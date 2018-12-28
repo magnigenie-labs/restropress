@@ -3,15 +3,15 @@ RestroPress is a Online Food Ordeing system for WordPress. It is a standalone Wo
 
 RestroPress has a user friendly frontend and backend interface which will allow you to easily manage the orders and also comes with pre built user dashboard to manage their profile and orders.
 
-#Restropress In action
+# Restropress In action
 
-[YouTube Demo](https://www.youtube.com/watch?v=c5oWarsCYf0) 
+Check [Video Demo](https://www.youtube.com/watch?v=c5oWarsCYf0) 
 
 Check [RestroPress Website](http://restropress.magnigenie.com/) 
 
 Check  [RestroPress Demo Website](http://restropress.magnigenie.com/demo/)
 
-= Benefits: =
+# Benefits
 * 100% Free and easy to install and setup.
 * Add food ordering system to your WordPress site without any coding skills.
 * Easy to use interface to manage food items, add-on items, food category etc.
