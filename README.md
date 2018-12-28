@@ -28,4 +28,5 @@ Check  [RestroPress Demo Website](http://restropress.magnigenie.com/demo/)
 If you have any suggestions for a new plugin, feel free to email us at info@magnigenie.com
 
 ## License
- [GPL] (https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+
+ [GPL](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
