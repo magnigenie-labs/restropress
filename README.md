@@ -10,8 +10,10 @@ Check [Demo Video](https://www.youtube.com/watch?v=c5oWarsCYf0)
 Check [RestroPress Website](http://restropress.magnigenie.com/) 
 
 Check  [RestroPress Demo Website](http://restropress.magnigenie.com/demo/)
+ 
 
 ## Benefits
+
 * 100% Free and easy to install and setup.
 * Add food ordering system to your WordPress site without any coding skills.
 * Easy to use interface to manage food items, add-on items, food category etc.
@@ -29,4 +31,4 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 ## License
 
- [GPL](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+License  [GPL](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
