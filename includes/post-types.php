@@ -99,6 +99,36 @@ function rpress_setup_rpress_post_types() {
 	);
 	register_post_type( 'rpress_payment', $payment_args );
 
+	/** Discounts Post Type */
+	$discount_labels = array(
+		'name'               => _x( 'Discounts', 'post type general name', 'restro-press' ),
+		'singular_name'      => _x( 'Discount', 'post type singular name', 'restro-press' ),
+		'add_new'            => __( 'Add New', 'restro-press' ),
+		'add_new_item'       => __( 'Add New Discount', 'restro-press' ),
+		'edit_item'          => __( 'Edit Discount', 'restro-press' ),
+		'new_item'           => __( 'New Discount', 'restro-press' ),
+		'all_items'          => __( 'All Discounts', 'restro-press' ),
+		'view_item'          => __( 'View Discount', 'restro-press' ),
+		'search_items'       => __( 'Search Discounts', 'restro-press' ),
+		'not_found'          => __( 'No Discounts found', 'restro-press' ),
+		'not_found_in_trash' => __( 'No Discounts found in Trash', 'restro-press' ),
+		'parent_item_colon'  => '',
+		'menu_name'          => __( 'Discounts', 'restro-press' )
+	);
+
+	$discount_args = array(
+		'labels'          => apply_filters( 'rpress_discount_labels', $discount_labels ),
+		'public'          => false,
+		'query_var'       => false,
+		'rewrite'         => false,
+		'show_ui'         => false,
+		'capability_type' => 'shop_discount',
+		'map_meta_cap'    => true,
+		'supports'        => array( 'title' ),
+		'can_export'      => true
+	);
+	register_post_type( 'rpress_discount', $discount_args );
+
 }
 add_action( 'init', 'rpress_setup_rpress_post_types', 1 );
 

@@ -245,6 +245,7 @@ final class RestroPress {
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-db-customer-meta.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-customer-query.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-customer.php';
+		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-discount.php';
 		
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-fooditem.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-cache-helper.php';
@@ -268,6 +269,7 @@ final class RestroPress {
 		}
 		require_once RPRESS_PLUGIN_DIR . 'includes/gateways/paypal-standard.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/gateways/manual.php';
+		require_once RPRESS_PLUGIN_DIR . 'includes/discount-functions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/discount-functions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/functions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/actions.php';
@@ -306,6 +308,9 @@ final class RestroPress {
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/customers/customer-actions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/fooditems/metabox.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/fooditems/contextual-help.php';
+			require_once RPRESS_PLUGIN_DIR . 'includes/admin/discounts/discount-actions.php';
+			require_once RPRESS_PLUGIN_DIR . 'includes/admin/discounts/discount-codes.php';
+
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/import-actions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/import-functions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/payments/actions.php';

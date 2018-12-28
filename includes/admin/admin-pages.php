@@ -35,6 +35,7 @@ function rpress_add_options_link() {
 
 	$rpress_payments_page      = add_submenu_page( 'edit.php?post_type=fooditem', $rpress_payment->labels->name, $rpress_payment->labels->menu_name, 'edit_shop_payments', 'rpress-payment-history', 'rpress_payment_history_page' );
 	$rpress_customers_page     = add_submenu_page( 'edit.php?post_type=fooditem', __( 'Customers', 'restro-press' ), __( 'Customers', 'restro-press' ), $customer_view_role, 'rpress-customers', 'rpress_customers_page' );
+	$rpress_discounts_page     = add_submenu_page( 'edit.php?post_type=fooditem', __( 'Discount Codes', 'restro-press' ), __( 'Discount Codes', 'restro-press' ), 'manage_shop_discounts', 'rpress-discounts', 'rpress_discounts_page' );
 	$rpress_reports_page       = add_submenu_page( 'edit.php?post_type=fooditem', __( 'Earnings and Sales Reports', 'restro-press' ), __( 'Reports', 'restro-press' ), 'view_shop_reports', 'rpress-reports', 'rpress_reports_page' );
 	$rpress_settings_page      = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Settings', 'restro-press' ), __( 'Settings', 'restro-press' ), 'manage_shop_settings', 'rpress-settings', 'rpress_options_page' );
 	$rpress_tools_page         = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Info and Tools', 'restro-press' ), __( 'Tools', 'restro-press' ), 'manage_shop_settings', 'rpress-tools', 'rpress_tools_page' );

@@ -114,6 +114,17 @@ div.rpress-search-wrap {
 	display: block;
 	clear: both;
 }
+.rpress_fooditems_list.sticky-live-search .rpress-live-search {
+	position: fixed;
+	width: 100%;
+	z-index: 9999;
+	top: 112px;
+	max-width: calc(124rem / 3);
+}
+
+.rpress_fooditems_list.sticky-live-search div.rpress-search-wrap #rpress-food-search {
+	box-shadow: 5px 4px 13px 2px #ccc;
+}
 div.rpress-search-wrap input[type="text"] {
 	border: none;
 	text-transform: initial;
@@ -1036,11 +1047,7 @@ form#fooditem-update-details h6 {
     padding-bottom: 20px;
     margin-bottom: -20px;
   }
-  .rpress_fooditems_list.passed .rpress-search-wrap.rpress-live-search {
-  	width: 100%;
-  	position: fixed;
-  	top: 120px;
-  }
+
 	.nav-scroller-content {
 	  position: relative;
 	  display: flex;

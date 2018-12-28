@@ -366,18 +366,16 @@ jQuery(function($) {
     $('div.rpress-filter-wrapper').toggleClass('active');
   });
 
-  var LiveSearch = $(".rpress_fooditems_list").offset().top;
+  var HeaderHeight = $('#masthead').outerHeight();
+  var LiveSearch = $(".rpress_fooditems_list").offset().top - HeaderHeight;
 
   $(window).scroll(function() {
     if( jQuery(window).scrollTop() > LiveSearch ) {
-      $('.rpress_fooditems_list').addClass('passed');
+      $('.rpress_fooditems_list').addClass('sticky-live-search');
     }
     else {
-      $('.rpress_fooditems_list').removeClass('passed');
+      $('.rpress_fooditems_list').removeClass('sticky-live-search');
     }
   });
   
-
-
 });
-
