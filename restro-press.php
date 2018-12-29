@@ -310,7 +310,6 @@ final class RestroPress {
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/fooditems/contextual-help.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/discounts/discount-actions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/discounts/discount-codes.php';
-
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/import-actions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/import-functions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/payments/actions.php';

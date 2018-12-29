@@ -9,7 +9,7 @@
  */
 
 (function ($) {
-    $.fn.theiaStickySidebar = function (options) {
+    $.fn.rpressStickySidebar = function (options) {
         var defaults = {
             'containerSelector': '',
             'additionalMarginTop': 0,
@@ -79,7 +79,7 @@
             // Add CSS
             var existingStylesheet = $('#theia-sticky-sidebar-stylesheet-' + options.namespace);
             if (existingStylesheet.length === 0) {
-                $('head').append($('<style id="theia-sticky-sidebar-stylesheet-' + options.namespace + '">.theiaStickySidebar:after {content: ""; display: table; clear: both;}</style>'));
+                $('head').append($('<style id="theia-sticky-sidebar-stylesheet-' + options.namespace + '">.rpressStickySidebar:after {content: ""; display: table; clear: both;}</style>'));
             }
 
             $that.each(function () {
@@ -108,7 +108,7 @@
                 });
 
                 // Get the sticky sidebar element. If none has been found, then create one.
-                o.stickySidebar = o.sidebar.find('.theiaStickySidebar');
+                o.stickySidebar = o.sidebar.find('.rpressStickySidebar');
                 if (o.stickySidebar.length == 0) {
                     // Remove <script> tags, otherwise they will be run again when added to the stickySidebar.
                     var javaScriptMIMETypes = /(?:text|application)\/(?:x-)?(?:javascript|ecmascript)/i;
@@ -116,7 +116,7 @@
                         return script.type.length === 0 || script.type.match(javaScriptMIMETypes);
                     }).remove();
 
-                    o.stickySidebar = $('<div>').addClass('theiaStickySidebar').append(o.sidebar.children());
+                    o.stickySidebar = $('<div>').addClass('rpressStickySidebar').append(o.sidebar.children());
                     o.sidebar.append(o.stickySidebar);
                 }
 

@@ -53,6 +53,7 @@ function rpress_set_custom_taxonomies() {
 	);
 
 	register_taxonomy( 'food-category', array( 'fooditem' ), $food_item_args );
+
   //Register taxonomy for food category
 	register_taxonomy_for_object_type( 'food-category', 'fooditem' );
 
@@ -68,18 +69,23 @@ function rpress_enque_scripts() {
 	wp_enqueue_script( 'rpress-fancybox', plugins_url( 'assets/js/jquery.fancybox.js', RPRESS_PLUGIN_FILE ) , array( 'jquery' ), '1.0.1', true );
 
 	//Add Sticky bar
-	wp_enqueue_script('rpress-sticky-sidebar', plugins_url( 'assets/js/theia-sticky-sidebar.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
+	wp_enqueue_script('rpress-sticky-sidebar', plugins_url( 'assets/js/rpress-sticky-sidebar.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
 
 	//Add custom js script
 	wp_enqueue_script('rpress-custom', plugins_url( 'assets/js/rpress-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-sticky-sidebar' ), '1.0.1', true );
 
+	// Add custom css
 	wp_enqueue_style( 'rpress-custom-stylesheet', plugins_url( 'assets/css/rpress-custom.css', RPRESS_PLUGIN_FILE ));
 
+	// Timepicker css
   wp_register_style( 'rpress-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css' );
   wp_enqueue_style( 'rpress-timepicker' );
 
+  // Timepicker js
   wp_register_script( 'rpress-timepicker-script', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js' );
   wp_enqueue_script( 'rpress-timepicker-script' );
+
+  $fooditem_popup_enable = rpress_get_option( 'enable_food_image_popup', false );
 
   wp_localize_script( 'rpress-custom', 'RpressVars', array(
   	'wait_text' 		=> __( 'Please Wait', 'restro-press' ),
@@ -87,6 +93,7 @@ function rpress_enque_scripts() {
   	'added_into_cart' 	=> __( 'Added Into Cart', 'restro-press' ),
   	'estimated_tax'		=> __( 'Estimated Tax', 'restro-press'),
   	'total_text'		=> __( 'Subtotal', 'restro-press'),
+  	'enable_fooditem_popup' => $fooditem_popup_enable,
   ));
 }
 add_action( 'wp_enqueue_scripts',  'rpress_enque_scripts' );
@@ -290,7 +297,7 @@ if( ! function_exists( 'rpress_get_food_cats' ) ) {
 		//filter wrapper starts here
 		$html .= '<div class="rpress-filter-wrapper">';
 		$html .= '<div class="rpress-categories-menu">';
-		$html .= '<h6>'.__('Categories', 'rpress').'</h6>';
+		$html .= '<h6>'.__('Categories', 'restro-press').'</h6>';
 
 		if( is_array($get_all_items) && !empty($get_all_items) ) :
 			$html .= '<ul class="rpress-category-lists">';
@@ -432,7 +439,7 @@ function rpress_update_delivery_options() {
 
   	$delivery_time = isset($_POST['deliveryTime']) ? $_POST['deliveryTime'] : '';
 
-	if(session_id() == '' || !isset($_SESSION)) {
+	if( session_id() == '' || !isset($_SESSION) ) {
     	// session isn't started
     	session_start();
    

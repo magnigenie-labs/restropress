@@ -300,7 +300,7 @@ jQuery(function($) {
     var TotalHeight = 120;
 
     if (jQuery(".sticky-sidebar").length != '') {
-      $('.sticky-sidebar').theiaStickySidebar({
+      $('.sticky-sidebar').rpressStickySidebar({
         additionalMarginTop: TotalHeight
       });
     }
@@ -377,5 +377,14 @@ jQuery(function($) {
       $('.rpress_fooditems_list').removeClass('sticky-live-search');
     }
   });
-  
+
+  if( RpressVars.enable_fooditem_popup == '1' ) {
+    //Fancbox Show Images
+    $(".rpress-fancybox").fancybox({
+      autoSize: false,
+      fitToView: false,
+      maxWidth: 20
+    });
+  }
+
 });

@@ -612,6 +612,12 @@ function rpress_get_registered_settings() {
 						'tooltip_title' => __( 'Disabling Styles', 'restro-press' ),
 						'tooltip_desc'  => __( "If your theme has a complete custom CSS file for RestroPress, you may wish to disable our default styles. This is not recommended unless you're sure your theme has a complete custom CSS.", 'restro-press' ),
 					),
+					'enable_food_image_popup' => array(
+						'id'            => 'enable_food_image_popup',
+						'name'          => __( 'Enable food image in popup', 'restro-press' ),
+						'desc'          => __( 'Check this to enable food items image to be shown in the popup, The food items image should be greater than 200X200', 'restro-press' ),
+						'type'          => 'checkbox',
+					),
 					'button_header' => array(
 						'id'   => 'button_header',
 						'name' => '<strong>' . __( 'Buttons', 'restro-press' ) . '</strong>',

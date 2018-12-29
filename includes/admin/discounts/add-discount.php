@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				</th>
 				<td>
 					<input name="name" required="required" id="rpress-name" type="text" value="" />
-					<p class="description"><?php _e( 'The name of this discount.', 'restro-press' ); ?></p>
+					<p class="description"><?php _e( 'Enter the name of this discount.', 'restro-press' ); ?></p>
 				</td>
 			</tr>
 			<?php do_action( 'rpress_discount_form_before_code' ); ?>
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				</th>
 				<td>
 					<input type="text" required="required" id="rpress-code" name="code" value="" pattern="[a-zA-Z0-9-_]+" />
-					<p class="description"><?php _e( 'Enter a code for this discount, such as 10PERCENT. Only alphanumeric characters are allowed.', 'restro-press' ); ?></p>
+					<p class="description"><?php _e( 'Enter a code for this discount, such as <span class="rpress-discount-demo"style="background:#FFF; padding: 2px 8px;" > 10PERCENT</span>. Only alphanumeric characters are allowed.', 'restro-press' ); ?></p>
 				</td>
 			</tr>
 			<?php do_action( 'rpress_add_discount_form_before_type' ); ?>

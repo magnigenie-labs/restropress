@@ -118,7 +118,7 @@ div.rpress-search-wrap {
 	position: fixed;
 	width: 100%;
 	z-index: 9999;
-	top: 112px;
+	top: 109px;
 	max-width: calc(124rem / 3);
 }
 
