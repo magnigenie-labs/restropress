@@ -8,7 +8,7 @@
  * @subpackage  Classes/Session
  * @copyright   Copyright (c) 2018, Magnigenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.5
+ * @since       1.0.5
  */
 
 // Exit if accessed directly

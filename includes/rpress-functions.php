@@ -12,6 +12,13 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Create Addon Item taxonomy.
+ *
+ * @since       1.0
+ * @param       null
+ * @return      void
+ */
 function rpress_set_custom_taxonomies() {
 
 	$addon_item_label = array(
@@ -160,6 +167,14 @@ function addon_category_taxonomy_custom_fields($tag) {
 <?php
 }
 
+
+/**
+ * Update taxonomy meta data
+ *
+ * @since       1.0
+ * @param       string | term_id
+ * @return      update meta data
+ */
 function save_addon_category_custom_fields( $term_id ) {
 	if( isset( $_POST['term_meta'] ) ) {  
   	$t_id = $term_id;  
@@ -169,7 +184,7 @@ function save_addon_category_custom_fields( $term_id ) {
     	if( isset( $_POST['term_meta'][$key] ) ){  
       	$term_meta[$key] = $_POST['term_meta'][$key];  
       }  
-    }  
+    }
     //save the option array  
     update_option( "taxonomy_term_$t_id", $term_meta );  
   }  
@@ -182,7 +197,13 @@ add_action( 'addon_category_edit_form_fields', 'addon_category_taxonomy_custom_f
 // Save the changes made on the "addon_category" taxonomy, using our callback function  
 add_action( 'edited_addon_category', 'save_addon_category_custom_fields', 10, 2 );
 
-/* Get cart items by cart key */
+/**
+ * Get Cart Items By Key
+ *
+ * @since       1.0
+ * @param       int | key
+ * @return      array | cart items array
+ */
 function getCartItemsByKey($key) {
 	$cart_items_arr = array();
 	if( $key !== '' ) {
@@ -199,7 +220,13 @@ function getCartItemsByKey($key) {
 	return $cart_items_arr;
 }
 
-/* Get cart price by key */
+/**
+ * Get Cart Items Price 
+ *
+ * @since       1.0
+ * @param       int | key
+ * @return      int | total price for cart
+ */
 function getCartItemsByPrice($key) {
 	$cart_items_price = array();
 	if( $key !== '' ) {
@@ -229,6 +256,13 @@ function getCartItemsByPrice($key) {
 	return $cart_item_total;
 }
 
+/**
+ * Get food item quantity in the cart by key
+ *
+ * @since       1.0
+ * @param       int | cart_key
+ * @return      array | cart items array
+ */
 function rpress_get_item_qty_by_key( $cart_key ) {
 	if( $cart_key !== '' ) {
 		$cart_items = rpress_get_cart_contents();
@@ -340,7 +374,13 @@ if ( ! function_exists( 'rpress_product_menu_tab' ) ) {
 	}
 }
 
-
+/**
+ * Get special instruction for food items
+ *
+ * @since       1.0
+ * @param       array | food items
+ * @return      string | Special instruction string
+ */
 function get_special_instruction( $items ) {
 	$instruction = '';
 	if( is_array($items) ) {
@@ -356,6 +396,13 @@ function get_special_instruction( $items ) {
 	return $instruction;
 }
 
+/**
+ * Get instruction in the cart by key
+ *
+ * @since       1.0
+ * @param       int | cart_key
+ * @return      string | Special instruction string
+ */
 function rpress_get_instruction_by_key( $cart_key ) {
 	if( $cart_key !== '' ) {
 		$cart_items = rpress_get_cart_contents();
@@ -379,11 +426,19 @@ function rpress_get_cart_items() {
 	echo $html;
 }
 
+
+/**
+ * Get formatted array of food item details 
+ *
+ * @since       1.0.2
+ * @param       array | Food items 
+ * @param       int | cart key by default blank
+ * @return      array | Outputs the array of food items with formatted values in the key value
+ */
 function getFormattedCatsList($terms, $cart_key = '') {
 	$parent_ids = array();
 	$child_ids = array();
 	$list_array = array();
-	$child_arr = array();
 
 	$html = '';
 
@@ -434,6 +489,14 @@ function getFormattedCatsList($terms, $cart_key = '') {
 	return $list_array;
 }
 
+
+/**
+ * Update delivery options when user procedds to checkout
+ *
+ * @since       1.0.2
+ * @param       void
+ * @return      array | Session array for selected delivery system
+ */
 function rpress_update_delivery_options() {
 	$delivery_opt = isset($_POST['deliveryOpt']) ? $_POST['deliveryOpt'] : '';
 
@@ -457,6 +520,14 @@ function rpress_update_delivery_options() {
 add_action('wp_ajax_rpress_update_delivery_options', 'rpress_update_delivery_options');
 add_action('wp_ajax_nopriv_rpress_update_delivery_options', 'rpress_update_delivery_options');
 
+
+/**
+ * Show delivery options in the cart 
+ *
+ * @since       1.0.2
+ * @param       void
+ * @return      string | Outputs the html for the delivery options with texts
+ */
 function get_delivery_options() {
 	if( rpress_get_option('enable_delivery') == 1 || rpress_get_option('enable_pickup') == 1 ) {
 
@@ -491,6 +562,15 @@ function get_delivery_options() {
 
 add_action( 'rpress_insert_payment', 'rpress_show_admin_notification', 10, 2 );
 
+
+/**
+ * Show notification to admin 
+ *
+ * @since       1.0.3
+ * @param       int | Payment_id
+ * @param 			obj | Payment Data
+ * @return      boolean
+ */
 function rpress_show_admin_notification($payment_id, $payment_data) {
 
 	$url_order = admin_url('post.php?post=' . absint($payment_id) . '&action=edit');
@@ -521,6 +601,13 @@ function rpress_show_admin_notification($payment_id, $payment_data) {
 
 add_action('wp_ajax_rpress_display_order_notifications', 'rpress_display_order_notifications');
 
+/**
+ * Show order notification
+ *
+ * @since       1.0.3
+ * @param       void
+ * @return      json | user notification json object
+ */
 function rpress_display_order_notifications() {
 	$user_notifications = array();
             
@@ -533,7 +620,6 @@ function rpress_display_order_notifications() {
     foreach ($notifications as $notification) {
     	$user_notified = (array)unserialize($notification->notified_users);
       $url = $notification->url;
-
 
       if (!in_array($id_current_user, $user_notified)) {
       	$noti = (array)unserialize($notification->data);
@@ -573,6 +659,13 @@ function create_order_notification_table() {
 	update_option( $table_name . '_db_version', $version );
 }
 
+/**
+ * Register notification system
+ *
+ * @since       1.0.3
+ * @param       string | type
+ * @return      void
+ */
 function register_notification($type) {
 	global $wpdb;
 	$table_name = $wpdb->prefix.'rpress_order_notification';
@@ -589,6 +682,13 @@ function register_notification($type) {
   $wpdb->query( $insert_query );
 }
 
+/**
+ * Get user notification
+ *
+ * @since       1.0.3
+ * @param       object | User object
+ * @return      array | an array of results
+ */
 function get_notifications_by_user($user) {
 	global $wpdb;
 	$table = $wpdb->prefix.'rpress_order_notification';
@@ -603,6 +703,14 @@ function get_notifications_by_user($user) {
   return $results;
 }
 
+/**
+ * Update order push notification
+ *
+ * @since       1.0.3
+ * @param       int | id
+ * @param       int | user_notified
+ * @return      void
+ */
 function update_notification($id,$user_notified) {
 	global $wpdb;
 	$table_name = $wpdb->prefix.'rpress_order_notification';
@@ -648,31 +756,39 @@ function rpress_display_checkout_fields() {
 add_action( 'rpress_purchase_form_user_info_fields', 'rpress_display_checkout_fields' );
 
 /**
- * Make fields required
+ * Make checkout fields required
+ *
+ * @since       1.0.3
+ * @param       array | An array of required fields
+ * @return      array | An array of fields
  */
 function rpress_required_checkout_fields( $required_fields ) {
-    $required_fields['rpress_phone'] = array(
-    	'error_id' 			=> 'invalid_phone',
-      'error_message' =>  __('Please enter a valid Phone number', 'restro-press')
-    );
+	$required_fields['rpress_phone'] = array(
+		'error_id' 			=> 'invalid_phone',
+		'error_message' =>  __('Please enter a valid Phone number', 'restro-press')
+	);
 
-    $required_fields['rpress_door_flat'] = array(
-    'error_id' 			=> 'invalid_door_flat',
-      'error_message' => __('Please enter your door flat', 'restro-press')
-    );
+  $required_fields['rpress_door_flat'] = array(
+  	'error_id' 			=> 'invalid_door_flat',
+    'error_message' => __('Please enter your door flat', 'restro-press')
+  );
 
-    $required_fields['rpress_landmark'] = array(
-    	'error_id' 			=> 'invalid_landmark',
-      'error_message' => __('Please enter landmark', 'restro-press')
-    );
+  $required_fields['rpress_landmark'] = array(
+  	'error_id' 			=> 'invalid_landmark',
+    'error_message' => __('Please enter landmark', 'restro-press')
+  );
 
-    return $required_fields;
+  return $required_fields;
 }
 add_filter( 'rpress_purchase_form_required_fields', 'rpress_required_checkout_fields' );
 
 
 /**
- * Store the custom field data into RestroPress's payment meta
+ * Stores custom data in payment fields
+ *
+ * @since       1.0.3
+ * @param       array | Payment meta array
+ * @return      array | Custom data with payment meta array
  */
 function rpress_store_custom_fields( $payment_meta ) {
 
@@ -761,6 +877,13 @@ function rpress_email_tag_landmark( $payment_id ) {
 	return $payment_data['landmark'];
 }
 
+/**
+ * Get order by statemeny by taxonomy
+ *
+ * @since       1.0.2
+ * @param       string | order by
+ * @return      string | order by string passed
+ */
 function edit_posts_orderby($orderby_statement) {
 	$orderby_statement = " term_taxonomy_id ASC ";
   return $orderby_statement;

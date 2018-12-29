@@ -4,7 +4,7 @@
  *
  * @package     RPRESS
  * @subpackage  Admin/Discounts
- * @copyright   Copyright (c) 2018, Kshirod Patel
+ * @copyright   Copyright (c) 2018, Magnigenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Renders the Discount Pages Admin Page
  *
  * @since 1.4
- * @author Kshirod Patel
+ * @author Magnigenie
  * @return void
 */
 function rpress_discounts_page() {

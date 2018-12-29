@@ -15,11 +15,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
-/**
- * Removes our tracking query arg so as not to interfere with the WP query, see https://core.trac.wordpress.org/ticket/25143/1926229
- *
- * @since 2.4.3
- */
 function rpress_unset_discount_query_arg( $query ) {
 
 	if ( is_admin() || ! $query->is_main_query() ) {

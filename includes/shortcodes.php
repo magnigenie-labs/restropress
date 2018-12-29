@@ -500,7 +500,7 @@ add_shortcode( 'rpress_items', 'get_rpress_fooditems' );
  *
  * Shows the price of a fooditem.
  *
- * @since 1.1.3.3
+ * @since 1.0.3
  * @param array $atts Shortcode attributes
  * @param string $content
  * @return string

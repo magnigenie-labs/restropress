@@ -4,7 +4,7 @@
  *
  * @package     RPRESS
  * @subpackage  Admin/Discounts
- * @copyright   Copyright (c) 2018, Kshirod Patel
+ * @copyright   Copyright (c) 2018, Magnigenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0.6
  */
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * Renders the Discount Codes table on the Discount Codes page
  *
  * @since 1.0.6
- * @author Kshirod Patel
+ * @author Magnigenie
  */
 class RPRESS_Discount_Codes_Table extends WP_List_Table {
 	/**

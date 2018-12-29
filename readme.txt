@@ -50,9 +50,14 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 == ChangeLog ==
 = Version 1.0.6 =
+* js modified
+* Discount code functionality added in admin
+* Discount code functionality added in frontend
+* custom functions renamed into rpress functions
 
 = Version 1.0.5 =
-
+* Payment gateway link modified
+* minor code optimized
 
 = Version 1.0.4 =
 * Fixed css conflict issue with theme

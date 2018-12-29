@@ -245,6 +245,8 @@ final class RestroPress {
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-db-customer-meta.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-customer-query.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-customer.php';
+
+		// Discount Class
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-discount.php';
 		
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-fooditem.php';
@@ -264,13 +266,19 @@ final class RestroPress {
 		require_once RPRESS_PLUGIN_DIR . 'includes/mime-types.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/gateways/actions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/gateways/functions.php';
+
 		if ( version_compare( phpversion(), 5.3, '>' ) ) {
 			require_once RPRESS_PLUGIN_DIR . 'includes/gateways/amazon-payments.php';
 		}
+
 		require_once RPRESS_PLUGIN_DIR . 'includes/gateways/paypal-standard.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/gateways/manual.php';
+
+		
+		//Add frontend discount functionality
 		require_once RPRESS_PLUGIN_DIR . 'includes/discount-functions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/discount-functions.php';
+
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/functions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/actions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/class-payment-stats.php';
@@ -308,8 +316,11 @@ final class RestroPress {
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/customers/customer-actions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/fooditems/metabox.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/fooditems/contextual-help.php';
+
+			//Add admin discount codes
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/discounts/discount-actions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/discounts/discount-codes.php';
+
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/import-actions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/import-functions.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/payments/actions.php';
@@ -338,7 +349,7 @@ final class RestroPress {
 		require_once RPRESS_PLUGIN_DIR . 'includes/class-rpress-register-meta.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/install.php';
 
-		require_once RPRESS_PLUGIN_DIR . 'includes/custom-functions.php';
+		require_once RPRESS_PLUGIN_DIR . 'includes/rpress-functions.php';
 	}
 
 	/**
@@ -359,7 +370,6 @@ endif; // End if class_exists check.
 /**
  * The main function for that returns RestroPress
  *
- * The main function responsible for returning the one true RestroPress
  * Instance to functions everywhere.
  *
  * Use this function like you would a global variable, except without needing
@@ -374,5 +384,5 @@ function RPRESS() {
 	return RestroPress::instance();
 }
 
-// Get RestroPress Running.
+//Get RestroPress Running.
 RPRESS();

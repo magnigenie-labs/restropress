@@ -551,7 +551,7 @@ function rpress_get_customer_address( $user_id = 0 ) {
 /**
  * Sends the new user notification email when a user registers during checkout
  *
- * @since 1.0.8
+ * @since 1.0.4
  * @param int   $user_id
  * @param array $user_data
  *

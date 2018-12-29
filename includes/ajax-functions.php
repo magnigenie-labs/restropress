@@ -239,6 +239,13 @@ function rpress_ajax_add_to_cart() {
 add_action( 'wp_ajax_rpress_add_to_cart', 'rpress_ajax_add_to_cart' );
 add_action( 'wp_ajax_nopriv_rpress_add_to_cart', 'rpress_ajax_add_to_cart' );
 
+/**
+ * Gets lists of products in the popup through ajax
+ *
+ * @since  1.0.0
+ * @param void
+ * @return html
+*/
 function rpress_ajax_show_product() {
 
 	$food_item_id = $_POST['fooditem_id'];
@@ -286,7 +293,13 @@ function rpress_ajax_show_product() {
 add_action( 'wp_ajax_rpress_show_product', 'rpress_ajax_show_product' );
 add_action( 'wp_ajax_nopriv_rpress_show_product', 'rpress_ajax_show_product' );
 
-
+/**
+ * Updates cart items through ajax
+ *
+ * @since  1.0.0
+ * @param void
+ * @return json_object | cart items
+*/
 function rpress_ajax_update_cart_items() {
 	if( isset($_POST['fooditem_cartkey']) ) {
 		$cart_key = ($_POST['fooditem_cartkey'] !== '') ? $_POST['fooditem_cartkey'] : '';
@@ -350,7 +363,13 @@ add_action( 'wp_ajax_rpress_update_cart_items', 'rpress_ajax_update_cart_items' 
 add_action( 'wp_ajax_nopriv_rpress_update_cart_items', 'rpress_ajax_update_cart_items' );
 
 
-//clear cart by ajax
+/**
+ * Makes the cart clear by ajax
+ *
+ * @since  1.0.0
+ * @param void
+ * @return json
+*/
 function rpress_clear_cart_items() {
 	rpress_empty_cart();
 	$return['status'] = 'success';
@@ -361,6 +380,14 @@ function rpress_clear_cart_items() {
 add_action( 'wp_ajax_rpress_clear_cart', 'rpress_clear_cart_items' );
 add_action( 'wp_ajax_nopriv_rpress_clear_cart', 'rpress_clear_cart_items' );
 
+
+/**
+ * Edits the food items in the cart through ajax
+ *
+ * @since  1.0.0
+ * @param void
+ * @return html
+*/
 function rpress_ajax_edit_food_item() {
 	$cart_key = ($_POST['cartitem_id'] !== '') ? $_POST['cartitem_id'] : '';
 	$food_item_id = !empty($_POST['fooditem_id']) ? $_POST['fooditem_id'] : '';
@@ -486,6 +513,14 @@ function getFormattedCats($terms, $cart_key = '') {
   return $html;
 }
 
+
+/**
+ * Gets food items by category id 
+ *
+ * @since  	1.0.0
+ * @param 	int
+ * @return 	array | food items array
+*/
 function getFooditemCategoryById($post_id) {
 	if( !empty($post_id) ) {
 		$taxonomy = 'addon_category';
@@ -493,7 +528,6 @@ function getFooditemCategoryById($post_id) {
 		return $food_terms;
 	}
 }
-
 
 
 /**
