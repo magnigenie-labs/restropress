@@ -439,6 +439,7 @@ function getFormattedCatsList($terms, $cart_key = '') {
 	$parent_ids = array();
 	$child_ids = array();
 	$list_array = array();
+	$child_arr = array();
 
 	$html = '';
 
@@ -500,20 +501,16 @@ function getFormattedCatsList($terms, $cart_key = '') {
 function rpress_update_delivery_options() {
 	$delivery_opt = isset($_POST['deliveryOpt']) ? $_POST['deliveryOpt'] : '';
 
-  	$delivery_time = isset($_POST['deliveryTime']) ? $_POST['deliveryTime'] : '';
+  $delivery_time = isset($_POST['deliveryTime']) ? $_POST['deliveryTime'] : '';
 
 	if( session_id() == '' || !isset($_SESSION) ) {
-    	// session isn't started
-    	session_start();
-   
-    	$_SESSION['delivery_type'] = $delivery_opt;
-    	$_SESSION['delivery_time'] = $delivery_time;
+  	// session isn't started
+    session_start();
 	}
-	else {
-		$_SESSION['delivery_type'] = $delivery_opt;
-    $_SESSION['delivery_time'] = $delivery_time;
-	}
-	
+
+	$_SESSION['delivery_type'] = $delivery_opt;
+  $_SESSION['delivery_time'] = $delivery_time;
+
 	exit;
 }	
 
@@ -887,4 +884,16 @@ function rpress_email_tag_landmark( $payment_id ) {
 function edit_posts_orderby($orderby_statement) {
 	$orderby_statement = " term_taxonomy_id ASC ";
   return $orderby_statement;
+}
+
+function rpress_get_delivery_type( $payment_id ) {
+	if( $payment_id  ) {
+		$delivery_type = get_post_meta( $payment_id, '_rpress_delivery_type', true );
+		if( $delivery_type ) {
+			return ucfirst($delivery_type);
+		}
+		else {
+			return '-';
+		}
+	}
 }

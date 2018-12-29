@@ -272,6 +272,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			'amount'   => __( 'Amount', 'restro-press' ),
 			'date'     => __( 'Date', 'restro-press' ),
 			'customer' => __( 'Customer', 'restro-press' ),
+			'delivery' => __( 'Order Type', 'restro-press' ),
 			'status'   => __( 'Status', 'restro-press' ),
 		);
 
@@ -329,6 +330,9 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			case 'status' :
 				$payment = get_post( $payment->ID );
 				$value   = rpress_get_payment_status( $payment, true );
+				break;
+			case 'delivery' :
+				$value = rpress_get_delivery_type( $payment->ID );
 				break;
 			case 'details' :
 				$value = '<a href="' . add_query_arg( 'id', $payment->ID, admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details' ) ) . '">' . __( 'View Order Details', 'restro-press' ) . '</a>';

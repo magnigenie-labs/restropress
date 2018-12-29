@@ -29,14 +29,8 @@ function rpress_add_fooditem_meta_box() {
 		/** Product Prices **/
 		add_meta_box( 'rpress_product_prices', sprintf( __( '%1$s Prices', 'restro-press' ), rpress_get_label_singular(), rpress_get_label_plural() ),  'rpress_render_fooditem_meta_box', $post_type, 'normal', 'high' );
 
-		/** Product Files (and bundled products) **/
-		//add_meta_box( 'rpress_product_files', sprintf( __( '%1$s Files', 'restro-press' ), rpress_get_label_singular(), rpress_get_label_plural() ),  'rpress_render_files_meta_box', $post_type, 'normal', 'high' );
-
-		/** Product Settings **/
-		//add_meta_box( 'rpress_product_settings', sprintf( __( '%1$s Settings', 'restro-press' ), rpress_get_label_singular(), rpress_get_label_plural() ),  'rpress_render_settings_meta_box', $post_type, 'side', 'default' );
-
 		/** Product Notes */
-		add_meta_box( 'rpress_product_notes', sprintf( __( '%1$s Notes', 'restro-press' ), rpress_get_label_singular(), rpress_get_label_plural() ), 'rpress_render_product_notes_meta_box', $post_type, 'normal', 'high' );
+		// add_meta_box( 'rpress_product_notes', sprintf( __( '%1$s Notes', 'restro-press' ), rpress_get_label_singular(), rpress_get_label_plural() ), 'rpress_render_product_notes_meta_box', $post_type, 'normal', 'high' );
 
 	}
 }
@@ -280,7 +274,7 @@ function rpress_render_price_field( $post_id ) {
 	$currency_position  = rpress_get_option( 'currency_position', 'before' );
 	?>
 	<p>
-		<strong><?php echo apply_filters( 'rpress_price_options_heading', __( 'Pricing Options:', 'restro-press' ) ); ?></strong>
+		<strong><?php echo apply_filters( 'rpress_price_options_heading', __( 'Item Price:', 'restro-press' ) ); ?></strong>
 	</p>
 
 	
