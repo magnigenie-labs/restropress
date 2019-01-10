@@ -268,7 +268,6 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			'cb'       => '<input type="checkbox" />', //Render a checkbox instead of text
 			'ID'       => __( 'ID', 'restro-press' ),
 			'email'    => __( 'Email', 'restro-press' ),
-			'details'  => __( 'Details', 'restro-press' ),
 			'amount'   => __( 'Amount', 'restro-press' ),
 			'date'     => __( 'Date', 'restro-press' ),
 			'customer' => __( 'Customer', 'restro-press' ),
@@ -333,9 +332,6 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 				break;
 			case 'delivery' :
 				$value = rpress_get_delivery_type( $payment->ID );
-				break;
-			case 'details' :
-				$value = '<a href="' . add_query_arg( 'id', $payment->ID, admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details' ) ) . '">' . __( 'View Order Details', 'restro-press' ) . '</a>';
 				break;
 			default:
 				$value = isset( $payment->$column_name ) ? $payment->$column_name : '';
@@ -404,7 +400,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 * @return string Displays a checkbox
 	 */
 	public function column_ID( $payment ) {
-		return rpress_get_payment_number( $payment->ID );
+		return '<a href="' . add_query_arg( 'id', $payment->ID, admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details' ) ) . '">' . $payment->ID . '</a>';
 	}
 
 	/**

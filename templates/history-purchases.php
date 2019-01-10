@@ -8,7 +8,7 @@ endif;
  * This template is used to display the order history of the current user.
  */
 if ( is_user_logged_in() ):
-	$payments = rpress_get_users_purchases( get_current_user_id(), 20, true, 'any' );
+	$payments = rpress_get_users_orders( get_current_user_id(), 20, true, 'any' );
 	if ( $payments ) :
 		do_action( 'rpress_before_order_history', $payments ); ?>
 		<table id="rpress_user_history" class="rpress-table">

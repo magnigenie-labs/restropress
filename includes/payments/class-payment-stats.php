@@ -147,7 +147,7 @@ class RPRESS_Payment_Stats extends RPRESS_Stats {
 				set_transient( 'rpress_stats_earnings', $cached, HOUR_IN_SECONDS );
 			}
 		} else {
-			// Download specific earning stats
+			// Get specific earning stats
 			global $rpress_logs, $wpdb;
 
 			$args = array(

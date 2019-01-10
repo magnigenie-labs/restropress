@@ -249,6 +249,39 @@ function rpress_get_registered_settings() {
 		'general' => apply_filters( 'rpress_settings_general',
 			array(
 				'main' => array(
+					'order_settings' => array(
+						'id'   => 'order_settings',
+						'name' => '<h3>' . __( 'General Settings', 'restro-press' ) . '</h3>',
+						'desc' => '',
+						'type' => 'header',
+						'tooltip_title' => __( 'Minimum Order Settings', 'restro-press' ),
+						'tooltip_desc'  => __( 'This would be the minimum order to be placed on the site to get checkout page' ),
+					),
+					'allow_minimum_order' => array(
+						'id'   => 'allow_minimum_order',
+						'name' => __( 'Allow minimum order amount', 'restro-press' ),
+						'desc' => sprintf(
+							__( 'By checking this the users have to place an order with minimum amount of set price', 'restro-press' )
+						),
+						'type' => 'checkbox',
+					),
+					'minimum_order_price' => array(
+						'id'   => 'minimum_order_price',
+						'size' => 'small',
+						'name' => __( 'Minimum order price', 'restro-press' ),
+						'desc' => sprintf(
+							__( 'Minimum order price that should be made on the store', 'restro-press' )
+						),
+						'type' => 'number',
+					),
+					'minimum_order_error' => array(
+						'id'   => 'minimum_order_error',
+						'name' => __( 'Minimum order price error', 'restro-press' ),
+						'desc' => sprintf(
+							__( 'This would be the error message when someone tries to place an order with less than that price, You can use {min_order_price} variable', 'restro-press' )
+						),
+						'type' => 'textarea',
+					),
 					'style_settings' => array(
 						'id'   => 'style_settings',
 						'name' => '<h3>' . __( 'Plugin Layout Style', 'restro-press' ) . '</h3>',
@@ -393,7 +426,13 @@ function rpress_get_registered_settings() {
 						'name' => '<h3>' . __( 'Notification Settings', 'restro-press' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
-						'tooltip_title' => __( 'Plugin Layout Style', 'restro-press' ),
+						'tooltip_title' => __( 'Notification Settings', 'restro-press' ),
+					),
+					'enable_order_notification' => array(
+						'id'   => 'enable_order_notification',
+						'name' => __( 'Enable Notification', 'restro-press' ),
+						'desc' => __( 'Enable checkbox for order notification', 'restro-press' ),
+						'type' => 'checkbox',
 					),
 					'notification_title' => array(
 						'id' => 'notification_title',

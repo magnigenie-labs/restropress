@@ -270,11 +270,12 @@ jQuery(function($) {
 
 	$('body').on('click', '.cart_item.rpress_checkout a', function(e) {
     e.preventDefault();
-    var href = $(this).attr('href');
+    var href = $(this).attr('data-url');
     var deliveryOption = $('div.delivery-opts input[name=delivery_opt]:checked').val();
     var deliveryHrs = $('#rpress-allowed-hours').val();
 
-    var action = 'rpress_update_delivery_options';
+    var action = 'rpress_proceed_checkout';
+
     var data = {
       action       : action,
       deliveryOpt  : deliveryOption,
@@ -290,7 +291,13 @@ jQuery(function($) {
         withCredentials: true
       },
       success : function(response) {
-        window.location.replace(href);
+        console.log(response);
+        if( response.status == 'error' ) {
+          $( "<p class='rpress-min-price-error'>"+response.minimum_price_error+"</p>" ).insertAfter( "ul.rpress-cart" );
+        }
+        else {
+          window.location.replace(href);
+        }
       }
     });
     
@@ -386,5 +393,7 @@ jQuery(function($) {
       maxWidth: 20
     });
   }
+
+  
 
 });

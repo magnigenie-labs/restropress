@@ -413,7 +413,7 @@ function rpress_reports_tab_export() {
 					</div><!-- .postbox -->
 
 					<div class="postbox rpress-export-fooditem-history">
-						<h3><span><?php _e('Export Download History in CSV','restro-press' ); ?></span></h3>
+						<h3><span><?php _e('Export Order History in CSV','restro-press' ); ?></span></h3>
 						<div class="inside">
 							<p><?php _e( 'Download a CSV of file fooditems. To fooditem a CSV for all file fooditems, leave "Choose a Download" as it is.', 'restro-press' ); ?></p>
 							<form id="rpress-export-file-fooditems" class="rpress-export-form rpress-import-export-form" method="post">

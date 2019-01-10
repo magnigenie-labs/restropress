@@ -160,7 +160,7 @@ class RPRESS_Sales_Log_Table extends WP_List_Table {
 	 * Retrieves the ID of the fooditem we're filtering logs by
 	 *
 	 * @since  1.0.0
-	 * @return int Download ID
+	 * @return int Food Item ID
 	 */
 	public function get_filtered_fooditem() {
 		return ! empty( $_GET['fooditem'] ) ? absint( $_GET['fooditem'] ) : false;

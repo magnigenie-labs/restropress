@@ -1,9 +1,9 @@
 <?php
 /**
- * Download Object
+ * Food Item Object
  *
  * @package     RPRESS
- * @subpackage  Classes/Download
+ * @subpackage  Classes/RPRESS
  * @copyright   Copyright (c) 2018, Magnigenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.2
@@ -204,7 +204,7 @@ class RPRESS_Fooditem {
 	 *
 	 * @since  1.0.0.6
 	 * @param  array  $data Array of attributes for a fooditem
-	 * @return mixed  false if data isn't passed and class not instantiated for creation, or New Download ID
+	 * @return mixed  false if data isn't passed and class not instantiated for creation
 	 */
 	public function create( $data = array() ) {
 
@@ -215,7 +215,7 @@ class RPRESS_Fooditem {
 		$defaults = array(
 			'post_type'   => 'fooditem',
 			'post_status' => 'draft',
-			'post_title'  => __( 'New Download Product', 'restro-press' )
+			'post_title'  => __( 'New Product', 'restro-press' )
 		);
 
 		$args = wp_parse_args( $data, $defaults );
@@ -443,7 +443,7 @@ class RPRESS_Fooditem {
 
 			if ( ! empty( $limit ) || ( is_numeric( $limit ) && (int)$limit == 0 ) ) {
 
-				// Download specific limit
+				//specific limit
 				$ret = absint( $limit );
 
 			} else {
@@ -509,7 +509,7 @@ class RPRESS_Fooditem {
 	}
 
 	/**
-	 * Retrieves the Download IDs that are bundled with this Download
+	 * Retrieves the Food Item IDs that are bundled with this
 	 *
 	 * @since  1.0.0
 	 * @return array List of bundled fooditems
@@ -527,7 +527,7 @@ class RPRESS_Fooditem {
 	}
 
 	/**
-	 * Retrieve the Download IDs that are bundled with this Download based on the variable pricing ID passed
+	 * Retrieve the Product IDs that are bundled with this based on the variable pricing ID passed
 	 *
 	 * @since 1.0
 	 * @param int $price_id Variable pricing ID

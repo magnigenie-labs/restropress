@@ -234,7 +234,8 @@ function rpress_load_admin_scripts( $hook ) {
 		'show_advanced_settings'      => __( 'Show advanced settings', 'restro-press' ),
 		'hide_advanced_settings'      => __( 'Hide advanced settings', 'restro-press' ),
 		'is_admin'					  => is_admin(),
-		'desktop_notification_duration'	=> rpress_get_option('notification_duration')     
+		'desktop_notification_duration'	=> rpress_get_option('notification_duration') ,
+		'enable_order_notification'  =>  rpress_get_option('enable_order_notification'),   
 	));
 
 	/*

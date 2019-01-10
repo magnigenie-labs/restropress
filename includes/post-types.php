@@ -87,6 +87,7 @@ function rpress_setup_rpress_post_types() {
 		'menu_name'          => __( 'Order History', 'restro-press' )
 	);
 
+
 	$payment_args = array(
 		'labels'          => apply_filters( 'rpress_payment_labels', $payment_labels ),
 		'public'          => false,

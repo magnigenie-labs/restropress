@@ -567,7 +567,7 @@ class RPRESS_Payments_Query extends RPRESS_Stats {
 	}
 
 	/**
-	 * Specific Download
+	 * Specific Item
 	 *
 	 * @since 1.0
 	 * @return void

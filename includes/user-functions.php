@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  * @return WP_Post[]|false List of all user purchases
  */
-function rpress_get_users_purchases( $user = 0, $number = 20, $pagination = false, $status = 'complete' ) {
+function rpress_get_users_orders( $user = 0, $number = 20, $pagination = false, $status = 'complete' ) {
 	if ( empty( $user ) ) {
 		$user = get_current_user_id();
 	}
@@ -87,7 +87,7 @@ function rpress_get_users_purchases( $user = 0, $number = 20, $pagination = fals
 
 	}
 
-	$purchases = rpress_get_payments( apply_filters( 'rpress_get_users_purchases_args', $args ) );
+	$purchases = rpress_get_payments( apply_filters( 'rpress_get_users_orders_args', $args ) );
 
 	// No purchases
 	if ( ! $purchases )
@@ -108,7 +108,7 @@ function rpress_get_users_purchases( $user = 0, $number = 20, $pagination = fals
  *
  * @return WP_Post[]|false List of unique products purchased by user
  */
-function rpress_get_users_purchased_products( $user = 0, $status = 'complete' ) {
+function rpress_get_users_ordered_products( $user = 0, $status = 'complete' ) {
 	if ( empty( $user ) ) {
 		$user = get_current_user_id();
 	}
@@ -183,7 +183,7 @@ function rpress_get_users_purchased_products( $user = 0, $status = 'complete' ) 
 		return false;
 	}
 
-	$args = apply_filters( 'rpress_get_users_purchased_products_args', array(
+	$args = apply_filters( 'rpress_get_users_ordered_products_args', array(
 		'include'        => $product_ids,
 		'post_type'      => 'fooditem',
 		'posts_per_page' => -1,
@@ -214,9 +214,9 @@ function rpress_has_user_purchased( $user_id, $fooditems, $variable_price_id = n
 	 *
 	 * Allow 3rd parties to take actions before the history is queried.
 	 */
-	do_action( 'rpress_has_user_purchased_before', $user_id, $fooditems, $variable_price_id );
+	do_action( 'rpress_has_user_ordered_before', $user_id, $fooditems, $variable_price_id );
 
-	$users_purchases = rpress_get_users_purchases( $user_id );
+	$users_purchases = rpress_get_users_orders( $user_id );
 
 	$return = false;
 
@@ -274,7 +274,7 @@ function rpress_has_purchases( $user_id = null ) {
 		$user_id = get_current_user_id();
 	}
 
-	if ( rpress_get_users_purchases( $user_id, 1 ) ) {
+	if ( rpress_get_users_orders( $user_id, 1 ) ) {
 		return true; // User has at least one purchase
 	}
 	return false; // User has never purchased anything

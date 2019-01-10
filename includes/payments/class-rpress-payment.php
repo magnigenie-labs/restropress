@@ -1354,7 +1354,7 @@ class RPRESS_Payment {
 			}
 
 			if ( (int) $this->cart_details[ $cart_index ]['id'] !== (int) $fooditem_id ) {
-				return false; // We still need the proper Download ID to be sure.
+				return false; // We still need the proper Item ID to be sure.
 			}
 
 			$found_cart_key = $cart_index;

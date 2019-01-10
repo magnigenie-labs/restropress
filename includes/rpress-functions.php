@@ -498,25 +498,61 @@ function getFormattedCatsList($terms, $cart_key = '') {
  * @param       void
  * @return      array | Session array for selected delivery system
  */
-function rpress_update_delivery_options() {
+function rpress_proceed_checkout() {
+
+	//Check minimum order 
+	$enable_minimum_order = rpress_get_option('allow_minimum_order');
+
 	$delivery_opt = isset($_POST['deliveryOpt']) ? $_POST['deliveryOpt'] : '';
 
   $delivery_time = isset($_POST['deliveryTime']) ? $_POST['deliveryTime'] : '';
+	
+	if( $enable_minimum_order ) :
+		$minimum_order_price = rpress_get_option('minimum_order_price');
+		$minimum_price_error = rpress_get_option('minimum_order_error');
+		$minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price ) );
+		$minimum_price_error = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error);
 
-	if( session_id() == '' || !isset($_SESSION) ) {
-  	// session isn't started
-    session_start();
-	}
+		if( rpress_get_cart_total() < $minimum_order_price ) :
+			$response = array( 'status' => 'error', 'minimum_price' => $minimum_order_price, 'minimum_price_error' =>  $minimum_price_error  );
+		else :
+			//Save session vars
+			rpress_checkout_delivery_type($delivery_opt, $delivery_time);
+			$response = array( 'status' => 'success' );
+		endif;
 
-	$_SESSION['delivery_type'] = $delivery_opt;
-  $_SESSION['delivery_time'] = $delivery_time;
+	else :
+		//Save session vars
+		rpress_checkout_delivery_type($delivery_opt, $delivery_time);
+		$response = array( 'status' => 'success' );
+	endif;
+
+	echo json_encode($response);
 
 	exit;
 }	
 
-add_action('wp_ajax_rpress_update_delivery_options', 'rpress_update_delivery_options');
-add_action('wp_ajax_nopriv_rpress_update_delivery_options', 'rpress_update_delivery_options');
+add_action('wp_ajax_rpress_proceed_checkout', 'rpress_proceed_checkout');
+add_action('wp_ajax_nopriv_rpress_proceed_checkout', 'rpress_proceed_checkout');
 
+
+/**
+ * Save order type in session 
+ *
+ * @since       1.0.4
+ * @param       string | Delivery Type
+ * @param 			string | Delivery Time
+ * @return      array | session array for delivery type and delivery time
+ */
+function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
+	if( session_id() == '' || ! isset($_SESSION) ) :
+  	//session isn't started
+  	session_start();
+	endif;
+
+	$_SESSION['delivery_type'] = $delivery_type;
+  $_SESSION['delivery_time'] = $delivery_time;
+}
 
 /**
  * Show delivery options in the cart 
@@ -886,6 +922,13 @@ function edit_posts_orderby($orderby_statement) {
   return $orderby_statement;
 }
 
+/**
+ * Get Delivery type
+ *
+ * @since       1.0.4
+ * @param       Int | Payment_id
+ * @return      string | Delivery type string
+ */
 function rpress_get_delivery_type( $payment_id ) {
 	if( $payment_id  ) {
 		$delivery_type = get_post_meta( $payment_id, '_rpress_delivery_type', true );
@@ -897,3 +940,65 @@ function rpress_get_delivery_type( $payment_id ) {
 		}
 	}
 }
+
+/**
+ * Get Addon items in the admin
+ *
+ * @since       1.0.6
+ * @param       Int | Item id
+ * @return      array | addon items array
+ */
+function rpress_get_admin_addon_items() {
+	$item_id = isset($_POST['fooditem_id']) ? $_POST['fooditem_id'] : '';
+	if( $item_id ) {
+		$terms = getFooditemCategoryById($item_id);
+
+		if( is_array($terms) ) {
+			$html = '';
+
+			$parent_ids = array();
+			$child_ids = array();
+
+			foreach( $terms as $term ) {
+				if( $term->parent == 0 ) {
+    			$parent_id = $term->term_id;
+    			array_push($parent_ids, $parent_id);
+    		}
+    		else {
+    			$child_id = $term->term_id;;
+    			array_push( $child_ids, $child_id );
+    		}
+			}
+		}
+
+		if( is_array( $parent_ids ) && !empty($parent_ids) ) {
+			
+			//$html .= '<select class="addon-items-list" name="rpress-payment-details-fooditems[0][addon_items][]">';
+
+			foreach( $parent_ids as $parent_id ) {
+				$term_data = get_term_by('id', $parent_id, 'addon_category');
+				$children = get_term_children( $term_data->term_id, 'addon_category' );
+
+				if( is_array($children) && !empty($children) ) {
+					foreach( $children as $children_data ) {
+						if( in_array($children_data, $child_ids) ) {
+							$term_data = get_term_by('id', $children_data, 'addon_category');
+							$t_id = $children_data;
+							$term_meta = get_option( "taxonomy_term_$t_id" );
+							$term_price = !empty($term_meta['price']) ? $term_meta['price'] : '';
+							$html .= '<option value="'.$term_data->slug.'">'.$term_data->name.'('.rpress_currency_filter( rpress_format_amount( $term_price ) ).')</option>';
+						}
+					}
+				}
+			}
+			//$html .= '</select>';
+		}
+		echo $html;
+	}
+	exit;
+}
+
+add_action('wp_ajax_rpress_get_admin_addon_items', 'rpress_get_admin_addon_items');
+
+
+

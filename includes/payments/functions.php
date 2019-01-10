@@ -406,7 +406,7 @@ function rpress_delete_purchase( $payment_id = 0, $update_customer = true, $dele
  * when refunding or deleting a purchase
  *
  * @since 1.0.0.1
- * @param int $fooditem_id Download (Post) ID
+ * @param int $fooditem_id (Post) ID
  * @param int $payment_id Payment ID
  * @return void
  */

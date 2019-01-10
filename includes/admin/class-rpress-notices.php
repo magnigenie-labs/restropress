@@ -143,7 +143,7 @@ class RPRESS_Notices {
 						$notices['updated']['rpress-payment-deleted'] = __( 'The payment has been deleted.', 'restro-press' );
 						break;
 					case 'email_sent' :
-						$notices['updated']['rpress-payment-sent'] = __( 'The purchase receipt has been resent.', 'restro-press' );
+						$notices['updated']['rpress-payment-sent'] = __( 'The order receipt has been resent.', 'restro-press' );
 						break;
 					case 'refreshed-reports' :
 						$notices['updated']['rpress-refreshed-reports'] = __( 'The reports have been refreshed.', 'restro-press' );
@@ -182,7 +182,7 @@ class RPRESS_Notices {
 						$notices['updated']['rpress-note-added'] = __( 'The payment note has been added successfully.', 'restro-press' );
 						break;
 					case 'payment-updated' :
-						$notices['updated']['rpress-payment-updated'] = __( 'The payment has been successfully updated.', 'restro-press' );
+						$notices['updated']['rpress-payment-updated'] = __( 'The order has been successfully updated.', 'restro-press' );
 						break;
 				}
 			}

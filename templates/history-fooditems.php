@@ -7,7 +7,7 @@ endif;
 /**
  * This template is used to display the fooditem history of the current user.
  */
-$purchases = rpress_get_users_purchases( get_current_user_id(), 20, true, 'any' );
+$purchases = rpress_get_users_orders( get_current_user_id(), 20, true, 'any' );
 if ( $purchases ) :
 	do_action( 'rpress_before_fooditem_history' ); ?>
 	<table id="rpress_user_history" class="rpress-table">

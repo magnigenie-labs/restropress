@@ -343,7 +343,7 @@ function rpress_customers_view( $customer ) {
 			<li>
 				<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&customer=' . $customer->id ); ?>">
 					<span class="dashicons dashicons-cart"></span>
-					<?php printf( _n( '%d Completed Sale', '%d Completed Sales', $customer->purchase_count, 'restro-press' ), $customer->purchase_count ); ?>
+					<?php printf( _n( '%d Completed Order', '%d Completed Sales', $customer->purchase_count, 'restro-press' ), $customer->purchase_count ); ?>
 				</a>
 			</li>
 			<li>
@@ -427,7 +427,7 @@ function rpress_customers_view( $customer ) {
 			</tbody>
 		</table>
 
-		<h3><?php _e( 'Recent Payments', 'restro-press' ); ?></h3>
+		<h3><?php _e( 'Recent Orders', 'restro-press' ); ?></h3>
 		<?php
 			$payment_ids = explode( ',', $customer->payment_ids );
 			$payments    = rpress_get_payments( array( 'post__in' => $payment_ids ) );
@@ -465,14 +465,14 @@ function rpress_customers_view( $customer ) {
 			</tbody>
 		</table>
 
-		<h3><?php printf( __( 'Purchased %s', 'restro-press' ), rpress_get_label_plural() ); ?></h3>
+		<h3><?php printf( __( 'Ordered Item', 'restro-press' ), rpress_get_label_plural() ); ?></h3>
 		<?php
-			$fooditems = rpress_get_users_purchased_products( $customer->email );
+			$fooditems = rpress_get_users_ordered_products( $customer->email );
 		?>
 		<table class="wp-list-table widefat striped fooditems">
 			<thead>
 				<tr>
-					<th><?php echo rpress_get_label_singular(); ?></th>
+					<th>Item</th>
 					<th width="120px"><?php _e( 'Actions', 'restro-press' ); ?></th>
 				</tr>
 			</thead>
@@ -483,7 +483,7 @@ function rpress_customers_view( $customer ) {
 							<td><?php echo $fooditem->post_title; ?></td>
 							<td>
 								<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $fooditem->ID ) ); ?>">
-									<?php printf( __( 'View %s', 'restro-press' ), rpress_get_label_singular() ); ?>
+									<?php _e('View Item', 'restro-press'); ?>
 								</a>
 							</td>
 						</tr>

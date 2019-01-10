@@ -595,6 +595,7 @@ jQuery(document).ready(function ($) {
 
 				var Name = $('#rpress-purchased-files div.row:last').find('select').attr('name');
 				
+				
 
 				clone.find( '.fooditem span' ).html( '<a href="post.php?post=' + fooditem_id + '&action=edit"></a>' );
 				clone.find( '.fooditem span a' ).text( fooditem_title );
@@ -635,6 +636,15 @@ jQuery(document).ready(function ($) {
 				// Flag the RestroPress section as changed
 				$('#rpress-payment-fooditems-changed').val(1);
 
+				setTimeout(function(){ 
+					var data = rpress_get_addon_items_list(fooditem_id);
+					console.log(data);
+				 }, 2000);
+
+				
+				//Ajax callback to get addon item if they are available
+				
+				
 				clone.find('select').chosen();
 				clone.find('div.chosen-container').last().remove();
 				clone.find('select.addon-items-list').val('').trigger('chosen:updated');
@@ -642,6 +652,8 @@ jQuery(document).ready(function ($) {
 				$(clone).insertAfter( '#rpress-purchased-files div.row:last' );
 				$( '.rpress-order-payment-recalc-totals' ).show();
 				$( '.rpress-add-fooditem-field' ).val('');
+				
+
 			});
 		},
 
@@ -2172,6 +2184,29 @@ var rpressLegendFormatterEarnings = function (label, series) {
 	return item;
 }
 
+
+//get Addon item for a food item in the admin 
+function rpress_get_addon_items_list(fooditem_id) {
+	if( parseInt(fooditem_id) > 0 ) {
+		var Options;
+
+		var postData = {
+			action : 'rpress_get_admin_addon_items',
+			fooditem_id: fooditem_id
+		};
+
+		$.ajax({
+    	type: "POST",
+      data: postData,
+			url: ajaxurl,
+      success: function (response) {
+      	$(response).insertAfter( '#rpress-ajax-options' );
+      },
+      complete: function () { }
+    });
+	}
+}
+
 function rpress_attach_tooltips( selector ) {
 	// Tooltips
 	selector.tooltip({
@@ -2196,7 +2231,7 @@ function rpress_attach_tooltips( selector ) {
 
 
 jQuery(function($) {
-	if( rpress_vars.is_admin == 1 ) {
+	if( rpress_vars.is_admin == 1 && rpress_vars.enable_order_notification == 1 ) {
 		if ( typeof Notification !== "undefined" ) {
 			Notification.requestPermission().then(function (result) {
     		if (result === 'denied') {

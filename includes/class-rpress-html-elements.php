@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class RPRESS_HTML_Elements {
 
 	/**
-	 * Renders an HTML Dropdown of all the Products (Downloads)
+	 * Renders an HTML Dropdown of all the Products
 	 *
 	 * @since 1.0
 	 * @param array $args Arguments for the dropdown

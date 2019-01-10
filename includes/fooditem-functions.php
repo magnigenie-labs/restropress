@@ -84,7 +84,7 @@ function rpress_get_fooditem_by( $field = '', $value = '' ) {
  * @since 1.0
  * @since 2.9 - Return an RPRESS_Fooditem object.
  *
- * @param int $fooditem_id Download ID.
+ * @param int $fooditem_id Item ID.
  *
  * @return RPRESS_Fooditem $fooditem Entire fooditem data.
  */
@@ -494,7 +494,7 @@ function rpress_price_range( $fooditem_id = 0 ) {
  * Checks to see if multiple price options can be purchased at once
  *
  * @since 1.0.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id Item ID
  * @return bool
  */
 function rpress_single_price_option_mode( $fooditem_id = 0 ) {
@@ -518,7 +518,7 @@ function rpress_single_price_option_mode( $fooditem_id = 0 ) {
  * Get product types
  *
  * @since 1.0
- * @return array $types Download types
+ * @return array $types Item types
  */
 function rpress_get_fooditem_types() {
 
@@ -531,11 +531,11 @@ function rpress_get_fooditem_types() {
 }
 
 /**
- * Gets the Download type, either default or "bundled"
+ * Gets the Item type
  *
  * @since  1.0.0
- * @param int $fooditem_id Download ID
- * @return string $type Download type
+ * @param int $fooditem_id Item ID
+ * @return string $type Item type
  */
 function rpress_get_fooditem_type( $fooditem_id = 0 ) {
 	$fooditem = new RPRESS_Fooditem( $fooditem_id );
@@ -546,7 +546,7 @@ function rpress_get_fooditem_type( $fooditem_id = 0 ) {
  * Determines if a product is a bundle
  *
  * @since  1.0.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id Item ID
  * @return bool
  */
 function rpress_is_bundled_product( $fooditem_id = 0 ) {
@@ -559,7 +559,7 @@ function rpress_is_bundled_product( $fooditem_id = 0 ) {
  * Retrieves the product IDs of bundled products
  *
  * @since  1.0.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id Item ID
  * @return array $products Products in the bundle
  *
  * @since 1.0
@@ -578,7 +578,7 @@ function rpress_get_bundled_products( $fooditem_id = 0, $price_id = null ) {
  * Returns the total earnings for a fooditem.
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id Item ID
  * @return int $earnings Earnings for a certain fooditem
  */
 function rpress_get_fooditem_earnings_stats( $fooditem_id = 0 ) {
@@ -590,7 +590,7 @@ function rpress_get_fooditem_earnings_stats( $fooditem_id = 0 ) {
  * Return the sales number for a fooditem.
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id Item ID
  * @return int $sales Amount of sales for a certain fooditem
  */
 function rpress_get_fooditem_sales_stats( $fooditem_id = 0 ) {
@@ -605,7 +605,7 @@ function rpress_get_fooditem_sales_stats( $fooditem_id = 0 ) {
  *
  * @since 1.0
  * @global $rpress_logs
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id Item ID
  * @param int $payment_id Payment ID
  * @param bool|int $price_id Price ID, if any
  * @param string|null $sale_date The date of the sale
@@ -630,13 +630,13 @@ function rpress_record_sale_in_log( $fooditem_id = 0, $payment_id, $price_id = f
 }
 
 /**
- * Record Download In Log
+ * Record Order In Log
  *
  * Stores a log entry for a file fooditem.
  *
  * @since 1.0
  * @global $rpress_logs
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id Item ID
  * @param int $file_id ID of the file fooditemed
  * @param array $user_info User information (Deprecated)
  * @param string $ip IP Address
@@ -673,7 +673,7 @@ function rpress_record_fooditem_in_log( $fooditem_id = 0, $file_id, $user_info, 
  * (Does not run when a fooditem is trashed)
  *
  * @since  1.0.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @return void
  */
 function rpress_remove_fooditem_logs_on_delete( $fooditem_id = 0 ) {
@@ -692,7 +692,7 @@ add_action( 'delete_post', 'rpress_remove_fooditem_logs_on_delete' );
  * Increases the sale count of a fooditem.
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $quantity Quantity to increase purchase count by
  * @return bool|int
  */
@@ -707,7 +707,7 @@ function rpress_increase_purchase_count( $fooditem_id = 0, $quantity = 1 ) {
  * refunded.
  *
  * @since 1.0.0.1
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @return bool|int
  */
 function rpress_decrease_purchase_count( $fooditem_id = 0, $quantity = 1 ) {
@@ -719,7 +719,7 @@ function rpress_decrease_purchase_count( $fooditem_id = 0, $quantity = 1 ) {
  * Increases the total earnings of a fooditem.
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $amount Earnings
  * @return bool|int
  */
@@ -732,7 +732,7 @@ function rpress_increase_earnings( $fooditem_id = 0, $amount ) {
  * Decreases the total earnings of a fooditem. Primarily for when a purchase is refunded.
  *
  * @since 1.0.0.1
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $amount Earnings
  * @return bool|int
  */
@@ -745,7 +745,7 @@ function rpress_decrease_earnings( $fooditem_id = 0, $amount ) {
  * Retrieves the average monthly earnings for a specific fooditem
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @return float $earnings Average monthly earnings
  */
 function rpress_get_average_monthly_fooditem_earnings( $fooditem_id = 0 ) {
@@ -767,7 +767,7 @@ function rpress_get_average_monthly_fooditem_earnings( $fooditem_id = 0 ) {
  * Retrieves the average monthly sales for a specific fooditem
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @return float $sales Average monthly sales
  */
 function rpress_get_average_monthly_fooditem_sales( $fooditem_id = 0 ) {
@@ -790,9 +790,9 @@ function rpress_get_average_monthly_fooditem_sales( $fooditem_id = 0 ) {
  * Can retrieve files specific to price ID
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $variable_price_id Variable pricing option ID
- * @return array $files Download files
+ * @return array $files  files
  */
 function rpress_get_fooditem_files( $fooditem_id = 0, $variable_price_id = null ) {
 	$fooditem = new RPRESS_Fooditem( $fooditem_id );
@@ -822,7 +822,7 @@ function rpress_get_file_name( $file = array() ) {
  * Gets the number of times a file has been fooditemed for a specific purchase
  *
  * @since  1.0.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $file_key File key
  * @param int $payment_id The ID number of the associated payment
  * @return int Number of times the file has been fooditemed for the purchase
@@ -853,7 +853,7 @@ function rpress_get_file_fooditemed_count( $fooditem_id = 0, $file_key = 0, $pay
  * can be fooditemed.
  *
  * @since  1.0.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @return int $limit File fooditem limit
  */
 function rpress_get_file_fooditem_limit( $fooditem_id = 0 ) {
@@ -867,7 +867,7 @@ function rpress_get_file_fooditem_limit( $fooditem_id = 0 ) {
  * The override allows the main file fooditem limit to be bypassed
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $payment_id Payment ID
  * @return int $limit_override The new limit
 */
@@ -887,7 +887,7 @@ function rpress_get_file_fooditem_limit_override( $fooditem_id = 0, $payment_id 
  * If the override is already set, then it is simply incremented by 1
  *
  * @since 1.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $payment_id Payment ID
  * @return void
  */
@@ -912,7 +912,7 @@ function rpress_set_file_fooditem_limit_override( $fooditem_id = 0, $payment_id 
  *
  * @since  1.0.0
  * @uses RPRESS_Logging::get_log_count()
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param int $payment_id Payment ID
  * @param int $file_id File ID
  * @param int $price_id Price ID
@@ -966,7 +966,7 @@ function rpress_is_file_at_fooditem_limit( $fooditem_id = 0, $payment_id = 0, $f
  * Gets the Price ID that can fooditem a file
  *
  * @since 1.0.9
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @param string $file_key File Key
  * @return string - the price ID if restricted, "all" otherwise
  */
@@ -976,7 +976,7 @@ function rpress_get_file_price_condition( $fooditem_id = 0, $file_key ) {
 }
 
 /**
- * Get Download File Url
+ * Get Item Url
  * Constructs a secure file fooditem url for a specific file.
  *
  * @since 1.0
@@ -1045,7 +1045,7 @@ function rpress_get_fooditem_file_url( $key, $email, $filekey, $fooditem_id = 0,
  * Get product notes
  *
  * @since  1.0.0
- * @param int $fooditem_id Download ID
+ * @param int $fooditem_id ID
  * @return string $notes Product notes
  */
 function rpress_get_product_notes( $fooditem_id = 0 ) {
@@ -1061,7 +1061,7 @@ function rpress_get_product_notes( $fooditem_id = 0 ) {
  * @author RestroPress
  * @param int $fooditem_id
  *
- * @return mixed|void Download SKU
+ * @return mixed|void SKU
  */
 function rpress_get_fooditem_sku( $fooditem_id = 0 ) {
 	$fooditem = new RPRESS_Fooditem( $fooditem_id );
@@ -1069,7 +1069,7 @@ function rpress_get_fooditem_sku( $fooditem_id = 0 ) {
 }
 
 /**
- * get the Download button behavior, either add to cart or direct
+ * get the button behavior, either add to cart or direct
  *
  * @since  1.0.0
  *
@@ -1094,7 +1094,7 @@ function rpress_fooditem_quantities_disabled( $fooditem_id = 0 ) {
 }
 
 /**
- * Get the file Download method
+ * Get the  method
  *
  * @since  1.0.0
  * @return string The method to use for file fooditems

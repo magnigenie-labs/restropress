@@ -263,6 +263,11 @@ function rpress_purchase_form_validate_fields() {
 		'cc_info'          => rpress_purchase_form_validate_cc()    // Credit card info
 	);
 
+	// Validate of min order amount is enabled and the cart contains the order amount
+	if ( '1' === rpress_get_option( 'allow_minimum_order', false ) ) {
+		rpress_check_minimum_order_amount();
+	}
+
 	// Validate agree to terms
 	if ( '1' === rpress_get_option( 'show_agree_to_terms', false ) ) {
 		rpress_purchase_form_validate_agree_to_terms();
@@ -1193,3 +1198,21 @@ function rpress_process_straight_to_gateway( $data ) {
 	rpress_send_to_gateway( $purchase_data['gateway'], $purchase_data );
 }
 add_action( 'rpress_straight_to_gateway', 'rpress_process_straight_to_gateway' );
+
+
+function rpress_check_minimum_order_amount() {
+	$enable_minimum_order = rpress_get_option('allow_minimum_order');
+
+	if( $enable_minimum_order ) :
+		$minimum_order_price = rpress_get_option('minimum_order_price');
+		$minimum_price_error = rpress_get_option('minimum_order_error');
+		$minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price ) );
+		$minimum_price_error = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error);
+
+		if( rpress_get_cart_total() < $minimum_order_price ) :
+			rpress_set_error( 'rpress_checkout_error', $minimum_price_error );
+		endif;
+
+	endif;
+
+}

@@ -944,6 +944,10 @@ form#fooditem-update-details h6 {
 .qty_plus_font{
      font-weight: bold !important;
 }
+.rpress-min-price-error {
+	line-height: 20px;
+	font-size: 14px;
+}
 
 /*=========================css for responsive=====================
 ===================================================================*/

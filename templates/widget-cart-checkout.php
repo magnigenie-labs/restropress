@@ -7,6 +7,4 @@
 <li class="delivery-items-options">
 	<?php echo get_delivery_options(); ?>
 </li>
-
-
-<li class="cart_item rpress_checkout"><a href="<?php echo rpress_get_checkout_uri(); ?>"><?php _e( 'Confirm Order', 'restro-press' ); ?></a></li>
+<li class="cart_item rpress_checkout"><a data-url="<?php echo rpress_get_checkout_uri(); ?>" href="#"><?php _e( 'Confirm Order', 'restro-press' ); ?></a></li>

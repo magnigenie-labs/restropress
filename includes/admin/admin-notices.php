@@ -43,15 +43,15 @@ function rpress_admin_messages() {
 	}
 
 	if ( isset( $_GET['rpress-message'] ) && 'payment_deleted' == $_GET['rpress-message'] && current_user_can( 'view_shop_reports' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-payment-deleted', __( 'The payment has been deleted.', 'rpress' ), 'updated' );
+		add_settings_error( 'rpress-notices', 'rpress-payment-deleted', __( 'The order has been deleted.', 'rpress' ), 'updated' );
 	}
 
 	if ( isset( $_GET['rpress-message'] ) && 'email_sent' == $_GET['rpress-message'] && current_user_can( 'view_shop_reports' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-payment-sent', __( 'The purchase receipt has been resent.', 'rpress' ), 'updated' );
+		add_settings_error( 'rpress-notices', 'rpress-payment-sent', __( 'The order receipt has been resent.', 'rpress' ), 'updated' );
     }
 
     if ( isset( $_GET['rpress-message'] ) && 'payment-note-deleted' == $_GET['rpress-message'] && current_user_can( 'view_shop_reports' ) ) {
-        add_settings_error( 'rpress-notices', 'rpress-payment-note-deleted', __( 'The payment note has been deleted.', 'rpress' ), 'updated' );
+        add_settings_error( 'rpress-notices', 'rpress-payment-note-deleted', __( 'The order note has been deleted.', 'rpress' ), 'updated' );
     }
 
 	if ( isset( $_GET['page'] ) && 'rpress-payment-history' == $_GET['page'] && current_user_can( 'view_shop_reports' ) && rpress_is_test_mode() ) {
@@ -70,27 +70,11 @@ function rpress_admin_messages() {
 	}
 
 	if ( isset( $_GET['rpress-message'] ) && 'note-added' == $_GET['rpress-message'] && current_user_can( 'edit_shop_payments' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-note-added', __( 'The payment note has been added successfully.', 'rpress' ), 'updated' );
+		add_settings_error( 'rpress-notices', 'rpress-note-added', __( 'The order note has been added successfully.', 'rpress' ), 'updated' );
 	}
 
 	if ( isset( $_GET['rpress-message'] ) && 'payment-updated' == $_GET['rpress-message'] && current_user_can( 'edit_shop_payments' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-payment-updated', __( 'The payment has been successfully updated.', 'rpress' ), 'updated' );
-	}
-
-	if ( isset( $_GET['rpress-message'] ) && 'api-key-generated' == $_GET['rpress-message'] && current_user_can( 'manage_shop_settings' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-api-key-generated', __( 'API keys successfully generated.', 'rpress' ), 'updated' );
-	}
-
-	if ( isset( $_GET['rpress-message'] ) && 'api-key-failed' == $_GET['rpress-message'] && current_user_can( 'manage_shop_settings' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-api-key-failed', __( 'The specified user already has API keys or the specified user does not exist..', 'rpress' ), 'error' );
-	}
-
-	if ( isset( $_GET['rpress-message'] ) && 'api-key-regenerated' == $_GET['rpress-message'] && current_user_can( 'manage_shop_settings' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-api-key-regenerated', __( 'API keys successfully regenerated.', 'rpress' ), 'updated' );
-	}
-
-	if ( isset( $_GET['rpress-message'] ) && 'api-key-revoked' == $_GET['rpress-message'] && current_user_can( 'manage_shop_settings' ) ) {
-		add_settings_error( 'rpress-notices', 'rpress-api-key-revoked', __( 'API keys successfully revoked.', 'rpress' ), 'updated' );
+		add_settings_error( 'rpress-notices', 'rpress-payment-updated', __( 'The order has been successfully updated.', 'rpress' ), 'updated' );
 	}
 
     if( ! rpress_htaccess_exists() && ! get_user_meta( get_current_user_id(), '_rpress_htaccess_missing_dismissed', true ) && current_user_can( 'manage_shop_settings' ) ) {

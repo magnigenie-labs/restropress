@@ -874,7 +874,7 @@ function rpress_add_body_classes( $class ) {
 	}
 
 	if( rpress_is_order_history_page() ) {
-		$classes[] = 'rpress-order-history';
+		$classes[] = 'rpress-payment-history';
 		$classes[] = 'rpress-page';
 	}
 

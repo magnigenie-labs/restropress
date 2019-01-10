@@ -144,7 +144,7 @@ function rpress_run_install() {
 		// Order History (History) Page
 		$history = wp_insert_post(
 			array(
-				'post_title'     => __( 'Order History', 'restro-press' ),
+				'post_title'     => __( 'Orders', 'restro-press' ),
 				'post_content'   => '[order_history]',
 				'post_status'    => 'publish',
 				'post_author'    => 1,
