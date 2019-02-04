@@ -269,13 +269,15 @@ jQuery(function($) {
 	});
 
 	$('body').on('click', '.cart_item.rpress_checkout a', function(e) {
-    e.preventDefault();
-    var href = $(this).attr('data-url');
+    var CheckoutUrl = rpress_scripts.checkout_page;
+
     var deliveryOption = $('div.delivery-opts input[name=delivery_opt]:checked').val();
     var deliveryHrs = $('#rpress-allowed-hours').val();
+    var ErrorHtml;
 
     var action = 'rpress_proceed_checkout';
-
+    var prevText = $(this).text() ;
+    var $this = $(this);
     var data = {
       action       : action,
       deliveryOpt  : deliveryOption,
@@ -287,16 +289,29 @@ jQuery(function($) {
       data: data,
       dataType: "json",
       url: rpress_scripts.ajaxurl,
+      beforeSend : function(){
+       $this.text('Please Wait ..')
+      },
       xhrFields: {
         withCredentials: true
       },
       success : function(response) {
-        console.log(response);
+        $this.text(prevText)
         if( response.status == 'error' ) {
-          $( "<p class='rpress-min-price-error'>"+response.minimum_price_error+"</p>" ).insertAfter( "ul.rpress-cart" );
+
+          ErrorHtml = '<a id="RPressError" href="#RPressMinOrder"></a>';
+          ErrorHtml += '<div class="RPressMinOrderWrap">';
+          ErrorHtml += '<p id="RPressMinOrder">'+ response.minimum_price_error +'';
+          ErrorHtml += '<a href="javascript:void(0)" title="Close" id="rpress-err-close-button">&times;</a>';
+          ErrorHtml += '</p></div>';    
+             
+          document.body.insertAdjacentHTML('beforeend' , ErrorHtml );
+          $("#RPressError").fancybox().trigger('click');
+          
         }
         else {
-          window.location.replace(href);
+          $this.attr('disabled');
+          window.location.href = CheckoutUrl;
         }
       }
     });
@@ -333,7 +348,9 @@ jQuery(function($) {
     }, 500);
   }
 
-
+  $(document).on('click' , '#rpress-err-close-button', function(){
+     $.fancybox.close();
+  })
   //jQuery live search
   $('.rpress_fooditems_list').find('.rpress-title-holder a').each(function(){
     $(this).attr('data-search-term', $(this).text().toLowerCase());
@@ -373,17 +390,17 @@ jQuery(function($) {
     $('div.rpress-filter-wrapper').toggleClass('active');
   });
 
-  var HeaderHeight = $('#masthead').outerHeight();
-  var LiveSearch = $(".rpress_fooditems_list").offset().top - HeaderHeight;
+  // var HeaderHeight = $('#masthead').outerHeight();
+  // var LiveSearch = $(".rpress_fooditems_list").offset().top - HeaderHeight;
 
-  $(window).scroll(function() {
-    if( jQuery(window).scrollTop() > LiveSearch ) {
-      $('.rpress_fooditems_list').addClass('sticky-live-search');
-    }
-    else {
-      $('.rpress_fooditems_list').removeClass('sticky-live-search');
-    }
-  });
+  // $(window).scroll(function() {
+  //   if( jQuery(window).scrollTop() > LiveSearch ) {
+  //     $('.rpress_fooditems_list').addClass('sticky-live-search');
+  //   }
+  //   else {
+  //     $('.rpress_fooditems_list').removeClass('sticky-live-search');
+  //   }
+  // });
 
   if( RpressVars.enable_fooditem_popup == '1' ) {
     //Fancbox Show Images
@@ -393,7 +410,5 @@ jQuery(function($) {
       maxWidth: 20
     });
   }
-
-  
 
 });

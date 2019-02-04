@@ -314,6 +314,16 @@ function rpress_register_post_type_statuses() {
 		'show_in_admin_status_list' => true,
 		'label_count'               => _n_noop( 'Refunded <span class="count">(%s)</span>', 'Refunded <span class="count">(%s)</span>', 'restro-press' )
 	) );
+
+	register_post_status( 'paid', array(
+		'label'                     => _x( 'Paid', 'Paid payment status', 'restro-press' ),
+		'public'                    => true,
+		'exclude_from_search'       => false,
+		'show_in_admin_all_list'    => true,
+		'show_in_admin_status_list' => true,
+		'label_count'               => _n_noop( 'Paid <span class="count">(%s)</span>', 'Paid <span class="count">(%s)</span>', 'restro-press' )
+	) );
+		
 	register_post_status( 'failed', array(
 		'label'                     => _x( 'Failed', 'Failed payment status', 'restro-press' ),
 		'public'                    => true,
@@ -364,6 +374,7 @@ function rpress_register_post_type_statuses() {
 		'show_in_admin_status_list' => true,
 		'label_count'               => _n_noop( 'Inactive <span class="count">(%s)</span>', 'Inactive <span class="count">(%s)</span>', 'restro-press' )
 	)  );
+
 }
 add_action( 'init', 'rpress_register_post_type_statuses', 2 );
 

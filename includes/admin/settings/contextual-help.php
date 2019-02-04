@@ -42,7 +42,8 @@ function rpress_settings_contextual_help() {
 		'content'	=>
 			'<p>' . __( 'This screen provides ways to toggle payment gateways on or off, as well as configure gateway-specific settings. Any extra payment gateway extensions you have installed will appear on this page, and can be configured to suit your needs.', 'restro-press' ) . '</p>' .
 			'<p>' . __( '<strong>Test Payment</strong> - This included gateway is great for testing your store, as it requires no payment, and leads straight to product fooditems. However, please remember to turn it off once your site is live!', 'restro-press' ) . '</p>' .
-			'<p>' . __( '<strong>PayPal</strong> - A PayPal payment gateway is included as standard with RestroPress. To test the PayPal gateway, you need a Sandbox account for PayPal and the site must be placed in Test Mode from the General settings tab. Please remember to enter your PayPal account email address in order for payments to get processed.', 'restro-press' ) . '</p>'
+			'<p>' . __( '<strong>PayPal</strong> - A PayPal payment gateway is included as standard with RestroPress. To test the PayPal gateway, you need a Sandbox account for PayPal and the site must be placed in Test Mode from the General settings tab. Please remember to enter your PayPal account email address in order for payments to get processed.', 'restro-press' ) . '</p>'.
+			'<p>'. __( '<strong>Cash On Delivery</strong> Collect payment on delivery')
 	) );
 
 	$screen->add_help_tab( array(

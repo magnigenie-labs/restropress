@@ -335,7 +335,6 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 		$status   = isset( $_GET['status'] )   ? $_GET['status']                   : array( 'active', 'inactive' );
 		$meta_key = isset( $_GET['meta_key'] ) ? $_GET['meta_key']                 : null;
 		$search   = isset( $_GET['s'] )        ? sanitize_text_field( $_GET['s'] ) : null;
-
 		$args = array(
 			'posts_per_page' => $per_page,
 			'paged'          => isset( $_GET['paged'] ) ? $_GET['paged'] : 1,

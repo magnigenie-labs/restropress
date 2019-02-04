@@ -40,8 +40,10 @@ function rpress_checkout_form() {
 					do_action( 'rpress_checkout_form_top' );
 
 					if ( rpress_is_ajax_disabled() && ! empty( $_REQUEST['payment-mode'] ) ) {
+
 						do_action( 'rpress_purchase_form' );
 					} elseif ( rpress_show_gateways() ) {
+						
 						do_action( 'rpress_payment_mode_select'  );
 					} else {
 						do_action( 'rpress_purchase_form' );
@@ -155,7 +157,6 @@ add_action( 'rpress_purchase_form', 'rpress_show_purchase_form' );
  * @return void
  */
 function rpress_user_info_fields() {
-
 	$customer = RPRESS()->session->get( 'customer' );
 	$customer = wp_parse_args( $customer, array( 'first_name' => '', 'last_name' => '', 'email' => '' ) );
 
@@ -171,7 +172,6 @@ function rpress_user_info_fields() {
 
 		}
 	}
-
 	$customer = array_map( 'sanitize_text_field', $customer );
 	?>
 	<fieldset id="rpress_checkout_user_info">
@@ -211,6 +211,7 @@ function rpress_user_info_fields() {
 		<?php do_action( 'rpress_purchase_form_user_info' ); ?>
 		<?php do_action( 'rpress_purchase_form_user_info_fields' ); ?>
 	</fieldset>
+	
 	<?php
 }
 add_action( 'rpress_purchase_form_after_user_info', 'rpress_user_info_fields' );

@@ -78,6 +78,14 @@ function rpress_enque_scripts() {
 	//Add Sticky bar
 	wp_enqueue_script('rpress-sticky-sidebar', plugins_url( 'assets/js/rpress-sticky-sidebar.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
 
+	//Add Google Map js 
+	if( rpress_get_option('enable_google_map_api') 
+		&& rpress_is_checkout() && rpress_get_option('map_api_key') !== '' ) :
+		wp_enqueue_script('rpress-google-address', plugins_url( 'assets/js/rpress-google-address.js', RPRESS_PLUGIN_FILE ), array(), '1.0.1', true );
+
+		wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
+	endif;
+
 	//Add custom js script
 	wp_enqueue_script('rpress-custom', plugins_url( 'assets/js/rpress-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-sticky-sidebar' ), '1.0.1', true );
 
@@ -100,6 +108,7 @@ function rpress_enque_scripts() {
   	'added_into_cart' 	=> __( 'Added Into Cart', 'restro-press' ),
   	'estimated_tax'		=> __( 'Estimated Tax', 'restro-press'),
   	'total_text'		=> __( 'Subtotal', 'restro-press'),
+  	'google_api'			=> rpress_get_option('map_api_key'),
   	'enable_fooditem_popup' => $fooditem_popup_enable,
   ));
 }
@@ -167,7 +176,6 @@ function addon_category_taxonomy_custom_fields($tag) {
 <?php
 }
 
-
 /**
  * Update taxonomy meta data
  *
@@ -189,7 +197,6 @@ function save_addon_category_custom_fields( $term_id ) {
     update_option( "taxonomy_term_$t_id", $term_meta );  
   }  
 }
-
 
 // Add the fields to the "addon_category" taxonomy, using our callback function  
 add_action( 'addon_category_edit_form_fields', 'addon_category_taxonomy_custom_fields', 10, 2 ); 
@@ -219,7 +226,6 @@ function getCartItemsByKey($key) {
 	}
 	return $cart_items_arr;
 }
-
 /**
  * Get Cart Items Price 
  *
@@ -231,18 +237,14 @@ function getCartItemsByPrice($key) {
 	$cart_items_price = array();
 	if( $key !== '' ) {
 		$cart_items = rpress_get_cart_contents();
-
 		if( is_array($cart_items) && !empty($cart_items) ) {
 			$items_in_cart = $cart_items[$key];
-
 			if( is_array($items_in_cart) ) {
 				$item_price = rpress_get_fooditem_price( $items_in_cart['id'] );
 				if( $items_in_cart['quantity'] > 0 ) {
 					$item_price = $item_price * $items_in_cart['quantity'];
 				}
 				array_push($cart_items_price, $item_price);
-
-
 				if( isset( $items_in_cart['addon_items'] ) ) {
 					foreach( $items_in_cart['addon_items'] as $key => $item_list ) {
 						array_push($cart_items_price, $item_list['price']);
@@ -542,7 +544,7 @@ add_action('wp_ajax_nopriv_rpress_proceed_checkout', 'rpress_proceed_checkout');
  * @since       1.0.4
  * @param       string | Delivery Type
  * @param 			string | Delivery Time
- * @return      array | session array for delivery type and delivery time
+ * @return      array  | Session array for delivery type and delivery time
  */
 function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
 	if( session_id() == '' || ! isset($_SESSION) ) :
@@ -609,6 +611,7 @@ function rpress_show_admin_notification($payment_id, $payment_data) {
 	$url_order = admin_url('post.php?post=' . absint($payment_id) . '&action=edit');
 
 	$customer_email = isset($payment_data['user_email']) ? $payment_data['user_email'] : '';
+	$username = '';
 
 	if( !empty($customer_email) ) {
 		$customer_user = get_user_by('email', $customer_email);
@@ -752,23 +755,73 @@ function update_notification($id,$user_notified) {
 
 
 function rpress_display_checkout_fields() {
+	$enable_phone = rpress_get_option('enable_phone');
+	$enable_flat = rpress_get_option('enable_door_flat');
+	$enable_landmark = rpress_get_option('enable_landmark');
+	$google_map_opts = rpress_get_option('enable_google_map_api');
 ?>
-	<p id="rpress-phone-wrap">
-  	<label class="rpress-label" for="rpress-phone"><?php _e('Phone Number', 'restro-press'); ?></label>
-    <span class="rpress-description">
-    	<?php _e('Enter your phone number so we can get in touch with you.', 'restro-press'); ?>
-    </span>
-    <input class="rpress-input" type="text" name="rpress_phone" id="rpress-phone" placeholder="Phone Number" />
-    </p>
 
+	<?php if($enable_phone): ?>
+		<p id="rpress-phone-wrap">
+  		<label class="rpress-label" for="rpress-phone"><?php _e('Phone Number', 'restro-press'); ?></label>
+    	<span class="rpress-description">
+    		<?php _e('Enter your phone number so we can get in touch with you.', 'restro-press'); ?>
+    	</span>
+    	<input class="rpress-input" type="text" name="rpress_phone" id="rpress-phone" placeholder="Phone Number" />
+    </p>
+   <?php endif; ?>
+
+  <?php if($google_map_opts) :  ?>
+  	
+  	<p id="rpress-google-address">
+  		<label class="rpress-address" for="rpress-address"><?php _e('Address', 'restro-press') ?></label>
+    	<span class="rpress-description">
+    		<?php _e('Enter Your Address', 'restro-press'); ?> 
+    	</span>
+    	<input class="rpress-input" id="autocomplete" name="address" placeholder="Enter your address"
+              type="text"/>
+  	</p>
+
+  	<p id="rpress-street-address">
+  		<label class="rpress-street-address" for="rpress-street-address"><?php _e('Street Address', 'restro-press') ?></label>
+    	<input class="rpress-input rpress-street-number" type="text" name="route" id="route"  />
+  	</p>
+
+  	<p id="rpress-city">
+  		<label class="rpress-city" for="rpress-city"><?php _e('City', 'restro-press') ?></label>
+    	<input class="rpress-input rpress-street-number" autocomplete="off" type="text" name="locality" id="locality"  />
+  	</p>
+
+  	<p id="rpress-state">
+  		<label class="rpress-state" for="rpress-state"><?php _e('State', 'restro-press') ?></label>
+    	<input class="rpress-input rpress-street-number" autocomplete="off" type="text" name="administrative_area_level_1" id="administrative_area_level_1"  />
+  	</p>
+
+  	<p id="rpress-zip">
+  		<label class="rpress-zip" for="rpress-zip"><?php _e('Zip code', 'restro-press') ?></label>
+    	<input class="rpress-input rpress-zip" autocomplete="off" type="text" name="postal_code" id="postal_code"  />
+  	</p>
+
+  	<p id="rpress-country">
+  		<label class="rpress-country" for="rpress-country"><?php _e('Country', 'restro-press') ?></label>
+    	<input class="rpress-input rpress-country" autocomplete="off" type="text" name="country" id="country"  />
+    	<input type="hidden" id="rpress_geo_address" name="rpress_geo_address" value="">
+  	</p>
+
+  <?php endif; ?>
+  
+
+  <?php if($enable_flat) : ?>
     <p id="rpress-door-flat">
-  	<label class="rpress-flat" for="rpress-flat"><?php _e('Door/Flat No.', 'restro-press'); ?></label>
-    <span class="rpress-description">
-    	<?php _e('Enter your Door/Flat number', 'restro-press'); ?> 
-    </span>
-    <input class="rpress-input" type="text" name="rpress_door_flat" id="rpress-door-flat" placeholder="Door/Flat Number" />
+  		<label class="rpress-flat" for="rpress-flat"><?php _e('Door/Flat No.', 'restro-press'); ?></label>
+    	<span class="rpress-description">
+    		<?php _e('Enter your Door/Flat number', 'restro-press'); ?> 
+    	</span>
+    	<input class="rpress-input" type="text" name="rpress_door_flat" id="rpress-door-flat" placeholder="Door/Flat Number" />
     </p>
+  <?php endif; ?>
 
+  <?php if($enable_landmark): ?>
     <p id="rpress-landmark">
   	<label class="rpress-landmark" for="rpress-landmark"><?php _e('Land Mark', 'restro-press') ?></label>
     <span class="rpress-description">
@@ -776,14 +829,8 @@ function rpress_display_checkout_fields() {
     </span>
     <input class="rpress-input" type="text" name="rpress_landmark" id="rpress-landmark" placeholder="Landmark" />
     </p>
+  <?php endif; ?>
 
-    <p id="rpress-google-address">
-  	<label class="rpress-google-address" for="rpress-google-address"><?php _e('Address', 'restro-press') ?></label>
-    <span class="rpress-description">
-    	<?php _e('Enter Your Address', 'restro-press'); ?> 
-    </span>
-    <input class="rpress-input" type="text" name="rpress_address" id="rpress-google-address" placeholder="Address" />
-    </p>
   <?php
 }
 add_action( 'rpress_purchase_form_user_info_fields', 'rpress_display_checkout_fields' );
@@ -796,20 +843,32 @@ add_action( 'rpress_purchase_form_user_info_fields', 'rpress_display_checkout_fi
  * @return      array | An array of fields
  */
 function rpress_required_checkout_fields( $required_fields ) {
-	$required_fields['rpress_phone'] = array(
-		'error_id' 			=> 'invalid_phone',
-		'error_message' =>  __('Please enter a valid Phone number', 'restro-press')
-	);
+	$enable_phone = rpress_get_option('enable_phone');
+	$enable_flat = rpress_get_option('enable_door_flat');
+	$enable_landmark = rpress_get_option('enable_landmark');
 
-  $required_fields['rpress_door_flat'] = array(
-  	'error_id' 			=> 'invalid_door_flat',
-    'error_message' => __('Please enter your door flat', 'restro-press')
-  );
+	if( $enable_phone ) :
+		$required_fields['rpress_phone'] = array(
+			'error_id' 			=> 'invalid_phone',
+			'error_message' =>  __('Please enter a valid Phone number', 'restro-press')
+		);
+	endif;
 
-  $required_fields['rpress_landmark'] = array(
-  	'error_id' 			=> 'invalid_landmark',
-    'error_message' => __('Please enter landmark', 'restro-press')
-  );
+	if( $enable_flat ) :
+  	$required_fields['rpress_door_flat'] = array(
+  		'error_id' 			=> 'invalid_door_flat',
+    	'error_message' => __('Please enter your door flat', 'restro-press')
+  	);
+  endif;
+
+  if( $enable_landmark ):
+  	$required_fields['rpress_landmark'] = array(
+  		'error_id' 			=> 'invalid_landmark',
+    	'error_message' => __('Please enter landmark', 'restro-press')
+  	);
+  endif;
+
+
 
   return $required_fields;
 }
@@ -825,17 +884,41 @@ add_filter( 'rpress_purchase_form_required_fields', 'rpress_required_checkout_fi
  */
 function rpress_store_custom_fields( $payment_meta ) {
 
+	// if( did_action( 'rpress_purchase' ) ) {
+	// 	$payment_meta['phone'] = isset( $_POST['rpress_phone'] ) ? sanitize_text_field( $_POST['rpress_phone'] ) : '';
+	// }
+
+	// if( did_action( 'rpress_purchase' ) ) {
+	// 	$payment_meta['flat'] = isset( $_POST['rpress_door_flat'] ) ? sanitize_text_field( $_POST['rpress_door_flat'] ) : '';
+	// }
+
+	// if( did_action( 'rpress_purchase' ) ) {
+	// 	$payment_meta['landmark'] = isset( $_POST['rpress_landmark'] ) ? sanitize_text_field( $_POST['rpress_landmark'] ) : '';
+	// }
+
 	if( did_action( 'rpress_purchase' ) ) {
 		$payment_meta['phone'] = isset( $_POST['rpress_phone'] ) ? sanitize_text_field( $_POST['rpress_phone'] ) : '';
-	}
 
-	if( did_action( 'rpress_purchase' ) ) {
 		$payment_meta['flat'] = isset( $_POST['rpress_door_flat'] ) ? sanitize_text_field( $_POST['rpress_door_flat'] ) : '';
+
+		$payment_meta['landmark'] = isset( $_POST['rpress_landmark'] ) ? sanitize_text_field( $_POST['rpress_landmark'] ) : '';
+
+		$payment_meta['address'] = isset( $_POST['address'] ) ? sanitize_text_field( $_POST['address'] ) : '';
+
+		$payment_meta['route'] = isset( $_POST['route'] ) ? sanitize_text_field( $_POST['route'] ) : '';
+
+		$payment_meta['city'] = isset( $_POST['locality'] ) ? sanitize_text_field( $_POST['locality'] ) : '';
+
+		$payment_meta['state'] = isset( $_POST['administrative_area_level_1'] ) ? sanitize_text_field( $_POST['administrative_area_level_1'] ) : '';
+
+		$payment_meta['zip'] = isset( $_POST['postal_code'] ) ? sanitize_text_field( $_POST['postal_code'] ) : '';
+
+		$payment_meta['country'] = isset( $_POST['country'] ) ? sanitize_text_field( $_POST['country'] ) : '';
+
+		$payment_meta['latlng'] = isset( $_POST['rpress_geo_address'] ) ? sanitize_text_field( $_POST['rpress_geo_address'] ) : '';
 	}
 
-	if( did_action( 'rpress_purchase' ) ) {
-		$payment_meta['landmark'] = isset( $_POST['rpress_landmark'] ) ? sanitize_text_field( $_POST['rpress_landmark'] ) : '';
-	}
+	
 
 	return $payment_meta;
 }
@@ -851,23 +934,31 @@ function rpress_view_order_details( $payment_meta, $user_info ) {
 	$phone = isset( $payment_meta['phone'] ) ? $payment_meta['phone'] : 'none';
 	$flat = isset( $payment_meta['flat'] ) ? $payment_meta['flat'] : 'none';
 	$landmark = isset( $payment_meta['landmark'] ) ? $payment_meta['landmark'] : 'none';
+	
 ?>
 	<div class="column-container">
   	<div class="column">
-   		<div style="margin-top:10px; margin-bottom:10px;">
-    		<strong><?php echo __('Phone:', 'restro-press'); ?> </strong>
-    		<?php echo $phone; ?>
-    	</div>
+  		<?php if( $phone ) : ?>
+   			<div style="margin-top:10px; margin-bottom:10px;">
+    			<strong><?php echo __('Phone:', 'restro-press'); ?> </strong>
+    			<?php echo $phone; ?>
+    		</div>
+    	<?php endif; ?>
 
-    	<div style="margin-bottom:10px;">
-    		<strong><?php echo __('Flat:', 'restro-press'); ?> </strong>
-    		<?php echo $flat; ?>
-    	</div>
-    		
-    	<div style="margin-bottom:10px;">
-    		<strong><?php echo __('Landmark:', 'restro-press'); ?> </strong>
-    		 <?php echo $landmark; ?>
-    	</div>
+    	<?php if( $flat ) : ?>
+    		<div style="margin-bottom:10px;">
+    			<strong><?php echo __('Flat:', 'restro-press'); ?> </strong>
+    			<?php echo $flat; ?>
+    		</div>
+    	<?php endif; ?>
+
+    	<?php if( $landmark) : ?>
+    		<div style="margin-bottom:10px;">
+    			<strong><?php echo __('Landmark:', 'restro-press'); ?> </strong>
+    		 	<?php echo $landmark; ?>
+    		</div>
+    	<?php endif; ?>
+
   	</div>
   </div>
 <?php

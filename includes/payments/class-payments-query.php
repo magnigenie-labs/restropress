@@ -170,9 +170,9 @@ class RPRESS_Payments_Query extends RPRESS_Stats {
 		$this->post__in();
 
 		do_action( 'rpress_pre_get_payments', $this );
-
+		//print_r( $this->args) ;
 		$query = new WP_Query( $this->args );
-
+		
 		$custom_output = array(
 			'payments',
 			'rpress_payments',
@@ -205,7 +205,6 @@ class RPRESS_Payments_Query extends RPRESS_Stats {
 		do_action( 'rpress_post_get_payments', $this );
 
 		$this->maybe_reset_globals();
-
 		return $this->payments;
 	}
 

@@ -47,9 +47,10 @@ $currency_code  = $payment->currency;
 $customer       = new RPRESS_Customer( $payment->customer_id );
 
 
+
 ?>
 <div class="wrap rpress-wrap">
-	<h2><?php printf( __( 'Order # %s', 'restro-press' ), $number ); ?></h2>
+	<h2><?php printf( __( 'Payment %s', 'restro-press' ), $number ); ?></h2>
 	<?php do_action( 'rpress_view_order_details_before', $payment_id ); ?>
 	<form id="rpress-edit-order-form" method="post">
 		<?php do_action( 'rpress_view_order_details_form_top', $payment_id ); ?>
@@ -65,7 +66,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<div id="rpress-order-update" class="postbox rpress-order-data">
 
 								<h3 class="hndle">
-									<span><?php _e( 'Update Order Details', 'restro-press' ); ?></span>
+									<span><?php _e( 'Update Payment', 'restro-press' ); ?></span>
 								</h3>
 								<div class="inside">
 									<div class="rpress-admin-box">
@@ -175,9 +176,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 									<?php do_action( 'rpress_view_order_details_update_before', $payment_id ); ?>
 									<div id="major-publishing-actions">
 										<div id="delete-action">
-											<a href="<?php echo wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment_id ), admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ) ), 'rpress_payment_nonce' ) ?>" class="rpress-delete-payment rpress-delete"><?php _e( 'Delete Order', 'restro-press' ); ?></a>
+											<a href="<?php echo wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment_id ), admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ) ), 'rpress_payment_nonce' ) ?>" class="rpress-delete-payment rpress-delete"><?php _e( 'Delete Payment', 'restro-press' ); ?></a>
 										</div>
-										<input type="submit" class="button button-primary right" value="<?php esc_attr_e( 'Save Order', 'restro-press' ); ?>"/>
+										<input type="submit" class="button button-primary right" value="<?php esc_attr_e( 'Save Payment', 'restro-press' ); ?>"/>
 										<div class="clear"></div>
 									</div>
 									<?php do_action( 'rpress_view_order_details_update_after', $payment_id ); ?>
@@ -221,20 +222,19 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							?>
 							<div id="rpress-delivery-details" class="postbox rpress-order-data">
 								<h3 class="hndle">
-									<span><?php _e( 'Order Type Details', 'restro-press' ); ?></span>
+									<span><?php _e( 'Delivery Details', 'restro-press' ); ?></span>
 								</h3>
 								<div class="inside">
 									<div class="rpress-admin-box">
 										<div class="rpress-delivery-details rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Order Type:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'Delivery Type:', 'restro-press' ); ?></span>&nbsp;
 												<?php  echo ucfirst($delivery_type); ?>
 												</p>
 											</div>
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
-													<span class="label">
-														<?php echo ucfirst($delivery_type)  .'&nbsp;'.   __( 'Time:', 'restro-press' ); ?></span>&nbsp;
+													<span class="label"><?php _e( 'Delivery Time:', 'restro-press' ); ?></span>&nbsp;
 													<?php  
 														if( !empty($delivery_time) ) :
 															echo $delivery_time;
@@ -308,13 +308,14 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<div id="rpress-order-logs" class="postbox rpress-order-logs">
 
 								<h3 class="hndle">
-									<span><?php _e( 'All Orders For This Customer', 'restro-press' ); ?></span>
+									<span><?php _e( 'Logs', 'restro-press' ); ?></span>
 								</h3>
 								<div class="inside">
 									<div class="rpress-admin-box">
 
 										<div class="rpress-admin-box-inside">
 
+											
 											<p>
 												<?php $purchase_url = admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&user=' . esc_attr( rpress_get_payment_user_email( $payment_id ) ) ); ?>
 												<a href="<?php echo $purchase_url; ?>"><?php _e( 'View all orders for this customer', 'restro-press' ); ?></a>
@@ -344,7 +345,6 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<?php if ( is_array( $cart_items ) ) :
 								$is_qty_enabled = rpress_item_quantities_enabled() ? ' item_quantity' : '' ;
 								?>
-								<div id="rpress-ajax-options"></div>
 								<div id="rpress-purchased-files" class="postbox rpress-edit-purchase-element <?php echo $column_count; ?>">
 									<h3 class="hndle rpress-payment-details-label-mobile">
 										<span><?php printf( __( 'Purchased %s', 'restro-press' ), rpress_get_label_plural() ); ?></span>
@@ -478,7 +478,11 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 											<div class="rpress-purchased-fooditem-actions actions">
 												<input type="hidden" class="rpress-payment-details-fooditem-has-log" name="rpress-payment-details-fooditems[<?php echo $key; ?>][has_log]" value="1" />
-												
+												<?php if( rpress_get_fooditem_files( $item_id, $price_id ) && rpress_is_payment_complete( $payment_id ) ) : ?>
+													<span class="rpress-copy-fooditem-link-wrapper">
+														<a href="" class="rpress-copy-fooditem-link" data-fooditem-id="<?php echo esc_attr( $item_id ); ?>" data-price-id="<?php echo esc_attr( $price_id ); ?>"><?php _e( 'Copy Download Link(s)', 'restro-press' ); ?></a> |
+													</span>
+												<?php endif; ?>
 												<a href="" class="rpress-order-remove-fooditem rpress-delete" data-key="<?php echo esc_attr( $key ); ?>"><?php _e( 'Remove', 'restro-press' ); ?></a>
 											</div>
 
@@ -748,10 +752,14 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											<div class="data column-container">
 												<div class="column">
 													<p>
+														<?php
+														$line1_address = ($address['line1'] !== '') ? $address['line1'] : $payment_meta['address'];
+														?>
 														<strong class="order-data-address-line"><?php _e( 'Street Address Line 1:', 'restro-press' ); ?></strong><br/>
-														<input type="text" name="rpress-payment-address[0][line1]" value="<?php echo esc_attr( $address['line1'] ); ?>" class="large-text" />
+														<input type="text" name="rpress-payment-address[0][line1]" value="<?php echo esc_attr($line1_address); ?>" class="large-text" />
 													</p>
 													<p>
+
 														<strong class="order-data-address-line"><?php _e( 'Street Address Line 2:', 'restro-press' ); ?></strong><br/>
 														<input type="text" name="rpress-payment-address[0][line2]" value="<?php echo esc_attr( $address['line2'] ); ?>" class="large-text" />
 													</p>
@@ -759,17 +767,26 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 												</div>
 												<div class="column">
 													<p>
+														<?php
+														$city = ($address['city'] !== '') ? $address['city'] : $payment_meta['city'];
+														?>
 														<strong class="order-data-address-line"><?php echo _x( 'City:', 'Address City', 'restro-press' ); ?></strong><br/>
-														<input type="text" name="rpress-payment-address[0][city]" value="<?php echo esc_attr( $address['city'] ); ?>" class="large-text"/>
+														<input type="text" name="rpress-payment-address[0][city]" value="<?php echo esc_attr( $city ); ?>" class="large-text"/>
 
 													</p>
 													<p>
+														<?php
+														$zip = ($address['zip'] !== '') ? $address['zip'] : $payment_meta['zip'];
+														?>
 														<strong class="order-data-address-line"><?php echo _x( 'Zip / Postal Code:', 'Zip / Postal code of address', 'restro-press' ); ?></strong><br/>
-														<input type="text" name="rpress-payment-address[0][zip]" value="<?php echo esc_attr( $address['zip'] ); ?>" class="large-text"/>
+														<input type="text" name="rpress-payment-address[0][zip]" value="<?php echo esc_attr( $zip ); ?>" class="large-text"/>
 
 													</p>
 												</div>
 												<div class="column">
+													<?php
+													$country = ($address[ 'country' ] !== '') ? $address[ 'country' ] : $payment_meta['country'];
+													 ?>
 													<p id="rpress-order-address-country-wrap">
 														<strong class="order-data-address-line"><?php echo _x( 'Country:', 'Address country', 'restro-press' ); ?></strong><br/>
 														<?php
@@ -777,7 +794,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 															'options'          => rpress_get_country_list(),
 															'name'             => 'rpress-payment-address[0][country]',
 															'id'               => 'rpress-payment-address-country',
-															'selected'         => $address[ 'country' ],
+															'selected'         => $country,
 															'show_option_all'  => false,
 															'show_option_none' => false,
 															'chosen'           => true,
@@ -792,13 +809,16 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													<p id="rpress-order-address-state-wrap">
 														<strong class="order-data-address-line"><?php echo _x( 'State / Province:', 'State / province of address', 'restro-press' ); ?></strong><br/>
 														<?php
+													$state = ($address[ 'state' ] !== '') ? $address[ 'state' ] : $payment_meta['state'];
+													 ?>
+														<?php
 														$states = rpress_get_shop_states( $address['country'] );
 														if( ! empty( $states ) ) {
 															echo RPRESS()->html->select( array(
 																'options'          => $states,
 																'name'             => 'rpress-payment-address[0][state]',
 																'id'               => 'rpress-payment-address-state',
-																'selected'         => $address[ 'state' ],
+																'selected'         => $state,
 																'show_option_all'  => false,
 																'show_option_none' => false,
 																'chosen'           => true,

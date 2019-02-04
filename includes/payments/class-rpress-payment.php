@@ -1107,8 +1107,13 @@ class RPRESS_Payment {
 		$cache_key = md5( 'rpress_payment' . $this->ID );
 		wp_cache_set( $cache_key, $this, 'payments' );
 
-		unset($_SESSION['delivery_time']);
-		unset($_SESSION['delivery_type']);
+		if( isset($_SESSION['delivery_time']) ) :
+			unset($_SESSION['delivery_time']);
+		endif;
+
+		if( isset($_SESSION['delivery_type']) ) :
+			unset($_SESSION['delivery_type']);
+		endif;
 
 		return $saved;
 	}
@@ -2514,9 +2519,11 @@ class RPRESS_Payment {
 	 */
 	private function setup_address() {
 		$address  = ! empty( $this->payment_meta['user_info']['address'] ) ? $this->payment_meta['user_info']['address'] : array();
+
 		$defaults = array( 'line1' => '', 'line2' => '', 'city' => '', 'country' => '', 'state' => '', 'zip' => '' );
 
 		$address = wp_parse_args( $address, $defaults );
+
 		return $address;
 	}
 

@@ -621,7 +621,7 @@ section.fullwidth.nav {
 .col-sm-3.cent {
 	padding-right: 0px;
 }
-#rpress_checkout_user_info input[type="text"] {
+#rpress_checkout_user_info input[type="text"] , #rpress_checkout_addrs input[type="text"]  {
     border: 1px solid #bbb !important;
     line-height: 1.5;
     text-align: left;
@@ -910,8 +910,27 @@ form#fooditem-update-details h6 {
 #fooditem-update-details {
 	margin-bottom: -15px;
 }
+.RPressMinOrderWrap {display: none;}
+#RPressMinOrder {
+	width:400px;
+	overflow:auto; 
+  padding : 30px 0px ;
+  background : #FFFFFF ; 
+  position : relative ;
+  color : #666; 
+}
+#RPressMinOrder a {
+	background: white;
+  padding: 4px , 4px;
+	padding: 0px 5px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 2px;
+	border-radius: 50px;
+}
 .fancybox-can-drag .fancybox-content {
- 	cursor: pointer;
+  cursor: pointer;
   height: 600px !important;
   top: 33px;
   position: absolute;
@@ -1180,6 +1199,12 @@ form#fooditem-update-details h6 {
   	top: -15px !important;
 	  margin-left: -51px !important;
   }
+  html body #RPressMinOrder {
+  	position : absolute ;
+  	left : 8%;
+  	top: 42%; 
+  	width: 85%;
+	}
 }
 @media only screen and (max-width: 768px) {
 	

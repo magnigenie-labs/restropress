@@ -379,6 +379,26 @@ function rpress_get_registered_settings() {
 						'placeholder' => __( 'Select a state', 'restro-press' ),
 						'class'       => ( empty( $shop_states ) ) ? 'hidden' : '',
 					),
+
+					'map_settings' => array(
+						'id'            => 'map_settings',
+						'name'          => '<h3>' . __( 'Google Map Settings', 'restro-press' ) . '</h3>',
+						'desc'          => '',
+						'type'          => 'header',
+						'tooltip_title' => __( 'Google map settings', 'restro-press' ),
+					),
+					'enable_google_map_api' => array(
+						'id'          => 'enable_google_map_api',
+						'name'        => __( 'Enable Google API ?', 'restro-press' ),
+						'desc'        => __( 'Enable checkbox for google map api on your site', 'restro-press' ),
+						'type'        => 'checkbox',
+					),
+					'map_api_key' => array(
+						'id'          => 'map_api_key',
+						'name'        => __( 'Google Map API Key', 'restro-press' ),
+						'desc'        => __( 'Enter google map api key here. Check how to get <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">map api key</a>', 'restro-press' ),
+						'type'        => 'text',
+					),
 				),
 				
 				//Currency Settings Here
@@ -488,6 +508,34 @@ function rpress_get_registered_settings() {
 						'desc'          => __( 'Select restaurant close time', 'restro-press' ),
 						'type'          => 'text',
 						'field_class' 	=> 'rpress_timings'
+					),
+				),
+
+				//Checkout Options
+				'checkout_options' => array(
+					'checkout_settings' => array(
+						'id'   => 'checkout_settings',
+						'name' => '<h3>' . __( 'Checkout Field Options', 'restro-press' ) . '</h3>',
+						'desc' => '',
+						'type' => 'header',
+					),
+					'enable_phone' => array(
+						'id' => 'enable_phone',
+						'name'    => __( 'Enable Phone  Field', 'restro-press' ),
+						'desc'    => __( 'Check this option to enable this field on checkout page', 'restro-press' ),
+						'type' => 'checkbox',
+					),
+					'enable_door_flat' => array(
+						'id' => 'enable_door_flat',
+						'name'    => __( 'Enable Door/Flat Field', 'restro-press' ),
+						'desc'    => __( 'Check this option to enable this field on checkout page', 'restro-press' ),
+						'type' => 'checkbox',
+					),
+					'enable_landmark' => array(
+						'id' => 'enable_landmark',
+						'name'    => __( 'Enable Landmark', 'restro-press' ),
+						'desc'    => __( 'Check this option to enable landmark on checkout page', 'restro-press' ),
+						'type' => 'checkbox',
 					),
 				),
 
@@ -1361,6 +1409,7 @@ function rpress_get_registered_settings_sections() {
 			'currency'           => __( 'Currency', 'restro-press' ),
 			'order_notification'   => __( 'Order Notification', 'restro-press' ),
 			'delivery_options'   => __( 'Delivery Options', 'restro-press' ),
+			'checkout_options'   => __( 'Checkout Options', 'restro-press' ),
 		) ),
 		'gateways'   => apply_filters( 'rpress_settings_sections_gateways', array(
 			'main'               => __( 'General', 'restro-press' ),
@@ -1483,6 +1532,7 @@ function rpress_checkbox_callback( $args ) {
  * @return void
  */
 function rpress_multicheck_callback( $args ) {
+
 	$rpress_option = rpress_get_option( $args['id'] );
 
 	$class = rpress_sanitize_html_class( $args['field_class'] );

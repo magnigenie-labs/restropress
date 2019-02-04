@@ -135,7 +135,7 @@ function rpress_process_purchase_form() {
 		'post_data'    => $_POST,
 		'cart_details' => rpress_get_cart_content_details(),
 		'gateway'      => $valid_data['gateway'],
-		'card_info'    => $valid_data['cc_info']
+		'card_info'    => $valid_data['cc_info'],
 	);
 
 	// Add the user data for hooks

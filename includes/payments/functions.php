@@ -787,12 +787,11 @@ function rpress_get_payment_status_label( $status = '' ) {
 function rpress_get_payment_statuses() {
 	$payment_statuses = array(
 		'pending'   => __( 'Pending', 'restro-press' ),
-		'publish'   => __( 'Complete', 'restro-press' ),
+		'paid'   	=> __( 'Paid', 'restro-press' ),
+		'publish'   => __( 'Delivered', 'restro-press' ),
 		'refunded'  => __( 'Refunded', 'restro-press' ),
 		'failed'    => __( 'Failed', 'restro-press' ),
-		'abandoned' => __( 'Abandoned', 'restro-press' ),
-		'revoked'   => __( 'Revoked', 'restro-press' ),
-		'processing' => __( 'Processing', 'restro-press' )
+		'processing' => __( 'Out For Delivery', 'restro-press' ),
 	);
 
 	return apply_filters( 'rpress_payment_statuses', $payment_statuses );

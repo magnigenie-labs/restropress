@@ -51,12 +51,12 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	public $total_count;
 
 	/**
-	 * Total number of complete payments
+	 * Total number of delivered payments
 	 *
 	 * @var int
 	 * @since  1.0.0
 	 */
-	public $complete_count;
+	public $delivered_count;
 
 	/**
 	 * Total number of pending payments
@@ -67,44 +67,20 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	public $pending_count;
 
 	/**
-	 * Total number of processing payments
+	 * Total number of paid payments
 	 *
 	 * @var int
 	 * @since 1.0.0
 	 */
-	public $processing_count;
+	public $paid_count;
 
 	/**
-	 * Total number of refunded payments
+	 * Total number of out for deliver payments
 	 *
 	 * @var int
 	 * @since  1.0.0
 	 */
-	public $refunded_count;
-
-	/**
-	 * Total number of failed payments
-	 *
-	 * @var int
-	 * @since  1.0.0
-	 */
-	public $failed_count;
-
-	/**
-	 * Total number of revoked payments
-	 *
-	 * @var int
-	 * @since  1.0.0
-	 */
-	public $revoked_count;
-
-	/**
-	 * Total number of abandoned payments
-	 *
-	 * @var int
-	 * @since  1.0.0
-	 */
-	public $abandoned_count;
+	public $out_for_deliver_count;
 
 	/**
 	 * Get things started
@@ -235,23 +211,16 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 		$current          = isset( $_GET['status'] ) ? $_GET['status'] : '';
 		$total_count      = '&nbsp;<span class="count">(' . $this->total_count    . ')</span>';
-		$complete_count   = '&nbsp;<span class="count">(' . $this->complete_count . ')</span>';
+		$delivered_count   = '&nbsp;<span class="count">(' . $this->delivered_count . ')</span>';
 		$pending_count    = '&nbsp;<span class="count">(' . $this->pending_count  . ')</span>';
-		$processing_count = '&nbsp;<span class="count">(' . $this->processing_count  . ')</span>';
-		$refunded_count   = '&nbsp;<span class="count">(' . $this->refunded_count . ')</span>';
-		$failed_count     = '&nbsp;<span class="count">(' . $this->failed_count   . ')</span>';
-		$abandoned_count  = '&nbsp;<span class="count">(' . $this->abandoned_count . ')</span>';
-		$revoked_count    = '&nbsp;<span class="count">(' . $this->revoked_count   . ')</span>';
-
+		$paid_count = '&nbsp;<span class="count">(' . $this->paid_count  . ')</span>';
+		$out_for_deliver_count = '&nbsp;<span class="count">(' . $this->out_for_deliver_count . ')</span>';
 		$views = array(
 			'all'        => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( array( 'status', 'paged' ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All','restro-press' ) . $total_count ),
-			'publish'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'publish' ? ' class="current"' : '', __('Completed','restro-press' ) . $complete_count ),
+			'publish'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'deleverd' ? ' class="current"' : '', __('Delivered','restro-press' ) . $delivered_count ),
 			'pending'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'pending', 'paged' => FALSE ) ), $current === 'pending' ? ' class="current"' : '', __('Pending','restro-press' ) . $pending_count ),
-			'processing' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Processing','restro-press' ) . $processing_count ),
-			'refunded'   => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'refunded', 'paged' => FALSE ) ), $current === 'refunded' ? ' class="current"' : '', __('Refunded','restro-press' ) . $refunded_count ),
-			'revoked'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'revoked', 'paged' => FALSE ) ), $current === 'revoked' ? ' class="current"' : '', __('Revoked','restro-press' ) . $revoked_count ),
-			'failed'     => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'failed', 'paged' => FALSE ) ), $current === 'failed' ? ' class="current"' : '', __('Failed','restro-press' ) . $failed_count ),
-			'abandoned'  => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'abandoned', 'paged' => FALSE ) ), $current === 'abandoned' ? ' class="current"' : '', __('Abandoned','restro-press' ) . $abandoned_count ),
+			'paid' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'paid', 'paged' => FALSE ) ), $current === 'paid' ? ' class="current"' : '', __('Paid','restro-press' ) . $paid_count ),
+			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Out For Delivery','restro-press' ) . $out_for_deliver_count)
 		);
 
 		return apply_filters( 'rpress_payments_table_views', $views );
@@ -437,9 +406,8 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			'set-status-pending'     => __( 'Set To Pending',        'restro-press' ),
 			'set-status-processing'  => __( 'Set To Processing',     'restro-press' ),
 			'set-status-refunded'    => __( 'Set To Refunded',       'restro-press' ),
-			'set-status-revoked'     => __( 'Set To Revoked',        'restro-press' ),
-			'set-status-failed'      => __( 'Set To Failed',         'restro-press' ),
-			'set-status-abandoned'   => __( 'Set To Abandoned',      'restro-press' ),
+			'set-status-paid'     	 => __( 'Set To Paid',        'restro-press' ),
+			'set-status-failed'      => __( 'Set To Delivered',         'restro-press' ),
 			'set-status-preapproval' => __( 'Set To Preapproval',    'restro-press' ),
 			'set-status-cancelled'   => __( 'Set To Cancelled',      'restro-press' ),
 			'resend-receipt'         => __( 'Resend Email Receipts', 'restro-press' )
@@ -487,8 +455,8 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 				rpress_update_payment_status( $id, 'refunded' );
 			}
 
-			if ( 'set-status-revoked' === $this->current_action() ) {
-				rpress_update_payment_status( $id, 'revoked' );
+			if ( 'set-status-paid' === $this->current_action() ) {
+				rpress_update_payment_status( $id, 'paid' );
 			}
 
 			if ( 'set-status-failed' === $this->current_action() ) {
@@ -556,15 +524,11 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			$args['gateway'] = $_GET['gateway'];
 		}
 
-		$payment_count          = rpress_count_payments( $args );
-		$this->complete_count   = $payment_count->publish;
-		$this->pending_count    = $payment_count->pending;
-		$this->processing_count = $payment_count->processing;
-		$this->refunded_count   = $payment_count->refunded;
-		$this->failed_count     = $payment_count->failed;
-		$this->revoked_count    = $payment_count->revoked;
-		$this->abandoned_count  = $payment_count->abandoned;
-
+		$payment_count          	= rpress_count_payments( $args );
+		$this->delivered_count   	= (isset($payment_count->delivered))? $payment_count->delivered : 0;
+		$this->pending_count    	=  (isset($payment_count->pending)) ? $payment_count->pending : 0 ;
+		$this->paid_count 			=  (isset($payment_count->paid)) ? $payment_count->paid : 0 ;
+		$this->out_for_deliver_count   	=  (isset($payment_count->processing)) ? $payment_count->processing : 0 ;
 		foreach( $payment_count as $count ) {
 			$this->total_count += $count;
 		}
@@ -666,27 +630,18 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		switch ( $status ) {
-			case 'publish':
-				$total_items = $this->complete_count;
+			case 'deleverd':
+				$total_items = $this->delivered_count;
 				break;
 			case 'pending':
 				$total_items = $this->pending_count;
 				break;
-			case 'processing':
-				$total_items = $this->processing_count;
-				break;
-			case 'refunded':
-				$total_items = $this->refunded_count;
-				break;
-			case 'failed':
-				$total_items = $this->failed_count;
-				break;
-			case 'revoked':
-				$total_items = $this->revoked_count;
-				break;
-			case 'abandoned':
-				$total_items = $this->abandoned_count;
-				break;
+			case 'out_for_deliver':
+				$total_items = $this->out_for_deliver_count;
+			break;
+			case 'paid':
+				$total_items = $this->paid_count;
+			break;
 			case 'any':
 				$total_items = $this->total_count;
 				break;
