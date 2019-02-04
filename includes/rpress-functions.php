@@ -81,7 +81,6 @@ function rpress_enque_scripts() {
 	//Add Google Map js 
 	if( rpress_get_option('enable_google_map_api') 
 		&& rpress_is_checkout() && rpress_get_option('map_api_key') !== '' ) :
-		wp_enqueue_script('rpress-google-address', plugins_url( 'assets/js/rpress-google-address.js', RPRESS_PLUGIN_FILE ), array(), '1.0.1', true );
 
 		wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
 	endif;
@@ -109,6 +108,8 @@ function rpress_enque_scripts() {
   	'estimated_tax'		=> __( 'Estimated Tax', 'restro-press'),
   	'total_text'		=> __( 'Subtotal', 'restro-press'),
   	'google_api'			=> rpress_get_option('map_api_key'),
+  	'enable_google_autocomplete' => rpress_get_option('enable_google_map_api'),
+  	'is_checkout_page' => rpress_is_checkout(),
   	'enable_fooditem_popup' => $fooditem_popup_enable,
   ));
 }
@@ -778,7 +779,7 @@ function rpress_display_checkout_fields() {
     	<span class="rpress-description">
     		<?php _e('Enter Your Address', 'restro-press'); ?> 
     	</span>
-    	<input class="rpress-input" id="autocomplete" name="address" placeholder="Enter your address"
+    	<input class="rpress-input autocomplete" id="autocomplete" name="address" placeholder="Enter your address"
               type="text"/>
   	</p>
 

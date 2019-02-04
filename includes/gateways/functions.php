@@ -30,6 +30,10 @@ function rpress_get_payment_gateways() {
 			'admin_label'    => __( 'Test Payment', 'restro-press' ),
 			'checkout_label' => __( 'Test Payment', 'restro-press' )
 		),
+		'cash_on_delivery' => array(
+			'admin_label'    => __( 'Cash On Delivery', 'restro-press' ),
+			'checkout_label' => __( 'Cash On Delivery', 'restro-press' )
+		),
 	);
 
 	return apply_filters( 'rpress_payment_gateways', $gateways );
@@ -53,6 +57,7 @@ function rpress_get_enabled_payment_gateways( $sort = false ) {
 			$gateway_list[ $key ] = $gateway;
 		}
 	}
+
 
 	if ( true === $sort ) {
 		// Reorder our gateways so the default is first
@@ -409,3 +414,54 @@ function rpress_count_sales_by_gateway( $gateway_id = 'paypal', $status = 'publi
 		$ret = $payments->post_count;
 	return $ret;
 }
+
+/**
+ * Processes the purchase data and uses the Cash On Delivery to record
+ * the transaction in the Order History
+ *
+ * @since 1.0
+ * @param array $purchase_data Purchase Data
+ * @return void
+*/
+function rpress_cash_on_delivery_payment( $purchase_data ) {
+	if( ! wp_verify_nonce( $purchase_data['gateway_nonce'], 'rpress-gateway' ) ) {
+		wp_die( __( 'Nonce verification has failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+	}
+
+	$payment_data = array(
+		'price' 		=> $purchase_data['price'],
+		'date' 			=> $purchase_data['date'],
+		'user_email' 	=> $purchase_data['user_email'],
+		'purchase_key' 	=> $purchase_data['purchase_key'],
+		'currency' 		=> rpress_get_currency(),
+		'fooditems' 	=> $purchase_data['fooditems'],
+		'user_info' 	=> $purchase_data['user_info'],
+		'cart_details' 	=> $purchase_data['cart_details'],
+		'status' 		=> 'pending'
+	);
+
+	// Record the pending payment
+	$payment = rpress_insert_payment( $payment_data );
+
+	if ( $payment ) {
+		rpress_update_payment_status( $payment, 'processing' );
+		// Empty the shopping cart
+		rpress_empty_cart();
+		rpress_send_to_success_page();
+	} else {
+		rpress_record_gateway_error( __( 'Payment Error', 'restro-press' ), sprintf( __( 'Payment creation failed while processing with Cash On delivery order. Payment data: %s', 'restro-press' ), json_encode( $payment_data ) ), $payment );
+		// If errors are present, send the user back to the purchase page so they can be corrected
+		rpress_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['rpress-gateway'] );
+	}
+}
+add_action( 'rpress_gateway_cash_on_delivery', 'rpress_cash_on_delivery_payment' );
+
+/**
+ * Cash On Delivery Remove CC Form
+ *
+ * Cash On Delivery does not need a CC form, so remove it.
+ *
+ * @access private
+ * @since 1.0
+ */
+add_action( 'rpress_cash_on_delivery_cc_form', '__return_false' );
