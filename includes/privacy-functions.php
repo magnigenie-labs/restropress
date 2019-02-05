@@ -25,16 +25,12 @@ function rpress_register_privacy_policy_template() {
 		return;
 	}
 
-	$content = wp_kses_post( apply_filters( 'rpress_privacy_policy_content', __( '
-We collect information about you during the checkout process on our store. This information may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing your orders.
-Handling this data also allows us to:
+	$content = wp_kses_post( apply_filters( 'rpress_privacy_policy_content', __( 'We collect information about you during the checkout process on our store. This information may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing your orders. Handling this data also allows us to:
 - Send you important account/order/service information.
 - Respond to your queries, refund requests, or complaints.
 - Process payments and to prevent fraudulent transactions. We do this on the basis of our legitimate business interests.
 - Set up and administer your account, provide technical and/or customer support, and to verify your identity.
 ', 'restro-press' ) ) );
-
-	$content .= "\n\n";
 
 	$additional_collection = array(
 		__( 'Location and traffic data (including IP address and browser type) if you place an order, or if we need to estimate taxes and shipping costs based on your location.', 'restro-press' ),
@@ -91,8 +87,6 @@ function rpress_mask_string( $string = '' ) {
 		$masked_string = $first_char . '*';
 
 	}
-
-
 
 	return $masked_string;
 
