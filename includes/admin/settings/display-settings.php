@@ -125,7 +125,7 @@ function rpress_options_page() {
 		?>
 		<div id="tab_container">
 			<form method="post" action="options.php">
-				<table class="form-table">
+				<table class="form-table rpress-settings">
 				<?php
 
 				settings_fields( 'rpress_settings' );
@@ -134,12 +134,12 @@ function rpress_options_page() {
 					do_action( 'rpress_settings_tab_top', $active_tab );
 				}
 
-				do_action( 'rpress_settings_tab_top_' . $active_tab . '_' . $section );
+				 do_action( 'rpress_settings_tab_top_' . $active_tab . '_' . $section );
 
 
-				do_settings_sections( 'rpress_settings_' . $active_tab . '_' . $section );
+				 do_settings_sections( 'rpress_settings_' . $active_tab . '_' . $section );
 
-				do_action( 'rpress_settings_tab_bottom_' . $active_tab . '_' . $section  );
+				 do_action( 'rpress_settings_tab_bottom_' . $active_tab . '_' . $section  );
 
 				// For backwards compatibility
 				if ( 'main' === $section ) {

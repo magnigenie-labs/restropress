@@ -343,12 +343,8 @@ function rpress_customers_view( $customer ) {
 			<li>
 				<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&customer=' . $customer->id ); ?>">
 					<span class="dashicons dashicons-cart"></span>
-					<?php printf( _n( '%d Completed Order', '%d Completed Sales', $customer->purchase_count, 'restro-press' ), $customer->purchase_count ); ?>
+					<?php printf( _n( '%d Completed Order', '%d Completed Orders', $customer->purchase_count, 'restro-press' ), $customer->purchase_count ); ?>
 				</a>
-			</li>
-			<li>
-				<span class="dashicons dashicons-chart-area"></span>
-				<?php echo rpress_currency_filter( rpress_format_amount( $customer->purchase_value ) ); ?> <?php _e( 'Lifetime Value', 'restro-press' ); ?>
 			</li>
 			<?php do_action( 'rpress_customer_stats_list', $customer ); ?>
 		</ul>

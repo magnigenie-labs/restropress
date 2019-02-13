@@ -644,7 +644,6 @@ jQuery(document).ready(function ($) {
 				
 				//Ajax callback to get addon item if they are available
 				
-				
 				clone.find('select').chosen();
 				clone.find('div.chosen-container').last().remove();
 				clone.find('select.addon-items-list').val('').trigger('chosen:updated');
@@ -652,7 +651,6 @@ jQuery(document).ready(function ($) {
 				$(clone).insertAfter( '#rpress-purchased-files div.row:last' );
 				$( '.rpress-order-payment-recalc-totals' ).show();
 				$( '.rpress-add-fooditem-field' ).val('');
-				
 
 			});
 		},

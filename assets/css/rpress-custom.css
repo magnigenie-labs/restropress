@@ -629,6 +629,9 @@ section.fullwidth.nav {
 #rpress_purchase_submit .rpress-submit, #rpress_login_submit, #rpress-purchase-button {
 	padding: 5px 15px;
 }
+#rpress_purchase_form_wrap #rpress-purchase-button {
+	margin-top: 15px;
+}
 #rpress_checkout_cart a.rpress-cart-saving-button {
     padding: 5px 15px;
     font-size: 16px;

@@ -390,13 +390,13 @@ function rpress_get_registered_settings() {
 					'enable_google_map_api' => array(
 						'id'          => 'enable_google_map_api',
 						'name'        => __( 'Enable Google API ?', 'restro-press' ),
-						'desc'        => __( 'Enable checkbox for google map api on your site', 'restro-press' ),
+						'desc'        => __( 'Enable google map api on your site', 'restro-press' ),
 						'type'        => 'checkbox',
 					),
 					'map_api_key' => array(
 						'id'          => 'map_api_key',
 						'name'        => __( 'Google Map API Key', 'restro-press' ),
-						'desc'        => __( 'Enter google map api key here. Check how to get <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">map api key</a>', 'restro-press' ),
+						'desc'        => __( 'Enter google map api key here. To get your google api key check this <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">link</a>', 'restro-press' ),
 						'type'        => 'text',
 					),
 				),
@@ -1441,10 +1441,10 @@ function rpress_get_registered_settings_sections() {
 			'export_erase' => __( 'Export & Erase', 'restro-press' ),
 		) ),
 		
-		'notification'     => apply_filters( 'rpress_settings_sections_notification', array(
-			'main'               => __( 'General Settings', 'restro-press' ),
-			'active_notification'           => __( 'Active Notifications', 'restro-press' ),
-		) ),
+		// 'notification'     => apply_filters( 'rpress_settings_sections_notification', array(
+		// 	'main'               => __( 'General Settings', 'restro-press' ),
+		// 	'active_notification'           => __( 'Active Notifications', 'restro-press' ),
+		// ) ),
 	);
 
 	$sections = apply_filters( 'rpress_settings_sections', $sections );

@@ -297,13 +297,27 @@ jQuery(function($) {
       },
       success : function(response) {
         $this.text(prevText)
+
         if( response.status == 'error' ) {
+
+
+          if ( response.store_status == 'closed' ) {
+            ErrorString = RpressVars.store_closed;
+          }
+
+          if( response.delivery_status == 'delivery_closed' ) {
+            ErrorString = RpressVars.delivery_closed;
+          }
+
+          if( response.minimum_price_error ) {
+            ErrorString = response.minimum_price_error;
+          }
 
           ErrorHtml = '<a id="RPressError" href="#RPressMinOrder"></a>';
           ErrorHtml += '<div class="RPressMinOrderWrap">';
-          ErrorHtml += '<p id="RPressMinOrder">'+ response.minimum_price_error +'';
+          ErrorHtml += '<p id="RPressMinOrder">'+ ErrorString +'';
           ErrorHtml += '<a href="javascript:void(0)" title="Close" id="rpress-err-close-button">&times;</a>';
-          ErrorHtml += '</p></div>';    
+          ErrorHtml += '</p></div>'; 
              
           document.body.insertAdjacentHTML('beforeend' , ErrorHtml );
           $("#RPressError").fancybox().trigger('click');

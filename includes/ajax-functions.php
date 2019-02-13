@@ -282,7 +282,7 @@ function rpress_ajax_show_product() {
 		$html .= '<div class="col-md-2 col-sm-2 col-xs-3 plus-symb"><input type="button" value="+" class="qtyplus col-md-3 qtyplus-style qtyplus-style-edit" field="quantity"/></div>';
 		$html .='</div>';
 		$html .='</div>';
-		$html .= '<a data-item-qty="1" data-item-id="'.$food_item_id.'" data-item-price="'.$price.'" class="center submit-fooditem-button text-center inline col-md-6">Add To Cart</a>';
+		$html .= '<a data-item-qty="1" data-item-id="'.$food_item_id.'" data-item-price="'.$price.'" class="center submit-fooditem-button text-center inline col-md-6">'.__('Add To Cart', 'restro-press').'</a>';
 		$html .= '</div>';
 		$html .= '</div>';
 	}
@@ -426,7 +426,7 @@ function rpress_ajax_edit_food_item() {
 		$html .= '<div class="rpress-popup-actions  edit-pop-up-custom-button">';
 	
 
-		$html .= '<a data-item-qty="'.$item_qty.'" data-cart-key="'.$cart_key.'" data-item-id="'.$food_item_id.'" data-item-price="'.$fooditem_price.'" class="center update-fooditem-button inline">Update Cart</a>';
+		$html .= '<a data-item-qty="'.$item_qty.'" data-cart-key="'.$cart_key.'" data-item-id="'.$food_item_id.'" data-item-price="'.$fooditem_price.'" class="center update-fooditem-button inline">'.__('Update Cart', 'restro-press').'</a>';
 		$html .= '</div>';
 		$html .='</div>';
 		$html .= '</div>';

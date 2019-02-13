@@ -928,7 +928,9 @@ class RPRESS_Payment {
 						break;
 
 					case 'delivery_type':
-						$delivery_type = isset($_SESSION['delivery_type']) ? $_SESSION['delivery_type'] : ''; 
+
+						$delivery_type = isset($_SESSION['delivery_type']) ? $_SESSION['delivery_type'] : '';
+						
 						$this->update_meta( '_rpress_delivery_type', $delivery_type );
 						break;
 

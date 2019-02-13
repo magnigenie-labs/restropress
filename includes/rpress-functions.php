@@ -110,6 +110,8 @@ function rpress_enque_scripts() {
   	'google_api'			=> rpress_get_option('map_api_key'),
   	'enable_google_autocomplete' => rpress_get_option('enable_google_map_api'),
   	'is_checkout_page' => rpress_is_checkout(),
+  	'store_closed'		=> __('Store is closed', 'restro-press'),
+  	'delivery_closed' => __('Delivery is closed', 'restro-press'),
   	'enable_fooditem_popup' => $fooditem_popup_enable,
   ));
 }
@@ -503,33 +505,72 @@ function getFormattedCatsList($terms, $cart_key = '') {
  */
 function rpress_proceed_checkout() {
 
-	//Check minimum order 
-	$enable_minimum_order = rpress_get_option('allow_minimum_order');
-
 	$delivery_opt = isset($_POST['deliveryOpt']) ? $_POST['deliveryOpt'] : '';
 
   $delivery_time = isset($_POST['deliveryTime']) ? $_POST['deliveryTime'] : '';
 	
-	if( $enable_minimum_order ) :
-		$minimum_order_price = rpress_get_option('minimum_order_price');
-		$minimum_price_error = rpress_get_option('minimum_order_error');
-		$minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price ) );
-		$minimum_price_error = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error);
+	//Check store timing is enabled or not
+	if( class_exists('RestroPress_Store_Timing') ) {
+		rpress_checkout_delivery_type($delivery_opt, $delivery_time);
 
-		if( rpress_get_cart_total() < $minimum_order_price ) :
-			$response = array( 'status' => 'error', 'minimum_price' => $minimum_order_price, 'minimum_price_error' =>  $minimum_price_error  );
+		$store_timings = rpress_get_store_timing();
+		//check store timings
+		if( isset($store_timings['enable']) ) {
+			$delivery_option = isset($_POST['deliveryOpt']) ? $_POST['deliveryOpt'] : '';
+
+			$store_timings_response = RestroPress_Store_Timing::check_store_timing($delivery_option);
+			$store_timings_response = json_decode($store_timings_response);
+
+			//Check store is closed
+			if( $store_timings_response->store_status == 'closed' ) {
+				$response = array( 'status' => 'error', 'store_status' => 'closed' );
+			}
+
+			if( $store_timings_response->store_status == 'opened' && $delivery_option == 'delivery' ) {
+				if( $store_timings_response->delivery_status == 'delivery closed' ) {
+					$response = array( 'status' => 'error', 'delivery_status' => 'delivery_closed' );
+				}
+				else {
+					$response = array( 'status' => 'success' );
+				}
+			}
+
+			if( $store_timings_response->store_status == 'opened' 
+				&& $delivery_option == 'pickup' ) {
+				$response = array( 'status' => 'success' );
+			}
+		}
+		else {
+			$response = array( 'status' => 'success' );
+		}
+		
+	}
+	else {
+		//Check minimum order 
+		$enable_minimum_order = rpress_get_option('allow_minimum_order');
+
+		if( $enable_minimum_order ) :
+			$minimum_order_price = rpress_get_option('minimum_order_price');
+			$minimum_price_error = rpress_get_option('minimum_order_error');
+			$minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price ) );
+			$minimum_price_error = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error);
+
+			if( rpress_get_cart_total() < $minimum_order_price ) :
+				$response = array( 'status' => 'error', 'minimum_price' => $minimum_order_price, 'minimum_price_error' =>  $minimum_price_error  );
+			else :
+				//Save session vars
+				rpress_checkout_delivery_type($delivery_opt, $delivery_time);
+				$response = array( 'status' => 'success' );
+			endif;
+
 		else :
 			//Save session vars
 			rpress_checkout_delivery_type($delivery_opt, $delivery_time);
 			$response = array( 'status' => 'success' );
 		endif;
 
-	else :
-		//Save session vars
-		rpress_checkout_delivery_type($delivery_opt, $delivery_time);
-		$response = array( 'status' => 'success' );
-	endif;
-
+	}
+	
 	echo json_encode($response);
 
 	exit;
@@ -565,9 +606,9 @@ function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
  * @return      string | Outputs the html for the delivery options with texts
  */
 function get_delivery_options() {
+	$html = '';
 	if( rpress_get_option('enable_delivery') == 1 || rpress_get_option('enable_pickup') == 1 ) {
 
-		$html = '';
 		$html .= '<h3 class="delivery-options-heading">'. __( 'Delivery Options', 'restro-press' ).'</h3>';
 		$html .='<div class="delivery-wrap">';
 		$html .='<div class="delivery-opts">';
@@ -1037,16 +1078,16 @@ function rpress_get_delivery_type( $payment_id ) {
  * Get Addon items in the admin
  *
  * @since       1.0.6
- * @param       Int | Item id
- * @return      array | addon items array
+ * @param       blank
+ * @return      html | addon items html options
  */
 function rpress_get_admin_addon_items() {
+	$html = '';
+
 	$item_id = isset($_POST['fooditem_id']) ? $_POST['fooditem_id'] : '';
 	if( $item_id ) {
 		$terms = getFooditemCategoryById($item_id);
-
 		if( is_array($terms) ) {
-			$html = '';
 
 			$parent_ids = array();
 			$child_ids = array();
@@ -1065,7 +1106,7 @@ function rpress_get_admin_addon_items() {
 
 		if( is_array( $parent_ids ) && !empty($parent_ids) ) {
 			
-			//$html .= '<select class="addon-items-list" name="rpress-payment-details-fooditems[0][addon_items][]">';
+			$html .= '<select class="addon-items-list" name="rpress-payment-details-fooditems[0][addon_items][]">';
 
 			foreach( $parent_ids as $parent_id ) {
 				$term_data = get_term_by('id', $parent_id, 'addon_category');
@@ -1083,7 +1124,7 @@ function rpress_get_admin_addon_items() {
 					}
 				}
 			}
-			//$html .= '</select>';
+			$html .= '</select>';
 		}
 		echo $html;
 	}
@@ -1091,6 +1132,3 @@ function rpress_get_admin_addon_items() {
 }
 
 add_action('wp_ajax_rpress_get_admin_addon_items', 'rpress_get_admin_addon_items');
-
-
-

@@ -8,7 +8,7 @@ $display       = $cart_quantity > 0 ? '' : ' style="display:none;"';
 ?>
 <div class="rpress item-order">
 	<h6><?php echo __('Your Order', 'restro-press'); ?></h6>
-	<a class="rpress-clear-cart" href="#">[Clear Order]</a>
+	<a class="rpress-clear-cart" href="#">[<?php echo __('Clear Order', 'restro-press'); ?>]</a>
 </div>
 <p class="rpress-cart-number-of-items"<?php echo $display; ?>><?php _e( 'Number of items in cart', 'restro-press' ); ?>: <span class="rpress-cart-quantity"><?php echo $cart_quantity; ?></span></p>
 <ul class="rpress-cart">
