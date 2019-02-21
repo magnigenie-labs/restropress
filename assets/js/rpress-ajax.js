@@ -1,6 +1,26 @@
 var rpress_scripts;
 jQuery(document).ready(function ($) {
 
+	// Set Cookie
+function rpress_setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/";
+}
+
+// Get Cookie
+function rpress_getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0; i<ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1);
+    if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
+  }
+  return "";
+}
+
 	$('input#rpress-allowed-hours').timepicker({
 		startTime: rpress_scripts.open_hours,
 		minTime: rpress_scripts.open_hours,
@@ -103,14 +123,47 @@ jQuery(document).ready(function ($) {
 		return false;
 	});
 
+	//Check Local Storage Data
+	function GetStorageDate() {
+		var DeliveryMethod = rpress_getCookie('deliveryMethod');
+		var DeliveryTime = rpress_getCookie('deliveryTime');
 
+		if( DeliveryMethod == undefined || DeliveryMethod == '' ) 
+			return false;
+		else
+			return true; 
+	}
 
 	$('.rpress-add-to-cart').click(function(e) {
+		var GetDeliveryData = GetStorageDate();
+
+		//var unavailableDates = ["2019-2-21","2019-2-24","2019-2-28"];
+		var unavailableDates = rpress_scripts.rpress_holidays;
+
+    function unavailable(date) {
+
+        ymd = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
+        if( $.inArray(ymd, unavailableDates) !== -1 ) {
+        	return false;
+        }
+    }
+
+		if( ! GetDeliveryData ) {
+			var action = 'rpress_show_delivery_options';
+			var baseClass = 'fancybox-delivery-options';
+		}
+		else {
+			var action = 'rpress_show_products';
+			var baseClass = 'fancybox-food-options';
+		}
+		
 		e.preventDefault();
 		var $this = $(this);
 		var pid 	= $this.attr('data-fooditem-id');
 		var price = $this.attr('data-price');
-		var action = 'rpress_show_product';
+		var action = action;
+
 
 		var data   = {
 			action: action,
@@ -134,18 +187,67 @@ jQuery(document).ready(function ($) {
 				withCredentials: true
 			},
 			success: function(response) {
-				$.fancybox.close();
+
+				$.fancybox.close(true);
+
 				$.fancybox.open({
 					'content'  : response,
 					'type' : 'html',
 					headers  : { 'X-fancyBox': true },
   				'width' : 600,
-  				'height': 600,
+  				baseClass : baseClass,
   				'openEffect'  : 'fade',
 				});
+				
+				$('.rpress_get_delivery_dates').datepicker({
+    				autoclose: true,
+    				format: 'yyyy-mm-dd',
+    				endDate : rpress_scripts.rpress_pre_order_until,
+    				beforeShowDay: unavailable,
+  				});
+  				
+				$('input#rpress-allowed-hours').timepicker({
+					'scrollDefault': 'now',
+					'minTime' :  rpress_scripts.open_hours,
+					'maxTime' :  rpress_scripts.close_hours,
+					'disableTimeRanges': [
+						[rpress_scripts.rpress_cutoff_starts, rpress_scripts.rpress_cutoff_ends],
+					]
+				});
+
+				// Make the tab open
+				if( $('.rpress-tabs-wrapper').length ) {
+					$('#rpressdeliveryTab > li:first-child > a')[0].click();
+				}
+				
 			}
 		});
 		return false;
+	});
+
+	$('body').on('click', '.rpress-delivery-opt-update', function(e) {
+		e.preventDefault();
+		var Selected = $(this);
+		var DefaultText = $(this).text();
+		Selected.text(rpress_scripts.please_wait);
+		var FoodItemId = $(this).attr('data-food-id');
+		var DeliveryMethod = Selected.parents('.fancybox-container').find('.nav-item.active a').attr('data-delivery-type');
+		var DeliveryTime = Selected.parents('.fancybox-container').find('.delivery-settings-wrapper.active #rpress-allowed-hours').val();
+		
+		if( DeliveryTime == '' ) {
+			alert('Please Select ' + DeliveryMethod + ' time');
+			return false;
+		}
+
+		rpress_setCookie('deliveryMethod', DeliveryMethod, 1);
+		rpress_setCookie('deliveryTime', DeliveryTime, 1);
+
+		$('.rpress-add-to-cart').each(function() {
+			if( $(this).attr('data-fooditem-id') == FoodItemId ) {
+				$(this).trigger('click');
+			}
+		});
+		
 	});
 
 
@@ -382,5 +484,4 @@ function rpress_load_gateway( payment_mode ) {
 			jQuery('body').trigger('rpress_gateway_loaded', [ payment_mode ]);
 		}
 	);
-
 }

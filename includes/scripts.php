@@ -75,6 +75,19 @@ function rpress_load_scripts() {
 		) ) );
 	}
 
+
+	// Get Delivery Cutoff Hours 
+	$cutof_hours = Rpress_Delivery_Cut_Hours();
+	$cutoff_start_time = '';
+	$cutof_end_time = '';
+	if( is_array($cutof_hours) ) {
+		$cutoff_start_time = isset($cutof_hours['cutoff_start_time']) ? $cutof_hours['cutoff_start_time'] : '';
+		$cutof_end_time = isset($cutof_hours['cutoff_end_time']) ? $cutof_hours['cutoff_end_time'] : '';
+	}
+
+	
+
+
 	// Load AJAX scripts, if enabled
 	if ( ! rpress_is_ajax_disabled() ) {
 		wp_register_script( 'rpress-ajax', $js_dir . 'rpress-ajax.js', array( 'jquery' ), RPRESS_VERSION, $in_footer );
@@ -97,6 +110,11 @@ function rpress_load_scripts() {
 			'taxes_enabled'           => rpress_use_taxes() ? '1' : '0', // Adding here for widget, but leaving in checkout vars for backcompat
 			'open_hours'          	  => rpress_get_option('open_time'),
 			'close_hours'          	  => rpress_get_option('close_time'),
+			'please_wait'							=> __('Please Wait', 'restro-press'),
+			'rpress_holidays' 				=> rpress_get_holidays_lists(),
+			'rpress_pre_order_until' 	=> rpress_show_preorder_until(),
+			'rpress_cutoff_starts'		=> $cutoff_start_time,
+			'rpress_cutoff_ends'			=> $cutof_end_time,
 		) ) );
 	}
 }

@@ -929,13 +929,13 @@ class RPRESS_Payment {
 
 					case 'delivery_type':
 
-						$delivery_type = isset($_SESSION['delivery_type']) ? $_SESSION['delivery_type'] : '';
+						$delivery_type = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : '';
 						
 						$this->update_meta( '_rpress_delivery_type', $delivery_type );
 						break;
 
 					case 'delivery_time':
-						$delivery_time = isset($_SESSION['delivery_time']) ? $_SESSION['delivery_time'] : '';
+						$delivery_time = isset($_COOKIE['deliveryTime']) ? $_COOKIE['deliveryTime'] : '';
 						$this->update_meta( '_rpress_delivery_time', $delivery_time );
 						break;
 
@@ -1109,12 +1109,14 @@ class RPRESS_Payment {
 		$cache_key = md5( 'rpress_payment' . $this->ID );
 		wp_cache_set( $cache_key, $this, 'payments' );
 
-		if( isset($_SESSION['delivery_time']) ) :
-			unset($_SESSION['delivery_time']);
+		if( isset($_COOKIE['deliveryTime']) ) :
+			unset($_COOKIE['deliveryTime']);
+			setcookie("deliveryTime", "", time() - 300,"/");
 		endif;
 
-		if( isset($_SESSION['delivery_type']) ) :
-			unset($_SESSION['delivery_type']);
+		if( isset($_COOKIE['deliveryMethod']) ) :
+			unset($_COOKIE['deliveryMethod']);
+			setcookie("deliveryMethod", "", time() - 300,"/");
 		endif;
 
 		return $saved;

@@ -78,6 +78,8 @@ function rpress_enque_scripts() {
 	//Add Sticky bar
 	wp_enqueue_script('rpress-sticky-sidebar', plugins_url( 'assets/js/rpress-sticky-sidebar.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
 
+	wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
+
 	//Add Google Map js 
 	if( rpress_get_option('enable_google_map_api') 
 		&& rpress_is_checkout() && rpress_get_option('map_api_key') !== '' ) :
@@ -85,18 +87,22 @@ function rpress_enque_scripts() {
 		wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
 	endif;
 
+	wp_enqueue_style( 'rpress-datepicker-stylesheet', plugins_url( 'assets/css/rpress-datepicker.css', RPRESS_PLUGIN_FILE ));
+
+	wp_enqueue_script('rpress-datepicker', plugins_url( 'assets/js/rpress-datepicker.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
+
 	//Add custom js script
-	wp_enqueue_script('rpress-custom', plugins_url( 'assets/js/rpress-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-sticky-sidebar' ), '1.0.1', true );
+	wp_enqueue_script('rpress-custom', plugins_url( 'assets/js/rpress-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-sticky-sidebar', 'rpress-datepicker' ), '1.0.1', true );
 
 	// Add custom css
 	wp_enqueue_style( 'rpress-custom-stylesheet', plugins_url( 'assets/css/rpress-custom.css', RPRESS_PLUGIN_FILE ));
 
 	// Timepicker css
-  wp_register_style( 'rpress-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css' );
+  wp_register_style( 'rpress-timepicker', plugins_url( 'assets/css/jquery.timepicker.css', RPRESS_PLUGIN_FILE ));
   wp_enqueue_style( 'rpress-timepicker' );
 
   // Timepicker js
-  wp_register_script( 'rpress-timepicker-script', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js' );
+  wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   wp_enqueue_script( 'rpress-timepicker-script' );
 
   $fooditem_popup_enable = rpress_get_option( 'enable_food_image_popup', false );
@@ -120,10 +126,10 @@ add_action( 'wp_enqueue_scripts',  'rpress_enque_scripts' );
 add_action( 'admin_enqueue_scripts', 'rpress_admin_scripts' );
 
 function rpress_admin_scripts() {
-	wp_register_style( 'rpress-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css' );
+  wp_register_style( 'rpress-timepicker', plugins_url( 'assets/css/jquery.timepicker.css', RPRESS_PLUGIN_FILE ));
   wp_enqueue_style( 'rpress-timepicker' );
 
-  wp_register_script( 'rpress-timepicker-script', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js' );
+  wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   wp_enqueue_script( 'rpress-timepicker-script' );
 }
 
@@ -589,14 +595,11 @@ add_action('wp_ajax_nopriv_rpress_proceed_checkout', 'rpress_proceed_checkout');
  * @return      array  | Session array for delivery type and delivery time
  */
 function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
-	if( session_id() == '' || ! isset($_SESSION) ) :
-  	//session isn't started
-  	session_start();
-	endif;
 
-	$_SESSION['delivery_type'] = $delivery_type;
-  $_SESSION['delivery_time'] = $delivery_time;
+	$_COOKIE['deliveryMethod'] = $delivery_type;
+  	$_COOKIE['deliveryTime'] = $delivery_time;
 }
+
 
 /**
  * Show delivery options in the cart 
@@ -607,37 +610,25 @@ function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
  */
 function get_delivery_options() {
 	$html = '';
-	if( rpress_get_option('enable_delivery') == 1 || rpress_get_option('enable_pickup') == 1 ) {
-
-		$html .= '<h3 class="delivery-options-heading">'. __( 'Delivery Options', 'restro-press' ).'</h3>';
-		$html .='<div class="delivery-wrap">';
-		$html .='<div class="delivery-opts">';
-		
-		if( rpress_get_option('enable_delivery') == 1 ) :
-			
-			$html .='<input class="deli" id="delivery" type="radio" checked="checked" value="delivery" name="delivery_opt"><label for="delivery">'.__( 'Delivery', 'restro-press' ).'</label>'
-	  			;
-		endif;
-
-		if( rpress_get_option('enable_pickup') == 1 ) : 
-			
-			$html .='<input class="pick" id="pickup" type="radio" value="pickup" name="delivery_opt"><label for="pickup">'.__( 'Pickup', 'restro-press' ).'</label>'
-	  			;
-		endif;
-		$html .='</div>';
-		
-		$html .='<div class="rpress-open-hrs">';
-		$html .= '<h3 class="delivery-options-heading">'.__( 'Select Delivery / Pickup Time', 'restro-press' ).'</h3>';
-		$html .='<input type="text" id="rpress-allowed-hours" name="rpress_allowed_hours">';
-		$html .='</div>';
-		$html .='</div>';
+	$html .='<div class="delivery-wrap">';
+	$html .='<div class="delivery-opts">';
+	if( isset($_COOKIE['deliveryMethod']) && $_COOKIE['deliveryMethod'] !== '' ) {
+		$html .= '<span>'.strtoupper($_COOKIE['deliveryMethod']).'</span>';
+		if( isset($_COOKIE['deliveryTime']) 
+		&& $_COOKIE['deliveryTime'] !== '' ) {
+			$html .= '<span> at '.$_COOKIE['deliveryTime'].'</span>';
+		}
 	}
-
+	$html .='</div>';
+	$html .='</div>';
+		
 	return $html;
 
 }
 
 add_action( 'rpress_insert_payment', 'rpress_show_admin_notification', 10, 2 );
+
+
 
 
 /**
@@ -1132,3 +1123,90 @@ function rpress_get_admin_addon_items() {
 }
 
 add_action('wp_ajax_rpress_get_admin_addon_items', 'rpress_get_admin_addon_items');
+
+
+/**
+ * Get holidays list and disable the dates from calendar
+ *
+ * @since       1.0.6
+ * @param       blank
+ * @return      array | Holiday lists
+ */
+function rpress_get_holidays_lists() {
+	$holidays_arr = array();
+	if( class_exists('RestroPress_Store_Timing') ) {
+		$store_timings = get_option('rpress_store_timing');
+		if( isset($store_timings['enable']) 
+			&& isset($store_timings['pre_order']) ) {
+       if( isset($store_timings['holiday']) ) {
+         $holidays = $store_timings['holiday'];
+         if( is_array($holidays) ) {
+           foreach( $holidays as $key => $holiday ) {
+             $holiday_list = date('Y-n-d', strtotime($holiday));
+             array_push($holidays_arr, $holiday_list);
+           }
+         }
+       }
+     }
+	}
+	return $holidays_arr;
+}
+
+
+/**
+ * Get Preorder ranges and hides the dates which are in max
+ *
+ * @since       1.0.6
+ * @param       blank
+ * @return      string | Max range date
+ */
+function rpress_show_preorder_until() {
+	$pre_order_date = '';
+	if( class_exists('RestroPress_Store_Timing') ) {
+		$store_timings = get_option('rpress_store_timing');
+
+		if( isset($store_timings['enable']) 
+			&& isset($store_timings['pre_order']) ) {
+			$pre_order_range = isset($store_timings['pre_order_range']) ? $store_timings['pre_order_range'] : '';
+
+		  $get_timezone = get_option('timezone_string');
+
+  		if( $get_timezone !== '' ) {
+  			date_default_timezone_set($get_timezone);
+  		}
+
+			if( $pre_order_range !== '' ) {
+				$current_date = date('Y-m-d');
+				$pre_order_date = date('Y-m-d', strtotime($current_date . ' + '.$pre_order_range.' days'));
+			}
+		}
+	}
+	return $pre_order_date;
+}
+
+/**
+ * Get Cutoff Delivery time
+ *
+ * @since       1.0.6
+ * @param       blank
+ * @return      array | Cutoff Hours For Today Delivery
+ */
+function Rpress_Delivery_Cut_Hours() {
+	$get_timezone = get_option('timezone_string');
+
+  if( !empty($get_timezone) ) {
+  	date_default_timezone_set($get_timezone);
+  }
+
+  $current_day = date("w");
+
+	if( class_exists('RestroPress_Store_Timing') ) {
+		$store_hours = new RestroPress_Store_Timing();
+		
+		if( method_exists($store_hours, 'rpress_check_delivery_hours') ) {
+			$cutoff_hours = $store_hours->rpress_check_delivery_hours($current_day);
+			return $cutoff_hours;
+		}
+	}
+
+}

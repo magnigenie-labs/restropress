@@ -16,6 +16,37 @@ div.rpress_fooditems_list .rpress_fooditem {
 	clear: both;
 	margin: 6px 0px;
 }
+html body .fancybox-delivery-options .fancybox-content.rpress-store-closed {
+	height: 150px !important;
+}
+html body .datepicker.datepicker-dropdown { width: 24%; }
+html body .ui-timepicker-wrapper {z-index: 999999 !important; width: 200px;}
+.fancybox-delivery-options .fancybox-close-small {
+	right: 2px;
+	top: -3px;
+}
+.fancybox-delivery-options div#rpress-tab-content {
+	margin-top: 50px;
+}
+
+html body .fancybox-delivery-options .fancybox-main.rpress-delivery-popup {
+	height: 400px !important;
+}
+html body .fancybox-delivery-options .fancybox-content{
+	width: 340px !important;
+	left: 37% !important;
+	height: 300px !important;
+	top: 60px !important;
+	overflow-y: hidden; 
+	position: absolute;
+}
+.delivery-settings-wrapper #rpress-allowed-hours {
+	width: 100%;
+}
+.rpress-tabs-wrapper {
+	display: block;
+	clear: both;
+}
 div.rpress-thumbnail-holder {
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -91,6 +122,9 @@ div.rpress-element-title {
 	margin-top: -10px;
 	margin-bottom: 20px;
 }
+.view-food-item-wrap div {
+	margin-bottom: 20px;
+}
 .rpress_fooditems_list h5.rpress-cat {
     text-decoration: underline;
     width: 100%;
@@ -100,6 +134,7 @@ div.rpress-element-title {
     display: block;
     font-size: 17px;
 }
+#rpress-tab-content .delivery-address-input {text-align: left !important;}
 div.rpress-tabs ul.tabs {
 	list-style: none;
 }
@@ -139,6 +174,15 @@ div.rpress-search-wrap input[type="text"] {
 	box-shadow: none;
 	width: 100%;
 }
+a.rpress-order-time {text-align: left; display: block;}
+.delivery-settings-wrapper {
+	padding: 15px;
+}
+.rpress-tabs-wrapper #rpress-tab-content {
+	display: block;
+	clear: both;
+	overflow: hidden;
+}
 div.rpress-search-wrap #rpress-food-search {
 	background-image: url('../svg/search-icon.svg');
 	background-repeat: no-repeat;
@@ -170,7 +214,7 @@ html body .rpress-open-hrs {
 	margin-top: -20px;
 	width: 100%;
 }
-html .rpress-open-hrs #rpress-allowed-hours {
+html body #rpress-allowed-hours {
 	border: 1px solid #ccc !important;
 	padding: 0px 10px;
 	width: 40%;
@@ -252,7 +296,11 @@ ul.rpress-category-lists .rpress-category-item {
 	padding: 1.5em 0 0;
 }
 div.fancybox-container {
-	z-index: 99999999 !important;
+	z-index: 99999 !important;
+}
+
+.ui-timepicker-container.ui-timepicker-standard {
+	z-index: 9999999 !important;
 }
 
 #rpress_checkout_wrap #rpress_checkout_cart td img {
@@ -924,7 +972,7 @@ form#fooditem-update-details h6 {
 }
 #RPressMinOrder a {
 	background: white;
-  padding: 4px , 4px;
+  padding: 4px 4px;
 	padding: 0px 5px;
 	position: absolute;
 	top: 0;
@@ -938,7 +986,8 @@ form#fooditem-update-details h6 {
   top: 33px;
   position: absolute;
   margin: 0px auto;
-  left: 28%;
+  left: 24%;
+  width: 600px !important;
  }
 .fancybox-content {
 	position: relative;

@@ -239,59 +239,190 @@ function rpress_ajax_add_to_cart() {
 add_action( 'wp_ajax_rpress_add_to_cart', 'rpress_ajax_add_to_cart' );
 add_action( 'wp_ajax_nopriv_rpress_add_to_cart', 'rpress_ajax_add_to_cart' );
 
+
 /**
- * Gets lists of products in the popup through ajax
+ * Show delivery options in the poup before adding fooditem
  *
  * @since  1.0.0
  * @param void
  * @return html
 */
-function rpress_ajax_show_product() {
+function rpress_show_delivery_data() {
+	ob_start();
+	rpress_get_template_part( 'delivery', 'options' );
+	return ob_get_clean();
+}
 
-	$food_item_id = $_POST['fooditem_id'];
-	$food_title = get_the_title($food_item_id);
-	$price = $_POST['fooditem_price'];
+/**
+ * Show pickup options in the poup before adding fooditem
+ *
+ * @since  1.0.0
+ * @param void
+ * @return html
+*/
+function rpress_show_pickup_data() {
+	ob_start();
+	rpress_get_template_part( 'rpress', 'pickup' );
+	return ob_get_clean();
+}
 
-	$html = '';
+function get_default_store_status() {
+	$get_timezone = get_option('timezone_string');
 
-	if( !empty($food_item_id) ) {
+  if( $get_timezone !== '' ) {
+  	date_default_timezone_set($get_timezone);
+  }
 
-		//get food category by id
-		$terms = getFooditemCategoryById($food_item_id);
-		$get_formatted_cats = getFormattedCats($terms);
-		$html .= '<div class="fancybox-main">';
-		$html .= '<div class="fancybox-first">';
-		$html .= '<div class="view-food-item-wrap">';
-		$html .= '<div class="row"><div class="col-md-12"><h1 class="text-center">'.$food_title.'</h1></div></div>';
-		
-		$html .= '<form id="fooditem-details" class="row">';
-		
-		$html .= $get_formatted_cats;
-		$html .= '</form>';
-		$html .= '<div class="col-md-12 md-4-top special-margin">';
-		$html .= '<a href="#" class="special-instructions-link">'.__('Special Instructions?', 'restro-press').'</a>';
-		$html .= '<textarea placeholder="'.__('Add Instructions...', 'restro-press').'" class="col-md-12 special-instructions " name="special_instruction"></textarea>';
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="rpress-popup-actions edit-rpress-popup-actions  col-md-12">';
-		$html .= '<div class="row row-top">';
-		$html .= '<div class="col-md-6 btn-count">';
-		$html .= '<div class="col-md-3 col-xs-3 col-sm-2"><input type="button" value="-" class="qtyminus qtyminus-style qtyminus-style-edit" field="quantity"/></div>';
-		$html .= '<div class="col-md-4 col-xs-4  col-sm-4 md-4-mar-lft"><input type="text" name="quantity" value="1" class="qty qty-style"></div>';
-		$html .= '<div class="col-md-2 col-sm-2 col-xs-3 plus-symb"><input type="button" value="+" class="qtyplus col-md-3 qtyplus-style qtyplus-style-edit" field="quantity"/></div>';
-		$html .='</div>';
-		$html .='</div>';
-		$html .= '<a data-item-qty="1" data-item-id="'.$food_item_id.'" data-item-price="'.$price.'" class="center submit-fooditem-button text-center inline col-md-6">'.__('Add To Cart', 'restro-press').'</a>';
-		$html .= '</div>';
-		$html .= '</div>';
+  $store_status = array();
+
+	//Current Time
+	$current_time = date("h:i A");
+	$current_time_unix = strtotime($current_time);
+	
+	//Store Open Time
+	$store_open_time = rpress_get_option('open_time');
+	$store_open_time_unix = strtotime($store_open_time);
+
+	//Store Close Time
+	$store_close_time = rpress_get_option('close_time');
+	$store_close_time_unix = strtotime($store_close_time);
+
+	if( $current_time_unix > $store_open_time_unix 
+		&& $current_time_unix < $store_close_time_unix ) {
+		$store_status['store_status'] = 'opened';
+	}
+	else {
+		$store_status['store_status'] = 'closed';
+	}
+
+	return $store_status;
+}
+
+function rpress_closed_message($close_message) {
+
+	if( $close_message == '' ) {
+		$close_message = __('Store is Closed', 'restro-press');
 	}
 	
-	echo json_encode( $html );
+	ob_start();
+	rpress_get_template_part( 'rpress', 'closed' );
+	$data = ob_get_clean();
+	$data = str_replace( '{StoreClosed}', $close_message, $data );
+	return $data;
+}
+
+/**
+ * Show delivery options in the poup before adding fooditem
+ *
+ * @since  1.0.0
+ * @param void
+ * @return html
+*/
+function rpress_get_store_status() {
+	$get_timezone = get_option('timezone_string');
+
+  if( $get_timezone !== '' ) {
+  	date_default_timezone_set($get_timezone);
+  }
+
+  $store_status = '';
+
+	//Check Store Timing is Enabled or not
+	if( class_exists('RestroPress_Store_Timing') ) {
+		$store_timings = get_option('rpress_store_timing');
+
+		//check store timings
+		if( isset($store_timings['enable']) ) {
+			$store_settings = RestroPress_Store_Timing::check_store_timing();
+			$store_status = $store_settings;			
+		}
+		else {
+			$store_status = get_default_store_status();
+		}
+	}
+	else {
+		$store_status = get_default_store_status();
+	}
+	return $store_status;
+}
+
+function get_delivery_steps($fooditem_id) {
+	ob_start();
+	rpress_get_template_part( 'rpress', 'delivery-steps' );
+	$data = ob_get_clean();
+	$data = str_replace( '{FoodID}', $fooditem_id, $data );
+	return $data;
+}
+
+
+function rpress_show_delivery_options() {
+	//Get store status
+	$food_item_id = isset($_POST['fooditem_id']) ? $_POST['fooditem_id'] : '';
+	$store_status = rpress_get_store_status();
+
+	$store_current_status = $store_status['store_status'];
+	$close_message = isset($store_status['close_message']) ? $store_status['close_message'] : '';
+
+	switch ($store_current_status) {
+		case 'opened':
+			$data = get_delivery_steps($food_item_id);
+			break;
+
+		case 'holiday':
+			$data = rpress_closed_message($close_message);
+			break;
+
+		case 'closed':
+			$data = rpress_closed_message($close_message);
+			break;
+		
+		default:
+			$data = get_delivery_steps($food_item_id);
+			break;
+	}
+
+	echo json_encode( $data );
 	rpress_die();
 }
-add_action( 'wp_ajax_rpress_show_product', 'rpress_ajax_show_product' );
-add_action( 'wp_ajax_nopriv_rpress_show_product', 'rpress_ajax_show_product' );
+add_action( 'wp_ajax_rpress_show_delivery_options', 'rpress_show_delivery_options' );
+add_action( 'wp_ajax_nopriv_rpress_show_delivery_options', 'rpress_show_delivery_options' );
+
+/**
+ * Gets lists of products in the popup
+ *
+ * @since  1.0.0
+ * @param void
+ * @return html
+*/
+function rpress_show_products() {
+	$food_item_id = isset($_POST['fooditem_id']) ? $_POST['fooditem_id'] : '';
+	$price = isset($_POST['price']) ? $_POST['price'] : '';
+
+	if( empty($food_item_id) ) 
+		return;
+
+	$food_title = get_the_title($food_item_id);
+	
+	if( !empty($food_item_id) ) {
+		$terms = getFooditemCategoryById($food_item_id);
+		$get_formatted_cats = getFormattedCats($terms);
+		ob_start();
+		rpress_get_template_part( 'rpress', 'show-products' );
+
+		$data = ob_get_clean();
+		$data = str_replace( '{Food_Title}', $food_title, $data );
+		$data = str_replace( '{Food_ID}', $food_item_id, $data );
+		$data = str_replace( '{Food_Price}', $price, $data );
+		$data = str_replace( '{Formatted_Cats}', $get_formatted_cats, $data );
+	}
+
+	echo json_encode( $data );
+	rpress_die();
+}
+
+add_action('wp_ajax_rpress_show_products', 'rpress_show_products');
+add_action( 'wp_ajax_nopriv_rpress_show_products', 'rpress_show_products');
+
 
 /**
  * Updates cart items through ajax
@@ -402,38 +533,19 @@ function rpress_ajax_edit_food_item() {
 		$item_qty = rpress_get_item_qty_by_key($cart_key);
 		$special_instruction = rpress_get_instruction_by_key($cart_key);
 
-		$html .= '<div class="fancybox-content pointer">';
-		$html .= '<div class="view-food-item-wrap">';
-		$html .= '<div class="row"><div class="col-md-12"><h1 class="text-center">'.$fooditem_name.'</h1></div></div>';
+		ob_start();
+		rpress_get_template_part( 'rpress', 'edit-product' );
 
-		$html .= '<form id="fooditem-update-details" class="row">';
-		$html .= $get_formatted_cats;
-		$html .= '</form>';
-		$html .= '<div class="col-md-12 md-12-top special-inst">';
-		$html .= '<a href="#" class="special-instructions-link">'.__('Special Instructions?', 'restro-press').'</a>';
-		$class = !empty($special_instruction) ? '' : 'hide';
-		
-		$html .= '<textarea placeholder="Add Instructions..." class="col-md-12 special-instructions '.$class.' " name="special_instruction">'.$special_instruction.'</textarea>';
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="row row-top update-bottom">';
-		$html .= '<div class="col-md-6 qty-button">';
-		$html .= '<div class="col-md-3 col-xs-3 col-sm-3 left"><input type="button" value="-" class="qtyminus" field="quantity" style="font-weight: bold;" /></div>';
-		$html .= '<div class="col-md-4 col-xs-4 col-sm-3 cent"><input type="text" name="quantity" value="'.$item_qty.'" class="qty" style="margin-bottom: 0px !important"/></div>';
-		$html .= '<div class="col-md-4 col-xs-3 col-sm-3 right"><input type="button" value="+" class="qtyplus col-md-3 qty_plus_font" field="quantity" style="font-weight: bold;" /></div>';
-		$html .='</div>';
-		
-		$html .= '<div class="rpress-popup-actions  edit-pop-up-custom-button">';
-	
-
-		$html .= '<a data-item-qty="'.$item_qty.'" data-cart-key="'.$cart_key.'" data-item-id="'.$food_item_id.'" data-item-price="'.$fooditem_price.'" class="center update-fooditem-button inline">'.__('Update Cart', 'restro-press').'</a>';
-		$html .= '</div>';
-		$html .='</div>';
-		$html .= '</div>';
-		
-
+		$data = ob_get_clean();
+		$data = str_replace( '{FoodName}', $fooditem_name, $data );
+		$data = str_replace( '{FormattedCats}', $get_formatted_cats, $data );
+		$data = str_replace( '{ItemQty}', $item_qty, $data );
+		$data = str_replace( '{CartKey}', $cart_key, $data );
+		$data = str_replace( '{FoodItemId}', $food_item_id, $data );
+		$data = str_replace( '{FoodItemPrice}', $fooditem_price, $data );
+		$data = str_replace( '{SpecialInstruction}', $special_instruction, $data );
 	}
-	echo json_encode( $html );
+	echo json_encode( $data );
 	rpress_die();
 }
 

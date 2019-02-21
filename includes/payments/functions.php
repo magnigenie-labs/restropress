@@ -261,8 +261,8 @@ function rpress_insert_payment( $payment_data = array() ) {
 	$payment->tax_rate       = rpress_get_cart_tax_rate( $country, $state, $zip );
 
 
-	$payment->delivery_type      = isset($_SESSION['delivery_type']) ? $_SESSION['delivery_type'] : ''  ;
-	$payment->delivery_time      = isset($_SESSION['delivery_time']) ? $_SESSION['delivery_time'] : ''  ;
+	$payment->delivery_type      = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : ''  ;
+	$payment->delivery_time      = isset($_COOKIE['deliveryTime']) ? $_COOKIE['deliveryTime'] : ''  ;
 
 
 	if ( isset( $payment_data['post_date'] ) ) {

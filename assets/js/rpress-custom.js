@@ -1,4 +1,16 @@
 jQuery(function($) {
+  // Get Cookie
+  function rpress_getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1);
+      if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
+    }
+    return "";
+  }
+
 	$( document ).on( "click", ".submit-fooditem-button", function() { 
     var Selected = $(this);  	   
 		var Form = $(this).parents('.fancybox-slide').find('form#fooditem-details');
@@ -31,7 +43,12 @@ jQuery(function($) {
 				},
 				success: function(response) {
 					if( response ) {
+            console.log(response);
             Selected.text(RpressVars.added_into_cart);
+            
+            var DeliveryMethod = rpress_getCookie('deliveryMethod');
+            var DeliveryTime = rpress_getCookie('deliveryTime');
+
 						$('ul.rpress-cart').find('li.cart_item.empty').remove();
             $('ul.rpress-cart').find('li.cart_item.rpress_subtotal').remove();
             $('ul.rpress-cart').find('li.cart_item.rpress_cart_tax').remove();
@@ -43,19 +60,33 @@ jQuery(function($) {
 						$('.cart_item.rpress-cart-meta.rpress_total').css('display', 'block');
             $('.cart_item.rpress-cart-meta.rpress_subtotal').css('display', 'block');
 						$('.cart_item.rpress_checkout').css('display', 'block');
+            
+            if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
+              $('.delivery-items-options').find('.delivery-opts').text( DeliveryMethod.toUpperCase() +' at '+ DeliveryTime );
+            }
+
 						$('.delivery-items-options').css('display', 'block');
+
+
+
             var TotalHtml = '<li class="cart_item rpress-cart-meta rpress_subtotal">'+RpressVars.total_text+'<span class="subtotal">'+response.subtotal+'</span></li>';
             if( response.tax ) {
               var TaxHtml = '<li class="cart_item rpress-cart-meta rpress_cart_tax">'+RpressVars.estimated_tax+'<span class="cart-tax">'+response.tax+'</span></li>';
               $(TaxHtml).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
               $(TotalHtml).insertBefore('ul.rpress-cart li.cart_item.rpress_cart_tax');
             }
-						$.fancybox.close();
+						$.fancybox.close(true);
 					}
 				}
 			})
 		}
 	});
+
+  $('button.fancybox-close-small').click(function(e) {
+    e.preventDefault();
+    //$.fancybox.close(true);
+    $.fancybox.destroy();
+  });
 
 	jQuery(document).on('click', 'a.rpress-edit-from-cart', function() {
 		var CartItemId = $(this).attr('data-remove-item');
@@ -498,4 +529,11 @@ jQuery(function($) {
       }
     }
   }
+
+
+
+  
+
+  //$('.nav-tabs > li:first-child > a')[0].click();
+
 });
