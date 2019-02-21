@@ -242,11 +242,22 @@ function rpress_getCookie(cname) {
 		rpress_setCookie('deliveryMethod', DeliveryMethod, 1);
 		rpress_setCookie('deliveryTime', DeliveryTime, 1);
 
-		$('.rpress-add-to-cart').each(function() {
-			if( $(this).attr('data-fooditem-id') == FoodItemId ) {
-				$(this).trigger('click');
-			}
-		});
+		if( FoodItemId ) {
+			$('.rpress-add-to-cart').each(function() {
+				if( $(this).attr('data-fooditem-id') == FoodItemId ) {
+					$(this).trigger('click');
+				}
+			});
+		}
+		else {
+			var DeliveryMethod = rpress_getCookie('deliveryMethod');
+      var DeliveryTime = rpress_getCookie('deliveryTime');
+
+      if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
+      	$('.delivery-items-options').find('.delivery-opts').text( DeliveryMethod.toUpperCase() +' at '+ DeliveryTime );      
+      }
+			$.fancybox.close(true);
+		}
 		
 	});
 
@@ -345,6 +356,77 @@ function rpress_getCookie(cname) {
 
 		}
 	}
+
+	//Update delivery process
+  $('body').on('click', '.delivery-change', function(e) {
+    e.preventDefault();
+    
+    var action = 'rpress_show_delivery_options';
+		var baseClass = 'fancybox-delivery-options';
+
+		var data   = {
+			action: action,
+		};
+
+		$.fancybox.open({
+			type     : 'html',
+			afterShow : function(instance, current) {
+				instance.showLoading( current );
+			}
+		});
+
+		$.ajax({
+			type: "POST",
+			data: data,
+			dataType: "json",
+			url: rpress_scripts.ajaxurl,
+			xhrFields: {
+				withCredentials: true
+			},
+			success: function(response) {
+
+				$.fancybox.close(true);
+
+				$.fancybox.open({
+					'content'  	: response,
+					'type' 			: 'html',
+					headers  		: { 'X-fancyBox': true },
+  				'width' 		: 600,
+  				baseClass 	: baseClass,
+  				'openEffect': 'fade',
+				});
+				
+				$('.rpress_get_delivery_dates').datepicker({
+    			autoclose  : true,
+    			format     : 'yyyy-mm-dd',
+    			endDate 	 : rpress_scripts.rpress_pre_order_until,
+    				//beforeShowDay: unavailable,
+  			});
+  				
+				$('input#rpress-allowed-hours').timepicker({
+					'scrollDefault' : 'now',
+					'minTime'   		:  rpress_scripts.open_hours,
+					'maxTime' 			:  rpress_scripts.close_hours,
+					'disableTimeRanges': [
+						[rpress_scripts.rpress_cutoff_starts, rpress_scripts.rpress_cutoff_ends],
+					]
+				});
+
+				var DeliveryMethod = rpress_getCookie('deliveryMethod');
+				var DeliveryTime = rpress_getCookie('deliveryTime');
+				if( DeliveryMethod !== '' || DeliveryMethod !== undefined ) {
+					$('.rpress-delivery-wrap').find('.rpress-'+ DeliveryMethod ).val(DeliveryTime);
+				}
+
+				// Make the tab open
+				if( $('.rpress-tabs-wrapper').length ) {
+					$('#rpressdeliveryTab > li:first-child > a')[0].click();
+				}
+				
+			}
+		});
+		return false;
+  });
 
 	// Process checkout
 	$(document).on('click', '#rpress_purchase_form #rpress_purchase_submit [type=submit]', function(e) {

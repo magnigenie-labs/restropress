@@ -4,9 +4,9 @@
  *
  * @package     RPRESS
  * @subpackage  Admin/Add-ons
- * @copyright   Copyright (c) 2018, Magnigenie
+ * @copyright   Copyright (c) 2019, 
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0.0
+ * @since       1.0
  */
 
 // Exit if accessed directly
@@ -17,23 +17,65 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  * Renders the add-ons page content.
  *
- * @since 1.0.0
+ * @since 1.0
  * @return void
  */
 function rpress_add_ons_page() {
-	$add_ons_tabs = apply_filters( 'rpress_add_ons_tabs', array( 'popular' => __( 'Popular', 'restro-press' ), 'new' => __( 'New', 'restro-press' ), 'all' => __( 'View all Integrations', 'restro-press' ) ) );
-	$active_tab   = isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $add_ons_tabs ) ? $_GET['tab'] : 'popular';
-
-	// Set a new campaign for tracking purposes
-	$campaign = isset( $_GET['view'] ) && strtolower( $_GET['view'] ) === 'integrations' ? 'RPRESSIntegrationsPage' : 'RPRESSAddonsPage';
-
 	ob_start(); ?>
 	<div class="wrap" id="rpress-add-ons">
-		<h1 class="wp-heading-inline"><?php echo rpress_get_label_plural(); ?></h1>
-		<a href="<?php echo admin_url( 'post-new.php?post_type=fooditem' ); ?>" class="page-title-action">Add New</a>
+		<h1 class="wp-heading-inline">
+			<?php echo rpress_get_label_plural(); ?>
+		</h1>
 		<hr class="wp-header-end">
-		<?php rpress_display_product_tabs(); ?>
+		<h2>
+			<?php _e( 'Addons for RestroPress', 'restro-press' ); ?>
+		</h2>
+		<p><?php _e( 'These <em><strong>add functionality</strong></em> to your RestroPress powered store.', 'restro-press' ); ?></p>
+		<div class="rpress-add-ons-view-wrapper">
+			
+		</div>
+		
 	</div>
 	<?php
 	echo ob_get_clean();
+}
+
+/**
+ * Add-ons Get Feed
+ *
+ * Gets the add-ons page feed.
+ *
+ * @since 1.0
+ * @return void
+ */
+function rpress_add_ons_get_feed( $tab = 'popular' ) {
+	$cache = get_transient( 'restropress_add_ons_feed_' . $tab );
+
+	$cache = '';
+
+	if ( false === $cache ) {
+		$url = 'https://restropress.com/?feed=addons';
+
+		if ( 'popular' !== $tab ) {
+			$url = add_query_arg( array( 'display' => $tab ), $url );
+		}
+
+		$feed = wp_remote_get( esc_url_raw( $url ), array( 'sslverify' => false ) );
+
+		if ( ! is_wp_error( $feed ) ) {
+			if ( isset( $feed['body'] ) && strlen( $feed['body'] ) > 0 ) {
+				$cache = wp_remote_retrieve_body( $feed );
+				set_transient( 'restropress_add_ons_feed_' . $tab, $cache, 3600 );
+			}
+		} else {
+			$cache = '<div class="error"><p>' . __( 'There was an error retrieving the extensions list from the server. Please try again later.', 'restro-press' ) . '</div>';
+		}
+	}
+
+	if ( isset( $_GET['view'] ) && 'integrations' === $_GET['view'] ) {
+		// Set a new campaign for tracking purposes
+		//$cache = str_replace( 'RPRESSAddonsPage', 'RPRESSIntegrationsPage', $cache );
+	}
+
+	return $cache;
 }

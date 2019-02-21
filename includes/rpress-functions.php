@@ -611,6 +611,12 @@ function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
 function get_delivery_options() {
 	$html = '';
 	$html .='<div class="delivery-wrap">';
+
+	if( isset($_COOKIE['deliveryMethod']) 
+		&& $_COOKIE['deliveryMethod'] !== '' ) :
+		$html .= '<span class="delivery-change">'.__('Change', 'restro-press').'</span>';
+	endif;
+
 	$html .='<div class="delivery-opts">';
 	if( isset($_COOKIE['deliveryMethod']) && $_COOKIE['deliveryMethod'] !== '' ) {
 		$html .= '<span>'.strtoupper($_COOKIE['deliveryMethod']).'</span>';

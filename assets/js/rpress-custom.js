@@ -43,7 +43,6 @@ jQuery(function($) {
 				},
 				success: function(response) {
 					if( response ) {
-            console.log(response);
             Selected.text(RpressVars.added_into_cart);
             
             var DeliveryMethod = rpress_getCookie('deliveryMethod');
@@ -63,11 +62,15 @@ jQuery(function($) {
             
             if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
               $('.delivery-items-options').find('.delivery-opts').text( DeliveryMethod.toUpperCase() +' at '+ DeliveryTime );
+
+              if( $('.delivery-wrap .delivery-change').length == 0 ) {
+                $( "<span class='delivery-change'>Change</span>" ).insertBefore( ".delivery-opts" );
+              }
+
+              
             }
 
 						$('.delivery-items-options').css('display', 'block');
-
-
 
             var TotalHtml = '<li class="cart_item rpress-cart-meta rpress_subtotal">'+RpressVars.total_text+'<span class="subtotal">'+response.subtotal+'</span></li>';
             if( response.tax ) {
@@ -435,18 +438,6 @@ jQuery(function($) {
     $('div.rpress-filter-wrapper').toggleClass('active');
   });
 
-  // var HeaderHeight = $('#masthead').outerHeight();
-  // var LiveSearch = $(".rpress_fooditems_list").offset().top - HeaderHeight;
-
-  // $(window).scroll(function() {
-  //   if( jQuery(window).scrollTop() > LiveSearch ) {
-  //     $('.rpress_fooditems_list').addClass('sticky-live-search');
-  //   }
-  //   else {
-  //     $('.rpress_fooditems_list').removeClass('sticky-live-search');
-  //   }
-  // });
-
   if( RpressVars.enable_fooditem_popup == '1' ) {
     //Fancbox Show Images
     $(".rpress-fancybox").fancybox({
@@ -530,6 +521,7 @@ jQuery(function($) {
     }
   }
 
+  
 
 
   

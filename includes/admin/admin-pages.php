@@ -22,12 +22,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @global $rpress_customers_page
  * @global $rpress_settings_page
  * @global $rpress_reports_page
+ * @global $rpress_add_ons_page
  * @global $rpress_settings_export
  * @global $rpress_upgrades_screen
  * @return void
  */
 function rpress_add_options_link() {
-	global $rpress_discounts_page, $rpress_payments_page, $rpress_settings_page, $rpress_reports_page,  $rpress_settings_export, $rpress_upgrades_screen, $rpress_tools_page, $rpress_delivery_page, $rpress_customers_page;
+	global $rpress_discounts_page, $rpress_payments_page, $rpress_settings_page, $rpress_reports_page, $rpress_add_ons_page, $rpress_settings_export, $rpress_upgrades_screen, $rpress_tools_page, $rpress_delivery_page, $rpress_customers_page;
 
 	$rpress_payment         = get_post_type_object( 'rpress_payment' );
 
@@ -38,6 +39,7 @@ function rpress_add_options_link() {
 	$rpress_discounts_page     = add_submenu_page( 'edit.php?post_type=fooditem', __( 'Discount Codes', 'restro-press' ), __( 'Discount Codes', 'restro-press' ), 'manage_shop_discounts', 'rpress-discounts', 'rpress_discounts_page' );
 	$rpress_reports_page       = add_submenu_page( 'edit.php?post_type=fooditem', __( 'Earnings and Sales Reports', 'restro-press' ), __( 'Reports', 'restro-press' ), 'view_shop_reports', 'rpress-reports', 'rpress_reports_page' );
 	$rpress_settings_page      = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Settings', 'restro-press' ), __( 'Settings', 'restro-press' ), 'manage_shop_settings', 'rpress-settings', 'rpress_options_page' );
+	$rpress_add_ons_page       = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Addons', 'restro-press' ), '<span style="color:#f39c12;">' . __( 'Addons', 'restro-press' ) . '</span>', 'manage_shop_settings', 'rpress-addons', 'rpress_add_ons_page' );
 	$rpress_tools_page         = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Info and Tools', 'restro-press' ), __( 'Tools', 'restro-press' ), 'manage_shop_settings', 'rpress-tools', 'rpress_tools_page' );
 	$rpress_upgrades_screen    = add_submenu_page( null, __( 'RPRESS Upgrades', 'restro-press' ), __( 'RPRESS Upgrades', 'restro-press' ), 'manage_shop_settings', 'rpress-upgrades', 'rpress_upgrades_screen' );
 
@@ -331,8 +333,8 @@ function rpress_is_admin_page( $passed_page = '', $passed_view = '' ) {
 			}
 			break;
 		default:
-			global $rpress_discounts_page, $rpress_payments_page, $rpress_settings_page, $rpress_reports_page, $rpress_system_info_page, $rpress_settings_export, $rpress_upgrades_screen, $rpress_customers_page, $rpress_reports_page;
-			$admin_pages = apply_filters( 'rpress_admin_pages', array( $rpress_discounts_page, $rpress_payments_page, $rpress_settings_page, $rpress_reports_page, $rpress_system_info_page,  $rpress_settings_export, $rpress_customers_page, $rpress_reports_page ) );
+			global $rpress_discounts_page, $rpress_payments_page, $rpress_settings_page, $rpress_reports_page, $rpress_system_info_page, $rpress_settings_export, $rpress_upgrades_screen, $rpress_customers_page, $rpress_add_ons_page, $rpress_reports_page;
+			$admin_pages = apply_filters( 'rpress_admin_pages', array( $rpress_discounts_page, $rpress_payments_page, $rpress_settings_page, $rpress_add_ons_page, $rpress_reports_page, $rpress_system_info_page,  $rpress_settings_export, $rpress_customers_page, $rpress_reports_page ) );
 			if ( 'fooditem' == $typenow || 'index.php' == $pagenow || 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 				$found = true;
 				if( 'rpress-upgrades' === $page ) {
