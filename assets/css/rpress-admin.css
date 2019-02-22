@@ -1837,3 +1837,17 @@ form#delivery-options label {
 	background-size: 70%;
 	background-repeat: no-repeat;
 }
+
+/* Admin Styles
+----------------------------------- */
+.rpress-about-body .about-text {
+  margin: 1em 200px 1em 0;
+  min-height: 60px;
+  color: #555d66;
+}
+
+.rpress-about-body .about-description, .rpress-about-body .about-text {
+	font-weight: 400;
+	line-height: 1.6em;
+	font-size: 19px;
+}
