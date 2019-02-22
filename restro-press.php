@@ -341,6 +341,7 @@ final class RestroPress {
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/upgrades/upgrades.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/class-rpress-heartbeat.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/admin/tools/tools-actions.php';
+			
 		} else {
 			require_once RPRESS_PLUGIN_DIR . 'includes/process-fooditem.php';
 			require_once RPRESS_PLUGIN_DIR . 'includes/theme-compatibility.php';

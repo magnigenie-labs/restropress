@@ -507,8 +507,8 @@ class RPRESS_Payment {
 		$this->number          = $this->setup_payment_number();
 
 		//Delivery options
-		$this->delivery_type   = 'addons';
-		$this->delivery_time   = '4:34';
+		// $this->delivery_type   = 'addons';
+		// $this->delivery_time   = '4:34';
 
 		// Additional Attributes
 		$this->has_unlimited_fooditems = $this->setup_has_unlimited();
