@@ -3,7 +3,7 @@ Contributors: magnigenie,kshirod-patel
 Tags: Food Ordering System,Online Food Ordering System,Food Ordering, WordPress Restaurant Ordering System, Restaurant Orders, WordPress Ordering system, Restaurant Menu
 Requires at least: 4.0
 Requires PHP: 5.4
-Tested up to: 4.9.8
+Tested up to: 5.1
 Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -53,7 +53,12 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 * js modified
 * Discount code functionality added in admin
 * Discount code functionality added in frontend
-* custom functions renamed into rpress functions
+* Minimum order price option added
+* Google address autocomplete added in checkout
+* Made option to select delivery and pickup on load
+* Cash on delivery method added in the payment gateway
+* Fixed issue for address in order history
+* css fixed
 
 = Version 1.0.5 =
 * Payment gateway link modified
@@ -88,6 +93,6 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 == Upgrade Notice ==
 
-= Version 1.0.3 =
+= Version 1.0.6 =
 
 * New update is available.

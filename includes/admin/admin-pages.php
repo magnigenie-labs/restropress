@@ -39,7 +39,7 @@ function rpress_add_options_link() {
 	$rpress_discounts_page     = add_submenu_page( 'edit.php?post_type=fooditem', __( 'Discount Codes', 'restro-press' ), __( 'Discount Codes', 'restro-press' ), 'manage_shop_discounts', 'rpress-discounts', 'rpress_discounts_page' );
 	$rpress_reports_page       = add_submenu_page( 'edit.php?post_type=fooditem', __( 'Earnings and Sales Reports', 'restro-press' ), __( 'Reports', 'restro-press' ), 'view_shop_reports', 'rpress-reports', 'rpress_reports_page' );
 	$rpress_settings_page      = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Settings', 'restro-press' ), __( 'Settings', 'restro-press' ), 'manage_shop_settings', 'rpress-settings', 'rpress_options_page' );
-	$rpress_add_ons_page       = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Addons', 'restro-press' ), '<span style="color:#f39c12;">' . __( 'Addons', 'restro-press' ) . '</span>', 'manage_shop_settings', 'rpress-addons', 'rpress_add_ons_page' );
+	// $rpress_add_ons_page       = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Addons', 'restro-press' ), '<span style="color:#f39c12;">' . __( 'Addons', 'restro-press' ) . '</span>', 'manage_shop_settings', 'rpress-addons', 'rpress_add_ons_page' );
 	$rpress_tools_page         = add_submenu_page( 'edit.php?post_type=fooditem', __( 'RestroPress Info and Tools', 'restro-press' ), __( 'Tools', 'restro-press' ), 'manage_shop_settings', 'rpress-tools', 'rpress_tools_page' );
 	$rpress_upgrades_screen    = add_submenu_page( null, __( 'RPRESS Upgrades', 'restro-press' ), __( 'RPRESS Upgrades', 'restro-press' ), 'manage_shop_settings', 'rpress-upgrades', 'rpress_upgrades_screen' );
 

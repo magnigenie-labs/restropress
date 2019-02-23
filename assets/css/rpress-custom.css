@@ -26,25 +26,61 @@ html body .fancybox-delivery-options .fancybox-content.rpress-store-closed {
 	height: 150px !important;
 }
 html body .datepicker.datepicker-dropdown { width: 24%; }
-html body .ui-timepicker-wrapper {z-index: 999999 !important; width: 200px;}
+html body .ui-timepicker-wrapper {
+	z-index: 999999 !important; 
+	width: 290px;
+	text-align: center;
+}
+.delivery-change{
+	margin-bottom: -25px;
+	color: #c33332;
+	font-weight: bold;
+}
 .fancybox-delivery-options .fancybox-close-small {
 	right: 2px;
 	top: -3px;
 }
-.fancybox-delivery-options div#rpress-tab-content {
-	margin-top: 50px;
-}
 
-html body .fancybox-delivery-options .fancybox-main.rpress-delivery-popup {
-	height: 400px !important;
+html body .fancybox-delivery-options .fancybox-main.rpress-delivery-popup
+ .nav-pills > li.active > a, .nav-pills > li.active > a:hover{
+	margin-top: -2px;
+    margin-bottom: -2px;
+    margin-right: -2px;
+    padding: 8px !important;
+    margin-left: -2px;
+    border-radius: 0px;
+    background: #c33332;
+}
+.btn.btn-block.btn-primary{
+	background: #c33332;
+	border: none;
+	margin-top: 20px;
+}
+.btn.btn-block.btn-primary:hover{
+	color: #c33332;
+	border: 1px solid #c33332;
+}
+.rpress-delivery-options ul#rpressdeliveryTab.nav > li > a{
+	text-align: center;
+	width: 145px;
+	padding: 6px;
+}
+.rpress-delivery-options ul#rpressdeliveryTab{
+	display: inline-block;
+	border: 2px solid #ccc;
+	margin: 0;
 }
 html body .fancybox-delivery-options .fancybox-content{
-	width: 340px !important;
+	width: 360px !important;
 	left: 37% !important;
 	height: 300px !important;
 	top: 60px !important;
 	overflow-y: hidden; 
 	position: absolute;
+}
+html body .pickup-time-text, html body .delivery-time-text {text-transform: capitalize;}
+html body .fancybox-delivery-options .fancybox-content.pre-order-enable{
+	height: 310px !important;
 }
 .delivery-settings-wrapper #rpress-allowed-hours {
 	width: 100%;
@@ -181,9 +217,7 @@ div.rpress-search-wrap input[type="text"] {
 	width: 100%;
 }
 a.rpress-order-time {text-align: left; display: block;}
-.delivery-settings-wrapper {
-	padding: 15px;
-}
+
 .rpress-tabs-wrapper #rpress-tab-content {
 	display: block;
 	clear: both;
@@ -220,11 +254,14 @@ html body .rpress-open-hrs {
 	margin-top: -20px;
 	width: 100%;
 }
-html body #rpress-allowed-hours {
+html body #rpress-allowed-hours, html body .rpress_get_delivery_dates {
 	border: 1px solid #ccc !important;
 	padding: 0px 10px;
 	width: 40%;
 	background: #f9f9f9;
+}
+html body .rpress_get_delivery_dates {
+	width: 100%;
 }
 .restro-instruction {
 	font-weight: bold;
@@ -628,6 +665,9 @@ input.pick {
 .delivery-opts {
 	display: inline-block;
 }
+.delivery-opts>span{
+	text-transform: capitalize;
+}
 .ui-timepicker-standard a {
 	font-size: 14px;
     margin-left: -22px;
@@ -791,6 +831,26 @@ div.rpress_fooditems_list.col-md-5 {
 }
 #rpress_user_history th {
     background: #e4e4e4;
+}
+html body .rpress-delivery-popup .fancybox-first {
+	height: 310px !important;
+}
+/* Scroll bar style */
+html body .rpress-delivery-popup .fancybox-first::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #c33332;
+}
+
+html body .rpress-delivery-popup .fancybox-first::-webkit-scrollbar {
+	width: 5px;
+	background-color: #c33332;
+}
+
+html body .rpress-delivery-popup .fancybox-first::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
 }
 .fancybox-first {
 	cursor: pointer;
@@ -1025,6 +1085,11 @@ form#fooditem-update-details h6 {
 	line-height: 20px;
 	font-size: 14px;
 }
+
+/* Purchase Page */
+form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
+
+
 
 /*=========================css for responsive=====================
 ===================================================================*/
@@ -1284,10 +1349,10 @@ form#fooditem-update-details h6 {
 	.view-food-item-wrap .col-xs-4  {
 		width: 28.333333%;
 	}
-	.fancybox-can-drag .fancybox-content, 
+	html body .fancybox-container.fancybox-can-drag .fancybox-content, 
 	.rpress-popup-actions.edit-rpress-popup-actions {
 		width: 398px !important;
-   	left: 3%;
+   		left: 3% !important;
 	}
 	.sticky-cat {
 		margin-left: -45px !important;

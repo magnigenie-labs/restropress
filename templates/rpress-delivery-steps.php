@@ -2,15 +2,26 @@
 global $rpress_options;
 $delivery_options = rpress_get_option('enable_delivery');
 $pickup_options = rpress_get_option('enable_pickup');
+$store_timings = get_option('rpress_store_timing');
+
+$pre_order_class = '';
+if( is_array($store_timings) && isset($store_timings['enable']) ) {
+	if( isset($store_timings['pre_order']) ) {
+		$pre_order_class = 'pre-order-enable';
+	}
+}
 ?>
-<div class="fancybox-main rpress-delivery-popup">
+<div class="fancybox-main rpress-delivery-popup <?php echo $pre_order_class; ?>">
 	<div class="fancybox-first">
 		<div class="rpress-delivery-wrap">
-			<div class="col-md-12">
-				<h3 style="text-align: center;">
+			<div class="rpress-row">
+				<h5 class="text-center">
 					<?php echo __('Your Order Settings', 'restro-press'); ?>		
-				</h3>
-				<div class="rpress-tabs-wrapper rpress-delivery-options">
+				</h5>
+				<div class="alert alert-warning rpress-order-time-error hide">
+    			<span class="rpress-order"><?php echo __('You should select', 'restro-press'); ?></span> <span class="rpress-delivery-text"></span> <span class="rpress-order"><?php echo __('time', 'restro-press'); ?></span>
+  			</div>
+				<div class="rpress-tabs-wrapper rpress-delivery-options text-center">
 					<ul class="nav nav-pills" id="rpressdeliveryTab">
 
 						<!-- Delivery Option Starts Here -->
@@ -30,7 +41,6 @@ $pickup_options = rpress_get_option('enable_pickup');
 						<?php endif; ?>
 						<!-- Pickup Option Ends Here -->
 					</ul>
-				</div>
 				
 				<div class="tab-content" id="rpress-tab-content">
 					<?php if( $delivery_options == 1 ) : ?>
@@ -46,4 +56,5 @@ $pickup_options = rpress_get_option('enable_pickup');
 			</div>
 		</div>
 	</div>
+</div>
 </div>

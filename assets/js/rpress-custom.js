@@ -61,10 +61,10 @@ jQuery(function($) {
 						$('.cart_item.rpress_checkout').css('display', 'block');
             
             if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
-              $('.delivery-items-options').find('.delivery-opts').text( DeliveryMethod.toUpperCase() +' at '+ DeliveryTime );
+              $('.delivery-items-options').find('.delivery-opts').text( DeliveryMethod +' at '+ DeliveryTime );
 
               if( $('.delivery-wrap .delivery-change').length == 0 ) {
-                $( "<span class='delivery-change'>Change</span>" ).insertBefore( ".delivery-opts" );
+                $( "<span class='delivery-change'>Change?</span>" ).insertBefore( ".delivery-opts" );
               }
 
               

@@ -23,16 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_add_ons_page() {
 	ob_start(); ?>
 	<div class="wrap" id="rpress-add-ons">
-		<h1 class="wp-heading-inline">
-			<?php echo rpress_get_label_plural(); ?>
-		</h1>
 		<hr class="wp-header-end">
 		<!-- RestroPress Addons Starts Here-->
 		<div class="rpress-about-body">
 			<h2>
 				<?php _e( 'Extending the Possibilities', 'restro-press' ); ?>
 			</h2>
-			<div class="about-text"><?php _e('Even though RestroPress has a lot of built-in features, it is impossible to make everyone happy. This is why we have lots of addons to boost your restropress powsered ordering system.', 'restro-press');?></div>
+			<div class="about-text"><?php _e('RestroPress has some basic features for food ordering system. If you want more exciting premium features then we have some addons to boost your restropress powered ordering system.', 'restro-press');?></div>
 			
 			<a href="https://www.restropress.com/" target="_blank" class="button button-large button-primary"><?php _e('Browse Add Ons', 'restro-press'); ?></a>
 		</div>

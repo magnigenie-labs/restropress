@@ -614,12 +614,12 @@ function get_delivery_options() {
 
 	if( isset($_COOKIE['deliveryMethod']) 
 		&& $_COOKIE['deliveryMethod'] !== '' ) :
-		$html .= '<span class="delivery-change">'.__('Change', 'restro-press').'</span>';
+		$html .= '<span class="delivery-change">'.__('Change?', 'restro-press').'</span>';
 	endif;
 
 	$html .='<div class="delivery-opts">';
 	if( isset($_COOKIE['deliveryMethod']) && $_COOKIE['deliveryMethod'] !== '' ) {
-		$html .= '<span>'.strtoupper($_COOKIE['deliveryMethod']).'</span>';
+		$html .= '<span>'.$_COOKIE['deliveryMethod'].'</span>';
 		if( isset($_COOKIE['deliveryTime']) 
 		&& $_COOKIE['deliveryTime'] !== '' ) {
 			$html .= '<span> at '.$_COOKIE['deliveryTime'].'</span>';

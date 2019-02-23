@@ -137,7 +137,6 @@ function rpress_getCookie(cname) {
 	$('.rpress-add-to-cart').click(function(e) {
 		var GetDeliveryData = GetStorageDate();
 
-		//var unavailableDates = ["2019-2-21","2019-2-24","2019-2-28"];
 		var unavailableDates = rpress_scripts.rpress_holidays;
 
     function unavailable(date) {
@@ -225,19 +224,27 @@ function rpress_getCookie(cname) {
 		return false;
 	});
 
+	//Hide delivery error when switch tabs
+	$('body').on('click', '.rpress-delivery-options li.nav-item', function(e) {
+		e.preventDefault();
+		$(this).parents('.rpress-delivery-wrap').find('.rpress-order-time-error').addClass('hide');
+	})
+
 	$('body').on('click', '.rpress-delivery-opt-update', function(e) {
 		e.preventDefault();
 		var Selected = $(this);
 		var DefaultText = $(this).text();
-		Selected.text(rpress_scripts.please_wait);
 		var FoodItemId = $(this).attr('data-food-id');
 		var DeliveryMethod = Selected.parents('.fancybox-container').find('.nav-item.active a').attr('data-delivery-type');
 		var DeliveryTime = Selected.parents('.fancybox-container').find('.delivery-settings-wrapper.active #rpress-allowed-hours').val();
 		
 		if( DeliveryTime == '' ) {
-			alert('Please Select ' + DeliveryMethod + ' time');
+			Selected.parents('.rpress-delivery-wrap').find('.rpress-order-time-error .rpress-delivery-text').text(DeliveryMethod);
+			Selected.parents('.rpress-delivery-wrap').find('.rpress-order-time-error').removeClass('hide');
 			return false;
 		}
+		Selected.parents('.rpress-delivery-wrap').find('.rpress-order-time-error').addClass('hide');
+		Selected.text(rpress_scripts.please_wait);
 
 		rpress_setCookie('deliveryMethod', DeliveryMethod, 1);
 		rpress_setCookie('deliveryTime', DeliveryTime, 1);
@@ -254,7 +261,7 @@ function rpress_getCookie(cname) {
       var DeliveryTime = rpress_getCookie('deliveryTime');
 
       if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
-      	$('.delivery-items-options').find('.delivery-opts').text( DeliveryMethod.toUpperCase() +' at '+ DeliveryTime );      
+      	$('.delivery-items-options').find('.delivery-opts').html('<span>' +DeliveryMethod+ '</span> <span> at '+DeliveryTime+ '</span>' );      
       }
 			$.fancybox.close(true);
 		}
@@ -391,10 +398,10 @@ function rpress_getCookie(cname) {
 					'content'  	: response,
 					'type' 			: 'html',
 					headers  		: { 'X-fancyBox': true },
-  				'width' 		: 600,
-  				baseClass 	: baseClass,
-  				'openEffect': 'fade',
+	  				baseClass 	: baseClass,
+	  				'openEffect': 'fade',
 				});
+
 				
 				$('.rpress_get_delivery_dates').datepicker({
     			autoclose  : true,
@@ -414,13 +421,14 @@ function rpress_getCookie(cname) {
 
 				var DeliveryMethod = rpress_getCookie('deliveryMethod');
 				var DeliveryTime = rpress_getCookie('deliveryTime');
+
 				if( DeliveryMethod !== '' || DeliveryMethod !== undefined ) {
 					$('.rpress-delivery-wrap').find('.rpress-'+ DeliveryMethod ).val(DeliveryTime);
 				}
 
 				// Make the tab open
 				if( $('.rpress-tabs-wrapper').length ) {
-					$('#rpressdeliveryTab > li:first-child > a')[0].click();
+					$('.rpress-delivery-wrap').find('a#nav-'+ DeliveryMethod + '-tab').trigger('click');
 				}
 				
 			}
