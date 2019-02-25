@@ -90,7 +90,6 @@ a.rpress-delete:hover {
 	margin: 0 0 15px;
 }
 .rpress-add-ons-view-wrapper {
-	height: 50px;
 }
 #rpress-add-ons h2 .button-primary {
 	position: absolute;
@@ -132,6 +131,84 @@ a.rpress-delete:hover {
 #rpress-add-ons .rpress-extension .wp-post-image {
 	width: 100%;
 	height: auto;
+}
+
+/* Add On Items
+-------------------------------------------------------------- */
+div.restropress-addons-all {
+  margin-bottom: 40px;
+  padding-top: 40px;
+}
+
+div.restropress-addons-all .restropress-addon-item {
+  box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -.5rem;
+    margin-left: -.5rem;
+}
+.restropress-addon-img-wrap img {
+	width: 100%;
+	box-shadow: 0 0 2em #ddd;
+	margin: 0;
+	max-width: 100%;
+	height: auto;
+	vertical-align: top;
+	border: 7px solid #FFF;
+}
+.rpress-purchased-wrap {
+	display: block;
+	clear: both;
+	margin-top: 30px;
+}
+.rpress-license-wrapper {
+	display: block;
+	margin-top: 13px;
+}
+div.rpress-add-ons-view-wrapper .row+.row {
+	margin-top: 2em;
+	margin-bottom: 2em;
+	padding-top: 2em;
+	border-top: 1px solid #ddd;
+}
+.restropress-addon-item .inside h3 {
+	margin: 3px 0 1.33em 0;
+    font-size: 1.2em;
+    line-height: inherit;
+    color: #23282d;
+    display: inline-block;
+}
+.restropress-addon-item .inside .rpress-addon-item-pricing {
+	background: white;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+.restropress-addons-all .restropress-btn-group span.button-secondary {
+	border-radius: 3px 0 0 3px;
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+}
+.restropress-addons-all .restropress-btn-group a.button-primary {
+	border-radius: 0px 3px 3px 0px;
+	-webkit-border-radius: 0px 3px 3px 0px;
+	-moz-border-radius: 0px 3px 3px 0px;
 }
 
 /* Discount Code Styles
@@ -525,6 +602,8 @@ input[class*="rpress-price-field"] {
 .rpress_remove_repeatable:focus  {
 	background-position: -10px 0 !important;
 }
+
+
 
 /* Payment Details
 -------------------------------------------------------------- */
@@ -1824,7 +1903,7 @@ form#delivery-options label {
 	content: " ";
     position: absolute;
     left: 2px;
-    top: 0px;
+    top: 7px;
 	filter: grayscale(100%); /* Current draft standard */
     -webkit-filter: grayscale(100%); /* New WebKit */
     -moz-filter: grayscale(100%);

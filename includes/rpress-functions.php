@@ -131,6 +131,12 @@ function rpress_admin_scripts() {
 
   wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   wp_enqueue_script( 'rpress-timepicker-script' );
+
+  wp_register_style( 'rpress-addon-style', plugins_url( 'assets/css/rpress-bootstrap.css', RPRESS_PLUGIN_FILE ));
+
+  if( isset($_GET['page']) && $_GET['page'] == 'rpress-addons' ) {
+  	wp_enqueue_style( 'rpress-addon-style' );
+  }
 }
 
 function rpress_prefix_enqueue() { 
