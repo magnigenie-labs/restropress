@@ -157,8 +157,25 @@ add_action( 'wp_enqueue_scripts',  'rpress_prefix_enqueue' );
 add_action( 'admin_enqueue_scripts', 'load_admin_scripts' );
 
 function load_admin_scripts() {
+
+	wp_register_style( 'rpress-toast-style', plugins_url( 'assets/css/jquery.toast.css', RPRESS_PLUGIN_FILE ));
+  wp_enqueue_style( 'rpress-toast-style' );
+
+	//Add Toast on admin
+	wp_register_script('rpress-toast-script', plugins_url( 'assets/js/jquery.toast.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
+  wp_enqueue_script('rpress-toast-script');
+
+
 	//Add admin custom js script
-	wp_enqueue_script('admin-rpress-script', plugins_url( 'assets/js/admin-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
+	wp_enqueue_script('admin-rpress-script', plugins_url( 'assets/js/admin-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-toast-script' ), '1.0.1', true );
+
+	$admin_vars = array(
+		'ajaxurl'     => rpress_get_ajax_url(),
+	);
+
+	wp_localize_script('admin-rpress-script', 'rpress_admin_vars', 
+		$admin_vars
+	);
 }
 
 function addon_category_taxonomy_custom_fields($tag) {

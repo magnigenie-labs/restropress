@@ -350,6 +350,9 @@ final class RestroPress {
 		require_once RPRESS_PLUGIN_DIR . 'includes/install.php';
 
 		require_once RPRESS_PLUGIN_DIR . 'includes/rpress-functions.php';
+
+		//Addon License Functions
+		require_once RPRESS_PLUGIN_DIR . 'includes/rpress-license.php';
 	}
 
 	/**

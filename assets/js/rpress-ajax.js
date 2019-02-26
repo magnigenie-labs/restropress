@@ -575,3 +575,4 @@ function rpress_load_gateway( payment_mode ) {
 		}
 	);
 }
+

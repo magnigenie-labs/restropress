@@ -65,58 +65,85 @@ function rpress_add_ons_get_feed() {
 		
 		foreach( $items as $key => $item ) {
 
-			$class = '';
+			$class = 'inactive';
+
+			//echo $item->title;
+
+			if( $item->title == 'Coming Soon' ) {
+				$class = 'installed';
+			}
 			
 			if( in_array($item->title, $rpress_installed_addons) ) {
-				$class = 'purchased';
+				$class = 'installed';
 			}
 
+			$updated_class = '';
+			$deactive_class = 'hide';
+
+			if( get_option($item->license_string.'_status') == 'valid' ) {
+				$updated_class = 'rpress-updated';
+				$deactive_class = 'show';
+			}
+
+
 			$item_link = isset($item->link) ? $item->link : '';
+			ob_start();
+			?>
+			<div class="row restropress-addon-item <?php echo $class; ?>">
+				<!-- Addons Image Starts Here -->
+				<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 restropress-addon-img-wrap">
+					<img alt="<?php echo $item->title; ?>" src="<?php echo $item->product_image; ?>">
+				</div>
+				<!-- Addons Image Ends Here -->
+
+				<!-- Addons Price and Details Starts Here -->
+				<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 restropress-addon-img-wrap">
+					<div class="inside">
+						<h3><?php echo $item->title; ?></h3>
+						<small class="rpress-addon-item-pricing"><?php echo __('from', 'restro-press'). ' ' . $item->price_range; ?></small>
+
+						<!-- Addons price wrap starts here -->
+						<div class="restropress-btn-group rpress-purchase-section">
+							<span class="button-secondary"><?php echo $item->price_range; ?></span>
+							<a class="button button-medium button-primary " target="_blank" href="<?php echo $item_link . '?utm_source=plugin&utm_medium=addon_page&utm_campaign=promote_addon' ?>" ><?php echo __('Details and Buy', 'restro-press')?></a>
+						</div>
+						<!-- Addons price wrap ends here -->
+
+						<!-- Addons Installed Starts Here -->
+						<div class="restropress-btn-group rpress-installed-section">
+							<button class="button button-medium button-primary"><?php echo __('Installed', 'restro-press'); ?></button>
+						</div>
+						<!-- Addons Installed Ends Here -->
+
+						<div class="rpress-purchased-wrap">
+							<span><?php echo $item->short_content; ?></span>
+							
+							<div class="rpress-license-wrapper <?php echo $updated_class; ?>">
+								<input type="hidden" class="rpress_license_string" name="rpress_license" value="<?php echo $item->license_string; ?>">
+								<input type="text" data-license-key="" placeholder="<?php echo __('Enter your license key here'); ?>" data-item-name="<?php echo $item->title; ?>" data-item-id="<?php echo $item->id; ?>" class="rpress-license-field pull-left" name="rpress-license">
+								<button data-action="activate_addon_license" class="button button-medium button-primary pull-right rpress-validate-license"><?php echo __('Activate License', 'restro-press'); ?></button>
+								<div class="clear"></div>
+								
+							</div><!-- .rpress-license-wrapper-->
+
+							<!-- License Deactivate Starts Here -->
+							<div class="clear"></div>
+							<div class="rpress-license-deactivate-wrapper <?php echo $deactive_class; ?>">
+								<button data-action="deactivate_addon_license" class="button  pull-left rpress-deactivate-license"><?php echo __('Deactivate License', 'restro-press'); ?></button>
+							</div>
+							<!-- License Deactiave Ends Here -->
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Addons Price and Details Ends Here -->
+			</div>
 			
-			$data .= '<div class="row restropress-addon-item '.$class.' ">';
-
-			//Addons Image Starts Here
-			$data .= '<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 restropress-addon-img-wrap">';
-			$data .= '<img alt="'.$item->title.'" src="'.$item->product_image.'">';
-			$data .= '</div>';
-			//Addons Image Ends Here
-
-			//Addons Price and Details Starts Here
-			$data .= '<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 restropress-addon-img-wrap">';
-			$data .= '<div class="inside">';
-			$data .= '<h3>'.$item->title.'</h3>';
-			$data .= '<small class="rpress-addon-item-pricing">'.__('from', 'restro-press'). ' ' . $item->price_range . '</small>';
-				
-			//Addons price wrap starts here
-			$data .= '<div class="restropress-btn-group">';
-			$data .= '<span class="button-secondary">'.$item->price_range.'</span>';
-			$data .= '<a class="button button-medium button-primary " target="_blank" href="'.$item_link.'?utm_source=plugin&utm_medium=addon_page&utm_campaign=promote_addon">'.__('Details and Buy', 'restro-press').'</a>';
-			$data .= '</div>';
-			//Addons price wrap ends here
-
-			$data .= '<div class="rpress-purchased-wrap">';
-			$data .= '<span>'.$item->short_content.'</span>';
-
-			$data .= '<div class="rpress-license-wrapper">';
-			$data .= '<button class="button button-medium button-primary">'.__('Activate License').'</button>';
-			$data .= '</div>';
-
-			$data .= '</div>';
-			//$data .= '<button class="button button-medium button-primary">'.__('Already Purchased? Validate License', 'restro-press').'</button>';
-
-			$data .= '</div>';
-			$data .= '</div>';
-			//addons Price and Details Ends Here
-
-			$data .= '</div>';
+			<?php
 		}
-			$data .= '</div>';
-		}
-		else {
-			echo $items;
-		}
-	
-	return $data;
+	}
+	echo ob_get_clean();
 }
 
 function rpress_fetch_items() {
@@ -152,6 +179,5 @@ function rpress_installed_addons() {
 			array_push($plugin_titles, $get_plugin['Name']);
 		}
 	}
-	print_r($plugin_titles);
 	return $plugin_titles;
 }

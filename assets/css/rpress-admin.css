@@ -178,7 +178,20 @@ div.restropress-addons-all .restropress-addon-item {
 .rpress-license-wrapper {
 	display: block;
 	margin-top: 13px;
+	clear: both;
+	overflow: hidden;
 }
+.rpress-license-wrapper.rpress-updated {
+	display: none;
+}
+.rpress-license-deactivate-wrapper {
+	clear: both;
+	overflow: hidden;
+	margin-top: 10px;
+	height: 35px;
+}
+.rpress-license-deactivate-wrapper.hide {display: none;}
+.rpress-license-deactivate-wrapper.show {display: block;}
 div.rpress-add-ons-view-wrapper .row+.row {
 	margin-top: 2em;
 	margin-bottom: 2em;
@@ -210,6 +223,28 @@ div.rpress-add-ons-view-wrapper .row+.row {
 	-webkit-border-radius: 0px 3px 3px 0px;
 	-moz-border-radius: 0px 3px 3px 0px;
 }
+.restropress-addon-item.inactive .restropress-btn-group.rpress-installed-section,
+div.restropress-addon-item.installed div.restropress-btn-group.rpress-purchase-section {
+	display: none;
+}
+.rpress-license-wrapper .rpress-license-field {
+	width: 70%; 
+	height: 37px;
+	border-radius: 5px 0px 0px 5px;
+	-webkit-border-radius: 5px 0px 0px 5px;
+	-moz-border-radius: 5px 0px 0px 5px;
+}
+.rpress-license-wrapper button.button {
+	width: 30%; 
+	height: 35px;
+	border-radius: 0 5px 5px 0;
+	-webkit-border-radius: 0 5px 5px 0;
+	-moz-border-radius: 0 5px 5px 0;
+}
+.restropress-addon-item.inactive .rpress-license-wrapper{ display: none; }
+.rpress-license-response { margin-top: 10px; text-align: center; }
+
+
 
 /* Discount Code Styles
 -------------------------------------------------------------- */
