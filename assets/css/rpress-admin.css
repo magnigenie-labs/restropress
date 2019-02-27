@@ -213,6 +213,13 @@ div.rpress-add-ons-view-wrapper .row+.row {
     margin-left: 5px;
     font-weight: bold;
 }
+div.restropress-btn-group.rpress-purchase-section span {
+	border-radius: 5px 0 0 5px;
+	-webkit-border-radius: 5px 0 0 5px;
+	-moz-border-radius: 5px 0 0 5px;
+	margin-right: -4px;
+
+}
 .restropress-addons-all .restropress-btn-group span.button-secondary {
 	border-radius: 3px 0 0 3px;
 	-webkit-border-radius: 3px 0 0 3px;
@@ -244,7 +251,13 @@ div.restropress-addon-item.installed div.restropress-btn-group.rpress-purchase-s
 .restropress-addon-item.inactive .rpress-license-wrapper{ display: none; }
 .rpress-license-response { margin-top: 10px; text-align: center; }
 
+li.menu-icon-fooditem .wp-menu-image {
+	position: relative;
+}
 
+li.menu-icon-fooditem .wp-menu-image:before {
+	position: absolute;
+}
 
 /* Discount Code Styles
 -------------------------------------------------------------- */
@@ -1933,23 +1946,13 @@ form#delivery-options label {
 	font-weight: bold;
 }
 
-.dashicons-fooditem:before{
-	width: 32px;
-	content: " ";
-    position: absolute;
-    left: 2px;
-    top: 7px;
-	filter: grayscale(100%); /* Current draft standard */
-    -webkit-filter: grayscale(100%); /* New WebKit */
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%); 
-    -o-filter: grayscale(100%); /* Not yet supported in Gecko, Opera or IE */ 
-    filter: gray; /* IE */
-    -webkit-filter: grayscale(1); /* Old WebKit */
-	background-image: url('../svg/restropress-icon.svg');
-	background-position: center;
-	background-size: 70%;
-	background-repeat: no-repeat;
+
+.menu-icon-fooditem div.wp-menu-image img {
+	width: 20px;
+	height: 30px;
+	filter: grayscale(100%);
+	position: relative;
+	top: -6px;
 }
 
 /* Admin Styles

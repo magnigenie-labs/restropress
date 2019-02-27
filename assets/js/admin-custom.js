@@ -55,7 +55,7 @@ jQuery(function($){
     					text: 'Congrats, your license successfully activated!',
     					showHideTransition: 'slide',
     					icon: 'success',
-    					position: 'bottom-right',
+    					position: { top: '36px', right: '0px' },
     					stack: false
 						});
 
@@ -68,7 +68,7 @@ jQuery(function($){
     					text: 'Invalid License Key',
     					showHideTransition: 'slide',
     					icon: 'error',
-    					position: 'bottom-right',
+    					position: { top: '36px', right: '0px' },
     					stack: false
 						})
 					}
@@ -112,7 +112,7 @@ jQuery(function($){
 						text: 'Your license has been deactivated',
 						showHideTransition: 'slide',
 						icon: 'info',
-						position: 'bottom-right',
+						position: { top: '36px', right: '0px' },
 						stack: false
 					});
 

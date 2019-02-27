@@ -59,7 +59,7 @@ function rpress_setup_rpress_post_types() {
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
-		'menu_icon'          => 'dashicons-fooditem',
+		'menu_icon'          => plugin_dir_url('').'restropress/assets/svg/restropress-icon.svg',
 		'rewrite'            => false,
 		'capability_type'    => 'product',
 		'map_meta_cap'       => true,

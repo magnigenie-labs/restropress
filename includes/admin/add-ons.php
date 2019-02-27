@@ -67,8 +67,6 @@ function rpress_add_ons_get_feed() {
 
 			$class = 'inactive';
 
-			//echo $item->title;
-
 			if( $item->title == 'Coming Soon' ) {
 				$class = 'installed';
 			}

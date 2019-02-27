@@ -134,19 +134,18 @@ function rpress_getCookie(cname) {
 			return true; 
 	}
 
+	var unavailableDates = rpress_scripts.rpress_holidays;
+
+  function unavailable(date) {
+		ymd = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
+    if( $.inArray(ymd, unavailableDates) !== -1 ) {
+    	return { classes: 'holidays' };
+    }
+  }
+
 	$('.rpress-add-to-cart').click(function(e) {
 		var GetDeliveryData = GetStorageDate();
-
-		var unavailableDates = rpress_scripts.rpress_holidays;
-
-    function unavailable(date) {
-
-        ymd = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-
-        if( $.inArray(ymd, unavailableDates) !== -1 ) {
-        	return false;
-        }
-    }
 
 		if( ! GetDeliveryData ) {
 			var action = 'rpress_show_delivery_options';
@@ -198,12 +197,30 @@ function rpress_getCookie(cname) {
   				'openEffect'  : 'fade',
 				});
 				
+				// Date picker disable past dates
+				var date = new Date();
+				date.setDate(date.getDate());
+
 				$('.rpress_get_delivery_dates').datepicker({
     				autoclose: true,
     				format: 'yyyy-mm-dd',
     				endDate : rpress_scripts.rpress_pre_order_until,
     				beforeShowDay: unavailable,
+    				startDate: date
   				});
+
+				$(".rpress_get_delivery_dates").bind("changeDate", function(e) {
+					var unavailableDates = rpress_scripts.rpress_holidays;
+					var SelectedDate = $(this).val();
+
+					if( $.inArray(SelectedDate, unavailableDates) !== -1 ) {
+    				$(this).parents('.delivery-settings-wrapper').find('.rpress-store-closed-info').show();
+    			}
+    			else {
+    				$(this).parents('.delivery-settings-wrapper').find('.rpress-store-closed-info').hide();
+    			}
+				});
+
   				
 				$('input#rpress-allowed-hours').timepicker({
 					'scrollDefault': 'now',

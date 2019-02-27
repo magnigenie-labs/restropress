@@ -1171,7 +1171,7 @@ function rpress_get_holidays_lists() {
          $holidays = $store_timings['holiday'];
          if( is_array($holidays) ) {
            foreach( $holidays as $key => $holiday ) {
-             $holiday_list = date('Y-n-d', strtotime($holiday));
+             $holiday_list = date('Y-m-d', strtotime($holiday));
              array_push($holidays_arr, $holiday_list);
            }
          }
@@ -1212,6 +1212,7 @@ function rpress_show_preorder_until() {
 	}
 	return $pre_order_date;
 }
+
 
 /**
  * Get Cutoff Delivery time

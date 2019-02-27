@@ -334,14 +334,14 @@ function rpress_get_store_status() {
 		//check store timings
 		if( isset($store_timings['enable']) ) {
 			$store_settings = RestroPress_Store_Timing::check_store_timing();
-			$store_status = $store_settings;			
+			$store_status = 'opened';			
 		}
 		else {
-			$store_status = get_default_store_status();
+			$store_status = 'opened';
 		}
 	}
 	else {
-		$store_status = get_default_store_status();
+		$store_status = 'opened';
 	}
 	return $store_status;
 }

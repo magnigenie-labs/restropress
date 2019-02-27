@@ -18,9 +18,27 @@ if( is_array($store_timings) && isset($store_timings['enable']) ) {
 				<h5 class="text-center">
 					<?php echo __('Your Order Settings', 'restro-press'); ?>		
 				</h5>
+
+				<!-- Order Time Error -->
 				<div class="alert alert-warning rpress-order-time-error hide">
     			<span class="rpress-order"><?php echo __('You should select', 'restro-press'); ?></span> <span class="rpress-delivery-text"></span> <span class="rpress-order"><?php echo __('time', 'restro-press'); ?></span>
   			</div>
+  			<!-- Order Time error -->
+
+  			<!-- Holiday Message Error -->
+  			<?php 
+  			$store_timings = get_option('rpress_store_timing');
+
+  			if( isset($store_timings['holiday_close_message']) ) : ?>
+					<div class="alert alert-warning rpress-store-closed-info disabled">
+  					<?php echo $store_timings['holiday_close_message']; ?>
+					</div>
+				<?php endif; ?>
+  			
+  			
+  			<!-- Holiday Message Error -->
+
+
 				<div class="rpress-tabs-wrapper rpress-delivery-options text-center">
 					<ul class="nav nav-pills" id="rpressdeliveryTab">
 
