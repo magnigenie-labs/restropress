@@ -298,53 +298,6 @@ function get_default_store_status() {
 	return $store_status;
 }
 
-function rpress_closed_message($close_message) {
-
-	if( $close_message == '' ) {
-		$close_message = __('Store is Closed', 'restro-press');
-	}
-	
-	ob_start();
-	rpress_get_template_part( 'rpress', 'closed' );
-	$data = ob_get_clean();
-	$data = str_replace( '{StoreClosed}', $close_message, $data );
-	return $data;
-}
-
-/**
- * Show delivery options in the poup before adding fooditem
- *
- * @since  1.0.0
- * @param void
- * @return html
-*/
-function rpress_get_store_status() {
-	$get_timezone = get_option('timezone_string');
-
-  if( $get_timezone !== '' ) {
-  	date_default_timezone_set($get_timezone);
-  }
-
-  $store_status = '';
-
-	//Check Store Timing is Enabled or not
-	if( class_exists('RestroPress_Store_Timing') ) {
-		$store_timings = get_option('rpress_store_timing');
-
-		//check store timings
-		if( isset($store_timings['enable']) ) {
-			$store_settings = RestroPress_Store_Timing::check_store_timing();
-			$store_status = 'opened';			
-		}
-		else {
-			$store_status = 'opened';
-		}
-	}
-	else {
-		$store_status = 'opened';
-	}
-	return $store_status;
-}
 
 function get_delivery_steps($fooditem_id) {
 	ob_start();
@@ -358,30 +311,9 @@ function get_delivery_steps($fooditem_id) {
 function rpress_show_delivery_options() {
 	//Get store status
 	$food_item_id = isset($_POST['fooditem_id']) ? $_POST['fooditem_id'] : '';
-	$store_status = rpress_get_store_status();
+	$get_addons = get_delivery_steps($food_item_id);
 
-	$store_current_status = $store_status['store_status'];
-	$close_message = isset($store_status['close_message']) ? $store_status['close_message'] : '';
-
-	switch ($store_current_status) {
-		case 'opened':
-			$data = get_delivery_steps($food_item_id);
-			break;
-
-		case 'holiday':
-			$data = rpress_closed_message($close_message);
-			break;
-
-		case 'closed':
-			$data = rpress_closed_message($close_message);
-			break;
-		
-		default:
-			$data = get_delivery_steps($food_item_id);
-			break;
-	}
-
-	echo json_encode( $data );
+	echo json_encode( $get_addons );
 	rpress_die();
 }
 add_action( 'wp_ajax_rpress_show_delivery_options', 'rpress_show_delivery_options' );

@@ -217,11 +217,14 @@ function rpress_getCookie(cname) {
 
 						if( $.inArray(SelectedDate, unavailableDates) !== -1 ) {
 							//Show Holiday Message
+							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').addClass('holiday');
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text(rpress_scripts.holiday_message);
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
+							$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
     					//$(this).parents('.rpress-delivery-wrap').find('.rpress-store-closed-info').show();
     				}
     				else {
+    					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('holiday');
     					$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
     					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
 							var d = new Date(SelectedDate);
@@ -230,23 +233,25 @@ function rpress_getCookie(cname) {
     					if( dayName !== '' ) {
     						var getTimes = rpress_scripts.cutoff_hours[dayName];
     						var getOpenHrs = rpress_scripts.store_open_hours[dayName];
-    						 $('input.rpress-allowed-delivery-hrs').timepicker('remove');
-    						 $('input.rpress-allowed-pickup-hrs').timepicker('remove');
+    						$('input#rpress-delivery-hours').val('');
+    						$('input#rpress-delivery-hours').timepicker('remove');
 
-    						 $('input#rpress-delivery-hours').timepicker({
-										'scrollDefault': 'now',
-										'minTime' :  getOpenHrs.open_time,
-										'maxTime' :  getOpenHrs.close_time,
-										'disableTimeRanges': [
+	  						$('input#rpress-delivery-hours').timepicker({
+									'minTime' :  getOpenHrs.open_time,
+									'maxTime' :  getOpenHrs.close_time,
+									'disableTimeRanges': [
 											[getTimes.cutoff_starts, getTimes.cutoff_ends],
 										]
-									});
+								});
 
-	    						$('input#rpress-pickup-hours').timepicker({
-										'scrollDefault': 'now',
-										'minTime' :  getOpenHrs.open_time,
-										'maxTime' :  getOpenHrs.close_time,
-									});
+    						$('input#rpress-pickup-hours').val('');
+    						$('input#rpress-pickup-hours').timepicker('remove');
+
+
+    						$('input#rpress-pickup-hours').timepicker({
+									'minTime' :  getOpenHrs.open_time,
+									'maxTime' :  getOpenHrs.close_time,
+								});
     					}
     				
     					//$(this).parents('.rpress-delivery-wrap').find('.rpress-store-closed-info').hide();
@@ -292,6 +297,10 @@ function rpress_getCookie(cname) {
 		var DeliveryTime = Selected.parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-hrs').val();
 		var DeliveryDates = Selected.parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress_get_delivery_dates').val();
 
+		if( Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').hasClass('holiday') ) {
+			return false;
+		}
+
 		if( DeliveryDates == '' ) {
 			Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text('Please select date for ' + DeliveryMethod);
 			Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
@@ -303,6 +312,8 @@ function rpress_getCookie(cname) {
 			Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
 			return false;
 		}
+
+
 
 		Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
 		Selected.text(rpress_scripts.please_wait);
@@ -498,10 +509,13 @@ function rpress_getCookie(cname) {
 
 						if( $.inArray(SelectedDate, unavailableDates) !== -1 ) {
 							//Show Holiday Message
+							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').addClass('holiday');
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text(rpress_scripts.holiday_message);
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
+							$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
     				}
     				else {
+    					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('holiday');
     					$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
     					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
 							var d = new Date(SelectedDate);
