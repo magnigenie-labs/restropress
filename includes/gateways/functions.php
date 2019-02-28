@@ -441,12 +441,13 @@ function rpress_cash_on_delivery_payment( $purchase_data ) {
 	);
 
 	// Record the pending payment
-	$payment = rpress_insert_payment( $payment_data );
+	$payment = rpress_insert_payment( $payment_data);
 
 	if ( $payment ) {
 		rpress_update_payment_status( $payment, 'processing' );
 		// Empty the shopping cart
 		rpress_empty_cart();
+		rpress_admin_email_notice($payment, $payment_data);
 		rpress_send_to_success_page();
 	} else {
 		rpress_record_gateway_error( __( 'Payment Error', 'restro-press' ), sprintf( __( 'Payment creation failed while processing with Cash On delivery order. Payment data: %s', 'restro-press' ), json_encode( $payment_data ) ), $payment );

@@ -1240,3 +1240,4 @@ function Rpress_Delivery_Cut_Hours() {
 	}
 
 }
+

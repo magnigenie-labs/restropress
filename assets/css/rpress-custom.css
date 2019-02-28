@@ -16,6 +16,9 @@ div.rpress_fooditems_list .rpress_fooditem {
 	clear: both;
 	margin: 6px 0px;
 }
+html body .rpress-errors-wrap {text-align: center;}
+html body .rpress-errors-wrap.enable {display: block;}
+html body .rpress-errors-wrap.disabled{display: none;}
 html body .rpress-delivery-time-wrap.preorder-enable, html body .rpress-pickup-time-wrap.preorder-enable {
 	display: none;
 }
@@ -74,7 +77,7 @@ html body .fancybox-delivery-options .fancybox-main.rpress-delivery-popup
 	text-align: center;
 }
 .rpress-delivery-wrap .rpress-store-closed-info.disabled {
-	display: none;
+	/*display: none;*/
 }
 .rpress-delivery-options ul#rpressdeliveryTab{
 	display: inline-block;

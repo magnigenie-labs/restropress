@@ -85,8 +85,17 @@ function rpress_load_scripts() {
 		$cutof_end_time = isset($cutof_hours['cutoff_end_time']) ? $cutof_hours['cutoff_end_time'] : '';
 	}
 
+	$cutoff_hours = array();
+	$open_hours = array();
+	$get_holiday_message = '';
+	if( class_exists('RestroPress_Store_Timing') ) {
+		$store_timings = new RestroPress_Store_Timing();
+		$cutoff_hours = $store_timings->get_all_cutoff_hours();
+		$open_hours = $store_timings->get_all_open_hours();
+		$get_holiday_message = $store_timings->get_holiday_message();
+	}
 	
-
+	
 
 	// Load AJAX scripts, if enabled
 	if ( ! rpress_is_ajax_disabled() ) {
@@ -115,6 +124,9 @@ function rpress_load_scripts() {
 			'rpress_pre_order_until' 	=> rpress_show_preorder_until(),
 			'rpress_cutoff_starts'		=> $cutoff_start_time,
 			'rpress_cutoff_ends'			=> $cutof_end_time,
+			'cutoff_hours'						=> $cutoff_hours,
+			'store_open_hours'				=> $open_hours,
+			'holiday_message'					=> $get_holiday_message,
 		) ) );
 	}
 }

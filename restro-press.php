@@ -5,15 +5,15 @@
  * Description: RestroPress is a restaurant food ordering system for WordPress
  * Author: Magnigenie
  * Author URI: https://magnigenie.com
- * Version: 1.0.6
+ * Version: 1.0.7
  * Text Domain: restro-press
  * Domain Path: languages
  *
 
  * @package RPRESS
  * @category Core
- * @author Kshirod
- * @version 1.0.6
+ * @author kshirod.patel@gmail.com
+ * @version 1.0.7
  */
 
 // Exit if accessed directly.

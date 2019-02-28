@@ -22,9 +22,9 @@
 	
 
 	<!-- Pickup Time Starts Here -->
-	<div class="rpress-pickup-time-wrap  <?php echo $preorder_class; ?>">
+	<div class="rpress-pickup-time-wrap rpress-time-wrap  <?php echo $preorder_class; ?>">
 		<div class="pickup-time-text"><?php echo __('Select a pickup time', 'restro-press'); ?></div>
-		<input type="text" class="<?php echo $preorder_class; ?> rpress-pickup rpress-allowed-pickup-hrs" id="rpress-allowed-hours" name="rpress_allowed_hours">
+		<input type="text" class="<?php echo $preorder_class; ?> rpress-pickup rpress-allowed-pickup-hrs rpress-hrs" id="rpress-pickup-hours" name="rpress_allowed_hours">
 	</div>
 	<!-- Pickup Time Ends Here -->
 	 

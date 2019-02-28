@@ -1119,6 +1119,11 @@ class RPRESS_Payment {
 			setcookie("deliveryMethod", "", time() - 300,"/");
 		endif;
 
+		if( isset($_COOKIE['OrderDate']) ) :
+			unset($_COOKIE['OrderDate']);
+			setcookie("OrderDate", "", time() - 300,"/");
+		endif;
+
 		return $saved;
 	}
 
