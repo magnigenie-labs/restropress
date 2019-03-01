@@ -56,6 +56,7 @@ function rpress_add_ons_get_feed() {
 	if( !$items ) {
 		$items = rpress_fetch_items();
 	}
+	$items = rpress_fetch_items();
 
 	$rpress_installed_addons = rpress_installed_addons();
 
@@ -67,11 +68,9 @@ function rpress_add_ons_get_feed() {
 
 			$class = 'inactive';
 
-			if( $item->title == 'Coming Soon' ) {
-				$class = 'installed';
-			}
-			
-			if( in_array($item->title, $rpress_installed_addons) ) {
+			$class_name = trim($item->class_name);
+
+			if( class_exists($class_name) ) {
 				$class = 'installed';
 			}
 
