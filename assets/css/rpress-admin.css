@@ -198,6 +198,15 @@ div.rpress-add-ons-view-wrapper .row+.row {
 	padding-top: 2em;
 	border-top: 1px solid #ddd;
 }
+div.rpress-add-ons-view-wrapper .restropress-addon-item.inactive .rpress-addon-details-section{
+	display: none;
+}
+div.restropress-installed-wrap {
+	display: block;
+	clear: both;
+	overflow: hidden;
+	width: 45%;
+}
 .restropress-addon-item .inside h3 {
 	margin: 3px 0 1.33em 0;
     font-size: 1.2em;

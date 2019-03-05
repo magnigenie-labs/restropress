@@ -146,14 +146,18 @@ function rpress_getCookie(cname) {
 
 	$('.rpress-add-to-cart').click(function(e) {
 		var GetDeliveryData = GetStorageDate();
+		$('#rpressModal').removeClass('rpress-delivery-options');
+		$('#rpressModal').removeClass('rpress-food-options');
 
 		if( ! GetDeliveryData ) {
 			var action = 'rpress_show_delivery_options';
-			var baseClass = 'fancybox-delivery-options';
+			var baseClass = 'rpress-delivery-options';
+			var Title = 'Your Order Settings';
 		}
 		else {
 			var action = 'rpress_show_products';
-			var baseClass = 'fancybox-food-options';
+			var baseClass = 'rpress-food-options';
+			var Title = $(this).attr('data-title');
 		}
 		
 		e.preventDefault();
@@ -187,15 +191,19 @@ function rpress_getCookie(cname) {
 			success: function(response) {
 
 				$.fancybox.close(true);
+				$('#rpressModal .modal-title').html(Title);
+				$('#rpressModal .modal-body').html(response);
 
-				$.fancybox.open({
-					'content'  : response,
-					'type' : 'html',
-					headers  : { 'X-fancyBox': true },
-  				'width' : 600,
-  				baseClass : baseClass,
-  				'openEffect'  : 'fade',
-				});
+				$('#rpressModal').addClass(baseClass);
+
+				if( pid !== '' && price !== '' ) {
+					$('#rpressModal').find('.submit-fooditem-button').attr('data-item-id', pid); //setter
+					$('#rpressModal').find('.submit-fooditem-button').attr('data-item-price', price);
+				}
+				$('#rpressModal').find('.submit-fooditem-button').attr('data-cart-action', 'add-cart');
+				$('#rpressModal').find('.submit-fooditem-button').text(rpress_scripts.add_to_cart);
+				
+				$('#rpressModal').modal();
 				
 				// Date picker disable past dates
 				var date = new Date();
@@ -206,6 +214,7 @@ function rpress_getCookie(cname) {
 					$('.rpress_get_delivery_dates').datepicker({
     				autoclose: true,
     				format: 'yyyy-mm-dd',
+    				todayHighlight: true,
     				endDate : rpress_scripts.rpress_pre_order_until,
     				beforeShowDay: unavailable,
     				startDate: date
@@ -220,12 +229,12 @@ function rpress_getCookie(cname) {
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').addClass('holiday');
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text(rpress_scripts.holiday_message);
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
-							$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
+							$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
     					//$(this).parents('.rpress-delivery-wrap').find('.rpress-store-closed-info').show();
     				}
     				else {
     					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('holiday');
-    					$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
+    					$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
     					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
 							var d = new Date(SelectedDate);
 							var dayName = d.getDay()
@@ -278,9 +287,6 @@ function rpress_getCookie(cname) {
 		return false;
 	});
 
-	function rpress_get_times(selectedDate) {
-		console.log(selectedDate);
-	}
 
 	//Hide delivery error when switch tabs
 	$('body').on('click', '.rpress-delivery-options li.nav-item', function(e) {
@@ -293,9 +299,9 @@ function rpress_getCookie(cname) {
 		var Selected = $(this);
 		var DefaultText = $(this).text();
 		var FoodItemId = $(this).attr('data-food-id');
-		var DeliveryMethod = Selected.parents('.fancybox-container').find('.nav-item.active a').attr('data-delivery-type');
-		var DeliveryTime = Selected.parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-hrs').val();
-		var DeliveryDates = Selected.parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress_get_delivery_dates').val();
+		var DeliveryMethod = Selected.parents('.rpress-tabs-wrapper').find('.nav-item.active a').attr('data-delivery-type');
+		var DeliveryTime = Selected.parents('.rpress-tabs-wrapper').find('.delivery-settings-wrapper.active .rpress-hrs').val();
+		var DeliveryDates = Selected.parents('.rpress-tabs-wrapper').find('.delivery-settings-wrapper.active .rpress_get_delivery_dates').val();
 
 		if( Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').hasClass('holiday') ) {
 			return false;
@@ -314,7 +320,6 @@ function rpress_getCookie(cname) {
 		}
 
 
-
 		Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
 		Selected.text(rpress_scripts.please_wait);
 
@@ -323,6 +328,7 @@ function rpress_getCookie(cname) {
 		rpress_setCookie('OrderDate', DeliveryDates, 1);
 
 		if( FoodItemId ) {
+			$('#rpressModal').modal('hide');
 			$('.rpress-add-to-cart').each(function() {
 				if( $(this).attr('data-fooditem-id') == FoodItemId ) {
 					$(this).trigger('click');
@@ -334,11 +340,10 @@ function rpress_getCookie(cname) {
       var DeliveryTime = rpress_getCookie('deliveryTime');
 
       if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
-      	$('.delivery-items-options').find('.delivery-opts').html('<span>' +DeliveryMethod+ '</span> <span> at '+DeliveryTime+ '</span>' );      
+      	$('.delivery-items-options').find('.delivery-opts').html('<span>' +DeliveryMethod+ '</span> <span> at '+DeliveryTime+ '</span>' ); 
+      	$('#rpressModal').modal('hide');     
       }
-			$.fancybox.close(true);
 		}
-		
 	});
 
 
@@ -444,6 +449,8 @@ function rpress_getCookie(cname) {
     
     var action = 'rpress_show_delivery_options';
 		var baseClass = 'fancybox-delivery-options';
+		$('#rpressModal').removeClass('rpress-food-options');
+		$('#rpressModal').removeClass('rpress-delivery-options');
 
 		var data   = {
 			action: action,
@@ -468,13 +475,12 @@ function rpress_getCookie(cname) {
 
 				$.fancybox.close(true);
 
-				$.fancybox.open({
-					'content'  	: response,
-					'type' 			: 'html',
-					headers  		: { 'X-fancyBox': true },
-	  			baseClass 	: baseClass,
-	  			'openEffect': 'fade',
-				});
+				$('#rpressModal .modal-title').html('Update Order Settings');
+
+				$('#rpressModal').addClass('rpress-delivery-options');
+
+				$('#rpressModal .modal-body').html(response);
+				$('#rpressModal').modal();
 
 				var DeliveryMethod = rpress_getCookie('deliveryMethod');
 				var DeliveryTime = rpress_getCookie('deliveryTime');
@@ -496,6 +502,7 @@ function rpress_getCookie(cname) {
 					$('.rpress_get_delivery_dates').datepicker({
     				autoclose: true,
     				format: 'yyyy-mm-dd',
+    				todayHighlight: true,
     				endDate : rpress_scripts.rpress_pre_order_until,
     				//beforeShowDay: unavailable,
     				startDate: date
@@ -512,11 +519,11 @@ function rpress_getCookie(cname) {
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').addClass('holiday');
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text(rpress_scripts.holiday_message);
 							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
-							$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
+							$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
     				}
     				else {
     					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('holiday');
-    					$(this).parents('.fancybox-container').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
+    					$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
     					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
 							var d = new Date(SelectedDate);
 							var dayName = d.getDay();

@@ -327,16 +327,20 @@ if( !function_exists('food_cats_after_wrap') ) {
 add_filter( 'rpress_food_list_items_before', 'food_item_list_before' );
 if( !function_exists('food_item_list_before') ) {
 	function food_item_list_before() {
-		$html = '<div class="rpress_fooditems_list col-lg-7 col-md-7 col-sm-9 col-xs-12">';
-		echo $html;
+		ob_start();
+		?>
+		<div class="rpress_fooditems_list col-lg-7 col-md-7 col-sm-9 col-xs-12">
+		<?php
+		echo ob_get_clean();
 	}
 }
 
 add_filter('rpress_food_list_items_after', 'food_item_list_after' );
 if( !function_exists('food_item_list_after') ) {
 	function food_item_list_after() {
-		$html = '</div>';
-		echo $html;
+		ob_start();
+		rpress_get_template_part( 'rpress', 'popup' );
+		echo ob_get_clean();
 	}
 }
 
@@ -452,6 +456,7 @@ function rpress_get_instruction_by_key( $cart_key ) {
 add_action('rpress_fooditems_list_after', 'rpress_get_cart_items');
 
 function rpress_get_cart_items() {
+	//$html = '</div>';
 	$html = '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right rpress-sidebar-cart item-cart sticky-sidebar">';
 	$html .= '<div class="rpress-sidebar-cart-wrap">';
 	$html .= do_shortcode('[fooditem_cart]');
@@ -538,43 +543,6 @@ function rpress_proceed_checkout() {
 
   $delivery_time = isset($_POST['deliveryTime']) ? $_POST['deliveryTime'] : '';
 	
-	//Check store timing is enabled or not
-	if( class_exists('RestroPress_Store_Timing') ) {
-		rpress_checkout_delivery_type($delivery_opt, $delivery_time);
-
-		$store_timings = rpress_get_store_timing();
-		//check store timings
-		if( isset($store_timings['enable']) ) {
-			$delivery_option = isset($_POST['deliveryOpt']) ? $_POST['deliveryOpt'] : '';
-
-			$store_timings_response = RestroPress_Store_Timing::check_store_timing($delivery_option);
-			$store_timings_response = json_decode($store_timings_response);
-
-			//Check store is closed
-			if( $store_timings_response->store_status == 'closed' ) {
-				$response = array( 'status' => 'error', 'store_status' => 'closed' );
-			}
-
-			if( $store_timings_response->store_status == 'opened' && $delivery_option == 'delivery' ) {
-				if( $store_timings_response->delivery_status == 'delivery closed' ) {
-					$response = array( 'status' => 'error', 'delivery_status' => 'delivery_closed' );
-				}
-				else {
-					$response = array( 'status' => 'success' );
-				}
-			}
-
-			if( $store_timings_response->store_status == 'opened' 
-				&& $delivery_option == 'pickup' ) {
-				$response = array( 'status' => 'success' );
-			}
-		}
-		else {
-			$response = array( 'status' => 'success' );
-		}
-		
-	}
-	else {
 		//Check minimum order 
 		$enable_minimum_order = rpress_get_option('allow_minimum_order');
 
@@ -597,8 +565,6 @@ function rpress_proceed_checkout() {
 			rpress_checkout_delivery_type($delivery_opt, $delivery_time);
 			$response = array( 'status' => 'success' );
 		endif;
-
-	}
 	
 	echo json_encode($response);
 
@@ -825,7 +791,7 @@ function rpress_display_checkout_fields() {
 
 	<?php if($enable_phone): ?>
 		<p id="rpress-phone-wrap">
-  		<label class="rpress-label" for="rpress-phone"><?php _e('Phone Number', 'restro-press'); ?></label>
+  		<label class="rpress-label" for="rpress-phone"><?php _e('Phone Number', 'restro-press'); ?><span class="rpress-required-indicator">*</span></label>
     	<span class="rpress-description">
     		<?php _e('Enter your phone number so we can get in touch with you.', 'restro-press'); ?>
     	</span>
@@ -875,7 +841,7 @@ function rpress_display_checkout_fields() {
 
   <?php if($enable_flat) : ?>
     <p id="rpress-door-flat">
-  		<label class="rpress-flat" for="rpress-flat"><?php _e('Door/Flat No.', 'restro-press'); ?></label>
+  		<label class="rpress-flat" for="rpress-flat"><?php _e('Door/Flat No.', 'restro-press'); ?><span class="rpress-required-indicator">*</span></label>
     	<span class="rpress-description">
     		<?php _e('Enter your Door/Flat number', 'restro-press'); ?> 
     	</span>
@@ -885,7 +851,7 @@ function rpress_display_checkout_fields() {
 
   <?php if($enable_landmark): ?>
     <p id="rpress-landmark">
-  	<label class="rpress-landmark" for="rpress-landmark"><?php _e('Land Mark', 'restro-press') ?></label>
+  	<label class="rpress-landmark" for="rpress-landmark"><?php _e('Land Mark', 'restro-press') ?><span class="rpress-required-indicator">*</span></label>
     <span class="rpress-description">
     	<?php _e('Enter Landmark Near By You', 'restro-press'); ?> 
     </span>

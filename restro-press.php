@@ -277,8 +277,6 @@ final class RestroPress {
 		
 		//Add frontend discount functionality
 		require_once RPRESS_PLUGIN_DIR . 'includes/discount-functions.php';
-		require_once RPRESS_PLUGIN_DIR . 'includes/discount-functions.php';
-
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/functions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/actions.php';
 		require_once RPRESS_PLUGIN_DIR . 'includes/payments/class-payment-stats.php';

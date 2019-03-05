@@ -53,10 +53,10 @@ function rpress_add_ons_page() {
  */
 function rpress_add_ons_get_feed() {
 	$items = get_transient( 'restropress_add_ons_feed' );
-	if( !$items ) {
+
+	if( ! $items ) {
 		$items = rpress_fetch_items();
 	}
-	$items = rpress_fetch_items();
 
 	$rpress_installed_addons = rpress_installed_addons();
 
@@ -106,11 +106,21 @@ function rpress_add_ons_get_feed() {
 						</div>
 						<!-- Addons price wrap ends here -->
 
+						<div class="restropress-installed-wrap">
+
 						<!-- Addons Installed Starts Here -->
-						<div class="restropress-btn-group rpress-installed-section">
+						<div class="restropress-btn-group rpress-installed-section pull-left">
 							<button class="button button-medium button-primary"><?php echo __('Installed', 'restro-press'); ?></button>
 						</div>
 						<!-- Addons Installed Ends Here -->
+
+						<!-- Addon Details Starts Here -->
+						<div class="restropress-btn-group rpress-addon-details-section pull-right">
+							<a class="button button-medium button-primary " target="_blank" href="<?php echo $item_link . '?utm_source=plugin&utm_medium=addon_page&utm_campaign=promote_addon' ?>" ><?php echo __('Addon Details', 'restro-press')?></a>
+						</div>
+						<!-- Addon Details Ends Here -->
+
+						</div>
 
 						<div class="rpress-purchased-wrap">
 							<span><?php echo $item->short_content; ?></span>

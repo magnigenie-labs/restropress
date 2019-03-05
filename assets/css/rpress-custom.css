@@ -16,7 +16,13 @@ div.rpress_fooditems_list .rpress_fooditem {
 	clear: both;
 	margin: 6px 0px;
 }
-html body .rpress-errors-wrap {text-align: center;}
+html body .rpress-errors-wrap {
+	text-align: center;
+	width: 90%;
+	margin: 0 auto;
+	padding: 6px;
+	margin-bottom: 20px;
+}
 html body .rpress-errors-wrap.enable {display: block;}
 html body .rpress-errors-wrap.disabled{display: none;}
 html body .rpress-delivery-time-wrap.preorder-enable, html body .rpress-pickup-time-wrap.preorder-enable {
@@ -28,27 +34,34 @@ html body .delivery-items-options .delivery-change {
 	cursor: pointer;
 	font-size: 12px;
 }
-html body .fancybox-delivery-options .fancybox-content.rpress-store-closed {
-	height: 150px !important;
-}
+
 html body .datepicker.datepicker-dropdown { width: 24%; }
 html body .ui-timepicker-wrapper {
 	z-index: 999999 !important; 
 	width: 290px;
 	text-align: center;
 }
+html body #rpressModal .modal-body{
+	max-height: 500px;
+	overflow-y: scroll;
+}
+html body #rpressModal.rpress-delivery-options .modal-body {
+	max-height: 100%;
+	overflow-y: auto; 
+}
+html body .datepicker-days .today.day {
+	background: #c33332;
+	color: #FFF;
+}
 .delivery-change{
 	margin-bottom: -25px;
 	color: #c33332;
 	font-weight: bold;
 }
-.fancybox-delivery-options .fancybox-close-small {
-	right: 2px;
-	top: -3px;
-}
 
-html body .fancybox-delivery-options .fancybox-main.rpress-delivery-popup
- .nav-pills > li.active > a, .nav-pills > li.active > a:hover{
+
+html body #rpressModal
+ .nav-pills > li.active > a, html body #rpressModal .nav-pills > html body #rpressModal li.active > html body #rpressModal a:hover{
 	margin-top: -2px;
     margin-bottom: -2px;
     margin-right: -2px;
@@ -84,18 +97,22 @@ html body .fancybox-delivery-options .fancybox-main.rpress-delivery-popup
 	border: 2px solid #ccc;
 	margin: 0;
 }
-html body .fancybox-delivery-options .fancybox-content{
-	width: 360px !important;
-	left: 37% !important;
-	height: 300px !important;
-	top: 60px !important;
-	overflow-y: hidden; 
+html body .modal-backdrop.fade.in {z-index: 99999;}
+html body div#rpressModal{z-index: 999999;}
+html body div#rpressModal button.close {
 	position: absolute;
+	right: 11px;
+	top: 15px;
+}
+html body .modal.rpress-delivery-options .modal-content {
+	width: 360px;
+	top: 90px;
+}
+html body .modal.rpress-delivery-options .modal-footer {
+	display: none;
 }
 html body .pickup-time-text, html body .delivery-time-text {text-transform: capitalize;}
-html body .fancybox-delivery-options .fancybox-content.pre-order-enable{
-	height: 310px !important;
-}
+
 .delivery-settings-wrapper #rpress-allowed-hours {
 	width: 100%;
 }
@@ -128,8 +145,8 @@ div.food-item-list span.cat_price {
 	float: right;
 }
 .rpress-popup-actions {
-	display: block;
-	margin-top: 30px;
+	/*display: block;
+	margin-top: 30px;*/
 }
 .rpress-popup-actions a.submit-fooditem-button, .rpress-popup-actions a.update-fooditem-button {
 	cursor: pointer;
@@ -179,7 +196,7 @@ div.rpress-element-title {
 	margin-bottom: 20px;
 }
 .view-food-item-wrap div {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 .rpress_fooditems_list h5.rpress-cat {
     text-decoration: underline;
@@ -236,6 +253,8 @@ a.rpress-order-time {text-align: left; display: block;}
 	display: block;
 	clear: both;
 	overflow: hidden;
+	width: 90%;
+	margin: 0 auto;
 }
 div.rpress-search-wrap #rpress-food-search {
 	background-image: url('../svg/search-icon.svg');
@@ -348,13 +367,11 @@ ul.rpress-category-lists .rpress-category-item {
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
-#fooditem-details h6.rpress-addon-category {
-	margin: 0 0 0.75em;
-	padding: 1.5em 0 0;
+#fooditem-details h6.rpress-addon-category, #fooditem-update-details h6.rpress-addon-category {
+	margin: 0 0 5px 0;
+	padding: 10px 0 10px 0;
 }
-div.fancybox-container {
-	z-index: 99999 !important;
-}
+
 
 .ui-timepicker-container.ui-timepicker-standard {
 	z-index: 9999999 !important;
@@ -846,53 +863,18 @@ div.rpress_fooditems_list.col-md-5 {
 #rpress_user_history th {
     background: #e4e4e4;
 }
-html body .rpress-delivery-popup .fancybox-first {
-	height: 310px !important;
-}
+
 /* Scroll bar style */
-html body .rpress-delivery-popup .fancybox-first::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #c33332;
-}
 
-html body .rpress-delivery-popup .fancybox-first::-webkit-scrollbar {
-	width: 5px;
-	background-color: #c33332;
-}
-
-html body .rpress-delivery-popup .fancybox-first::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
-}
-.fancybox-first {
-	cursor: pointer;
-	height: 511px !important;
-	top: 0px;
-	position: absolute;
-	margin: 0px auto;
-	overflow: auto;
-	padding: 24px;
-	text-align: left;
-	width: 100%;
-	left: 0;
-}
-.fancybox-close-small {
-	right: 32px;
-	top: 14px;
-}
 .view-food-item-wrap {
 	cursor: pointer;
-	height: 511px !important;
-	top: 0px;
-	position: absolute;
+	height: auto;
+	position: relative;
 	margin: 0px auto;
-	overflow: auto;
-	padding: 24px;
+	overflow: hidden;
+	padding: 0px;
 	text-align: left;
 	width: 100%;
-	left: 0;
 }
 table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
 	font-weight: 600;
@@ -915,7 +897,7 @@ table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
 	margin-left: 10px;
 	}
 #fooditem-details {
-	padding: 25px;
+	padding: 0px 16px;
 }
 .press-popup-actions .md-4-top {
 	margin-top: 10px !important;
@@ -923,19 +905,18 @@ table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
 .press-popup-actions .bold {
 	margin-left: 14px;
 }
+html body .rpress-popup-actions input.qty.qty-style {text-align: center;}
 .rpress-popup-actions .submit-fooditem-button {
 	font-size: 12px;
 	letter-spacing: 0.72px;
 	text-transform: uppercase;
 	text-align: center;
-	height: 56px;
 	background-color: #d4413c;
 	color: rgb(255, 255, 255);
 	font-weight: 600;
 	border-radius: 28px;
-	line-height: 54px;
-	width: 64%;
-	margin-left: 7px;
+	padding: 20px;
+	width: 100%;
 }
 .update-fooditem-button {
 	font-size: 12px;
@@ -964,15 +945,10 @@ input[type="button"] {
 	background-color: #fff !important;
 	border-radius: 40px !important;
 }
-.fancybox-container input[type="text"] {
-	border: 0px solid #bbb !important;
-	line-height: 37px;
-	text-align: center;
-}
+
 div.btn-count {
 	border: 1px solid #d9dbe080;
 	border-radius: 100px;
-	width: 35%;
 }
 .clearfix:after, .container:after, .container-fluid:after, 
 .row:after, .btn-toolbar:after, .nav:after, 
@@ -983,16 +959,7 @@ div.btn-count {
 .rpress-section input[type="radio"], .rpress-section input[type="checkbox"] {
 	display: inline-block;
 }
-.rpress-popup-actions.edit-rpress-popup-actions {
-	border-top: 1px solid #d9dbe080;
-	padding: 8px 12px 0px 30px;
-	width: 100%;
-	margin: 0 auto;
-	position: absolute;
-	background-color: #ffffff;
-	left: 0;
-	bottom: 14px;
-}
+
 button:hover {
 	background: #76767600 !important;
 	color: #d4413c;
@@ -1013,7 +980,7 @@ form#fooditem-update-details h6 {
 /*===================Edit pop-up===============
 =================================================*/
 #fooditem-update-details {
-	padding: 28px;
+	padding: 0 16px;
 }
 .view-food-item-wrap .qtyplus{
 	font-weight: bold;
@@ -1060,21 +1027,11 @@ form#fooditem-update-details h6 {
 	margin-right: 2px;
 	border-radius: 50px;
 }
-.fancybox-can-drag .fancybox-content {
-  cursor: pointer;
-  height: 600px !important;
-  top: 33px;
-  position: absolute;
-  margin: 0px auto;
-  left: 24%;
-  width: 600px !important;
- }
-.fancybox-content {
-	position: relative;
-}   
+  
 .edit-rpress-popup-actions  {
-	position: absolute;
-	bottom: 20px;
+	display: block;
+	clear: both;
+	overflow: hidden;
 }
 .price-text-left {
 	margin-left: 15px;
@@ -1108,9 +1065,7 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 /*=========================css for responsive=====================
 ===================================================================*/
 @media only screen and (max-width: 1024px) {
-	.fancybox-can-drag .fancybox-content {
-		left: 21%;
-  	}
+	
 }
 
 @media only screen and (max-width: 1024px) and (min-width: 992px) {
@@ -1121,7 +1076,8 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 
 @media only screen and (max-width: 991px) {
 	div.btn-count {
-		float: left;
+		overflow: hidden;
+		margin-bottom: 20px;
    }
   .rpress-popup-actions .submit-fooditem-button {
   	display: inline-block;
@@ -1129,6 +1085,10 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 }
 
 @media only screen and (max-width: 768px) {
+	html body .modal.rpress-delivery-options .modal-content {
+		width: auto;
+		top: 90px;
+	}
 	div.item-cart {
   	padding-bottom: 1px;
     margin-bottom: 40px;
@@ -1179,15 +1139,8 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	ul.rpress-list .rpress-category-item {
 		font-size: 15px;
 	}
-	.fancybox-can-drag .fancybox-content {
-		left: 11%;
-	}
-	.rpress-popup-actions.edit-rpress-popup-actions {
-		left: 11%;
-	}
-	div.btn-count {
-		width: 60%;
-	}
+	
+	
 	section.fullwidth.nav {
 		display: block;
 		margin-left: -15px;
@@ -1327,11 +1280,7 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	}
 }
 @media only screen and (max-width: 625px) {
-	.fancybox-can-drag .fancybox-content, 
-  .rpress-popup-actions.edit-rpress-popup-actions {
-  	width: 540px !important;
-    left: 7%;
-  }
+	
   .sticky-cat {
   	top: -15px !important;
 	  margin-left: -51px !important;
@@ -1363,11 +1312,7 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	.view-food-item-wrap .col-xs-4  {
 		width: 28.333333%;
 	}
-	html body .fancybox-container.fancybox-can-drag .fancybox-content, 
-	.rpress-popup-actions.edit-rpress-popup-actions {
-		width: 398px !important;
-   		left: 3% !important;
-	}
+	
 	.sticky-cat {
 		margin-left: -45px !important;
   }
@@ -1392,3 +1337,23 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
     padding: 16px 20px !important;
 	}
 }
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+}
+
+html body.fancybox-active {padding-right: 0px; margin: 0 auto;}

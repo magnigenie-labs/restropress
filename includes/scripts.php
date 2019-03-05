@@ -127,6 +127,8 @@ function rpress_load_scripts() {
 			'cutoff_hours'						=> $cutoff_hours,
 			'store_open_hours'				=> $open_hours,
 			'holiday_message'					=> $get_holiday_message,
+			'add_to_cart'							=> __('Add To Cart', 'restro-press'),
+			'update_cart'							=> __('Update Cart', 'restro-press'),
 		) ) );
 	}
 }
