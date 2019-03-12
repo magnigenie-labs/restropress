@@ -597,21 +597,25 @@ function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
  * @param       void
  * @return      string | Outputs the html for the delivery options with texts
  */
-function get_delivery_options() {
+function get_delivery_options($changeble) {
+	$color = rpress_get_option( 'checkout_color', 'red' );
 	$html = '';
 	$html .='<div class="delivery-wrap">';
 
-	if( isset($_COOKIE['deliveryMethod']) 
+	if( $changeble ) {
+		if( isset($_COOKIE['deliveryMethod']) 
 		&& $_COOKIE['deliveryMethod'] !== '' ) :
-		$html .= '<span class="delivery-change">'.__('Change?', 'restro-press').'</span>';
-	endif;
+			$html .= '<span class="delivery-change '.$color.' ">'.__('Change?', 'restro-press').'</span>';
+		endif;
+	}
+	
 
 	$html .='<div class="delivery-opts">';
 	if( isset($_COOKIE['deliveryMethod']) && $_COOKIE['deliveryMethod'] !== '' ) {
-		$html .= '<span>'.$_COOKIE['deliveryMethod'].'</span>';
+		$html .= '<span class="delMethod">'.$_COOKIE['deliveryMethod'].'</span>';
 		if( isset($_COOKIE['deliveryTime']) 
 		&& $_COOKIE['deliveryTime'] !== '' ) {
-			$html .= '<span> at '.$_COOKIE['deliveryTime'].'</span>';
+			$html .= '<span class="delTime"> at '.$_COOKIE['deliveryTime'].'</span>';
 		}
 	}
 	$html .='</div>';
@@ -787,6 +791,7 @@ function rpress_display_checkout_fields() {
 	$enable_flat = rpress_get_option('enable_door_flat');
 	$enable_landmark = rpress_get_option('enable_landmark');
 	$google_map_opts = rpress_get_option('enable_google_map_api');
+	$delivery_method = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : '';
 ?>
 
 	<?php if($enable_phone): ?>
@@ -840,6 +845,7 @@ function rpress_display_checkout_fields() {
   
 
   <?php if($enable_flat) : ?>
+  	<?php if( $delivery_method !== 'pickup') : ?>
     <p id="rpress-door-flat">
   		<label class="rpress-flat" for="rpress-flat"><?php _e('Door/Flat No.', 'restro-press'); ?><span class="rpress-required-indicator">*</span></label>
     	<span class="rpress-description">
@@ -847,9 +853,11 @@ function rpress_display_checkout_fields() {
     	</span>
     	<input class="rpress-input" type="text" name="rpress_door_flat" id="rpress-door-flat" placeholder="Door/Flat Number" />
     </p>
+	<?php endif; ?>
   <?php endif; ?>
 
   <?php if($enable_landmark): ?>
+  	<?php if( $delivery_method !== 'pickup') : ?>
     <p id="rpress-landmark">
   	<label class="rpress-landmark" for="rpress-landmark"><?php _e('Land Mark', 'restro-press') ?><span class="rpress-required-indicator">*</span></label>
     <span class="rpress-description">
@@ -857,6 +865,7 @@ function rpress_display_checkout_fields() {
     </span>
     <input class="rpress-input" type="text" name="rpress_landmark" id="rpress-landmark" placeholder="Landmark" />
     </p>
+	<?php endif; ?>
   <?php endif; ?>
 
   <?php
@@ -874,6 +883,7 @@ function rpress_required_checkout_fields( $required_fields ) {
 	$enable_phone = rpress_get_option('enable_phone');
 	$enable_flat = rpress_get_option('enable_door_flat');
 	$enable_landmark = rpress_get_option('enable_landmark');
+	$delivery_method = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : '';
 
 	if( $enable_phone ) :
 		$required_fields['rpress_phone'] = array(
@@ -883,17 +893,21 @@ function rpress_required_checkout_fields( $required_fields ) {
 	endif;
 
 	if( $enable_flat ) :
-  	$required_fields['rpress_door_flat'] = array(
+		if( $delivery_method !== 'pickup' ) :
+  		$required_fields['rpress_door_flat'] = array(
   		'error_id' 			=> 'invalid_door_flat',
     	'error_message' => __('Please enter your door flat', 'restro-press')
-  	);
+  		);
+  	endif;
   endif;
 
   if( $enable_landmark ):
-  	$required_fields['rpress_landmark'] = array(
+  	if( $delivery_method !== 'pickup' ) :
+  		$required_fields['rpress_landmark'] = array(
   		'error_id' 			=> 'invalid_landmark',
     	'error_message' => __('Please enter landmark', 'restro-press')
   	);
+  	endif;
   endif;
 
 

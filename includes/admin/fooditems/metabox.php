@@ -995,7 +995,7 @@ function rpress_render_meta_box_shortcode() {
 
 	$purchase_text = rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restro-press' ) );
 	$style         = rpress_get_option( 'button_style', 'button' );
-	$color         = rpress_get_option( 'checkout_color', 'blue' );
+	$color         = rpress_get_option( 'checkout_color', 'red' );
 	$color         = ( $color == 'inherit' ) ? '' : $color;
 	$shortcode     = '[purchase_link id="' . absint( $post->ID ) . '" text="' . esc_html( $purchase_text ) . '" style="' . $style . '" color="' . esc_attr( $color ) . '"]';
 ?>

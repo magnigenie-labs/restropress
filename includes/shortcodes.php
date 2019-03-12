@@ -35,7 +35,7 @@ function rpress_fooditem_shortcode( $atts, $content = null ) {
 		'direct'        => '0',
 		'text'          => '',
 		'style'         => rpress_get_option( 'button_style', 'button' ),
-		'color'         => rpress_get_option( 'checkout_color', 'blue' ),
+		'color'         => rpress_get_option( 'checkout_color', 'red' ),
 		'class'         => 'rpress-submit',
 		'form_id'       => ''
 	),
@@ -293,7 +293,7 @@ function rpress_purchase_collection_shortcode( $atts, $content = null ) {
 			'terms'		=> '',
 			'text'		=> __('Purchase All Items','restro-press' ),
 			'style'     => rpress_get_option( 'button_style', 'button' ),
-			'color'     => rpress_get_option( 'checkout_color', 'blue' ),
+			'color'     => rpress_get_option( 'checkout_color', 'red' ),
 			'class'		=> 'rpress-submit'
 		), $atts, 'purchase_collection' )
 	);
@@ -356,6 +356,8 @@ function get_rpress_fooditems( $atts, $content = null ) {
 
 	//Get food category items
 	echo apply_filters( 'rpress_food_cats', array() );
+
+	$color = rpress_get_option( 'checkout_color', 'red' );
 
 	//Get food category names
 	$taxonomy_name = 'food-category';
@@ -458,7 +460,7 @@ function get_rpress_fooditems( $atts, $content = null ) {
 		
 				if( $class == 'rpress-different-cat' ) :
 					$get_food_html .= '<div id="menu-category-'.$get_food_id.'" class="rpress-element-title" id="'.$get_food_id.'" data-term-id="'.$get_food_id.'">';
-					$get_food_html .= '<h5 class="rpress-cat rpress-different-cat"  >'.$get_food_cat.'</h5>';
+					$get_food_html .= '<h5 class="rpress-cat rpress-different-cat '.$color.' "  >'.$get_food_cat.'</h5>';
 					if( $get_description !== '' ) {
 						$get_food_html .= '<span>'.$get_description.'</span>';
 					}

@@ -8,7 +8,7 @@ do_action( 'rpress_print_errors' ); ?>
 
 <?php 
 if ( ! is_user_logged_in() ) : 
-	$color = rpress_get_option( 'checkout_color', 'blue' );
+	$color = rpress_get_option( 'checkout_color', 'red' );
 	$color = ( $color == 'inherit' ) ? '' : $color;
 	$style = rpress_get_option( 'button_style', 'button' );
 ?>

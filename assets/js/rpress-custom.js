@@ -61,10 +61,11 @@ jQuery(function($) {
               $('.cart_item.rpress-cart-meta.rpress_subtotal').find('.subtotal').text(response.total);
   						$('.cart_item.rpress-cart-meta.rpress_total').css('display', 'block');
               $('.cart_item.rpress-cart-meta.rpress_subtotal').css('display', 'block');
+              $('.cart_item.rpress_checkout').addClass(rpress_scripts.button_color);
   						$('.cart_item.rpress_checkout').css('display', 'block');
               
               if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
-                $('.delivery-items-options').find('.delivery-opts').text( DeliveryMethod +' at '+ DeliveryTime );
+                $('.delivery-items-options').find('.delivery-opts').html('<span class="delMethod">'+ DeliveryMethod +'</span><span class="delTime"> at '+ DeliveryTime + '</span>' );
 
                 if( $('.delivery-wrap .delivery-change').length == 0 ) {
                   $( "<span class='delivery-change'>Change?</span>" ).insertBefore( ".delivery-opts" );
@@ -294,6 +295,11 @@ jQuery(function($) {
 		$(this).parents('div.modal-footer').find('a.submit-fooditem-button').attr('data-item-qty', liveQtyVal);
 
 	});
+
+  //Close minimum order error modal
+  $('body').on('click', '#rpress-err-close-button', function() {
+    $.fancybox.close();
+  });
 
 	$(document).on('click', 'a.special-instructions-link', function(e) {
 		e.preventDefault();

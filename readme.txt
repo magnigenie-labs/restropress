@@ -4,7 +4,7 @@ Tags: Food Ordering System,Online Food Ordering System,Food Ordering, WordPress 
 Requires at least: 4.0
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 1.0.6
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ RestroPress has a user friendly frontend and backend interface which will allow 
 Check  [RestroPress Website](http://restropress.magnigenie.com/) for details and support.
 
 = Restropress Demo =
-Check  [RestroPress Demo Website](http://restropress.magnigenie.com/demo/) 
+Check  [RestroPress Demo Website](https://demo.restropress.com/) 
 
 = Benefits: =
 * 100% Free and easy to install and setup.
@@ -49,6 +49,24 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 
 == ChangeLog ==
+
+= Version 2.0 =
+* Changed checkout layout
+* Changed quantity box design
+* fixed css issues
+* fixed option for color theme
+* js modified for change delivery options
+* Added addons page in the admin 
+
+
+= Version 1.0.7 =
+* Fixed email issue when order placed
+* Fixed store open hours issue
+* Replaced bootstrap modal with fancybox
+* Fixed responsive issues
+* js modified
+* css fixed
+
 = Version 1.0.6 =
 * js modified
 * Discount code functionality added in admin
@@ -93,6 +111,6 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 == Upgrade Notice ==
 
-= Version 1.0.6 =
+= Version 2.0 =
 
 * New update is available.

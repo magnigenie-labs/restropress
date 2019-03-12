@@ -31,7 +31,7 @@ function rpress_checkout_cart() {
 	}
 
 	do_action( 'rpress_before_checkout_cart' );
-	echo '<form id="rpress_checkout_cart_form" method="post">';
+	echo '<form id="rpress_checkout_cart_form" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right" method="post">';
 		echo '<div id="rpress_checkout_cart_wrap">';
 			do_action( 'rpress_checkout_cart_top' );
 			rpress_get_template_part( 'checkout_cart' );
@@ -92,7 +92,7 @@ function rpress_get_cart_item_template( $cart_key, $item, $ajax = false, $data_k
 	$price      = rpress_get_cart_item_price( $id, $options );
 	$addon_itm  = get_addon_item_formatted($item);
 	$instruction = get_special_instruction($item);
-	$delivery_options = get_delivery_options();
+	$delivery_options = get_delivery_options(true);
 	$item_qty   = rpress_get_item_qty_by_key( $cart_key );
 
 	ob_start();
@@ -231,7 +231,7 @@ function rpress_save_cart_button() {
 	if ( rpress_is_cart_saving_disabled() )
 		return;
 
-	$color = rpress_get_option( 'checkout_color', 'blue' );
+	$color = rpress_get_option( 'checkout_color', 'red' );
 	$color = ( $color == 'inherit' ) ? '' : $color;
 
 	if ( rpress_is_cart_saved() ) : ?>
@@ -268,7 +268,7 @@ function rpress_update_cart_button() {
 	if ( ! rpress_item_quantities_enabled() )
 		return;
 
-	$color = rpress_get_option( 'checkout_color', 'blue' );
+	$color = rpress_get_option( 'checkout_color', 'red' );
 	$color = ( $color == 'inherit' ) ? '' : $color;
 ?>
 	<input type="submit" name="rpress_update_cart_submit" class="rpress-submit rpress-no-js button<?php echo ' ' . $color; ?>" value="<?php _e( 'Update Cart', 'restro-press' ); ?>"/>

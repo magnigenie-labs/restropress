@@ -340,7 +340,7 @@ function rpress_getCookie(cname) {
       var DeliveryTime = rpress_getCookie('deliveryTime');
 
       if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
-      	$('.delivery-items-options').find('.delivery-opts').html('<span>' +DeliveryMethod+ '</span> <span> at '+DeliveryTime+ '</span>' ); 
+      	$('.delivery-items-options').find('.delivery-opts').html('<span class="delMethod">' +DeliveryMethod+ '</span> <span class="delTime"> at '+DeliveryTime+ '</span>' ); 
       	$('#rpressModal').modal('hide');     
       }
 		}
@@ -454,6 +454,7 @@ function rpress_getCookie(cname) {
 
 		var data   = {
 			action: action,
+			changedate : 'yes',
 		};
 
 		$.fancybox.open({
@@ -479,6 +480,7 @@ function rpress_getCookie(cname) {
 
 				$('#rpressModal').addClass('rpress-delivery-options');
 
+
 				$('#rpressModal .modal-body').html(response);
 				$('#rpressModal').modal();
 
@@ -487,8 +489,14 @@ function rpress_getCookie(cname) {
 				var OrderDate = rpress_getCookie('OrderDate');
 
 				if( DeliveryMethod !== '' || DeliveryMethod !== undefined ) {
-					$('.rpress-delivery-wrap').find('.rpress-'+DeliveryMethod+'-time-wrap' ).show();
-					$('.rpress-delivery-wrap').find('.rpress-'+ DeliveryMethod ).val(DeliveryTime);
+					// $('.rpress-delivery-wrap').find('.rpress-'+DeliveryMethod+'-time-wrap' ).show();
+					// $('.rpress-delivery-wrap').find('.rpress-'+ DeliveryMethod ).val(DeliveryTime);
+					$('.rpress-delivery-wrap').find('.rpress-pickup').val(DeliveryTime);
+					$('.rpress-delivery-wrap').find('.rpress-delivery').val(DeliveryTime);
+					//$('#rpressModal').find('rpress-pickup-time-wrap.rpress-time-wrap').show();
+					$('.rpress-delivery-wrap').find('.rpress-delivery-time-wrap' ).show();
+					$('.rpress-delivery-wrap').find('.rpress-pickup-time-wrap' ).show();
+
 				}
 
 				if( OrderDate !== '' || OrderDate != undefined ) {
@@ -531,6 +539,12 @@ function rpress_getCookie(cname) {
     					if( dayName !== '' ) {
     						var getTimes = rpress_scripts.cutoff_hours[dayName];
     						var getOpenHrs = rpress_scripts.store_open_hours[dayName];
+    						
+    						$('input#rpress-delivery-hours').val('');
+    						$('input#rpress-pickup-hours').val('');
+
+    						$('input#rpress-delivery-hours').timepicker('remove');
+    						$('input#rpress-pickup-hours').timepicker('remove');
 
     						$('input#rpress-delivery-hours').timepicker({
 									'scrollDefault': 'now',

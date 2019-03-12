@@ -28,7 +28,7 @@ function rpress_checkout_form() {
 
 			rpress_checkout_cart();
 ?>
-			<div id="rpress_checkout_form_wrap" class="rpress_clearfix">
+			<div id="rpress_checkout_form_wrap" class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
 				<?php do_action( 'rpress_before_purchase_form' ); ?>
 				<form id="rpress_purchase_form" class="rpress_form" action="<?php echo $form_action; ?>" method="POST">
 					<?php
@@ -70,6 +70,38 @@ function rpress_checkout_form() {
 		endif;
 		echo '</div><!--end #rpress_checkout_wrap-->';
 	return ob_get_clean();
+}
+
+
+/**
+ * Renders the user account link
+ *
+ * @since  1.0.8
+ * @return string
+ */
+//add_action('rpress_purchase_form_top', 'rpress_checkout_user_account');
+function rpress_checkout_user_account() {
+	ob_start(); ?>
+		<div class="rpress-checkout-account-wrap rpress-checkout-block">
+			<h6><?php echo __('Account', 'restro-press'); ?></h6>
+			<p><?php echo __('To place your order now, log into your existing account or signup', 'restro-press'); ?></p>
+			<div class="clear"></div>
+			<div class="rpress-checkout-button-actions">
+				<div class="col-md-4 col-lg-4 col-sm-6">
+					<span><?php echo __('Have an account?', 'restro-press'); ?></span>
+					<a href="<?php echo esc_url( add_query_arg( 'login', 1 ) ); ?>" class="rpress_checkout_register_login col-md-12 col-lg-12 col-sm-12" data-action="checkout_login"><?php _e( 'Login', 'restro-press' ); ?></a>
+				</div>
+				<div class="col-md-5 col-lg-5 col-sm-6">
+					<span><?php echo __('New to RestroPress?', 'restro-press'); ?></span>
+					<a href="<?php echo esc_url( remove_query_arg('login') ); ?>" class="rpress_checkout_register_login col-md-12 col-lg-12 col-sm-12" data-action="checkout_register">
+						<?php _e( 'Register', 'restro-press' ); if(!rpress_no_guest_checkout()) { echo ' ' . __( 'or checkout as a guest.', 'restro-press' ); } ?>
+					</a>
+				</div>
+			</div>
+			
+		</div>
+	<?php
+	echo ob_get_clean();
 }
 
 /**
@@ -535,7 +567,7 @@ add_action( 'rpress_purchase_form_register_fields', 'rpress_get_register_fields'
  * @return string
  */
 function rpress_get_login_fields() {
-	$color = rpress_get_option( 'checkout_color', 'gray' );
+	$color = rpress_get_option( 'checkout_color', 'red' );
 	$color = ( $color == 'inherit' ) ? '' : $color;
 	$style = rpress_get_option( 'button_style', 'button' );
 
@@ -637,6 +669,7 @@ function rpress_payment_mode_select() {
 		</form>
 		<?php } ?>
 	</div>
+	<?php do_action('rpress_after_payment_gateways'); ?>
 	<div id="rpress_purchase_form_wrap"></div><!-- the checkout fields are loaded into this-->
 
 	<?php do_action('rpress_payment_mode_bottom');
@@ -653,16 +686,14 @@ add_action( 'rpress_payment_mode_select', 'rpress_payment_mode_select' );
 */
 function rpress_show_payment_icons() {
 
-	if( rpress_show_gateways() && did_action( 'rpress_payment_mode_top' ) ) {
-		return;
-	}
-
 	$payment_methods = rpress_get_option( 'accepted_cards', array() );
 
 	if( empty( $payment_methods ) ) {
 		return;
 	}
 
+	echo '<fieldset id="rpress_payment_icons">';
+	echo '<legend>'.__('Accepted Cards', 'restro-press').'</legend>';
 	echo '<div class="rpress-payment-icons">';
 
 	foreach( $payment_methods as $key => $card ) {
@@ -705,9 +736,11 @@ function rpress_show_payment_icons() {
 	}
 
 	echo '</div>';
+	echo '</fieldset>';
+	
 }
-add_action( 'rpress_payment_mode_top', 'rpress_show_payment_icons' );
-add_action( 'rpress_checkout_form_top', 'rpress_show_payment_icons' );
+add_action( 'rpress_after_payment_gateways', 'rpress_show_payment_icons' );
+//add_action( 'rpress_checkout_form_top', 'rpress_show_payment_icons' );
 
 
 /**
@@ -730,7 +763,7 @@ function rpress_discount_field() {
 
 	if ( rpress_has_active_discounts() && rpress_get_cart_total() ) :
 
-		$color = rpress_get_option( 'checkout_color', 'blue' );
+		$color = rpress_get_option( 'checkout_color', 'red' );
 		$color = ( $color == 'inherit' ) ? '' : $color;
 		$style = rpress_get_option( 'button_style', 'button' );
 ?>
@@ -931,7 +964,7 @@ add_action( 'rpress_purchase_form_after_cc_form', 'rpress_checkout_submit', 9999
  * @return string
  */
 function rpress_checkout_button_next() {
-	$color = rpress_get_option( 'checkout_color', 'blue' );
+	$color = rpress_get_option( 'checkout_color', 'red' );
 	$color = ( $color == 'inherit' ) ? '' : $color;
 	$style = rpress_get_option( 'button_style', 'button' );
 	$purchase_page = rpress_get_option( 'purchase_page', '0' );
@@ -952,7 +985,7 @@ function rpress_checkout_button_next() {
  * @return string
  */
 function rpress_checkout_button_purchase() {
-	$color = rpress_get_option( 'checkout_color', 'blue' );
+	$color = rpress_get_option( 'checkout_color', 'red' );
 	$color = ( $color == 'inherit' ) ? '' : $color;
 	$style = rpress_get_option( 'button_style', 'button' );
 	$label = rpress_get_checkout_button_purchase_label();

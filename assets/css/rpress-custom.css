@@ -22,8 +22,10 @@ html body .rpress-errors-wrap {
 	margin: 0 auto;
 	padding: 6px;
 	margin-bottom: 20px;
+	background: #ac2925;
+	color: #FFF;
 }
-html body .rpress-errors-wrap.enable {display: block;}
+html body .rpress-errors-wrap.enable {display: block; }
 html body .rpress-errors-wrap.disabled{display: none;}
 html body .rpress-delivery-time-wrap.preorder-enable, html body .rpress-pickup-time-wrap.preorder-enable {
 	display: none;
@@ -41,6 +43,18 @@ html body .ui-timepicker-wrapper {
 	width: 290px;
 	text-align: center;
 }
+html body #rpressModal .modal-header button.close {
+	background: #808080;
+	opacity: 1;
+	border-radius: 0;
+	width: 23px;
+	text-align: center;
+	text-shadow: none;
+	color: #FFF;
+}
+html body #rpressModal .modal-header button.close:hover {
+	background: #808080 !important;
+}
 html body #rpressModal .modal-body{
 	max-height: 500px;
 	overflow-y: scroll;
@@ -55,7 +69,6 @@ html body .datepicker-days .today.day {
 }
 .delivery-change{
 	margin-bottom: -25px;
-	color: #c33332;
 	font-weight: bold;
 }
 
@@ -68,16 +81,10 @@ html body #rpressModal
     padding: 8px !important;
     margin-left: -2px;
     border-radius: 0px;
-    background: #c33332;
 }
 .btn.btn-block.btn-primary{
-	background: #c33332;
 	border: none;
 	margin-top: 20px;
-}
-.btn.btn-block.btn-primary:hover{
-	color: #c33332;
-	border: 1px solid #c33332;
 }
 .rpress-delivery-options ul#rpressdeliveryTab.nav > li > a{
 	text-align: center;
@@ -183,6 +190,28 @@ div.food-item-list span.cat_price {
 .rpress_checkout_cart_item_qty {
 	padding-right: 20px;
 }
+#rpress_checkout_cart_wrap .rpress_cart_item_name {
+	width: 100%;
+	padding: 4px 10px;
+}
+#rpress_checkout_cart_wrap .rpress_cart_total {padding: 10px;}
+#rpress_checkout_cart_wrap .rpress_cart_amount {padding-top: 0px;}
+#rpress_checkout_cart_wrap th {
+	padding: 5px;
+	border-top: none;
+	border-bottom: none;
+}
+#rpress_checkout_cart_wrap .delivery-wrap {
+	text-align: center;
+	margin-top: 20px;
+}
+#rpress_checkout_cart_wrap .delivery-wrap span {
+	font-weight: normal;
+}
+#rpress_checkout_cart_wrap .rpress_cart_subtotal_amount {padding: 0;}
+#rpress_checkout_cart_wrap .rpress.item-order h6 {
+	margin-bottom: 0px;
+}
 div.rpress-element-title {
 	display: block;
 	clear: both;
@@ -202,7 +231,6 @@ div.rpress-element-title {
     text-decoration: underline;
     width: 100%;
     margin-bottom: 20px;
-    color: #d4413c;
     text-transform: capitalize;
     display: block;
     font-size: 17px;
@@ -308,6 +336,8 @@ html body .rpress_get_delivery_dates {
 	position: relative;
 	top: 0px;
 }
+
+#rpress_checkout_wrap  span.rpress-cart-item-title {width: 60%;}
 
 
 .rpress-tabs div.rpress-Tabs-panel#tab-menu {
@@ -482,7 +512,6 @@ html body .rpress_fooditem_inner {
 }
 ul.rpress-cart span.cart-total {
 	float: right;
-	color: #c33332;
 	font-weight: 600;
 	margin-right: 47px;
 }
@@ -503,6 +532,12 @@ ul.rpress-cart span.cart-total {
 }
 .rpress-edit-from-cart{
 	margin-left: 5px;
+}
+#rpress_checkout_wrap .rpress-cart .cart-action-wrap {
+	float: none;
+}
+#rpress_checkout_wrap .rpress-cart .cart-action-wrap.addon-items {
+	display: none;
 }
 .rpress-cart .cart-action-wrap {
 	float: right;
@@ -541,7 +576,6 @@ ul.rpress-cart span.cart-total {
 }
 .rpress-cart .rpress_checkout a {
 	padding: 10px;
-	background-color: #c33332;
 	display: block;
 	border-radius: 3px;
 	font-family: 'Montserrat', sans-serif;
@@ -582,6 +616,7 @@ ul.rpress-cart span.cart-total {
 	width: 18%;
 }
 /* Rpress Item Order */
+#rpress_checkout_cart_wrap .rpress.item-order {border-bottom: none;}
 .rpress.item-order {
 	display: block;
 	border-bottom: 1px solid #ebedf3;
@@ -600,7 +635,6 @@ ul.rpress-cart span.cart-total {
 }
 .rpress_purchase_submit_wrapper .rpress-add-to-cart-label {
 	font-size: 20px;
-	color: #d4413c;
 	line-height: 25px;
 	position: absolute;
 	left: 4px;
@@ -641,8 +675,30 @@ ul.rpress-cart span.cart-total {
 	width: 13px;
 	height: auto;
 }
+.rpress_checkout_wrap .rpress-cart .remove_icon img {
+	width: 13px !important;
+}
+#rpress_purchase_form #rpress-purchase-button, #rpress_purchase_form #rpress-user-login-submit input {
+	padding: 9px 24px;
+}
+.rpress-checkout-button-actions {
+	display: block;
+	clear: both;
+	overflow: hidden;
+	margin-top: 20px;
+}
+.rpress-checkout-button-actions span {
+	display: block; 
+	text-align: center;
+	margin-bottom: 10px;
+}
+.rpress-checkout-button-actions a {
+	border: 1px solid #ccc;
+	text-align: center;
+	padding: 4px 10px;
+}
 .rpress-cart .remove_icon img {
-	width: 19px !important;
+	width: 13px !important;
 	height: auto;
 	float: none !important;
 }
@@ -650,6 +706,15 @@ ul.rpress-cart span.cart-total {
 	width: 16px;
 	height: auto;
 }
+.rpress-checkout-block {
+	border: 1px solid #eee;
+	padding: 10px;
+	margin-bottom: 20px;
+	display: block;
+	clear: both;
+	overflow: hidden;
+}
+
 .rpress-cart .cart_icon, .rpress-cart .order-icn {
   display: inline-block;
 }
@@ -696,8 +761,11 @@ input.pick {
 .delivery-opts {
 	display: inline-block;
 }
-.delivery-opts>span{
+.delivery-opts span.delMethod{
 	text-transform: capitalize;
+}
+.delivery-opts span.delTime {
+	text-transform: lowercase;
 }
 .ui-timepicker-standard a {
 	font-size: 14px;
@@ -712,9 +780,7 @@ input.pick {
 .pull-right {
 	padding-top: 10px;
 }
-a.rpress-clear-cart:hover {
-	color: #c33332 !important;
-}
+
 input#rpress-allowed-hours {
     background: #f7f7f700;
 }
@@ -757,9 +823,17 @@ section.fullwidth.nav {
 #rpress_purchase_form_wrap #rpress-purchase-button {
 	margin-top: 15px;
 }
-#rpress_checkout_cart a.rpress-cart-saving-button {
+#rpress_checkout_cart_form a.rpress-cart-saving-button {
     padding: 5px 15px;
     font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+}
+#rpress_checkout_cart_form .rpress_cart_remove_item_btn{
+	float: right;
+	position: relative;
+	top: 7px;
+	width: 10%;
 }
 #rpress_checkout_cart .rpress_cart_header_row th {
     padding: 15px;
@@ -772,6 +846,7 @@ section.fullwidth.nav {
 #rpress_checkout_cart td img {
 	width: 40px;
 }
+
 #rpress_checkout_cart #item_thumbnail, #rpress_checkout_cart .tb-cart {display: inline-block;}
 
 #rpress_checkout_form_wrap .rpress-payment-icons {
@@ -789,6 +864,16 @@ section.fullwidth.nav {
 	text-align: center;
 	position: relative;
 	top: 4px;
+}
+#rpress_checkout_cart_wrap .rpress-checkout-item-row {
+	position: relative;
+	width: 100%;
+	margin-bottom: 10px;
+}
+#rpress_checkout_cart_form .rpress-cart .cart-item-quantity-wrap {
+	float: none;
+	top: 0px;
+	width: 30%;
 }
 .rpress-cart .addon-item-wrap span.addon-item-price {
 	width: 45%;
@@ -864,6 +949,9 @@ div.rpress_fooditems_list.col-md-5 {
     background: #e4e4e4;
 }
 
+/* Checkout Page Style */
+
+
 /* Scroll bar style */
 
 .view-food-item-wrap {
@@ -905,17 +993,21 @@ table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
 .press-popup-actions .bold {
 	margin-left: 14px;
 }
-html body .rpress-popup-actions input.qty.qty-style {text-align: center;}
+.rpress-popup-actions .qtyminus-style { 
+  content: 'Hello';
+  color: #F00;
+  font-size: 16px;
+}
+html body .rpress-popup-actions input.qty.qty-style {text-align: center; height: 42px; margin-top: 2px;}
 .rpress-popup-actions .submit-fooditem-button {
 	font-size: 12px;
 	letter-spacing: 0.72px;
 	text-transform: uppercase;
 	text-align: center;
-	background-color: #d4413c;
 	color: rgb(255, 255, 255);
 	font-weight: 600;
-	border-radius: 28px;
-	padding: 20px;
+	border-radius: 4px;
+	padding: 12px 0px;
 	width: 100%;
 }
 .update-fooditem-button {
@@ -939,16 +1031,21 @@ html body .rpress-popup-actions input.qty.qty-style {text-align: center;}
 .edit-pop-up-custom-button a {
 	color: #ffffff;
 }
-input[type="button"] {
-	height: 56px;
+
+div.rpress-popup-actions input[type="button"] {
 	color: #2d3138 !important;
 	background-color: #fff !important;
-	border-radius: 40px !important;
+	position: absolute;
+	top: -14px !important;
+	left: 15px;
+	background-color: transparent !important;
+	font-size: 28px !important;
+	font-weight: normal !important; 
 }
 
 div.btn-count {
 	border: 1px solid #d9dbe080;
-	border-radius: 100px;
+	border-radius: 5px;
 }
 .clearfix:after, .container:after, .container-fluid:after, 
 .row:after, .btn-toolbar:after, .nav:after, 
@@ -999,7 +1096,6 @@ form#fooditem-update-details h6 {
 }
 .special-margin a, 
 .special-inst a {
-	color: #d4413c;
   font-weight: 500;
   margin-bottom: 8px;
   display: block;
@@ -1139,8 +1235,6 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	ul.rpress-list .rpress-category-item {
 		font-size: 15px;
 	}
-	
-	
 	section.fullwidth.nav {
 		display: block;
 		margin-left: -15px;
@@ -1213,14 +1307,20 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	}
 	.nav-scroller {
 		overflow: hidden;
-	    overflow-x: hidden;
+	  overflow-x: hidden;
 	}
 	.rpress-list {
 		display: none;
 	}
 	.btn-primary {
 		color: #efefef !important;
-		font-size: 27px !important;
+		font-size: 27px;
+	}
+	html body .rpress-tabs-wrapper button.btn-primary {
+		font-size: 15px;
+	}
+	html body .datepicker-days > table {
+		background: #FFF;
 	}
 	.nav-scroller-item.selected {
 		border-bottom: 1px solid #c33332;
@@ -1238,7 +1338,6 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 		border-bottom: 1px solid #ececec;
 	  border-width: 0 0 4px;
 	}
-	
 	.container.scroll-class {
 		padding-right: 50px;
    	padding-left: 50px;
@@ -1279,9 +1378,9 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 		width: 100% !important;
 	}
 }
-@media only screen and (max-width: 625px) {
-	
-  .sticky-cat {
+
+@media only screen and (max-width: 625px) {	
+	.sticky-cat {
   	top: -15px !important;
 	  margin-left: -51px !important;
   }
@@ -1293,7 +1392,6 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	}
 }
 @media only screen and (max-width: 768px) {
-	
 	.view-food-item-wrap .col-sm-3 {
   	width: 17%;
 	} 
@@ -1312,7 +1410,6 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	.view-food-item-wrap .col-xs-4  {
 		width: 28.333333%;
 	}
-	
 	.sticky-cat {
 		margin-left: -45px !important;
   }

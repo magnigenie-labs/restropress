@@ -1,1 +1,1370 @@
-@charset "UTF-8";.rpress-icon{display:inline-block;fill:currentColor;position:relative;top:-.0625em;vertical-align:middle;width:1em;height:1em}.rpress-icon-lock{top:-.125rem}.rpress-icon-spin{display:inline-block;-moz-animation:rpress-icon-spin 2s infinite linear;-o-animation:rpress-icon-spin 2s infinite linear;-webkit-animation:rpress-icon-spin 2s infinite linear;animation:rpress-icon-spin 2s infinite linear}@-moz-keyframes rpress-icon-spin{0%{-moz-transform:rotate(0)}100%{-moz-transform:rotate(359deg)}}@-webkit-keyframes rpress-icon-spin{0%{-webkit-transform:rotate(0)}100%{-webkit-transform:rotate(359deg)}}@-o-keyframes rpress-icon-spin{0%{-o-transform:rotate(0)}100%{-o-transform:rotate(359deg)}}@-ms-keyframes rpress-icon-spin{0%{-ms-transform:rotate(0)}100%{-ms-transform:rotate(359deg)}}@keyframes rpress-icon-spin{0%{transform:rotate(0)}100%{transform:rotate(359deg)}}.rpress_clearfix:after{display:block;visibility:hidden;float:none;clear:both;text-indent:-9999px;content:"."}#rpress_checkout_cart{text-align:left;width:100%;border:none;margin:0 0 21px;table-layout:auto}#rpress_checkout_cart td,#rpress_checkout_cart th{text-align:left;border:1px solid #eee;color:#666;padding:.5em 1.387em}#rpress_checkout_cart .rpress_cart_header_row th{background:#fafafa;padding:1.387em}#rpress_checkout_cart .rpress_cart_discount_row th,#rpress_checkout_cart .rpress_cart_tax_row th{background:0 0}#rpress_checkout_cart th{font-weight:700}#rpress_checkout_cart td{line-height:25px;vertical-align:middle;background:#fff}#rpress_checkout_cart td.rpress_cart_actions,#rpress_checkout_cart td:last-child,#rpress_checkout_cart th.rpress_cart_actions,#rpress_checkout_cart th.rpress_cart_total,#rpress_checkout_cart th:last-child{text-align:right}#rpress_checkout_cart td img{float:left;margin:0 8px 0 0;background:0 0;padding:0;border:none}#rpress_checkout_cart input.rpress-item-quantity{width:3em;padding:2px}#rpress_checkout_cart .rpress_discount{display:inline-block;margin-left:5px}.rpress_discount_remove{display:inline-block;width:10px;height:11px;background:url(images/xit.gif ) 0 0 no-repeat;position:relative;top:3px}.rpress_discount_remove:hover{background-position:-10px 0}#rpress_checkout_cart br{display:none}#rpress_checkout_cart a.rpress-cart-saving-button{font-weight:400;text-decoration:none}#rpress_checkout_form_wrap legend{display:block;font-size:120%;line-height:1;font-weight:700;width:100%;margin:0 0 21px;padding:0}#rpress_checkout_form_wrap label{font-weight:700;display:block;position:relative;line-height:100%;font-size:95%;margin:0 0 5px}#rpress_checkout_form_wrap label:after{display:block;visibility:hidden;float:none;clear:both;height:0;text-indent:-9999px;content:"."}#rpress_checkout_form_wrap span.rpress-description{color:#666;font-size:80%;display:block;margin:0 0 5px}#rpress_checkout_form_wrap input.rpress-input,#rpress_checkout_form_wrap textarea.rpress-input{display:inline-block;width:70%}#rpress_checkout_form_wrap select.rpress-select{display:block;width:60%}#rpress_checkout_form_wrap select.rpress-select.rpress-select-small{display:inline;width:auto}#rpress_checkout_form_wrap input.rpress-input.error,#rpress_checkout_form_wrap textarea.rpress-input.error{border-color:#c4554e}#rpress_checkout_form_wrap>p{margin:0 0 21px}#rpress_checkout_form_wrap span.rpress-required-indicator{color:#b94a48;display:inline}#rpress_checkout_form_wrap input[type=email],#rpress_checkout_form_wrap input[type=password],#rpress_checkout_form_wrap input[type=tel],#rpress_checkout_form_wrap input[type=text],#rpress_checkout_form_wrap textarea{padding:4px 6px}#rpress_checkout_form_wrap input[type=radio]{border:none;margin-right:5px}#rpress_checkout_form_wrap input[type=checkbox]{display:inline-block;margin:0 5px 0 0}#rpress_checkout_form_wrap input[type=checkbox]+label,#rpress_checkout_form_wrap input[type=checkbox]+label:after{display:inline}#rpress_checkout_form_wrap .rpress-payment-icons{height:32px;display:block;margin:0 0 8px}#rpress_checkout_form_wrap .rpress-payment-icons img.payment-icon{max-height:32px;width:auto;margin:0 3px 0 0;float:left;background:0 0;padding:0;border:none;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}#rpress_checkout_form_wrap #rpress-payment-mode-wrap label{display:inline-block;margin:0 20px 0 0}#rpress_checkout_form_wrap #rpress-payment-mode-wrap .rpress-payment-mode-label{font-weight:700;display:inline-block;position:relative;margin-bottom:5px}#rpress_checkout_form_wrap fieldset{border:1px solid #eee;padding:1.387em;margin:0 0 21px}#rpress_checkout_form_wrap #rpress_discount_code,#rpress_checkout_form_wrap #rpress_purchase_submit,#rpress_checkout_form_wrap #rpress_register_account_fields{padding:0;border:none}#rpress_checkout_form_wrap fieldset fieldset{margin:0;border:none;padding:0}#rpress_checkout_form_wrap #rpress-login-account-wrap,#rpress_checkout_form_wrap #rpress-new-account-wrap,#rpress_checkout_form_wrap #rpress_final_total_wrap,#rpress_checkout_form_wrap #rpress_show_discount,#rpress_checkout_form_wrap .rpress-cart-adjustment{background:#fafafa;color:#666;padding:.5em 1.387em}#rpress_checkout_form_wrap #rpress-discount-code-wrap,#rpress_checkout_form_wrap #rpress_final_total_wrap,#rpress_checkout_form_wrap #rpress_show_discount{border:1px solid #eee}#rpress_checkout_form_wrap .rpress-cart-adjustment{padding:1.387em}#rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-input,#rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-submit{display:inline-block}#rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-submit{padding:3px 12px;margin-bottom:2px}#rpress_checkout_form_wrap #rpress-discount-error-wrap{width:100%;display:inline-block;margin:1em 0 0}#rpress_checkout_form_wrap #rpress-login-account-wrap,#rpress_checkout_form_wrap #rpress-new-account-wrap{margin:-1.387em -1.387em 21px;border-left:none;border-right:none;border-top:none}#rpress_checkout_form_wrap #rpress_payment_mode_select{margin-bottom:21px}#rpress_checkout_form_wrap fieldset#rpress_register_fields #rpress_checkout_user_info{margin-bottom:21px}#rpress_checkout_form_wrap fieldset#rpress_register_account_fields legend{padding-top:11px}#rpress_checkout_form_wrap fieldset#rpress_register_account_fields p.rpress_login_password,#rpress_checkout_form_wrap fieldset#rpress_register_account_fields p.rpress_register_password{margin:0}#rpress_checkout_form_wrap fieldset#rpress_cc_fields{border:1px solid #f0f0f0;background:#f9f9f9;position:relative}#rpress_checkout_form_wrap fieldset#rpress_cc_fields legend{border:none;padding:0}#rpress_checkout_form_wrap fieldset p:last-child{margin-bottom:0}#rpress_checkout_form_wrap fieldset#rpress_cc_fields #rpress-card-number-wrap{margin-top:5px}#rpress_checkout_form_wrap #rpress_purchase_final_total{margin:21px 0}#rpress_checkout_form_wrap #rpress_purchase_final_total p{margin:0}#rpress_secure_site_wrapper{padding:4px 4px 4px 0;font-weight:700}#rpress_checkout_form_wrap input.rpress-input.card-number.valid{background-image:url(images/tick.png);background-repeat:no-repeat;background-position:98% 50%}#rpress_checkout_form_wrap span.exp-divider{display:inline}#rpress_checkout_form_wrap span.card-type{position:absolute;top:-2px;right:0;width:43px;height:32px;background-size:43px 32px!important}#rpress_checkout_form_wrap span.card-type.off{display:none}#rpress_checkout_form_wrap span.card-type.visa{background:url(images/icons/visa.png ) no-repeat}#rpress_checkout_form_wrap span.card-type.mastercard{background:url(images/icons/mastercard.png ) no-repeat}#rpress_checkout_form_wrap span.card-type.discover{background:url(images/icons/discover.png ) no-repeat}#rpress_checkout_form_wrap span.card-type.amex{background:url(images/icons/americanexpress.png ) no-repeat}#rpress_checkout_form_wrap .rpress-cart-ajax{-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}.rpress-amazon-profile-wrapper{font-size:12px}.rpress-amazon-profile-name{font-weight:600}.rpress-amazon-logout{font-size:10px;line-height:12px}.rpress-amazon-logout a{cursor:pointer}#rpress-amazon-address-box,#rpress-amazon-wallet-box{height:228px;width:350px}#rpress-amazon-address-box{margin-bottom:15px}@media only screen and (min-width:768px){#rpress-amazon-address-box,#rpress-amazon-wallet-box{width:100%;height:228px}}.rpress_purchase_submit_wrapper{position:relative}.rpress_purchase_submit_wrapper a.rpress-add-to-cart{text-decoration:none;display:none;position:relative;overflow:hidden}.rpress_purchase_submit_wrapper a.rpress-add-to-cart.rpress-has-js{display:inline-block}.rpress_purchase_submit_wrapper .rpress-cart-ajax{display:none;position:relative;left:-35px}.rpress-submit.button.rpress-ajax-loading{padding-right:30px}.rpress-add-to-cart .rpress-add-to-cart-label{opacity:1}.rpress-loading,.rpress-loading:after{border-radius:50%;display:block;width:1.5em;height:1.5em}.rpress-loading{-webkit-animation:rpress-spinning 1.1s infinite linear;animation:rpress-spinning 1.1s infinite linear;border-top:.2em solid rgba(255,255,255,.2);border-right:.2em solid rgba(255,255,255,.2);border-bottom:.2em solid rgba(255,255,255,.2);border-left:.2em solid #fff;font-size:.75em;position:absolute;left:calc(50% - .75em);top:calc(50% - .75em);opacity:0;-ms-transform:translateZ(0);transform:translateZ(0)}.rpress-discount-loader.rpress-loading,.rpress-loading-ajax.rpress-loading,a.rpress-add-to-cart.white .rpress-loading{border-top-color:rgba(0,0,0,.2);border-right-color:rgba(0,0,0,.2);border-bottom-color:rgba(0,0,0,.2);border-left-color:#000}.rpress-loading-ajax.rpress-loading{display:inline-block;position:relative;top:0;left:.25em;vertical-align:middle}#rpress_checkout_form_wrap .rpress-cart-adjustment .rpress-apply-discount.rpress-submit{display:inline-block}.rpress-discount-loader.rpress-loading{display:inline-block;position:relative;left:auto;vertical-align:middle;width:1.25em;height:1.25em}.rpress-loading-ajax.rpress-loading{opacity:1}@-webkit-keyframes rpress-spinning{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rpress-spinning{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.rpress-loading,a.rpress-add-to-cart .rpress-add-to-cart-label{-webkit-transition:.1s opacity!important;-moz-transition:.1s opacity!important;-ms-transition:.1s opacity!important;-o-transition:.1s opacity!important;transition:.1s opacity!important}.rpress-add-to-cart[data-rpress-loading] .rpress-add-to-cart-label{opacity:0}.rpress-add-to-cart[data-rpress-loading] .rpress-loading,.rpress-discount-loader.rpress-loading{opacity:1}.rpress-cart-added-alert{color:#567622;display:block;position:absolute}.rpress_form input.rpress-input.required,.rpress_form select.rpress-select.required{color:#000}body.rpress_receipt_page{background-color:#fff;color:#141412;margin:0;font-family:Helvetica,sans-serif;font-size:12px}body.rpress_receipt_page:before{position:relative}body.rpress_receipt_page #rpress_receipt_wrapper{width:660px;margin:0 auto;padding:50px 0}body.rpress_receipt_page table{display:table;width:100%;border-bottom:1px solid #ededed;border-collapse:collapse;border-spacing:0;font-size:14px;line-height:2;margin:0 0 20px}body.rpress_receipt_page td,body.rpress_receipt_page th{display:table-cell;text-align:left;border-top:1px solid #ededed;padding:6px 10px;font-weight:400}body.rpress_receipt_page th{font-weight:700;text-transform:uppercase}body.rpress_receipt_page h3{font-size:22px;margin:40px 0 5px;clear:both;display:block;font-weight:700}body.rpress_receipt_page li{list-style:none}table#rpress_purchase_receipt,table#rpress_purchase_receipt_products{width:100%}table#rpress_purchase_receipt td,table#rpress_purchase_receipt th,table#rpress_purchase_receipt_products td,table#rpress_purchase_receipt_products th{text-align:left}table#rpress_purchase_receipt .rpress_receipt_payment_status.cancelled,table#rpress_purchase_receipt .rpress_receipt_payment_status.failed,table#rpress_purchase_receipt .rpress_receipt_payment_status.pending,table#rpress_purchase_receipt .rpress_receipt_payment_status.revoked{color:#f73f2e}table#rpress_purchase_receipt_products li{list-style:none;margin:0 0 8px 10px}table#rpress_purchase_receipt ul,table#rpress_purchase_receipt_products ul.rpress_purchase_receipt_files{margin:0;padding:0}table#rpress_purchase_receipt li.rpress_fooditem_file{list-style:none;margin:0 0 8px 0}table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_notes{font-style:italic}table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name{font-weight:700}table#rpress_purchase_receipt_products .rpress_bundled_product_name{font-style:italic;font-weight:700}#rpress_user_history{text-align:left;width:100%;border-top:1px solid #f0f0f0;border-bottom:none}#rpress_user_history td,#rpress_user_history th{text-align:left;padding:3px 5px;border-bottom:1px solid #f0f0f0;border-top:none}#rpress_user_history th{font-weight:700;background:#f5f5f5}#rpress_user_history td{line-height:25px;vertical-align:middle}#rpress_user_history .rpress_purchase_status.cancelled,#rpress_user_history .rpress_purchase_status.failed,#rpress_user_history .rpress_purchase_status.pending,#rpress_user_history .rpress_purchase_status.revoked{color:#f73f2e}#rpress_login_form legend,#rpress_register_form legend{font-size:120%;margin-bottom:1em}#rpress_login_form fieldset,#rpress_register_form fieldset{border:none}#rpress_login_form .rpress-input,#rpress_register_form .rpress-input{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}#rpress_login_form label,#rpress_register_form label{cursor:pointer}#rpress_profile_editor_form p{margin-bottom:8px}#rpress_profile_editor_form label{display:inline-block}#rpress_profile_editor_form .rpress-profile-emails{list-style-type:none;display:inline-table;margin-left:0;margin-bottom:0}#rpress_profile_editor_form .rpress-profile-email{width:auto}#rpress_profile_editor_form .rpress-profile-email .actions{display:none}#rpress_profile_editor_form .rpress-profile-email:hover>span{display:inline-block}.rpress_added_to_cart_alert{padding:5px;font-size:14px;border:1px solid #046a9e;background:#9ecce2;color:#333;margin:8px 0}.rpress_added_to_cart_alert a.rpress_alert_checkout_link{color:#000!important}input.rpress_submit_plain{background:0 0!important;border:none!important;padding:0!important;display:inline;cursor:pointer}.single-fooditem .rpress_fooditem_purchase_form{margin-bottom:1.387em}.rpress_fooditem_purchase_form .rpress_fooditem_quantity_wrapper{margin:0 0 .5em}.rpress_fooditem_purchase_form .rpress_fooditem_quantity_wrapper .rpress-item-quantity{width:75px}.rpress_fooditem_purchase_form .rpress_price_options{margin:0 0 15px}.rpress_fooditem_purchase_form .rpress_price_options ul{margin:0;padding:0;list-style:none}.rpress_fooditem_purchase_form .rpress_price_options li{display:block;padding:0;margin:0}.rpress_fooditem_purchase_form .rpress_price_options span{display:inline;padding:0;margin:0}.rpress_fooditem_purchase_form .rpress_price_options .rpress_fooditem_quantity_wrapper{padding-left:18px}.rpress_fooditem_purchase_form .rpress_price_options .rpress_fooditem_quantity_wrapper *{font-size:80%}.rpress_fooditem_purchase_form .rpress_price_options input.rpress-item-quantity{display:inline;width:50px;max-width:90%}#rpress-purchase-button,.rpress-submit,[type=submit].rpress-submit{display:inline-block;padding:0px 5px;margin:0;font-size:14px;font-weight:400;line-height:1.428571429;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none}.rpress-submit.button:focus,[type=submit].rpress-submit:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}.rpress-submit.button:active{background-image:none;outline:0;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,.125);box-shadow:inset 0 3px 5px rgba(0,0,0,.125)}.rpress-submit.plain{padding:0;border:none;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0}.rpress-submit.button,.rpress-submit.button.gray,.rpress-submit.button:visited{color:#333;background:#f0f0f0;border-color:#ccc}.rpress-submit.button.gray:active,.rpress-submit.button.gray:focus,.rpress-submit.button.gray:hover,.rpress-submit.button:active,.rpress-submit.button:focus,.rpress-submit.button:hover{color:#333;background:#ebebeb;border-color:#adadad}.rpress-submit.button.gray:active{background-image:none}.rpress-submit.button.white{color:#333;background:#fff;border-color:#ccc}.rpress-submit.button.white:active,.rpress-submit.button.white:focus,.rpress-submit.button.white:hover{color:#333;background:#ebebeb;border-color:#adadad}.rpress-submit.button.white:active{background-image:none}.rpress-submit.button.blue{color:#fff;background:#428bca;border-color:#357ebd}.rpress-submit.button.blue.active,.rpress-submit.button.blue:focus,.rpress-submit.button.blue:hover{color:#fff;background:#3276b1;border-color:#285e8e}.rpress-submit.button.blue.active{background-image:none}.rpress-submit.button.red{color:#fff;background:#d9534f;border-color:#d43f3a}.rpress-submit.button.red:active,.rpress-submit.button.red:focus,.rpress-submit.button.red:hover{color:#fff;background:#d2322d;border-color:#ac2925}.rpress-submit.button.red:active{background-image:none}.rpress-submit.button.green{color:#fff;background:#5cb85c;border-color:#4cae4c}.rpress-submit.button.green:active,.rpress-submit.button.green:focus,.rpress-submit.button.green:hover{color:#fff;background:#47a447;border-color:#398439}.rpress-submit.button.green:active{background-image:none}.rpress-submit.button.yellow{color:#fff;background:#f0ad4e;border-color:#eea236}.rpress-submit.button.yellow:active,.rpress-submit.button.yellow:focus,.rpress-submit.button.yellow:hover{color:#fff;background:#ed9c28;border-color:#d58512}.rpress-submit.button.yellow:active{background-image:none}.rpress-submit.button.orange{color:#fff;background:#ed9c28;border-color:#e3921e}.rpress-submit.button.orange:active,.rpress-submit.button.orange:focus,.rpress-submit.button.orange:hover{color:#fff;background:#e59016;border-color:#d58512}.rpress-submit.button.orange:active{background-image:none}.rpress-submit.button.dark-gray{color:#fff;background:#363636;border-color:#222}.rpress-submit.button.dark-gray:active,.rpress-submit.button.dark-gray:focus,.rpress-submit.button.dark-gray:hover{color:#fff;background:#333;border-color:#adadad}.rpress-submit.button.dark-gray:active{background-image:none}.rpress_fooditems_list:after{content:"";display:table;clear:both}.rpress_fooditem{float:left}.rpress_fooditem_columns_1 .rpress_fooditem{width:100%}.rpress_fooditem_columns_2 .rpress_fooditem{width:50%}.rpress_fooditem_columns_0 .rpress_fooditem,.rpress_fooditem_columns_3 .rpress_fooditem{width:33%}.rpress_fooditem_columns_4 .rpress_fooditem{width:25%}.rpress_fooditem_columns_5 .rpress_fooditem{width:20%}.rpress_fooditem_columns_6 .rpress_fooditem{width:16.6%}.rpress_fooditem_inner{padding:0 8px 8px;margin:0 0 10px}.rpress_fooditem_columns_2 .rpress_fooditem:nth-child(2n+1),.rpress_fooditem_columns_3 .rpress_fooditem:nth-child(3n+1),.rpress_fooditem_columns_4 .rpress_fooditem:nth-child(4n+1),.rpress_fooditem_columns_5 .rpress_fooditem:nth-child(5n+1),.rpress_fooditem_columns_6 .rpress_fooditem:nth-child(6n+1){clear:left}.rpress_fooditem_image{max-width:100%}.rpress_fooditem .rpress_price{margin-bottom:10px}#rpress_fooditem_pagination{clear:both}.rpress-hide-on-empty.cart-empty{display:none}rpress-hide-on-empty.cart-not.empty{display:block}.rpress-cart-ajax{margin:0 8px 0 4px;position:relative;top:2px;background:0 0;border:none;padding:0}.rpress-cart-number-of-items{font-style:italic;color:grey}.rpress-cart-meta.rpress_subtotal{font-weight:700;font-style:italic}.rpress-cart-meta.rpress_cart_tax{font-size:1em;font-style:italic}.rpress-cart-meta.rpress_cart_tax::before{font-style:normal}.rpress-cart-meta.rpress_total{font-weight:700}.rpress-cart-meta{padding:2px 5px}.rpress-cart-meta.rpress_subtotal,.rpress-cart-meta.rpress_total{background-color:#f9f9f9}.rpress_errors:not(.rpress-alert){-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;border:1px solid #e6db55;margin:0 0 21px;background:#ffffe0;color:#333}.rpress_error{padding:10px}p.rpress_error{margin:0!important}.rpress_success:not(.rpress-alert){-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;border:1px solid #b3ce89;margin:20px 0;background:#d5eab3;color:#567622;padding:6px 8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}.rpress-alert{-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;margin-bottom:20px;padding:10px;border:1px solid transparent;vertical-align:middle}.rpress-alert p{padding:0}.rpress-alert p:not(:last-child){margin-bottom:5px}.rpress-alert p:last-child{margin-bottom:0}.rpress-alert-error{color:#a94442;background-color:#f2dede;border-color:#ebccd1}.rpress-alert-success{background-color:#dff0d8;border-color:#d6e9c6;color:#3c763d}.rpress-alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.rpress-alert-warn{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}
+@charset "UTF-8";
+.rpress-icon {
+	display: inline-block;
+	fill: currentColor;
+	position: relative;
+	top: -.0625em;
+	vertical-align: middle;
+	width: 1em;
+	height: 1em
+}
+
+.rpress-icon-lock {
+	top: -.125rem
+}
+
+.rpress-icon-spin {
+	display: inline-block;
+	-moz-animation: rpress-icon-spin 2s infinite linear;
+	-o-animation: rpress-icon-spin 2s infinite linear;
+	-webkit-animation: rpress-icon-spin 2s infinite linear;
+	animation: rpress-icon-spin 2s infinite linear
+}
+
+@-moz-keyframes rpress-icon-spin {
+	0% {
+		-moz-transform: rotate(0)
+	}
+	100% {
+		-moz-transform: rotate(359deg)
+	}
+}
+
+@-webkit-keyframes rpress-icon-spin {
+	0% {
+		-webkit-transform: rotate(0)
+	}
+	100% {
+		-webkit-transform: rotate(359deg)
+	}
+}
+
+@-o-keyframes rpress-icon-spin {
+	0% {
+		-o-transform: rotate(0)
+	}
+	100% {
+		-o-transform: rotate(359deg)
+	}
+}
+
+@-ms-keyframes rpress-icon-spin {
+	0% {
+		-ms-transform: rotate(0)
+	}
+	100% {
+		-ms-transform: rotate(359deg)
+	}
+}
+
+@keyframes rpress-icon-spin {
+	0% {
+		transform: rotate(0)
+	}
+	100% {
+		transform: rotate(359deg)
+	}
+}
+
+.rpress_clearfix:after {
+	display: block;
+	visibility: hidden;
+	float: none;
+	clear: both;
+	text-indent: -9999px;
+	content: "."
+}
+
+#rpress_checkout_cart {
+	text-align: left;
+	width: 100%;
+	border: none;
+	margin: 0 0 21px;
+	table-layout: auto
+}
+
+#rpress_checkout_cart td,
+#rpress_checkout_cart th {
+	text-align: left;
+	border: 1px solid #eee;
+	color: #666;
+	padding: .5em 1.387em
+}
+
+#rpress_checkout_cart .rpress_cart_header_row th {
+	background: #fafafa;
+	padding: 1.387em
+}
+
+#rpress_checkout_cart .rpress_cart_discount_row th,
+#rpress_checkout_cart .rpress_cart_tax_row th {
+	background: 0 0
+}
+
+#rpress_checkout_cart th {
+	font-weight: 700
+}
+
+#rpress_checkout_cart td {
+	line-height: 25px;
+	vertical-align: middle;
+	background: #fff
+}
+
+#rpress_checkout_cart td.rpress_cart_actions,
+#rpress_checkout_cart td:last-child,
+#rpress_checkout_cart th.rpress_cart_actions,
+#rpress_checkout_cart th.rpress_cart_total,
+#rpress_checkout_cart th:last-child {
+	text-align: right
+}
+
+#rpress_checkout_cart td img {
+	float: left;
+	margin: 0 8px 0 0;
+	background: 0 0;
+	padding: 0;
+	border: none
+}
+
+#rpress_checkout_cart input.rpress-item-quantity {
+	width: 3em;
+	padding: 2px
+}
+
+#rpress_checkout_cart .rpress_discount {
+	display: inline-block;
+	margin-left: 5px
+}
+
+.rpress_discount_remove {
+	display: inline-block;
+	width: 10px;
+	height: 11px;
+	background: url(images/xit.gif ) 0 0 no-repeat;
+	position: relative;
+	top: 3px
+}
+
+.rpress_discount_remove:hover {
+	background-position: -10px 0
+}
+
+#rpress_checkout_cart br {
+	display: none
+}
+
+#rpress_checkout_cart a.rpress-cart-saving-button {
+	font-weight: 400;
+	text-decoration: none
+}
+
+#rpress_checkout_form_wrap legend {
+	display: block;
+	font-size: 120%;
+	line-height: 1;
+	font-weight: 700;
+	width: 100%;
+	margin: 0 0 21px;
+	padding: 0
+}
+
+#rpress_checkout_form_wrap label {
+	font-weight: 700;
+	display: block;
+	position: relative;
+	line-height: 100%;
+	font-size: 95%;
+	margin: 0 0 5px
+}
+
+#rpress_checkout_form_wrap label:after {
+	display: block;
+	visibility: hidden;
+	float: none;
+	clear: both;
+	height: 0;
+	text-indent: -9999px;
+	content: "."
+}
+
+#rpress_checkout_form_wrap span.rpress-description {
+	color: #666;
+	font-size: 80%;
+	display: block;
+	margin: 0 0 5px
+}
+
+#rpress_checkout_form_wrap input.rpress-input,
+#rpress_checkout_form_wrap textarea.rpress-input {
+	display: inline-block;
+	width: 70%
+}
+
+#rpress_checkout_form_wrap select.rpress-select {
+	display: block;
+	width: 60%
+}
+
+#rpress_checkout_form_wrap select.rpress-select.rpress-select-small {
+	display: inline;
+	width: auto
+}
+
+#rpress_checkout_form_wrap input.rpress-input.error,
+#rpress_checkout_form_wrap textarea.rpress-input.error {
+	border-color: #c4554e
+}
+
+#rpress_checkout_form_wrap>p {
+	margin: 0 0 21px
+}
+
+#rpress_checkout_form_wrap span.rpress-required-indicator {
+	color: #b94a48;
+	display: inline
+}
+
+#rpress_checkout_form_wrap input[type=email],
+#rpress_checkout_form_wrap input[type=password],
+#rpress_checkout_form_wrap input[type=tel],
+#rpress_checkout_form_wrap input[type=text],
+#rpress_checkout_form_wrap textarea {
+	padding: 4px 6px
+}
+
+#rpress_checkout_form_wrap input[type=radio] {
+	border: none;
+	margin-right: 5px
+}
+
+#rpress_checkout_form_wrap input[type=checkbox] {
+	display: inline-block;
+	margin: 0 5px 0 0
+}
+
+#rpress_checkout_form_wrap input[type=checkbox]+label,
+#rpress_checkout_form_wrap input[type=checkbox]+label:after {
+	display: inline
+}
+
+#rpress_checkout_form_wrap .rpress-payment-icons {
+	height: 32px;
+	display: block;
+	margin: 0 0 8px
+}
+
+#rpress_checkout_form_wrap .rpress-payment-icons img.payment-icon {
+	max-height: 32px;
+	width: auto;
+	margin: 0 3px 0 0;
+	float: left;
+	background: 0 0;
+	padding: 0;
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none
+}
+
+#rpress_checkout_form_wrap #rpress-payment-mode-wrap label {
+	display: inline-block;
+	margin: 0 20px 0 0
+}
+
+#rpress_checkout_form_wrap #rpress-payment-mode-wrap .rpress-payment-mode-label {
+	font-weight: 700;
+	display: inline-block;
+	position: relative;
+	margin-bottom: 5px
+}
+
+#rpress_checkout_form_wrap fieldset {
+	border: 1px solid #eee;
+	padding: 1.387em;
+	margin: 0 0 21px
+}
+
+#rpress_checkout_form_wrap #rpress_discount_code,
+#rpress_checkout_form_wrap #rpress_purchase_submit,
+#rpress_checkout_form_wrap #rpress_register_account_fields {
+	padding: 0;
+	border: none
+}
+
+#rpress_checkout_form_wrap fieldset fieldset {
+	margin: 0;
+	border: none;
+	padding: 0
+}
+
+#rpress_checkout_form_wrap #rpress-login-account-wrap,
+#rpress_checkout_form_wrap #rpress-new-account-wrap,
+#rpress_checkout_form_wrap #rpress_final_total_wrap,
+#rpress_checkout_form_wrap #rpress_show_discount,
+#rpress_checkout_form_wrap .rpress-cart-adjustment {
+	background: #fafafa;
+	color: #666;
+	padding: .5em 1.387em
+}
+
+#rpress_checkout_form_wrap #rpress-discount-code-wrap,
+#rpress_checkout_form_wrap #rpress_final_total_wrap,
+#rpress_checkout_form_wrap #rpress_show_discount {
+	border: 1px solid #eee
+}
+
+#rpress_checkout_form_wrap .rpress-cart-adjustment {
+	padding: 1.387em
+}
+
+#rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-input,
+#rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-submit {
+	display: inline-block
+}
+
+#rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-submit {
+	padding: 3px 12px;
+	margin-bottom: 2px
+}
+
+#rpress_checkout_form_wrap #rpress-discount-error-wrap {
+	width: 100%;
+	display: inline-block;
+	margin: 1em 0 0
+}
+
+#rpress_checkout_form_wrap #rpress-login-account-wrap,
+#rpress_checkout_form_wrap #rpress-new-account-wrap {
+	margin: -1.387em -1.387em 21px;
+	border-left: none;
+	border-right: none;
+	border-top: none
+}
+
+#rpress_checkout_form_wrap #rpress_payment_mode_select {
+	margin-bottom: 21px
+}
+
+#rpress_checkout_form_wrap fieldset#rpress_register_fields #rpress_checkout_user_info {
+	margin-bottom: 21px
+}
+
+#rpress_checkout_form_wrap fieldset#rpress_register_account_fields legend {
+	padding-top: 11px
+}
+
+#rpress_checkout_form_wrap fieldset#rpress_register_account_fields p.rpress_login_password,
+#rpress_checkout_form_wrap fieldset#rpress_register_account_fields p.rpress_register_password {
+	margin: 0
+}
+
+#rpress_checkout_form_wrap fieldset#rpress_cc_fields {
+	border: 1px solid #f0f0f0;
+	background: #f9f9f9;
+	position: relative
+}
+
+#rpress_checkout_form_wrap fieldset#rpress_cc_fields legend {
+	border: none;
+	padding: 0
+}
+
+#rpress_checkout_form_wrap fieldset p:last-child {
+	margin-bottom: 0
+}
+
+#rpress_checkout_form_wrap fieldset#rpress_cc_fields #rpress-card-number-wrap {
+	margin-top: 5px
+}
+
+#rpress_checkout_form_wrap #rpress_purchase_final_total {
+	margin: 21px 0
+}
+
+#rpress_checkout_form_wrap #rpress_purchase_final_total p {
+	margin: 0
+}
+
+#rpress_secure_site_wrapper {
+	padding: 4px 4px 4px 0;
+	font-weight: 700
+}
+
+#rpress_checkout_form_wrap input.rpress-input.card-number.valid {
+	background-image: url(images/tick.png);
+	background-repeat: no-repeat;
+	background-position: 98% 50%
+}
+
+#rpress_checkout_form_wrap span.exp-divider {
+	display: inline
+}
+
+#rpress_checkout_form_wrap span.card-type {
+	position: absolute;
+	top: -2px;
+	right: 0;
+	width: 43px;
+	height: 32px;
+	background-size: 43px 32px!important
+}
+
+#rpress_checkout_form_wrap span.card-type.off {
+	display: none
+}
+
+#rpress_checkout_form_wrap span.card-type.visa {
+	background: url(images/icons/visa.png ) no-repeat
+}
+
+#rpress_checkout_form_wrap span.card-type.mastercard {
+	background: url(images/icons/mastercard.png ) no-repeat
+}
+
+#rpress_checkout_form_wrap span.card-type.discover {
+	background: url(images/icons/discover.png ) no-repeat
+}
+
+#rpress_checkout_form_wrap span.card-type.amex {
+	background: url(images/icons/americanexpress.png ) no-repeat
+}
+
+#rpress_checkout_form_wrap .rpress-cart-ajax {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none
+}
+
+.rpress-amazon-profile-wrapper {
+	font-size: 12px
+}
+
+.rpress-amazon-profile-name {
+	font-weight: 600
+}
+
+.rpress-amazon-logout {
+	font-size: 10px;
+	line-height: 12px
+}
+
+.rpress-amazon-logout a {
+	cursor: pointer
+}
+
+#rpress-amazon-address-box,
+#rpress-amazon-wallet-box {
+	height: 228px;
+	width: 350px
+}
+
+#rpress-amazon-address-box {
+	margin-bottom: 15px
+}
+
+@media only screen and (min-width:768px) {
+	#rpress-amazon-address-box,
+	#rpress-amazon-wallet-box {
+		width: 100%;
+		height: 228px
+	}
+}
+
+.rpress_purchase_submit_wrapper {
+	position: relative
+}
+
+.rpress_purchase_submit_wrapper a.rpress-add-to-cart {
+	text-decoration: none;
+	display: none;
+	position: relative;
+	overflow: hidden
+}
+
+.rpress_purchase_submit_wrapper a.rpress-add-to-cart.rpress-has-js {
+	display: inline-block
+}
+
+.rpress_purchase_submit_wrapper .rpress-cart-ajax {
+	display: none;
+	position: relative;
+	left: -35px
+}
+
+.rpress-submit.button.rpress-ajax-loading {
+	padding-right: 30px
+}
+
+.rpress-add-to-cart .rpress-add-to-cart-label {
+	opacity: 1
+}
+
+.rpress-loading,
+.rpress-loading:after {
+	border-radius: 50%;
+	display: block;
+	width: 1.5em;
+	height: 1.5em
+}
+
+.rpress-loading {
+	-webkit-animation: rpress-spinning 1.1s infinite linear;
+	animation: rpress-spinning 1.1s infinite linear;
+	border-top: .2em solid rgba(255, 255, 255, .2);
+	border-right: .2em solid rgba(255, 255, 255, .2);
+	border-bottom: .2em solid rgba(255, 255, 255, .2);
+	border-left: .2em solid #fff;
+	font-size: .75em;
+	position: absolute;
+	left: calc(50% - .75em);
+	top: calc(50% - .75em);
+	opacity: 0;
+	-ms-transform: translateZ(0);
+	transform: translateZ(0)
+}
+
+.rpress-discount-loader.rpress-loading,
+.rpress-loading-ajax.rpress-loading,
+a.rpress-add-to-cart.white .rpress-loading {
+	border-top-color: rgba(0, 0, 0, .2);
+	border-right-color: rgba(0, 0, 0, .2);
+	border-bottom-color: rgba(0, 0, 0, .2);
+	border-left-color: #000
+}
+
+.rpress-loading-ajax.rpress-loading {
+	display: inline-block;
+	position: relative;
+	top: 0;
+	left: .25em;
+	vertical-align: middle
+}
+
+#rpress_checkout_form_wrap .rpress-cart-adjustment .rpress-apply-discount.rpress-submit {
+	display: inline-block
+}
+
+.rpress-discount-loader.rpress-loading {
+	display: inline-block;
+	position: relative;
+	left: auto;
+	vertical-align: middle;
+	width: 1.25em;
+	height: 1.25em
+}
+
+.rpress-loading-ajax.rpress-loading {
+	opacity: 1
+}
+
+@-webkit-keyframes rpress-spinning {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0)
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg)
+	}
+}
+
+@keyframes rpress-spinning {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0)
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg)
+	}
+}
+
+.rpress-loading,
+a.rpress-add-to-cart .rpress-add-to-cart-label {
+	-webkit-transition: .1s opacity!important;
+	-moz-transition: .1s opacity!important;
+	-ms-transition: .1s opacity!important;
+	-o-transition: .1s opacity!important;
+	transition: .1s opacity!important
+}
+
+.rpress-add-to-cart[data-rpress-loading] .rpress-add-to-cart-label {
+	opacity: 0
+}
+
+.rpress-add-to-cart[data-rpress-loading] .rpress-loading,
+.rpress-discount-loader.rpress-loading {
+	opacity: 1
+}
+
+.rpress-cart-added-alert {
+	color: #567622;
+	display: block;
+	position: absolute
+}
+
+.rpress_form input.rpress-input.required,
+.rpress_form select.rpress-select.required {
+	color: #000
+}
+
+body.rpress_receipt_page {
+	background-color: #fff;
+	color: #141412;
+	margin: 0;
+	font-family: Helvetica, sans-serif;
+	font-size: 12px
+}
+
+body.rpress_receipt_page:before {
+	position: relative
+}
+
+body.rpress_receipt_page #rpress_receipt_wrapper {
+	width: 660px;
+	margin: 0 auto;
+	padding: 50px 0
+}
+
+body.rpress_receipt_page table {
+	display: table;
+	width: 100%;
+	border-bottom: 1px solid #ededed;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 14px;
+	line-height: 2;
+	margin: 0 0 20px
+}
+
+body.rpress_receipt_page td,
+body.rpress_receipt_page th {
+	display: table-cell;
+	text-align: left;
+	border-top: 1px solid #ededed;
+	padding: 6px 10px;
+	font-weight: 400
+}
+
+body.rpress_receipt_page th {
+	font-weight: 700;
+	text-transform: uppercase
+}
+
+body.rpress_receipt_page h3 {
+	font-size: 22px;
+	margin: 40px 0 5px;
+	clear: both;
+	display: block;
+	font-weight: 700
+}
+
+body.rpress_receipt_page li {
+	list-style: none
+}
+
+table#rpress_purchase_receipt,
+table#rpress_purchase_receipt_products {
+	width: 100%
+}
+
+table#rpress_purchase_receipt td,
+table#rpress_purchase_receipt th,
+table#rpress_purchase_receipt_products td,
+table#rpress_purchase_receipt_products th {
+	text-align: left
+}
+
+table#rpress_purchase_receipt .rpress_receipt_payment_status.cancelled,
+table#rpress_purchase_receipt .rpress_receipt_payment_status.failed,
+table#rpress_purchase_receipt .rpress_receipt_payment_status.pending,
+table#rpress_purchase_receipt .rpress_receipt_payment_status.revoked {
+	color: #f73f2e
+}
+
+table#rpress_purchase_receipt_products li {
+	list-style: none;
+	margin: 0 0 8px 10px
+}
+
+table#rpress_purchase_receipt ul,
+table#rpress_purchase_receipt_products ul.rpress_purchase_receipt_files {
+	margin: 0;
+	padding: 0
+}
+
+table#rpress_purchase_receipt li.rpress_fooditem_file {
+	list-style: none;
+	margin: 0 0 8px 0
+}
+
+table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_notes {
+	font-style: italic
+}
+
+table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
+	font-weight: 700
+}
+
+table#rpress_purchase_receipt_products .rpress_bundled_product_name {
+	font-style: italic;
+	font-weight: 700
+}
+
+#rpress_user_history {
+	text-align: left;
+	width: 100%;
+	border-top: 1px solid #f0f0f0;
+	border-bottom: none
+}
+
+#rpress_user_history td,
+#rpress_user_history th {
+	text-align: left;
+	padding: 3px 5px;
+	border-bottom: 1px solid #f0f0f0;
+	border-top: none
+}
+
+#rpress_user_history th {
+	font-weight: 700;
+	background: #f5f5f5
+}
+
+#rpress_user_history td {
+	line-height: 25px;
+	vertical-align: middle
+}
+
+#rpress_user_history .rpress_purchase_status.cancelled,
+#rpress_user_history .rpress_purchase_status.failed,
+#rpress_user_history .rpress_purchase_status.pending,
+#rpress_user_history .rpress_purchase_status.revoked {
+	color: #f73f2e
+}
+
+#rpress_login_form legend,
+#rpress_register_form legend {
+	font-size: 120%;
+	margin-bottom: 1em
+}
+
+#rpress_login_form fieldset,
+#rpress_register_form fieldset {
+	border: none
+}
+
+#rpress_login_form .rpress-input,
+#rpress_register_form .rpress-input {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+#rpress_login_form label,
+#rpress_register_form label {
+	cursor: pointer
+}
+
+#rpress_profile_editor_form p {
+	margin-bottom: 8px
+}
+
+#rpress_profile_editor_form label {
+	display: inline-block
+}
+
+#rpress_profile_editor_form .rpress-profile-emails {
+	list-style-type: none;
+	display: inline-table;
+	margin-left: 0;
+	margin-bottom: 0
+}
+
+#rpress_profile_editor_form .rpress-profile-email {
+	width: auto
+}
+
+#rpress_profile_editor_form .rpress-profile-email .actions {
+	display: none
+}
+
+#rpress_profile_editor_form .rpress-profile-email:hover>span {
+	display: inline-block
+}
+
+.rpress_added_to_cart_alert {
+	padding: 5px;
+	font-size: 14px;
+	border: 1px solid #046a9e;
+	background: #9ecce2;
+	color: #333;
+	margin: 8px 0
+}
+
+.rpress_added_to_cart_alert a.rpress_alert_checkout_link {
+	color: #000!important
+}
+
+input.rpress_submit_plain {
+	background: 0 0!important;
+	border: none!important;
+	padding: 0!important;
+	display: inline;
+	cursor: pointer
+}
+
+.single-fooditem .rpress_fooditem_purchase_form {
+	margin-bottom: 1.387em
+}
+
+.rpress_fooditem_purchase_form .rpress_fooditem_quantity_wrapper {
+	margin: 0 0 .5em
+}
+
+.rpress_fooditem_purchase_form .rpress_fooditem_quantity_wrapper .rpress-item-quantity {
+	width: 75px
+}
+
+.rpress_fooditem_purchase_form .rpress_price_options {
+	margin: 0 0 15px
+}
+
+.rpress_fooditem_purchase_form .rpress_price_options ul {
+	margin: 0;
+	padding: 0;
+	list-style: none
+}
+
+.rpress_fooditem_purchase_form .rpress_price_options li {
+	display: block;
+	padding: 0;
+	margin: 0
+}
+
+.rpress_fooditem_purchase_form .rpress_price_options span {
+	display: inline;
+	padding: 0;
+	margin: 0
+}
+
+.rpress_fooditem_purchase_form .rpress_price_options .rpress_fooditem_quantity_wrapper {
+	padding-left: 18px
+}
+
+.rpress_fooditem_purchase_form .rpress_price_options .rpress_fooditem_quantity_wrapper * {
+	font-size: 80%
+}
+
+.rpress_fooditem_purchase_form .rpress_price_options input.rpress-item-quantity {
+	display: inline;
+	width: 50px;
+	max-width: 90%
+}
+
+#rpress-purchase-button,
+.rpress-submit,
+[type=submit].rpress-submit {
+	display: inline-block;
+	padding: 0px 5px;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.428571429;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none
+}
+
+.rpress-submit.button:focus,
+[type=submit].rpress-submit:focus {
+	outline: thin dotted #333;
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px
+}
+
+.rpress-submit.button:active {
+	background-image: none;
+	outline: 0;
+	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+	box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+}
+
+.rpress-submit.plain {
+	padding: 0;
+	border: none;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0
+}
+
+/* Gray Color */
+a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart span.cart-total.gray, 
+.special-margin.gray a, 
+.special-inst.gray a, 
+.rpress-submit.button.gray .rpress-add-to-cart-label, 
+.btn.btn-block.btn-primary.gray:hover, 
+.delivery-change.gray {
+	color: #ccc;
+}
+
+.rpress-submit.button,
+.rpress-submit.button.gray,
+.rpress-submit.button:visited {
+	color: #333;
+	background: #f0f0f0;
+	border-color: #ccc
+}
+
+.btn.btn-block.btn-primary.gray:hover {
+	border: 1px solid #adadad;
+}
+
+.rpress-popup-actions .submit-fooditem-button.gray,
+.btn.btn-block.btn-primary.gray,
+.rpress-cart .rpress_checkout.gray a,
+ html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > html body #rpressModal .rpress-delivery-wrap.gray li.active > html body #rpressModal .rpress-delivery-wrap.gray a:hover {
+	background: #f0f0f0;
+}
+
+.rpress-cart .cart_item.rpress_checkout.gray a,
+.rpress-submit.button.gray:active,
+.rpress-submit.button.gray:focus,
+.rpress-submit.button.gray:hover,
+.rpress-submit.button.gray:active,
+.rpress-submit.button.gray:focus,
+.rpress-submit.button.gray:hover {
+	color: #333;
+	background: #ebebeb;
+	border-color: #adadad
+}
+
+.rpress-submit.button.gray:active {
+	background-image: none
+}
+
+/* White Button */
+
+.rpress-submit.button.white {
+	color: #333;
+	background: #fff;
+	border-color: #ccc
+}
+
+.rpress-submit.button.white:active,
+.rpress-submit.button.white:focus,
+.rpress-submit.button.white:hover {
+	color: #333;
+	background: #ebebeb;
+	border-color: #adadad
+}
+
+.rpress-submit.button.white:active {
+	background-image: none
+}
+
+/* Blue Color */
+.rpress-submit.button.blue {
+	color: #fff;
+	background: #428bca;
+	border-color: #357ebd
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.blue:hover, .rpress-sidebar-cart-wrap .rpress-clear-cart.blue:hover, a.nav-link.blue:hover, .rpress_fooditems_list h5.rpress-cat.blue, ul.rpress-cart span.cart-total.blue, .special-margin.blue a, .special-inst.blue a, .rpress-submit.button.blue .rpress-add-to-cart-label, .btn.btn-block.btn-primary.blue:hover, .delivery-change.blue {
+	color: #428bca;
+}
+
+.rpress-submit.button.blue.active,
+.rpress-submit.button.blue:focus,
+.rpress-submit.button.blue:hover {
+	color: #fff;
+	background: #3276b1;
+	border-color: #285e8e
+}
+
+.cart_item.rpress_checkout.blue a,
+.rpress-popup-actions .submit-fooditem-button.blue,
+.btn.btn-block.btn-primary.blue,
+.rpress-cart .rpress_checkout.blue a,
+ html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > html body #rpressModal .rpress-delivery-wrap.blue li.active > html body #rpressModal .rpress-delivery-wrap.blue a:hover {
+	background: #3276b1;
+}
+
+.rpress-submit.button.blue.active {
+	background-image: none
+}
+
+.btn.btn-block.btn-primary.blue:hover {
+	border: 1px solid #285e8e;
+}
+
+/* Red Color */
+.rpress-submit.button.red {
+	color: #fff;
+	background: #d9534f;
+	border-color: #d43f3a
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.red:hover, a.nav-link.red:hover, .rpress_fooditems_list h5.rpress-cat.red, ul.rpress-cart span.cart-total.red, .special-margin.red a, .special-inst.red a, .rpress-submit.button.red .rpress-add-to-cart-label, .btn.btn-block.btn-primary.red:hover, .delivery-change.red {
+	color: #d4413c;
+}
+
+.rpress-submit.button.red:active,
+.rpress-submit.button.red:focus,
+.rpress-submit.button.red:hover {
+	color: #fff;
+	background: #d2322d;
+	border-color: #ac2925
+}
+
+.rpress-submit.button.red:active {
+	background-image: none
+}
+
+.btn.btn-block.btn-primary.red:hover {
+	border: 1px solid #ac2925;
+}
+
+.cart_item.rpress_checkout.red a,
+.rpress-popup-actions .submit-fooditem-button.red,
+.btn.btn-block.btn-primary.red,
+.rpress-cart .rpress_checkout.red a,
+ html body #rpressModal .rpress-delivery-wrap.red .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.red .nav-pills > html body #rpressModal .rpress-delivery-wrap.red li.active > html body #rpressModal .rpress-delivery-wrap.red a:hover {
+	background-color: #ac2925;
+}
+
+/* Green Color */
+.rpress-submit.button.green {
+	color: #fff;
+	background: #5cb85c;
+	border-color: #4cae4c
+}
+
+.rpress-submit.button.green:active,
+.rpress-submit.button.green:focus,
+.rpress-submit.button.green:hover {
+	color: #fff;
+	background: #47a447;
+	border-color: #398439
+}
+
+.rpress-submit.button.green:active {
+	background-image: none
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.green:hover, .rpress_fooditems_list h5.rpress-cat.green, ul.rpress-cart span.cart-total.green, 
+.special-margin.green a, .special-inst.green a, 
+.rpress-submit.button.green .rpress-add-to-cart-label, 
+.btn.btn-block.btn-primary.green:hover, 
+.delivery-change.green, a.nav-link.green:hover {
+	color: #5cb85c;
+}
+
+.cart_item.rpress_checkout.green a,
+.rpress-popup-actions .submit-fooditem-button.green,
+.btn.btn-block.btn-primary.green,
+.rpress-cart .rpress_checkout.green a,
+ html body #rpressModal .rpress-delivery-wrap.green .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.green .nav-pills > html body #rpressModal .rpress-delivery-wrap.green li.active > html body #rpressModal .rpress-delivery-wrap.green a:hover {
+	background: #47a447;
+}
+
+.btn.btn-block.btn-primary.green:hover {
+	border: 1px solid #47a447;
+}
+
+/* Yellow Color */
+.rpress-submit.button.yellow {
+	color: #fff;
+	background: #f0ad4e;
+	border-color: #eea236
+}
+
+.rpress-submit.button.yellow:active,
+.rpress-submit.button.yellow:focus,
+.rpress-submit.button.yellow:hover {
+	color: #fff;
+	background: #ed9c28;
+	border-color: #d58512
+}
+
+.rpress-submit.button.yellow:active {
+	background-image: none
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.yellow:hover, .rpress_fooditems_list h5.rpress-cat.yellow, ul.rpress-cart span.cart-total.yellow, 
+.special-margin.yellow a, 
+.special-inst.yellow a, 
+.rpress-submit.button.yellow .rpress-add-to-cart-label, 
+.btn.btn-block.btn-primary.yellow:hover, 
+.delivery-change.yellow, a.nav-link.yellow:hover {
+	color: #f0ad4e;
+}
+
+.btn.btn-block.btn-primary.yellow:hover {
+	border: 1px solid #d58512;
+}
+
+
+.cart_item.rpress_checkout.yellow a,
+.rpress-popup-actions .submit-fooditem-button.yellow,
+.btn.btn-block.btn-primary.yellow,
+.rpress-cart .rpress_checkout.yellow a,
+ html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > html body #rpressModal .rpress-delivery-wrap.yellow li.active > html body #rpressModal .rpress-delivery-wrap.yellow a:hover {
+	background-color: #d58512;
+}
+
+/* Orange Color */
+.rpress-submit.button.orange {
+	color: #fff;
+	background: #ed9c28;
+	border-color: #e3921e
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.orange:hover, a.nav-link.orange:hover, .rpress_fooditems_list h5.rpress-cat.orange, ul.rpress-cart span.cart-total.orange, .special-margin.orange a, .special-inst.orange a, .rpress-submit.button.orange .rpress-add-to-cart-label, .btn.btn-block.btn-primary.orange:hover, .delivery-change.orange {
+	color: #ed9c28;
+}
+
+.btn.btn-block.btn-primary.orange:hover {
+	border: 1px solid #ed9c28;
+}
+
+.rpress-popup-actions .submit-fooditem-button.orange,
+.btn.btn-block.btn-primary.orange,
+.rpress-cart .rpress_checkout.orange a,
+ html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > html body #rpressModal .rpress-delivery-wrap.orange li.active > html body #rpressModal .rpress-delivery-wrap.orange a:hover {
+	background-color: #ed9c28;
+}
+
+.rpress-submit.button.orange:active,
+.rpress-submit.button.orange:focus,
+.rpress-submit.button.orange:hover {
+	color: #fff;
+	background: #e59016;
+	border-color: #d58512
+}
+
+.rpress-submit.button.orange:active {
+	background-image: none
+}
+
+/* Dark Gray Color */ 
+.rpress-submit.button.dark-gray {
+	color: #fff;
+	background: #363636;
+	border-color: #222
+}
+
+.rpress-submit.button.dark-gray:active,
+.rpress-submit.button.dark-gray:focus,
+.rpress-submit.button.dark-gray:hover {
+	color: #fff;
+	background: #333;
+	border-color: #adadad
+}
+
+.rpress-submit.button.dark-gray:active {
+	background-image: none
+}
+
+.rpress_fooditems_list:after {
+	content: "";
+	display: table;
+	clear: both
+}
+
+.rpress_fooditem {
+	float: left
+}
+
+.rpress_fooditem_columns_1 .rpress_fooditem {
+	width: 100%
+}
+
+.rpress_fooditem_columns_2 .rpress_fooditem {
+	width: 50%
+}
+
+.rpress_fooditem_columns_0 .rpress_fooditem,
+.rpress_fooditem_columns_3 .rpress_fooditem {
+	width: 33%
+}
+
+.rpress_fooditem_columns_4 .rpress_fooditem {
+	width: 25%
+}
+
+.rpress_fooditem_columns_5 .rpress_fooditem {
+	width: 20%
+}
+
+.rpress_fooditem_columns_6 .rpress_fooditem {
+	width: 16.6%
+}
+
+.rpress_fooditem_inner {
+	padding: 0 8px 8px;
+	margin: 0 0 10px
+}
+
+.rpress_fooditem_columns_2 .rpress_fooditem:nth-child(2n+1),
+.rpress_fooditem_columns_3 .rpress_fooditem:nth-child(3n+1),
+.rpress_fooditem_columns_4 .rpress_fooditem:nth-child(4n+1),
+.rpress_fooditem_columns_5 .rpress_fooditem:nth-child(5n+1),
+.rpress_fooditem_columns_6 .rpress_fooditem:nth-child(6n+1) {
+	clear: left
+}
+
+.rpress_fooditem_image {
+	max-width: 100%
+}
+
+.rpress_fooditem .rpress_price {
+	margin-bottom: 10px
+}
+
+#rpress_fooditem_pagination {
+	clear: both
+}
+
+.rpress-hide-on-empty.cart-empty {
+	display: none
+}
+
+rpress-hide-on-empty.cart-not.empty {
+	display: block
+}
+
+.rpress-cart-ajax {
+	margin: 0 8px 0 4px;
+	position: relative;
+	top: 2px;
+	background: 0 0;
+	border: none;
+	padding: 0
+}
+
+.rpress-cart-number-of-items {
+	font-style: italic;
+	color: grey
+}
+
+.rpress-cart-meta.rpress_subtotal {
+	font-weight: 700;
+	font-style: italic
+}
+
+.rpress-cart-meta.rpress_cart_tax {
+	font-size: 1em;
+	font-style: italic
+}
+
+.rpress-cart-meta.rpress_cart_tax::before {
+	font-style: normal
+}
+
+.rpress-cart-meta.rpress_total {
+	font-weight: 700
+}
+
+.rpress-cart-meta {
+	padding: 2px 5px
+}
+
+.rpress-cart-meta.rpress_subtotal,
+.rpress-cart-meta.rpress_total {
+	background-color: #f9f9f9
+}
+
+.rpress_errors:not(.rpress-alert) {
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border: 1px solid #e6db55;
+	margin: 0 0 21px;
+	background: #ffffe0;
+	color: #333
+}
+
+.rpress_error {
+	padding: 10px
+}
+
+p.rpress_error {
+	margin: 0!important
+}
+
+.rpress_success:not(.rpress-alert) {
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border: 1px solid #b3ce89;
+	margin: 20px 0;
+	background: #d5eab3;
+	color: #567622;
+	padding: 6px 8px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7)
+}
+
+.rpress-alert {
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 1px solid transparent;
+	vertical-align: middle
+}
+
+.rpress-alert p {
+	padding: 0
+}
+
+.rpress-alert p:not(:last-child) {
+	margin-bottom: 5px
+}
+
+.rpress-alert p:last-child {
+	margin-bottom: 0
+}
+
+.rpress-alert-error {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1
+}
+
+.rpress-alert-success {
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+	color: #3c763d
+}
+
+.rpress-alert-info {
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1
+}
+
+.rpress-alert-warn {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc
+}

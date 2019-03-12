@@ -129,6 +129,7 @@ function rpress_load_scripts() {
 			'holiday_message'					=> $get_holiday_message,
 			'add_to_cart'							=> __('Add To Cart', 'restro-press'),
 			'update_cart'							=> __('Update Cart', 'restro-press'),
+			'button_color'   					=> rpress_get_option( 'checkout_color', 'red' ),
 		) ) );
 	}
 }

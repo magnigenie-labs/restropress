@@ -1,9 +1,12 @@
+<?php
+$color = rpress_get_option( 'checkout_color', 'red' );
+?>
 <div class="view-food-item-wrap">
 	<form id="fooditem-details" class="row">
 		{Formatted_Cats}
 	</form>
 	<div class="clear"></div>	
-	<div class="col-md-12 md-4-top special-margin">
+	<div class="col-md-12 md-4-top special-margin <?php echo $color; ?> ">
 		<a href="#" class="special-instructions-link">
 			<?php echo __('Special Instructions?', 'restro-press'); ?>
 		</a>

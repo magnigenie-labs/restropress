@@ -720,8 +720,8 @@ function rpress_get_registered_settings() {
 					),
 					'checkout_color' => array(
 						'id'      => 'checkout_color',
-						'name'    => __( 'Default Button Color', 'restro-press' ),
-						'desc'    => __( 'Choose the color you want to use for the buttons.', 'restro-press' ),
+						'name'    => __( 'Theme Color', 'restro-press' ),
+						'desc'    => __( 'Choose the color you want to use for the buttons and links.', 'restro-press' ),
 						'type'    => 'color_select',
 						'options' => rpress_get_button_colors(),
 					),

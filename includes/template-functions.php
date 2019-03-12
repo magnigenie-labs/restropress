@@ -78,7 +78,7 @@ function rpress_get_purchase_link( $args = array() ) {
 		'text'        => $button_behavior == 'direct' ? rpress_get_option( 'buy_now_text', __( 'Buy Now', 'restro-press' ) ) : rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restro-press' ) ),
 		'checkout'    => rpress_get_option( 'checkout_button_text', _x( 'Checkout', 'text shown on the Add to Cart Button when the product is already in the cart', 'restro-press' ) ),
 		'style'       => rpress_get_option( 'button_style', 'button' ),
-		'color'       => rpress_get_option( 'checkout_color', 'blue' ),
+		'color'       => rpress_get_option( 'checkout_color', 'red' ),
 		'class'       => 'rpress-submit'
 	) );
 
@@ -406,10 +406,6 @@ add_filter( 'the_content', 'rpress_after_fooditem_content' );
  */
 function rpress_get_button_colors() {
 	$colors = array(
-		'white'     => array(
-			'label' => __( 'White', 'restro-press' ),
-			'hex'   => '#ffffff'
-		),
 		'gray'      => array(
 			'label' => __( 'Gray', 'restro-press' ),
 			'hex'   => '#f0f0f0'
