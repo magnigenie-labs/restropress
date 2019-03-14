@@ -28,7 +28,7 @@ function rpress_checkout_form() {
 
 			rpress_checkout_cart();
 ?>
-			<div id="rpress_checkout_form_wrap" class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+			<div id="rpress_checkout_form_wrap" class="rp-col-lg-9 rp-col-md-9 rp-col-sm-12 rp-col-xs-12 ">
 				<?php do_action( 'rpress_before_purchase_form' ); ?>
 				<form id="rpress_purchase_form" class="rpress_form" action="<?php echo $form_action; ?>" method="POST">
 					<?php
@@ -87,13 +87,13 @@ function rpress_checkout_user_account() {
 			<p><?php echo __('To place your order now, log into your existing account or signup', 'restro-press'); ?></p>
 			<div class="clear"></div>
 			<div class="rpress-checkout-button-actions">
-				<div class="col-md-4 col-lg-4 col-sm-6">
+				<div class="rp-col-md-4 rp-col-lg-4 rp-col-sm-6">
 					<span><?php echo __('Have an account?', 'restro-press'); ?></span>
-					<a href="<?php echo esc_url( add_query_arg( 'login', 1 ) ); ?>" class="rpress_checkout_register_login col-md-12 col-lg-12 col-sm-12" data-action="checkout_login"><?php _e( 'Login', 'restro-press' ); ?></a>
+					<a href="<?php echo esc_url( add_query_arg( 'login', 1 ) ); ?>" class="rpress_checkout_register_login rp-col-md-12 rp-col-lg-12 rp-col-sm-12" data-action="checkout_login"><?php _e( 'Login', 'restro-press' ); ?></a>
 				</div>
-				<div class="col-md-5 col-lg-5 col-sm-6">
+				<div class="rp-col-md-5 rp-col-lg-5 rp-col-sm-6">
 					<span><?php echo __('New to RestroPress?', 'restro-press'); ?></span>
-					<a href="<?php echo esc_url( remove_query_arg('login') ); ?>" class="rpress_checkout_register_login col-md-12 col-lg-12 col-sm-12" data-action="checkout_register">
+					<a href="<?php echo esc_url( remove_query_arg('login') ); ?>" class="rpress_checkout_register_login rp-col-md-12 rp-col-lg-12 rp-col-sm-12" data-action="checkout_register">
 						<?php _e( 'Register', 'restro-press' ); if(!rpress_no_guest_checkout()) { echo ' ' . __( 'or checkout as a guest.', 'restro-press' ); } ?>
 					</a>
 				</div>

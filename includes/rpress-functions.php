@@ -310,7 +310,7 @@ add_filter( 'rpress_food_cats_before', 'food_cats_before_wrap' );
 
 if( !function_exists('food_cats_before_wrap') ) {
 	function food_cats_before_wrap() {
-		$html = '<div class="rpress-section col-lg-12 col-md-12 col-sm-12 col-xs-12" >';
+		$html = '<div class="rpress-section rp-col-lg-12 rp-col-md-12 rp-col-sm-12 rp-col-xs-12" >';
 		echo $html;
 	}
 }
@@ -328,9 +328,7 @@ add_filter( 'rpress_food_list_items_before', 'food_item_list_before' );
 if( !function_exists('food_item_list_before') ) {
 	function food_item_list_before() {
 		ob_start();
-		?>
-		<div class="rpress_fooditems_list col-lg-7 col-md-7 col-sm-9 col-xs-12">
-		<?php
+		rpress_get_template_part( 'rpress', 'before-fooditem' );
 		echo ob_get_clean();
 	}
 }
@@ -338,6 +336,15 @@ if( !function_exists('food_item_list_before') ) {
 add_filter('rpress_food_list_items_after', 'food_item_list_after' );
 if( !function_exists('food_item_list_after') ) {
 	function food_item_list_after() {
+		ob_start();
+		rpress_get_template_part( 'rpress', 'after-fooditem' );
+		echo ob_get_clean();
+	}
+}
+
+add_action('wp_footer', 'rpress_popup' );
+if( !function_exists('rpress_popup') ) {
+	function rpress_popup() {
 		ob_start();
 		rpress_get_template_part( 'rpress', 'popup' );
 		echo ob_get_clean();
@@ -359,7 +366,7 @@ if( ! function_exists( 'rpress_get_food_cats' ) ) {
 
 		$html = '';
 
-		$html .= '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 sticky-sidebar cat-lists">';
+		$html .= '<div class="rp-col-lg-2 rp-col-md-2 rp-col-sm-3 rp-col-xs-12 sticky-sidebar cat-lists">';
 
 		//filter toggle for mobile
 		$html .= '<div class="rpress-filter-toggle">';
@@ -457,7 +464,7 @@ add_action('rpress_fooditems_list_after', 'rpress_get_cart_items');
 
 function rpress_get_cart_items() {
 	//$html = '</div>';
-	$html = '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right rpress-sidebar-cart item-cart sticky-sidebar">';
+	$html = '<div class="rp-col-lg-3 rp-col-md-3 rp-col-sm-12 rp-col-xs-12 pull-right rpress-sidebar-cart item-cart sticky-sidebar">';
 	$html .= '<div class="rpress-sidebar-cart-wrap">';
 	$html .= do_shortcode('[fooditem_cart]');
 	$html .= '</div>';

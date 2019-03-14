@@ -88,13 +88,13 @@ function rpress_add_ons_get_feed() {
 			?>
 			<div class="row restropress-addon-item <?php echo $class; ?>">
 				<!-- Addons Image Starts Here -->
-				<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 restropress-addon-img-wrap">
+				<div class="rp-col-xs-12 rp-col-sm-6 rp-col-md-5 rp-col-lg-5 restropress-addon-img-wrap">
 					<img alt="<?php echo $item->title; ?>" src="<?php echo $item->product_image; ?>">
 				</div>
 				<!-- Addons Image Ends Here -->
 
 				<!-- Addons Price and Details Starts Here -->
-				<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 restropress-addon-img-wrap">
+				<div class="rp-col-xs-12 rp-col-sm-6 rp-col-md-5 rp-col-lg-5 restropress-addon-img-wrap">
 					<div class="inside">
 						<h3><?php echo $item->title; ?></h3>
 						<small class="rpress-addon-item-pricing"><?php echo __('from', 'restro-press'). ' ' . $item->price_range; ?></small>

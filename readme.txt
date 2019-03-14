@@ -4,7 +4,7 @@ Tags: Food Ordering System,Online Food Ordering System,Food Ordering, WordPress 
 Requires at least: 4.0
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 
 == ChangeLog ==
+
+= Version 2.0.1 =
+* Fixed popup z-index issue
+* fixed template part issue for before and after fooditems
+* added prefix rp for bootstrap classes
 
 = Version 2.0 =
 * Changed checkout layout
@@ -111,6 +116,6 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 == Upgrade Notice ==
 
-= Version 2.0 =
+= Version 2.0.1 =
 
 * New update is available.

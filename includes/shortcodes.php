@@ -338,7 +338,7 @@ function rpress_fooditems_tabs( $atts, $content = null ) {
 				$active_class = (	esc_attr( $key ) == 'menu') ? 'active in' : '';
 				?>
 				<div class="tab-pane row fade show <?php echo $active_class; ?>" id="nav-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="nav-<?php echo esc_attr( $key ); ?>-tab">
-					<div class="col-md-12 <?php echo esc_attr( $key ); ?>">
+					<div class="rp-col-md-12 <?php echo esc_attr( $key ); ?>">
 						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
 					</div>
 				</div>

@@ -31,7 +31,7 @@ function rpress_checkout_cart() {
 	}
 
 	do_action( 'rpress_before_checkout_cart' );
-	echo '<form id="rpress_checkout_cart_form" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right" method="post">';
+	echo '<form id="rpress_checkout_cart_form" class="rp-col-lg-3 rp-col-md-3 rp-col-sm-12 rp-col-xs-12 pull-right" method="post">';
 		echo '<div id="rpress_checkout_cart_wrap">';
 			do_action( 'rpress_checkout_cart_top' );
 			rpress_get_template_part( 'checkout_cart' );

@@ -4,12 +4,12 @@
 <div class="view-food-item-wrap">
 	<form id="fooditem-update-details" class="row">{FormattedCats}</form>
 	<div class="clear"></div>
-	<div class="col-md-12 md-12-top special-inst">
+	<div class="rp-col-md-12 md-12-top special-inst">
 		<a href="#" class="special-instructions-link">
 			<?php echo __('Special Instructions?', 'restro-press'); ?>		
 		</a>
 		
-		<textarea placeholder="Add Instructions..." class="col-md-12 special-instructions " name="special_instruction">{SpecialInstruction}</textarea>
+		<textarea placeholder="Add Instructions..." class="rp-col-md-12 special-instructions " name="special_instruction">{SpecialInstruction}</textarea>
 	</div>
 </div>
 	

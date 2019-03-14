@@ -1614,7 +1614,7 @@
 						'</tfoot>'
 	};
 	DPGlobal.template = '<div class="datepicker">'+
-							'<div class="datepicker-days">'+
+							'<div class="datepicker-days rpress-datepicker-days">'+
 								'<table class=" table-condensed">'+
 									DPGlobal.headTemplate+
 									'<tbody></tbody>'+

@@ -399,6 +399,12 @@ function rpress_get_registered_settings() {
 						'desc'        => __( 'Enter google map api key here. To get your google api key check this <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">link</a>', 'restro-press' ),
 						'type'        => 'text',
 					),
+					// 'map_api_key' => array(
+					// 	'id'          => 'map_api_key',
+					// 	'name'        => __( 'Google Map API Key', 'restro-press' ),
+					// 	'desc'        => __( 'Enter google map api key here. To get your google api key check this <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">link</a>', 'restro-press' ),
+					// 	'type'        => 'text',
+					// ),
 				),
 				
 				//Currency Settings Here

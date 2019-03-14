@@ -278,7 +278,7 @@ add_filter( 'months_dropdown_results', 'rpress_remove_month_filter', 99 );
 function rpress_price_field_quick_edit( $column_name, $post_type ) {
 	if ( $column_name != 'price' || $post_type != 'fooditem' ) return;
 	?>
-	<fieldset class="inline-edit-col-left">
+	<fieldset class="inline-edit-rp-col-left">
 		<div id="rpress-fooditem-data" class="inline-edit-col">
 			<h4><?php echo sprintf( __( '%s Configuration', 'restro-press' ), rpress_get_label_singular() ); ?></h4>
 			<label>
