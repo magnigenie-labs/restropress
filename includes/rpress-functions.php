@@ -208,8 +208,29 @@ function addon_category_taxonomy_custom_fields($tag) {
 	// Check for existing taxonomy meta for the term you're editing  
     $t_id = $tag->term_id; // Get the ID of the term you're editing  
     $term_meta = get_option( "taxonomy_term_$t_id" ); // Do the check  
-?>   
+?>  
+  
+<tr class="form-field">  
+	<th scope="row" valign="top">  
+  	<label for="price_id"><?php _e('Price'); ?></label>  
+  </th>  
+  <td>  
+  	<input type="number" step=".01" name="term_meta[price]" id="term_meta[price]" size="25" style="width:15%;" value="<?php echo $term_meta['price'] ? $term_meta['price'] : ''; ?>"><br />  
+    <span class="description"><?php _e('Price for this addon item'); ?></span>  
+  </td>  
+</tr>  
 
+<tr class="form-field">  
+	<th scope="row" valign="top">  
+  	<label for="enable_quantity"><?php _e('Enable Quantity'); ?></label>  
+  </th>  
+  <td>
+  	<input type="hidden" value="0" name="term_meta[enable_quantity]">
+  	<input type="checkbox" <?php echo (!empty($term_meta['enable_quantity']) ? ' checked="checked" ' : ''); ?> value="1" name="term_meta[enable_quantity]" />
+  	<br />  
+    <span class="description"><?php _e('Show quantity for this?'); ?></span>  
+  </td>  
+</tr> 
 <?php
 }
 
