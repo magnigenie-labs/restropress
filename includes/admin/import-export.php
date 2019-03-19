@@ -17,29 +17,29 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function rpress_export_import() {
 	?>
 	<div class="wrap">
-		<h2><?php _e( 'Export / Import Settings', 'rpress' ); ?></h2>
+		<h2><?php _e( 'Export / Import Settings', 'restro-press' ); ?></h2>
 		<div class="metabox-holder">
 			<?php do_action( 'rpress_export_import_top' ); ?>
 			<div class="postbox">
-				<h3><span><?php _e( 'Export Settings', 'rpress' ); ?></span></h3>
+				<h3><span><?php _e( 'Export Settings', 'restro-press' ); ?></span></h3>
 				<div class="inside">
-					<p><?php _e( 'Export the RestroPress settings for this site as a .json file. This allows you to easily import the configuration into another site.', 'rpress' ); ?></p>
-					<p><?php printf( __( 'To export shop data (purchases, customers, etc), visit the <a href="%s">Reports</a> page.', 'rpress' ), admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&tab=export' ) ); ?>
+					<p><?php _e( 'Export the RestroPress settings for this site as a .json file. This allows you to easily import the configuration into another site.', 'restro-press' ); ?></p>
+					<p><?php printf( __( 'To export shop data (purchases, customers, etc), visit the <a href="%s">Reports</a> page.', 'restro-press' ), admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&tab=export' ) ); ?>
 					<form method="post" action="<?php echo admin_url( 'tools.php?page=rpress-settings-export-import' ); ?>">
 						<p>
 							<input type="hidden" name="rpress_action" value="export_settings" />
 						</p>
 						<p>
 							<?php wp_nonce_field( 'rpress_export_nonce', 'rpress_export_nonce' ); ?>
-							<?php submit_button( __( 'Export', 'rpress' ), 'secondary', 'submit', false ); ?>
+							<?php submit_button( __( 'Export', 'restro-press' ), 'secondary', 'submit', false ); ?>
 						</p>
 					</form>
 				</div><!-- .inside -->
 			</div><!-- .postbox -->
 			<div class="postbox">
-				<h3><span><?php _e( 'Import Settings', 'rpress' ); ?></span></h3>
+				<h3><span><?php _e( 'Import Settings', 'restro-press' ); ?></span></h3>
 				<div class="inside">
-					<p><?php _e( 'Import the RestroPress settings from a .json file. This file can be obtained by exporting the settings on another site using the form above.', 'rpress' ); ?></p>
+					<p><?php _e( 'Import the RestroPress settings from a .json file. This file can be obtained by exporting the settings on another site using the form above.', 'restro-press' ); ?></p>
 					<form method="post" enctype="multipart/form-data" action="<?php echo admin_url( 'tools.php?page=rpress-settings-export-import' ); ?>">
 						<p>
 							<input type="file" name="import_file"/>
@@ -47,7 +47,7 @@ function rpress_export_import() {
 						<p>
 							<input type="hidden" name="rpress_action" value="import_settings" />
 							<?php wp_nonce_field( 'rpress_import_nonce', 'rpress_import_nonce' ); ?>
-							<?php submit_button( __( 'Import', 'rpress' ), 'secondary', 'submit', false ); ?>
+							<?php submit_button( __( 'Import', 'restro-press' ), 'secondary', 'submit', false ); ?>
 						</p>
 					</form>
 				</div><!-- .inside -->
@@ -122,7 +122,7 @@ function rpress_process_settings_import() {
 	$import_file = $_FILES['import_file']['tmp_name'];
 
 	if( empty( $import_file ) ) {
-		wp_die( __( 'Please upload a file to import', 'rpress' ) );
+		wp_die( __( 'Please upload a file to import', 'restro-press' ) );
 	}
 
 	// Retrieve the settings from the file and convert the json object to an array

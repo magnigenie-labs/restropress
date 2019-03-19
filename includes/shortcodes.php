@@ -355,7 +355,7 @@ function get_rpress_fooditems( $atts, $content = null ) {
 	apply_filters( 'rpress_food_cats_before', array() );
 
 	//Get food category items
-	echo apply_filters( 'rpress_food_cats', array() );
+	do_action('rpress_food_cats');
 
 	$color = rpress_get_option( 'checkout_color', 'red' );
 
@@ -491,6 +491,8 @@ function get_rpress_fooditems( $atts, $content = null ) {
 	echo apply_filters( 'fooditems_shortcode', $display, $atts, $atts['buy_button'], $atts['columns'], '', $fooditems, $atts['excerpt'], $atts['full_content'], $atts['price'], $atts['thumbnails'], $query );
 
 	do_action( 'rpress_fooditems_list_after', $atts, $fooditems );
+
+	do_action( 'rpress_get_cart' );
 
 	echo apply_filters( 'rpress_food_cats_after', array() );
 }

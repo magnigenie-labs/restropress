@@ -299,6 +299,12 @@ jQuery(function($) {
 
 	});
 
+  //Show Image on Modal
+  $('.rpress-pop').on('click', function() {
+      $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+      $('#rpressImageModal').modal('show');   
+    }); 
+
 
 	$(document).on('click', '.qtyplus', function(e) {
 		// Stop acting like a button

@@ -61,8 +61,8 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 
 		// Set parent defaults
 		parent::__construct( array(
-			'singular'  => __( 'Customer', 'rpress' ),     // Singular name of the listed records
-			'plural'    => __( 'Customers', 'rpress' ),    // Plural name of the listed records
+			'singular'  => __( 'Customer', 'restro-press' ),     // Singular name of the listed records
+			'plural'    => __( 'Customers', 'restro-press' ),    // Plural name of the listed records
 			'ajax'      => false             			// Does this table support ajax?
 		) );
 
@@ -121,7 +121,7 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 
 			case 'file_fooditems' :
 				$user = ! empty( $item['user_id'] ) ? $item['user_id'] : $item['email'];
-				$value = '<a href="' . esc_url( admin_url( '/edit.php?post_type=fooditem&page=rpress-reports&tab=logs&user=' . urlencode( $user ) ) ) . '">' . __( 'View fooditem log', 'rpress' ) . '</a>';
+				$value = '<a href="' . esc_url( admin_url( '/edit.php?post_type=fooditem&page=rpress-reports&tab=logs&user=' . urlencode( $user ) ) ) . '">' . __( 'View fooditem log', 'restro-press' ) . '</a>';
 				break;
 			default:
 				$value = isset( $item[ $column_name ] ) ? $item[ $column_name ] : null;
@@ -139,12 +139,12 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'name'     		=> __( 'Name', 'rpress' ),
-			'id'     		=> __( 'ID', 'rpress' ),
-			'email'     	=> __( 'Email', 'rpress' ),
-			'num_purchases' => __( 'Purchases', 'rpress' ),
-			'amount_spent'  => __( 'Total Spent', 'rpress' ),
-			'file_fooditems'=> __( 'Food Items', 'rpress' )
+			'name'     		=> __( 'Name', 'restro-press' ),
+			'id'     		=> __( 'ID', 'restro-press' ),
+			'email'     	=> __( 'Email', 'restro-press' ),
+			'num_purchases' => __( 'Purchases', 'restro-press' ),
+			'amount_spent'  => __( 'Total Spent', 'restro-press' ),
+			'file_fooditems'=> __( 'Food Items', 'restro-press' )
 		);
 
 		return apply_filters( 'rpress_report_customer_columns', $columns );

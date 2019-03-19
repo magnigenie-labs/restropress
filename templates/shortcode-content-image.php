@@ -8,7 +8,10 @@
   	<div class="rpress-thumbnail-holder rpress-bg" style="background-image: url(<?php echo $image[0]; ?>);">
   	
   		<?php if( $fooditems_overlay == 1 ) : ?>
-  		<a rel="gallery" class="rpress-fancybox" href="<?php echo $image[0]; ?>"><img src="<?php echo $image[0]; ?>" alt=""/></a>
+  		
+        <a href="#" class="rpress-pop">
+          <img src="<?php echo $image[0]; ?>" alt=""/>
+        </a>
   		<?php endif; ?>
   	</div>
 
@@ -20,7 +23,9 @@
   <div class="rpress-thumbnail-holder rpress-default-bg" style="background-image: url(<?php echo $image_src; ?>)">
   	
   	<?php if( $fooditems_overlay == 1 ) : ?>
-  		<a rel="gallery" class="rpress-fancybox" href="<?php echo $image_src; ?>"><img src="<?php echo $image_src;?>" alt=""/></a>
+      <a href="#" class="rpress-pop">
+          <img src="<?php echo $image_src; ?>" alt=""/>
+        </a>
   	<?php endif; ?>
 
   </div>

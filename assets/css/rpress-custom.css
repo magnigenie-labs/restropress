@@ -7,6 +7,7 @@ div.rpress-element-title, input[type="button"], input[type="text"] {
 html body .rpress_fooditems_list .rpress_fooditem {
 	clear: both;
 }
+a.rpress-popup {display: block;}
 div.rpress_fooditems_list .rpress_fooditem {width: 100%;}
 
 div.rpress_fooditems_list .rpress_fooditem h3.rpress_fooditem_title {display: block; margin: 0;}
@@ -112,7 +113,7 @@ html body #rpressModal
 	margin: 0;
 }
 html body .modal-backdrop.fade.in {z-index: 99999;}
-html body div#rpressModal{z-index: 999999;}
+html body div#rpressModal, html body div#rpressImageModal{z-index: 999999;}
 html body div#rpressModal button.close {
 	position: absolute;
 	right: 11px;

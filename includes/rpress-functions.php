@@ -141,15 +141,6 @@ function rpress_admin_scripts() {
   wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   wp_enqueue_script( 'rpress-timepicker-script' );
 
- //  if( rpress_get_option('enable_google_map_api') 
-	// 	&& rpress_get_option('map_api_key') !== '' 
-	// 	&& isset($_GET['page']) 
-	// 	&& $_GET['page'] == 'rpress-settings' ) :
-	// 	wp_register_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
-	// 	wp_enqueue_script('rpress-google-js');
-
-	// 	//wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
-	// endif;
 
   wp_register_style( 'rpress-addon-style', plugins_url( 'assets/css/rpress-bootstrap.css', RPRESS_PLUGIN_FILE ));
 
@@ -373,12 +364,13 @@ if( !function_exists('rpress_popup') ) {
 	function rpress_popup() {
 		ob_start();
 		rpress_get_template_part( 'rpress', 'popup' );
+		rpress_get_template_part( 'rpress', 'image-popup' );
 		echo ob_get_clean();
 	}
 }
 
 
-add_filter( 'rpress_food_cats', 'rpress_get_food_cats' );
+add_action( 'rpress_food_cats', 'rpress_get_food_cats' );
 
 if( ! function_exists( 'rpress_get_food_cats' ) ) {
 	function rpress_get_food_cats(){
@@ -390,35 +382,35 @@ if( ! function_exists( 'rpress_get_food_cats' ) ) {
     	'hide_empty' => true,
 		) );
 
-		$html = '';
+		ob_start();
+		?>
+		<div class="rp-col-lg-2 rp-col-md-2 rp-col-sm-3 rp-col-xs-12 sticky-sidebar cat-lists">
+			<div class="rpress-filter-toggle">
+				<span class="rpress-filter-toggle-text"><?php echo __('Categories By', 'restro-press'); ?></span>
+			</div>
 
-		$html .= '<div class="rp-col-lg-2 rp-col-md-2 rp-col-sm-3 rp-col-xs-12 sticky-sidebar cat-lists">';
+			<div class="rpress-filter-wrapper">
+				<div class="rpress-categories-menu">
+					<h6><?php echo __('Categories', 'restro-press'); ?></h6>
+					<?php do_action('rpress_before_category_list'); ?>
+					<?php 
+					if( is_array($get_all_items) && !empty($get_all_items) ) :
+					?>
+						<ul class="rpress-category-lists">
 
-		//filter toggle for mobile
-		$html .= '<div class="rpress-filter-toggle">';
-		$html .= '<span class="rpress-filter-toggle-text">'.__('Categories By', 'rpress').'</span>';
-		$html .= '</div>';
-
-		//filter wrapper starts here
-		$html .= '<div class="rpress-filter-wrapper">';
-		$html .= '<div class="rpress-categories-menu">';
-		$html .= '<h6>'.__('Categories', 'restro-press').'</h6>';
-
-		if( is_array($get_all_items) && !empty($get_all_items) ) :
-			$html .= '<ul class="rpress-category-lists">';
-			foreach ($get_all_items as $key => $get_all_item) :
-				$html .= '<li class="rpress-category-item "><a href="javascript:void(0)" data-id="'.$get_all_item->term_id.'" class="rpress-category-link  nav-scroller-item  ">'.$get_all_item->name.'</a></li>';
-			endforeach;
-
-			$html .= '</ul>';
-		endif;
-
-		$html .= '</div>';
-		$html .= '</div>';
-		//filter wrapper ends here
-
-		$html .= '</div>';
-		return $html;
+							<?php foreach ($get_all_items as $key => $get_all_item) : ?>
+								<li class="rpress-category-item "><a href="javascript:void(0)" data-id="<?php echo $get_all_item->term_id; ?>" class="rpress-category-link  nav-scroller-item"><?php echo $get_all_item->name; ?></a></li>
+							<?php endforeach; ?>
+						</ul>
+					<?php
+					endif;
+					?>
+					<?php do_action('rpress_after_category_list'); ?>
+				</div>
+			</div>
+		</div>
+		<?php
+		echo ob_get_clean();
 	}
 }
 
@@ -486,16 +478,18 @@ function rpress_get_instruction_by_key( $cart_key ) {
 	return $instruction;
 }
 
-add_action('rpress_fooditems_list_after', 'rpress_get_cart_items');
+add_action('rpress_get_cart', 'rpress_get_cart_items');
 
 function rpress_get_cart_items() {
-	//$html = '</div>';
-	$html = '<div class="rp-col-lg-3 rp-col-md-3 rp-col-sm-12 rp-col-xs-12 pull-right rpress-sidebar-cart item-cart sticky-sidebar">';
-	$html .= '<div class="rpress-sidebar-cart-wrap">';
-	$html .= do_shortcode('[fooditem_cart]');
-	$html .= '</div>';
-	$html .= '</div>';
-	echo $html;
+	ob_start();
+	?>
+	<div class="rp-col-lg-3 rp-col-md-3 rp-col-sm-12 rp-col-xs-12 pull-right rpress-sidebar-cart item-cart sticky-sidebar">
+		<div class="rpress-sidebar-cart-wrap">
+			<?php echo rpress_shopping_cart(); ?>
+		</div>
+	</div>
+	<?php
+	echo ob_get_clean();
 }
 
 
@@ -1298,5 +1292,39 @@ function get_delivery_fee() {
 		$delivery_fee = $_COOKIE['rpress_delivery_price'];
 		return $delivery_fee;
 	}
+}
+
+
+/* Remove View Link From Food Items */
+
+add_filter('post_row_actions','rpress_remove_view_link', 10, 2);
+
+function rpress_remove_view_link($actions, $post){
+	if ($post->post_type =="fooditem"){
+  	unset($actions['view']);
+  }
+  return $actions;
+}
+
+/* Remove View Link From Food Addon Category */
+
+add_filter('addon_category_row_actions','rpress_remove_tax_view_link', 10, 2);
+
+function rpress_remove_tax_view_link($actions, $taxonomy) {
+	if( $taxonomy->taxonomy == 'addon_category' ) {
+		unset($actions['view']);
+	}
+	return $actions;
+}
+
+
+/* Remove View Link From Food Category */
+add_filter('food-category_row_actions','rpress_remove_food_cat_view_link', 10, 2);
+
+function rpress_remove_food_cat_view_link($actions, $taxonomy) {
+	if( $taxonomy->taxonomy == 'food-category' ) {
+		unset($actions['view']);
+	}
+	return $actions;
 }
 

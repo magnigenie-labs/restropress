@@ -267,82 +267,82 @@ function rpress_setup_email_tags() {
 	$email_tags = array(
 		array(
 			'tag'         => 'fooditem_list',
-			'description' => __( 'A list of fooditem purchased', 'rpress' ),
+			'description' => __( 'A list of fooditem purchased', 'restro-press' ),
 			'function'    => 'rpress_email_tag_fooditem_list'
 		),
 		array(
 			'tag'         => 'name',
-			'description' => __( "The buyer's first name", 'rpress' ),
+			'description' => __( "The buyer's first name", 'restro-press' ),
 			'function'    => 'rpress_email_tag_first_name'
 		),
 		array(
 			'tag'         => 'fullname',
-			'description' => __( "The buyer's full name, first and last", 'rpress' ),
+			'description' => __( "The buyer's full name, first and last", 'restro-press' ),
 			'function'    => 'rpress_email_tag_fullname'
 		),
 		array(
 			'tag'         => 'username',
-			'description' => __( "The buyer's user name on the site, if they registered an account", 'rpress' ),
+			'description' => __( "The buyer's user name on the site, if they registered an account", 'restro-press' ),
 			'function'    => 'rpress_email_tag_username'
 		),
 		array(
 			'tag'         => 'user_email',
-			'description' => __( "The buyer's email address", 'rpress' ),
+			'description' => __( "The buyer's email address", 'restro-press' ),
 			'function'    => 'rpress_email_tag_user_email'
 		),
 		array(
 			'tag'         => 'billing_address',
-			'description' => __( 'The buyer\'s billing address', 'rpress' ),
+			'description' => __( 'The buyer\'s billing address', 'restro-press' ),
 			'function'    => 'rpress_email_tag_billing_address'
 		),
 		array(
 			'tag'         => 'date',
-			'description' => __( 'The date of the purchase', 'rpress' ),
+			'description' => __( 'The date of the purchase', 'restro-press' ),
 			'function'    => 'rpress_email_tag_date'
 		),
 		array(
 			'tag'         => 'subtotal',
-			'description' => __( 'The price of the purchase before taxes', 'rpress' ),
+			'description' => __( 'The price of the purchase before taxes', 'restro-press' ),
 			'function'    => 'rpress_email_tag_subtotal'
 		),
 		array(
 			'tag'         => 'tax',
-			'description' => __( 'The taxed amount of the purchase', 'rpress' ),
+			'description' => __( 'The taxed amount of the purchase', 'restro-press' ),
 			'function'    => 'rpress_email_tag_tax'
 		),
 		array(
 			'tag'         => 'price',
-			'description' => __( 'The total price of the purchase', 'rpress' ),
+			'description' => __( 'The total price of the purchase', 'restro-press' ),
 			'function'    => 'rpress_email_tag_price'
 		),
 		array(
 			'tag'         => 'payment_id',
-			'description' => __( 'The unique ID number for this purchase', 'rpress' ),
+			'description' => __( 'The unique ID number for this purchase', 'restro-press' ),
 			'function'    => 'rpress_email_tag_payment_id'
 		),
 		array(
 			'tag'         => 'receipt_id',
-			'description' => __( 'The unique ID number for this purchase receipt', 'rpress' ),
+			'description' => __( 'The unique ID number for this purchase receipt', 'restro-press' ),
 			'function'    => 'rpress_email_tag_receipt_id'
 		),
 		array(
 			'tag'         => 'payment_method',
-			'description' => __( 'The method of payment used for this purchase', 'rpress' ),
+			'description' => __( 'The method of payment used for this purchase', 'restro-press' ),
 			'function'    => 'rpress_email_tag_payment_method'
 		),
 		array(
 			'tag'         => 'sitename',
-			'description' => __( 'Your site name', 'rpress' ),
+			'description' => __( 'Your site name', 'restro-press' ),
 			'function'    => 'rpress_email_tag_sitename'
 		),
 		array(
 			'tag'         => 'receipt_link',
-			'description' => __( 'Adds a link so users can view their receipt directly on your website if they are unable to view it in the browser correctly.', 'rpress' ),
+			'description' => __( 'Adds a link so users can view their receipt directly on your website if they are unable to view it in the browser correctly.', 'restro-press' ),
 			'function'    => 'rpress_email_tag_receipt_link'
 		),
 		array(
 			'tag'         => 'discount_codes',
-			'description' => __( 'Adds a list of any discount codes applied to this purchase', 'rpress' ),
+			'description' => __( 'Adds a list of any discount codes applied to this purchase', 'restro-press' ),
 			'function'    => 'rpress_email_tag_discount_codes'
 		),
 	);
@@ -389,7 +389,7 @@ function rpress_email_tag_fooditem_list( $payment_id ) {
 				$title = get_the_title( $item['id'] );
 
 				if ( ! empty( $sku ) ) {
-					$title .= "&nbsp;&ndash;&nbsp;" . __( 'SKU', 'rpress' ) . ': ' . $sku;
+					$title .= "&nbsp;&ndash;&nbsp;" . __( 'SKU', 'restro-press' ) . ': ' . $sku;
 				}
 
 				if ( $price_id !== false ) {
@@ -681,7 +681,7 @@ function rpress_email_tag_sitename( $payment_id ) {
  * @return string receipt_link
  */
 function rpress_email_tag_receipt_link( $payment_id ) {
-	return sprintf( __( '%1$sView it in your browser.%2$s', 'rpress' ), '<a href="' . add_query_arg( array( 'payment_key' => rpress_get_payment_key( $payment_id ), 'rpress_action' => 'view_receipt' ), home_url() ) . '">', '</a>' );
+	return sprintf( __( '%1$sView it in your browser.%2$s', 'restro-press' ), '<a href="' . add_query_arg( array( 'payment_key' => rpress_get_payment_key( $payment_id ), 'rpress_action' => 'view_receipt' ), home_url() ) . '">', '</a>' );
 }
 
 /**

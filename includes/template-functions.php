@@ -184,7 +184,7 @@ function rpress_get_purchase_link( $args = array() ) {
 
 			if ( ! rpress_is_ajax_disabled() ) {
 
-				echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label">' . __('+', 'rpress') . '</span> </a>';
+				echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label">' . __('+', 'restro-press') . '</span> </a>';
 
 			}
 			
