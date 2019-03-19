@@ -660,6 +660,9 @@ input[class*="rpress-price-field"] {
 	background-position: -10px 0 !important;
 }
 
+/* Admin Store Info */
+.rpress-store-pos-info { font-style: italic; display: block; margin-top: 10px; margin-bottom: 10px; }
+.store_lat_lng {display: none;}
 
 
 /* Payment Details

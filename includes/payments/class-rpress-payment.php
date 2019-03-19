@@ -276,6 +276,15 @@ class RPRESS_Payment {
 	 */
 	protected $delivery_time = '';
 
+
+	/**
+	 * Delivery Fee for this payment
+	 *
+	 * @since  1.0
+	 * @var array
+	 */
+	protected $delivery_fee = '';
+
 	/**
 	 * IP Address payment was made from
 	 *
@@ -939,6 +948,16 @@ class RPRESS_Payment {
 						$this->update_meta( '_rpress_delivery_time', $delivery_time );
 						break;
 
+					case 'delivery_fee':
+						$delivery_fee = isset($_COOKIE['rpress_delivery_price']) ? $_COOKIE['rpress_delivery_price'] : '';
+						$this->update_meta( '_rpress_delivery_price', $delivery_fee );
+						break;
+
+					case 'delivery_location':
+						$delivery_location = isset($_COOKIE['rpress_delivery_location']) ? $_COOKIE['rpress_delivery_location'] : '';
+						$this->update_meta( '_rpress_delivery_location', $delivery_location );
+						break;
+
 					case 'discounts':
 						if ( ! is_array( $this->discounts ) ) {
 							$this->discounts = explode( ',', $this->discounts );
@@ -1122,6 +1141,11 @@ class RPRESS_Payment {
 		if( isset($_COOKIE['OrderDate']) ) :
 			unset($_COOKIE['OrderDate']);
 			setcookie("OrderDate", "", time() - 300,"/");
+		endif;
+
+		if( isset($_COOKIE['rpress_delivery_price']) ) :
+			unset($_COOKIE['rpress_delivery_price']);
+			setcookie("rpress_delivery_price", "", time() - 300,"/");
 		endif;
 
 		return $saved;

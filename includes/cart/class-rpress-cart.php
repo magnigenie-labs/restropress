@@ -1114,7 +1114,14 @@ class RPRESS_Cart {
 			$total = 0.00;
 		}
 
-		$this->total = (float) apply_filters( 'rpress_get_cart_total', $total );
+		if( apply_delivery_fee() ) {
+			$this->total = (float) apply_filters( 'rpress_get_cart_total', $total );
+			$this->total = $this->total + get_delivery_fee();
+		}
+		else {
+			$this->total = (float) apply_filters( 'rpress_get_cart_total', $total );
+		}
+
 
 		return $this->total;
 	}

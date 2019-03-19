@@ -232,6 +232,11 @@ function rpress_ajax_add_to_cart() {
 			$return['tax'] = html_entity_decode( rpress_currency_filter( rpress_format_amount( $cart_tax ) ), ENT_COMPAT, 'UTF-8' );
 		}
 
+		if( apply_delivery_fee() ) :
+			$return['subtotal'] = rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) );
+			$return['delivery_fee'] = rpress_get_delivery_price();
+		endif;
+
 		echo json_encode( $return );
 	}
 	rpress_die();
@@ -416,6 +421,11 @@ function rpress_ajax_update_cart_items() {
 			$cart_tax = (float) rpress_get_cart_tax();
 			$return['tax'] = html_entity_decode( rpress_currency_filter( rpress_format_amount( $cart_tax ) ), ENT_COMPAT, 'UTF-8' );
 		}
+
+		if( apply_delivery_fee() ) :
+			$return['subtotal'] = rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) );
+			$return['delivery_fee'] = rpress_get_delivery_price();
+		endif;
 
 		echo json_encode( $return );
 	}

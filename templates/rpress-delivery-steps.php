@@ -13,12 +13,15 @@ if( is_array($store_timings) && isset($store_timings['enable']) ) {
 }
 ?>
 
+
 <div class="rpress-delivery-wrap <?php echo $color; ?> ">
 	<div class="rpress-row">
   			
   	<!-- Error Message Starts Here -->
   	<div class="alert alert-warning rpress-errors-wrap disabled"></div>
   	<!-- Error Message Ends Here -->
+
+  	<?php do_action('rpress_delivery_location_field'); ?>
 
 		<div class="rpress-tabs-wrapper rpress-delivery-options text-center">
 			<ul class="nav nav-pills" id="rpressdeliveryTab">

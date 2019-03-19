@@ -329,6 +329,17 @@ html body #rpress-allowed-hours, html body .rpress_get_delivery_dates {
 	width: 40%;
 	background: #f9f9f9;
 }
+html body .pac-container.pac-logo {z-index: 9999999 !important;}
+html body .rpress-location-wrapper span {
+	display: block;
+}
+
+html body .rpress-delivery-location {
+	width: 100%;
+	border: 1px solid #ccc !important;
+	padding: 0px 10px;
+	background: #f9f9f9;
+}
 html body .rpress_get_delivery_dates {
 	width: 100%;
 }
@@ -574,7 +585,7 @@ html body .rpress-section ul li {
 	width: 12px;
 	height: 12px;
 }
-.rpress-cart li {
+.rpress-cart li.rpress-cart-meta:first-child {
 	margin-top: 10px;
 }
 .entry-content a {
@@ -892,7 +903,7 @@ section.fullwidth.nav {
 	font-size: 13px;
 	padding: 0;
 }
-.rpress-cart .rpress_subtotal, .rpress-cart .rpress_cart_tax {
+.rpress-cart .rpress_subtotal, .rpress-cart .rpress_cart_tax, .rpress-cart .rpress-delivery-fee {
 	font-weight: normal;
 	font-size: 14px;
 	font-style: normal;
@@ -901,7 +912,7 @@ section.fullwidth.nav {
 	clear: both;
 	overflow: hidden;
 }
-.rpress-cart .rpress_subtotal span, .rpress-cart .rpress_cart_tax span {
+.rpress-cart .rpress_subtotal span, .rpress-cart .cart-delivery-fee, .rpress-cart .rpress_cart_tax span {
 	float: right;
 }
 .rpress-cart .rpress_total {

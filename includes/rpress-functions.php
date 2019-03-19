@@ -67,6 +67,18 @@ function rpress_set_custom_taxonomies() {
 }
 add_action( 'init', 'rpress_set_custom_taxonomies' );
 
+add_action( 'wp_loaded', 'register_all_scripts' );
+
+function register_all_scripts() {
+	$map_api_key = rpress_get_option('map_api_key');
+	$enable_google_api = rpress_get_option('enable_google_map_api');
+
+	if( $enable_google_api && $map_api_key !== '' ) :
+		wp_register_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.$map_api_key.'&libraries=places', array(), '', true);
+	endif;
+}
+
+
 function rpress_enque_scripts() {
 
 	//Add fancybox style
@@ -78,13 +90,10 @@ function rpress_enque_scripts() {
 	//Add Sticky bar
 	wp_enqueue_script('rpress-sticky-sidebar', plugins_url( 'assets/js/rpress-sticky-sidebar.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
 
-	wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
-
 	//Add Google Map js 
 	if( rpress_get_option('enable_google_map_api') 
-		&& rpress_is_checkout() && rpress_get_option('map_api_key') !== '' ) :
-
-		wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
+		&& rpress_get_option('map_api_key') !== '' ) :
+		wp_enqueue_script('rpress-google-js');
 	endif;
 
 	wp_enqueue_style( 'rpress-datepicker-stylesheet', plugins_url( 'assets/css/rpress-datepicker.css', RPRESS_PLUGIN_FILE ));
@@ -132,6 +141,16 @@ function rpress_admin_scripts() {
   wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   wp_enqueue_script( 'rpress-timepicker-script' );
 
+ //  if( rpress_get_option('enable_google_map_api') 
+	// 	&& rpress_get_option('map_api_key') !== '' 
+	// 	&& isset($_GET['page']) 
+	// 	&& $_GET['page'] == 'rpress-settings' ) :
+	// 	wp_register_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
+	// 	wp_enqueue_script('rpress-google-js');
+
+	// 	//wp_enqueue_script('rpress-google-js', 'https://maps.googleapis.com/maps/api/js?&key='.rpress_get_option('map_api_key').'&libraries=places', array(), '', true);
+	// endif;
+
   wp_register_style( 'rpress-addon-style', plugins_url( 'assets/css/rpress-bootstrap.css', RPRESS_PLUGIN_FILE ));
 
   if( isset($_GET['page']) && $_GET['page'] == 'rpress-addons' ) {
@@ -165,12 +184,19 @@ function load_admin_scripts() {
 	wp_register_script('rpress-toast-script', plugins_url( 'assets/js/jquery.toast.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   wp_enqueue_script('rpress-toast-script');
 
+  if( rpress_get_option('enable_google_map_api') 
+  	&& $_GET['page'] == 'rpress-settings'
+		&& rpress_get_option('map_api_key') !== '' ) :
+		wp_enqueue_script('rpress-google-js');
+	endif;
+
 
 	//Add admin custom js script
 	wp_enqueue_script('admin-rpress-script', plugins_url( 'assets/js/admin-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-toast-script' ), '1.0.1', true );
 
 	$admin_vars = array(
-		'ajaxurl'     => rpress_get_ajax_url(),
+		'ajaxurl'     		=> rpress_get_ajax_url(),
+		'custom_address'  => rpress_get_option('use_custom_latlng'),
 	);
 
 	wp_localize_script('admin-rpress-script', 'rpress_admin_vars', 
@@ -182,29 +208,8 @@ function addon_category_taxonomy_custom_fields($tag) {
 	// Check for existing taxonomy meta for the term you're editing  
     $t_id = $tag->term_id; // Get the ID of the term you're editing  
     $term_meta = get_option( "taxonomy_term_$t_id" ); // Do the check  
-?>  
-  
-<tr class="form-field">  
-	<th scope="row" valign="top">  
-  	<label for="price_id"><?php _e('Price'); ?></label>  
-  </th>  
-  <td>  
-  	<input type="number" step=".01" name="term_meta[price]" id="term_meta[price]" size="25" style="width:15%;" value="<?php echo $term_meta['price'] ? $term_meta['price'] : ''; ?>"><br />  
-    <span class="description"><?php _e('Price for this addon item'); ?></span>  
-  </td>  
-</tr>  
+?>   
 
-<tr class="form-field">  
-	<th scope="row" valign="top">  
-  	<label for="enable_quantity"><?php _e('Enable Quantity'); ?></label>  
-  </th>  
-  <td>
-  	<input type="hidden" value="0" name="term_meta[enable_quantity]">
-  	<input type="checkbox" <?php echo (!empty($term_meta['enable_quantity']) ? ' checked="checked" ' : ''); ?> value="1" name="term_meta[enable_quantity]" />
-  	<br />  
-    <span class="description"><?php _e('Show quantity for this?'); ?></span>  
-  </td>  
-</tr> 
 <?php
 }
 
@@ -629,6 +634,29 @@ function get_delivery_options($changeble) {
 	$html .='</div>';
 		
 	return $html;
+
+}
+
+
+function rpress_get_delivery_price() {
+	$delivery_fee_settings = get_option( 'rpress_delivery_fee', array() );
+	$free_delivery_above = isset($delivery_fee_settings['free_delivery_above']) ? $delivery_fee_settings['free_delivery_above'] : 0;
+
+	$cart_subtotal = rpress_get_cart_subtotal();
+
+	if( isset($_COOKIE['rpress_delivery_price']) ) {
+		ob_start();
+		?>
+		<?php 
+		if( $cart_subtotal < $free_delivery_above ) {
+			echo rpress_currency_filter( rpress_format_amount( $_COOKIE['rpress_delivery_price'] ) ); 
+		}
+		else {
+			echo rpress_currency_filter( rpress_format_amount( '0' ) ); 
+		}
+		
+	return ob_get_clean();
+	}
 
 }
 
@@ -1226,5 +1254,28 @@ function Rpress_Delivery_Cut_Hours() {
 		}
 	}
 
+}
+
+function apply_delivery_fee() {
+	$delivery_settings = get_option('rpress_delivery_fee', array());
+
+	if( isset($delivery_settings['enable']) 
+		&& isset($delivery_settings['free_delivery_above']) ) {
+
+		//Get Cart Subtotal
+		$subtotal = rpress_get_cart_subtotal();
+
+		if( $subtotal < $delivery_settings['free_delivery_above'] ) {
+			return true;
+		}
+	}
+}
+
+function get_delivery_fee() {
+	if( isset($_COOKIE['rpress_delivery_price']) 
+		&& $_COOKIE['rpress_delivery_price'] !== '' ) {
+		$delivery_fee = $_COOKIE['rpress_delivery_price'];
+		return $delivery_fee;
+	}
 }
 

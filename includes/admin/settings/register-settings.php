@@ -399,12 +399,39 @@ function rpress_get_registered_settings() {
 						'desc'        => __( 'Enter google map api key here. To get your google api key check this <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">link</a>', 'restro-press' ),
 						'type'        => 'text',
 					),
-					// 'map_api_key' => array(
-					// 	'id'          => 'map_api_key',
-					// 	'name'        => __( 'Google Map API Key', 'restro-press' ),
-					// 	'desc'        => __( 'Enter google map api key here. To get your google api key check this <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">link</a>', 'restro-press' ),
-					// 	'type'        => 'text',
-					// ),
+					'store_address' => array(
+						'id'          => 'autocomplete',
+						'name'        => __( 'Store Address', 'restro-press' ),
+						'desc'        => __( 'Please set exact address for your store. It would be helpfull for better delivery experienece to your user', 'restro-press' ),
+						'type'        => 'store_address',
+					),
+					'store_lat' => array(
+						'id'   => 'store_lat',
+						'size' => 'small',
+						'name' => __( 'Store Latitude', 'restro-press' ),
+						'desc' => sprintf(
+							__( 'Enter your store exact latitude position', 'restro-press' )
+						),
+						'type' => 'number',
+						'class'       => 'store_lat_lng',
+					),
+					'store_lng' => array(
+						'id'   => 'store_lng',
+						'size' => 'small',
+						'name' => __( 'Store Longitude', 'restro-press' ),
+						'desc' => sprintf(
+							__( 'Enter your store exact longitude position', 'restro-press' )
+						),
+						'type' => 'number',
+						'class'       => 'store_lat_lng',
+					),
+					'use_custom_latlng' => array(
+						'id'          => 'use_custom_latlng',
+						'name'        => __( 'Use These Cordinates For Store Address', 'restro-press' ),
+						'desc'        => __( 'Use this custom latitude and longitude cordinates for store address on google map. ', 'restro-press' ),
+						'type'        => 'checkbox',
+						'class'       => 'store_lat_lng',
+					),
 				),
 				
 				//Currency Settings Here
@@ -2102,6 +2129,29 @@ function rpress_color_callback( $args ) {
 	$html = '<input type="text" class="' . $class . ' rpress-color-picker" id="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . ']" name="rpress_settings[' . esc_attr( $args['id'] ) . ']" value="' . esc_attr( $value ) . '" data-default-color="' . esc_attr( $default ) . '" />';
 	$html .= '<label for="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
 
+	echo apply_filters( 'rpress_after_setting_output', $html, $args );
+}
+
+/**
+ * Shop Addres Callback
+ *
+ * Renders google address autocomplete so that admin can set their store exact address
+ *
+ * @since  2.0.1
+ * @param array $args Arguments passed by the setting
+ *
+ * @return void
+ */
+function rpress_store_address_callback($args) {
+	$rpress_geo_address = rpress_get_option('rpress_geo_address');
+	$rpress_geo_location = ($rpress_geo_address !== '') ? $rpress_geo_address : '';
+
+	$rpress_store_address = rpress_get_option('rpress_store_address');
+	$rpress_store_address = $rpress_store_address !== '' ? $rpress_store_address : '';
+
+	$html = '<input class="regular-text rpress-input autocomplete" id="autocomplete" name="rpress_settings[rpress_store_address]" value="'.$rpress_store_address.'"  placeholder="'.__('Enter Your Address', 'restro-press').'">';
+	$html .= '<input type="hidden" id="rpress_geo_address" name="rpress_settings[rpress_geo_address]" value="'.$rpress_geo_location.'">';
+	$html .= '<span class="rpress-store-pos-info">'.__('Did not able to get your address? Enter your location latitude and longitude by doing click ', 'restro-press').'<a class="store_lat_lng_position" href="#">here</a></span>';
 	echo apply_filters( 'rpress_after_setting_output', $html, $args );
 }
 

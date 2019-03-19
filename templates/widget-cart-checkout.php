@@ -5,8 +5,20 @@
 <li class="cart_item rpress-cart-meta rpress_subtotal"><?php echo __( 'Subtotal:', 'restro-press' ). " <span class='subtotal'>" . rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) ); ?></span></li>
 <li class="cart_item rpress-cart-meta rpress_cart_tax"><?php _e( 'Estimated Tax:', 'restro-press' ); ?> <span class="cart-tax"><?php echo rpress_currency_filter( rpress_format_amount( rpress_get_cart_tax() ) ); ?></span></li>
 <?php endif; ?>
-<li class="cart_item rpress-cart-meta rpress_total"><?php _e( 'Total:', 'restro-press' ); ?> <span class="cart-total <?php echo $color; ?>"><?php echo rpress_currency_filter( rpress_format_amount( rpress_get_cart_total() ) ); ?></span></li>
+<!-- Check Delivery Fee Starts Here -->
+<?php if( apply_delivery_fee() ) : ?>
+	<li class="cart_item rpress-cart-meta rpress_subtotal"><?php _e( 'SubTotal:', 'restro-press' ); ?> <span class="cart-sub-total <?php echo $color; ?>"><?php echo rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) ); ?></span>
+	</li>
+<li class="cart_item rpress-cart-meta rpress-delivery-fee">
+	<?php _e('Delivery Fee:', 'restro-press' ); ?>
+	<span class="cart-delivery-fee <?php echo $color; ?>"><?php echo rpress_get_delivery_price(); ?></span>
+			
+</li>
+<?php endif; ?>
+<!-- Check Delivery Fee Ends Here -->
 
+
+<li class="cart_item rpress-cart-meta rpress_total"><?php _e( 'Total:', 'restro-press' ); ?> <span class="cart-total <?php echo $color; ?>"><?php echo rpress_currency_filter( rpress_format_amount( rpress_get_cart_total() ) ); ?></span></li>
 <li class="delivery-items-options">
 	<?php echo get_delivery_options(true); ?>
 </li>

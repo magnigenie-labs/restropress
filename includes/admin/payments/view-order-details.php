@@ -217,6 +217,8 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 									$delivery_type =  $payment->get_meta('_rpress_delivery_type');
 									$delivery_time = $payment->get_meta( '_rpress_delivery_time');
+									$delivery_fee = $payment->get_meta( '_rpress_delivery_price');
+									$delivery_location = $payment->get_meta( '_rpress_delivery_location');
 
 									if( !empty($delivery_type) ) : 
 							?>
@@ -242,6 +244,19 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													?>
 												</p>
 											</div>
+
+											<?php if( !empty($delivery_fee) ) : ?>
+											<div class="rpress-delivery-details rpress-admin-box-inside">
+												<p>
+													<span class="label"><?php _e( 'Delivery Fee:', 'restro-press' ); ?></span>&nbsp;
+													<?php  
+														if( !empty($delivery_fee) ) :
+															 echo rpress_currency_filter( rpress_format_amount( $delivery_fee) ); 
+														endif;
+													?>
+												</p>
+											</div>
+										<?php endif; ?>
 										</div><!-- /.column-container -->
 									</div><!-- /.inside -->
 								</div><!-- /#rpress-order-data -->

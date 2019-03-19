@@ -22,8 +22,6 @@
 
 	?>
 
-	<?php do_action( 'rpress_delivery_fee' ); ?>
-
 	<!-- Delivery Time Wrap -->
 	<div class="rpress-delivery-time-wrap rpress-time-wrap <?php echo $preorder_class; ?>">
 		<div class="delivery-time-text"><?php echo __('Select a delivery time', 'restro-press'); ?></div>

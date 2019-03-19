@@ -5,7 +5,6 @@
 
 global $post; ?>
 <table id="rpress_checkout_cart " class="rpress-cart ajaxed">
-
 	<thead>
 		<th colspan="3">
 		<div class="rpress item-order">
@@ -163,7 +162,18 @@ global $post; ?>
 	</tbody>
 	<tfoot>
 
-		
+		<?php if( apply_delivery_fee() ) : ?>
+			<tr>
+				<th colspan="3" class="rpress_get_subtotal">
+					<?php _e( 'Subtotal', 'restro-press' ); ?>:&nbsp;<span class="rpress_cart_subtotal_amount pull-right"><?php echo rpress_cart_subtotal(); ?></span>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="3" class="rpress_get_delivery_fee">
+					<?php _e( 'Delivery Fee', 'restro-press' ); ?>:&nbsp;<span class="rpress_cart_delivery_fee pull-right"><?php echo rpress_get_delivery_price(); ?></span>
+				</th>
+			</tr>
+		<?php endif; ?>
 
 		<?php if( rpress_use_taxes() && ! rpress_prices_include_tax() ) : ?>
 			<tr class="rpress_cart_footer_row rpress_cart_subtotal_row"<?php if ( ! rpress_is_cart_taxed() ) echo ' style="display:none;"'; ?>>
@@ -210,5 +220,7 @@ global $post; ?>
 				</th>
 			</tr>
 		<?php endif; ?>
+
+		
 	</tfoot>
 </table>

@@ -50,11 +50,24 @@ jQuery(function($) {
               
               var DeliveryMethod = rpress_getCookie('deliveryMethod');
               var DeliveryTime = rpress_getCookie('deliveryTime');
+              var DeliveryFee = rpress_getCookie('rpress_delivery_price');
 
   						$('ul.rpress-cart').find('li.cart_item.empty').remove();
               $('ul.rpress-cart').find('li.cart_item.rpress_subtotal').remove();
+              $('ul.rpress-cart').find('li.cart_item.cart-sub-total').remove();
               $('ul.rpress-cart').find('li.cart_item.rpress_cart_tax').remove();
-  						$(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
+              $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress-delivery-fee').remove();
+              $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress_subtotal').remove();
+              
+              if( response.delivery_fee !== undefined ) {
+                $( "<li class='cart_item rpress-cart-meta rpress-delivery-fee'>Delivery Fee <span class='cart-delivery-fee'>"+response.delivery_fee+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress_total" );
+                $( "<li class='cart_item rpress-cart-meta rpress_subtotal'>Subtotal <span class='cart-sub-total'>"+response.subtotal+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress-delivery-fee" );
+                $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress-cart-meta.rpress_subtotal');
+              }
+              else {
+                $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
+              }
+  						
   						$('.rpress-cart-number-of-items').find('.rpress-cart-quantity').text(response.cart_quantity);
   						$('.rpress-cart-number-of-items').css('display', 'block');
   						$('.cart_item.rpress-cart-meta.rpress_total').find('.cart-total').text(response.total);
@@ -63,6 +76,8 @@ jQuery(function($) {
               $('.cart_item.rpress-cart-meta.rpress_subtotal').css('display', 'block');
               $('.cart_item.rpress_checkout').addClass(rpress_scripts.button_color);
   						$('.cart_item.rpress_checkout').css('display', 'block');
+
+
               
               if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
                 $('.delivery-items-options').find('.delivery-opts').html('<span class="delMethod">'+ DeliveryMethod +'</span><span class="delTime"> at '+ DeliveryTime + '</span>' );
@@ -154,7 +169,7 @@ jQuery(function($) {
       var GetDefaultText = Selected.text();
       Selected.text(RpressVars.wait_text);
 
-      var data   = {
+      var data = {
         action            : action,
         fooditem_id       : itemId,
         fooditem_price    : itemPrice,
@@ -164,41 +179,52 @@ jQuery(function($) {
         post_data         : Form.serializeArray()
       };
 
-    if( itemId !== '' ) {
-      $.ajax({
-        type: "POST",
-        data: data,
-        dataType: "json",
-        url: rpress_scripts.ajaxurl,
-        xhrFields: {
-          withCredentials: true
-        },
-        success: function(response) {
-          if( response ) {
-            Selected.text(RpressVars.added_into_cart);
+      if( itemId !== '' ) {
+        $.ajax({
+          type     : "POST",
+          data     : data,
+          dataType : "json",
+          url      : rpress_scripts.ajaxurl,
+          xhrFields: {
+            withCredentials: true
+          },
+          success: function(response) {
+            if( response ) {
+              Selected.text(RpressVars.added_into_cart);
             
-            $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, element) {
-              if( index == cartKey ) {
-                $(this).remove();
-              }
-            });
-            
-            $('ul.rpress-cart').find('li.rpress_total .cart-total').text(response.total);
-            $('ul.rpress-cart').find('li.cart_item.empty').remove();
-            $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress_total')
+              $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, element) {
+                if( index == cartKey ) {
+                  $(this).remove();
+                }
+              });
 
-            $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, item) {
-              $(item).attr('data-cart-key', index);
-              $(item).find('.rpress-edit-from-cart').attr('data-cart-item', index);
-              $(item).find('.rpress-edit-from-cart').attr('data-remove-item', index);
-              $(item).find('.rpress-remove-from-cart').attr('data-cart-item', index);
-            });
+              $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress-delivery-fee').remove();
+              $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress_subtotal').remove();
             
-            $('#rpressModal').modal('hide');
+              $('ul.rpress-cart').find('li.rpress_total .cart-total').text(response.total);
+              $('ul.rpress-cart').find('li.cart_item.empty').remove();
+
+              if( typeof response.delivery_fee !== "undefined" ) {
+                $( "<li class='cart_item rpress-cart-meta rpress-delivery-fee'>Delivery Fee <span class='cart-delivery-fee'>"+response.delivery_fee+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress_total" );
+                $( "<li class='cart_item rpress-cart-meta rpress_subtotal'>Subtotal <span class='cart-sub-total'>"+response.subtotal+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress-delivery-fee" );
+                $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress-cart-meta.rpress_subtotal');
+              }
+              else {
+                $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
+              }
+
+              $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, item) {
+                $(item).attr('data-cart-key', index);
+                $(item).find('.rpress-edit-from-cart').attr('data-cart-item', index);
+                $(item).find('.rpress-edit-from-cart').attr('data-remove-item', index);
+                $(item).find('.rpress-remove-from-cart').attr('data-cart-item', index);
+              });
+            
+              $('#rpressModal').modal('hide');
+            }
           }
-        }
-      })
-    }
+        })
+      }
     }
   });
 
@@ -229,6 +255,7 @@ jQuery(function($) {
 					$('ul.rpress-cart').find('li.cart_item.empty').remove();
           $('ul.rpress-cart').find('li.rpress_subtotal').remove();
           $('ul.rpress-cart').find('li.rpress_cart_tax').remove();
+          $('ul.rpress-cart').find('li.rpress-delivery-fee').remove();
 					$('ul.rpress-cart').append(response.response);
 					$('.rpress-cart-number-of-items').css('display','none');
           $('.delivery-items-options').css('display', 'none');
