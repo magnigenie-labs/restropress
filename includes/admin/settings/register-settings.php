@@ -298,6 +298,14 @@ function rpress_get_registered_settings() {
 						),
 						'type' => 'checkbox',
 					),
+					'allow_using_bootstrap_script' => array(
+						'id'   => 'allow_using_bootstrap_script',
+						'name' => __( 'Use Bootstrap JS?', 'restro-press' ),
+						'desc' => sprintf(
+							__( 'This plugin uses bootstrap js for showing the popup. If your active theme doesn\'t have bootstrap js then check this checkbox to use internal js from the plugin ', 'restro-press' )
+						),
+						'type' => 'checkbox',
+					),
 					'page_settings' => array(
 						'id'   => 'page_settings',
 						'name' => '<h3>' . __( 'Pages', 'restro-press' ) . '</h3>',

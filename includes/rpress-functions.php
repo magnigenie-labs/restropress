@@ -151,13 +151,15 @@ function rpress_admin_scripts() {
 
 function rpress_prefix_enqueue() { 
 	if( rpress_get_option('allow_using_style') == 1 ) {
-		// js
-		wp_register_script('prefix_bootstrap', plugins_url( 'assets/js/rpress-bootstrap.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
-  	wp_enqueue_script('prefix_bootstrap');
-
   	// css
-  	wp_register_style('prefix_bootstrap', plugins_url( 'assets/css/rpress-bootstrap.css', RPRESS_PLUGIN_FILE ));
-  	wp_enqueue_style('prefix_bootstrap');
+  	wp_register_style('prefix_bootstrap_style', plugins_url( 'assets/css/rpress-bootstrap.css', RPRESS_PLUGIN_FILE ));
+  	wp_enqueue_style('prefix_bootstrap_style');
+	}
+
+	if( rpress_get_option('allow_using_bootstrap_script') == 1 ) {
+		// js
+		wp_register_script('prefix_bootstrap_script', plugins_url( 'assets/js/rpress-bootstrap.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
+  	wp_enqueue_script('prefix_bootstrap_script');
 	}
 }
 
@@ -209,19 +211,22 @@ function addon_category_taxonomy_custom_fields($tag) {
   	<input type="number" step=".01" name="term_meta[price]" id="term_meta[price]" size="25" style="width:15%;" value="<?php echo $term_meta['price'] ? $term_meta['price'] : ''; ?>"><br />  
     <span class="description"><?php _e('Price for this addon item'); ?></span>  
   </td>  
-</tr>  
+</tr>
+
 
 <tr class="form-field">  
 	<th scope="row" valign="top">  
-  	<label for="enable_quantity"><?php _e('Enable Quantity'); ?></label>  
+  	<label for="enable_quantity"><?php _e('Enable Quantity'); ?></label>
   </th>  
   <td>
   	<input type="hidden" value="0" name="term_meta[enable_quantity]">
   	<input type="checkbox" <?php echo (!empty($term_meta['enable_quantity']) ? ' checked="checked" ' : ''); ?> value="1" name="term_meta[enable_quantity]" />
   	<br />  
     <span class="description"><?php _e('Show quantity for this?'); ?></span>  
-  </td>  
-</tr> 
+  </td>
+</tr>  
+ 
+
 <?php
 }
 
@@ -613,7 +618,7 @@ add_action('wp_ajax_nopriv_rpress_proceed_checkout', 'rpress_proceed_checkout');
 function rpress_checkout_delivery_type($delivery_type, $delivery_time) {
 
 	$_COOKIE['deliveryMethod'] = $delivery_type;
-  	$_COOKIE['deliveryTime'] = $delivery_time;
+  $_COOKIE['deliveryTime'] 	= $delivery_time;
 }
 
 
@@ -665,9 +670,6 @@ function rpress_get_delivery_price() {
 		<?php 
 		if( $cart_subtotal < $free_delivery_above ) {
 			echo rpress_currency_filter( rpress_format_amount( $_COOKIE['rpress_delivery_price'] ) ); 
-		}
-		else {
-			echo rpress_currency_filter( rpress_format_amount( '0' ) ); 
 		}
 		
 	return ob_get_clean();

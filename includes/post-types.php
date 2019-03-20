@@ -209,16 +209,16 @@ function rpress_setup_fooditem_taxonomies() {
 
 	/** Categories */
 	$category_labels = array(
-		'name'              => sprintf( _x( '%s Addon Category', 'taxonomy general name', 'restro-press' ), rpress_get_label_singular() ),
-		'singular_name'     => sprintf( _x( '%s Addon Category', 'taxonomy singular name', 'restro-press' ), rpress_get_label_singular() ),
-		'search_items'      => sprintf( __( 'Search %s Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'all_items'         => sprintf( __( 'All %s Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'parent_item'       => sprintf( __( 'Parent %s Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'parent_item_colon' => sprintf( __( 'Parent %s Addon Category:', 'restro-press' ), rpress_get_label_singular() ),
-		'edit_item'         => sprintf( __( 'Edit %s Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'update_item'       => sprintf( __( 'Update %s Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'add_new_item'      => sprintf( __( 'Add New %s Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'new_item_name'     => sprintf( __( 'New %s Addon Category Name', 'restro-press' ), rpress_get_label_singular() ),
+		'name'              => sprintf( _x( ' Addon Category', 'taxonomy general name', 'restro-press' ), rpress_get_label_singular() ),
+		'singular_name'     => sprintf( _x( ' Addon Category', 'taxonomy singular name', 'restro-press' ), rpress_get_label_singular() ),
+		'search_items'      => sprintf( __( 'Search Addon Category', 'restro-press' ), rpress_get_label_singular() ),
+		'all_items'         => sprintf( __( 'All Addon Category', 'restro-press' ), rpress_get_label_singular() ),
+		'parent_item'       => sprintf( __( 'Parent Addon Category', 'restro-press' ), rpress_get_label_singular() ),
+		'parent_item_colon' => sprintf( __( 'Parent Addon Category:', 'restro-press' ), rpress_get_label_singular() ),
+		'edit_item'         => sprintf( __( 'Edit Addon Category', 'restro-press' ), rpress_get_label_singular() ),
+		'update_item'       => sprintf( __( 'Update Addon Category', 'restro-press' ), rpress_get_label_singular() ),
+		'add_new_item'      => sprintf( __( 'Add New Addon Category', 'restro-press' ), rpress_get_label_singular() ),
+		'new_item_name'     => sprintf( __( 'New Addon Category Name', 'restro-press' ), rpress_get_label_singular() ),
 		'menu_name'         => __( 'Addon Category', 'restro-press' ),
 	);
 
