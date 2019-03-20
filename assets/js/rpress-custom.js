@@ -370,7 +370,6 @@ jQuery(function($) {
       },
       success : function(response) {
         $this.text(prevText)
-        
         if( response.status == 'error' ) {
           if( response.minimum_price_error ) {
             ErrorString = response.minimum_price_error;
@@ -485,18 +484,22 @@ jQuery(function($) {
     };
 
     function initAutocomplete() {
-      // Create the autocomplete object, restricting the search to geographical
-      // location types.
-      autocomplete = new google.maps.places.Autocomplete(
 
-      /** @type {!HTMLInputElement} */(document.getElementsByClassName("autocomplete")[0]),
+      if( typeof google !== 'undefined' ) {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
 
-      {types: ['geocode']});
+        /** @type {!HTMLInputElement} */(document.getElementsByClassName("autocomplete")[0]),
+
+        {types: ['geocode']});
 
 
-      // When the user selects an address from the dropdown, populate the address
-      // fields in the form.
-      autocomplete.addListener('place_changed', fillInAddress);
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+      }
+      
     }
 
     function fillInAddress() {

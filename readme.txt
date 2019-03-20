@@ -54,12 +54,15 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 * Fixed popup z-index issue
 * fixed template part issue for before and after fooditems
 * added prefix rp for bootstrap classes
-* made functionality for show food item in the popup
+* made functionality for show food item featured image in the popup
 * Removed view option from admin fooditems
 * Removed view option from admin addon category
 * Removed view option from admin food category
 * Fixed cart shortcode template issue
 * Added delivery hours hooks for the addon
+* Renamed food item addon category into addon category
+* Added option whether to use internal bootsrap js
+
  
 
 = Version 2.0 =

@@ -272,6 +272,7 @@ function rpress_get_registered_settings() {
 						'desc' => sprintf(
 							__( 'Minimum order price that should be made on the store', 'restro-press' )
 						),
+						'std'  => '100',
 						'type' => 'number',
 					),
 					'minimum_order_error' => array(
@@ -280,6 +281,7 @@ function rpress_get_registered_settings() {
 						'desc' => sprintf(
 							__( 'This would be the error message when someone tries to place an order with less than that price, You can use {min_order_price} variable', 'restro-press' )
 						),
+						'std'  => 'We accept order for at least {min_order_price} ',
 						'type' => 'textarea',
 					),
 					'style_settings' => array(

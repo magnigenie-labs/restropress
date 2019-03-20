@@ -1205,7 +1205,8 @@ function rpress_check_minimum_order_amount() {
 
 	if( $enable_minimum_order ) :
 		$minimum_order_price = rpress_get_option('minimum_order_price');
-		$minimum_price_error = rpress_get_option('minimum_order_error');
+		$minimum_price_error = rpress_get_option('minimum_order_error') !== '' ? rpress_get_option('minimum_order_error') : 'Please add more items';
+		
 		$minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price ) );
 		$minimum_price_error = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error);
 
