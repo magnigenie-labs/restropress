@@ -200,7 +200,8 @@ function load_admin_scripts() {
 function addon_category_taxonomy_custom_fields($tag) {
 	// Check for existing taxonomy meta for the term you're editing  
     $t_id = $tag->term_id; // Get the ID of the term you're editing  
-    $term_meta = get_option( "taxonomy_term_$t_id" ); // Do the check  
+    $term_meta = get_option( "taxonomy_term_$t_id" ); // Do the check 
+    $use_addon_like =  isset($term_meta['use_it_like']) ? $term_meta['use_it_like'] : 'checkbox';
 ?>  
   
 <tr class="form-field">  
@@ -213,7 +214,8 @@ function addon_category_taxonomy_custom_fields($tag) {
   </td>  
 </tr>
 
-
+<?php 
+/*
 <tr class="form-field">  
 	<th scope="row" valign="top">  
   	<label for="enable_quantity"><?php _e('Enable Quantity'); ?></label>
@@ -224,7 +226,33 @@ function addon_category_taxonomy_custom_fields($tag) {
   	<br />  
     <span class="description"><?php _e('Show quantity for this?'); ?></span>  
   </td>
-</tr>  
+</tr>
+*/ ?>
+
+
+
+<tr class="form-field">  
+	<th scope="row" valign="top">  
+  	<label for="use_it_as"><?php _e('Use it like', 'restro-press'); ?></label>
+  </th>  
+  <td>
+  	<div class="use-it-like-wrap">
+  		<label for="use_like_radio">
+  			<input id="use_like_radio" type="radio" value="radio" name="term_meta[use_it_like]" <?php checked($use_addon_like, 'radio'); ?> >
+  			<?php _e('Single Select', 'restro-press'); ?>
+  		</label>
+  		<br/><br/>
+  		<label for="use_like_checkbox">
+  			<input id="use_like_checkbox" type="radio" value="checkbox" name="term_meta[use_it_like]" <?php checked($use_addon_like, 'checkbox'); ?> >
+  			<?php _e('Multi Select', 'restro-press'); ?>
+  		</label>
+  	</div>
+  	
+  	 
+  </td>
+</tr>
+
+
  
 
 <?php

@@ -186,12 +186,23 @@ function rpress_ajax_add_to_cart() {
 			foreach( $get_all_items as $key => $get_all_item ) {
 				$item_qty = explode('|', $get_all_item['value']);
 
-				
 				if( is_array($item_qty) && !empty($item_qty) ) {
-					$options['addon_items'][$key]['addon_item_name'] = $get_all_item['name'];
-					$options['addon_items'][$key]['addon_id'] = $item_qty[0];
-					$options['addon_items'][$key]['price'] = $item_qty[2];
-					$options['addon_items'][$key]['quantity'] = $item_qty[1];
+					
+					$addon_item_like = isset($item_qty[3]) ? $item_qty[3] : 'checkbox';
+					
+					if( $addon_item_like == 'radio' ) {
+						$addon_item_name = get_term_by('id', $item_qty[0], 'addon_category');
+						$addon_item_name = $addon_item_name->name;
+						$options['addon_items'][$key]['addon_item_name'] = $addon_item_name;
+
+					}
+					else {
+						$options['addon_items'][$key]['addon_item_name'] = $get_all_item['name'];
+					}
+
+					$options['addon_items'][$key]['addon_id'] = isset($item_qty[0]) ? $item_qty[0] : '';
+					$options['addon_items'][$key]['price'] = isset($item_qty[2]) ? $item_qty[2] : '';
+					$options['addon_items'][$key]['quantity'] = isset($item_qty[1]) ? $item_qty[1] : '';
 				}
 			}
 		}
@@ -388,7 +399,18 @@ function rpress_ajax_update_cart_items() {
 					$item_qty = explode('|', $get_all_item['value']);
 				
 					if( is_array($item_qty) && !empty($item_qty) ) {
-						$options['addon_items'][$key]['addon_item_name'] = $get_all_item['name'];
+						
+						$addon_item_like = isset($item_qty[3]) ? $item_qty[3] : 'checkbox';
+
+						if( $addon_item_like == 'radio' ) {
+							$addon_item_name = get_term_by('id', $item_qty[0], 'addon_category');
+							$addon_item_name = $addon_item_name->name;
+							$options['addon_items'][$key]['addon_item_name'] = $addon_item_name;
+						}
+						else {
+							$options['addon_items'][$key]['addon_item_name'] = $get_all_item['name'];
+						}
+
 						$options['addon_items'][$key]['addon_id'] = isset($item_qty[0]) ? $item_qty[0] : '';
 						$options['addon_items'][$key]['price'] = isset($item_qty[2]) ? $item_qty[2] : '';
 						$options['addon_items'][$key]['quantity'] = isset($item_qty[1]) ? $item_qty[1] : '';
@@ -530,7 +552,10 @@ function getFormattedCats($terms, $cart_key = '') {
   if( is_array( $parent_ids ) && !empty($parent_ids) ) {
   	foreach( $parent_ids as $parent_id ) {
     	$term_data = get_term_by('id', $parent_id, 'addon_category');
-    	$html .= '<h6 class="rpress-addon-category">'.$term_data->name.'</h6>';
+    	$parent_addon_name = $term_data->name;
+    	$parent_addon_slug = $term_data->slug;
+
+    	$html .= '<h6 class="rpress-addon-category">'.$parent_addon_name.'</h6>';
 
     	$children = get_term_children( $term_data->term_id, 'addon_category' );
 
@@ -542,6 +567,7 @@ function getFormattedCats($terms, $cart_key = '') {
     				$t_id = $children_data;
     				$term_meta = get_option( "taxonomy_term_$t_id" );
     				$term_price = !empty($term_meta['price']) ? $term_meta['price'] : '';
+    				$use_addon_like = !empty($term_meta['use_it_like']) ? $term_meta['use_it_like'] : 'checkbox';
     				$term_quantity = !empty($term_meta['enable_quantity']) ? $term_meta['enable_quantity'] : '';
 
     				$html .= '<div class="food-item-list">';
@@ -550,10 +576,22 @@ function getFormattedCats($terms, $cart_key = '') {
 
     				if( is_array($cart_items) ) {
     					if( in_array($term_data->name, $cart_items) ) {
-    						$html .= '<input type="checkbox" id="cbtest" checked name="'.$term_data->name.'" value="'.$term_data->term_id.'|1|'.$term_price.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
+    						if( $use_addon_like == 'radio' ) {
+    							$html .= '<input data-type="'.$use_addon_like.'" type='.$use_addon_like.' id="cbtest" checked name="'.$parent_addon_name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$parent_addon_slug.'"><span>'.$term_data->name.'</span>';
+    						}
+    						else {
+    							$html .= '<input data-type="'.$use_addon_like.'" type='.$use_addon_like.' id="cbtest" checked name="'.$term_data->name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
+    						}
+    						
     					}
     					else {
-    						$html .= '<input type="checkbox" name="'.$term_data->name.'" value="'.$term_data->term_id.'|1|'.$term_price.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
+    						if( $use_addon_like == 'radio' ) {
+    							$html .= '<input type='.$use_addon_like.' data-type="'.$use_addon_like.'" name="'.$parent_addon_name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$parent_addon_slug.'"><span>'.$term_data->name.'</span>';
+    						}
+    						else {
+    							$html .= '<input type='.$use_addon_like.' data-type="'.$use_addon_like.'" name="'.$term_data->name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
+    						}
+    						
     					}
     				}
     				$html .= '</label>';

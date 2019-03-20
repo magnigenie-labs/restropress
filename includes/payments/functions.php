@@ -264,6 +264,8 @@ function rpress_insert_payment( $payment_data = array() ) {
 	$payment->delivery_type      = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : ''  ;
 	$payment->delivery_time      = isset($_COOKIE['deliveryTime']) ? $_COOKIE['deliveryTime'] : ''  ;
 	$payment->delivery_fee      = isset($_COOKIE['rpress_delivery_price']) ? $_COOKIE['rpress_delivery_price'] : ''  ;
+	$payment->delivery_location      = isset($_COOKIE['rpress_delivery_location']) ? $_COOKIE['rpress_delivery_location'] : ''  ;
+	$payment->delivery_location_pos     = isset($_COOKIE['rpress_delivery_location_pos']) ? $_COOKIE['rpress_delivery_location_pos'] : ''  ;
 
 
 	if ( isset( $payment_data['post_date'] ) ) {

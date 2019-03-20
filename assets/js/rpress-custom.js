@@ -485,7 +485,7 @@ jQuery(function($) {
 
     function initAutocomplete() {
 
-      if( typeof google !== 'undefined' ) {
+     // if( typeof google !== 'undefined' ) {
         // Create the autocomplete object, restricting the search to geographical
         // location types.
         autocomplete = new google.maps.places.Autocomplete(
@@ -498,7 +498,7 @@ jQuery(function($) {
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
-      }
+      //}
       
     }
 

@@ -219,6 +219,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 									$delivery_time = $payment->get_meta( '_rpress_delivery_time');
 									$delivery_fee = $payment->get_meta( '_rpress_delivery_price');
 									$delivery_location = $payment->get_meta( '_rpress_delivery_location');
+									$delivery_location_pos = $payment->get_meta( '_rpress_delivery_location_pos');
 
 									if( !empty($delivery_type) ) : 
 							?>
@@ -257,6 +258,33 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 												</p>
 											</div>
 										<?php endif; ?>
+
+										<?php if( !empty($delivery_location) && $delivery_type == 'delivery' ) : ?>
+											<div class="rpress-delivery-details rpress-admin-box-inside">
+												<p>
+													<span class="label"><?php _e( 'Deliver Address:', 'restro-press' ); ?></span>&nbsp;
+													<?php  
+														if( !empty($delivery_location) ) :
+															 echo $delivery_location; 
+														endif;
+													?>
+												</p>
+											</div>
+										<?php endif; ?>
+
+										<?php if( !empty($delivery_location_pos) && $delivery_type == 'delivery' ) : ?>
+											<div class="rpress-delivery-details rpress-admin-box-inside">
+												<p>
+													<span class="label"><?php _e( 'Deliver Address Cordinates:', 'restro-press' ); ?></span>&nbsp;
+													<?php  
+														if( !empty($delivery_location_pos) ) :
+															 echo $delivery_location_pos; 
+														endif;
+													?>
+												</p>
+											</div>
+										<?php endif; ?>
+
 										</div><!-- /.column-container -->
 									</div><!-- /.inside -->
 								</div><!-- /#rpress-order-data -->
