@@ -300,11 +300,11 @@ function rpress_get_registered_settings() {
 						),
 						'type' => 'checkbox',
 					),
-					'allow_using_bootstrap_script' => array(
-						'id'   => 'allow_using_bootstrap_script',
-						'name' => __( 'Use Bootstrap JS?', 'restro-press' ),
+					'use_external_bootstrap_script' => array(
+						'id'   => 'use_external_bootstrap_script',
+						'name' => __( 'Use external resource for bootstrap js', 'restro-press' ),
 						'desc' => sprintf(
-							__( 'This plugin uses bootstrap js for showing the popup. If your active theme doesn\'t have bootstrap js then check this checkbox to use internal js from the plugin ', 'restro-press' )
+							__( 'This plugin uses bootstrap js for showing the popup. If your child theme uses bootstrap js then you can check this checkbox so that the plugin will use your theme js file', 'restro-press' )
 						),
 						'type' => 'checkbox',
 					),

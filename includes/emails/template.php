@@ -179,7 +179,7 @@ function rpress_get_email_body_content( $payment_id = 0, $payment_data = array()
  * @param array $payment_data Payment Data
  * @return string $email_body Body of the email
  */
-function rpress_get_sale_notification_body_content( $payment_id = 0, $payment_data = array() ) {
+function rpress_get_order_notification_body_content( $payment_id = 0, $payment_data = array() ) {
 	$payment = rpress_get_payment( $payment_id );
 
 	if( $payment->user_id > 0 ) {
@@ -216,10 +216,9 @@ function rpress_get_sale_notification_body_content( $payment_id = 0, $payment_da
 	$default_email_body .= __( 'Payment Method: ', 'restro-press' ) . " " . $gateway . "\n\n";
 	$default_email_body .= __( 'Thank you', 'restro-press' );
 
-	$message = rpress_get_option( 'sale_notification', false );
+	$message = rpress_get_option( 'order_notification', false );
 	$message   = $message ? stripslashes( $message ) : $default_email_body;
 
-	//$email_body = rpress_email_template_tags( $email, $payment_data, $payment_id, true );
 	$email_body = rpress_do_email_tags( $message, $payment_id );
 
 	$email_body = apply_filters( 'rpress_email_template_wpautop', true ) ? wpautop( $email_body ) : $email_body;

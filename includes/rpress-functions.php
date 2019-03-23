@@ -85,7 +85,7 @@ function rpress_enque_scripts() {
 	wp_enqueue_style( 'rpress-fancybox-stylesheet', plugins_url( 'assets/css/jquery.fancybox.css', RPRESS_PLUGIN_FILE ));
 
 	//Add fancybox script
-	wp_enqueue_script( 'rpress-fancybox', plugins_url( 'assets/js/jquery.fancybox.js', RPRESS_PLUGIN_FILE ) , array( 'jquery' ), '1.0.1', true );
+	wp_enqueue_script( 'rpress-fancybox', plugins_url( 'assets/js/jquery.fancybox.js', RPRESS_PLUGIN_FILE ) , array( 'jquery' ), '2.0.1', true );
 
 	//Add Sticky bar
 	wp_enqueue_script('rpress-sticky-sidebar', plugins_url( 'assets/js/rpress-sticky-sidebar.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
@@ -98,20 +98,20 @@ function rpress_enque_scripts() {
 
 	wp_enqueue_style( 'rpress-datepicker-stylesheet', plugins_url( 'assets/css/rpress-datepicker.css', RPRESS_PLUGIN_FILE ));
 
-	wp_enqueue_script('rpress-datepicker', plugins_url( 'assets/js/rpress-datepicker.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '1.0.1', true );
+	wp_enqueue_script('rpress-datepicker', plugins_url( 'assets/js/rpress-datepicker.js', RPRESS_PLUGIN_FILE ), array( 'jquery' ), '2.0.1', true );
 
 	//Add custom js script
-	wp_enqueue_script('rpress-custom', plugins_url( 'assets/js/rpress-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-sticky-sidebar', 'rpress-datepicker' ), '1.0.1', true );
+	wp_enqueue_script('rpress-custom', plugins_url( 'assets/js/rpress-custom.js', RPRESS_PLUGIN_FILE ), array( 'jquery', 'rpress-sticky-sidebar', 'rpress-datepicker' ), '2.0.1', true );
 
 	// Add custom css
-	wp_enqueue_style( 'rpress-custom-stylesheet', plugins_url( 'assets/css/rpress-custom.css', RPRESS_PLUGIN_FILE ));
+	wp_enqueue_style( 'rpress-custom-stylesheet', plugins_url( 'assets/css/rpress-custom.css', RPRESS_PLUGIN_FILE ), '2.0.1');
 
 	// Timepicker css
   wp_register_style( 'rpress-timepicker', plugins_url( 'assets/css/jquery.timepicker.css', RPRESS_PLUGIN_FILE ));
   wp_enqueue_style( 'rpress-timepicker' );
 
   // Timepicker js
-  wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
+  wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RPRESS_PLUGIN_FILE ), '2.0.1', true);
   wp_enqueue_script( 'rpress-timepicker-script' );
 
   $fooditem_popup_enable = rpress_get_option( 'enable_food_image_popup', false );
@@ -156,7 +156,7 @@ function rpress_prefix_enqueue() {
   	wp_enqueue_style('prefix_bootstrap_style');
 	}
 
-	if( rpress_get_option('allow_using_bootstrap_script') == 1 ) {
+	if( rpress_get_option('use_external_bootstrap_script') !== '1' ) {
 		// js
 		wp_register_script('prefix_bootstrap_script', plugins_url( 'assets/js/rpress-bootstrap.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   	wp_enqueue_script('prefix_bootstrap_script');

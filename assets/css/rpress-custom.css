@@ -747,6 +747,39 @@ html body .rpress-section ul li {
 	margin-top: -9px !important;
 }
 
+.food-item-list input[type="radio"] {
+	margin-right: 5px;
+	position: relative;
+	top: -2px;
+}
+
+.food-item-list input[type="radio"]:checked:after {
+   width: 16px;
+   height: 16px;
+   top: 1px;
+   left: -1px;
+   position: relative;
+   margin-right: 4px;
+   background-color: #2d3138;
+   content: '';
+   display: inline-block;
+   visibility: visible;
+   border: 1px solid #2d3138 ;
+}
+.food-item-list input[type="radio"]:after {
+   width: 16px;
+   height: 16px;
+   top: 2px;
+   position: relative;
+   margin-right: 4px;
+   background-color: #FFF;
+   content: '';
+   display: inline-block;
+   visibility: visible;
+   border: 1px solid #2d3138;
+   border-radius: 20px;
+}
+
 .view-food-item-wrap input[type="checkbox"] {
 	background: #EEE;
 	box-shadow: 0 0 0 0 #d4413c inset, 0 0 0 2px #666666 inset, 0 0 0 8px #EEE inset, 0 0 0 0 #ddd inset, 0 0 0 0 #ddd;

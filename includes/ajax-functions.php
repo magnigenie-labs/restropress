@@ -570,11 +570,14 @@ function getFormattedCats($terms, $cart_key = '') {
     				$term_quantity = !empty($term_meta['enable_quantity']) ? $term_meta['enable_quantity'] : '';
 
     				$html .= '<div class="food-item-list">';
-    				$html .= '<label for="'.$term_data->slug.'">';
+
+    				$name = ($use_addon_like == 'radio') ? $parent_addon_name : $term_data->name;
+    				
+    				$class = ($use_addon_like == 'radio') ? 'radio-container' : 'checkbox-container';
+
+    				$html .= '<label for="'.$term_data->slug.'" class="'.$class.'">';
 
     				if( is_array($cart_items) ) {
-
-    					$name = ($use_addon_like == 'radio') ? $parent_addon_name : $term_data->name;
 
     					if( in_array($term_data->name, $cart_items) ) {
     						$html .= '<input data-type="'.$use_addon_like.'" type='.$use_addon_like.' id="cbtest" checked name="'.$name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
