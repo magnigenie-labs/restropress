@@ -559,7 +559,6 @@ function getFormattedCats($terms, $cart_key = '') {
 
     	$children = get_term_children( $term_data->term_id, 'addon_category' );
 
-    	
     	if( is_array($children) && !empty($children) ) {
     		foreach( $children as $children_data ) {
     			if( in_array($children_data, $child_ids) ) {
@@ -572,29 +571,21 @@ function getFormattedCats($terms, $cart_key = '') {
 
     				$html .= '<div class="food-item-list">';
     				$html .= '<label for="'.$term_data->slug.'">';
-    				
 
     				if( is_array($cart_items) ) {
+
+    					$name = ($use_addon_like == 'radio') ? $parent_addon_name : $term_data->name;
+
     					if( in_array($term_data->name, $cart_items) ) {
-    						if( $use_addon_like == 'radio' ) {
-    							$html .= '<input data-type="'.$use_addon_like.'" type='.$use_addon_like.' id="cbtest" checked name="'.$parent_addon_name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$parent_addon_slug.'"><span>'.$term_data->name.'</span>';
-    						}
-    						else {
-    							$html .= '<input data-type="'.$use_addon_like.'" type='.$use_addon_like.' id="cbtest" checked name="'.$term_data->name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
-    						}
-    						
+    						$html .= '<input data-type="'.$use_addon_like.'" type='.$use_addon_like.' id="cbtest" checked name="'.$name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
     					}
     					else {
-    						if( $use_addon_like == 'radio' ) {
-    							$html .= '<input type='.$use_addon_like.' data-type="'.$use_addon_like.'" name="'.$parent_addon_name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$parent_addon_slug.'"><span>'.$term_data->name.'</span>';
-    						}
-    						else {
-    							$html .= '<input type='.$use_addon_like.' data-type="'.$use_addon_like.'" name="'.$term_data->name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
-    						}
-    						
+    						$html .= '<input type='.$use_addon_like.' data-type="'.$use_addon_like.'" name="'.$name.'" value="'.$term_data->term_id.'|1|'.$term_price.'|'.$use_addon_like.'" id="'.$term_data->slug.'"><span>'.$term_data->name.'</span>';
     					}
     				}
+
     				$html .= '</label>';
+    				
     				$html .= '<span class="cat_price">'.rpress_currency_filter( rpress_format_amount( $term_price ) ).'</span>';
     				$html .= '</div>';
     			}

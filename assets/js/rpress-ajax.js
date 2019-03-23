@@ -153,6 +153,10 @@ function rpress_getCookie(cname) {
 			var action = 'rpress_show_delivery_options';
 			var baseClass = 'rpress-delivery-options';
 			var Title = 'Your Order Settings';
+
+			if( rpress_scripts.check_delivery_fee_enabled == 1 ) {
+				setTimeout(function(){initAutocomplete()},'2000');
+			}
 		}
 		else {
 			var action = 'rpress_show_products';

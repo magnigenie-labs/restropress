@@ -1359,3 +1359,18 @@ function rpress_remove_food_cat_view_link($actions, $taxonomy) {
 	return $actions;
 }
 
+
+/* Function to check delivery fee addon is enabled so that it would init google map js on popup */
+function check_delivery_fee_enabled() {
+	$delivery_settings = get_option( 'rpress_delivery_fee', array() );
+
+	$delivery_fee_enable = 	isset($delivery_settings['enable']) ? $delivery_settings['enable'] : '';
+
+	if( $delivery_fee_enable  ) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
