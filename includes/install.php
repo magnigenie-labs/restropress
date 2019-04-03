@@ -157,6 +157,23 @@ function rpress_run_install() {
 		$options['order_history_page'] = $history;
 	}
 
+	$fooditems = array_key_exists( 'fooditems_page', $current_options ) ? get_post( $current_options['fooditems_page'] ) : false;
+	if ( empty( $fooditems ) ) {
+		// Food Item (Food Item) Page
+		$fooditem = wp_insert_post(
+			array(
+				'post_title'     => __( 'Food Items', 'restro-press' ),
+				'post_content'   => '[fooditems]',
+				'post_status'    => 'publish',
+				'post_author'    => 1,
+				'post_type'      => 'page',
+				'comment_status' => 'closed'
+			)
+		);
+
+		$options['fooditems_page'] = $fooditem;
+	}
+
 	// Populate some default values
 	foreach( rpress_get_registered_settings() as $tab => $sections ) {
 		foreach( $sections as $section => $settings) {

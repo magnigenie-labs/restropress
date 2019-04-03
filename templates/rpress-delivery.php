@@ -25,7 +25,23 @@
 	<!-- Delivery Time Wrap -->
 	<div class="rpress-delivery-time-wrap rpress-time-wrap <?php echo $preorder_class; ?>">
 		<div class="delivery-time-text"><?php echo __('Select a delivery time', 'restro-press'); ?></div>
-		<input type="text" class="rpress-delivery rpress-allowed-delivery-hrs rpress-hrs rp-form-control" id="rpress-delivery-hours" name="rpress_allowed_hours">
+		<!-- <input type="text" class="rpress-delivery rpress-allowed-delivery-hrs rpress-hrs rp-form-control" id="rpress-delivery-hours" name="rpress_allowed_hours"> -->
+		<select class="rpress-delivery rpress-allowed-delivery-hrs rpress-hrs rp-form-control" id="rpress-delivery-hours" name="rpress_allowed_hours">
+			<?php
+				$open_time = rpress_get_option('open_time');
+				$close_time = rpress_get_option('close_time');
+				$range=range(strtotime($open_time),strtotime($close_time),30*60);
+				$first = true;
+				foreach($range as $time){
+					if ($first == true) {
+						echo "<option selected value='".date("h:ia",$time)."'>".date("h:ia",$time)."</option>";
+						$first = false;
+					}else{
+						echo "<option value='".date("h:ia",$time)."'>".date("h:ia",$time)."</option>";
+					}
+				}
+			?>
+		</select>
 	</div>
 	<!-- Delivery Time Wrap Ends Here -->
 

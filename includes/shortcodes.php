@@ -352,11 +352,6 @@ add_shortcode( 'rpress_fooditems', 'rpress_fooditems_tabs' );
 
 function get_rpress_fooditems( $atts, $content = null ) {
 
-	apply_filters( 'rpress_food_cats_before', array() );
-
-	//Get food category items
-	do_action('rpress_food_cats');
-
 	$color = rpress_get_option( 'checkout_color', 'red' );
 
 	//Get food category names
@@ -393,9 +388,15 @@ function get_rpress_fooditems( $atts, $content = null ) {
 		
 		ob_start();
 
-		apply_filters( 'rpress_food_list_items_before', array() );
+		echo '<div class="rpress-section rp-col-lg-12 rp-col-md-12 rp-col-sm-12 rp-col-xs-12" >';
 
-		apply_filters('rpress_fooditems_search', array());
+		//Get food category items
+		do_action('rpress_food_cats');
+
+		rpress_get_template_part( 'rpress', 'before-fooditem' );
+
+		//Restropress search form
+		echo apply_filters( 'rpress_search_form', rpress_search_form() );
 		
 		foreach( $get_all_items as $key => $get_all_item ) {
 			wp_reset_query();
@@ -429,6 +430,7 @@ function get_rpress_fooditems( $atts, $content = null ) {
 			$query = apply_filters( 'rpress_fooditems_query', $query, $atts );
 
 			do_action( 'rpress_fooditems_list_before', $atts );
+
 			$fooditems = new WP_Query( $query );
 
 			if ( $fooditems->have_posts() ) :
@@ -480,21 +482,23 @@ function get_rpress_fooditems( $atts, $content = null ) {
 
 			endif;
 		}
-		?>
-		<?php
-		apply_filters('rpress_food_list_items_after', array());
-	$display = ob_get_clean();
+
+	rpress_get_template_part( 'rpress', 'after-fooditem' );
+
 	else:
 		$display = sprintf( _x( 'No %s found', 'fooditem post type name', 'restro-press' ), rpress_get_label_plural() );
 	endif;
 
-	echo apply_filters( 'fooditems_shortcode', $display, $atts, $atts['buy_button'], $atts['columns'], '', $fooditems, $atts['excerpt'], $atts['full_content'], $atts['price'], $atts['thumbnails'], $query );
 
 	do_action( 'rpress_fooditems_list_after', $atts, $fooditems );
 
 	do_action( 'rpress_get_cart' );
 
-	echo apply_filters( 'rpress_food_cats_after', array() );
+	echo '</div>';
+
+	echo $display = ob_get_clean();
+
+	return apply_filters( 'fooditems_shortcode', $display, $atts, $atts['buy_button'], $atts['columns'], '', $fooditems, $atts['excerpt'], $atts['full_content'], $atts['price'], $atts['thumbnails'], $query );
 }
 
 add_shortcode( 'rpress_items', 'get_rpress_fooditems' );

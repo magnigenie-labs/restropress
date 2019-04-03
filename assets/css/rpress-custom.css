@@ -412,7 +412,7 @@ ul.rpress-category-lists .rpress-category-item {
 .rpress-categories-menu h6 {
 	background-image: url('../svg/restaurant.svg');
 	background-repeat: no-repeat;
-	background-size: 8%;
+	background-size: 16px;
 	background-position: 0px 2px;
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -769,7 +769,7 @@ html body .rpress-section ul li {
 .food-item-list input[type="radio"]:after {
    width: 16px;
    height: 16px;
-   top: 2px;
+   top: 1px;
    position: relative;
    margin-right: 4px;
    background-color: #FFF;

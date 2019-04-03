@@ -22,7 +22,23 @@
 	<!-- Pickup Time Starts Here -->
 	<div class="rpress-pickup-time-wrap rpress-time-wrap  <?php echo $preorder_class; ?>">
 		<div class="pickup-time-text"><?php echo __('Select a pickup time', 'restro-press'); ?></div>
-		<input type="text" class="<?php echo $preorder_class; ?> rpress-pickup rpress-allowed-pickup-hrs rpress-hrs rp-form-control" id="rpress-pickup-hours" name="rpress_allowed_hours">
+		<!-- <input type="text" class="<?php echo $preorder_class; ?> rpress-pickup rpress-allowed-pickup-hrs rpress-hrs rp-form-control" id="rpress-pickup-hours" name="rpress_allowed_hours"> -->
+		<select class="<?php echo $preorder_class; ?> rpress-pickup rpress-allowed-pickup-hrs rpress-hrs rp-form-control" id="rpress-pickup-hours" name="rpress_allowed_hours">
+			<?php
+				$open_time = rpress_get_option('open_time');
+				$close_time = rpress_get_option('close_time');
+				$range=range(strtotime($open_time),strtotime($close_time),30*60);
+				$first = true;
+				foreach($range as $time){
+					if ($first == true) {
+						echo "<option selected value='".date("h:ia",$time)."'>".date("h:ia",$time)."</option>";
+						$first = false;
+					}else{
+						echo "<option value='".date("h:ia",$time)."'>".date("h:ia",$time)."</option>";
+					}
+				}
+			?>
+		</select>
 	</div>
 	<!-- Pickup Time Ends Here -->
 	 

@@ -176,9 +176,9 @@ function load_admin_scripts() {
 	//Add Toast on admin
 	wp_register_script('rpress-toast-script', plugins_url( 'assets/js/jquery.toast.js', RPRESS_PLUGIN_FILE ), '1.0.1', true);
   wp_enqueue_script('rpress-toast-script');
-
+  $page = isset($_GET['page']) ? $_GET['page'] : '';
   if( rpress_get_option('enable_google_map_api') 
-  	&& $_GET['page'] == 'rpress-settings'
+  	&& $page == 'rpress-settings'
 		&& rpress_get_option('map_api_key') !== '' ) :
 		wp_enqueue_script('rpress-google-js');
 	endif;
@@ -356,42 +356,6 @@ function rpress_get_item_qty_by_key( $cart_key ) {
 	}
 }
 
-add_filter( 'rpress_food_cats_before', 'food_cats_before_wrap' );
-
-if( !function_exists('food_cats_before_wrap') ) {
-	function food_cats_before_wrap() {
-		$html = '<div class="rpress-section rp-col-lg-12 rp-col-md-12 rp-col-sm-12 rp-col-xs-12" >';
-		echo $html;
-	}
-}
-
-add_filter( 'rpress_food_cats_after', 'food_cats_after_wrap' );
-
-if( !function_exists('food_cats_after_wrap') ) {
-	function food_cats_after_wrap() {
-		$html = '</div>';
-		return $html;
-	}
-}
-
-add_filter( 'rpress_food_list_items_before', 'food_item_list_before' );
-if( !function_exists('food_item_list_before') ) {
-	function food_item_list_before() {
-		ob_start();
-		rpress_get_template_part( 'rpress', 'before-fooditem' );
-		echo ob_get_clean();
-	}
-}
-
-add_filter('rpress_food_list_items_after', 'food_item_list_after' );
-if( !function_exists('food_item_list_after') ) {
-	function food_item_list_after() {
-		ob_start();
-		rpress_get_template_part( 'rpress', 'after-fooditem' );
-		echo ob_get_clean();
-	}
-}
-
 add_action('wp_footer', 'rpress_popup' );
 if( !function_exists('rpress_popup') ) {
 	function rpress_popup() {
@@ -447,14 +411,12 @@ if( ! function_exists( 'rpress_get_food_cats' ) ) {
 	}
 }
 
-add_filter('rpress_fooditems_search', 'rpress_implement_search');
-if( !function_exists('rpress_implement_search') ) {
-	function rpress_implement_search() {
-		$search = '';
-		$search .= '<div class="rpress-search-wrap rpress-live-search">';
+if( !function_exists('rpress_search_form') ) {
+	function rpress_search_form() {
+		$search  = '<div class="rpress-search-wrap rpress-live-search">';
 		$search .= '<input id="rpress-food-search" type="text" placeholder="'.__('Search Food Item', 'restro-press').'">';
 		$search .= '</div>';
-		echo $search;
+		return $search;
 	}
 }
 
