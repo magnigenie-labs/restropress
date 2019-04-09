@@ -24,10 +24,10 @@ function rpress_getCookie(cname) {
 	$('input#rpress-allowed-hours').timepicker({
 		startTime: rpress_scripts.open_hours,
 		minTime: rpress_scripts.open_hours,
-    maxTime: rpress_scripts.close_hours,
-    defaultTime: rpress_scripts.open_hours,
-    dropdown: true,
-    scrollbar: true
+	    maxTime: rpress_scripts.close_hours,
+	    defaultTime: rpress_scripts.open_hours,
+	    dropdown: true,
+	    scrollbar: true
 	});
 
 

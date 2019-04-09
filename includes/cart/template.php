@@ -144,7 +144,7 @@ function get_addon_item_formatted($addon_items) {
 			foreach( $addon_items['options']['addon_items'] as $key => $addon_item ) {
 				if( $addon_item['addon_item_name'] !== '' 
 					&& $addon_item['price'] !== '' )
-					$html .= '<li class="t rpress-cart-item"><span class="rpress-cart-item-title">'.$addon_item['addon_item_name'].'</span><span class="addon-item-price cart-item-quantity-wrap"><span class="rpress-cart-item-qty qty-class">1</span><span class="rpress-cart-item-qty separator qty-class">X</span><span class="rpress-cart-item-price qty-class">'.rpress_currency_filter( rpress_format_amount( $addon_item['price'])).'</span></li>';
+					$html .= '<li class="t rpress-cart-item"><span class="rpress-cart-item-title">'.$addon_item['addon_item_name'].'</span><span class="addon-item-price cart-item-quantity-wrap"><span class="rpress-cart-item-price qty-class">'.rpress_currency_filter( rpress_format_amount( $addon_item['price'])).'</span></li>';
 			}
 		}
 		$html .= '</ul>';
@@ -156,7 +156,7 @@ function get_addon_item_formatted($addon_items) {
 			
 			foreach( $addon_items['addon_items'] as $k => $val ) {
 				if( is_array($val) ) {
-					$html .= '<li class="t y f rpress-cart-item"><span class="rpress-cart-item-title">'.$val['addon_item_name'].'</span><span class="addon-item-price cart-item-quantity-wrap"><span class="rpress-cart-item-qty qty-class">1</span><span class="rpress-cart-item-qty separator qty-class">X</span><span class="rpress-cart-item-price qty-class">'.rpress_currency_filter( rpress_format_amount( $val['price'] ) ).'</span></li>';
+					$html .= '<li class="t y f rpress-cart-item"><span class="rpress-cart-item-title">'.$val['addon_item_name'].'</span><span class="addon-item-price cart-item-quantity-wrap"><span class="rpress-cart-item-price qty-class">'.rpress_currency_filter( rpress_format_amount( $val['price'] ) ).'</span></li>';
 				}
 				
 			}
