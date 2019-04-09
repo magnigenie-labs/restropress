@@ -571,10 +571,10 @@ function rpress_new_user_notification( $user_id = 0, $user_data = array() ) {
 	$emails->__set( 'from_name', $from_name );
 	$emails->__set( 'from_email', $from_email );
 
-	$admin_subject  = apply_filters( 'rpress_user_registration_admin_email_subject', sprintf( __('[%s] New User Registration', 'restro-press' ), $from_name ), $user_data );
-	$admin_heading  = apply_filters( 'rpress_user_registration_admin_email_heading', __( 'New user registration', 'restro-press' ), $user_data );
-	$admin_message  = sprintf( __( 'Username: %s', 'restro-press'), $user_data['user_login'] ) . "\r\n\r\n";
-	$admin_message .= sprintf( __( 'E-mail: %s', 'restro-press'), $user_data['user_email'] ) . "\r\n";
+	$admin_subject  = apply_filters( 'rpress_user_registration_admin_email_subject', sprintf( __('[%s] New User Registration', 'restropress' ), $from_name ), $user_data );
+	$admin_heading  = apply_filters( 'rpress_user_registration_admin_email_heading', __( 'New user registration', 'restropress' ), $user_data );
+	$admin_message  = sprintf( __( 'Username: %s', 'restropress'), $user_data['user_login'] ) . "\r\n\r\n";
+	$admin_message .= sprintf( __( 'E-mail: %s', 'restropress'), $user_data['user_email'] ) . "\r\n";
 
 	$admin_message = apply_filters( 'rpress_user_registration_admin_email_message', $admin_message, $user_data );
 
@@ -583,26 +583,26 @@ function rpress_new_user_notification( $user_id = 0, $user_data = array() ) {
 	$emails->send( get_option( 'admin_email' ), $admin_subject, $admin_message );
 
 	// Setup and send the new user email for the end user.
-	$user_subject  = apply_filters( 'rpress_user_registration_email_subject', sprintf( __( '[%s] Your username and password', 'restro-press' ), $from_name ), $user_data );
-	$user_heading  = apply_filters( 'rpress_user_registration_email_heading', __( 'Your account info', 'restro-press' ), $user_data );
-	$user_message  = apply_filters( 'rpress_user_registration_email_username', sprintf( __( 'Username: %s', 'restro-press' ), $user_data['user_login'] ) . "\r\n", $user_data );
+	$user_subject  = apply_filters( 'rpress_user_registration_email_subject', sprintf( __( '[%s] Your username and password', 'restropress' ), $from_name ), $user_data );
+	$user_heading  = apply_filters( 'rpress_user_registration_email_heading', __( 'Your account info', 'restropress' ), $user_data );
+	$user_message  = apply_filters( 'rpress_user_registration_email_username', sprintf( __( 'Username: %s', 'restropress' ), $user_data['user_login'] ) . "\r\n", $user_data );
 
 	if ( did_action( 'rpress_pre_process_purchase' ) ) {
-		$password_message = __( 'Password entered at checkout', 'restro-press' );
+		$password_message = __( 'Password entered at checkout', 'restropress' );
 	} else {
-		$password_message = __( 'Password entered at registration', 'restro-press' );
+		$password_message = __( 'Password entered at registration', 'restropress' );
 	}
 
-	$user_message .= apply_filters( 'rpress_user_registration_email_password', sprintf( __( 'Password: %s', 'restro-press' ), '[' . $password_message . ']' ) . "\r\n" );
+	$user_message .= apply_filters( 'rpress_user_registration_email_password', sprintf( __( 'Password: %s', 'restropress' ), '[' . $password_message . ']' ) . "\r\n" );
 
 	$login_url = apply_filters( 'rpress_user_registration_email_login_url', wp_login_url() );
 	if( $emails->html ) {
 
-		$user_message .= '<a href="' . $login_url . '"> ' . esc_attr__( 'Click here to log in', 'restro-press' ) . ' &raquo;</a>' . "\r\n";
+		$user_message .= '<a href="' . $login_url . '"> ' . esc_attr__( 'Click here to log in', 'restropress' ) . ' &raquo;</a>' . "\r\n";
 
 	} else {
 
-		$user_message .= sprintf( __( 'To log in, visit: %s', 'restro-press' ), $login_url ) . "\r\n";
+		$user_message .= sprintf( __( 'To log in, visit: %s', 'restropress' ), $login_url ) . "\r\n";
 
 	}
 
@@ -756,10 +756,10 @@ function rpress_send_user_verification_email( $user_id = 0 ) {
 	$url        = rpress_get_user_verification_url( $user_id );
 	$from_name  = rpress_get_option( 'from_name', wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) );
 	$from_email = rpress_get_option( 'from_email', get_bloginfo( 'admin_email' ) );
-	$subject    = apply_filters( 'rpress_user_verification_email_subject', __( 'Verify your account', 'restro-press' ), $user_id );
-	$heading    = apply_filters( 'rpress_user_verification_email_heading', __( 'Verify your account', 'restro-press' ), $user_id );
+	$subject    = apply_filters( 'rpress_user_verification_email_subject', __( 'Verify your account', 'restropress' ), $user_id );
+	$heading    = apply_filters( 'rpress_user_verification_email_heading', __( 'Verify your account', 'restropress' ), $user_id );
 	$message    = sprintf(
-		__( "Hello %s,\n\nYour account with %s needs to be verified before you can access your purchase history. <a href='%s'>Click here</a> to verify your account.\n\nLink missing? Visit the following URL: %s", 'restro-press' ),
+		__( "Hello %s,\n\nYour account with %s needs to be verified before you can access your purchase history. <a href='%s'>Click here</a> to verify your account.\n\nLink missing? Visit the following URL: %s", 'restropress' ),
 		$name,
 		$from_name,
 		$url,
@@ -884,11 +884,11 @@ function rpress_validate_user_verification_token( $url = '' ) {
 			do_action( 'rpress_user_verification_token_expired' );
 
 			$link_text = sprintf(
-				__( 'Sorry but your account verification link has expired. <a href="%s">Click here</a> to request a new verification URL.', 'restro-press' ),
+				__( 'Sorry but your account verification link has expired. <a href="%s">Click here</a> to request a new verification URL.', 'restropress' ),
 				rpress_get_user_verification_request_url()
 			);
 
-			wp_die( apply_filters( 'rpress_verification_link_expired_text', $link_text ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( apply_filters( 'rpress_verification_link_expired_text', $link_text ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 
 		}
 
@@ -913,15 +913,15 @@ function rpress_validate_user_verification_token( $url = '' ) {
 function rpress_process_user_verification_request() {
 
 	if( ! wp_verify_nonce( $_GET['_wpnonce'], 'rpress-request-verification' ) ) {
-		wp_die( __( 'Nonce verification failed.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification failed.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if( ! is_user_logged_in() ) {
-		wp_die( __( 'You must be logged in to verify your account.', 'restro-press' ), __( 'Notice', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You must be logged in to verify your account.', 'restropress' ), __( 'Notice', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if( ! rpress_user_pending_verification( get_current_user_id() ) ) {
-		wp_die( __( 'Your account has already been verified.', 'restro-press' ), __( 'Notice', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Your account has already been verified.', 'restropress' ), __( 'Notice', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	rpress_send_user_verification_email( get_current_user_id() );
@@ -966,7 +966,7 @@ function rpress_process_user_account_verification() {
 
 		do_action( 'rpress_invalid_user_verification_token' );
 
-		wp_die( __( 'Invalid verification token provided.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Invalid verification token provided.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	rpress_set_user_to_verified( absint( $_GET['user_id'] ) );

@@ -30,7 +30,7 @@ add_action( 'rpress_manual_cc_form', '__return_false' );
 */
 function rpress_manual_payment( $purchase_data ) {
 	if( ! wp_verify_nonce( $purchase_data['gateway_nonce'], 'rpress-gateway' ) ) {
-		wp_die( __( 'Nonce verification has failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification has failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	/*
@@ -70,7 +70,7 @@ function rpress_manual_payment( $purchase_data ) {
 		rpress_empty_cart();
 		rpress_send_to_success_page();
 	} else {
-		rpress_record_gateway_error( __( 'Payment Error', 'restro-press' ), sprintf( __( 'Payment creation failed while processing a manual (free or test) order. Payment data: %s', 'restro-press' ), json_encode( $payment_data ) ), $payment );
+		rpress_record_gateway_error( __( 'Payment Error', 'restropress' ), sprintf( __( 'Payment creation failed while processing a manual (free or test) order. Payment data: %s', 'restropress' ), json_encode( $payment_data ) ), $payment );
 		// If errors are present, send the user back to the purchase page so they can be corrected
 		rpress_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['rpress-gateway'] );
 	}

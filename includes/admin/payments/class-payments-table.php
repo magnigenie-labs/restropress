@@ -115,7 +115,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		$selected_gateway = isset( $_GET['gateway'] ) ? sanitize_text_field( $_GET['gateway'] ) : 'all';
 
 		if ( ! empty( $all_gateways ) ) {
-			$gateways['all'] = __( 'All Gateways', 'restro-press' );
+			$gateways['all'] = __( 'All Gateways', 'restropress' );
 
 			foreach( $all_gateways as $slug => $admin_label ) {
 				$gateways[ $slug ] = $admin_label['admin_label'];
@@ -132,11 +132,11 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		<div id="rpress-payment-filters">
 			<span id="rpress-payment-date-filters">
 				<span>
-					<label for="start-date"><?php _e( 'Start Date:', 'restro-press' ); ?></label>
+					<label for="start-date"><?php _e( 'Start Date:', 'restropress' ); ?></label>
 					<input type="text" id="start-date" name="start-date" class="rpress_datepicker" value="<?php echo $start_date; ?>" placeholder="mm/dd/yyyy"/>
 				</span>
 				<span>
-					<label for="end-date"><?php _e( 'End Date:', 'restro-press' ); ?></label>
+					<label for="end-date"><?php _e( 'End Date:', 'restropress' ); ?></label>
 					<input type="text" id="end-date" name="end-date" class="rpress_datepicker" value="<?php echo $end_date; ?>" placeholder="mm/dd/yyyy"/>
 				</span>
 			</span>
@@ -156,16 +156,16 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			</span>
 			<span id="rpress-payment-after-core-filters">
 				<?php do_action( 'rpress_payment_advanced_filters_after_fields' ); ?>
-				<input type="submit" class="button-secondary" value="<?php _e( 'Apply', 'restro-press' ); ?>"/>
+				<input type="submit" class="button-secondary" value="<?php _e( 'Apply', 'restropress' ); ?>"/>
 			</span>
 			<?php if( ! empty( $status ) ) : ?>
 				<input type="hidden" name="status" value="<?php echo esc_attr( $status ); ?>"/>
 			<?php endif; ?>
 			<?php if( ! empty( $start_date ) || ! empty( $end_date ) || 'all' !== $selected_gateway ) : ?>
-				<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ); ?>" class="button-secondary"><?php _e( 'Clear Filter', 'restro-press' ); ?></a>
+				<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ); ?>" class="button-secondary"><?php _e( 'Clear Filter', 'restropress' ); ?></a>
 			<?php endif; ?>
 			<?php do_action( 'rpress_payment_advanced_filters_row' ); ?>
-			<?php $this->search_box( __( 'Search', 'restro-press' ), 'rpress-payments' ); ?>
+			<?php $this->search_box( __( 'Search', 'restropress' ), 'rpress-payments' ); ?>
 		</div>
 
 <?php
@@ -216,11 +216,11 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		$paid_count = '&nbsp;<span class="count">(' . $this->paid_count  . ')</span>';
 		$out_for_deliver_count = '&nbsp;<span class="count">(' . $this->out_for_deliver_count . ')</span>';
 		$views = array(
-			'all'        => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( array( 'status', 'paged' ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All','restro-press' ) . $total_count ),
-			'publish'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'deleverd' ? ' class="current"' : '', __('Delivered','restro-press' ) . $delivered_count ),
-			'pending'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'pending', 'paged' => FALSE ) ), $current === 'pending' ? ' class="current"' : '', __('Pending','restro-press' ) . $pending_count ),
-			'paid' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'paid', 'paged' => FALSE ) ), $current === 'paid' ? ' class="current"' : '', __('Paid','restro-press' ) . $paid_count ),
-			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Out For Delivery','restro-press' ) . $out_for_deliver_count)
+			'all'        => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( array( 'status', 'paged' ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All','restropress' ) . $total_count ),
+			'publish'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'deleverd' ? ' class="current"' : '', __('Delivered','restropress' ) . $delivered_count ),
+			'pending'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'pending', 'paged' => FALSE ) ), $current === 'pending' ? ' class="current"' : '', __('Pending','restropress' ) . $pending_count ),
+			'paid' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'paid', 'paged' => FALSE ) ), $current === 'paid' ? ' class="current"' : '', __('Paid','restropress' ) . $paid_count ),
+			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Out For Delivery','restropress' ) . $out_for_deliver_count)
 		);
 
 		return apply_filters( 'rpress_payments_table_views', $views );
@@ -235,13 +235,13 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	public function get_columns() {
 		$columns = array(
 			'cb'       => '<input type="checkbox" />', //Render a checkbox instead of text
-			'ID'       => __( 'ID', 'restro-press' ),
-			'email'    => __( 'Email', 'restro-press' ),
-			'amount'   => __( 'Amount', 'restro-press' ),
-			'date'     => __( 'Date', 'restro-press' ),
-			'customer' => __( 'Customer', 'restro-press' ),
-			'delivery' => __( 'Order Type', 'restro-press' ),
-			'status'   => __( 'Status', 'restro-press' ),
+			'ID'       => __( 'ID', 'restropress' ),
+			'email'    => __( 'Email', 'restropress' ),
+			'amount'   => __( 'Amount', 'restropress' ),
+			'date'     => __( 'Date', 'restropress' ),
+			'customer' => __( 'Customer', 'restropress' ),
+			'delivery' => __( 'Order Type', 'restropress' ),
+			'status'   => __( 'Status', 'restropress' ),
 		);
 
 		return apply_filters( 'rpress_payments_table_columns', $columns );
@@ -330,15 +330,15 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		}
 
 		if ( rpress_is_payment_complete( $payment->ID ) && ! empty( $email ) ) {
-			$row_actions['email_links'] = '<a href="' . add_query_arg( array( 'rpress-action' => 'email_links', 'purchase_id' => $payment->ID ), $this->base_url ) . '">' . __( 'Resend Purchase Receipt', 'restro-press' ) . '</a>';
+			$row_actions['email_links'] = '<a href="' . add_query_arg( array( 'rpress-action' => 'email_links', 'purchase_id' => $payment->ID ), $this->base_url ) . '">' . __( 'Resend Purchase Receipt', 'restropress' ) . '</a>';
 		}
 
-		$row_actions['delete'] = '<a href="' . wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment->ID ), $this->base_url ), 'rpress_payment_nonce') . '">' . __( 'Delete', 'restro-press' ) . '</a>';
+		$row_actions['delete'] = '<a href="' . wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment->ID ), $this->base_url ), 'rpress_payment_nonce') . '">' . __( 'Delete', 'restropress' ) . '</a>';
 
 		$row_actions = apply_filters( 'rpress_payment_row_actions', $row_actions, $payment );
 
 		if ( empty( $email ) ) {
-			$email = __( '(unknown)', 'restro-press' );
+			$email = __( '(unknown)', 'restropress' );
 		}
 
 		$value = $email . $this->row_actions( $row_actions );
@@ -388,7 +388,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			$value = '<a href="' . esc_url( admin_url( "edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=$customer_id" ) ) . '">' . $customer->name . '</a>';
 		} else {
 			$email = rpress_get_payment_user_email( $payment->ID );
-			$value = '<a href="' . esc_url( admin_url( "edit.php?post_type=fooditem&page=rpress-payment-history&s=$email" ) ) . '">' . __( '(customer missing)', 'restro-press' ) . '</a>';
+			$value = '<a href="' . esc_url( admin_url( "edit.php?post_type=fooditem&page=rpress-payment-history&s=$email" ) ) . '">' . __( '(customer missing)', 'restropress' ) . '</a>';
 		}
 		return apply_filters( 'rpress_payments_table_column', $value, $payment->ID, 'user' );
 	}
@@ -401,16 +401,16 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'delete'                 => __( 'Delete',                'restro-press' ),
-			'set-status-publish'     => __( 'Set To Completed',      'restro-press' ),
-			'set-status-pending'     => __( 'Set To Pending',        'restro-press' ),
-			'set-status-processing'  => __( 'Set To Processing',     'restro-press' ),
-			'set-status-refunded'    => __( 'Set To Refunded',       'restro-press' ),
-			'set-status-paid'     	 => __( 'Set To Paid',        'restro-press' ),
-			'set-status-failed'      => __( 'Set To Delivered',         'restro-press' ),
-			'set-status-preapproval' => __( 'Set To Preapproval',    'restro-press' ),
-			'set-status-cancelled'   => __( 'Set To Cancelled',      'restro-press' ),
-			'resend-receipt'         => __( 'Resend Email Receipts', 'restro-press' )
+			'delete'                 => __( 'Delete',                'restropress' ),
+			'set-status-publish'     => __( 'Set To Completed',      'restropress' ),
+			'set-status-pending'     => __( 'Set To Pending',        'restropress' ),
+			'set-status-processing'  => __( 'Set To Processing',     'restropress' ),
+			'set-status-refunded'    => __( 'Set To Refunded',       'restropress' ),
+			'set-status-paid'     	 => __( 'Set To Paid',        'restropress' ),
+			'set-status-failed'      => __( 'Set To Delivered',         'restropress' ),
+			'set-status-preapproval' => __( 'Set To Preapproval',    'restropress' ),
+			'set-status-cancelled'   => __( 'Set To Cancelled',      'restropress' ),
+			'resend-receipt'         => __( 'Resend Email Receipts', 'restropress' )
 		);
 
 		return apply_filters( 'rpress_payments_table_bulk_actions', $actions );

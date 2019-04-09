@@ -27,7 +27,7 @@ function rpress_add_discount( $data ) {
 	}
 
 	if( ! current_user_can( 'manage_shop_discounts' ) ) {
-		wp_die( __( 'You do not have permission to create discount codes', 'restr-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to create discount codes', 'restr-press' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	// Setup the discount code details
@@ -109,7 +109,7 @@ function rpress_edit_discount( $data ) {
 	}
 
 	if( ! current_user_can( 'manage_shop_discounts' ) ) {
-		wp_die( __( 'You do not have permission to edit discount codes', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to edit discount codes', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	// Setup the discount code details
@@ -169,11 +169,11 @@ add_action( 'rpress_edit_discount', 'rpress_edit_discount' );
 function rpress_delete_discount( $data ) {
 
 	if ( ! isset( $data['_wpnonce'] ) || ! wp_verify_nonce( $data['_wpnonce'], 'rpress_discount_nonce' ) ) {
-		wp_die( __( 'Trying to cheat or something?', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Trying to cheat or something?', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if( ! current_user_can( 'manage_shop_discounts' ) ) {
-		wp_die( __( 'You do not have permission to delete discount codes', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to delete discount codes', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$discount_id = $data['discount'];
@@ -194,11 +194,11 @@ add_action( 'rpress_delete_discount', 'rpress_delete_discount' );
 function rpress_activate_discount( $data ) {
 
 	if ( ! isset( $data['_wpnonce'] ) || ! wp_verify_nonce( $data['_wpnonce'], 'rpress_discount_nonce' ) ) {
-		wp_die( __( 'Trying to cheat or something?', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Trying to cheat or something?', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if( ! current_user_can( 'manage_shop_discounts' ) ) {
-		wp_die( __( 'You do not have permission to edit discount codes', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to edit discount codes', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$id = absint( $data['discount'] );
@@ -219,11 +219,11 @@ add_action( 'rpress_activate_discount', 'rpress_activate_discount' );
 function rpress_deactivate_discount( $data ) {
 
 	if ( ! isset( $data['_wpnonce'] ) || ! wp_verify_nonce( $data['_wpnonce'], 'rpress_discount_nonce' ) ) {
-		wp_die( __( 'Trying to cheat or something?', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Trying to cheat or something?', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if( ! current_user_can( 'manage_shop_discounts' ) ) {
-		wp_die( __( 'You do not have permission to create discount codes', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to create discount codes', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$id = absint( $data['discount'] );

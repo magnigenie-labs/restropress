@@ -59,11 +59,11 @@ class RPRESS_Fooditem_History_Export extends RPRESS_Export {
 	 */
 	public function csv_cols() {
 		$cols = array(
-			'date'     => __( 'Date',   'restro-press' ),
-			'user'     => __( 'Ordered by', 'restro-press' ),
-			'ip'       => __( 'IP Address', 'restro-press' ),
-			'fooditem' => __( 'Product', 'restro-press' ),
-			'file'     => __( 'File', 'restro-press' )
+			'date'     => __( 'Date',   'restropress' ),
+			'user'     => __( 'Ordered by', 'restropress' ),
+			'ip'       => __( 'IP Address', 'restropress' ),
+			'fooditem' => __( 'Product', 'restropress' ),
+			'file'     => __( 'File', 'restropress' )
 		);
 		return $cols;
 	}

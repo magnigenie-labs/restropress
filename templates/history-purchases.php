@@ -1,6 +1,6 @@
 <?php if( ! empty( $_GET['rpress-verify-success'] ) ) : ?>
 <p class="rpress-account-verified rpress_success">
-	<?php _e( 'Your account has been successfully verified!', 'restro-press' ); ?>
+	<?php _e( 'Your account has been successfully verified!', 'restropress' ); ?>
 </p>
 <?php
 endif;
@@ -15,10 +15,10 @@ if ( is_user_logged_in() ):
 			<thead>
 				<tr class="rpress_purchase_row">
 					<?php do_action('rpress_order_history_header_before'); ?>
-					<th class="rpress_purchase_id"><?php _e('ID','restro-press' ); ?></th>
-					<th class="rpress_purchase_date"><?php _e('Date','restro-press' ); ?></th>
-					<th class="rpress_purchase_amount"><?php _e('Amount','restro-press' ); ?></th>
-					<th class="rpress_purchase_details"><?php _e('Details','restro-press' ); ?></th>
+					<th class="rpress_purchase_id"><?php _e('ID','restropress' ); ?></th>
+					<th class="rpress_purchase_date"><?php _e('Date','restropress' ); ?></th>
+					<th class="rpress_purchase_amount"><?php _e('Amount','restropress' ); ?></th>
+					<th class="rpress_purchase_details"><?php _e('Details','restropress' ); ?></th>
 					<?php do_action('rpress_order_history_header_after'); ?>
 				</tr>
 			</thead>
@@ -36,10 +36,10 @@ if ( is_user_logged_in() ):
 						<?php if( $payment->status != 'publish' ) : ?>
 							<span class="rpress_purchase_status <?php echo $payment->status; ?>"><?php echo $payment->status_nicename; ?></span>
 							<?php if ( $payment->is_recoverable() ) : ?>
-								&mdash; <a href="<?php echo $payment->get_recovery_url(); ?>"><?php _e( 'Complete Purchase', 'restro-press' ); ?></a>
+								&mdash; <a href="<?php echo $payment->get_recovery_url(); ?>"><?php _e( 'Complete Purchase', 'restropress' ); ?></a>
 							<?php endif; ?>
 						<?php else: ?>
-							<a href="<?php echo esc_url( add_query_arg( 'payment_key', $payment->key, rpress_get_success_page_uri() ) ); ?>"><?php _e( 'View Details', 'restro-press' ); ?></a>
+							<a href="<?php echo esc_url( add_query_arg( 'payment_key', $payment->key, rpress_get_success_page_uri() ) ); ?>"><?php _e( 'View Details', 'restropress' ); ?></a>
 						<?php endif; ?>
 					</td>
 					<?php do_action( 'rpress_order_history_row_end', $payment->ID, $payment->payment_meta ); ?>
@@ -60,6 +60,6 @@ if ( is_user_logged_in() ):
 		<?php do_action( 'rpress_after_order_history', $payments ); ?>
 		<?php wp_reset_postdata(); ?>
 	<?php else : ?>
-		<p class="rpress-no-purchases"><?php _e('You have not made any orders','restro-press' ); ?></p>
+		<p class="rpress-no-purchases"><?php _e('You have not made any orders','restropress' ); ?></p>
 	<?php endif;
 endif;

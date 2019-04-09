@@ -28,15 +28,15 @@ function rpress_do_ajax_import_file_upload() {
 	require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
 
 	if( ! wp_verify_nonce( $_REQUEST['rpress_ajax_import'], 'rpress_ajax_import' ) ) {
-		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restro-press' ) ) );
+		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restropress' ) ) );
 	}
 
 	if( empty( $_POST['rpress-import-class'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Missing import parameters. Import class must be specified.', 'restro-press' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => __( 'Missing import parameters. Import class must be specified.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	if( empty( $_FILES['rpress-import-file'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Missing import file. Please provide an import file.', 'restro-press' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => __( 'Missing import file. Please provide an import file.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	$accepted_mime_types = array(
@@ -55,11 +55,11 @@ function rpress_do_ajax_import_file_upload() {
 	);
 
 	if( empty( $_FILES['rpress-import-file']['type'] ) || ! in_array( strtolower( $_FILES['rpress-import-file']['type'] ), $accepted_mime_types ) ) {
-		wp_send_json_error( array( 'error' => __( 'The file you uploaded does not appear to be a CSV file.', 'restro-press' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => __( 'The file you uploaded does not appear to be a CSV file.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	if( ! file_exists( $_FILES['rpress-import-file']['tmp_name'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Something went wrong during the upload process, please try again.', 'restro-press' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => __( 'Something went wrong during the upload process, please try again.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	// Let WordPress import the file. We will remove it after import is complete
@@ -72,7 +72,7 @@ function rpress_do_ajax_import_file_upload() {
 		$import = new $_POST['rpress-import-class']( $import_file['file'] );
 
 		if( ! $import->can_import() ) {
-			wp_send_json_error( array( 'error' => __( 'You do not have permission to import data', 'restro-press' ) ) );
+			wp_send_json_error( array( 'error' => __( 'You do not have permission to import data', 'restropress' ) ) );
 		}
 
 		wp_send_json_success( array(
@@ -110,15 +110,15 @@ function rpress_do_ajax_import() {
 	require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
 
 	if( ! wp_verify_nonce( $_REQUEST['nonce'], 'rpress_ajax_import' ) ) {
-		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restro-press' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	if( empty( $_REQUEST['class'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Missing import parameters. Import class must be specified.', 'restro-press' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => __( 'Missing import parameters. Import class must be specified.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	if( ! file_exists( $_REQUEST['upload']['file'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Something went wrong during the upload process, please try again.', 'restro-press' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => __( 'Something went wrong during the upload process, please try again.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	do_action( 'rpress_batch_import_class_include', $_REQUEST['class'] );
@@ -129,7 +129,7 @@ function rpress_do_ajax_import() {
 
 	if( ! $import->can_import() ) {
 
-		wp_send_json_error( array( 'error' => __( 'You do not have permission to import data', 'restro-press' ) ) );
+		wp_send_json_error( array( 'error' => __( 'You do not have permission to import data', 'restropress' ) ) );
 
 	}
 
@@ -155,7 +155,7 @@ function rpress_do_ajax_import() {
 	} elseif ( true === $import->is_empty ) {
 
 		wp_send_json_error( array(
-			'error' => __( 'No data found for import parameters', 'restro-press' )
+			'error' => __( 'No data found for import parameters', 'restropress' )
 		) );
 
 	} else {
@@ -163,7 +163,7 @@ function rpress_do_ajax_import() {
 		wp_send_json_success( array(
 			'step'    => 'done',
 			'message' => sprintf(
-				__( 'Import complete! <a href="%s">View imported %s</a>.', 'restro-press' ),
+				__( 'Import complete! <a href="%s">View imported %s</a>.', 'restropress' ),
 				$import->get_list_table_url(),
 				$import->get_import_type_label()
 			)

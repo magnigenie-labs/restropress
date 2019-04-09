@@ -71,7 +71,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'rpress_sanitize_amount',
 				'type'              => 'float',
-				'description'       => __( 'The total earnings for the specified product', 'restro-press' ),
+				'description'       => __( 'The total earnings for the specified product', 'restropress' ),
 			)
 		);
 
@@ -86,7 +86,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'intval_wrapper' ),
 				'type'              => 'float',
-				'description'       => __( 'The number of sales for the specified product.', 'restro-press' ),
+				'description'       => __( 'The number of sales for the specified product.', 'restropress' ),
 			)
 		);
 
@@ -100,7 +100,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_price' ),
 				'type'              => 'float',
-				'description'       => __( 'The price of the product.', 'restro-press' ),
+				'description'       => __( 'The price of the product.', 'restropress' ),
 				'show_in_rest'      => true,
 			)
 		);
@@ -115,7 +115,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_variable_prices'),
 				'type'              => 'array',
-				'description'       => __( 'An array of variable prices for the product.', 'restro-press' ),
+				'description'       => __( 'An array of variable prices for the product.', 'restropress' ),
 				'show_in_rest'      => true,
 			)
 		);
@@ -130,7 +130,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_files' ),
 				'type'              => 'array',
-				'description'       => __( 'The files associated with the product, available for fooditem.', 'restro-press' ),
+				'description'       => __( 'The files associated with the product, available for fooditem.', 'restropress' ),
 			)
 		);
 
@@ -144,7 +144,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_array' ),
 				'type'              => 'array',
-				'description'       => __( 'An array of product IDs to associate with a bundle.', 'restro-press' ),
+				'description'       => __( 'An array of product IDs to associate with a bundle.', 'restropress' ),
 				'show_in_rest'      => true,
 			)
 		);
@@ -159,7 +159,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'sanitize_text_field',
 				'type'              => 'string',
-				'description'       => __( "Defines how this product's 'Purchase' button should behave, either add to cart or buy now", 'restro-press' ),
+				'description'       => __( "Defines how this product's 'Purchase' button should behave, either add to cart or buy now", 'restropress' ),
 				'show_in_rest'      => true,
 			)
 		);
@@ -174,7 +174,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'intval_wrapper' ),
 				'type'              => 'int',
-				'description'       => __( 'When variable pricing is enabled, this value defines which option should be chosen by default.', 'restro-press' ),
+				'description'       => __( 'When variable pricing is enabled, this value defines which option should be chosen by default.', 'restropress' ),
 				'show_in_rest'      => true,
 			)
 		);
@@ -199,7 +199,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'sanitize_email',
 				'type'              => 'string',
-				'description'       => __( 'The email address associated with the purchase.', 'restro-press' ),
+				'description'       => __( 'The email address associated with the purchase.', 'restropress' ),
 			)
 		);
 
@@ -214,7 +214,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'intval_wrapper' ),
 				'type'              => 'int',
-				'description'       => __( 'The Customer ID associated with the payment.', 'restro-press' ),
+				'description'       => __( 'The Customer ID associated with the payment.', 'restropress' ),
 			)
 		);
 
@@ -228,7 +228,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'intval_wrapper' ),
 				'type'              => 'int',
-				'description'       => __( 'The User ID associated with the payment.', 'restro-press' ),
+				'description'       => __( 'The User ID associated with the payment.', 'restropress' ),
 			)
 		);
 
@@ -242,7 +242,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'sanitize_text_field',
 				'type'              => 'string',
-				'description'       => __( 'The IP address the payment was made from.', 'restro-press' ),
+				'description'       => __( 'The IP address the payment was made from.', 'restropress' ),
 			)
 		);
 
@@ -256,7 +256,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'sanitize_text_field',
 				'type'              => 'string',
-				'description'       => __( 'The unique purchase key for this payment.', 'restro-press' ),
+				'description'       => __( 'The unique purchase key for this payment.', 'restropress' ),
 			)
 		);
 
@@ -270,7 +270,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'rpress_sanitize_amount',
 				'type'              => 'float',
-				'description'       => __( 'The order total for this payment.', 'restro-press' ),
+				'description'       => __( 'The order total for this payment.', 'restropress' ),
 			)
 		);
 
@@ -284,7 +284,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'sanitize_text_field',
 				'type'              => 'string',
-				'description'       => __( 'Identifies if the purchase was made in Test or Live mode.', 'restro-press' ),
+				'description'       => __( 'Identifies if the purchase was made in Test or Live mode.', 'restropress' ),
 			)
 		);
 
@@ -298,7 +298,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'sanitize_text_field',
 				'type'              => 'string',
-				'description'       => __( 'The registered gateway that was used to process this payment.', 'restro-press' ),
+				'description'       => __( 'The registered gateway that was used to process this payment.', 'restropress' ),
 			)
 		);
 
@@ -312,7 +312,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_array' ),
 				'type'              => 'array',
-				'description'       => __( 'Array of payment meta that contains cart details, fooditems, amounts, taxes, discounts, and subtotals, etc.', 'restro-press' ),
+				'description'       => __( 'Array of payment meta that contains cart details, fooditems, amounts, taxes, discounts, and subtotals, etc.', 'restropress' ),
 			)
 		);
 
@@ -326,7 +326,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'rpress_sanitize_amount',
 				'type'              => 'float',
-				'description'       => __( 'The total amount of tax paid for this payment.', 'restro-press' ),
+				'description'       => __( 'The total amount of tax paid for this payment.', 'restropress' ),
 			)
 		);
 
@@ -340,7 +340,7 @@ class RPRESS_Register_Meta {
 			array(
 				'sanitize_callback' => 'sanitize_text_field',
 				'type'              => 'string',
-				'description'       => __( 'The date this payment was changed to the `completed` status.', 'restro-press' ),
+				'description'       => __( 'The date this payment was changed to the `completed` status.', 'restropress' ),
 			)
 		);
 

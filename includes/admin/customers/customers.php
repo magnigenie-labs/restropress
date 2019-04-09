@@ -60,11 +60,11 @@ function rpress_customers_list() {
 	$customers_table->prepare_items();
 	?>
 	<div class="wrap">
-		<h1><?php _e( 'Customers', 'restro-press' ); ?></h1>
+		<h1><?php _e( 'Customers', 'restropress' ); ?></h1>
 		<?php do_action( 'rpress_customers_table_top' ); ?>
 		<form id="rpress-customers-filter" method="get" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-customers' ); ?>">
 			<?php
-			$customers_table->search_box( __( 'Search Customers', 'restro-press' ), 'rpress-customers' );
+			$customers_table->search_box( __( 'Search Customers', 'restropress' ), 'rpress-customers' );
 			$customers_table->display();
 			?>
 			<input type="hidden" name="post_type" value="fooditem" />
@@ -91,12 +91,12 @@ function rpress_render_customer_view( $view, $callbacks ) {
 	$customer_view_role = apply_filters( 'rpress_view_customers_role', 'view_shop_reports' );
 
 	if ( ! current_user_can( $customer_view_role ) ) {
-		rpress_set_error( 'rpress-no-access', __( 'You are not permitted to view this data.', 'restro-press' ) );
+		rpress_set_error( 'rpress-no-access', __( 'You are not permitted to view this data.', 'restropress' ) );
 		$render = false;
 	}
 
 	if ( ! isset( $_GET['id'] ) || ! is_numeric( $_GET['id'] ) ) {
-		rpress_set_error( 'rpress-invalid_customer', __( 'Invalid Customer ID Provided.', 'restro-press' ) );
+		rpress_set_error( 'rpress-invalid_customer', __( 'Invalid Customer ID Provided.', 'restropress' ) );
 		$render = false;
 	}
 
@@ -104,7 +104,7 @@ function rpress_render_customer_view( $view, $callbacks ) {
 	$customer    = new RPRESS_Customer( $customer_id );
 
 	if ( empty( $customer->id ) ) {
-		rpress_set_error( 'rpress-invalid_customer', __( 'Invalid Customer ID Provided.', 'restro-press' ) );
+		rpress_set_error( 'rpress-invalid_customer', __( 'Invalid Customer ID Provided.', 'restropress' ) );
 		$render = false;
 	}
 
@@ -113,7 +113,7 @@ function rpress_render_customer_view( $view, $callbacks ) {
 
 	<div class='wrap'>
 		<h2>
-			<?php _e( 'Customer Details', 'restro-press' ); ?>
+			<?php _e( 'Customer Details', 'restropress' ); ?>
 			<?php do_action( 'rpress_after_customer_details_header', $customer ); ?>
 		</h2>
 		<?php if ( rpress_get_errors() ) :?>
@@ -138,7 +138,7 @@ function rpress_render_customer_view( $view, $callbacks ) {
 								$tab['title'] = preg_replace("(^Customer )","",$tab['title']);
 
 								// rpress item tab full title
-								$tab_title = sprintf( _x( 'Customer %s', 'Customer Details page tab title', 'restro-press' ), esc_attr( $tab[ 'title' ] ) );
+								$tab_title = sprintf( _x( 'Customer %s', 'Customer Details page tab title', 'restropress' ), esc_attr( $tab[ 'title' ] ) );
 
 								// aria-label output
 								$aria_label = ' aria-label="' . $tab_title . '"';
@@ -200,7 +200,7 @@ function rpress_customers_view( $customer ) {
 				<div class="avatar-wrap left" id="customer-avatar">
 					<?php echo get_avatar( $customer->email ); ?><br />
 					<?php if ( current_user_can( $customer_edit_role ) ): ?>
-						<span class="info-item editable customer-edit-link"><a href="#" id="edit-customer"><?php _e( 'Edit Customer', 'restro-press' ); ?></a></span>
+						<span class="info-item editable customer-edit-link"><a href="#" id="edit-customer"><?php _e( 'Edit Customer', 'restropress' ); ?></a></span>
 						<?php do_action( 'rpress_after_customer_edit_link', $customer ); ?>
 					<?php endif; ?>
 				</div>
@@ -226,7 +226,7 @@ function rpress_customers_view( $customer ) {
 						$address = wp_parse_args( $address, $defaults );
 					?>
 
-					<strong><?php _e( 'Customer Address', 'restro-press' ); ?></strong>
+					<strong><?php _e( 'Customer Address', 'restropress' ); ?></strong>
 					<span class="customer-address info-item editable">
 						<span class="info-item" data-key="line1"><?php echo $address['line1']; ?></span>
 						<span class="info-item" data-key="line2"><?php echo $address['line2']; ?></span>
@@ -237,9 +237,9 @@ function rpress_customers_view( $customer ) {
 					</span>
 
 					<span class="customer-address info-item edit-item">
-						<input class="info-item" type="text" data-key="line1" name="customerinfo[line1]" placeholder="<?php _e( 'Address 1', 'restro-press' ); ?>" value="<?php echo $address['line1']; ?>" />
-						<input class="info-item" type="text" data-key="line2" name="customerinfo[line2]" placeholder="<?php _e( 'Address 2', 'restro-press' ); ?>" value="<?php echo $address['line2']; ?>" />
-						<input class="info-item" type="text" data-key="city" name="customerinfo[city]" placeholder="<?php _e( 'City', 'restro-press' ); ?>" value="<?php echo $address['city']; ?>" />
+						<input class="info-item" type="text" data-key="line1" name="customerinfo[line1]" placeholder="<?php _e( 'Address 1', 'restropress' ); ?>" value="<?php echo $address['line1']; ?>" />
+						<input class="info-item" type="text" data-key="line2" name="customerinfo[line2]" placeholder="<?php _e( 'Address 2', 'restropress' ); ?>" value="<?php echo $address['line2']; ?>" />
+						<input class="info-item" type="text" data-key="city" name="customerinfo[city]" placeholder="<?php _e( 'City', 'restropress' ); ?>" value="<?php echo $address['city']; ?>" />
 						<select data-key="country" name="customerinfo[country]" id="billing_country" class="billing_country rpress-select edit-item">
 							<?php
 
@@ -266,24 +266,24 @@ function rpress_customers_view( $customer ) {
 							?>
 						</select>
 						<?php else : ?>
-						<input type="text" data-key="state" name="customerinfo[state]" id="card_state" class="card_state rpress-input info-item" placeholder="<?php _e( 'State / Province', 'restro-press' ); ?>" value="<?php echo $address['state']; ?>"/>
+						<input type="text" data-key="state" name="customerinfo[state]" id="card_state" class="card_state rpress-input info-item" placeholder="<?php _e( 'State / Province', 'restropress' ); ?>" value="<?php echo $address['state']; ?>"/>
 						<?php endif; ?>
-						<input class="info-item" type="text" data-key="zip" name="customerinfo[zip]" placeholder="<?php _e( 'Postal', 'restro-press' ); ?>" value="<?php echo $address['zip']; ?>" />
+						<input class="info-item" type="text" data-key="zip" name="customerinfo[zip]" placeholder="<?php _e( 'Postal', 'restropress' ); ?>" value="<?php echo $address['zip']; ?>" />
 					</span>
 				<?php endif; ?>
 				</div>
 
 				<div class="customer-main-wrapper left">
 
-					<span class="customer-name info-item edit-item"><input size="15" data-key="name" name="customerinfo[name]" type="text" value="<?php echo esc_attr( $customer->name ); ?>" placeholder="<?php _e( 'Customer Name', 'restro-press' ); ?>" /></span>
+					<span class="customer-name info-item edit-item"><input size="15" data-key="name" name="customerinfo[name]" type="text" value="<?php echo esc_attr( $customer->name ); ?>" placeholder="<?php _e( 'Customer Name', 'restropress' ); ?>" /></span>
 					<span class="customer-name info-item editable"><span data-key="name"><?php echo $customer->name; ?></span></span>
-					<span class="customer-name info-item edit-item"><input size="20" data-key="email" name="customerinfo[email]" type="text" value="<?php echo $customer->email; ?>" placeholder="<?php _e( 'Customer Email', 'restro-press' ); ?>" /></span>
+					<span class="customer-name info-item edit-item"><input size="20" data-key="email" name="customerinfo[email]" type="text" value="<?php echo $customer->email; ?>" placeholder="<?php _e( 'Customer Email', 'restropress' ); ?>" /></span>
 					<span class="customer-email info-item editable" data-key="email"><?php echo $customer->email; ?></span>
 					<span class="customer-since info-item">
 						<?php
 						printf(
 							/* translators: The date. */
-							esc_html__( 'Customer since %s', 'restro-press' ),
+							esc_html__( 'Customer since %s', 'restropress' ),
 							esc_html( date_i18n( get_option( 'date_format' ), strtotime( $customer->date_created ) ) )
 						);
 						?>
@@ -310,14 +310,14 @@ function rpress_customers_view( $customer ) {
 					</span>
 
 					<span class="customer-user-id info-item editable">
-						<?php _e( 'User ID', 'restro-press' ); ?>:&nbsp;
+						<?php _e( 'User ID', 'restropress' ); ?>:&nbsp;
 						<?php if( intval( $customer->user_id ) > 0 ) : ?>
 							<span data-key="user_id"><a href="<?php echo admin_url( 'user-edit.php?user_id=' . $customer->user_id ); ?>"><?php echo $customer->user_id; ?></a></span>
 						<?php else : ?>
-							<span data-key="user_id"><?php _e( 'none', 'restro-press' ); ?></span>
+							<span data-key="user_id"><?php _e( 'none', 'restropress' ); ?></span>
 						<?php endif; ?>
 						<?php if ( current_user_can( $customer_edit_role ) && intval( $customer->user_id ) > 0 ) : ?>
-							<span class="disconnect-user"> - <a id="disconnect-customer" href="#disconnect"><?php _e( 'Disconnect User', 'restro-press' ); ?></a></span>
+							<span class="disconnect-user"> - <a id="disconnect-customer" href="#disconnect"><?php _e( 'Disconnect User', 'restropress' ); ?></a></span>
 						<?php endif; ?>
 					</span>
 
@@ -329,8 +329,8 @@ function rpress_customers_view( $customer ) {
 				<input type="hidden" data-key="id" name="customerinfo[id]" value="<?php echo $customer->id; ?>" />
 				<?php wp_nonce_field( 'edit-customer', '_wpnonce', false, true ); ?>
 				<input type="hidden" name="rpress_action" value="edit-customer" />
-				<input type="submit" id="rpress-edit-customer-save" class="button-secondary" value="<?php _e( 'Update Customer', 'restro-press' ); ?>" />
-				<a id="rpress-edit-customer-cancel" href="" class="delete"><?php _e( 'Cancel', 'restro-press' ); ?></a>
+				<input type="submit" id="rpress-edit-customer-save" class="button-secondary" value="<?php _e( 'Update Customer', 'restropress' ); ?>" />
+				<a id="rpress-edit-customer-cancel" href="" class="delete"><?php _e( 'Cancel', 'restropress' ); ?></a>
 			</span>
 
 		</form>
@@ -343,7 +343,7 @@ function rpress_customers_view( $customer ) {
 			<li>
 				<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&customer=' . $customer->id ); ?>">
 					<span class="dashicons dashicons-cart"></span>
-					<?php printf( _n( '%d Completed Order', '%d Completed Orders', $customer->purchase_count, 'restro-press' ), $customer->purchase_count ); ?>
+					<?php printf( _n( '%d Completed Order', '%d Completed Orders', $customer->purchase_count, 'restropress' ), $customer->purchase_count ); ?>
 				</a>
 			</li>
 			<?php do_action( 'rpress_customer_stats_list', $customer ); ?>
@@ -357,8 +357,8 @@ function rpress_customers_view( $customer ) {
 		<?php do_action( 'rpress_customer_before_tables', $customer ); ?>
 
 		<h3>
-			<?php _e( 'Customer Emails', 'restro-press' ); ?>
-			<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( 'This customer can use any of the emails listed here when making new purchases.', 'restro-press' ); ?>"></span>
+			<?php _e( 'Customer Emails', 'restropress' ); ?>
+			<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( 'This customer can use any of the emails listed here when making new purchases.', 'restropress' ); ?>"></span>
 		</h3>
 		<?php
 			$primary_email     = $customer->email;
@@ -376,8 +376,8 @@ function rpress_customers_view( $customer ) {
 		<table class="wp-list-table widefat striped emails">
 			<thead>
 				<tr>
-					<th><?php _e( 'Email', 'restro-press' ); ?></th>
-					<th><?php _e( 'Actions', 'restro-press' ); ?></th>
+					<th><?php _e( 'Email', 'restropress' ); ?></th>
+					<th><?php _e( 'Actions', 'restropress' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -397,9 +397,9 @@ function rpress_customers_view( $customer ) {
 										$promote_url = wp_nonce_url( add_query_arg( array( 'email' => rawurlencode( $email ), 'rpress_action' => 'customer-primary-email'), $base_url ), 'rpress-set-customer-primary-email' );
 										$remove_url  = wp_nonce_url( add_query_arg( array( 'email' => rawurlencode( $email ), 'rpress_action' => 'customer-remove-email'), $base_url ), 'rpress-remove-customer-email' );
 									?>
-									<a href="<?php echo $promote_url; ?>"><?php _e( 'Make Primary', 'restro-press' ); ?></a>
+									<a href="<?php echo $promote_url; ?>"><?php _e( 'Make Primary', 'restropress' ); ?></a>
 									&nbsp;|&nbsp;
-									<a href="<?php echo $remove_url; ?>" class="delete"><?php _e( 'Remove', 'restro-press' ); ?></a>
+									<a href="<?php echo $remove_url; ?>" class="delete"><?php _e( 'Remove', 'restropress' ); ?></a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -409,21 +409,21 @@ function rpress_customers_view( $customer ) {
 							<div class="add-customer-email-wrapper">
 								<input type="hidden" name="customer-id" value="<?php echo $customer->id; ?>" />
 								<?php wp_nonce_field( 'rpress-add-customer-email', 'add_email_nonce', false, true ); ?>
-								<input type="email" name="additional-email" value="" placeholder="<?php _e( 'Email Address', 'restro-press' ); ?>" />&nbsp;
-								<input type="checkbox" name="make-additional-primary" value="1" id="make-additional-primary" />&nbsp;<label for="make-additional-primary"><?php _e( 'Make Primary', 'restro-press' ); ?></label>
-								<button class="button-secondary rpress-add-customer-email" id="add-customer-email" style="margin: 6px 0;"><?php _e( 'Add Email', 'restro-press' ); ?></button>
+								<input type="email" name="additional-email" value="" placeholder="<?php _e( 'Email Address', 'restropress' ); ?>" />&nbsp;
+								<input type="checkbox" name="make-additional-primary" value="1" id="make-additional-primary" />&nbsp;<label for="make-additional-primary"><?php _e( 'Make Primary', 'restropress' ); ?></label>
+								<button class="button-secondary rpress-add-customer-email" id="add-customer-email" style="margin: 6px 0;"><?php _e( 'Add Email', 'restropress' ); ?></button>
 								<span class="spinner"></span>
 							</div>
 							<div class="notice-container"></div>
 						</td>
 					</tr>
 				<?php else: ?>
-					<tr><td colspan="2"><?php _e( 'No Emails Found', 'restro-press' ); ?></td></tr>
+					<tr><td colspan="2"><?php _e( 'No Emails Found', 'restropress' ); ?></td></tr>
 				<?php endif; ?>
 			</tbody>
 		</table>
 
-		<h3><?php _e( 'Recent Orders', 'restro-press' ); ?></h3>
+		<h3><?php _e( 'Recent Orders', 'restropress' ); ?></h3>
 		<?php
 			$payment_ids = explode( ',', $customer->payment_ids );
 			$payments    = rpress_get_payments( array( 'post__in' => $payment_ids ) );
@@ -432,11 +432,11 @@ function rpress_customers_view( $customer ) {
 		<table class="wp-list-table widefat striped payments">
 			<thead>
 				<tr>
-					<th><?php _e( 'ID', 'restro-press' ); ?></th>
-					<th><?php _e( 'Amount', 'restro-press' ); ?></th>
-					<th><?php _e( 'Date', 'restro-press' ); ?></th>
-					<th><?php _e( 'Status', 'restro-press' ); ?></th>
-					<th><?php _e( 'Actions', 'restro-press' ); ?></th>
+					<th><?php _e( 'ID', 'restropress' ); ?></th>
+					<th><?php _e( 'Amount', 'restropress' ); ?></th>
+					<th><?php _e( 'Date', 'restropress' ); ?></th>
+					<th><?php _e( 'Status', 'restropress' ); ?></th>
+					<th><?php _e( 'Actions', 'restropress' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -449,19 +449,19 @@ function rpress_customers_view( $customer ) {
 							<td><?php echo rpress_get_payment_status( $payment, true ); ?></td>
 							<td>
 								<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details&id=' . $payment->ID ); ?>">
-									<?php _e( 'View Details', 'restro-press' ); ?>
+									<?php _e( 'View Details', 'restropress' ); ?>
 								</a>
 								<?php do_action( 'rpress_customer_recent_purchases_actions', $customer, $payment ); ?>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				<?php else: ?>
-					<tr><td colspan="5"><?php _e( 'No Payments Found', 'restro-press' ); ?></td></tr>
+					<tr><td colspan="5"><?php _e( 'No Payments Found', 'restropress' ); ?></td></tr>
 				<?php endif; ?>
 			</tbody>
 		</table>
 
-		<h3><?php printf( __( 'Ordered Item', 'restro-press' ), rpress_get_label_plural() ); ?></h3>
+		<h3><?php printf( __( 'Ordered Item', 'restropress' ), rpress_get_label_plural() ); ?></h3>
 		<?php
 			$fooditems = rpress_get_users_ordered_products( $customer->email );
 		?>
@@ -469,7 +469,7 @@ function rpress_customers_view( $customer ) {
 			<thead>
 				<tr>
 					<th>Item</th>
-					<th width="120px"><?php _e( 'Actions', 'restro-press' ); ?></th>
+					<th width="120px"><?php _e( 'Actions', 'restropress' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -479,13 +479,13 @@ function rpress_customers_view( $customer ) {
 							<td><?php echo $fooditem->post_title; ?></td>
 							<td>
 								<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $fooditem->ID ) ); ?>">
-									<?php _e('View Item', 'restro-press'); ?>
+									<?php _e('View Item', 'restropress'); ?>
 								</a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				<?php else: ?>
-					<tr><td colspan="2"><?php printf( __( 'No %s Found', 'restro-press' ), rpress_get_label_plural() ); ?></td></tr>
+					<tr><td colspan="2"><?php printf( __( 'No %s Found', 'restropress' ), rpress_get_label_plural() ); ?></td></tr>
 				<?php endif; ?>
 			</tbody>
 		</table>
@@ -557,23 +557,23 @@ function rpress_customer_notes_view( $customer ) {
 
 		?>
 
-		<h3><?php _e( 'Agreements', 'restro-press' ); ?></h3>
+		<h3><?php _e( 'Agreements', 'restropress' ); ?></h3>
 
 		<span class="customer-terms-agreement-date info-item">
-			<?php _e( 'Last Agreed to Terms', 'restro-press' ); ?>:
+			<?php _e( 'Last Agreed to Terms', 'restropress' ); ?>:
 			<?php if ( ! empty( $agreement_timestamp ) ) : ?>
 				<?php echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $agreement_timestamp ); ?>
 				<?php if ( ! empty( $agreement_timestamps ) ) : ?>
-					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Previous Agreement Dates', 'restro-press' ); ?></strong><br /><?php foreach ( $agreement_timestamps as $timestamp ) { echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $timestamp ); } ?>"></span>
+					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Previous Agreement Dates', 'restropress' ); ?></strong><br /><?php foreach ( $agreement_timestamps as $timestamp ) { echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $timestamp ); } ?>"></span>
 				<?php endif; ?>
 			<?php else: ?>
 				<?php
 				if ( empty( $last_payment_date ) ) {
-					_e( 'No date found.', 'restro-press' );
+					_e( 'No date found.', 'restropress' );
 				} else {
 					echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $last_payment_date );
 					?>
-					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Estimated Privacy Policy Date', 'restro-press' ); ?></strong><br /><?php _e( 'This customer made a purchase prior to agreement dates being logged, this is the date of their last purchase. If your site was displaying the agreement checkbox at that time, this is our best estimate as to when they last agreed to your terms.', 'restro-press' ); ?>"></span>
+					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Estimated Privacy Policy Date', 'restropress' ); ?></strong><br /><?php _e( 'This customer made a purchase prior to agreement dates being logged, this is the date of their last purchase. If your site was displaying the agreement checkbox at that time, this is our best estimate as to when they last agreed to your terms.', 'restropress' ); ?>"></span>
 					<?php
 				}
 				?>
@@ -581,27 +581,27 @@ function rpress_customer_notes_view( $customer ) {
 		</span>
 
 		<span class="customer-privacy-policy-date info-item">
-			<?php _e( 'Last Agreed to Privacy Policy', 'restro-press' ); ?>:
+			<?php _e( 'Last Agreed to Privacy Policy', 'restropress' ); ?>:
 			<?php if ( ! empty( $privacy_timestamp ) ) : ?>
 				<?php echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $privacy_timestamp ); ?>
 				<?php if ( ! empty( $privacy_timestamps ) ) : ?>
-					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Previous Agreement Dates', 'restro-press' ); ?></strong><br /><?php foreach ( $privacy_timestamps as $timestamp ) { echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $timestamp ); } ?>"></span>
+					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Previous Agreement Dates', 'restropress' ); ?></strong><br /><?php foreach ( $privacy_timestamps as $timestamp ) { echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $timestamp ); } ?>"></span>
 				<?php endif; ?>
 			<?php else: ?>
 				<?php
 				if ( empty( $last_payment_date ) ) {
-					_e( 'No date found.', 'restro-press' );
+					_e( 'No date found.', 'restropress' );
 				} else {
 					echo date_i18n( get_option( 'date_format' ) . ' H:i:s', $last_payment_date );
 					?>
-					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Estimated Privacy Policy Date', 'restro-press' ); ?></strong><br /><?php _e( 'This customer made a purchase prior to privacy policy dates being logged, this is the date of their last purchase. If your site was displaying the privacy policy checkbox at that time, this is our best estimate as to when they last agreed to your privacy policy.', 'restro-press' ); ?>"></span>
+					<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<strong><?php _e( 'Estimated Privacy Policy Date', 'restropress' ); ?></strong><br /><?php _e( 'This customer made a purchase prior to privacy policy dates being logged, this is the date of their last purchase. If your site was displaying the privacy policy checkbox at that time, this is our best estimate as to when they last agreed to your privacy policy.', 'restropress' ); ?>"></span>
 					<?php
 				}
 				?>
 			<?php endif; ?>
 		</span>
 
-		<h3><?php _e( 'Notes', 'restro-press' ); ?></h3>
+		<h3><?php _e( 'Notes', 'restropress' ); ?></h3>
 
 		<?php if ( 1 == $paged ) : ?>
 		<div style="display: block; margin-bottom: 35px;">
@@ -639,7 +639,7 @@ function rpress_customer_notes_view( $customer ) {
 			<?php endforeach; ?>
 		<?php else: ?>
 			<div class="rpress-no-customer-notes">
-				<?php _e( 'No Customer Notes', 'restro-press' ); ?>
+				<?php _e( 'No Customer Notes', 'restropress' ); ?>
 			</div>
 		<?php endif; ?>
 		</div>
@@ -672,12 +672,12 @@ function rpress_customers_delete_view( $customer ) {
 				<span class="delete-customer-options">
 					<p>
 						<?php echo RPRESS()->html->checkbox( array( 'name' => 'rpress-customer-delete-confirm' ) ); ?>
-						<label for="rpress-customer-delete-confirm"><?php _e( 'Are you sure you want to delete this customer?', 'restro-press' ); ?></label>
+						<label for="rpress-customer-delete-confirm"><?php _e( 'Are you sure you want to delete this customer?', 'restropress' ); ?></label>
 					</p>
 
 					<p>
 						<?php echo RPRESS()->html->checkbox( array( 'name' => 'rpress-customer-delete-records', 'options' => array( 'disabled' => true ) ) ); ?>
-						<label for="rpress-customer-delete-records"><?php _e( 'Delete all associated payments and records?', 'restro-press' ); ?></label>
+						<label for="rpress-customer-delete-records"><?php _e( 'Delete all associated payments and records?', 'restropress' ); ?></label>
 					</p>
 
 					<?php do_action( 'rpress_customer_delete_inputs', $customer ); ?>
@@ -687,8 +687,8 @@ function rpress_customers_delete_view( $customer ) {
 					<input type="hidden" name="customer_id" value="<?php echo $customer->id; ?>" />
 					<?php wp_nonce_field( 'delete-customer', '_wpnonce', false, true ); ?>
 					<input type="hidden" name="rpress_action" value="delete-customer" />
-					<input type="submit" disabled="disabled" id="rpress-delete-customer" class="button-primary" value="<?php _e( 'Delete Customer', 'restro-press' ); ?>" />
-					<a id="rpress-delete-customer-cancel" href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer->id ); ?>" class="delete"><?php _e( 'Cancel', 'restro-press' ); ?></a>
+					<input type="submit" disabled="disabled" id="rpress-delete-customer" class="button-primary" value="<?php _e( 'Delete Customer', 'restropress' ); ?>" />
+					<a id="rpress-delete-customer-cancel" href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer->id ); ?>" class="delete"><?php _e( 'Cancel', 'restropress' ); ?></a>
 				</span>
 
 			</div>
@@ -713,18 +713,18 @@ function rpress_customer_tools_view( $customer ) {
 		<div class="customer-notes-header">
 			<?php echo get_avatar( $customer->email, 30 ); ?> <span><?php echo $customer->name; ?></span>
 		</div>
-		<h3><?php _e( 'Tools', 'restro-press' ); ?></h3>
+		<h3><?php _e( 'Tools', 'restropress' ); ?></h3>
 
 		<div class="rpress-item-info customer-info">
-			<h4><?php _e( 'Recount Customer Stats', 'restro-press' ); ?></h4>
-			<p class="rpress-item-description"><?php _e( 'Use this tool to recalculate the purchase count and total value of the customer.', 'restro-press' ); ?></p>
+			<h4><?php _e( 'Recount Customer Stats', 'restropress' ); ?></h4>
+			<p class="rpress-item-description"><?php _e( 'Use this tool to recalculate the purchase count and total value of the customer.', 'restropress' ); ?></p>
 			<form method="post" id="rpress-tools-recount-form" class="rpress-export-form rpress-import-export-form">
 				<span>
 					<?php wp_nonce_field( 'rpress_ajax_export', 'rpress_ajax_export' ); ?>
 
 					<input type="hidden" name="rpress-export-class" data-type="recount-single-customer-stats" value="RPRESS_Tools_Recount_Single_Customer_Stats" />
 					<input type="hidden" name="customer_id" value="<?php echo $customer->id; ?>" />
-					<input type="submit" id="recount-stats-submit" value="<?php _e( 'Recount Stats', 'restro-press' ); ?>" class="button-secondary"/>
+					<input type="submit" id="recount-stats-submit" value="<?php _e( 'Recount Stats', 'restropress' ); ?>" class="button-secondary"/>
 					<span class="spinner"></span>
 
 				</span>
@@ -754,9 +754,9 @@ function rpress_verify_customer_notice( $customer ) {
 	$url = wp_nonce_url( admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&rpress_action=verify_user_admin&id=' . $customer->id ), 'rpress-verify-user' );
 
 	echo '<div class="update error"><p>';
-	_e( 'This customer\'s user account is pending verification.', 'restro-press' );
+	_e( 'This customer\'s user account is pending verification.', 'restropress' );
 	echo ' ';
-	echo '<a href="' . $url . '">' . __( 'Verify account.', 'restro-press' ) . '</a>';
+	echo '<a href="' . $url . '">' . __( 'Verify account.', 'restropress' ) . '</a>';
 	echo "\n\n";
 
 	echo '</p></div>';

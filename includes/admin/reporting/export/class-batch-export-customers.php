@@ -38,11 +38,11 @@ class RPRESS_Batch_Customers_Export extends RPRESS_Batch_Export {
 	public function csv_cols() {
 
 		$cols = array(
-			'id'        => __( 'ID',   'restro-press' ),
-			'name'      => __( 'Name',   'restro-press' ),
-			'email'     => __( 'Email', 'restro-press' ),
-			'purchases' => __( 'Number of Purchases', 'restro-press' ),
-			'amount'    => __( 'Customer Value', 'restro-press' )
+			'id'        => __( 'ID',   'restropress' ),
+			'name'      => __( 'Name',   'restropress' ),
+			'email'     => __( 'Email', 'restropress' ),
+			'purchases' => __( 'Number of Purchases', 'restropress' ),
+			'amount'    => __( 'Customer Value', 'restropress' )
 		);
 
 		return $cols;

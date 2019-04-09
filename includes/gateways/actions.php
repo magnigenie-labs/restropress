@@ -53,7 +53,7 @@ function rpress_no_gateway_error() {
 	if ( empty( $gateways ) && rpress_get_cart_total() > 0 ) {
 		remove_action( 'rpress_after_cc_fields', 'rpress_default_cc_address_fields' );
 		remove_action( 'rpress_cc_form', 'rpress_get_cc_form' );
-		rpress_set_error( 'no_gateways', __( 'You must enable a payment gateway to use RestroPress', 'restro-press' ) );
+		rpress_set_error( 'no_gateways', __( 'You must enable a payment gateway to use RestroPress', 'restropress' ) );
 	} else {
 		rpress_unset_error( 'no_gateways' );
 	}

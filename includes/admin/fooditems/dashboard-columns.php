@@ -28,12 +28,12 @@ function rpress_fooditem_columns( $fooditem_columns ) {
 
 	$fooditem_columns = array(
 		'cb'                => '<input type="checkbox"/>',
-		'title'             => __( 'Name', 'restro-press' ),
+		'title'             => __( 'Name', 'restropress' ),
 		'addon_category' => $category_labels['menu_name'],
 		'fooditem_tag'      => $tag_labels['menu_name'],
-		'price'             => __( 'Price', 'restro-press' ),
-		'earnings'          => __( 'Earnings', 'restro-press' ),
-		'date'              => __( 'Date', 'restro-press' )
+		'price'             => __( 'Price', 'restropress' ),
+		'earnings'          => __( 'Earnings', 'restropress' ),
+		'date'              => __( 'Date', 'restropress' )
 	);
 
 	return apply_filters( 'rpress_fooditem_columns', $fooditem_columns );
@@ -167,7 +167,7 @@ function rpress_filter_fooditems( $vars ) {
 			$author_id = $_REQUEST['author'];
 			if ( (int) $author_id !== get_current_user_id() ) {
 				// Tried to view the products of another person, sorry
-				wp_die( __( 'You do not have permission to view this data.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+				wp_die( __( 'You do not have permission to view this data.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 			}
 			$vars = array_merge(
 				$vars,
@@ -214,7 +214,7 @@ function rpress_add_fooditem_filters() {
 		if ( count( $terms ) > 0 ) {
 			echo "<select name='addon_category' id='addon_category' class='postform'>";
 				$category_labels = rpress_get_taxonomy_labels( 'addon_category' );
-				echo "<option value=''>" . sprintf( __( 'Show all %s', 'restro-press' ), strtolower( $category_labels['name'] ) ) . "</option>";
+				echo "<option value=''>" . sprintf( __( 'Show all %s', 'restropress' ), strtolower( $category_labels['name'] ) ) . "</option>";
 				foreach ( $terms as $term ) {
 					$selected = isset( $_GET['addon_category'] ) && $_GET['addon_category'] == $term->slug ? ' selected="selected"' : '';
 					echo '<option value="' . esc_attr( $term->slug ) . '"' . $selected . '>' . esc_html( $term->name ) .' (' . $term->count .')</option>';
@@ -226,7 +226,7 @@ function rpress_add_fooditem_filters() {
 		if ( count( $terms ) > 0) {
 			echo "<select name='fooditem_tag' id='fooditem_tag' class='postform'>";
 				$tag_labels = rpress_get_taxonomy_labels( 'fooditem_tag' );
-				echo "<option value=''>" . sprintf( __( 'Show all %s', 'restro-press' ), strtolower( $tag_labels['name'] ) ) . "</option>";
+				echo "<option value=''>" . sprintf( __( 'Show all %s', 'restropress' ), strtolower( $tag_labels['name'] ) ) . "</option>";
 				foreach ( $terms as $term ) {
 					$selected = isset( $_GET['fooditem_tag']) && $_GET['fooditem_tag'] == $term->slug ? ' selected="selected"' : '';
 					echo '<option value="' . esc_attr( $term->slug ) . '"' . $selected . '>' . esc_html( $term->name ) .' (' . $term->count .')</option>';
@@ -280,9 +280,9 @@ function rpress_price_field_quick_edit( $column_name, $post_type ) {
 	?>
 	<fieldset class="inline-edit-rp-col-left">
 		<div id="rpress-fooditem-data" class="inline-edit-col">
-			<h4><?php echo sprintf( __( '%s Configuration', 'restro-press' ), rpress_get_label_singular() ); ?></h4>
+			<h4><?php echo sprintf( __( '%s Configuration', 'restropress' ), rpress_get_label_singular() ); ?></h4>
 			<label>
-				<span class="title"><?php _e( 'Price', 'restro-press' ); ?></span>
+				<span class="title"><?php _e( 'Price', 'restropress' ); ?></span>
 				<span class="input-text-wrap">
 					<input type="text" name="_rpress_regprice" class="text regprice" />
 				</span>

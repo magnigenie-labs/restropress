@@ -172,7 +172,7 @@ function rpress_insert_payment( $payment_data = array() ) {
 	if ( $resume_payment ) {
 		$payment->date = date( 'Y-m-d G:i:s', current_time( 'timestamp' ) );
 
-		$payment->add_note( __( 'Payment recovery processed', 'restro-press' ) );
+		$payment->add_note( __( 'Payment recovery processed', 'restropress' ) );
 
 		// Since things could have been added/removed since we first crated this...rebuild the cart details.
 		foreach ( $payment->fees as $fee_index => $fee ) {
@@ -789,12 +789,12 @@ function rpress_get_payment_status_label( $status = '' ) {
  */
 function rpress_get_payment_statuses() {
 	$payment_statuses = array(
-		'pending'   => __( 'Pending', 'restro-press' ),
-		'paid'   	=> __( 'Paid', 'restro-press' ),
-		'publish'   => __( 'Delivered', 'restro-press' ),
-		'refunded'  => __( 'Refunded', 'restro-press' ),
-		'failed'    => __( 'Failed', 'restro-press' ),
-		'processing' => __( 'Out For Delivery', 'restro-press' ),
+		'pending'   => __( 'Pending', 'restropress' ),
+		'paid'   	=> __( 'Paid', 'restropress' ),
+		'publish'   => __( 'Delivered', 'restropress' ),
+		'refunded'  => __( 'Refunded', 'restropress' ),
+		'failed'    => __( 'Failed', 'restropress' ),
+		'processing' => __( 'Out For Delivery', 'restropress' ),
 	);
 
 	return apply_filters( 'rpress_payment_statuses', $payment_statuses );
@@ -1620,7 +1620,7 @@ function rpress_get_payment_note_html( $note, $payment_id = 0 ) {
 		$user = get_userdata( $note->user_id );
 		$user = $user->display_name;
 	} else {
-		$user = __( 'RPRESS Bot', 'restro-press' );
+		$user = __( 'RPRESS Bot', 'restropress' );
 	}
 
 	$date_format = get_option( 'date_format' ) . ', ' . get_option( 'time_format' );
@@ -1635,7 +1635,7 @@ function rpress_get_payment_note_html( $note, $payment_id = 0 ) {
 		$note_html .='<p>';
 			$note_html .= '<strong>' . $user . '</strong>&nbsp;&ndash;&nbsp;' . date_i18n( $date_format, strtotime( $note->comment_date ) ) . '<br/>';
 			$note_html .= make_clickable( wp_kses_post( $note->comment_content ) );
-			$note_html .= '&nbsp;&ndash;&nbsp;<a href="' . esc_url( $delete_note_url ) . '" class="rpress-delete-payment-note" data-note-id="' . absint( $note->comment_ID ) . '" data-payment-id="' . absint( $payment_id ) . '">' . __( 'Delete', 'restro-press' ) . '</a>';
+			$note_html .= '&nbsp;&ndash;&nbsp;<a href="' . esc_url( $delete_note_url ) . '" class="rpress-delete-payment-note" data-note-id="' . absint( $note->comment_ID ) . '" data-payment-id="' . absint( $payment_id ) . '">' . __( 'Delete', 'restropress' ) . '</a>';
 		$note_html .= '</p>';
 	$note_html .= '</div>';
 

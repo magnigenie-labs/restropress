@@ -194,7 +194,7 @@ function rpress_process_after_payment_actions( $payment_id = 0, $force = false )
 		return;
 	}
 
-	$payment->add_note( __( 'After payment actions processed.', 'restro-press' ) );
+	$payment->add_note( __( 'After payment actions processed.', 'restropress' ) );
 	$payment->update_meta( '_rpress_complete_actions_run', time() ); // This is in GMT
 	do_action( 'rpress_after_payment_actions', $payment_id );
 }
@@ -216,7 +216,7 @@ function rpress_record_status_change( $payment_id, $new_status, $old_status ) {
 	$old_status = isset( $stati[ $old_status ] ) ? $stati[ $old_status ] : $old_status;
 	$new_status = isset( $stati[ $new_status ] ) ? $stati[ $new_status ] : $new_status;
 
-	$status_change = sprintf( __( 'Status changed from %s to %s', 'restro-press' ), $old_status, $new_status );
+	$status_change = sprintf( __( 'Status changed from %s to %s', 'restropress' ), $old_status, $new_status );
 
 	rpress_insert_payment_note( $payment_id, $status_change );
 }
@@ -465,11 +465,11 @@ function rpress_recover_payment() {
 		( ! is_user_logged_in() && ! empty( $payment->user_id ) )
 	) {
 		$redirect = get_permalink( rpress_get_option( 'order_history_page' ) );
-		rpress_set_error( 'rpress-payment-recovery-user-mismatch', __( 'Error resuming payment.', 'restro-press' ) );
+		rpress_set_error( 'rpress-payment-recovery-user-mismatch', __( 'Error resuming payment.', 'restropress' ) );
 		wp_redirect( $redirect );
 	}
 
-	$payment->add_note( __( 'Payment recovery triggered URL', 'restro-press' ) );
+	$payment->add_note( __( 'Payment recovery triggered URL', 'restropress' ) );
 
 	// Empty out the cart.
 	RPRESS()->cart->empty_cart();
@@ -533,7 +533,7 @@ function rpress_recovery_user_mismatch() {
 		$payment = new RPRESS_Payment( $resuming_payment );
 		if ( is_user_logged_in() && $payment->user_id != get_current_user_id() ) {
 			rpress_empty_cart();
-			rpress_set_error( 'rpress-payment-recovery-user-mismatch', __( 'Error resuming payment.', 'restro-press' ) );
+			rpress_set_error( 'rpress-payment-recovery-user-mismatch', __( 'Error resuming payment.', 'restropress' ) );
 			wp_redirect( get_permalink( rpress_get_option( 'purchase_page' ) ) );
 			exit;
 		}
@@ -555,10 +555,10 @@ function rpress_recovery_force_login_fields() {
 		if ( ( $requires_login && ! is_user_logged_in() ) && ( $payment->user_id > 0 && ( ! is_user_logged_in() ) ) ) {
 			?>
 			<div class="rpress-alert rpress-alert-info">
-				<p><?php _e( 'To complete this payment, please login to your account.', 'restro-press' ); ?></p>
+				<p><?php _e( 'To complete this payment, please login to your account.', 'restropress' ); ?></p>
 				<p>
-					<a href="<?php echo wp_lostpassword_url(); ?>" title="<?php _e( 'Lost Password', 'restro-press' ); ?>">
-						<?php _e( 'Lost Password?', 'restro-press' ); ?>
+					<a href="<?php echo wp_lostpassword_url(); ?>" title="<?php _e( 'Lost Password', 'restropress' ); ?>">
+						<?php _e( 'Lost Password?', 'restropress' ); ?>
 					</a>
 				</p>
 			</div>
@@ -589,7 +589,7 @@ function rpress_recovery_verify_logged_in( $verified_data, $post_data ) {
 		$same_email = strtolower( $payment->email ) === strtolower( $post_data['rpress_email'] );
 
 		if ( ( is_user_logged_in() && ! $same_user ) || ( ! is_user_logged_in() && (int) $payment->user_id > 0 && ! $same_email ) ) {
-			rpress_set_error( 'recovery_requires_login', __( 'To complete this payment, please login to your account.', 'restro-press' ) );
+			rpress_set_error( 'recovery_requires_login', __( 'To complete this payment, please login to your account.', 'restropress' ) );
 		}
 	}
 }

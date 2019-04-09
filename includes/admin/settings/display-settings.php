@@ -75,7 +75,7 @@ function rpress_options_page() {
 	ob_start();
 	?>
 	<div class="wrap <?php echo 'wrap-' . $active_tab; ?>">
-		<h2><?php _e( 'RestroPress Settings', 'restro-press' ); ?></h2>
+		<h2><?php _e( 'RestroPress Settings', 'restropress' ); ?></h2>
 		<h2 class="nav-tab-wrapper">
 			<?php
 			foreach ( rpress_get_settings_tabs() as $tab_id => $tab_name ) {

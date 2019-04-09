@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function rpress_register_dashboard_widgets() {
 	if ( current_user_can( apply_filters( 'rpress_dashboard_stats_cap', 'view_shop_reports' ) ) ) {
-		wp_add_dashboard_widget( 'rpress_dashboard_sales', __('RestroPress Sales Summary','restro-press' ), 'rpress_dashboard_sales_widget' );
+		wp_add_dashboard_widget( 'rpress_dashboard_sales', __('RestroPress Sales Summary','restropress' ), 'rpress_dashboard_sales_widget' );
 	}
 }
 add_action('wp_dashboard_setup', 'rpress_register_dashboard_widgets', 10 );
@@ -59,17 +59,17 @@ function rpress_load_dashboard_sales_widget( ) {
 			<table>
 				<thead>
 					<tr>
-						<td colspan="2"><?php _e( 'Current Month', 'restro-press' ) ?></td>
+						<td colspan="2"><?php _e( 'Current Month', 'restropress' ) ?></td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="first t monthly_earnings"><?php _e( 'Earnings', 'restro-press' ); ?></td>
+						<td class="first t monthly_earnings"><?php _e( 'Earnings', 'restropress' ); ?></td>
 						<td class="b b-earnings"><?php echo rpress_currency_filter( rpress_format_amount( $stats->get_earnings( 0, 'this_month' ) ) ); ?></td>
 					</tr>
 					<tr>
 						<?php $monthly_sales = $stats->get_sales( 0, 'this_month', false, array( 'publish', 'revoked' ) ); ?>
-						<td class="first t monthly_sales"><?php echo _n( 'Sale', 'Sales', $monthly_sales, 'restro-press' ); ?></td>
+						<td class="first t monthly_sales"><?php echo _n( 'Sale', 'Sales', $monthly_sales, 'restropress' ); ?></td>
 						<td class="b b-sales"><?php echo rpress_format_amount( $monthly_sales, false ); ?></td>
 					</tr>
 				</tbody>
@@ -77,18 +77,18 @@ function rpress_load_dashboard_sales_widget( ) {
 			<table>
 				<thead>
 					<tr>
-						<td colspan="2"><?php _e( 'Last Month', 'restro-press' ) ?></td>
+						<td colspan="2"><?php _e( 'Last Month', 'restropress' ) ?></td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="first t earnings"><?php echo __( 'Earnings', 'restro-press' ); ?></td>
+						<td class="first t earnings"><?php echo __( 'Earnings', 'restropress' ); ?></td>
 						<td class="b b-last-month-earnings"><?php echo rpress_currency_filter( rpress_format_amount( $stats->get_earnings( 0, 'last_month' ) ) ); ?></td>
 					</tr>
 					<tr>
 						<td class="first t sales">
 							<?php $last_month_sales = $stats->get_sales( 0, 'last_month', false, array( 'publish', 'revoked' ) ); ?>
-							<?php echo _n( 'Sale', 'Sales', rpress_format_amount( $last_month_sales, false ), 'restro-press' ); ?>
+							<?php echo _n( 'Sale', 'Sales', rpress_format_amount( $last_month_sales, false ), 'restropress' ); ?>
 						</td>
 						<td class="b b-last-month-sales">
 							<?php echo $last_month_sales; ?>
@@ -102,13 +102,13 @@ function rpress_load_dashboard_sales_widget( ) {
 				<thead>
 					<tr>
 						<td colspan="2">
-							<?php _e( 'Today', 'restro-press' ); ?>
+							<?php _e( 'Today', 'restropress' ); ?>
 						</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="t sales"><?php _e( 'Earnings', 'restro-press' ); ?></td>
+						<td class="t sales"><?php _e( 'Earnings', 'restropress' ); ?></td>
 						<td class="last b b-earnings">
 							<?php $earnings_today = $stats->get_earnings( 0, 'today', false ); ?>
 							<?php echo rpress_currency_filter( rpress_format_amount( $earnings_today ) ); ?>
@@ -116,7 +116,7 @@ function rpress_load_dashboard_sales_widget( ) {
 					</tr>
 					<tr>
 						<td class="t sales">
-							<?php _e( 'Sales', 'restro-press' ); ?>
+							<?php _e( 'Sales', 'restropress' ); ?>
 						</td>
 						<td class="last b b-sales">
 							<?php $sales_today = $stats->get_sales( 0, 'today', false, array( 'publish', 'revoked' ) ); ?>
@@ -130,16 +130,16 @@ function rpress_load_dashboard_sales_widget( ) {
 			<table>
 				<thead>
 					<tr>
-						<td colspan="2"><?php _e( 'Totals', 'restro-press' ) ?></td>
+						<td colspan="2"><?php _e( 'Totals', 'restropress' ) ?></td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="t earnings"><?php _e( 'Total Earnings', 'restro-press' ); ?></td>
+						<td class="t earnings"><?php _e( 'Total Earnings', 'restropress' ); ?></td>
 						<td class="last b b-earnings"><?php echo rpress_currency_filter( rpress_format_amount( rpress_get_total_earnings() ) ); ?></td>
 					</tr>
 					<tr>
-						<td class="t sales"><?php _e( 'Total Sales', 'restro-press' ); ?></td>
+						<td class="t sales"><?php _e( 'Total Sales', 'restropress' ); ?></td>
 						<td class="last b b-sales"><?php echo rpress_format_amount( rpress_get_total_sales(), false ); ?></td>
 					</tr>
 				</tbody>
@@ -161,8 +161,8 @@ function rpress_load_dashboard_sales_widget( ) {
 				<thead>
 					<tr>
 						<td colspan="2">
-							<?php _e( 'Recent Purchases', 'restro-press' ); ?>
-							<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ); ?>">&nbsp;&ndash;&nbsp;<?php _e( 'View All', 'restro-press' ); ?></a>
+							<?php _e( 'Recent Purchases', 'restropress' ); ?>
+							<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ); ?>">&nbsp;&ndash;&nbsp;<?php _e( 'View All', 'restropress' ); ?></a>
 						</td>
 					</tr>
 				</thead>
@@ -212,7 +212,7 @@ function rpress_dashboard_at_a_glance_widget( $items ) {
 	$num_posts = wp_count_posts( 'fooditem' );
 
 	if ( $num_posts && $num_posts->publish ) {
-		$text = _n( '%s ' . rpress_get_label_singular(), '%s ' . rpress_get_label_plural(), $num_posts->publish, 'restro-press' );
+		$text = _n( '%s ' . rpress_get_label_singular(), '%s ' . rpress_get_label_plural(), $num_posts->publish, 'restropress' );
 
 		$text = sprintf( $text, number_format_i18n( $num_posts->publish ) );
 

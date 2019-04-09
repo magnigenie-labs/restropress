@@ -70,8 +70,8 @@ function rpress_append_no_cache_param( $settings ) {
 
 	$settings[] = array(
 		'id' => 'no_cache_checkout',
-		'name' => __('No Caching on Checkout?','restro-press' ),
-		'desc' => __('Check this box in order to append a ?nocache parameter to the checkout URL to prevent caching plugins from caching the page.','restro-press' ),
+		'name' => __('No Caching on Checkout?','restropress' ),
+		'desc' => __('Check this box in order to append a ?nocache parameter to the checkout URL to prevent caching plugins from caching the page.','restropress' ),
 		'type' => 'checkbox'
 	);
 
@@ -164,7 +164,7 @@ add_action( 'template_redirect', 'rpress_disable_404_redirected_redirect', 9 );
  * @return array          Say What domain alises with 'rpress' added
  */
 function rpress_say_what_domain_aliases( $aliases ) {
-	$aliases['restro-press'][] = 'rpress';
+	$aliases['restropress'][] = 'rpress';
 
 	return $aliases;
 }

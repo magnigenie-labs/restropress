@@ -63,8 +63,8 @@ class RPRESS_Export {
 	 */
 	public function csv_cols() {
 		$cols = array(
-			'id'   => __( 'ID',   'restro-press' ),
-			'date' => __( 'Date', 'restro-press' )
+			'id'   => __( 'ID',   'restropress' ),
+			'date' => __( 'Date', 'restropress' )
 		);
 		return $cols;
 	}
@@ -161,7 +161,7 @@ class RPRESS_Export {
 	 */
 	public function export() {
 		if ( ! $this->can_export() )
-			wp_die( __( 'You do not have permission to export data.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to export data.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 
 		// Set headers
 		$this->headers();

@@ -78,11 +78,11 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'label'          => __( 'Category', 'restro-press' ),
-			'total_sales'    => __( 'Total Sales', 'restro-press' ),
-			'total_earnings' => __( 'Total Earnings', 'restro-press' ),
-			'avg_sales'      => __( 'Monthly Sales Avg', 'restro-press' ),
-			'avg_earnings'   => __( 'Monthly Earnings Avg', 'restro-press' ),
+			'label'          => __( 'Category', 'restropress' ),
+			'total_sales'    => __( 'Total Sales', 'restropress' ),
+			'total_earnings' => __( 'Total Earnings', 'restropress' ),
+			'avg_sales'      => __( 'Monthly Sales Avg', 'restropress' ),
+			'avg_earnings'   => __( 'Monthly Earnings Avg', 'restropress' ),
 		);
 
 		return $columns;
@@ -215,7 +215,7 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 
 				$avg_earnings = round( $avg_earnings, rpress_currency_decimal_filter() );
 				if ( ! empty( $avg_earnings ) && $avg_sales < 1 ) {
-					$avg_sales = __( 'Less than 1', 'restro-press' );
+					$avg_sales = __( 'Less than 1', 'restropress' );
 				} else {
 					$avg_sales = round( rpress_format_amount( $avg_sales, false ) );
 				}
@@ -322,7 +322,7 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 
 
 		if ( empty( $total_sales ) ) {
-			echo '<p><em>' . __( 'No sales for dates provided.', 'restro-press' ) . '</em></p>';
+			echo '<p><em>' . __( 'No sales for dates provided.', 'restropress' ) . '</em></p>';
 		}
 
 		// Sort High to Low, prior to filter so people can reorder if they please
@@ -363,7 +363,7 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 		}
 
 		if ( empty( $total_earnings ) ) {
-			echo '<p><em>' . __( 'No earnings for dates provided.', 'restro-press' ) . '</em></p>';
+			echo '<p><em>' . __( 'No earnings for dates provided.', 'restropress' ) . '</em></p>';
 		}
 
 		// Sort High to Low, prior to filter so people can reorder if they please

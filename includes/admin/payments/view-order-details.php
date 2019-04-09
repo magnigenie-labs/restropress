@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
 */
 if ( ! isset( $_GET['id'] ) || ! is_numeric( $_GET['id'] ) ) {
-	wp_die( __( 'Payment ID not supplied. Please try again', 'restro-press' ), __( 'Error', 'restro-press' ) );
+	wp_die( __( 'Payment ID not supplied. Please try again', 'restropress' ), __( 'Error', 'restropress' ) );
 }
 
 // Setup the variables
@@ -30,7 +30,7 @@ $payment      = new RPRESS_Payment( $payment_id );
 // Sanity check... fail if purchase ID is invalid
 $payment_exists = $payment->ID;
 if ( empty( $payment_exists ) ) {
-	wp_die( __( 'The specified ID does not belong to a payment. Please try again', 'restro-press' ), __( 'Error', 'restro-press' ) );
+	wp_die( __( 'The specified ID does not belong to a payment. Please try again', 'restropress' ), __( 'Error', 'restropress' ) );
 }
 
 $number         = $payment->number;
@@ -50,7 +50,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 ?>
 <div class="wrap rpress-wrap">
-	<h2><?php printf( __( 'Payment %s', 'restro-press' ), $number ); ?></h2>
+	<h2><?php printf( __( 'Payment %s', 'restropress' ), $number ); ?></h2>
 	<?php do_action( 'rpress_view_order_details_before', $payment_id ); ?>
 	<form id="rpress-edit-order-form" method="post">
 		<?php do_action( 'rpress_view_order_details_form_top', $payment_id ); ?>
@@ -66,7 +66,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<div id="rpress-order-update" class="postbox rpress-order-data">
 
 								<h3 class="hndle">
-									<span><?php _e( 'Update Payment', 'restro-press' ); ?></span>
+									<span><?php _e( 'Update Payment', 'restropress' ); ?></span>
 								</h3>
 								<div class="inside">
 									<div class="rpress-admin-box">
@@ -75,7 +75,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 										<div class="rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Status:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'Status:', 'restropress' ); ?></span>&nbsp;
 												<select name="rpress-payment-status" class="medium-text">
 													<?php foreach( rpress_get_payment_statuses() as $key => $status ) : ?>
 														<option value="<?php echo esc_attr( $key ); ?>"<?php selected( $payment->status, $key, true ); ?>><?php echo esc_html( $status ); ?></option>
@@ -84,12 +84,12 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 												<?php
 												$status_help  = '<ul>';
-												$status_help .= '<li>' . __( '<strong>Pending</strong>: payment is still processing or was abandoned by customer. Successful payments will be marked as Complete automatically once processing is finalized.', 'restro-press' ) . '</li>';
-												$status_help .= '<li>' . __( '<strong>Complete</strong>: all processing is completed for this purchase.', 'restro-press' ) . '</li>';
-												$status_help .= '<li>' . __( '<strong>Revoked</strong>: access to purchased items is disabled, perhaps due to policy violation or fraud.', 'restro-press' ) . '</li>';
-												$status_help .= '<li>' . __( '<strong>Refunded</strong>: the purchase amount is returned to the customer and access to items is disabled.', 'restro-press' ) . '</li>';
-												$status_help .= '<li>' . __( '<strong>Abandoned</strong>: the purchase attempt was not completed by the customer.', 'restro-press' ) . '</li>';
-												$status_help .= '<li>' . __( '<strong>Failed</strong>: customer clicked Cancel before completing the purchase.', 'restro-press' ) . '</li>';
+												$status_help .= '<li>' . __( '<strong>Pending</strong>: payment is still processing or was abandoned by customer. Successful payments will be marked as Complete automatically once processing is finalized.', 'restropress' ) . '</li>';
+												$status_help .= '<li>' . __( '<strong>Complete</strong>: all processing is completed for this purchase.', 'restropress' ) . '</li>';
+												$status_help .= '<li>' . __( '<strong>Revoked</strong>: access to purchased items is disabled, perhaps due to policy violation or fraud.', 'restropress' ) . '</li>';
+												$status_help .= '<li>' . __( '<strong>Refunded</strong>: the purchase amount is returned to the customer and access to items is disabled.', 'restropress' ) . '</li>';
+												$status_help .= '<li>' . __( '<strong>Abandoned</strong>: the purchase attempt was not completed by the customer.', 'restropress' ) . '</li>';
+												$status_help .= '<li>' . __( '<strong>Failed</strong>: customer clicked Cancel before completing the purchase.', 'restropress' ) . '</li>';
 												$status_help .= '</ul>';
 												?>
 												<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php echo $status_help; ?>"></span>
@@ -97,8 +97,8 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 											<?php if ( $payment->is_recoverable() ) : ?>
 											<p>
-												<span class="label"><?php _e( 'Recovery URL', 'restro-press' ); ?>:</span>
-												<?php $recover_help = __( 'Pending and abandoned payments can be resumed by the customer, using this custom URL. Payments can be resumed only when they do not have a transaction ID from the gateway.', 'restro-press' ); ?>
+												<span class="label"><?php _e( 'Recovery URL', 'restropress' ); ?>:</span>
+												<?php $recover_help = __( 'Pending and abandoned payments can be resumed by the customer, using this custom URL. Payments can be resumed only when they do not have a transaction ID from the gateway.', 'restropress' ); ?>
 												<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php echo $recover_help; ?>"></span>
 
 												<input type="text" class="large-text" readonly="readonly" value="<?php echo $payment->get_recovery_url(); ?>" />
@@ -108,14 +108,14 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 										<div class="rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Date:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'Date:', 'restropress' ); ?></span>&nbsp;
 												<input type="text" name="rpress-payment-date" value="<?php echo esc_attr( date( 'm/d/Y', $payment_date ) ); ?>" class="medium-text rpress_datepicker"/>
 											</p>
 										</div>
 
 										<div class="rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Time:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'Time:', 'restropress' ); ?></span>&nbsp;
 												<input type="text" maxlength="2" name="rpress-payment-time-hour" value="<?php echo esc_attr( date_i18n( 'H', $payment_date ) ); ?>" class="small-text rpress-payment-time-hour"/>&nbsp;:&nbsp;
 												<input type="text" maxlength="2" name="rpress-payment-time-min" value="<?php echo esc_attr( date( 'i', $payment_date ) ); ?>" class="small-text rpress-payment-time-min"/>
 											</p>
@@ -129,7 +129,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										$fees = $payment->fees;
 										if ( ! empty( $fees ) ) : ?>
 										<div class="rpress-order-fees rpress-admin-box-inside">
-											<p class="strong"><?php _e( 'Fees', 'restro-press' ); ?>:</p>
+											<p class="strong"><?php _e( 'Fees', 'restropress' ); ?>:</p>
 											<ul class="rpress-payment-fees">
 												<?php foreach( $fees as $fee ) : ?>
 												<li data-fee-id="<?php echo $fee['id']; ?>"><span class="fee-label"><?php echo $fee['label'] . ':</span> ' . '<span class="fee-amount" data-fee="' . esc_attr( $fee['amount'] ) . '">' . rpress_currency_filter( $fee['amount'], $currency_code ); ?></span></li>
@@ -141,7 +141,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										<?php if ( rpress_use_taxes() ) : ?>
 										<div class="rpress-order-taxes rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Tax', 'restro-press' ); ?>:</span>&nbsp;
+												<span class="label"><?php _e( 'Tax', 'restropress' ); ?>:</span>&nbsp;
 												<input name="rpress-payment-tax" class="med-text" type="text" value="<?php echo esc_attr( rpress_format_amount( $payment->tax ) ); ?>"/>
 												<?php if ( ! empty( $payment->tax_rate ) ) : ?>
 													<span class="rpress-tax-rate">
@@ -154,15 +154,15 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 										<div class="rpress-order-payment rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Total Price', 'restro-press' ); ?>:</span>&nbsp;
+												<span class="label"><?php _e( 'Total Price', 'restropress' ); ?>:</span>&nbsp;
 												<?php echo rpress_currency_symbol( $payment->currency ); ?>&nbsp;<input name="rpress-payment-total" type="text" class="med-text" value="<?php echo esc_attr( rpress_format_amount( $payment->total ) ); ?>"/>
 											</p>
 										</div>
 
 										<div class="rpress-order-payment-recalc-totals rpress-admin-box-inside" style="display:none">
 											<p>
-												<span class="label"><?php _e( 'Recalculate Totals', 'restro-press' ); ?>:</span>&nbsp;
-												<a href="" id="rpress-order-recalc-total" class="button button-secondary right"><?php _e( 'Recalculate', 'restro-press' ); ?></a>
+												<span class="label"><?php _e( 'Recalculate Totals', 'restropress' ); ?>:</span>&nbsp;
+												<a href="" id="rpress-order-recalc-total" class="button button-secondary right"><?php _e( 'Recalculate', 'restropress' ); ?></a>
 											</p>
 										</div>
 
@@ -176,9 +176,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 									<?php do_action( 'rpress_view_order_details_update_before', $payment_id ); ?>
 									<div id="major-publishing-actions">
 										<div id="delete-action">
-											<a href="<?php echo wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment_id ), admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ) ), 'rpress_payment_nonce' ) ?>" class="rpress-delete-payment rpress-delete"><?php _e( 'Delete Payment', 'restro-press' ); ?></a>
+											<a href="<?php echo wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment_id ), admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ) ), 'rpress_payment_nonce' ) ?>" class="rpress-delete-payment rpress-delete"><?php _e( 'Delete Payment', 'restropress' ); ?></a>
 										</div>
-										<input type="submit" class="button button-primary right" value="<?php esc_attr_e( 'Save Payment', 'restro-press' ); ?>"/>
+										<input type="submit" class="button button-primary right" value="<?php esc_attr_e( 'Save Payment', 'restropress' ); ?>"/>
 										<div class="clear"></div>
 									</div>
 									<?php do_action( 'rpress_view_order_details_update_after', $payment_id ); ?>
@@ -191,13 +191,13 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 								<div class="inside">
 									<div class="rpress-order-resend-receipt-box rpress-admin-box">
 										<?php do_action( 'rpress_view_order_details_resend_receipt_before', $payment_id ); ?>
-										<a href="<?php echo esc_url( add_query_arg( array( 'rpress-action' => 'email_links', 'purchase_id' => $payment_id ) ) ); ?>" id="<?php if( count( $customer->emails ) > 1 ) { echo 'rpress-select-receipt-email'; } else { echo 'rpress-resend-receipt'; } ?>" class="button-secondary alignleft"><?php _e( 'Resend Receipt', 'restro-press' ); ?></a>
-										<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Resend Receipt</strong>: This will send a new copy of the purchase receipt to the customer&#8217;s email address. If fooditem URLs are included in the receipt, new file fooditem URLs will also be included with the receipt.', 'restro-press' ); ?>"></span>
+										<a href="<?php echo esc_url( add_query_arg( array( 'rpress-action' => 'email_links', 'purchase_id' => $payment_id ) ) ); ?>" id="<?php if( count( $customer->emails ) > 1 ) { echo 'rpress-select-receipt-email'; } else { echo 'rpress-resend-receipt'; } ?>" class="button-secondary alignleft"><?php _e( 'Resend Receipt', 'restropress' ); ?></a>
+										<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Resend Receipt</strong>: This will send a new copy of the purchase receipt to the customer&#8217;s email address. If fooditem URLs are included in the receipt, new file fooditem URLs will also be included with the receipt.', 'restropress' ); ?>"></span>
 										<?php if( count( $customer->emails ) > 1 ) : ?>
 											<div class="clear"></div>
 											<div class="rpress-order-resend-receipt-addresses" style="display:none;">
 												<select class="rpress-order-resend-receipt-email">
-													<option value=""><?php _e( ' -- select email --', 'restro-press' ); ?></option>
+													<option value=""><?php _e( ' -- select email --', 'restropress' ); ?></option>
 													<?php foreach( $customer->emails as $email ) : ?>
 														<option value="<?php echo urlencode( sanitize_email( $email ) ); ?>"><?php echo $email; ?></option>
 													<?php endforeach; ?>
@@ -225,19 +225,19 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							?>
 							<div id="rpress-delivery-details" class="postbox rpress-order-data">
 								<h3 class="hndle">
-									<span><?php _e( 'Delivery Details', 'restro-press' ); ?></span>
+									<span><?php _e( 'Delivery Details', 'restropress' ); ?></span>
 								</h3>
 								<div class="inside">
 									<div class="rpress-admin-box">
 										<div class="rpress-delivery-details rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Delivery Type:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'Delivery Type:', 'restropress' ); ?></span>&nbsp;
 												<?php  echo ucfirst($delivery_type); ?>
 												</p>
 											</div>
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
-													<span class="label"><?php _e( 'Delivery Time:', 'restro-press' ); ?></span>&nbsp;
+													<span class="label"><?php _e( 'Delivery Time:', 'restropress' ); ?></span>&nbsp;
 													<?php  
 														if( !empty($delivery_time) ) :
 															echo $delivery_time;
@@ -249,7 +249,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											<?php if( !empty($delivery_fee) ) : ?>
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
-													<span class="label"><?php _e( 'Delivery Fee:', 'restro-press' ); ?></span>&nbsp;
+													<span class="label"><?php _e( 'Delivery Fee:', 'restropress' ); ?></span>&nbsp;
 													<?php  
 														if( !empty($delivery_fee) ) :
 															 echo rpress_currency_filter( rpress_format_amount( $delivery_fee) ); 
@@ -262,7 +262,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										<?php if( !empty($delivery_location) && $delivery_type == 'delivery' ) : ?>
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
-													<span class="label"><?php _e( 'Deliver Address:', 'restro-press' ); ?></span>&nbsp;
+													<span class="label"><?php _e( 'Deliver Address:', 'restropress' ); ?></span>&nbsp;
 													<?php  
 														if( !empty($delivery_location) ) :
 															 echo $delivery_location; 
@@ -275,7 +275,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										<?php if( !empty($delivery_location_pos) && $delivery_type == 'delivery' ) : ?>
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
-													<span class="label"><?php _e( 'Deliver Address Cordinates:', 'restro-press' ); ?></span>&nbsp;
+													<span class="label"><?php _e( 'Deliver Address Cordinates:', 'restropress' ); ?></span>&nbsp;
 													<?php  
 														if( !empty($delivery_location_pos) ) :
 															 echo $delivery_location_pos; 
@@ -296,7 +296,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<div id="rpress-order-details" class="postbox rpress-order-data">
 
 								<h3 class="hndle">
-									<span><?php _e( 'Payment Meta', 'restro-press' ); ?></span>
+									<span><?php _e( 'Payment Meta', 'restropress' ); ?></span>
 								</h3>
 								<div class="inside">
 									<div class="rpress-admin-box">
@@ -307,7 +307,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										if ( $gateway ) : ?>
 											<div class="rpress-order-gateway rpress-admin-box-inside">
 												<p>
-													<span class="label"><?php _e( 'Gateway:', 'restro-press' ); ?></span>&nbsp;
+													<span class="label"><?php _e( 'Gateway:', 'restropress' ); ?></span>&nbsp;
 													<?php echo rpress_get_gateway_admin_label( $gateway ); ?>
 												</p>
 											</div>
@@ -315,14 +315,14 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 										<div class="rpress-order-payment-key rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Key:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'Key:', 'restropress' ); ?></span>&nbsp;
 												<span><?php echo $payment->key; ?></span>
 											</p>
 										</div>
 
 										<div class="rpress-order-ip rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'IP:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'IP:', 'restropress' ); ?></span>&nbsp;
 												<span><?php echo rpress_payment_get_ip_address_url( $payment_id ); ?></span>
 											</p>
 										</div>
@@ -330,7 +330,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										<?php if ( $transaction_id ) : ?>
 										<div class="rpress-order-tx-id rpress-admin-box-inside">
 											<p>
-												<span class="label"><?php _e( 'Transaction ID:', 'restro-press' ); ?></span>&nbsp;
+												<span class="label"><?php _e( 'Transaction ID:', 'restropress' ); ?></span>&nbsp;
 												<span><?php echo apply_filters( 'rpress_payment_details_transaction_id-' . $gateway, $transaction_id, $payment_id ); ?></span>
 											</p>
 										</div>
@@ -351,7 +351,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<div id="rpress-order-logs" class="postbox rpress-order-logs">
 
 								<h3 class="hndle">
-									<span><?php _e( 'Logs', 'restro-press' ); ?></span>
+									<span><?php _e( 'Logs', 'restropress' ); ?></span>
 								</h3>
 								<div class="inside">
 									<div class="rpress-admin-box">
@@ -361,7 +361,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											
 											<p>
 												<?php $purchase_url = admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&user=' . esc_attr( rpress_get_payment_user_email( $payment_id ) ) ); ?>
-												<a href="<?php echo $purchase_url; ?>"><?php _e( 'View all orders for this customer', 'restro-press' ); ?></a>
+												<a href="<?php echo $purchase_url; ?>"><?php _e( 'View all orders for this customer', 'restropress' ); ?></a>
 											</p>
 										</div>
 
@@ -390,31 +390,31 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 								?>
 								<div id="rpress-purchased-files" class="postbox rpress-edit-purchase-element <?php echo $column_count; ?>">
 									<h3 class="hndle rpress-payment-details-label-mobile">
-										<span><?php printf( __( 'Purchased %s', 'restro-press' ), rpress_get_label_plural() ); ?></span>
+										<span><?php printf( __( 'Purchased %s', 'restropress' ), rpress_get_label_plural() ); ?></span>
 									</h3>
 									<div class="rpress-purchased-files-header row header">
 										<ul class="rpress-purchased-files-list-wrapper">
 											<li class="fooditem 123">
-												<?php printf( _x( '%s Purchased', 'payment details purchased item title - full screen', 'restro-press' ), rpress_get_label_singular() ); ?>
+												<?php printf( _x( '%s Purchased', 'payment details purchased item title - full screen', 'restropress' ), rpress_get_label_singular() ); ?>
 											</li>
 
 											<li class="item_price">
 												<?php
-													 _ex( 'Price', 'payment details purchased item price - full screen', 'restro-press' );
+													 _ex( 'Price', 'payment details purchased item price - full screen', 'restropress' );
 													//if( rpress_item_quantities_enabled() ) :
-														_ex( ' & Quantity', 'payment details purchased item quantity - full screen', 'restro-press' );
+														_ex( ' & Quantity', 'payment details purchased item quantity - full screen', 'restropress' );
 													//endif;
 												?>
 											</li>
 
 											<?php if ( rpress_use_taxes() ) : ?>
 												<li class="item_tax">
-													<?php _ex( 'Tax', 'payment details purchased item tax - full screen', 'restro-press' ); ?>
+													<?php _ex( 'Tax', 'payment details purchased item tax - full screen', 'restropress' ); ?>
 												</li>
 											<?php endif; ?>
 
 											<li class="price">
-												<?php printf( _x( '%s Total', 'payment details purchased item total - full screen', 'restro-press' ), rpress_get_label_singular() ); ?>
+												<?php printf( _x( '%s Total', 'payment details purchased item total - full screen', 'restropress' ), rpress_get_label_singular() ); ?>
 											</li>
 										</ul>
 									</div>
@@ -460,9 +460,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 															<span class="deleted">
 																<?php if ( ! empty( $cart_item['name'] ) ) : ?>
 																	<?php echo $cart_item['name']; ?>&nbsp;-&nbsp;
-																	<em>(<?php _e( 'Deleted', 'restro-press' ); ?>)</em>
+																	<em>(<?php _e( 'Deleted', 'restropress' ); ?>)</em>
 																<?php else: ?>
-																	<em><?php printf( __( '%s deleted', 'restro-press' ), rpress_get_label_singular() ); ?></em>
+																	<em><?php printf( __( '%s deleted', 'restropress' ), rpress_get_label_singular() ); ?></em>
 																<?php endif; ?>
 															</span>
 														<?php endif; ?>
@@ -489,8 +489,8 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 												<li class="item_price ">
 													<span class="rpress-payment-details-label-mobile">
 														<?php
-															_ex( 'Price', 'payment details purchased item price - mobile', 'restro-press' );
-																_ex( ' & Quantity', 'payment details purchased item quantity - mobile', 'restro-press' );
+															_ex( 'Price', 'payment details purchased item price - mobile', 'restropress' );
+																_ex( ' & Quantity', 'payment details purchased item quantity - mobile', 'restropress' );
 														?>
 													</span>
 													<?php echo rpress_currency_symbol( $currency_code ); ?>
@@ -503,7 +503,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 												<?php if ( rpress_use_taxes() ) : ?>
 												<li class="item_tax">
 													<span class="rpress-payment-details-label-mobile">
-														<?php _ex( 'Tax', 'payment details purchased item tax - mobile', 'restro-press' ); ?>
+														<?php _ex( 'Tax', 'payment details purchased item tax - mobile', 'restropress' ); ?>
 													</span>
 													<?php echo rpress_currency_symbol( $currency_code ); ?>
 													<input type="text" class="small-text rpress-price-field rpress-payment-details-fooditem-item-tax rpress-payment-item-input" name="rpress-payment-details-fooditems[<?php echo $key; ?>][item_tax]" value="<?php echo rpress_format_amount( $item_tax ); ?>" />
@@ -512,7 +512,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 												<li class="price">
 													<span class="rpress-payment-details-label-mobile">
-														<?php printf( _x( '%s Total', 'payment details purchased item total - mobile', 'restro-press' ), rpress_get_label_singular() ); ?>
+														<?php printf( _x( '%s Total', 'payment details purchased item total - mobile', 'restropress' ), rpress_get_label_singular() ); ?>
 													</span>
 													<span class="rpress-price-currency"><?php echo rpress_currency_symbol( $currency_code ); ?></span><span class="price-text rpress-payment-details-fooditem-amount"><?php echo rpress_format_amount( $price ); ?></span>
 													<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][amount]" class="rpress-payment-details-fooditem-amount" value="<?php echo esc_attr( $price ); ?>"/>
@@ -523,10 +523,10 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 												<input type="hidden" class="rpress-payment-details-fooditem-has-log" name="rpress-payment-details-fooditems[<?php echo $key; ?>][has_log]" value="1" />
 												<?php if( rpress_get_fooditem_files( $item_id, $price_id ) && rpress_is_payment_complete( $payment_id ) ) : ?>
 													<span class="rpress-copy-fooditem-link-wrapper">
-														<a href="" class="rpress-copy-fooditem-link" data-fooditem-id="<?php echo esc_attr( $item_id ); ?>" data-price-id="<?php echo esc_attr( $price_id ); ?>"><?php _e( 'Copy Download Link(s)', 'restro-press' ); ?></a> |
+														<a href="" class="rpress-copy-fooditem-link" data-fooditem-id="<?php echo esc_attr( $item_id ); ?>" data-price-id="<?php echo esc_attr( $price_id ); ?>"><?php _e( 'Copy Download Link(s)', 'restropress' ); ?></a> |
 													</span>
 												<?php endif; ?>
-												<a href="" class="rpress-order-remove-fooditem rpress-delete" data-key="<?php echo esc_attr( $key ); ?>"><?php _e( 'Remove', 'restro-press' ); ?></a>
+												<a href="" class="rpress-order-remove-fooditem rpress-delete" data-key="<?php echo esc_attr( $key ); ?>"><?php _e( 'Remove', 'restropress' ); ?></a>
 											</div>
 
 											<div class="rpress-addon-items">
@@ -537,7 +537,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													$get_formatted_cats = getFormattedCatsList($terms);
 													if( !empty($get_formatted_cats)  ) :
 													?>
-													<span class="order-addon-items"><?php _e( 'Addon Items', 'restro-press' ); ?></span>
+													<span class="order-addon-items"><?php _e( 'Addon Items', 'restropress' ); ?></span>
 													<div class="food-item-list">
 													<select multiple class="addon-items-list" name="rpress-payment-details-fooditems[<?php echo $key; ?>][addon_items][]">
 													<?php
@@ -580,7 +580,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 												if( isset($cart_items[$key]['instruction'] ) && !empty($cart_items[$key]['instruction']) ) :
 											?>
 											<span class="order-addon-items special-instructions">
-													<?php _e( 'Special Instruction:', 'restro-press' ); ?>
+													<?php _e( 'Special Instruction:', 'restropress' ); ?>
 													<?php
 														echo $cart_items[$key]['instruction'];
 													 ?>
@@ -595,7 +595,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 								</div>
 							<?php else : $key = 0; ?>
 								<div class="row">
-									<p><?php printf( __( 'No %s included with this purchase', 'restro-press' ), rpress_get_label_plural() ); ?></p>
+									<p><?php printf( __( 'No %s included with this purchase', 'restropress' ), rpress_get_label_plural() ); ?></p>
 								</div>
 							<?php endif; ?>
 
@@ -603,22 +603,22 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 								<div class="rpress-add-fooditem-to-purchase-header row header">
 									<ul class="rpress-purchased-files-list-wrapper">
-										<li class="fooditem"><?php printf( __( 'Add New %s', 'restro-press' ), rpress_get_label_singular() ); ?></li>
+										<li class="fooditem"><?php printf( __( 'Add New %s', 'restropress' ), rpress_get_label_singular() ); ?></li>
 
 										<li class="item_price<?php echo $is_qty_enabled; ?>">
-											<?php _e( 'Price', 'restro-press' ); ?>
+											<?php _e( 'Price', 'restropress' ); ?>
 											<?php //if( rpress_item_quantities_enabled() ) : ?>
-												<?php _e( ' & Quantity', 'restro-press' ); ?>
+												<?php _e( ' & Quantity', 'restropress' ); ?>
 											<?php //endif; ?>
 										</li>
 
 										<?php if ( rpress_use_taxes() ) : ?>
 											<li class="item_tax">
-												<?php _e( 'Tax', 'restro-press' ); ?>
+												<?php _e( 'Tax', 'restropress' ); ?>
 											</li>
 										<?php endif; ?>
 
-										<li class="price"><?php _e( 'Actions', 'restro-press' ); ?></li>
+										<li class="price"><?php _e( 'Actions', 'restropress' ); ?></li>
 									</ul>
 								</div>
 								<div class="rpress-add-fooditem-to-purchase inside">
@@ -626,7 +626,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 									<ul>
 										<li class="fooditem">
 											<span class="rpress-payment-details-label-mobile">
-												<?php printf( _x( 'Select New %s To Add', 'payment details select item to add - mobile', 'restro-press' ), rpress_get_label_singular() ); ?>
+												<?php printf( _x( 'Select New %s To Add', 'payment details select item to add - mobile', 'restropress' ), rpress_get_label_singular() ); ?>
 											</span>
 											<?php echo RPRESS()->html->product_dropdown( array(
 												'name'   => 'rpress-order-fooditem-select',
@@ -638,9 +638,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										<li class="item_price<?php echo $is_qty_enabled; ?>">
 											<span class="rpress-payment-details-label-mobile">
 												<?php
-												_ex( 'Price', 'payment details add item price - mobile', 'restro-press' );
+												_ex( 'Price', 'payment details add item price - mobile', 'restropress' );
 												//if( rpress_item_quantities_enabled() ) :
-													_ex( ' & Quantity', 'payment details add item quantity - mobile', 'restro-press' );
+													_ex( ' & Quantity', 'payment details add item quantity - mobile', 'restropress' );
 												//endif;
 												?>
 											</span>
@@ -664,7 +664,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										<?php if ( rpress_use_taxes() ) : ?>
 											<li class="item_tax">
 												<span class="rpress-payment-details-label-mobile">
-													<?php _ex( 'Tax', 'payment details add item tax - mobile', 'restro-press' ); ?>
+													<?php _ex( 'Tax', 'payment details add item tax - mobile', 'restropress' ); ?>
 												</span>
 												<?php
 												echo rpress_currency_symbol( $currency_code ) . '&nbsp;';
@@ -681,9 +681,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 										<li class="rpress-add-fooditem-to-purchase-actions actions">
 											<span class="rpress-payment-details-label-mobile">
-												<?php _e( 'Actions', 'restro-press' ); ?>
+												<?php _e( 'Actions', 'restropress' ); ?>
 											</span>
-											<a href="" id="rpress-order-add-fooditem" class="button button-secondary"><?php printf( __( 'Add New %s', 'restro-press' ), rpress_get_label_singular() ); ?></a>
+											<a href="" id="rpress-order-add-fooditem" class="button button-secondary"><?php printf( __( 'Add New %s', 'restropress' ), rpress_get_label_singular() ); ?></a>
 										</li>
 
 									</ul>
@@ -709,7 +709,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 							<div id="rpress-customer-details" class="postbox">
 								<h3 class="hndle">
-									<span><?php _e( 'Customer Details', 'restro-press' ); ?></span>
+									<span><?php _e( 'Customer Details', 'restropress' ); ?></span>
 								</h3>
 								<div class="inside rpress-clearfix">
 
@@ -722,21 +722,21 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											<input type="hidden" name="rpress-current-customer" value="<?php echo $customer->id; ?>" />
 										</div>
 										<div class="column">
-											<a href="#change" class="rpress-payment-change-customer"><?php _e( 'Assign to another customer', 'restro-press' ); ?></a>
+											<a href="#change" class="rpress-payment-change-customer"><?php _e( 'Assign to another customer', 'restropress' ); ?></a>
 											&nbsp;|&nbsp;
-											<a href="#new" class="rpress-payment-new-customer"><?php _e( 'New Customer', 'restro-press' ); ?></a>
+											<a href="#new" class="rpress-payment-new-customer"><?php _e( 'New Customer', 'restropress' ); ?></a>
 										</div>
 									</div>
 
 									<div class="column-container change-customer" style="display: none">
 										<div class="column">
-											<strong><?php _e( 'Select a customer', 'restro-press' ); ?>:</strong>
+											<strong><?php _e( 'Select a customer', 'restropress' ); ?>:</strong>
 											<?php
 												$args = array(
 													'class'       => 'rpress-payment-change-customer-input',
 													'selected'    => $customer->id,
 													'name'        => 'customer-id',
-													'placeholder' => __( 'Type to search all Customers', 'restro-press' ),
+													'placeholder' => __( 'Type to search all Customers', 'restropress' ),
 												);
 
 												echo RPRESS()->html->customer_dropdown( $args );
@@ -744,33 +744,33 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										</div>
 										<div class="column"></div>
 										<div class="column">
-											<strong><?php _e( 'Actions', 'restro-press' ); ?>:</strong>
+											<strong><?php _e( 'Actions', 'restropress' ); ?>:</strong>
 											<br />
 											<input type="hidden" id="rpress-change-customer" name="rpress-change-customer" value="0" />
-											<a href="#cancel" class="rpress-payment-change-customer-cancel rpress-delete"><?php _e( 'Cancel', 'restro-press' ); ?></a>
+											<a href="#cancel" class="rpress-payment-change-customer-cancel rpress-delete"><?php _e( 'Cancel', 'restropress' ); ?></a>
 										</div>
 										<div class="column">
-											<small><em>*<?php _e( 'Click "Save Payment" to change the customer', 'restro-press' ); ?></em></small>
+											<small><em>*<?php _e( 'Click "Save Payment" to change the customer', 'restropress' ); ?></em></small>
 										</div>
 									</div>
 
 									<div class="column-container new-customer" style="display: none">
 										<div class="column">
-											<strong><?php _e( 'Name', 'restro-press' ); ?>:</strong>&nbsp;
+											<strong><?php _e( 'Name', 'restropress' ); ?>:</strong>&nbsp;
 											<input type="text" name="rpress-new-customer-name" value="" class="medium-text"/>
 										</div>
 										<div class="column">
-											<strong><?php _e( 'Email', 'restro-press' ); ?>:</strong>&nbsp;
+											<strong><?php _e( 'Email', 'restropress' ); ?>:</strong>&nbsp;
 											<input type="email" name="rpress-new-customer-email" value="" class="medium-text"/>
 										</div>
 										<div class="column">
-											<strong><?php _e( 'Actions', 'restro-press' ); ?>:</strong>
+											<strong><?php _e( 'Actions', 'restropress' ); ?>:</strong>
 											<br />
 											<input type="hidden" id="rpress-new-customer" name="rpress-new-customer" value="0" />
-											<a href="#cancel" class="rpress-payment-new-customer-cancel rpress-delete"><?php _e( 'Cancel', 'restro-press' ); ?></a>
+											<a href="#cancel" class="rpress-payment-new-customer-cancel rpress-delete"><?php _e( 'Cancel', 'restropress' ); ?></a>
 										</div>
 										<div class="column">
-											<small><em>*<?php _e( 'Click "Save Payment" to create new customer', 'restro-press' ); ?></em></small>
+											<small><em>*<?php _e( 'Click "Save Payment" to create new customer', 'restropress' ); ?></em></small>
 										</div>
 									</div>
 
@@ -785,7 +785,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 							<div id="rpress-billing-details" class="postbox">
 								<h3 class="hndle">
-									<span><?php _e( 'Billing Address', 'restro-press' ); ?></span>
+									<span><?php _e( 'Billing Address', 'restropress' ); ?></span>
 								</h3>
 								<div class="inside rpress-clearfix">
 
@@ -798,12 +798,12 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 														<?php
 														$line1_address = ($address['line1'] !== '') ? $address['line1'] : $payment_meta['address'];
 														?>
-														<strong class="order-data-address-line"><?php _e( 'Street Address Line 1:', 'restro-press' ); ?></strong><br/>
+														<strong class="order-data-address-line"><?php _e( 'Street Address Line 1:', 'restropress' ); ?></strong><br/>
 														<input type="text" name="rpress-payment-address[0][line1]" value="<?php echo esc_attr($line1_address); ?>" class="large-text" />
 													</p>
 													<p>
 
-														<strong class="order-data-address-line"><?php _e( 'Street Address Line 2:', 'restro-press' ); ?></strong><br/>
+														<strong class="order-data-address-line"><?php _e( 'Street Address Line 2:', 'restropress' ); ?></strong><br/>
 														<input type="text" name="rpress-payment-address[0][line2]" value="<?php echo esc_attr( $address['line2'] ); ?>" class="large-text" />
 													</p>
 
@@ -813,7 +813,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 														<?php
 														$city = ($address['city'] !== '') ? $address['city'] : $payment_meta['city'];
 														?>
-														<strong class="order-data-address-line"><?php echo _x( 'City:', 'Address City', 'restro-press' ); ?></strong><br/>
+														<strong class="order-data-address-line"><?php echo _x( 'City:', 'Address City', 'restropress' ); ?></strong><br/>
 														<input type="text" name="rpress-payment-address[0][city]" value="<?php echo esc_attr( $city ); ?>" class="large-text"/>
 
 													</p>
@@ -821,7 +821,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 														<?php
 														$zip = ($address['zip'] !== '') ? $address['zip'] : $payment_meta['zip'];
 														?>
-														<strong class="order-data-address-line"><?php echo _x( 'Zip / Postal Code:', 'Zip / Postal code of address', 'restro-press' ); ?></strong><br/>
+														<strong class="order-data-address-line"><?php echo _x( 'Zip / Postal Code:', 'Zip / Postal code of address', 'restropress' ); ?></strong><br/>
 														<input type="text" name="rpress-payment-address[0][zip]" value="<?php echo esc_attr( $zip ); ?>" class="large-text"/>
 
 													</p>
@@ -831,7 +831,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													$country = ($address[ 'country' ] !== '') ? $address[ 'country' ] : $payment_meta['country'];
 													 ?>
 													<p id="rpress-order-address-country-wrap">
-														<strong class="order-data-address-line"><?php echo _x( 'Country:', 'Address country', 'restro-press' ); ?></strong><br/>
+														<strong class="order-data-address-line"><?php echo _x( 'Country:', 'Address country', 'restropress' ); ?></strong><br/>
 														<?php
 														echo RPRESS()->html->select( array(
 															'options'          => rpress_get_country_list(),
@@ -841,16 +841,16 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 															'show_option_all'  => false,
 															'show_option_none' => false,
 															'chosen'           => true,
-															'placeholder'      => __( 'Select a country', 'restro-press' ),
+															'placeholder'      => __( 'Select a country', 'restropress' ),
 															'data'             => array(
 																'search-type'        => 'no_ajax',
-																'search-placeholder' => __( 'Type to search all Countries', 'restro-press' ),
+																'search-placeholder' => __( 'Type to search all Countries', 'restropress' ),
 															),
 														) );
 														?>
 													</p>
 													<p id="rpress-order-address-state-wrap">
-														<strong class="order-data-address-line"><?php echo _x( 'State / Province:', 'State / province of address', 'restro-press' ); ?></strong><br/>
+														<strong class="order-data-address-line"><?php echo _x( 'State / Province:', 'State / province of address', 'restropress' ); ?></strong><br/>
 														<?php
 													$state = ($address[ 'state' ] !== '') ? $address[ 'state' ] : $payment_meta['state'];
 													 ?>
@@ -865,10 +865,10 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 																'show_option_all'  => false,
 																'show_option_none' => false,
 																'chosen'           => true,
-																'placeholder'      => __( 'Select a state', 'restro-press' ),
+																'placeholder'      => __( 'Select a state', 'restropress' ),
 																'data'             => array(
 																	'search-type'        => 'no_ajax',
-																	'search-placeholder' => __( 'Type to search all States/Provinces', 'restro-press' ),
+																	'search-placeholder' => __( 'Type to search all States/Provinces', 'restropress' ),
 																),
 															) );
 														} else { ?>
@@ -889,7 +889,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<?php do_action( 'rpress_view_order_details_billing_after', $payment_id ); ?>
 
 							<div id="rpress-payment-notes" class="postbox">
-								<h3 class="hndle"><span><?php _e( 'Payment Notes', 'restro-press' ); ?></span></h3>
+								<h3 class="hndle"><span><?php _e( 'Payment Notes', 'restropress' ); ?></span></h3>
 								<div class="inside">
 									<div id="rpress-payment-notes-inner">
 										<?php
@@ -904,13 +904,13 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										else :
 											$no_notes_display = '';
 										endif;
-										echo '<p class="rpress-no-payment-notes"' . $no_notes_display . '>'. __( 'No payment notes', 'restro-press' ) . '</p>';
+										echo '<p class="rpress-no-payment-notes"' . $no_notes_display . '>'. __( 'No payment notes', 'restropress' ) . '</p>';
 										?>
 									</div>
 									<textarea name="rpress-payment-note" id="rpress-payment-note" class="large-text"></textarea>
 
 									<p>
-										<button id="rpress-add-payment-note" class="button button-secondary right" data-payment-id="<?php echo absint( $payment_id ); ?>"><?php _e( 'Add Note', 'restro-press' ); ?></button>
+										<button id="rpress-add-payment-note" class="button button-secondary right" data-payment-id="<?php echo absint( $payment_id ); ?>"><?php _e( 'Add Note', 'restropress' ); ?></button>
 									</p>
 									<div class="clear"></div>
 								</div><!-- /.inside -->

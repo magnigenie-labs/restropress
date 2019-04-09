@@ -59,7 +59,7 @@ function rpress_logs_view_file_fooditems() {
 		<?php do_action( 'rpress_logs_file_fooditems_top' ); ?>
 		<form id="rpress-logs-filter" method="get" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&tab=logs' ); ?>">
 			<?php
-			$logs_table->search_box( __( 'Search', 'restro-press' ), 'rpress-payments' );
+			$logs_table->search_box( __( 'Search', 'restropress' ), 'rpress-payments' );
 			$logs_table->display();
 			?>
 			<input type="hidden" name="post_type" value="fooditem" />
@@ -105,9 +105,9 @@ add_action( 'rpress_logs_view_gateway_errors', 'rpress_logs_view_gateway_errors'
  */
 function rpress_log_default_views() {
 	$views = array(
-		'file_fooditems'  => __( 'File RestroPress', 'restro-press' ),
-		'sales' 		  => __( 'Sales', 'restro-press' ),
-		'gateway_errors'  => __( 'Payment Errors', 'restro-press' ),
+		'file_fooditems'  => __( 'File RestroPress', 'restropress' ),
+		'sales' 		  => __( 'Sales', 'restropress' ),
+		'gateway_errors'  => __( 'Payment Errors', 'restropress' ),
 	);
 
 	$views = apply_filters( 'rpress_log_views', $views );
@@ -127,7 +127,7 @@ function rpress_log_views() {
 	?>
 	<form id="rpress-logs-filter" method="get" action="edit.php">
 		<select id="rpress-logs-view" name="view">
-			<option value="-1"><?php _e( 'Log Type', 'restro-press' ); ?></option>
+			<option value="-1"><?php _e( 'Log Type', 'restropress' ); ?></option>
 			<?php foreach ( $views as $view_id => $label ): ?>
 				<option value="<?php echo esc_attr( $view_id ); ?>" <?php selected( $view_id, $current_view ); ?>><?php echo $label; ?></option>
 			<?php endforeach; ?>
@@ -139,7 +139,7 @@ function rpress_log_views() {
 		<input type="hidden" name="page" value="rpress-reports"/>
 		<input type="hidden" name="tab" value="logs"/>
 
-		<?php submit_button( __( 'Apply', 'restro-press' ), 'secondary', 'submit', false ); ?>
+		<?php submit_button( __( 'Apply', 'restropress' ), 'secondary', 'submit', false ); ?>
 	</form>
 	<?php
 }

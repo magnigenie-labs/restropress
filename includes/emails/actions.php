@@ -50,7 +50,7 @@ function rpress_resend_purchase_receipt( $data ) {
 	}
 
 	if( ! current_user_can( 'edit_shop_payments' ) ) {
-		wp_die( __( 'You do not have permission to edit this payment record', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$email = ! empty( $_GET['email'] ) ? sanitize_email( $_GET['email'] ) : '';

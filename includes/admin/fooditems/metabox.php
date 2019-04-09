@@ -27,10 +27,10 @@ function rpress_add_fooditem_meta_box() {
 	foreach ( $post_types as $post_type ) {
 
 		/** Product Prices **/
-		add_meta_box( 'rpress_product_prices', sprintf( __( '%1$s Prices', 'restro-press' ), rpress_get_label_singular(), rpress_get_label_plural() ),  'rpress_render_fooditem_meta_box', $post_type, 'normal', 'high' );
+		add_meta_box( 'rpress_product_prices', sprintf( __( '%1$s Prices', 'restropress' ), rpress_get_label_singular(), rpress_get_label_plural() ),  'rpress_render_fooditem_meta_box', $post_type, 'normal', 'high' );
 
 		/** Product Notes */
-		// add_meta_box( 'rpress_product_notes', sprintf( __( '%1$s Notes', 'restro-press' ), rpress_get_label_singular(), rpress_get_label_plural() ), 'rpress_render_product_notes_meta_box', $post_type, 'normal', 'high' );
+		// add_meta_box( 'rpress_product_notes', sprintf( __( '%1$s Notes', 'restropress' ), rpress_get_label_singular(), rpress_get_label_plural() ), 'rpress_render_product_notes_meta_box', $post_type, 'normal', 'high' );
 
 	}
 }
@@ -274,7 +274,7 @@ function rpress_render_price_field( $post_id ) {
 	$currency_position  = rpress_get_option( 'currency_position', 'before' );
 	?>
 	<p>
-		<strong><?php echo apply_filters( 'rpress_price_options_heading', __( 'Item Price:', 'restro-press' ) ); ?></strong>
+		<strong><?php echo apply_filters( 'rpress_price_options_heading', __( 'Item Price:', 'restropress' ) ); ?></strong>
 	</p>
 
 	
@@ -305,7 +305,7 @@ function rpress_render_price_field( $post_id ) {
 		<input type="hidden" id="rpress_variable_prices" class="rpress_variable_prices_name_field" value=""/>
 		<p>
 			<?php echo RPRESS()->html->checkbox( array( 'name' => '_rpress_price_options_mode', 'current' => $single_option_mode ) ); ?>
-			<label for="_rpress_price_options_mode"><?php echo apply_filters( 'rpress_multi_option_purchase_text', __( 'Enable multi-option purchase mode. Allows multiple price options to be added to your cart at once', 'restro-press' ) ); ?></label>
+			<label for="_rpress_price_options_mode"><?php echo apply_filters( 'rpress_multi_option_purchase_text', __( 'Enable multi-option purchase mode. Allows multiple price options to be added to your cart at once', 'restropress' ) ); ?></label>
 		</p>
 		<div id="rpress_price_fields" class="rpress_meta_table_wrap">
 			<div class="widefat rpress_repeatable_table">
@@ -334,7 +334,7 @@ function rpress_render_price_field( $post_id ) {
 
 					<div class="rpress-add-repeatable-row">
 						<div class="submit" style="float: none; clear:both; background:#fff; padding: 4px 4px 0 0;">
-							<button class="button-secondary rpress_add_repeatable"><?php _e( 'Add New Price', 'restro-press' ); ?></button>
+							<button class="button-secondary rpress_add_repeatable"><?php _e( 'Add New Price', 'restropress' ); ?></button>
 						</div>
 					</div>
 				</div>
@@ -388,17 +388,17 @@ function rpress_render_price_row( $key, $args = array(), $post_id, $index ) {
 	}
 	?>
 	<div class="rpress-repeatable-row-header rpress-draghandle-anchor">
-		<span class="rpress-repeatable-row-title" title="<?php _e( 'Click and drag to re-order price options', 'restro-press' ); ?>">
-			<?php printf( __( 'Price ID: %s', 'restro-press' ), '<span class="rpress_price_id">' . $key . '</span>' ); ?>
+		<span class="rpress-repeatable-row-title" title="<?php _e( 'Click and drag to re-order price options', 'restropress' ); ?>">
+			<?php printf( __( 'Price ID: %s', 'restropress' ), '<span class="rpress_price_id">' . $key . '</span>' ); ?>
 			<input type="hidden" name="rpress_variable_prices[<?php echo $key; ?>][index]" class="rpress_repeatable_index" value="<?php echo $index; ?>"/>
 		</span>
 		<?php
 		$actions = array();
 		if ( ! empty( $show_advanced ) || $custom_price_options ) {
-			$actions['show_advanced'] = '<a href="#" class="toggle-custom-price-option-section">' . __( 'Show advanced settings', 'restro-press' ) . '</a>';
+			$actions['show_advanced'] = '<a href="#" class="toggle-custom-price-option-section">' . __( 'Show advanced settings', 'restropress' ) . '</a>';
 		}
 
-		$actions['remove'] = '<a class="rpress-remove-row rpress-delete" data-type="price">' . sprintf( __( 'Remove', 'restro-press' ), $key ) . '<span class="screen-reader-text">' . sprintf( __( 'Remove price option %s', 'restro-press' ), $key ) . '</span></a>';
+		$actions['remove'] = '<a class="rpress-remove-row rpress-delete" data-type="price">' . sprintf( __( 'Remove', 'restropress' ), $key ) . '<span class="screen-reader-text">' . sprintf( __( 'Remove price option %s', 'restropress' ), $key ) . '</span></a>';
 		?>
 		<span class="rpress-repeatable-row-actions">
 			<?php echo implode( '&nbsp;&#124;&nbsp;', $actions ); ?>
@@ -408,17 +408,17 @@ function rpress_render_price_row( $key, $args = array(), $post_id, $index ) {
 	<div class="rpress-repeatable-row-standard-fields">
 
 		<div class="rpress-option-name">
-			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Option Name', 'restro-press' ); ?></span>
+			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Option Name', 'restropress' ); ?></span>
 			<?php echo RPRESS()->html->text( array(
 				'name'  => 'rpress_variable_prices[' . $key . '][name]',
 				'value' => esc_attr( $args['name'] ),
-				'placeholder' => __( 'Option Name', 'restro-press' ),
+				'placeholder' => __( 'Option Name', 'restropress' ),
 				'class' => 'rpress_variable_prices_name large-text'
 			) ); ?>
 		</div>
 
 		<div class="rpress-option-price">
-			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price', 'restro-press' ); ?></span>
+			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price', 'restropress' ); ?></span>
 			<?php
 			$price_args = array(
 				'name'  => 'rpress_variable_prices[' . $key . '][amount]',
@@ -440,10 +440,10 @@ function rpress_render_price_row( $key, $args = array(), $post_id, $index ) {
 		</div>
 
 		<div class="rpress_repeatable_default rpress_repeatable_default_wrapper">
-			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Default', 'restro-press' ); ?></span>
+			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Default', 'restropress' ); ?></span>
 			<label class="rpress-default-price">
 				<input type="radio" <?php checked( $default_price_id, $key, true ); ?> class="rpress_repeatable_default_input" name="_rpress_default_price_id" value="<?php echo $key; ?>" />
-				<span class="screen-reader-text"><?php printf( __( 'Set ID %s as default price', 'restro-press' ), $key ); ?></span>
+				<span class="screen-reader-text"><?php printf( __( 'Set ID %s as default price', 'restropress' ), $key ); ?></span>
 			</label>
 		</div>
 
@@ -508,7 +508,7 @@ function rpress_render_product_type_field( $post_id = 0 ) {
 	$type  = rpress_get_fooditem_type( $post_id );
 ?>
 	<p>
-		<strong><?php echo apply_filters( 'rpress_product_type_options_heading', __( 'Product Type Options:', 'restro-press' ) ); ?></strong>
+		<strong><?php echo apply_filters( 'rpress_product_type_options_heading', __( 'Product Type Options:', 'restropress' ) ); ?></strong>
 	</p>
 	<p>
 		<?php echo RPRESS()->html->select( array(
@@ -519,8 +519,8 @@ function rpress_render_product_type_field( $post_id = 0 ) {
 			'show_option_all'  => false,
 			'show_option_none' => false
 		) ); ?>
-		<label for="_rpress_product_type"><?php _e( 'Select a product type', 'restro-press' ); ?></label>
-		<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Product Type</strong>: Sell this item as a single product, or use the Bundle type to sell a collection of products.', 'restro-press' ); ?>"></span>
+		<label for="_rpress_product_type"><?php _e( 'Select a product type', 'restropress' ); ?></label>
+		<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Product Type</strong>: Sell this item as a single product, or use the Bundle type to sell a collection of products.', 'restropress' ); ?>"></span>
 	</p>
 <?php
 }
@@ -553,7 +553,7 @@ function rpress_render_products_field( $post_id ) {
 					<?php if ( $products ) : ?>
 
 						<div class="rpress-bundle-products-header">
-							<span class="rpress-bundle-products-title"><?php printf( __( 'Bundled %s', 'restro-press' ), rpress_get_label_plural() ); ?></span>
+							<span class="rpress-bundle-products-title"><?php printf( __( 'Bundled %s', 'restropress' ), rpress_get_label_plural() ); ?></span>
 						</div>
 
 						<?php $index = 1; ?>
@@ -561,11 +561,11 @@ function rpress_render_products_field( $post_id ) {
 							<div class="rpress_repeatable_product_wrapper rpress_repeatable_row" data-key="<?php echo esc_attr( $index ); ?>">
 								<div class="rpress-bundled-product-row<?php echo $variable_class; ?>">
 									<div class="rpress-bundled-product-item-reorder">
-										<span class="rpress-product-file-reorder rpress-draghandle-anchor dashicons dashicons-move"  title="<?php printf( __( 'Click and drag to re-order bundled %s', 'restro-press' ), rpress_get_label_plural() ); ?>"></span>
+										<span class="rpress-product-file-reorder rpress-draghandle-anchor dashicons dashicons-move"  title="<?php printf( __( 'Click and drag to re-order bundled %s', 'restropress' ), rpress_get_label_plural() ); ?>"></span>
 										<input type="hidden" name="rpress_bundled_products[<?php echo $index; ?>][index]" class="rpress_repeatable_index" value="<?php echo $index; ?>"/>
 									</div>
 									<div class="rpress-bundled-product-item">
-										<span class="rpress-repeatable-row-setting-label"><?php printf( __( 'Select %s:', 'restro-press' ), rpress_get_label_singular() ); ?></span>
+										<span class="rpress-repeatable-row-setting-label"><?php printf( __( 'Select %s:', 'restropress' ), rpress_get_label_singular() ); ?></span>
 										<?php
 										echo RPRESS()->html->product_dropdown( array(
 											'name'       => '_rpress_bundled_products[]',
@@ -579,7 +579,7 @@ function rpress_render_products_field( $post_id ) {
 										?>
 									</div>
 									<div class="rpress-bundled-product-price-assignment pricing" style="<?php echo $variable_display; ?>">
-										<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price assignment:', 'restro-press' ); ?></span>
+										<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price assignment:', 'restropress' ); ?></span>
 										<?php
 											$options = array();
 
@@ -604,7 +604,7 @@ function rpress_render_products_field( $post_id ) {
 										?>
 									</div>
 									<span class="rpress-bundled-product-actions">
-										<a class="rpress-remove-row rpress-delete" data-type="file"><?php printf( __( 'Remove', 'restro-press' ), $index ); ?><span class="screen-reader-text"><?php printf( __( 'Remove bundle option %s', 'restro-press' ), $index ); ?></span></a>
+										<a class="rpress-remove-row rpress-delete" data-type="file"><?php printf( __( 'Remove', 'restropress' ), $index ); ?><span class="screen-reader-text"><?php printf( __( 'Remove bundle option %s', 'restropress' ), $index ); ?></span></a>
 									</span>
 									<?php do_action( 'rpress_fooditem_products_table_row', $post_id ); ?>
 								</div>
@@ -615,17 +615,17 @@ function rpress_render_products_field( $post_id ) {
 					<?php else: ?>
 
 						<div class="rpress-bundle-products-header">
-							<span class="rpress-bundle-products-title"><?php printf( __( 'Bundled %s:', 'restro-press' ), rpress_get_label_plural() ); ?></span>
+							<span class="rpress-bundle-products-title"><?php printf( __( 'Bundled %s:', 'restropress' ), rpress_get_label_plural() ); ?></span>
 						</div>
 						<div class="rpress_repeatable_product_wrapper rpress_repeatable_row" data-key="1">
 							<div class="rpress-bundled-product-row<?php echo $variable_class; ?>">
 
 								<div class="rpress-bundled-product-item-reorder">
-									<span class="rpress-product-file-reorder rpress-draghandle-anchor dashicons dashicons-move" title="<?php printf( __( 'Click and drag to re-order bundled %s', 'restro-press' ), rpress_get_label_plural() ); ?>"></span>
+									<span class="rpress-product-file-reorder rpress-draghandle-anchor dashicons dashicons-move" title="<?php printf( __( 'Click and drag to re-order bundled %s', 'restropress' ), rpress_get_label_plural() ); ?>"></span>
 									<input type="hidden" name="rpress_bundled_products[1][index]" class="rpress_repeatable_index" value="1"/>
 								</div>
 								<div class="rpress-bundled-product-item">
-									<span class="rpress-repeatable-row-setting-label"><?php printf( __( 'Select %s:', 'restro-press' ), rpress_get_label_singular() ); ?></span>
+									<span class="rpress-repeatable-row-setting-label"><?php printf( __( 'Select %s:', 'restropress' ), rpress_get_label_singular() ); ?></span>
 									<?php
 									echo RPRESS()->html->product_dropdown( array(
 										'name'       => '_rpress_bundled_products[]',
@@ -638,7 +638,7 @@ function rpress_render_products_field( $post_id ) {
 									?>
 								</div>
 								<div class="rpress-bundled-product-price-assignment pricing" style="<?php echo $variable_display; ?>">
-									<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price assignment:', 'restro-press' ); ?></span>
+									<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price assignment:', 'restropress' ); ?></span>
 									<?php
 										$options = array();
 
@@ -660,7 +660,7 @@ function rpress_render_products_field( $post_id ) {
 									?>
 								</div>
 								<span class="rpress-bundled-product-actions">
-									<a class="rpress-remove-row rpress-delete" data-type="file" ><?php printf( __( 'Remove', 'restro-press' ) ); ?><span class="screen-reader-text"><?php __( 'Remove bundle option 1', 'restro-press' ); ?></span></a>
+									<a class="rpress-remove-row rpress-delete" data-type="file" ><?php printf( __( 'Remove', 'restropress' ) ); ?><span class="screen-reader-text"><?php __( 'Remove bundle option 1', 'restropress' ); ?></span></a>
 								</span>
 								<?php do_action( 'rpress_fooditem_products_table_row', $post_id ); ?>
 							</div>
@@ -670,7 +670,7 @@ function rpress_render_products_field( $post_id ) {
 
 					<div class="rpress-add-repeatable-row">
 						<div class="submit" style="float: none; clear:both; background: #fff;">
-							<button class="button-secondary rpress_add_repeatable"><?php _e( 'Add New File', 'restro-press' ); ?></button>
+							<button class="button-secondary rpress_add_repeatable"><?php _e( 'Add New File', 'restropress' ); ?></button>
 						</div>
 					</div>
 
@@ -738,7 +738,7 @@ function rpress_render_files_field( $post_id = 0 ) {
 
 					<div class="rpress-add-repeatable-row">
 						<div class="submit" style="float: none; clear:both; background: #fff;">
-							<button class="button-secondary rpress_add_repeatable"><?php _e( 'Add New File', 'restro-press' ); ?></button>
+							<button class="button-secondary rpress_add_repeatable"><?php _e( 'Add New File', 'restropress' ); ?></button>
 						</div>
 					</div>
 				</div>
@@ -780,12 +780,12 @@ function rpress_render_file_row( $key = '', $args = array(), $post_id, $index ) 
 	$variable_class   = $variable_pricing ? ' has-variable-pricing' : '';
 ?>
 	<div class="rpress-repeatable-row-header rpress-draghandle-anchor">
-		<span class="rpress-repeatable-row-title" title="<?php _e( 'Click and drag to re-order files', 'restro-press' ); ?>">
-			<?php printf( __( '%1$s file ID: %2$s', 'restro-press' ), rpress_get_label_singular(), '<span class="rpress_file_id">' . $key . '</span>' ); ?>
+		<span class="rpress-repeatable-row-title" title="<?php _e( 'Click and drag to re-order files', 'restropress' ); ?>">
+			<?php printf( __( '%1$s file ID: %2$s', 'restropress' ), rpress_get_label_singular(), '<span class="rpress_file_id">' . $key . '</span>' ); ?>
 			<input type="hidden" name="rpress_fooditem_files[<?php echo $key; ?>][index]" class="rpress_repeatable_index" value="<?php echo $index; ?>"/>
 		</span>
 		<span class="rpress-repeatable-row-actions">
-			<a class="rpress-remove-row rpress-delete" data-type="file"><?php printf( __( 'Remove', 'restro-press' ), $key ); ?><span class="screen-reader-text"><?php printf( __( 'Remove file %s', 'restro-press' ), $key ); ?></span>
+			<a class="rpress-remove-row rpress-delete" data-type="file"><?php printf( __( 'Remove', 'restropress' ), $key ); ?><span class="screen-reader-text"><?php printf( __( 'Remove file %s', 'restropress' ), $key ); ?></span>
 			</a>
 		</span>
 	</div>
@@ -793,36 +793,36 @@ function rpress_render_file_row( $key = '', $args = array(), $post_id, $index ) 
 	<div class="rpress-repeatable-row-standard-fields<?php echo $variable_class; ?>">
 
 		<div class="rpress-file-name">
-			<span class="rpress-repeatable-row-setting-label"><?php _e( 'File Name', 'restro-press' ); ?></span>
+			<span class="rpress-repeatable-row-setting-label"><?php _e( 'File Name', 'restropress' ); ?></span>
 			<input type="hidden" name="rpress_fooditem_files[<?php echo absint( $key ); ?>][attachment_id]" class="rpress_repeatable_attachment_id_field" value="<?php echo esc_attr( absint( $args['attachment_id'] ) ); ?>"/>
 			<input type="hidden" name="rpress_fooditem_files[<?php echo absint( $key ); ?>][thumbnail_size]" class="rpress_repeatable_thumbnail_size_field" value="<?php echo esc_attr( $args['thumbnail_size'] ); ?>"/>
 			<?php echo RPRESS()->html->text( array(
 				'name'        => 'rpress_fooditem_files[' . $key . '][name]',
 				'value'       => $args['name'],
-				'placeholder' => __( 'File Name', 'restro-press' ),
+				'placeholder' => __( 'File Name', 'restropress' ),
 				'class'       => 'rpress_repeatable_name_field large-text'
 			) ); ?>
 		</div>
 
 		<div class="rpress-file-url">
-			<span class="rpress-repeatable-row-setting-label"><?php _e( 'File URL', 'restro-press' ); ?></span>
+			<span class="rpress-repeatable-row-setting-label"><?php _e( 'File URL', 'restropress' ); ?></span>
 			<div class="rpress_repeatable_upload_field_container">
 				<?php echo RPRESS()->html->text( array(
 					'name'        => 'rpress_fooditem_files[' . $key . '][file]',
 					'value'       => $args['file'],
-					'placeholder' => __( 'Upload or enter the file URL', 'restro-press' ),
+					'placeholder' => __( 'Upload or enter the file URL', 'restropress' ),
 					'class'       => 'rpress_repeatable_upload_field rpress_upload_field large-text'
 				) ); ?>
 
 				<span class="rpress_upload_file">
-					<a href="#" data-uploader-title="<?php _e( 'Insert File', 'restro-press' ); ?>" data-uploader-button-text="<?php _e( 'Insert', 'restro-press' ); ?>" class="rpress_upload_file_button" onclick="return false;"><?php _e( 'Upload a File', 'restro-press' ); ?></a>
+					<a href="#" data-uploader-title="<?php _e( 'Insert File', 'restropress' ); ?>" data-uploader-button-text="<?php _e( 'Insert', 'restropress' ); ?>" class="rpress_upload_file_button" onclick="return false;"><?php _e( 'Upload a File', 'restropress' ); ?></a>
 				</span>
 			</div>
 		</div>
 
 		<div class="rpress-file-assignment pricing"<?php echo $variable_display; ?>>
 
-			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price Assignment', 'restro-press' ); ?><span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Price Assignment</strong>: With variable pricing enabled, you can choose to allow certain price variations access to specific files, or allow all price variations to access a file.', 'restro-press' ); ?>"></span></span>
+			<span class="rpress-repeatable-row-setting-label"><?php _e( 'Price Assignment', 'restropress' ); ?><span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Price Assignment</strong>: With variable pricing enabled, you can choose to allow certain price variations access to specific files, or allow all price variations to access a file.', 'restropress' ); ?>"></span></span>
 
 			<?php
 				$options = array();
@@ -867,7 +867,7 @@ function rpress_fooditem_media_strings( $strings ) {
 	$fooditems_object = get_post_type_object( 'fooditem' );
 	$labels = $fooditems_object->labels;
 
-	$strings['insertIntoPost'] = sprintf( __( 'Insert into %s', 'restro-press' ), strtolower( $labels->singular_name ) );
+	$strings['insertIntoPost'] = sprintf( __( 'Insert into %s', 'restropress' ), strtolower( $labels->singular_name ) );
 
 	return $strings;
 }
@@ -893,16 +893,16 @@ function rpress_render_fooditem_limit_row( $post_id ) {
 	$display = 'bundle' == rpress_get_fooditem_type( $post_id ) ? ' style="display: none;"' : '';
 ?>
 	<div id="rpress_fooditem_limit_wrap"<?php echo $display; ?>>
-		<p><strong><?php _e( 'File RestroPress Limit:', 'restro-press' ); ?></strong></p>
+		<p><strong><?php _e( 'File RestroPress Limit:', 'restropress' ); ?></strong></p>
 		<label for="rpress_fooditem_limit">
 			<?php echo RPRESS()->html->text( array(
 				'name'  => '_rpress_fooditem_limit',
 				'value' => $rpress_fooditem_limit,
 				'class' => 'small-text'
 			) ); ?>
-			<?php _e( 'Leave blank for global setting or 0 for unlimited', 'restro-press' ); ?>
+			<?php _e( 'Leave blank for global setting or 0 for unlimited', 'restropress' ); ?>
 		</label>
-		<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>File RestroPress Limit</strong>: Limit the number of times a customer who purchased this product can access their fooditem links.', 'restro-press' ); ?>"></span>
+		<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>File RestroPress Limit</strong>: Limit the number of times a customer who purchased this product can access their fooditem links.', 'restropress' ); ?>"></span>
 	</div>
 <?php
 }
@@ -938,13 +938,13 @@ function rpress_render_down_tax_options( $post_id = 0 ) {
 
 	$exclusive = rpress_fooditem_is_tax_exclusive( $post_id );
 ?>
-	<p><strong><?php _e( 'Ignore Tax:', 'restro-press' ); ?></strong></p>
+	<p><strong><?php _e( 'Ignore Tax:', 'restropress' ); ?></strong></p>
 	<label for="_rpress_fooditem_tax_exclusive">
 		<?php echo RPRESS()->html->checkbox( array(
 			'name'    => '_rpress_fooditem_tax_exclusive',
 			'current' => $exclusive
 		) ); ?>
-		<?php _e( 'Mark this product as exclusive of tax', 'restro-press' ); ?>
+		<?php _e( 'Mark this product as exclusive of tax', 'restropress' ); ?>
 	</label>
 <?php
 }
@@ -966,15 +966,15 @@ function rpress_render_fooditem_quantity_option( $post_id = 0 ) {
 
 	$disabled = rpress_fooditem_quantities_disabled( $post_id );
 ?>
-	<p><strong><?php _e( 'Item Quantities:', 'restro-press' ); ?></strong></p>
+	<p><strong><?php _e( 'Item Quantities:', 'restropress' ); ?></strong></p>
 	<label for="_rpress_quantities_disabled">
 		<?php echo RPRESS()->html->checkbox( array(
 			'name'    => '_rpress_quantities_disabled',
 			'current' => $disabled
 		) ); ?>
-		<?php _e( 'Disable quantity input for this product', 'restro-press' ); ?>
+		<?php _e( 'Disable quantity input for this product', 'restropress' ); ?>
 	</label>
-	<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Item Quantities</strong>: if disabled, customers will not be provided an option to change the number they wish to purchase.', 'restro-press' ); ?>"></span>
+	<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Item Quantities</strong>: if disabled, customers will not be provided an option to change the number they wish to purchase.', 'restropress' ); ?>"></span>
 <?php
 }
 add_action( 'rpress_meta_box_settings_fields', 'rpress_render_fooditem_quantity_option', 30 );
@@ -993,15 +993,15 @@ function rpress_render_meta_box_shortcode() {
 		return;
 	}
 
-	$purchase_text = rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restro-press' ) );
+	$purchase_text = rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restropress' ) );
 	$style         = rpress_get_option( 'button_style', 'button' );
 	$color         = rpress_get_option( 'checkout_color', 'red' );
 	$color         = ( $color == 'inherit' ) ? '' : $color;
 	$shortcode     = '[purchase_link id="' . absint( $post->ID ) . '" text="' . esc_html( $purchase_text ) . '" style="' . $style . '" color="' . esc_attr( $color ) . '"]';
 ?>
 	<p>
-		<strong><?php _e( 'Purchase Shortcode:', 'restro-press' ); ?></strong>
-		<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Purchse Shortcode</strong>: Use this shortcode to output a purchase link for this product in the location of your choosing.', 'restro-press' ); ?>"></span>
+		<strong><?php _e( 'Purchase Shortcode:', 'restropress' ); ?></strong>
+		<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Purchse Shortcode</strong>: Use this shortcode to output a purchase link for this product in the location of your choosing.', 'restropress' ); ?>"></span>
 	</p>
 	<input type="text" id="rpress-purchase-shortcode" class="widefat" readonly="readonly" value="<?php echo htmlentities( $shortcode ); ?>">
 <?php
@@ -1022,7 +1022,7 @@ function rpress_render_accounting_options( $post_id ) {
 
 		$rpress_sku = get_post_meta( $post_id, 'rpress_sku', true );
 ?>
-		<p><strong><?php _e( 'Accounting Options:', 'restro-press' ); ?></strong></p>
+		<p><strong><?php _e( 'Accounting Options:', 'restropress' ); ?></strong></p>
 		<p>
 			<label for="rpress_sku">
 				<?php echo RPRESS()->html->text( array(
@@ -1030,7 +1030,7 @@ function rpress_render_accounting_options( $post_id ) {
 					'value' => $rpress_sku,
 					'class' => 'small-text'
 				) ); ?>
-				<?php echo sprintf( __( 'Enter an SKU for this %s.', 'restro-press' ), strtolower( rpress_get_label_singular() ) ); ?>
+				<?php echo sprintf( __( 'Enter an SKU for this %s.', 'restropress' ), strtolower( rpress_get_label_singular() ) ); ?>
 			</label>
 		</p>
 <?php
@@ -1049,15 +1049,15 @@ function rpress_render_disable_button( $post_id ) {
 	$hide_button = get_post_meta( $post_id, '_rpress_hide_purchase_link', true ) ? 1 : 0;
 	$behavior    = get_post_meta( $post_id, '_rpress_button_behavior', true );
 ?>
-	<p><strong><?php _e( 'Button Options:', 'restro-press' ); ?></strong></p>
+	<p><strong><?php _e( 'Button Options:', 'restropress' ); ?></strong></p>
 	<p>
 		<label for="_rpress_hide_purchase_link">
 			<?php echo RPRESS()->html->checkbox( array(
 				'name'    => '_rpress_hide_purchase_link',
 				'current' => $hide_button
 			) ); ?>
-			<?php _e( 'Disable the automatic output of the purchase button', 'restro-press' ); ?>
-			<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Automatic Output</strong>: By default, the purchase buttons will be displayed at the bottom of the fooditem, when disabled you will need to use the Purchase link shortcode below to output the ability to buy the product where you prefer.', 'restro-press' ); ?>"></span>
+			<?php _e( 'Disable the automatic output of the purchase button', 'restropress' ); ?>
+			<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Automatic Output</strong>: By default, the purchase buttons will be displayed at the bottom of the fooditem, when disabled you will need to use the Purchase link shortcode below to output the ability to buy the product where you prefer.', 'restropress' ); ?>"></span>
 		</label>
 	</p>
 	<?php $supports_buy_now = rpress_shop_supports_buy_now(); ?>
@@ -1067,8 +1067,8 @@ function rpress_render_disable_button( $post_id ) {
 			$args = array(
 				'name'    => '_rpress_button_behavior',
 				'options' => array(
-					'add_to_cart' => __( 'Add to Cart', 'restro-press' ),
-					'direct'      => __( 'Buy Now', 'restro-press' ),
+					'add_to_cart' => __( 'Add to Cart', 'restropress' ),
+					'direct'      => __( 'Buy Now', 'restropress' ),
 				),
 				'show_option_all'  => null,
 				'show_option_none' => null,
@@ -1081,11 +1081,11 @@ function rpress_render_disable_button( $post_id ) {
 			}
 			?>
 			<?php echo RPRESS()->html->select( $args ); ?>
-			<?php _e( 'Purchase button behavior', 'restro-press' ); ?>
+			<?php _e( 'Purchase button behavior', 'restropress' ); ?>
 			<?php if ( $supports_buy_now ) : ?>
-				<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Button Behavior</strong>: Add to Cart buttons follow a traditional eCommerce flow. A Buy Now button bypasses most of the process, taking the customer directly from button click to payment, greatly speeding up the process of buying the product.', 'restro-press' ); ?>"></span>
+				<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Button Behavior</strong>: Add to Cart buttons follow a traditional eCommerce flow. A Buy Now button bypasses most of the process, taking the customer directly from button click to payment, greatly speeding up the process of buying the product.', 'restropress' ); ?>"></span>
 			<?php else: ?>
-				<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Button Behavior</strong>: Add to Cart buttons follow a traditional eCommerce flow. Buy Now buttons are only available for stores that have a single supported gateway active and that do not use taxes.', 'restro-press' ); ?>"></span>
+				<span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Button Behavior</strong>: Add to Cart buttons follow a traditional eCommerce flow. Buy Now buttons are only available for stores that have a single supported gateway active and that do not use taxes.', 'restropress' ); ?>"></span>
 			<?php endif; ?>
 
 		</label>
@@ -1123,7 +1123,7 @@ function rpress_render_product_notes_field( $post_id ) {
 	$product_notes = rpress_get_product_notes( $post_id );
 ?>
 	<textarea rows="1" cols="40" class="large-texarea" name="rpress_product_notes" id="rpress_product_notes_field"><?php echo esc_textarea( $product_notes ); ?></textarea>
-	<p><?php _e( 'Special notes or instructions for this product. These notes will be added to the purchase receipt.', 'restro-press' ); ?></p>
+	<p><?php _e( 'Special notes or instructions for this product. These notes will be added to the purchase receipt.', 'restropress' ); ?></p>
 <?php
 }
 add_action( 'rpress_product_notes_meta_box_fields', 'rpress_render_product_notes_field' );

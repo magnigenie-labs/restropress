@@ -38,11 +38,11 @@ class RPRESS_Batch_File_RestroPress_Export extends RPRESS_Batch_Export {
 	public function csv_cols() {
 
 		$cols = array(
-			'date'     => __( 'Date',   'restro-press' ),
-			'user'     => __( 'Ordered by', 'restro-press' ),
-			'ip'       => __( 'IP Address', 'restro-press' ),
-			'fooditem' => __( 'Product', 'restro-press' ),
-			'file'     => __( 'File', 'restro-press' )
+			'date'     => __( 'Date',   'restropress' ),
+			'user'     => __( 'Ordered by', 'restropress' ),
+			'ip'       => __( 'IP Address', 'restropress' ),
+			'fooditem' => __( 'Product', 'restropress' ),
+			'file'     => __( 'File', 'restropress' )
 		);
 
 		return $cols;

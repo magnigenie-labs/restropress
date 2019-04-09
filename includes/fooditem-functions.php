@@ -523,8 +523,8 @@ function rpress_single_price_option_mode( $fooditem_id = 0 ) {
 function rpress_get_fooditem_types() {
 
 	$types = array(
-		'0'       => __( 'Default', 'restro-press' ),
-		'bundle'  => __( 'Bundle', 'restro-press' )
+		'0'       => __( 'Default', 'restropress' ),
+		'bundle'  => __( 'Bundle', 'restropress' )
 	);
 
 	return apply_filters( 'rpress_fooditem_types', $types );
@@ -1260,7 +1260,7 @@ function rpress_validate_url_token( $url = '' ) {
 
 		if ( isset( $query_args['ttl'] ) && current_time( 'timestamp' ) > $query_args['ttl'] ) {
 
-			wp_die( apply_filters( 'rpress_fooditem_link_expired_text', __( 'Sorry but your fooditem link has expired.', 'restro-press' ) ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( apply_filters( 'rpress_fooditem_link_expired_text', __( 'Sorry but your fooditem link has expired.', 'restropress' ) ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 
 		}
 

@@ -27,7 +27,7 @@ function rpress_tools_page() {
 	$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 ?>
 	<div class="wrap">
-		<h2><?php _e( 'RestroPress Tools', 'restro-press' ); ?></h2>
+		<h2><?php _e( 'RestroPress Tools', 'restropress' ); ?></h2>
 		<h2 class="nav-tab-wrapper">
 			<?php
 			foreach( rpress_get_tools_tabs() as $tab_id => $tab_name ) {
@@ -65,19 +65,19 @@ function rpress_tools_page() {
 function rpress_get_tools_tabs() {
 
 	$tabs                  = array();
-	$tabs['general']       = __( 'General', 'restro-press' );
+	$tabs['general']       = __( 'General', 'restropress' );
 
 	if( count( rpress_get_beta_enabled_extensions() ) > 0 ) {
-		$tabs['betas'] = __( 'Beta Versions', 'restro-press' );
+		$tabs['betas'] = __( 'Beta Versions', 'restropress' );
 	}
 
-	$tabs['system_info']   = __( 'System Info', 'restro-press' );
+	$tabs['system_info']   = __( 'System Info', 'restropress' );
 
 	if( rpress_is_debug_mode() ) {
-		$tabs['debug_log'] = __( 'Debug Log', 'restro-press' );
+		$tabs['debug_log'] = __( 'Debug Log', 'restropress' );
 	}
 
-	$tabs['import_export'] = __( 'Import/Export', 'restro-press' );
+	$tabs['import_export'] = __( 'Import/Export', 'restropress' );
 
 	return apply_filters( 'rpress_tools_tabs', $tabs );
 }
@@ -98,18 +98,18 @@ function rpress_tools_banned_emails_display() {
 	do_action( 'rpress_tools_banned_emails_before' );
 ?>
 	<div class="postbox">
-		<h3><span><?php _e( 'Banned Emails', 'restro-press' ); ?></span></h3>
+		<h3><span><?php _e( 'Banned Emails', 'restropress' ); ?></span></h3>
 		<div class="inside">
-			<p><?php _e( 'Emails placed in the box below will not be allowed to make purchases.', 'restro-press' ); ?></p>
+			<p><?php _e( 'Emails placed in the box below will not be allowed to make purchases.', 'restropress' ); ?></p>
 			<form method="post" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-tools&tab=general' ); ?>">
 				<p>
 					<textarea name="banned_emails" rows="10" class="large-text"><?php echo implode( "\n", rpress_get_banned_emails() ); ?></textarea>
-					<span class="description"><?php _e( 'Enter emails and/or domains (starting with "@") and/or TLDs (starting with ".") to disallow, one per line.', 'restro-press' ); ?></span>
+					<span class="description"><?php _e( 'Enter emails and/or domains (starting with "@") and/or TLDs (starting with ".") to disallow, one per line.', 'restropress' ); ?></span>
 				</p>
 				<p>
 					<input type="hidden" name="rpress_action" value="save_banned_emails" />
 					<?php wp_nonce_field( 'rpress_banned_emails_nonce', 'rpress_banned_emails_nonce' ); ?>
-					<?php submit_button( __( 'Save', 'restro-press' ), 'secondary', 'submit', false ); ?>
+					<?php submit_button( __( 'Save', 'restropress' ), 'secondary', 'submit', false ); ?>
 				</p>
 			</form>
 		</div><!-- .inside -->
@@ -136,22 +136,22 @@ function rpress_tools_recount_stats_display() {
 	do_action( 'rpress_tools_recount_stats_before' );
 ?>
 	<div class="postbox">
-		<h3><span><?php _e( 'Recount Stats', 'restro-press' ); ?></span></h3>
+		<h3><span><?php _e( 'Recount Stats', 'restropress' ); ?></span></h3>
 		<div class="inside recount-stats-controls">
-			<p><?php _e( 'Use these tools to recount / reset store stats.', 'restro-press' ); ?></p>
+			<p><?php _e( 'Use these tools to recount / reset store stats.', 'restropress' ); ?></p>
 			<form method="post" id="rpress-tools-recount-form" class="rpress-export-form rpress-import-export-form">
 				<span>
 
 					<?php wp_nonce_field( 'rpress_ajax_export', 'rpress_ajax_export' ); ?>
 
 					<select name="rpress-export-class" id="recount-stats-type">
-						<option value="0" selected="selected" disabled="disabled"><?php _e( 'Please select an option', 'restro-press' ); ?></option>
-						<option data-type="recount-store" value="RPRESS_Tools_Recount_Store_Earnings"><?php _e( 'Recount Store Earnings and Sales', 'restro-press' ); ?></option>
-						<option data-type="recount-fooditem" value="RPRESS_Tools_Recount_Download_Stats"><?php printf( __( 'Recount Earnings and Sales for a %s', 'restro-press' ), rpress_get_label_singular( true ) ); ?></option>
-						<option data-type="recount-all" value="RPRESS_Tools_Recount_All_Stats"><?php printf( __( 'Recount Earnings and Sales for All %s', 'restro-press' ), rpress_get_label_plural( true ) ); ?></option>
-						<option data-type="recount-customer-stats" value="RPRESS_Tools_Recount_Customer_Stats"><?php _e( 'Recount Customer Stats', 'restro-press' ); ?></option>
+						<option value="0" selected="selected" disabled="disabled"><?php _e( 'Please select an option', 'restropress' ); ?></option>
+						<option data-type="recount-store" value="RPRESS_Tools_Recount_Store_Earnings"><?php _e( 'Recount Store Earnings and Sales', 'restropress' ); ?></option>
+						<option data-type="recount-fooditem" value="RPRESS_Tools_Recount_Download_Stats"><?php printf( __( 'Recount Earnings and Sales for a %s', 'restropress' ), rpress_get_label_singular( true ) ); ?></option>
+						<option data-type="recount-all" value="RPRESS_Tools_Recount_All_Stats"><?php printf( __( 'Recount Earnings and Sales for All %s', 'restropress' ), rpress_get_label_plural( true ) ); ?></option>
+						<option data-type="recount-customer-stats" value="RPRESS_Tools_Recount_Customer_Stats"><?php _e( 'Recount Customer Stats', 'restropress' ); ?></option>
 						<?php do_action( 'rpress_recount_tool_options' ); ?>
-						<option data-type="reset-stats" value="RPRESS_Tools_Reset_Stats"><?php _e( 'Reset Store', 'restro-press' ); ?></option>
+						<option data-type="reset-stats" value="RPRESS_Tools_Reset_Stats"><?php _e( 'Reset Store', 'restropress' ); ?></option>
 					</select>
 
 					<span id="tools-product-dropdown" style="display: none">
@@ -165,17 +165,17 @@ function rpress_tools_recount_stats_display() {
 						?>
 					</span>
 
-					<input type="submit" id="recount-stats-submit" value="<?php _e( 'Submit', 'restro-press' ); ?>" class="button-secondary"/>
+					<input type="submit" id="recount-stats-submit" value="<?php _e( 'Submit', 'restropress' ); ?>" class="button-secondary"/>
 
 					<br />
 
 					<span class="rpress-recount-stats-descriptions">
-						<span id="recount-store"><?php _e( 'Recalculates the total store earnings and sales.', 'restro-press' ); ?></span>
-						<span id="recount-fooditem"><?php printf( __( 'Recalculates the earnings and sales stats for a specific %s.', 'restro-press' ), rpress_get_label_singular( true ) ); ?></span>
-						<span id="recount-all"><?php printf( __( 'Recalculates the earnings and sales stats for all %s.', 'restro-press' ), rpress_get_label_plural( true ) ); ?></span>
-						<span id="recount-customer-stats"><?php _e( 'Recalculates the lifetime value and purchase counts for all customers.', 'restro-press' ); ?></span>
+						<span id="recount-store"><?php _e( 'Recalculates the total store earnings and sales.', 'restropress' ); ?></span>
+						<span id="recount-fooditem"><?php printf( __( 'Recalculates the earnings and sales stats for a specific %s.', 'restropress' ), rpress_get_label_singular( true ) ); ?></span>
+						<span id="recount-all"><?php printf( __( 'Recalculates the earnings and sales stats for all %s.', 'restropress' ), rpress_get_label_plural( true ) ); ?></span>
+						<span id="recount-customer-stats"><?php _e( 'Recalculates the lifetime value and purchase counts for all customers.', 'restropress' ); ?></span>
 						<?php do_action( 'rpress_recount_tool_descriptions' ); ?>
-						<span id="reset-stats"><?php _e( '<strong>Deletes</strong> all payment records, customers, and related log entries.', 'restro-press' ); ?></span>
+						<span id="reset-stats"><?php _e( '<strong>Deletes</strong> all payment records, customers, and related log entries.', 'restropress' ); ?></span>
 					</span>
 
 					<span class="spinner"></span>
@@ -205,15 +205,15 @@ function rpress_tools_clear_doing_upgrade_display() {
 	do_action( 'rpress_tools_clear_doing_upgrade_before' );
 ?>
 	<div class="postbox">
-		<h3><span><?php _e( 'Clear Incomplete Upgrade Notice', 'restro-press' ); ?></span></h3>
+		<h3><span><?php _e( 'Clear Incomplete Upgrade Notice', 'restropress' ); ?></span></h3>
 		<div class="inside">
-			<p><?php _e( 'Sometimes a database upgrade notice may not be cleared after an upgrade is completed due to conflicts with other extensions or other minor issues.', 'restro-press' ); ?></p>
-			<p><?php _e( 'If you\'re certain these upgrades have been completed, you can clear these upgrade notices by clicking the button below. If you have any questions about this, please contact the RestroPress support team and we\'ll be happy to help.', 'restro-press' ); ?></p>
+			<p><?php _e( 'Sometimes a database upgrade notice may not be cleared after an upgrade is completed due to conflicts with other extensions or other minor issues.', 'restropress' ); ?></p>
+			<p><?php _e( 'If you\'re certain these upgrades have been completed, you can clear these upgrade notices by clicking the button below. If you have any questions about this, please contact the RestroPress support team and we\'ll be happy to help.', 'restropress' ); ?></p>
 			<form method="post" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-tools&tab=general' ); ?>">
 				<p>
 					<input type="hidden" name="rpress_action" value="clear_doing_upgrade" />
 					<?php wp_nonce_field( 'rpress_clear_upgrades_nonce', 'rpress_clear_upgrades_nonce' ); ?>
-					<?php submit_button( __( 'Clear Incomplete Upgrade Notice', 'restro-press' ), 'secondary', 'submit', false ); ?>
+					<?php submit_button( __( 'Clear Incomplete Upgrade Notice', 'restropress' ), 'secondary', 'submit', false ); ?>
 				</p>
 			</form>
 		</div><!-- .inside -->
@@ -242,9 +242,9 @@ function rpress_tools_betas_display() {
 	?>
 
 	<div class="postbox rpress-beta-support">
-		<h3><span><?php _e( 'Enable Beta Versions', 'restro-press' ); ?></span></h3>
+		<h3><span><?php _e( 'Enable Beta Versions', 'restropress' ); ?></span></h3>
 		<div class="inside">
-			<p><?php _e( 'Checking any of the below checkboxes will opt you in to receive pre-release update notifications. You can opt-out at any time. Pre-release updates do not install automatically, you will still have the opportunity to ignore update notifications.', 'restro-press' ); ?></p>
+			<p><?php _e( 'Checking any of the below checkboxes will opt you in to receive pre-release update notifications. You can opt-out at any time. Pre-release updates do not install automatically, you will still have the opportunity to ignore update notifications.', 'restropress' ); ?></p>
 			<form method="post" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-tools&tab=betas' ); ?>">
 				<table class="form-table rpress-beta-support">
 					<tbody>
@@ -254,7 +254,7 @@ function rpress_tools_betas_display() {
 								<th scope="row"><?php echo esc_html( $product ); ?></th>
 								<td>
 									<input type="checkbox" name="enabled_betas[<?php echo esc_attr( $slug ); ?>]" id="enabled_betas[<?php echo esc_attr( $slug ); ?>]"<?php echo checked( $checked, true, false ); ?> value="1" />
-									<label for="enabled_betas[<?php echo esc_attr( $slug ); ?>]"><?php printf( __( 'Get updates for pre-release versions of %s', 'restro-press' ), $product ); ?></label>
+									<label for="enabled_betas[<?php echo esc_attr( $slug ); ?>]"><?php printf( __( 'Get updates for pre-release versions of %s', 'restropress' ), $product ); ?></label>
 								</td>
 							</tr>
 						<?php endforeach; ?>
@@ -262,7 +262,7 @@ function rpress_tools_betas_display() {
 				</table>
 				<input type="hidden" name="rpress_action" value="save_enabled_betas" />
 				<?php wp_nonce_field( 'rpress_save_betas_nonce', 'rpress_save_betas_nonce' ); ?>
-				<?php submit_button( __( 'Save', 'restro-press' ), 'secondary', 'submit', false ); ?>
+				<?php submit_button( __( 'Save', 'restropress' ), 'secondary', 'submit', false ); ?>
 			</form>
 		</div>
 	</div>
@@ -414,9 +414,9 @@ function rpress_tools_import_export_display() {
 ?>
 
 	<div class="postbox rpress-import-payment-history">
-		<h3><span><?php _e( 'Import Payment History', 'restro-press' ); ?></span></h3>
+		<h3><span><?php _e( 'Import Payment History', 'restropress' ); ?></span></h3>
 		<div class="inside">
-			<p><?php _e( 'Import a CSV file of payment records.', 'restro-press' ); ?></p>
+			<p><?php _e( 'Import a CSV file of payment records.', 'restropress' ); ?></p>
 			<form id="rpress-import-payments" class="rpress-import-form rpress-import-export-form" action="<?php echo esc_url( add_query_arg( 'rpress_action', 'upload_import_file', admin_url() ) ); ?>" method="post" enctype="multipart/form-data">
 
 				<div class="rpress-import-file-wrap">
@@ -426,7 +426,7 @@ function rpress_tools_import_export_display() {
 						<input name="rpress-import-file" id="rpress-payments-import-file" type="file" />
 					</p>
 					<span>
-						<input type="submit" value="<?php _e( 'Import CSV', 'restro-press' ); ?>" class="button-secondary"/>
+						<input type="submit" value="<?php _e( 'Import CSV', 'restropress' ); ?>" class="button-secondary"/>
 						<span class="spinner"></span>
 					</span>
 				</div>
@@ -436,7 +436,7 @@ function rpress_tools_import_export_display() {
 					<p>
 						<?php
 						printf(
-							__( 'Each column loaded from the CSV needs to be mapped to a payment field. Select the column that should be mapped to each field below. Any columns not needed can be ignored. See <a href="%s" target="_blank">this guide</a> for assistance with importing payment records.', 'restro-press' ),
+							__( 'Each column loaded from the CSV needs to be mapped to a payment field. Select the column that should be mapped to each field below. Any columns not needed can be ignored. See <a href="%s" target="_blank">this guide</a> for assistance with importing payment records.', 'restropress' ),
 							'http://docs.fooditems.com/category/1337-importexport'
 						);
 						?>
@@ -445,250 +445,250 @@ function rpress_tools_import_export_display() {
 					<table class="widefat rpress_repeatable_table striped" width="100%" cellpadding="0" cellspacing="0">
 						<thead>
 							<tr>
-								<th><strong><?php _e( 'Payment Field', 'restro-press' ); ?></strong></th>
-								<th><strong><?php _e( 'CSV Column', 'restro-press' ); ?></strong></th>
-								<th><strong><?php _e( 'Data Preview', 'restro-press' ); ?></strong></th>
+								<th><strong><?php _e( 'Payment Field', 'restropress' ); ?></strong></th>
+								<th><strong><?php _e( 'CSV Column', 'restropress' ); ?></strong></th>
+								<th><strong><?php _e( 'Data Preview', 'restropress' ); ?></strong></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><?php _e( 'Currency Code', 'restro-press' ); ?></td>
+								<td><?php _e( 'Currency Code', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[currency]" class="rpress-import-csv-column" data-field="Currency">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Email', 'restro-press' ); ?></td>
+								<td><?php _e( 'Email', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[email]" class="rpress-import-csv-column" data-field="Email">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'First Name', 'restro-press' ); ?></td>
+								<td><?php _e( 'First Name', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[first_name]" class="rpress-import-csv-column" data-field="First Name">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Last Name', 'restro-press' ); ?></td>
+								<td><?php _e( 'Last Name', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[last_name]" class="rpress-import-csv-column" data-field="Last Name">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Customer ID', 'restro-press' ); ?></td>
+								<td><?php _e( 'Customer ID', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[customer_id]" class="rpress-import-csv-column" data-field="Customer ID">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Discount Code(s)', 'restro-press' ); ?></td>
+								<td><?php _e( 'Discount Code(s)', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[discounts]" class="rpress-import-csv-column" data-field="Discount Code">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'IP Address', 'restro-press' ); ?></td>
+								<td><?php _e( 'IP Address', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[ip]" class="rpress-import-csv-column" data-field="IP Address">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Mode (Live|Test)', 'restro-press' ); ?></td>
+								<td><?php _e( 'Mode (Live|Test)', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[mode]" class="rpress-import-csv-column" data-field="Mode (Live|Test)">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Parent Payment ID', 'restro-press' ); ?></td>
+								<td><?php _e( 'Parent Payment ID', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[parent_payment_id]" class="rpress-import-csv-column" data-field="">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Payment Method', 'restro-press' ); ?></td>
+								<td><?php _e( 'Payment Method', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[gateway]" class="rpress-import-csv-column" data-field="Payment Method">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Payment Number', 'restro-press' ); ?></td>
+								<td><?php _e( 'Payment Number', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[number]" class="rpress-import-csv-column" data-field="Payment Number">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Date', 'restro-press' ); ?></td>
+								<td><?php _e( 'Date', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[date]" class="rpress-import-csv-column" data-field="Date">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Purchase Key', 'restro-press' ); ?></td>
+								<td><?php _e( 'Purchase Key', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[key]" class="rpress-import-csv-column" data-field="Purchase Key">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Purchased Product(s)', 'restro-press' ); ?></td>
+								<td><?php _e( 'Purchased Product(s)', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[fooditems]" class="rpress-import-csv-column" data-field="Products (Raw)">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Status', 'restro-press' ); ?></td>
+								<td><?php _e( 'Status', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[status]" class="rpress-import-csv-column" data-field="Status">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Subtotal', 'restro-press' ); ?></td>
+								<td><?php _e( 'Subtotal', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[subtotal]" class="rpress-import-csv-column" data-field="">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Tax', 'restro-press' ); ?></td>
+								<td><?php _e( 'Tax', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[tax]" class="rpress-import-csv-column" data-field="Tax ($)">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Total', 'restro-press' ); ?></td>
+								<td><?php _e( 'Total', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[total]" class="rpress-import-csv-column" data-field="Amount ($)">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Transaction ID', 'restro-press' ); ?></td>
+								<td><?php _e( 'Transaction ID', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[transaction_id]" class="rpress-import-csv-column" data-field="Transaction ID">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'User', 'restro-press' ); ?></td>
+								<td><?php _e( 'User', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[user_id]" class="rpress-import-csv-column" data-field="User">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Address Line 1', 'restro-press' ); ?></td>
+								<td><?php _e( 'Address Line 1', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[line1]" class="rpress-import-csv-column" data-field="Address">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Address Line 2', 'restro-press' ); ?></td>
+								<td><?php _e( 'Address Line 2', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[line2]" class="rpress-import-csv-column" data-field="Address (Line 2)">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'City', 'restro-press' ); ?></td>
+								<td><?php _e( 'City', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[city]" class="rpress-import-csv-column" data-field="City">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'State / Province', 'restro-press' ); ?></td>
+								<td><?php _e( 'State / Province', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[state]" class="rpress-import-csv-column" data-field="State">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Zip / Postal Code', 'restro-press' ); ?></td>
+								<td><?php _e( 'Zip / Postal Code', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[zip]" class="rpress-import-csv-column" data-field="Zip / Postal Code">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
-								<td><?php _e( 'Country', 'restro-press' ); ?></td>
+								<td><?php _e( 'Country', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[country]" class="rpress-import-csv-column" data-field="Country">
-										<option value=""><?php _e( '- Ignore this field -', 'restro-press' ); ?></option>
+										<option value=""><?php _e( '- Ignore this field -', 'restropress' ); ?></option>
 									</select>
 								</td>
-								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restro-press' ); ?></td>
+								<td class="rpress-import-preview-field"><?php _e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 						</tbody>
 					</table>
 					<p class="submit">
-						<button class="rpress-import-proceed button-primary"><?php _e( 'Process Import', 'restro-press' ); ?></button>
+						<button class="rpress-import-proceed button-primary"><?php _e( 'Process Import', 'restropress' ); ?></button>
 					</p>
 				</div>
 			</form>
@@ -697,24 +697,24 @@ function rpress_tools_import_export_display() {
 
 	
 	<div class="postbox">
-		<h3><span><?php _e( 'Export Settings', 'restro-press' ); ?></span></h3>
+		<h3><span><?php _e( 'Export Settings', 'restropress' ); ?></span></h3>
 		<div class="inside">
-			<p><?php _e( 'Export the RestroPress settings for this site as a .json file. This allows you to easily import the configuration into another site.', 'restro-press' ); ?></p>
-			<p><?php printf( __( 'To export shop data (purchases, customers, etc), visit the <a href="%s">Reports</a> page.', 'restro-press' ), admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&tab=export' ) ); ?></p>
+			<p><?php _e( 'Export the RestroPress settings for this site as a .json file. This allows you to easily import the configuration into another site.', 'restropress' ); ?></p>
+			<p><?php printf( __( 'To export shop data (purchases, customers, etc), visit the <a href="%s">Reports</a> page.', 'restropress' ), admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&tab=export' ) ); ?></p>
 			<form method="post" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-tools&tab=import_export' ); ?>">
 				<p><input type="hidden" name="rpress_action" value="export_settings" /></p>
 				<p>
 					<?php wp_nonce_field( 'rpress_export_nonce', 'rpress_export_nonce' ); ?>
-					<?php submit_button( __( 'Export', 'restro-press' ), 'secondary', 'submit', false ); ?>
+					<?php submit_button( __( 'Export', 'restropress' ), 'secondary', 'submit', false ); ?>
 				</p>
 			</form>
 		</div><!-- .inside -->
 	</div><!-- .postbox -->
 
 	<div class="postbox">
-		<h3><span><?php _e( 'Import Settings', 'restro-press' ); ?></span></h3>
+		<h3><span><?php _e( 'Import Settings', 'restropress' ); ?></span></h3>
 		<div class="inside">
-			<p><?php _e( 'Import the RestroPress settings from a .json file. This file can be obtained by exporting the settings on another site using the form above.', 'restro-press' ); ?></p>
+			<p><?php _e( 'Import the RestroPress settings from a .json file. This file can be obtained by exporting the settings on another site using the form above.', 'restropress' ); ?></p>
 			<form method="post" enctype="multipart/form-data" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-tools&tab=import_export' ); ?>">
 				<p>
 					<input type="file" name="import_file"/>
@@ -722,7 +722,7 @@ function rpress_tools_import_export_display() {
 				<p>
 					<input type="hidden" name="rpress_action" value="import_settings" />
 					<?php wp_nonce_field( 'rpress_import_nonce', 'rpress_import_nonce' ); ?>
-					<?php submit_button( __( 'Import', 'restro-press' ), 'secondary', 'submit', false ); ?>
+					<?php submit_button( __( 'Import', 'restropress' ), 'secondary', 'submit', false ); ?>
 				</p>
 			</form>
 		</div><!-- .inside -->
@@ -791,13 +791,13 @@ function rpress_tools_import_export_process_import() {
 		return;
 
 	if( rpress_get_file_extension( $_FILES['import_file']['name'] ) != 'json' ) {
-		wp_die( __( 'Please upload a valid .json file', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 400 ) );
+		wp_die( __( 'Please upload a valid .json file', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 400 ) );
 	}
 
 	$import_file = $_FILES['import_file']['tmp_name'];
 
 	if( empty( $import_file ) ) {
-		wp_die( __( 'Please upload a file to import', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 400 ) );
+		wp_die( __( 'Please upload a file to import', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 400 ) );
 	}
 
 	// Retrieve the settings from the file and convert the json object to an array
@@ -843,21 +843,21 @@ function rpress_tools_debug_log_display() {
 
 ?>
 	<div class="postbox">
-		<h3><span><?php esc_html_e( 'Debug Log', 'restro-press' ); ?></span></h3>
+		<h3><span><?php esc_html_e( 'Debug Log', 'restropress' ); ?></span></h3>
 		<div class="inside">
 			<form id="rpress-debug-log" method="post">
 				<textarea readonly="readonly" class="large-text" rows="15" name="rpress-debug-log-contents"><?php echo esc_textarea( $rpress_logs->get_file_contents() ); ?></textarea>
 				<p class="submit">
 					<input type="hidden" name="rpress_action" value="submit_debug_log" />
 					<?php
-					submit_button( __( 'Download Debug Log File', 'restro-press' ), 'primary', 'rpress-fooditem-debug-log', false );
-					submit_button( __( 'Clear Log', 'restro-press' ), 'secondary rpress-inline-button', 'rpress-clear-debug-log', false );
-					submit_button( __( 'Copy Entire Log', 'restro-press' ), 'secondary rpress-inline-button', 'rpress-copy-debug-log', false, array( 'onclick' => "this.form['rpress-debug-log-contents'].focus();this.form['rpress-debug-log-contents'].select();document.execCommand('copy');return false;" ) );
+					submit_button( __( 'Download Debug Log File', 'restropress' ), 'primary', 'rpress-fooditem-debug-log', false );
+					submit_button( __( 'Clear Log', 'restropress' ), 'secondary rpress-inline-button', 'rpress-clear-debug-log', false );
+					submit_button( __( 'Copy Entire Log', 'restropress' ), 'secondary rpress-inline-button', 'rpress-copy-debug-log', false, array( 'onclick' => "this.form['rpress-debug-log-contents'].focus();this.form['rpress-debug-log-contents'].select();document.execCommand('copy');return false;" ) );
 					?>
 				</p>
 				<?php wp_nonce_field( 'rpress-debug-log-action' ); ?>
 			</form>
-			<p><?php _e( 'Log file', 'restro-press' ); ?>: <code><?php echo $rpress_logs->get_log_file_path(); ?></code></p>
+			<p><?php _e( 'Log file', 'restropress' ); ?>: <code><?php echo $rpress_logs->get_log_file_path(); ?></code></p>
 		</div><!-- .inside -->
 	</div><!-- .postbox -->
 <?php

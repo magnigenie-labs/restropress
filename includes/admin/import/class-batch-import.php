@@ -153,7 +153,7 @@ class RPRESS_Batch_Import {
 		$more = false;
 
 		if ( ! $this->can_import() ) {
-			wp_die( __( 'You do not have permission to import data.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to import data.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 		}
 
 		return $more;

@@ -85,10 +85,10 @@ class RPRESS_Gateawy_Reports_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'label'          => __( 'Gateway', 'restro-press' ),
-			'complete_sales' => __( 'Complete Sales', 'restro-press' ),
-			'pending_sales'  => __( 'Pending / Failed Sales', 'restro-press' ),
-			'total_sales'    => __( 'Total Sales', 'restro-press' ),
+			'label'          => __( 'Gateway', 'restropress' ),
+			'complete_sales' => __( 'Complete Sales', 'restropress' ),
+			'pending_sales'  => __( 'Pending / Failed Sales', 'restropress' ),
+			'total_sales'    => __( 'Total Sales', 'restropress' ),
 		);
 
 		return $columns;

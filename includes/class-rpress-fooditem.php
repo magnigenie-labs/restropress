@@ -193,7 +193,7 @@ class RPRESS_Fooditem {
 
 		} else {
 
-			return new WP_Error( 'rpress-fooditem-invalid-property', sprintf( __( 'Can\'t get property %s', 'restro-press' ), $key ) );
+			return new WP_Error( 'rpress-fooditem-invalid-property', sprintf( __( 'Can\'t get property %s', 'restropress' ), $key ) );
 
 		}
 
@@ -215,7 +215,7 @@ class RPRESS_Fooditem {
 		$defaults = array(
 			'post_type'   => 'fooditem',
 			'post_status' => 'draft',
-			'post_title'  => __( 'New Product', 'restro-press' )
+			'post_title'  => __( 'New Product', 'restropress' )
 		);
 
 		$args = wp_parse_args( $data, $defaults );

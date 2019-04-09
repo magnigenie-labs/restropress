@@ -171,8 +171,8 @@ class RPRESS_Emails {
 	 */
 	public function get_templates() {
 		$templates = array(
-			'default' => __( 'Default Template', 'restro-press' ),
-			'none'    => __( 'No template, plain text only', 'restro-press' )
+			'default' => __( 'Default Template', 'restropress' ),
+			'none'    => __( 'No template, plain text only', 'restropress' )
 		);
 
 		return apply_filters( 'rpress_email_templates', $templates );
@@ -288,7 +288,7 @@ class RPRESS_Emails {
 	public function send( $to, $subject, $message, $attachments = '' ) {
 
 		if ( ! did_action( 'init' ) && ! did_action( 'admin_init' ) ) {
-			_doing_it_wrong( __FUNCTION__, __( 'You cannot send email with RPRESS_Emails until init/admin_init has been reached', 'restro-press' ), null );
+			_doing_it_wrong( __FUNCTION__, __( 'You cannot send email with RPRESS_Emails until init/admin_init has been reached', 'restropress' ), null );
 			return false;
 		}
 
@@ -315,7 +315,7 @@ class RPRESS_Emails {
 			}
 
 			$log_message = sprintf(
-				__( "Email from RestroPress failed to send.\nSend time: %s\nTo: %s\nSubject: %s\n\n", 'restro-press' ),
+				__( "Email from RestroPress failed to send.\nSend time: %s\nTo: %s\nSubject: %s\n\n", 'restropress' ),
 				date_i18n( 'F j Y H:i:s', current_time( 'timestamp' ) ),
 				$to,
 				$subject

@@ -24,8 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return array $links
  */
 function rpress_plugin_action_links( $links, $file ) {
-	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-settings' ) . '">' . esc_html__( 'General Settings', 'restro-press' ) . '</a>';
-	if ( $file == 'restro-press/restro-press.php' )
+	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-settings' ) . '">' . esc_html__( 'General Settings', 'restropress' ) . '</a>';
+	if ( $file == 'restropress/restropress.php' )
 		array_unshift( $links, $settings_link );
 
 	return $links;
@@ -43,7 +43,7 @@ add_filter( 'plugin_action_links', 'rpress_plugin_action_links', 10, 2 );
  * @return array $input
  */
 function rpress_plugin_row_meta( $input, $file ) {
-	if ( $file != 'restro-press/restro-press.php' )
+	if ( $file != 'restropress/restropress.php' )
 		return $input;
 
 	$rpress_link = esc_url( add_query_arg( array(
@@ -54,7 +54,7 @@ function rpress_plugin_row_meta( $input, $file ) {
 	);
 
 	$links = array(
-		'<a href="' . $rpress_link . '">' . esc_html__( 'Extensions', 'restro-press' ) . '</a>',
+		'<a href="' . $rpress_link . '">' . esc_html__( 'Extensions', 'restropress' ) . '</a>',
 	);
 
 	$input = array_merge( $input, $links );

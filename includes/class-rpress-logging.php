@@ -69,7 +69,7 @@ class RPRESS_Logging {
 	public function register_post_type() {
 		/* Logs post type */
 		$log_args = array(
-			'labels'              => array( 'name' => __( 'Logs', 'restro-press' ) ),
+			'labels'              => array( 'name' => __( 'Logs', 'restropress' ) ),
 			'public'              => false,
 			'exclude_from_search' => true,
 			'publicly_queryable'  => false,

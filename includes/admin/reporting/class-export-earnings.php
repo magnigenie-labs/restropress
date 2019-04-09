@@ -59,9 +59,9 @@ class RPRESS_Earnings_Export extends RPRESS_Export {
 	public function csv_cols() {
 
 		$cols = array(
-			'date'     => __( 'Date',   'restro-press' ),
-			'sales'    => __( 'Sales',   'restro-press' ),
-			'earnings' => __( 'Earnings', 'restro-press' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')'
+			'date'     => __( 'Date',   'restropress' ),
+			'sales'    => __( 'Sales',   'restropress' ),
+			'earnings' => __( 'Earnings', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')'
 		);
 
 		return $cols;

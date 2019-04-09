@@ -188,7 +188,7 @@ class RPRESS_Tools_Recount_Customer_Stats extends RPRESS_Batch_Export {
 	public function process_step() {
 
 		if ( ! $this->can_export() ) {
-			wp_die( __( 'You do not have permission to export data.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to export data.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 		}
 
 		$had_data = $this->get_data();
@@ -198,7 +198,7 @@ class RPRESS_Tools_Recount_Customer_Stats extends RPRESS_Batch_Export {
 			return true;
 		} else {
 			$this->done    = true;
-			$this->message = __( 'Customer stats successfully recounted.', 'restro-press' );
+			$this->message = __( 'Customer stats successfully recounted.', 'restropress' );
 			return false;
 		}
 	}

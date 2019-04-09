@@ -51,9 +51,9 @@ function rpress_system_info() {
 	}
 ?>
 	<div class="wrap">
-		<h2><?php _e( 'System Information', 'restro-press' ); ?></h2><br/>
+		<h2><?php _e( 'System Information', 'restropress' ); ?></h2><br/>
 		<form action="<?php echo esc_url( admin_url( 'edit.php?post_type=fooditem&page=rpress-system-info' ) ); ?>" method="post" dir="ltr">
-			<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="rpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'restro-press' ); ?>">
+			<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="rpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'restropress' ); ?>">
 ### Begin System Info ###
 
 ## Please include this information when posting support requests ##

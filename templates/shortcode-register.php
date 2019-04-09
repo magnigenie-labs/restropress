@@ -18,27 +18,27 @@ if ( ! is_user_logged_in() ) :
 	<?php do_action( 'rpress_register_form_fields_top' ); ?>
 
 	<fieldset>
-		<legend><?php _e( 'Register New User', 'restro-press' ); ?></legend>
+		<legend><?php _e( 'Register New User', 'restropress' ); ?></legend>
 
 		<?php do_action( 'rpress_register_form_fields_before' ); ?>
 
 		<p>
-			<label for="rpress-user-login"><?php _e( 'Username', 'restro-press' ); ?></label>
+			<label for="rpress-user-login"><?php _e( 'Username', 'restropress' ); ?></label>
 			<input id="rpress-user-login" class="required rpress-input" type="text" name="rpress_user_login" />
 		</p>
 
 		<p>
-			<label for="rpress-user-email"><?php _e( 'Email', 'restro-press' ); ?></label>
+			<label for="rpress-user-email"><?php _e( 'Email', 'restropress' ); ?></label>
 			<input id="rpress-user-email" class="required rpress-input" type="email" name="rpress_user_email" />
 		</p>
 
 		<p>
-			<label for="rpress-user-pass"><?php _e( 'Password', 'restro-press' ); ?></label>
+			<label for="rpress-user-pass"><?php _e( 'Password', 'restropress' ); ?></label>
 			<input id="rpress-user-pass" class="password required rpress-input" type="password" name="rpress_user_pass" />
 		</p>
 
 		<p>
-			<label for="rpress-user-pass2"><?php _e( 'Confirm Password', 'restro-press' ); ?></label>
+			<label for="rpress-user-pass2"><?php _e( 'Confirm Password', 'restropress' ); ?></label>
 			<input id="rpress-user-pass2" class="password required rpress-input" type="password" name="rpress_user_pass2" />
 		</p>
 
@@ -50,7 +50,7 @@ if ( ! is_user_logged_in() ) :
 			<input type="hidden" name="rpress_action" value="user_register" />
 			<input type="hidden" name="rpress_redirect" value="<?php echo esc_url( $rpress_register_redirect ); ?>"/>
 			
-			<input type="submit" class="rpress-submit <?php echo $color; ?> <?php echo $style; ?>" id="rpress-purchase-button" name="rpress_register_submit" value="<?php esc_attr_e( 'Register', 'restro-press' ); ?>"/>
+			<input type="submit" class="rpress-submit <?php echo $color; ?> <?php echo $style; ?>" id="rpress-purchase-button" name="rpress_register_submit" value="<?php esc_attr_e( 'Register', 'restropress' ); ?>"/>
 		</p>
 
 		<?php do_action( 'rpress_register_form_fields_after' ); ?>

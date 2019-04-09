@@ -767,14 +767,14 @@ class RPRESS_Discount {
 
 		switch( $this->status ) {
 			case 'expired' :
-				$label = __( 'Expired', 'restro-press' );
+				$label = __( 'Expired', 'restropress' );
 				break;
 			case 'inactive' :
-				$label = __( 'Inactive', 'restro-press' );
+				$label = __( 'Inactive', 'restropress' );
 				break;
 			case 'active' :
 			default :
-				$label = __( 'Active', 'restro-press' );
+				$label = __( 'Active', 'restropress' );
 				break;
 		}
 
@@ -1445,7 +1445,7 @@ class RPRESS_Discount {
 				// Discount has pased the start date
 				$return = true;
 			} elseif( $set_error ) {
-				rpress_set_error( 'rpress-discount-error', _x( 'This discount is invalid.', 'error shown when attempting to use a discount before its start date', 'restro-press' ) );
+				rpress_set_error( 'rpress-discount-error', _x( 'This discount is invalid.', 'error shown when attempting to use a discount before its start date', 'restropress' ) );
 			}
 		} else {
 			// No start date for this discount, so has to be true
@@ -1512,7 +1512,7 @@ class RPRESS_Discount {
 
 		if ( $this->uses >= $this->max_uses && ! empty( $this->max_uses ) ) {
 			if ( $set_error ) {
-				rpress_set_error( 'rpress-discount-error', __( 'This discount has reached its maximum usage.', 'restro-press' ) );
+				rpress_set_error( 'rpress-discount-error', __( 'This discount has reached its maximum usage.', 'restropress' ) );
 			}
 
 			$return = true;
@@ -1545,7 +1545,7 @@ class RPRESS_Discount {
 		if ( (float) $cart_amount >= (float) $this->min_price ) {
 			$return = true;
 		} elseif( $set_error ) {
-			rpress_set_error( 'rpress-discount-error', sprintf( __( 'Minimum order of %s not met.', 'restro-press' ), rpress_currency_filter( rpress_format_amount( $this->min_price ) ) ) );
+			rpress_set_error( 'rpress-discount-error', sprintf( __( 'Minimum order of %s not met.', 'restropress' ), rpress_currency_filter( rpress_format_amount( $this->min_price ) ) ) );
 		}
 
 		/**
@@ -1631,7 +1631,7 @@ class RPRESS_Discount {
 						if ( ! rpress_item_in_cart( $fooditem_id ) ) {
 
 							if ( $set_error ) {
-								rpress_set_error( 'rpress-discount-error', __( 'The product requirements for this discount are not met.', 'restro-press' ) );
+								rpress_set_error( 'rpress-discount-error', __( 'The product requirements for this discount are not met.', 'restropress' ) );
 							}
 
 							$return = false;
@@ -1660,7 +1660,7 @@ class RPRESS_Discount {
 					}
 
 					if ( ! $return && $set_error ) {
-						rpress_set_error( 'rpress-discount-error', __( 'The product requirements for this discount are not met.', 'restro-press' ) );
+						rpress_set_error( 'rpress-discount-error', __( 'The product requirements for this discount are not met.', 'restropress' ) );
 					}
 
 					break;
@@ -1678,7 +1678,7 @@ class RPRESS_Discount {
 				$return = false;
 
 				if ( $set_error ) {
-					rpress_set_error( 'rpress-discount-error', __( 'This discount is not valid for the cart contents.', 'restro-press' ) );
+					rpress_set_error( 'rpress-discount-error', __( 'This discount is not valid for the cart contents.', 'restropress' ) );
 				}
 			}
 		}
@@ -1767,7 +1767,7 @@ class RPRESS_Discount {
 						$key       = array_search( strtoupper( $this->code ), $discounts );
 						if ( false !== $key ) {
 							if ( $set_error ) {
-								rpress_set_error( 'rpress-discount-error', __( 'This discount has already been redeemed.', 'restro-press' ) );
+								rpress_set_error( 'rpress-discount-error', __( 'This discount has already been redeemed.', 'restropress' ) );
 							}
 
 							$return = true;
@@ -1815,7 +1815,7 @@ class RPRESS_Discount {
 				$return = true;
 			}
 		} elseif( $set_error ) {
-			rpress_set_error( 'rpress-discount-error', _x( 'This discount is invalid.', 'error for when a discount is invalid based on its configuration' , 'restro-press' ) );
+			rpress_set_error( 'rpress-discount-error', _x( 'This discount is invalid.', 'error for when a discount is invalid based on its configuration' , 'restropress' ) );
 		}
 
 		/**
@@ -1846,12 +1846,12 @@ class RPRESS_Discount {
 		if ( $this->exists() ) {
 			if ( $this->is_expired( $update ) ) {
 				if ( defined( 'DOING_AJAX' ) && $set_error ) {
-					rpress_set_error( 'rpress-discount-error', __( 'This discount is expired.', 'restro-press' ) );
+					rpress_set_error( 'rpress-discount-error', __( 'This discount is expired.', 'restropress' ) );
 				}
 			} elseif ( $this->post_status == 'active' ) {
 				$return = true;
 			} elseif( defined( 'DOING_AJAX' ) && $set_error ) {
-				rpress_set_error( 'rpress-discount-error', __( 'This discount is not active.', 'restro-press' ) );
+				rpress_set_error( 'rpress-discount-error', __( 'This discount is not active.', 'restropress' ) );
 			}
 		}
 

@@ -251,176 +251,176 @@ function rpress_get_registered_settings() {
 				'main' => array(
 					'order_settings' => array(
 						'id'   => 'order_settings',
-						'name' => '<h3>' . __( 'General Settings', 'restro-press' ) . '</h3>',
+						'name' => '<h3>' . __( 'General Settings', 'restropress' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
-						'tooltip_title' => __( 'Minimum Order Settings', 'restro-press' ),
+						'tooltip_title' => __( 'Minimum Order Settings', 'restropress' ),
 						'tooltip_desc'  => __( 'This would be the minimum order to be placed on the site to get checkout page' ),
 					),
 					'allow_minimum_order' => array(
 						'id'   => 'allow_minimum_order',
-						'name' => __( 'Allow minimum order amount', 'restro-press' ),
+						'name' => __( 'Allow minimum order amount', 'restropress' ),
 						'desc' => sprintf(
-							__( 'By checking this the users have to place an order with minimum amount of set price', 'restro-press' )
+							__( 'By checking this the users have to place an order with minimum amount of set price', 'restropress' )
 						),
 						'type' => 'checkbox',
 					),
 					'minimum_order_price' => array(
 						'id'   => 'minimum_order_price',
 						'size' => 'small',
-						'name' => __( 'Minimum order price', 'restro-press' ),
+						'name' => __( 'Minimum order price', 'restropress' ),
 						'desc' => sprintf(
-							__( 'Minimum order price that should be made on the store', 'restro-press' )
+							__( 'Minimum order price that should be made on the store', 'restropress' )
 						),
 						'std'  => '100',
 						'type' => 'number',
 					),
 					'minimum_order_error' => array(
 						'id'   => 'minimum_order_error',
-						'name' => __( 'Minimum order price error', 'restro-press' ),
+						'name' => __( 'Minimum order price error', 'restropress' ),
 						'desc' => sprintf(
-							__( 'This would be the error message when someone tries to place an order with less than that price, You can use {min_order_price} variable', 'restro-press' )
+							__( 'This would be the error message when someone tries to place an order with less than that price, You can use {min_order_price} variable', 'restropress' )
 						),
 						'std'  => 'We accept order for at least {min_order_price} ',
 						'type' => 'textarea',
 					),
 					'style_settings' => array(
 						'id'   => 'style_settings',
-						'name' => '<h3>' . __( 'Plugin Layout Style', 'restro-press' ) . '</h3>',
+						'name' => '<h3>' . __( 'Plugin Layout Style', 'restropress' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
-						'tooltip_title' => __( 'Plugin Layout Style', 'restro-press' ),
+						'tooltip_title' => __( 'Plugin Layout Style', 'restropress' ),
 						'tooltip_desc'  => __( 'This plugin internally uses bootstrap for style. If you make this option checked then it will take style from plugin file. Otherwise it will take style from theme css.' ),
 					),
 					'allow_using_style' => array(
 						'id'   => 'allow_using_style',
-						'name' => __( 'Use internal css?', 'restro-press' ),
+						'name' => __( 'Use internal css?', 'restropress' ),
 						'desc' => sprintf(
-							__( 'This plugin internally uses bootstrap for style. If you make this option checked then it will take style from plugin file. Otherwise it will take style from theme css.', 'restro-press' )
+							__( 'This plugin internally uses bootstrap for style. If you make this option checked then it will take style from plugin file. Otherwise it will take style from theme css.', 'restropress' )
 						),
 						'type' => 'checkbox',
 					),
 					'use_external_bootstrap_script' => array(
 						'id'   => 'use_external_bootstrap_script',
-						'name' => __( 'Use external resource for bootstrap js', 'restro-press' ),
+						'name' => __( 'Use external resource for bootstrap js', 'restropress' ),
 						'desc' => sprintf(
-							__( 'This plugin uses bootstrap js for showing the popup. If your child theme uses bootstrap js then you can check this checkbox so that the plugin will use your theme js file', 'restro-press' )
+							__( 'This plugin uses bootstrap js for showing the popup. If your child theme uses bootstrap js then you can check this checkbox so that the plugin will use your theme js file', 'restropress' )
 						),
 						'type' => 'checkbox',
 					),
 					'page_settings' => array(
 						'id'   => 'page_settings',
-						'name' => '<h3>' . __( 'Pages', 'restro-press' ) . '</h3>',
+						'name' => '<h3>' . __( 'Pages', 'restropress' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
-						'tooltip_title' => __( 'Page Settings', 'restro-press' ),
-						'tooltip_desc'  => __( 'RestroPress uses the pages below for handling the display of checkout, purchase confirmation, order history, and order failures. If pages are deleted or removed in some way, they can be recreated manually from the Pages menu. When re-creating the pages, enter the shortcode shown in the page content area.','restro-press' ),
+						'tooltip_title' => __( 'Page Settings', 'restropress' ),
+						'tooltip_desc'  => __( 'RestroPress uses the pages below for handling the display of checkout, purchase confirmation, order history, and order failures. If pages are deleted or removed in some way, they can be recreated manually from the Pages menu. When re-creating the pages, enter the shortcode shown in the page content area.','restropress' ),
 					),
 					'purchase_page' => array(
 						'id'          => 'purchase_page',
-						'name'        => __( 'Primary Checkout Page', 'restro-press' ),
-						'desc'        => __( 'This is the checkout page where buyers will complete their purchases. The [fooditem_checkout] shortcode must be on this page.', 'restro-press' ),
+						'name'        => __( 'Primary Checkout Page', 'restropress' ),
+						'desc'        => __( 'This is the checkout page where buyers will complete their purchases. The [fooditem_checkout] shortcode must be on this page.', 'restropress' ),
 						'type'        => 'select',
 						'options'     => rpress_get_pages(),
 						'chosen'      => true,
-						'placeholder' => __( 'Select a page', 'restro-press' ),
+						'placeholder' => __( 'Select a page', 'restropress' ),
 					),
 					'success_page' => array(
 						'id'          => 'success_page',
-						'name'        => __( 'Success Page', 'restro-press' ),
-						'desc'        => __( 'This is the page buyers are sent to after completing their purchases. The [rpress_receipt] shortcode should be on this page.', 'restro-press' ),
+						'name'        => __( 'Success Page', 'restropress' ),
+						'desc'        => __( 'This is the page buyers are sent to after completing their purchases. The [rpress_receipt] shortcode should be on this page.', 'restropress' ),
 						'type'        => 'select',
 						'options'     => rpress_get_pages(),
 						'chosen'      => true,
-						'placeholder' => __( 'Select a page', 'restro-press' ),
+						'placeholder' => __( 'Select a page', 'restropress' ),
 					),
 					'failure_page' => array(
 						'id'          => 'failure_page',
-						'name'        => __( 'Failed Transaction Page', 'restro-press' ),
-						'desc'        => __( 'This is the page buyers are sent to if their transaction is cancelled or fails.', 'restro-press' ),
+						'name'        => __( 'Failed Transaction Page', 'restropress' ),
+						'desc'        => __( 'This is the page buyers are sent to if their transaction is cancelled or fails.', 'restropress' ),
 						'type'        => 'select',
 						'options'     => rpress_get_pages(),
 						'chosen'      => true,
-						'placeholder' => __( 'Select a page', 'restro-press' ),
+						'placeholder' => __( 'Select a page', 'restropress' ),
 					),
 					'order_history_page' => array(
 						'id'          => 'order_history_page',
-						'name'        => __( 'Order History Page', 'restro-press' ),
-						'desc'        => __( 'This page shows a complete order history for the current user, including fooditem links. The [order_history] shortcode should be on this page.', 'restro-press' ),
+						'name'        => __( 'Order History Page', 'restropress' ),
+						'desc'        => __( 'This page shows a complete order history for the current user, including fooditem links. The [order_history] shortcode should be on this page.', 'restropress' ),
 						'type'        => 'select',
 						'options'     => rpress_get_pages(),
 						'chosen'      => true,
-						'placeholder' => __( 'Select a page', 'restro-press' ),
+						'placeholder' => __( 'Select a page', 'restropress' ),
 					),
 					'login_redirect_page' => array(
 						'id'          => 'login_redirect_page',
-						'name'        => __( 'Login Redirect Page', 'restro-press' ),
+						'name'        => __( 'Login Redirect Page', 'restropress' ),
 						'desc'        => sprintf(
-								__( 'If a customer logs in using the [rpress_login] shortcode, this is the page they will be redirected to. Note, this can be overridden using the redirect attribute in the shortcode like this: [rpress_login redirect="%s"].', 'restro-press' ), trailingslashit( home_url() )
+								__( 'If a customer logs in using the [rpress_login] shortcode, this is the page they will be redirected to. Note, this can be overridden using the redirect attribute in the shortcode like this: [rpress_login redirect="%s"].', 'restropress' ), trailingslashit( home_url() )
 						),
 						'type'        => 'select',
 						'options'     => rpress_get_pages(),
 						'chosen'      => true,
-						'placeholder' => __( 'Select a page', 'restro-press' ),
+						'placeholder' => __( 'Select a page', 'restropress' ),
 					),
 					'locale_settings' => array(
 						'id'            => 'locale_settings',
-						'name'          => '<h3>' . __( 'Store Location', 'restro-press' ) . '</h3>',
+						'name'          => '<h3>' . __( 'Store Location', 'restropress' ) . '</h3>',
 						'desc'          => '',
 						'type'          => 'header',
-						'tooltip_title' => __( 'Store Location Settings', 'restro-press' ),
-						'tooltip_desc'  => __( 'RestroPress will use the following Country and State to pre-fill fields at checkout. This will also pre-calculate any taxes defined if the location below has taxes enabled.','restro-press' ),
+						'tooltip_title' => __( 'Store Location Settings', 'restropress' ),
+						'tooltip_desc'  => __( 'RestroPress will use the following Country and State to pre-fill fields at checkout. This will also pre-calculate any taxes defined if the location below has taxes enabled.','restropress' ),
 					),
 					'base_country' => array(
 						'id'          => 'base_country',
-						'name'        => __( 'Base Country', 'restro-press' ),
-						'desc'        => __( 'Where does your store operate from?', 'restro-press' ),
+						'name'        => __( 'Base Country', 'restropress' ),
+						'desc'        => __( 'Where does your store operate from?', 'restropress' ),
 						'type'        => 'select',
 						'options'     => rpress_get_country_list(),
 						'chosen'      => true,
-						'placeholder' => __( 'Select a country', 'restro-press' ),
+						'placeholder' => __( 'Select a country', 'restropress' ),
 					),
 					'base_state' => array(
 						'id'          => 'base_state',
-						'name'        => __( 'Base State / Province', 'restro-press' ),
-						'desc'        => __( 'What state / province does your store operate from?', 'restro-press' ),
+						'name'        => __( 'Base State / Province', 'restropress' ),
+						'desc'        => __( 'What state / province does your store operate from?', 'restropress' ),
 						'type'        => 'shop_states',
 						'chosen'      => true,
-						'placeholder' => __( 'Select a state', 'restro-press' ),
+						'placeholder' => __( 'Select a state', 'restropress' ),
 						'class'       => ( empty( $shop_states ) ) ? 'hidden' : '',
 					),
 
 					'map_settings' => array(
 						'id'            => 'map_settings',
-						'name'          => '<h3>' . __( 'Google Map Settings', 'restro-press' ) . '</h3>',
+						'name'          => '<h3>' . __( 'Google Map Settings', 'restropress' ) . '</h3>',
 						'desc'          => '',
 						'type'          => 'header',
-						'tooltip_title' => __( 'Google map settings', 'restro-press' ),
+						'tooltip_title' => __( 'Google map settings', 'restropress' ),
 					),
 					'enable_google_map_api' => array(
 						'id'          => 'enable_google_map_api',
-						'name'        => __( 'Enable Google API ?', 'restro-press' ),
-						'desc'        => __( 'Enable google map api on your site', 'restro-press' ),
+						'name'        => __( 'Enable Google API ?', 'restropress' ),
+						'desc'        => __( 'Enable google map api on your site', 'restropress' ),
 						'type'        => 'checkbox',
 					),
 					'map_api_key' => array(
 						'id'          => 'map_api_key',
-						'name'        => __( 'Google Map API Key', 'restro-press' ),
-						'desc'        => __( 'Enter google map api key here. To get your google api key check this <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">link</a>', 'restro-press' ),
+						'name'        => __( 'Google Map API Key', 'restropress' ),
+						'desc'        => __( 'Enter google map api key here. To get your google api key check this <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">link</a>', 'restropress' ),
 						'type'        => 'text',
 					),
 					'store_address' => array(
 						'id'          => 'autocomplete',
-						'name'        => __( 'Store Address', 'restro-press' ),
-						'desc'        => __( 'Please set exact address for your store. It would be helpfull for better delivery experienece to your user', 'restro-press' ),
+						'name'        => __( 'Store Address', 'restropress' ),
+						'desc'        => __( 'Please set exact address for your store. It would be helpfull for better delivery experienece to your user', 'restropress' ),
 						'type'        => 'store_address',
 					),
 					'store_lat' => array(
 						'id'   => 'store_lat',
 						'size' => 'small',
-						'name' => __( 'Store Latitude', 'restro-press' ),
+						'name' => __( 'Store Latitude', 'restropress' ),
 						'desc' => sprintf(
-							__( 'Enter your store exact latitude position', 'restro-press' )
+							__( 'Enter your store exact latitude position', 'restropress' )
 						),
 						'type' => 'number',
 						'class'       => 'store_lat_lng',
@@ -428,17 +428,17 @@ function rpress_get_registered_settings() {
 					'store_lng' => array(
 						'id'   => 'store_lng',
 						'size' => 'small',
-						'name' => __( 'Store Longitude', 'restro-press' ),
+						'name' => __( 'Store Longitude', 'restropress' ),
 						'desc' => sprintf(
-							__( 'Enter your store exact longitude position', 'restro-press' )
+							__( 'Enter your store exact longitude position', 'restropress' )
 						),
 						'type' => 'number',
 						'class'       => 'store_lat_lng',
 					),
 					'use_custom_latlng' => array(
 						'id'          => 'use_custom_latlng',
-						'name'        => __( 'Use These Cordinates For Store Address', 'restro-press' ),
-						'desc'        => __( 'Use this custom latitude and longitude cordinates for store address on google map. ', 'restro-press' ),
+						'name'        => __( 'Use These Cordinates For Store Address', 'restropress' ),
+						'desc'        => __( 'Use this custom latitude and longitude cordinates for store address on google map. ', 'restropress' ),
 						'type'        => 'checkbox',
 						'class'       => 'store_lat_lng',
 					),
@@ -448,34 +448,34 @@ function rpress_get_registered_settings() {
 				'currency' => array(
 					'currency' => array(
 						'id'      => 'currency',
-						'name'    => __( 'Currency', 'restro-press' ),
-						'desc'    => __( 'Choose your currency. Note that some payment gateways have currency restrictions.', 'restro-press' ),
+						'name'    => __( 'Currency', 'restropress' ),
+						'desc'    => __( 'Choose your currency. Note that some payment gateways have currency restrictions.', 'restropress' ),
 						'type'    => 'select',
 						'options' => rpress_get_currencies(),
 						'chosen'  => true,
 					),
 					'currency_position' => array(
 						'id'      => 'currency_position',
-						'name'    => __( 'Currency Position', 'restro-press' ),
-						'desc'    => __( 'Choose the location of the currency sign.', 'restro-press' ),
+						'name'    => __( 'Currency Position', 'restropress' ),
+						'desc'    => __( 'Choose the location of the currency sign.', 'restropress' ),
 						'type'    => 'select',
 						'options' => array(
-							'before' => __( 'Before - $10', 'restro-press' ),
-							'after'  => __( 'After - 10$', 'restro-press' ),
+							'before' => __( 'Before - $10', 'restropress' ),
+							'after'  => __( 'After - 10$', 'restropress' ),
 						),
 					),
 					'thousands_separator' => array(
 						'id'   => 'thousands_separator',
-						'name' => __( 'Thousands Separator', 'restro-press' ),
-						'desc' => __( 'The symbol (usually , or .) to separate thousands.', 'restro-press' ),
+						'name' => __( 'Thousands Separator', 'restropress' ),
+						'desc' => __( 'The symbol (usually , or .) to separate thousands.', 'restropress' ),
 						'type' => 'text',
 						'size' => 'small',
 						'std'  => ',',
 					),
 					'decimal_separator' => array(
 						'id'   => 'decimal_separator',
-						'name' => __( 'Decimal Separator', 'restro-press' ),
-						'desc' => __( 'The symbol (usually , or .) to separate decimal points.', 'restro-press' ),
+						'name' => __( 'Decimal Separator', 'restropress' ),
+						'desc' => __( 'The symbol (usually , or .) to separate decimal points.', 'restropress' ),
 						'type' => 'text',
 						'size' => 'small',
 						'std'  => '.',
@@ -486,33 +486,33 @@ function rpress_get_registered_settings() {
 				'order_notification' => array(
 					'order_notification_settings' => array(
 						'id'   => 'notification_settings',
-						'name' => '<h3>' . __( 'Notification Settings', 'restro-press' ) . '</h3>',
+						'name' => '<h3>' . __( 'Notification Settings', 'restropress' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
-						'tooltip_title' => __( 'Notification Settings', 'restro-press' ),
+						'tooltip_title' => __( 'Notification Settings', 'restropress' ),
 					),
 					'enable_order_notification' => array(
 						'id'   => 'enable_order_notification',
-						'name' => __( 'Enable Notification', 'restro-press' ),
-						'desc' => __( 'Enable checkbox for order notification', 'restro-press' ),
+						'name' => __( 'Enable Notification', 'restropress' ),
+						'desc' => __( 'Enable checkbox for order notification', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'notification_title' => array(
 						'id' => 'notification_title',
-						'name'    => __( 'Title', 'restro-press' ),
-						'desc'    => __( 'Enter notification title', 'restro-press' ),
+						'name'    => __( 'Title', 'restropress' ),
+						'desc'    => __( 'Enter notification title', 'restropress' ),
 						'type' => 'text',
 					),
 					'notification_body' => array(
 						'id' => 'notification_body',
-						'name'    => __( 'Description', 'restro-press' ),
-						'desc'    => __( 'Enter notification desc. Available place holder {username}, {order_id}, {order_total}', 'restro-press' ),
+						'name'    => __( 'Description', 'restropress' ),
+						'desc'    => __( 'Enter notification desc. Available place holder {username}, {order_id}, {order_total}', 'restropress' ),
 						'type' => 'textarea',
 					),
 					'notification_duration' => array(
 						'id' => 'notification_duration',
-						'name'    => __( 'Notification Length', 'restro-press' ),
-						'desc'    => __( 'Time in seconds, "0" = Default notification length', 'restro-press' ),
+						'name'    => __( 'Notification Length', 'restropress' ),
+						'desc'    => __( 'Time in seconds, "0" = Default notification length', 'restropress' ),
 						'type' => 'number',
 					),
 				),
@@ -521,34 +521,34 @@ function rpress_get_registered_settings() {
 				'delivery_options' => array(
 					'delivery_settings' => array(
 						'id'   => 'delivery_settings',
-						'name' => '<h3>' . __( 'Delivery Settings', 'restro-press' ) . '</h3>',
+						'name' => '<h3>' . __( 'Delivery Settings', 'restropress' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
-						'tooltip_title' => __( 'Plugin Layout Style', 'restro-press' ),
+						'tooltip_title' => __( 'Plugin Layout Style', 'restropress' ),
 					),
 					'enable_delivery' => array(
 						'id' => 'enable_delivery',
-						'name'    => __( 'Enable Delivery', 'restro-press' ),
-						'desc'    => __( 'Check this option to enable delivery', 'restro-press' ),
+						'name'    => __( 'Enable Delivery', 'restropress' ),
+						'desc'    => __( 'Check this option to enable delivery', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'enable_pickup' => array(
 						'id' => 'enable_pickup',
-						'name'    => __( 'Enable Pickup', 'restro-press' ),
-						'desc'    => __( 'Check this option to enable pickup', 'restro-press' ),
+						'name'    => __( 'Enable Pickup', 'restropress' ),
+						'desc'    => __( 'Check this option to enable pickup', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'open_time' => array(
 						'id'            => 'open_time',
-						'name'          => __( 'Open Time', 'restro-press' ),
-						'desc'          => __( 'Select restaurant open time', 'restro-press' ),
+						'name'          => __( 'Open Time', 'restropress' ),
+						'desc'          => __( 'Select restaurant open time', 'restropress' ),
 						'type'          => 'text',
 						'field_class' 	=> 'rpress_timings',
 					),
 					'close_time' => array(
 						'id'            => 'close_time',
-						'name'          => __( 'Close Time', 'restro-press' ),
-						'desc'          => __( 'Select restaurant close time', 'restro-press' ),
+						'name'          => __( 'Close Time', 'restropress' ),
+						'desc'          => __( 'Select restaurant close time', 'restropress' ),
 						'type'          => 'text',
 						'field_class' 	=> 'rpress_timings'
 					),
@@ -558,26 +558,26 @@ function rpress_get_registered_settings() {
 				'checkout_options' => array(
 					'checkout_settings' => array(
 						'id'   => 'checkout_settings',
-						'name' => '<h3>' . __( 'Checkout Field Options', 'restro-press' ) . '</h3>',
+						'name' => '<h3>' . __( 'Checkout Field Options', 'restropress' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
 					),
 					'enable_phone' => array(
 						'id' => 'enable_phone',
-						'name'    => __( 'Enable Phone  Field', 'restro-press' ),
-						'desc'    => __( 'Check this option to enable this field on checkout page', 'restro-press' ),
+						'name'    => __( 'Enable Phone  Field', 'restropress' ),
+						'desc'    => __( 'Check this option to enable this field on checkout page', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'enable_door_flat' => array(
 						'id' => 'enable_door_flat',
-						'name'    => __( 'Enable Door/Flat Field', 'restro-press' ),
-						'desc'    => __( 'Check this option to enable this field on checkout page', 'restro-press' ),
+						'name'    => __( 'Enable Door/Flat Field', 'restropress' ),
+						'desc'    => __( 'Check this option to enable this field on checkout page', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'enable_landmark' => array(
 						'id' => 'enable_landmark',
-						'name'    => __( 'Enable Landmark', 'restro-press' ),
-						'desc'    => __( 'Check this option to enable landmark on checkout page', 'restro-press' ),
+						'name'    => __( 'Enable Landmark', 'restropress' ),
+						'desc'    => __( 'Check this option to enable landmark on checkout page', 'restropress' ),
 						'type' => 'checkbox',
 					),
 				),
@@ -590,28 +590,28 @@ function rpress_get_registered_settings() {
 				'main' => array(
 					'test_mode' => array(
 						'id'   => 'test_mode',
-						'name' => __( 'Test Mode', 'restro-press' ),
-						'desc' => __( 'While in test mode no live transactions are processed. To fully use test mode, you must have a sandbox (test) account for the payment gateway you are testing.', 'restro-press' ),
+						'name' => __( 'Test Mode', 'restropress' ),
+						'desc' => __( 'While in test mode no live transactions are processed. To fully use test mode, you must have a sandbox (test) account for the payment gateway you are testing.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'gateways' => array(
 						'id'      => 'gateways',
-						'name'    => __( 'Payment Gateways', 'restro-press' ),
-						'desc'    => __( 'Choose the payment gateways you want to enable.', 'restro-press' ),
+						'name'    => __( 'Payment Gateways', 'restropress' ),
+						'desc'    => __( 'Choose the payment gateways you want to enable.', 'restropress' ),
 						'type'    => 'gateways',
 						'options' => rpress_get_payment_gateways(),
 					),
 					'default_gateway' => array(
 						'id'      => 'default_gateway',
-						'name'    => __( 'Default Gateway', 'restro-press' ),
-						'desc'    => __( 'This gateway will be loaded automatically with the checkout page.', 'restro-press' ),
+						'name'    => __( 'Default Gateway', 'restropress' ),
+						'desc'    => __( 'This gateway will be loaded automatically with the checkout page.', 'restropress' ),
 						'type'    => 'gateway_select',
 						'options' => rpress_get_payment_gateways(),
 					),
 					'accepted_cards' => array(
 						'id'      => 'accepted_cards',
-						'name'    => __( 'Accepted Payment Method Icons', 'restro-press' ),
-						'desc'    => __( 'Display icons for the selected payment methods.', 'restro-press' ) . '<br/>' . __( 'You will also need to configure your gateway settings if you are accepting credit cards.', 'restro-press' ),
+						'name'    => __( 'Accepted Payment Method Icons', 'restropress' ),
+						'desc'    => __( 'Display icons for the selected payment methods.', 'restropress' ) . '<br/>' . __( 'You will also need to configure your gateway settings if you are accepting credit cards.', 'restropress' ),
 						'type'    => 'payment_icons',
 						'options' => apply_filters('rpress_accepted_payment_icons', array(
 								'mastercard'      => 'Mastercard',
@@ -631,28 +631,28 @@ function rpress_get_registered_settings() {
 				'main' => array(
 					'email_template' => array(
 						'id'      => 'email_template',
-						'name'    => __( 'Email Template', 'restro-press' ),
-						'desc'    => __( 'Choose a template. Click "Save Changes" then "Preview Purchase Receipt" to see the new template.', 'restro-press' ),
+						'name'    => __( 'Email Template', 'restropress' ),
+						'desc'    => __( 'Choose a template. Click "Save Changes" then "Preview Purchase Receipt" to see the new template.', 'restropress' ),
 						'type'    => 'select',
 						'options' => rpress_get_email_templates(),
 					),
 					'email_logo' => array(
 						'id'   => 'email_logo',
-						'name' => __( 'Logo', 'restro-press' ),
-						'desc' => __( 'Upload or choose a logo to be displayed at the top of the purchase receipt emails. Displayed on HTML emails only.', 'restro-press' ),
+						'name' => __( 'Logo', 'restropress' ),
+						'desc' => __( 'Upload or choose a logo to be displayed at the top of the purchase receipt emails. Displayed on HTML emails only.', 'restropress' ),
 						'type' => 'upload',
 					),
 					'from_name' => array(
 						'id'   => 'from_name',
-						'name' => __( 'From Name', 'restro-press' ),
-						'desc' => __( 'The name purchase receipts are said to come from. This should probably be your site or shop name.', 'restro-press' ),
+						'name' => __( 'From Name', 'restropress' ),
+						'desc' => __( 'The name purchase receipts are said to come from. This should probably be your site or shop name.', 'restropress' ),
 						'type' => 'text',
 						'std'  => get_bloginfo( 'name' ),
 					),
 					'from_email' => array(
 						'id'   => 'from_email',
-						'name' => __( 'From Email', 'restro-press' ),
-						'desc' => __( 'Email to send purchase receipts from. This will act as the "from" and "reply-to" address.', 'restro-press' ),
+						'name' => __( 'From Email', 'restropress' ),
+						'desc' => __( 'Email to send purchase receipts from. This will act as the "from" and "reply-to" address.', 'restropress' ),
 						'type' => 'email',
 						'std'  => get_bloginfo( 'admin_email' ),
 					),
@@ -672,59 +672,59 @@ function rpress_get_registered_settings() {
 					),
 					'purchase_subject' => array(
 						'id'   => 'purchase_subject',
-						'name' => __( 'Purchase Email Subject', 'restro-press' ),
-						'desc' => __( 'Enter the subject line for the purchase receipt email.', 'restro-press' ),
+						'name' => __( 'Purchase Email Subject', 'restropress' ),
+						'desc' => __( 'Enter the subject line for the purchase receipt email.', 'restropress' ),
 						'type' => 'text',
-						'std'  => __( 'Purchase Receipt', 'restro-press' ),
+						'std'  => __( 'Purchase Receipt', 'restropress' ),
 					),
 					'purchase_heading' => array(
 						'id'   => 'purchase_heading',
-						'name' => __( 'Purchase Email Heading', 'restro-press' ),
-						'desc' => __( 'Enter the heading for the purchase receipt email.', 'restro-press' ),
+						'name' => __( 'Purchase Email Heading', 'restropress' ),
+						'desc' => __( 'Enter the heading for the purchase receipt email.', 'restropress' ),
 						'type' => 'text',
-						'std'  => __( 'Purchase Receipt', 'restro-press' ),
+						'std'  => __( 'Purchase Receipt', 'restropress' ),
 					),
 					'purchase_receipt' => array(
 						'id'   => 'purchase_receipt',
-						'name' => __( 'Purchase Receipt', 'restro-press' ),
-						'desc' => __('Enter the text that is sent as purchase receipt email to users after completion of a successful purchase. HTML is accepted. Available template tags:','restro-press' ) . '<br/>' . rpress_get_emails_tags_list(),
+						'name' => __( 'Purchase Receipt', 'restropress' ),
+						'desc' => __('Enter the text that is sent as purchase receipt email to users after completion of a successful purchase. HTML is accepted. Available template tags:','restropress' ) . '<br/>' . rpress_get_emails_tags_list(),
 						'type' => 'rich_editor',
-						'std'  => __( "Dear", "restro-press" ) . " {name},\n\n" . __( "Thank you for your purchase. Please click on the link(s) below to fooditem your files.", "restro-press" ) . "\n\n{fooditem_list}\n\n{sitename}",
+						'std'  => __( "Dear", "restropress" ) . " {name},\n\n" . __( "Thank you for your purchase. Please click on the link(s) below to fooditem your files.", "restropress" ) . "\n\n{fooditem_list}\n\n{sitename}",
 					),
 				),
 				'new_order_notifications' => array(
 					'order_notification_subject' => array(
 						'id'   => 'order_notification_subject',
-						'name' => __( 'Order Notification Subject', 'restro-press' ),
-						'desc' => __( 'Enter the subject line for the order notification email.', 'restro-press' ),
+						'name' => __( 'Order Notification Subject', 'restropress' ),
+						'desc' => __( 'Enter the subject line for the order notification email.', 'restropress' ),
 						'type' => 'text',
 						'std'  => 'New Order Placed - Order #{payment_id}',
 					),
 					'order_notification_heading' => array(
 						'id'   => 'order_notification_heading',
-						'name' => __( 'Order Notification Heading', 'restro-press' ),
-						'desc' => __( 'Enter the heading for the order notification email.', 'restro-press' ),
+						'name' => __( 'Order Notification Heading', 'restropress' ),
+						'desc' => __( 'Enter the heading for the order notification email.', 'restropress' ),
 						'type' => 'text',
-						'std'  => __( 'New Order Placed!', 'restro-press' ),
+						'std'  => __( 'New Order Placed!', 'restropress' ),
 					),
 					'order_notification' => array(
 						'id'   => 'order_notification',
-						'name' => __( 'Order Notification', 'restro-press' ),
-						'desc' => __( 'Enter the text that is sent as order notification email after completion of a purchase. HTML is accepted. Available template tags:', 'restro-press' ) . '<br/>' . rpress_get_emails_tags_list(),
+						'name' => __( 'Order Notification', 'restropress' ),
+						'desc' => __( 'Enter the text that is sent as order notification email after completion of a purchase. HTML is accepted. Available template tags:', 'restropress' ) . '<br/>' . rpress_get_emails_tags_list(),
 						'type' => 'rich_editor',
 						'std'  => rpress_get_default_sale_notification_email(),
 					),
 					'admin_notice_emails' => array(
 						'id'   => 'admin_notice_emails',
-						'name' => __( 'Order Notification Emails', 'restro-press' ),
-						'desc' => __( 'Enter the email address(es) that should receive a notification anytime a order is placed, one per line.', 'restro-press' ),
+						'name' => __( 'Order Notification Emails', 'restropress' ),
+						'desc' => __( 'Enter the email address(es) that should receive a notification anytime a order is placed, one per line.', 'restropress' ),
 						'type' => 'textarea',
 						'std'  => get_bloginfo( 'admin_email' ),
 					),
 					'disable_admin_notices' => array(
 						'id'   => 'disable_admin_notices',
-						'name' => __( 'Disable Admin Notifications', 'restro-press' ),
-						'desc' => __( 'Check this box if you do not want to receive order notification emails.', 'restro-press' ),
+						'name' => __( 'Disable Admin Notifications', 'restropress' ),
+						'desc' => __( 'Check this box if you do not want to receive order notification emails.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 				),
@@ -736,35 +736,35 @@ function rpress_get_registered_settings() {
 				'main' => array(
 					'disable_styles' => array(
 						'id'            => 'disable_styles',
-						'name'          => __( 'Disable Styles', 'restro-press' ),
-						'desc'          => __( 'Check this to disable all included styling of buttons, checkout fields, and all other elements.', 'restro-press' ),
+						'name'          => __( 'Disable Styles', 'restropress' ),
+						'desc'          => __( 'Check this to disable all included styling of buttons, checkout fields, and all other elements.', 'restropress' ),
 						'type'          => 'checkbox',
-						'tooltip_title' => __( 'Disabling Styles', 'restro-press' ),
-						'tooltip_desc'  => __( "If your theme has a complete custom CSS file for RestroPress, you may wish to disable our default styles. This is not recommended unless you're sure your theme has a complete custom CSS.", 'restro-press' ),
+						'tooltip_title' => __( 'Disabling Styles', 'restropress' ),
+						'tooltip_desc'  => __( "If your theme has a complete custom CSS file for RestroPress, you may wish to disable our default styles. This is not recommended unless you're sure your theme has a complete custom CSS.", 'restropress' ),
 					),
 					'enable_food_image_popup' => array(
 						'id'            => 'enable_food_image_popup',
-						'name'          => __( 'Enable food image in popup', 'restro-press' ),
-						'desc'          => __( 'Check this to enable food items image to be shown in the popup, The food items image should be greater than 200X200', 'restro-press' ),
+						'name'          => __( 'Enable food image in popup', 'restropress' ),
+						'desc'          => __( 'Check this to enable food items image to be shown in the popup, The food items image should be greater than 200X200', 'restropress' ),
 						'type'          => 'checkbox',
 					),
 					'button_header' => array(
 						'id'   => 'button_header',
-						'name' => '<strong>' . __( 'Buttons', 'restro-press' ) . '</strong>',
-						'desc' => __( 'Options for add to cart and purchase buttons', 'restro-press' ),
+						'name' => '<strong>' . __( 'Buttons', 'restropress' ) . '</strong>',
+						'desc' => __( 'Options for add to cart and purchase buttons', 'restropress' ),
 						'type' => 'header',
 					),
 					'button_style' => array(
 						'id'      => 'button_style',
-						'name'    => __( 'Default Button Style', 'restro-press' ),
-						'desc'    => __( 'Choose the style you want to use for the buttons.', 'restro-press' ),
+						'name'    => __( 'Default Button Style', 'restropress' ),
+						'desc'    => __( 'Choose the style you want to use for the buttons.', 'restropress' ),
 						'type'    => 'select',
 						'options' => rpress_get_button_styles(),
 					),
 					'checkout_color' => array(
 						'id'      => 'checkout_color',
-						'name'    => __( 'Theme Color', 'restro-press' ),
-						'desc'    => __( 'Choose the color you want to use for the buttons and links.', 'restro-press' ),
+						'name'    => __( 'Theme Color', 'restropress' ),
+						'desc'    => __( 'Choose the color you want to use for the buttons and links.', 'restropress' ),
 						'type'    => 'color_select',
 						'options' => rpress_get_button_colors(),
 					),
@@ -778,58 +778,58 @@ function rpress_get_registered_settings() {
 				'main' => array(
 					'enable_taxes' => array(
 						'id'            => 'enable_taxes',
-						'name'          => __( 'Enable Taxes', 'restro-press' ),
-						'desc'          => __( 'Check this to enable taxes on purchases.', 'restro-press' ),
+						'name'          => __( 'Enable Taxes', 'restropress' ),
+						'desc'          => __( 'Check this to enable taxes on purchases.', 'restropress' ),
 						'type'          => 'checkbox',
-						'tooltip_title' => __( 'Enabling Taxes', 'restro-press' ),
-						'tooltip_desc'  => __( 'With taxes enabled, RestroPress will use the rules below to charge tax to customers. With taxes enabled, customers are required to input their address on checkout so that taxes can be properly calculated.', 'restro-press' ),
+						'tooltip_title' => __( 'Enabling Taxes', 'restropress' ),
+						'tooltip_desc'  => __( 'With taxes enabled, RestroPress will use the rules below to charge tax to customers. With taxes enabled, customers are required to input their address on checkout so that taxes can be properly calculated.', 'restropress' ),
 					),
 					'tax_rates' => array(
 						'id'   => 'tax_rates',
-						'name' => '<strong>' . __( 'Tax Rates', 'restro-press' ) . '</strong>',
-						'desc' => __( 'Add tax rates for specific regions. Enter a percentage, such as 6.5 for 6.5%.', 'restro-press' ),
+						'name' => '<strong>' . __( 'Tax Rates', 'restropress' ) . '</strong>',
+						'desc' => __( 'Add tax rates for specific regions. Enter a percentage, such as 6.5 for 6.5%.', 'restropress' ),
 						'type' => 'tax_rates',
 					),
 					'tax_rate' => array(
 						'id'   => 'tax_rate',
-						'name' => __( 'Fallback Tax Rate', 'restro-press' ),
-						'desc' => __( 'Customers not in a specific rate will be charged this tax rate. Enter a percentage, such as 6.5 for 6.5%. ', 'restro-press' ),
+						'name' => __( 'Fallback Tax Rate', 'restropress' ),
+						'desc' => __( 'Customers not in a specific rate will be charged this tax rate. Enter a percentage, such as 6.5 for 6.5%. ', 'restropress' ),
 						'type' => 'text',
 						'size' => 'small',
-						'tooltip_title' => __( 'Fallback Tax Rate', 'restro-press' ),
-						'tooltip_desc'  => __( 'If the customer\'s address fails to meet the above tax rules, you can define a `default` tax rate to be applied to all other customers. Enter a percentage, such as 6.5 for 6.5%.', 'restro-press' ),
+						'tooltip_title' => __( 'Fallback Tax Rate', 'restropress' ),
+						'tooltip_desc'  => __( 'If the customer\'s address fails to meet the above tax rules, you can define a `default` tax rate to be applied to all other customers. Enter a percentage, such as 6.5 for 6.5%.', 'restropress' ),
 					),
 					'prices_include_tax' => array(
 						'id'   => 'prices_include_tax',
-						'name' => __( 'Prices entered with tax', 'restro-press' ),
-						'desc' => __( 'This option affects how you enter prices.', 'restro-press' ),
+						'name' => __( 'Prices entered with tax', 'restropress' ),
+						'desc' => __( 'This option affects how you enter prices.', 'restropress' ),
 						'type' => 'radio',
 						'std'  => 'no',
 						'options' => array(
-							'yes' => __( 'Yes, I will enter prices inclusive of tax', 'restro-press' ),
-							'no'  => __( 'No, I will enter prices exclusive of tax', 'restro-press' ),
+							'yes' => __( 'Yes, I will enter prices inclusive of tax', 'restropress' ),
+							'no'  => __( 'No, I will enter prices exclusive of tax', 'restropress' ),
 						),
-						'tooltip_title' => __( 'Prices Inclusive of Tax', 'restro-press' ),
-						'tooltip_desc'  => __( 'When using prices inclusive of tax, you will be entering your prices as the total amount you want a customer to pay for the fooditem, including tax. RestroPress will calculate the proper amount to tax the customer for the defined total price.', 'restro-press' ),
+						'tooltip_title' => __( 'Prices Inclusive of Tax', 'restropress' ),
+						'tooltip_desc'  => __( 'When using prices inclusive of tax, you will be entering your prices as the total amount you want a customer to pay for the fooditem, including tax. RestroPress will calculate the proper amount to tax the customer for the defined total price.', 'restropress' ),
 					),
 					'display_tax_rate' => array(
 						'id'   => 'display_tax_rate',
-						'name' => __( 'Display Tax Rate on Prices', 'restro-press' ),
-						'desc' => __( 'Some countries require a notice when product prices include tax.', 'restro-press' ),
+						'name' => __( 'Display Tax Rate on Prices', 'restropress' ),
+						'desc' => __( 'Some countries require a notice when product prices include tax.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'checkout_include_tax' => array(
 						'id'   => 'checkout_include_tax',
-						'name' => __( 'Display during checkout', 'restro-press' ),
-						'desc' => __( 'Should prices on the checkout page be shown with or without tax?', 'restro-press' ),
+						'name' => __( 'Display during checkout', 'restropress' ),
+						'desc' => __( 'Should prices on the checkout page be shown with or without tax?', 'restropress' ),
 						'type' => 'select',
 						'std'  => 'no',
 						'options' => array(
-							'yes' => __( 'Including tax', 'restro-press' ),
-							'no'  => __( 'Excluding tax', 'restro-press' ),
+							'yes' => __( 'Including tax', 'restropress' ),
+							'no'  => __( 'Excluding tax', 'restropress' ),
 						),
-						'tooltip_title' => __( 'Taxes Displayed for Products on Checkout', 'restro-press' ),
-						'tooltip_desc'  => __( 'This option will determine whether the product price displays with or without tax on checkout.', 'restro-press' ),
+						'tooltip_title' => __( 'Taxes Displayed for Products on Checkout', 'restropress' ),
+						'tooltip_desc'  => __( 'This option will determine whether the product price displays with or without tax on checkout.', 'restropress' ),
 					),
 				),
 			)
@@ -847,102 +847,102 @@ function rpress_get_registered_settings() {
 				'main' => array(
 					'debug_mode' => array(
 						'id'   => 'debug_mode',
-						'name' => __( 'Debug Mode', 'restro-press' ),
-						'desc' => __( 'Check this box to enable debug mode. When enabled, debug messages will be logged and shown in RestroPress &rarr; Tools &rarr; Debug Log.', 'restro-press' ),
+						'name' => __( 'Debug Mode', 'restropress' ),
+						'desc' => __( 'Check this box to enable debug mode. When enabled, debug messages will be logged and shown in RestroPress &rarr; Tools &rarr; Debug Log.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'uninstall_on_delete' => array(
 						'id'   => 'uninstall_on_delete',
-						'name' => __( 'Remove Data on Uninstall?', 'restro-press' ),
-						'desc' => __( 'Check this box if you would like RPRESS to completely remove all of its data when the plugin is deleted.', 'restro-press' ),
+						'name' => __( 'Remove Data on Uninstall?', 'restropress' ),
+						'desc' => __( 'Check this box if you would like RPRESS to completely remove all of its data when the plugin is deleted.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 				),
 				'checkout' => array(
 					'enforce_ssl' => array(
 						'id'   => 'enforce_ssl',
-						'name' => __( 'Enforce SSL on Checkout', 'restro-press' ),
-						'desc' => __( 'Check this to force users to be redirected to the secure checkout page. You must have an SSL certificate installed to use this option.', 'restro-press' ),
+						'name' => __( 'Enforce SSL on Checkout', 'restropress' ),
+						'desc' => __( 'Check this to force users to be redirected to the secure checkout page. You must have an SSL certificate installed to use this option.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					
 					'show_register_form' => array(
 						'id'      => 'show_register_form',
-						'name'    => __( 'Show Register / Login Form?', 'restro-press' ),
-						'desc'    => __( 'Display the registration and login forms on the checkout page for non-logged-in users.', 'restro-press' ),
+						'name'    => __( 'Show Register / Login Form?', 'restropress' ),
+						'desc'    => __( 'Display the registration and login forms on the checkout page for non-logged-in users.', 'restropress' ),
 						'type'    => 'select',
 						'std'     => 'none',
 						'options' => array(
-							'both'         => __( 'Registration and Login Forms', 'restro-press' ),
-							'registration' => __( 'Registration Form Only', 'restro-press' ),
-							'login'        => __( 'Login Form Only', 'restro-press' ),
-							'none'         => __( 'None', 'restro-press' ),
+							'both'         => __( 'Registration and Login Forms', 'restropress' ),
+							'registration' => __( 'Registration Form Only', 'restropress' ),
+							'login'        => __( 'Login Form Only', 'restropress' ),
+							'none'         => __( 'None', 'restropress' ),
 						),
 					),
 					
 					'enable_cart_saving' => array(
 						'id'   => 'enable_cart_saving',
-						'name' => __( 'Enable Cart Saving', 'restro-press' ),
-						'desc' => __( 'Check this to enable cart saving on the checkout.', 'restro-press' ),
+						'name' => __( 'Enable Cart Saving', 'restropress' ),
+						'desc' => __( 'Check this to enable cart saving on the checkout.', 'restropress' ),
 						'type' => 'checkbox',
-						'tooltip_title' => __( 'Cart Saving', 'restro-press' ),
-						'tooltip_desc'  => __( 'Cart saving allows shoppers to create a temporary link to their current shopping cart so they can come back to it later, or share it with someone.', 'restro-press' ),
+						'tooltip_title' => __( 'Cart Saving', 'restropress' ),
+						'tooltip_desc'  => __( 'Cart saving allows shoppers to create a temporary link to their current shopping cart so they can come back to it later, or share it with someone.', 'restropress' ),
 					),
 				),
 				'button_text' => array(
 					'checkout_label' => array(
 						'id'   => 'checkout_label',
-						'name' => __( 'Complete Purchase Text', 'restro-press' ),
-						'desc' => __( 'The button label for completing a purchase.', 'restro-press' ),
+						'name' => __( 'Complete Purchase Text', 'restropress' ),
+						'desc' => __( 'The button label for completing a purchase.', 'restropress' ),
 						'type' => 'text',
-						'std'  => __( 'Purchase', 'restro-press' ),
+						'std'  => __( 'Purchase', 'restropress' ),
 					),
 					'free_checkout_label' => array(
 						'id'   => 'free_checkout_label',
-						'name' => __( 'Complete Free Purchase Text', 'restro-press' ),
-						'desc' => __( 'The button label for completing a free purchase.', 'restro-press' ),
+						'name' => __( 'Complete Free Purchase Text', 'restropress' ),
+						'desc' => __( 'The button label for completing a free purchase.', 'restropress' ),
 						'type' => 'text',
 					),
 					'add_to_cart_text' => array(
 						'id'   => 'add_to_cart_text',
-						'name' => __( 'Add to Cart Text', 'restro-press' ),
-						'desc' => __( 'Text shown on the Add to Cart Buttons.', 'restro-press' ),
+						'name' => __( 'Add to Cart Text', 'restropress' ),
+						'desc' => __( 'Text shown on the Add to Cart Buttons.', 'restropress' ),
 						'type' => 'text',
-						'std'  => __( 'Add to Cart', 'restro-press' ),
+						'std'  => __( 'Add to Cart', 'restropress' ),
 					),
 					'checkout_button_text' => array(
 						'id'   => 'checkout_button_text',
-						'name' => __( 'Checkout Button Text', 'restro-press' ),
-						'desc' => __( 'Text shown on the Add to Cart Button when the product is already in the cart.', 'restro-press' ),
+						'name' => __( 'Checkout Button Text', 'restropress' ),
+						'desc' => __( 'Text shown on the Add to Cart Button when the product is already in the cart.', 'restropress' ),
 						'type' => 'text',
-						'std'  => _x( 'Checkout', 'text shown on the Add to Cart Button when the product is already in the cart', 'restro-press' ),
+						'std'  => _x( 'Checkout', 'text shown on the Add to Cart Button when the product is already in the cart', 'restropress' ),
 					),
 					'buy_now_text' => array(
 						'id'   => 'buy_now_text',
-						'name' => __( 'Buy Now Text', 'restro-press' ),
-						'desc' => __( 'Text shown on the Buy Now Buttons.', 'restro-press' ),
+						'name' => __( 'Buy Now Text', 'restropress' ),
+						'desc' => __( 'Text shown on the Buy Now Buttons.', 'restropress' ),
 						'type' => 'text',
-						'std'  => __( 'Buy Now', 'restro-press' ),
+						'std'  => __( 'Buy Now', 'restropress' ),
 					),
 				),
 				'site_terms'     => array(
 					'show_agree_to_terms' => array(
 						'id'   => 'show_agree_to_terms',
-						'name' => __( 'Agree to Terms', 'restro-press' ),
-						'desc' => __( 'Check this to show an agree to terms on checkout that users must agree to before creating orders.', 'restro-press' ),
+						'name' => __( 'Agree to Terms', 'restropress' ),
+						'desc' => __( 'Check this to show an agree to terms on checkout that users must agree to before creating orders.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'agree_label' => array(
 						'id'   => 'agree_label',
-						'name' => __( 'Agree to Terms Label', 'restro-press' ),
-						'desc' => __( 'Label shown next to the agree to terms checkbox.', 'restro-press' ),
+						'name' => __( 'Agree to Terms Label', 'restropress' ),
+						'desc' => __( 'Label shown next to the agree to terms checkbox.', 'restropress' ),
 						'type' => 'text',
 						'size' => 'regular',
 					),
 					'agree_text' => array(
 						'id'   => 'agree_text',
-						'name' => __( 'Agreement Text', 'restro-press' ),
-						'desc' => __( 'If Agree to Terms is checked, enter the agreement terms here.', 'restro-press' ),
+						'name' => __( 'Agreement Text', 'restropress' ),
+						'desc' => __( 'If Agree to Terms is checked, enter the agreement terms here.', 'restropress' ),
 						'type' => 'rich_editor',
 					),
 				),
@@ -953,21 +953,21 @@ function rpress_get_registered_settings() {
 				'general' => array(
 					'show_agree_to_privacy_policy' => array(
 						'id'   => 'show_agree_to_privacy_policy',
-						'name' => __( 'Agree to Privacy Policy', 'restro-press' ),
-						'desc' => __( 'Check this to show an agree to Privacy Policy on checkout that users must agree to before creating orders.', 'restro-press' ),
+						'name' => __( 'Agree to Privacy Policy', 'restropress' ),
+						'desc' => __( 'Check this to show an agree to Privacy Policy on checkout that users must agree to before creating orders.', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'agree_privacy_label' => array(
 						'id'   => 'privacy_agree_label',
-						'name' => __( 'Agree to Privacy Policy Label', 'restro-press' ),
-						'desc' => __( 'Label shown next to the agree to Privacy Policy checkbox.', 'restro-press' ),
+						'name' => __( 'Agree to Privacy Policy Label', 'restropress' ),
+						'desc' => __( 'Label shown next to the agree to Privacy Policy checkbox.', 'restropress' ),
 						'type' => 'text',
 						'size' => 'regular',
 					),
 					'show_privacy_policy_on_checkout' => array(
 						'id'   => 'show_privacy_policy_on_checkout',
-						'name' => __( 'Show the Privacy Policy on checkout', 'restro-press' ),
-						'desc' => __( 'Display your Privacy Policy on checkout.', 'restro-press' ) . ' <a href="' . esc_attr( admin_url( 'privacy.php' ) ) . '">' . __( 'Set your Privacy Policy here', 'restro-press' ) .'</a>.',
+						'name' => __( 'Show the Privacy Policy on checkout', 'restropress' ),
+						'desc' => __( 'Display your Privacy Policy on checkout.', 'restropress' ) . ' <a href="' . esc_attr( admin_url( 'privacy.php' ) ) . '">' . __( 'Set your Privacy Policy here', 'restropress' ) .'</a>.',
 						'type' => 'checkbox',
 					),
 				),
@@ -980,11 +980,11 @@ function rpress_get_registered_settings() {
 
 	$rpress_settings['privacy']['export_erase'][] = array(
 		'id'            => 'payment_privacy_status_action_header',
-		'name'          => '<h3>' . __( 'Payment Status Actions', 'restro-press' ) . '</h3>',
+		'name'          => '<h3>' . __( 'Payment Status Actions', 'restropress' ) . '</h3>',
 		'type'          => 'descriptive_text',
-		'desc'          => __( 'When a user requests to be anonymized or removed from a site, these are the actions that will be taken on payments associated with their customer, by status.','restro-press' ),
-		'tooltip_title' => __( 'What settings should I use?', 'restro-press' ),
-		'tooltip_desc'  => __( 'By default, RestroPress sets suggested actions based on the Payment Status. These are purely recommendations, and you may need to change them to suit your store\'s needs. If you are unsure, you can safely leave these settings as is.','restro-press' ),
+		'desc'          => __( 'When a user requests to be anonymized or removed from a site, these are the actions that will be taken on payments associated with their customer, by status.','restropress' ),
+		'tooltip_title' => __( 'What settings should I use?', 'restropress' ),
+		'tooltip_desc'  => __( 'By default, RestroPress sets suggested actions based on the Payment Status. These are purely recommendations, and you may need to change them to suit your store\'s needs. If you are unsure, you can safely leave these settings as is.','restropress' ),
 	);
 
 	$rpress_settings['privacy']['export_erase'][] = array(
@@ -995,9 +995,9 @@ function rpress_get_registered_settings() {
 	);
 
 	$select_options = array(
-		'none'      => __( 'No Action', 'restro-press' ),
-		'anonymize' => __( 'Anonymize', 'restro-press' ),
-		'delete'    => __( 'Delete', 'restro-press' ),
+		'none'      => __( 'No Action', 'restropress' ),
+		'anonymize' => __( 'Anonymize', 'restropress' ),
+		'delete'    => __( 'Delete', 'restropress' ),
 	);
 
 	foreach ( $payment_statuses as $status => $label ) {
@@ -1025,7 +1025,7 @@ function rpress_get_registered_settings() {
 
 		$rpress_settings['privacy']['export_erase'][] = array(
 			'id'      => 'payment_privacy_status_action_' . $status,
-			'name'    => sprintf( _x( '%s Payments', 'payment status labels for the privacy export & erase settings: Pending Payments', 'restro-press' ), $label ),
+			'name'    => sprintf( _x( '%s Payments', 'payment status labels for the privacy export & erase settings: Pending Payments', 'restropress' ), $label ),
 			'desc'    => '',
 			'type'    => 'select',
 			'options' => $select_options,
@@ -1036,8 +1036,8 @@ function rpress_get_registered_settings() {
 
 	if ( ! rpress_shop_supports_buy_now() ) {
 		$rpress_settings['misc']['button_text']['buy_now_text']['disabled']      = true;
-		$rpress_settings['misc']['button_text']['buy_now_text']['tooltip_title'] = __( 'Buy Now Disabled', 'restro-press' );
-		$rpress_settings['misc']['button_text']['buy_now_text']['tooltip_desc']  = __( 'Buy Now buttons are only available for stores that have a single supported gateway active and that do not use taxes.', 'restro-press' );
+		$rpress_settings['misc']['button_text']['buy_now_text']['tooltip_title'] = __( 'Buy Now Disabled', 'restropress' );
+		$rpress_settings['misc']['button_text']['buy_now_text']['tooltip_desc']  = __( 'Buy Now buttons are only available for stores that have a single supported gateway active and that do not use taxes.', 'restropress' );
 	}
 
 	return apply_filters( 'rpress_registered_settings', $rpress_settings );
@@ -1140,7 +1140,7 @@ function rpress_settings_sanitize( $input = array() ) {
 	}
 
 	if ( $doing_section ) {
-		add_settings_error( 'rpress-notices', '', __( 'Settings updated.', 'restro-press' ), 'updated' );
+		add_settings_error( 'rpress-notices', '', __( 'Settings updated.', 'restropress' ), 'updated' );
 	}
 
 	return $output;
@@ -1284,7 +1284,7 @@ function rpress_settings_sanitize_gateways( $input ) {
 
 	if ( empty( $input['gateways'] ) || '-1' == $input['gateways'] )  {
 
-		add_settings_error( 'rpress-notices', '', __( 'Error setting default gateway. No gateways are enabled.', 'restro-press' ) );
+		add_settings_error( 'rpress-notices', '', __( 'Error setting default gateway. No gateways are enabled.', 'restropress' ) );
 		unset( $input['default_gateway'] );
 
 	} else if ( ! array_key_exists( $input['default_gateway'], $input['gateways'] ) ) {
@@ -1297,7 +1297,7 @@ function rpress_settings_sanitize_gateways( $input ) {
 		$first_gateway = key( $enabled_gateways );
 
 		if ( $first_gateway ) {
-			add_settings_error( 'rpress-notices', '', sprintf( __( '%s could not be set as the default gateway. It must first be enabled.', 'restro-press' ), $selected_default['admin_label'] ), 'error' );
+			add_settings_error( 'rpress-notices', '', sprintf( __( '%s could not be set as the default gateway. It must first be enabled.', 'restropress' ), $selected_default['admin_label'] ), 'error' );
 			$input['default_gateway'] = $first_gateway;
 		}
 
@@ -1391,22 +1391,22 @@ function rpress_get_settings_tabs() {
 	$settings = rpress_get_registered_settings();
 
 	$tabs             = array();
-	$tabs['general']  = __( 'General', 'restro-press' );
-	$tabs['gateways'] = __( 'Payment Gateways', 'restro-press' );
-	$tabs['emails']   = __( 'Emails', 'restro-press' );
-	$tabs['styles']   = __( 'Styles', 'restro-press' );
-	$tabs['taxes']    = __( 'Taxes', 'restro-press' );
-	$tabs['privacy']  = __( 'Privacy', 'restro-press' );
+	$tabs['general']  = __( 'General', 'restropress' );
+	$tabs['gateways'] = __( 'Payment Gateways', 'restropress' );
+	$tabs['emails']   = __( 'Emails', 'restropress' );
+	$tabs['styles']   = __( 'Styles', 'restropress' );
+	$tabs['taxes']    = __( 'Taxes', 'restropress' );
+	$tabs['privacy']  = __( 'Privacy', 'restropress' );
 
 	if( ! empty( $settings['extensions'] ) ) {
-		$tabs['extensions'] = __( 'Extensions', 'restro-press' );
+		$tabs['extensions'] = __( 'Extensions', 'restropress' );
 	}
 
 	if( ! empty( $settings['licenses'] ) ) {
-		$tabs['licenses'] 	= __( 'Licenses', 'restro-press' );
+		$tabs['licenses'] 	= __( 'Licenses', 'restropress' );
 	}
 
-	$tabs['misc']      		= __( 'Misc', 'restro-press' );
+	$tabs['misc']      		= __( 'Misc', 'restropress' );
 
 	return apply_filters( 'rpress_settings_tabs', $tabs );
 }
@@ -1448,45 +1448,45 @@ function rpress_get_registered_settings_sections() {
 
 	$sections = array(
 		'general'    => apply_filters( 'rpress_settings_sections_general', array(
-			'main'               => __( 'General', 'restro-press' ),
-			'currency'           => __( 'Currency', 'restro-press' ),
-			'order_notification'   => __( 'Order Notification', 'restro-press' ),
-			'delivery_options'   => __( 'Delivery Options', 'restro-press' ),
-			'checkout_options'   => __( 'Checkout Options', 'restro-press' ),
+			'main'               => __( 'General', 'restropress' ),
+			'currency'           => __( 'Currency', 'restropress' ),
+			'order_notification'   => __( 'Order Notification', 'restropress' ),
+			'delivery_options'   => __( 'Delivery Options', 'restropress' ),
+			'checkout_options'   => __( 'Checkout Options', 'restropress' ),
 		) ),
 		'gateways'   => apply_filters( 'rpress_settings_sections_gateways', array(
-			'main'               => __( 'General', 'restro-press' ),
-			'paypal'             => __( 'PayPal Standard', 'restro-press' ),
+			'main'               => __( 'General', 'restropress' ),
+			'paypal'             => __( 'PayPal Standard', 'restropress' ),
 		) ),
 		'emails'     => apply_filters( 'rpress_settings_sections_emails', array(
-			'main'               => __( 'General', 'restro-press' ),
-			'purchase_receipts'  => __( 'Purchase Receipts', 'restro-press' ),
-			'new_order_notifications' => __( 'New Order Notifications', 'restro-press' ),
+			'main'               => __( 'General', 'restropress' ),
+			'purchase_receipts'  => __( 'Purchase Receipts', 'restropress' ),
+			'new_order_notifications' => __( 'New Order Notifications', 'restropress' ),
 		) ),
 		'styles'     => apply_filters( 'rpress_settings_sections_styles', array(
-			'main'               => __( 'General', 'restro-press' ),
+			'main'               => __( 'General', 'restropress' ),
 		) ),
 		'taxes'      => apply_filters( 'rpress_settings_sections_taxes', array(
-			'main'               => __( 'General', 'restro-press' ),
+			'main'               => __( 'General', 'restropress' ),
 		) ),
 		'extensions' => apply_filters( 'rpress_settings_sections_extensions', array(
-			'main'               => __( 'Main', 'restro-press' )
+			'main'               => __( 'Main', 'restropress' )
 		) ),
 		'licenses'   => apply_filters( 'rpress_settings_sections_licenses', array() ),
 		'misc'       => apply_filters( 'rpress_settings_sections_misc', array(
-			'main'               => __( 'Miscellaneous', 'restro-press' ),
-			'checkout'           => __( 'Checkout', 'restro-press' ),
-			'button_text'        => __( 'Button Text', 'restro-press' ),
-			'site_terms'         => __( 'Terms of Agreement', 'restro-press' ),
+			'main'               => __( 'Miscellaneous', 'restropress' ),
+			'checkout'           => __( 'Checkout', 'restropress' ),
+			'button_text'        => __( 'Button Text', 'restropress' ),
+			'site_terms'         => __( 'Terms of Agreement', 'restropress' ),
 		) ),
 		'privacy'    => apply_filters( 'rpress_settings_section_privacy', array(
-			'general'      => __( 'General', 'restro-press' ),
-			'export_erase' => __( 'Export & Erase', 'restro-press' ),
+			'general'      => __( 'General', 'restropress' ),
+			'export_erase' => __( 'Export & Erase', 'restropress' ),
 		) ),
 		
 		// 'notification'     => apply_filters( 'rpress_settings_sections_notification', array(
-		// 	'main'               => __( 'General Settings', 'restro-press' ),
-		// 	'active_notification'           => __( 'Active Notifications', 'restro-press' ),
+		// 	'main'               => __( 'General Settings', 'restropress' ),
+		// 	'active_notification'           => __( 'Active Notifications', 'restropress' ),
 		// ) ),
 	);
 
@@ -1948,7 +1948,7 @@ function rpress_password_callback( $args ) {
  */
 function rpress_missing_callback($args) {
 	printf(
-		__( 'The callback function used for the %s setting is missing.', 'restro-press' ),
+		__( 'The callback function used for the %s setting is missing.', 'restropress' ),
 		'<strong>' . $args['id'] . '</strong>'
 	);
 }
@@ -2106,7 +2106,7 @@ function rpress_upload_callback( $args ) {
 
 	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html = '<input type="text" class="' . sanitize_html_class( $size ) . '-text" id="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . ']" class="' . $class . '" name="rpress_settings[' . esc_attr( $args['id'] ) . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-	$html .= '<span>&nbsp;<input type="button" class="rpress_settings_upload_button button-secondary" value="' . __( 'Upload File', 'restro-press' ) . '"/></span>';
+	$html .= '<span>&nbsp;<input type="button" class="rpress_settings_upload_button button-secondary" value="' . __( 'Upload File', 'restropress' ) . '"/></span>';
 	$html .= '<label for="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . ']"> ' . wp_kses_post( $args['desc'] ) . '</label>';
 
 	echo apply_filters( 'rpress_after_setting_output', $html, $args );
@@ -2159,9 +2159,9 @@ function rpress_store_address_callback($args) {
 	$rpress_store_address = rpress_get_option('rpress_store_address');
 	$rpress_store_address = $rpress_store_address !== '' ? $rpress_store_address : '';
 
-	$html = '<input class="regular-text rpress-input autocomplete" id="autocomplete" name="rpress_settings[rpress_store_address]" value="'.$rpress_store_address.'"  placeholder="'.__('Enter Your Address', 'restro-press').'">';
+	$html = '<input class="regular-text rpress-input autocomplete" id="autocomplete" name="rpress_settings[rpress_store_address]" value="'.$rpress_store_address.'"  placeholder="'.__('Enter Your Address', 'restropress').'">';
 	$html .= '<input type="hidden" id="rpress_geo_address" name="rpress_settings[rpress_geo_address]" value="'.$rpress_geo_location.'">';
-	$html .= '<span class="rpress-store-pos-info">'.__('Did not able to get your address? Enter your location latitude and longitude by doing click ', 'restro-press').'<a class="store_lat_lng_position" href="#">here</a></span>';
+	$html .= '<span class="rpress-store-pos-info">'.__('Did not able to get your address? Enter your location latitude and longitude by doing click ', 'restropress').'<a class="store_lat_lng_position" href="#">here</a></span>';
 	echo apply_filters( 'rpress_after_setting_output', $html, $args );
 }
 
@@ -2228,11 +2228,11 @@ function rpress_tax_rates_callback($args) {
 	<table id="rpress_tax_rates" class="wp-list-table widefat fixed posts <?php echo $class; ?>">
 		<thead>
 			<tr>
-				<th scope="col" class="rpress_tax_country"><?php _e( 'Country', 'restro-press' ); ?></th>
-				<th scope="col" class="rpress_tax_state"><?php _e( 'State / Province', 'restro-press' ); ?></th>
-				<th scope="col" class="rpress_tax_global"><?php _e( 'Country Wide', 'restro-press' ); ?></th>
-				<th scope="col" class="rpress_tax_rate"><?php _e( 'Rate', 'restro-press' ); ?><span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Regional tax rates: </strong>When a customer enters an address on checkout that matches the specified region for this tax rate, the cart tax will adjust automatically. Enter a percentage, such as 6.5 for 6.5%.', 'restro-press' ); ?>"></span></th>
-				<th scope="col"><?php _e( 'Remove', 'restro-press' ); ?></th>
+				<th scope="col" class="rpress_tax_country"><?php _e( 'Country', 'restropress' ); ?></th>
+				<th scope="col" class="rpress_tax_state"><?php _e( 'State / Province', 'restropress' ); ?></th>
+				<th scope="col" class="rpress_tax_global"><?php _e( 'Country Wide', 'restropress' ); ?></th>
+				<th scope="col" class="rpress_tax_rate"><?php _e( 'Rate', 'restropress' ); ?><span alt="f223" class="rpress-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Regional tax rates: </strong>When a customer enters an address on checkout that matches the specified region for this tax rate, the cart tax will adjust automatically. Enter a percentage, such as 6.5 for 6.5%.', 'restropress' ); ?>"></span></th>
+				<th scope="col"><?php _e( 'Remove', 'restropress' ); ?></th>
 			</tr>
 		</thead>
 		<?php if( ! empty( $rates ) ) : ?>
@@ -2248,7 +2248,7 @@ function rpress_tax_rates_callback($args) {
 						'show_option_none' => false,
 						'class'            => 'rpress-tax-country',
 						'chosen'           => false,
-						'placeholder'      => __( 'Choose a country', 'restro-press' )
+						'placeholder'      => __( 'Choose a country', 'restropress' )
 					) );
 					?>
 				</td>
@@ -2263,7 +2263,7 @@ function rpress_tax_rates_callback($args) {
 							'show_option_all'  => false,
 							'show_option_none' => false,
 							'chosen'           => false,
-							'placeholder'      => __( 'Choose a state', 'restro-press' )
+							'placeholder'      => __( 'Choose a state', 'restropress' )
 						) );
 					} else {
 						echo RPRESS()->html->text( array(
@@ -2275,10 +2275,10 @@ function rpress_tax_rates_callback($args) {
 				</td>
 				<td class="rpress_tax_global">
 					<input type="checkbox" name="tax_rates[<?php echo rpress_sanitize_key( $key ); ?>][global]" id="tax_rates[<?php echo rpress_sanitize_key( $key ); ?>][global]" value="1"<?php checked( true, ! empty( $rate['global'] ) ); ?>/>
-					<label for="tax_rates[<?php echo rpress_sanitize_key( $key ); ?>][global]"><?php _e( 'Apply to whole country', 'restro-press' ); ?></label>
+					<label for="tax_rates[<?php echo rpress_sanitize_key( $key ); ?>][global]"><?php _e( 'Apply to whole country', 'restropress' ); ?></label>
 				</td>
 				<td class="rpress_tax_rate"><input type="number" class="small-text" step="0.0001" min="0.0" max="99" name="tax_rates[<?php echo rpress_sanitize_key( $key ); ?>][rate]" value="<?php echo esc_html( $rate['rate'] ); ?>"/></td>
-				<td><span class="rpress_remove_tax_rate button-secondary"><?php _e( 'Remove Rate', 'restro-press' ); ?></span></td>
+				<td><span class="rpress_remove_tax_rate button-secondary"><?php _e( 'Remove Rate', 'restropress' ); ?></span></td>
 			</tr>
 			<?php endforeach; ?>
 		<?php else : ?>
@@ -2293,7 +2293,7 @@ function rpress_tax_rates_callback($args) {
 						'show_option_none' => false,
 						'class'            => 'rpress-tax-country',
 						'chosen'           => false,
-						'placeholder'      => __( 'Choose a country', 'restro-press' )
+						'placeholder'      => __( 'Choose a country', 'restropress' )
 					) ); ?>
 				</td>
 				<td class="rpress_tax_state">
@@ -2303,15 +2303,15 @@ function rpress_tax_rates_callback($args) {
 				</td>
 				<td class="rpress_tax_global">
 					<input type="checkbox" name="tax_rates[0][global]" value="1"/>
-					<label for="tax_rates[0][global]"><?php _e( 'Apply to whole country', 'restro-press' ); ?></label>
+					<label for="tax_rates[0][global]"><?php _e( 'Apply to whole country', 'restropress' ); ?></label>
 				</td>
 				<td class="rpress_tax_rate"><input type="number" class="small-text" step="0.0001" min="0.0" name="tax_rates[0][rate]" value=""/></td>
-				<td><span class="rpress_remove_tax_rate button-secondary"><?php _e( 'Remove Rate', 'restro-press' ); ?></span></td>
+				<td><span class="rpress_remove_tax_rate button-secondary"><?php _e( 'Remove Rate', 'restropress' ); ?></span></td>
 			</tr>
 		<?php endif; ?>
 	</table>
 	<p>
-		<span class="button-secondary" id="rpress_add_tax_rate"><?php _e( 'Add Tax Rate', 'restro-press' ); ?></span>
+		<span class="button-secondary" id="rpress_add_tax_rate"><?php _e( 'Add Tax Rate', 'restropress' ); ?></span>
 	</p>
 	<?php
 	echo ob_get_clean();
@@ -2364,7 +2364,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 
 						$class = 'expired';
 						$messages[] = sprintf(
-							__( 'Your license key expired on %s. Please <a href="%s" target="_blank">renew your license key</a>.', 'restro-press' ),
+							__( 'Your license key expired on %s. Please <a href="%s" target="_blank">renew your license key</a>.', 'restropress' ),
 							date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
 							'https://fooditems.com/checkout/?rpress_license_key=' . $value . '&utm_campaign=admin&utm_source=licenses&utm_medium=expired'
 						);
@@ -2377,7 +2377,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 
 						$class = 'error';
 						$messages[] = sprintf(
-							__( 'Your license key has been disabled. Please <a href="%s" target="_blank">contact support</a> for more information.', 'restro-press' ),
+							__( 'Your license key has been disabled. Please <a href="%s" target="_blank">contact support</a> for more information.', 'restropress' ),
 							'https://fooditems.com/support?utm_campaign=admin&utm_source=licenses&utm_medium=revoked'
 						);
 
@@ -2389,7 +2389,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 
 						$class = 'error';
 						$messages[] = sprintf(
-							__( 'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.', 'restro-press' ),
+							__( 'Invalid license. Please <a href="%s" target="_blank">visit your account page</a> and verify it.', 'restropress' ),
 							'https://fooditems.com/your-account?utm_campaign=admin&utm_source=licenses&utm_medium=missing'
 						);
 
@@ -2402,7 +2402,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 
 						$class = 'error';
 						$messages[] = sprintf(
-							__( 'Your %s is not active for this URL. Please <a href="%s" target="_blank">visit your account page</a> to manage your license key URLs.', 'restro-press' ),
+							__( 'Your %s is not active for this URL. Please <a href="%s" target="_blank">visit your account page</a> to manage your license key URLs.', 'restropress' ),
 							$args['name'],
 							'https://fooditems.com/your-account?utm_campaign=admin&utm_source=licenses&utm_medium=invalid'
 						);
@@ -2414,7 +2414,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 					case 'item_name_mismatch' :
 
 						$class = 'error';
-						$messages[] = sprintf( __( 'This appears to be an invalid license key for %s.', 'restro-press' ), $args['name'] );
+						$messages[] = sprintf( __( 'This appears to be an invalid license key for %s.', 'restropress' ), $args['name'] );
 
 						$license_status = 'license-' . $class . '-notice';
 
@@ -2423,7 +2423,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 					case 'no_activations_left':
 
 						$class = 'error';
-						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'restro-press' ), 'https://fooditems.com/your-account/' );
+						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'restropress' ), 'https://fooditems.com/your-account/' );
 
 						$license_status = 'license-' . $class . '-notice';
 
@@ -2432,7 +2432,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 					case 'license_not_activable':
 
 						$class = 'error';
-						$messages[] = __( 'The key you entered belongs to a bundle, please use the product specific license key.', 'restro-press' );
+						$messages[] = __( 'The key you entered belongs to a bundle, please use the product specific license key.', 'restropress' );
 
 						$license_status = 'license-' . $class . '-notice';
 						break;
@@ -2440,8 +2440,8 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 					default :
 
 						$class = 'error';
-						$error = ! empty(  $license->error ) ?  $license->error : __( 'unknown_error', 'restro-press' );
-						$messages[] = sprintf( __( 'There was an error with this license key: %s. Please <a href="%s">contact our support team</a>.', 'restro-press' ), $error, 'https://magnigenie.com' );
+						$error = ! empty(  $license->error ) ?  $license->error : __( 'unknown_error', 'restropress' );
+						$messages[] = sprintf( __( 'There was an error with this license key: %s. Please <a href="%s">contact our support team</a>.', 'restropress' ), $error, 'https://magnigenie.com' );
 
 						$license_status = 'license-' . $class . '-notice';
 						break;
@@ -2461,14 +2461,14 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 
 						if( 'lifetime' === $license->expires ) {
 
-							$messages[] = __( 'License key never expires.', 'restro-press' );
+							$messages[] = __( 'License key never expires.', 'restropress' );
 
 							$license_status = 'license-lifetime-notice';
 
 						} elseif( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
 
 							$messages[] = sprintf(
-								__( 'Your license key expires soon! It expires on %s. <a href="%s" target="_blank">Renew your license key</a>.', 'restro-press' ),
+								__( 'Your license key expires soon! It expires on %s. <a href="%s" target="_blank">Renew your license key</a>.', 'restropress' ),
 								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
 								'https://magnigenie.com'
 							);
@@ -2478,7 +2478,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 						} else {
 
 							$messages[] = sprintf(
-								__( 'Your license key expires on %s.', 'restro-press' ),
+								__( 'Your license key expires on %s.', 'restropress' ),
 								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
 							);
 
@@ -2496,7 +2496,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 			$class = 'empty';
 
 			$messages[] = sprintf(
-				__( 'To receive updates, please enter your valid %s license key.', 'restro-press' ),
+				__( 'To receive updates, please enter your valid %s license key.', 'restropress' ),
 				$args['name']
 			);
 
@@ -2509,7 +2509,7 @@ if ( ! function_exists( 'rpress_license_key_callback' ) ) {
 		$html = '<input type="text" class="' . sanitize_html_class( $size ) . '-text" id="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . ']" name="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . ']" value="' . esc_attr( $value ) . '"/>';
 
 		if ( ( is_object( $license ) && 'valid' == $license->license ) || 'valid' == $license ) {
-			$html .= '<input type="submit" class="button-secondary" name="' . $args['id'] . '_deactivate" value="' . __( 'Deactivate License',  'restro-press' ) . '"/>';
+			$html .= '<input type="submit" class="button-secondary" name="' . $args['id'] . '_deactivate" value="' . __( 'Deactivate License',  'restropress' ) . '"/>';
 		}
 
 		$html .= '<label for="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';

@@ -61,8 +61,8 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 
 		// Set parent defaults
 		parent::__construct( array(
-			'singular'  => __( 'Customer', 'restro-press' ),     // Singular name of the listed records
-			'plural'    => __( 'Customers', 'restro-press' ),    // Plural name of the listed records
+			'singular'  => __( 'Customer', 'restropress' ),     // Singular name of the listed records
+			'plural'    => __( 'Customers', 'restropress' ),    // Plural name of the listed records
 			'ajax'      => false             			// Does this table support ajax?
 		) );
 
@@ -121,7 +121,7 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 
 			case 'file_fooditems' :
 				$user = ! empty( $item['user_id'] ) ? $item['user_id'] : $item['email'];
-				$value = '<a href="' . esc_url( admin_url( '/edit.php?post_type=fooditem&page=rpress-reports&tab=logs&user=' . urlencode( $user ) ) ) . '">' . __( 'View fooditem log', 'restro-press' ) . '</a>';
+				$value = '<a href="' . esc_url( admin_url( '/edit.php?post_type=fooditem&page=rpress-reports&tab=logs&user=' . urlencode( $user ) ) ) . '">' . __( 'View fooditem log', 'restropress' ) . '</a>';
 				break;
 			default:
 				$value = isset( $item[ $column_name ] ) ? $item[ $column_name ] : null;
@@ -139,12 +139,12 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'name'     		=> __( 'Name', 'restro-press' ),
-			'id'     		=> __( 'ID', 'restro-press' ),
-			'email'     	=> __( 'Email', 'restro-press' ),
-			'num_purchases' => __( 'Purchases', 'restro-press' ),
-			'amount_spent'  => __( 'Total Spent', 'restro-press' ),
-			'file_fooditems'=> __( 'Food Items', 'restro-press' )
+			'name'     		=> __( 'Name', 'restropress' ),
+			'id'     		=> __( 'ID', 'restropress' ),
+			'email'     	=> __( 'Email', 'restropress' ),
+			'num_purchases' => __( 'Purchases', 'restropress' ),
+			'amount_spent'  => __( 'Total Spent', 'restropress' ),
+			'file_fooditems'=> __( 'Food Items', 'restropress' )
 		);
 
 		return apply_filters( 'rpress_report_customer_columns', $columns );

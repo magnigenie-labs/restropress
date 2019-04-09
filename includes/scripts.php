@@ -62,13 +62,13 @@ function rpress_load_scripts() {
 			'currency_pos'          => rpress_get_option( 'currency_position', 'before' ),
 			'decimal_separator'     => rpress_get_option( 'decimal_separator', '.' ),
 			'thousands_separator'   => rpress_get_option( 'thousands_separator', ',' ),
-			'no_gateway'            => __( 'Please select a payment method', 'restro-press' ),
-			'no_discount'           => __( 'Please enter a discount code', 'restro-press' ), // Blank discount code message
-			'enter_discount'        => __( 'Enter discount', 'restro-press' ),
-			'discount_applied'      => __( 'Discount Applied', 'restro-press' ), // Discount verified message
-			'no_email'              => __( 'Please enter an email address before applying a discount code', 'restro-press' ),
-			'no_username'           => __( 'Please enter a username before applying a discount code', 'restro-press' ),
-			'purchase_loading'      => __( 'Please Wait...', 'restro-press' ),
+			'no_gateway'            => __( 'Please select a payment method', 'restropress' ),
+			'no_discount'           => __( 'Please enter a discount code', 'restropress' ), // Blank discount code message
+			'enter_discount'        => __( 'Enter discount', 'restropress' ),
+			'discount_applied'      => __( 'Discount Applied', 'restropress' ), // Discount verified message
+			'no_email'              => __( 'Please enter an email address before applying a discount code', 'restropress' ),
+			'no_username'           => __( 'Please enter a username before applying a discount code', 'restropress' ),
+			'purchase_loading'      => __( 'Please Wait...', 'restropress' ),
 			'complete_purchase'     => rpress_get_checkout_button_purchase_label(),
 			'taxes_enabled'         => rpress_use_taxes() ? '1' : '0',
 			'rpress_version'           => RPRESS_VERSION
@@ -106,10 +106,10 @@ function rpress_load_scripts() {
 			'ajaxurl'                 => rpress_get_ajax_url(),
 			'position_in_cart'        => isset( $position ) ? $position : -1,
 			'has_purchase_links'      => $has_purchase_links,
-			'already_in_cart_message' => __('You have already added this item to your cart','restro-press' ), // Item already in the cart message
-			'empty_cart_message'      => __('Your cart is empty','restro-press' ), // Item already in the cart message
-			'loading'                 => __('Loading','restro-press' ) , // General loading message
-			'select_option'           => __('Please select an option','restro-press' ) , // Variable pricing error with multi-purchase option enabled
+			'already_in_cart_message' => __('You have already added this item to your cart','restropress' ), // Item already in the cart message
+			'empty_cart_message'      => __('Your cart is empty','restropress' ), // Item already in the cart message
+			'loading'                 => __('Loading','restropress' ) , // General loading message
+			'select_option'           => __('Please select an option','restropress' ) , // Variable pricing error with multi-purchase option enabled
 			'is_checkout'             => rpress_is_checkout() ? '1' : '0',
 			'default_gateway'         => rpress_get_default_gateway(),
 			'redirect_to_checkout'    => ( rpress_straight_to_checkout() || rpress_is_checkout() ) ? '1' : '0',
@@ -119,7 +119,7 @@ function rpress_load_scripts() {
 			'taxes_enabled'           => rpress_use_taxes() ? '1' : '0', // Adding here for widget, but leaving in checkout vars for backcompat
 			'open_hours'          	  => rpress_get_option('open_time'),
 			'close_hours'          	  => rpress_get_option('close_time'),
-			'please_wait'							=> __('Please Wait', 'restro-press'),
+			'please_wait'							=> __('Please Wait', 'restropress'),
 			'rpress_holidays' 				=> rpress_get_holidays_lists(),
 			'rpress_pre_order_until' 	=> rpress_show_preorder_until(),
 			'rpress_cutoff_starts'		=> $cutoff_start_time,
@@ -127,8 +127,8 @@ function rpress_load_scripts() {
 			'cutoff_hours'						=> $cutoff_hours,
 			'store_open_hours'				=> $open_hours,
 			'holiday_message'					=> $get_holiday_message,
-			'add_to_cart'							=> __('Add To Cart', 'restro-press'),
-			'update_cart'							=> __('Update Cart', 'restro-press'),
+			'add_to_cart'							=> __('Add To Cart', 'restropress'),
+			'update_cart'							=> __('Update Cart', 'restropress'),
 			'button_color'   					=> rpress_get_option( 'checkout_color', 'red' ),
 			'check_delivery_fee_enabled'		=> check_delivery_fee_enabled()
 		) ) );
@@ -233,24 +233,24 @@ function rpress_load_admin_scripts( $hook ) {
 	wp_localize_script( 'rpress-admin-scripts', 'rpress_vars', array(
 		'post_id'                     => isset( $post->ID ) ? $post->ID : null,
 		'rpress_version'                 => RPRESS_VERSION,
-		'add_new_fooditem'            => __( 'Add New Food Item', 'restro-press' ),
-		'use_this_file'               => __( 'Use This File', 'restro-press' ),
-		'quick_edit_warning'          => __( 'Sorry, not available for variable priced products.', 'restro-press' ),
-		'delete_payment'              => __( 'Are you sure you wish to delete this payment?', 'restro-press' ),
-		'delete_payment_note'         => __( 'Are you sure you wish to delete this note?', 'restro-press' ),
-		'delete_tax_rate'             => __( 'Are you sure you wish to delete this tax rate?', 'restro-press' ),
-		'resend_receipt'              => __( 'Are you sure you wish to resend the purchase receipt?', 'restro-press' ),
-		'disconnect_customer'         => __( 'Are you sure you wish to disconnect the WordPress user from this customer record?', 'restro-press' ),
-		'copy_fooditem_link_text'     => __( 'Copy these links to your clipboard and give them to your customer', 'restro-press' ),
-		'delete_payment_fooditem'     => sprintf( __( 'Are you sure you wish to delete this %s?', 'restro-press' ), rpress_get_label_singular() ),
-		'one_price_min'               => __( 'You must have at least one price', 'restro-press' ),
-		'one_field_min'               => __( 'You must have at least one field', 'restro-press' ),
-		'one_fooditem_min'            => __( 'Payments must contain at least one item', 'restro-press' ),
-		'one_option'                  => sprintf( __( 'Choose a %s', 'restro-press' ), rpress_get_label_singular() ),
-		'one_or_more_option'          => sprintf( __( 'Choose one or more %s', 'restro-press' ), rpress_get_label_plural() ),
-		'numeric_item_price'          => __( 'Item price must be numeric', 'restro-press' ),
-		'numeric_item_tax'            => __( 'Item tax must be numeric', 'restro-press' ),
-		'numeric_quantity'            => __( 'Quantity must be numeric', 'restro-press' ),
+		'add_new_fooditem'            => __( 'Add New Food Item', 'restropress' ),
+		'use_this_file'               => __( 'Use This File', 'restropress' ),
+		'quick_edit_warning'          => __( 'Sorry, not available for variable priced products.', 'restropress' ),
+		'delete_payment'              => __( 'Are you sure you wish to delete this payment?', 'restropress' ),
+		'delete_payment_note'         => __( 'Are you sure you wish to delete this note?', 'restropress' ),
+		'delete_tax_rate'             => __( 'Are you sure you wish to delete this tax rate?', 'restropress' ),
+		'resend_receipt'              => __( 'Are you sure you wish to resend the purchase receipt?', 'restropress' ),
+		'disconnect_customer'         => __( 'Are you sure you wish to disconnect the WordPress user from this customer record?', 'restropress' ),
+		'copy_fooditem_link_text'     => __( 'Copy these links to your clipboard and give them to your customer', 'restropress' ),
+		'delete_payment_fooditem'     => sprintf( __( 'Are you sure you wish to delete this %s?', 'restropress' ), rpress_get_label_singular() ),
+		'one_price_min'               => __( 'You must have at least one price', 'restropress' ),
+		'one_field_min'               => __( 'You must have at least one field', 'restropress' ),
+		'one_fooditem_min'            => __( 'Payments must contain at least one item', 'restropress' ),
+		'one_option'                  => sprintf( __( 'Choose a %s', 'restropress' ), rpress_get_label_singular() ),
+		'one_or_more_option'          => sprintf( __( 'Choose one or more %s', 'restropress' ), rpress_get_label_plural() ),
+		'numeric_item_price'          => __( 'Item price must be numeric', 'restropress' ),
+		'numeric_item_tax'            => __( 'Item tax must be numeric', 'restropress' ),
+		'numeric_quantity'            => __( 'Quantity must be numeric', 'restropress' ),
 		'currency'                    => rpress_get_currency(),
 		'currency_sign'               => rpress_currency_filter( '' ),
 		'currency_pos'                => rpress_get_option( 'currency_position', 'before' ),
@@ -258,15 +258,15 @@ function rpress_load_admin_scripts( $hook ) {
 		'decimal_separator'           => rpress_get_option( 'decimal_separator', '.' ),
 		'thousands_separator'         => rpress_get_option( 'thousands_separator', ',' ),
 		'new_media_ui'                => apply_filters( 'rpress_use_35_media_ui', 1 ),
-		'remove_text'                 => __( 'Remove', 'restro-press' ),
-		'type_to_search'              => sprintf( __( 'Type to search %s', 'restro-press' ), rpress_get_label_plural() ),
+		'remove_text'                 => __( 'Remove', 'restropress' ),
+		'type_to_search'              => sprintf( __( 'Type to search %s', 'restropress' ), rpress_get_label_plural() ),
 		'quantities_enabled'          => rpress_item_quantities_enabled(),
-		'batch_export_no_class'       => __( 'You must choose a method.', 'restro-press' ),
-		'batch_export_no_reqs'        => __( 'Required fields not completed.', 'restro-press' ),
-		'reset_stats_warn'            => __( 'Are you sure you want to reset your store? This process is <strong><em>not reversible</em></strong>. Please be sure you have a recent backup.', 'restro-press' ),
-		'unsupported_browser'         => __( 'We are sorry but your browser is not compatible with this kind of file upload. Please upgrade your browser.', 'restro-press' ),
-		'show_advanced_settings'      => __( 'Show advanced settings', 'restro-press' ),
-		'hide_advanced_settings'      => __( 'Hide advanced settings', 'restro-press' ),
+		'batch_export_no_class'       => __( 'You must choose a method.', 'restropress' ),
+		'batch_export_no_reqs'        => __( 'Required fields not completed.', 'restropress' ),
+		'reset_stats_warn'            => __( 'Are you sure you want to reset your store? This process is <strong><em>not reversible</em></strong>. Please be sure you have a recent backup.', 'restropress' ),
+		'unsupported_browser'         => __( 'We are sorry but your browser is not compatible with this kind of file upload. Please upgrade your browser.', 'restropress' ),
+		'show_advanced_settings'      => __( 'Show advanced settings', 'restropress' ),
+		'hide_advanced_settings'      => __( 'Hide advanced settings', 'restropress' ),
 		'is_admin'					  => is_admin(),
 		'desktop_notification_duration'	=> rpress_get_option('notification_duration') ,
 		'enable_order_notification'  =>  rpress_get_option('enable_order_notification'),   
@@ -279,10 +279,10 @@ function rpress_load_admin_scripts( $hook ) {
 	 */
 	wp_register_script( 'rpress-admin-scripts-compatibility', $js_dir . 'admin-backwards-compatibility' . $suffix . '.js', array( 'jquery', 'rpress-admin-scripts' ), RPRESS_VERSION );
 	wp_localize_script( 'rpress-admin-scripts-compatibility', 'rpress_backcompat_vars', array(
-		'purchase_limit_settings'     => __( 'Purchase Limit Settings', 'restro-press' ),
-		'simple_shipping_settings'    => __( 'Simple Shipping Settings', 'restro-press' ),
-		'software_licensing_settings' => __( 'Software Licensing Settings', 'restro-press' ),
-		'recurring_payments_settings' => __( 'Recurring Payments Settings', 'restro-press' ),
+		'purchase_limit_settings'     => __( 'Purchase Limit Settings', 'restropress' ),
+		'simple_shipping_settings'    => __( 'Simple Shipping Settings', 'restropress' ),
+		'software_licensing_settings' => __( 'Software Licensing Settings', 'restropress' ),
+		'recurring_payments_settings' => __( 'Recurring Payments Settings', 'restropress' ),
 	) );
 
 	wp_enqueue_style( 'wp-color-picker' );

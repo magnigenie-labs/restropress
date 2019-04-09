@@ -25,27 +25,27 @@ function rpress_setup_rpress_post_types() {
 	$rewrite  = defined( 'RPRESS_DISABLE_REWRITE' ) && RPRESS_DISABLE_REWRITE ? false : array('slug' => $slug, 'with_front' => false);
 
 	$fooditem_labels =  apply_filters( 'rpress_fooditem_labels', array(
-		'name'                  => _x( '%2$s', 'fooditem post type name', 'restro-press' ),
-		'singular_name'         => _x( '%1$s', 'singular fooditem post type name', 'restro-press' ),
-		'add_new'               => __( 'Add New', 'restro-press' ),
-		'add_new_item'          => __( 'Add New %1$s', 'restro-press' ),
-		'edit_item'             => __( 'Edit %1$s', 'restro-press' ),
-		'new_item'              => __( 'New %1$s', 'restro-press' ),
-		'all_items'             => __( 'All %2$s', 'restro-press' ),
-		'view_item'             => __( 'View %1$s', 'restro-press' ),
-		'search_items'          => __( 'Search %2$s', 'restro-press' ),
-		'not_found'             => __( 'No %2$s found', 'restro-press' ),
-		'not_found_in_trash'    => __( 'No %2$s found in Trash', 'restro-press' ),
+		'name'                  => _x( '%2$s', 'fooditem post type name', 'restropress' ),
+		'singular_name'         => _x( '%1$s', 'singular fooditem post type name', 'restropress' ),
+		'add_new'               => __( 'Add New', 'restropress' ),
+		'add_new_item'          => __( 'Add New %1$s', 'restropress' ),
+		'edit_item'             => __( 'Edit %1$s', 'restropress' ),
+		'new_item'              => __( 'New %1$s', 'restropress' ),
+		'all_items'             => __( 'All %2$s', 'restropress' ),
+		'view_item'             => __( 'View %1$s', 'restropress' ),
+		'search_items'          => __( 'Search %2$s', 'restropress' ),
+		'not_found'             => __( 'No %2$s found', 'restropress' ),
+		'not_found_in_trash'    => __( 'No %2$s found in Trash', 'restropress' ),
 		'parent_item_colon'     => '',
-		'menu_name'             => _x( 'RestroPress', 'fooditem post type menu name', 'restro-press' ),
-		'featured_image'        => __( '%1$s Image', 'restro-press' ),
-		'set_featured_image'    => __( 'Set %1$s Image', 'restro-press' ),
-		'remove_featured_image' => __( 'Remove %1$s Image', 'restro-press' ),
-		'use_featured_image'    => __( 'Use as %1$s Image', 'restro-press' ),
-		'attributes'            => __( '%1$s Attributes', 'restro-press' ),
-		'filter_items_list'     => __( 'Filter %2$s list', 'restro-press' ),
-		'items_list_navigation' => __( '%2$s list navigation', 'restro-press' ),
-		'items_list'            => __( '%2$s list', 'restro-press' ),
+		'menu_name'             => _x( 'RestroPress', 'fooditem post type menu name', 'restropress' ),
+		'featured_image'        => __( '%1$s Image', 'restropress' ),
+		'set_featured_image'    => __( 'Set %1$s Image', 'restropress' ),
+		'remove_featured_image' => __( 'Remove %1$s Image', 'restropress' ),
+		'use_featured_image'    => __( 'Use as %1$s Image', 'restropress' ),
+		'attributes'            => __( '%1$s Attributes', 'restropress' ),
+		'filter_items_list'     => __( 'Filter %2$s list', 'restropress' ),
+		'items_list_navigation' => __( '%2$s list navigation', 'restropress' ),
+		'items_list'            => __( '%2$s list', 'restropress' ),
 	) );
 
 	foreach ( $fooditem_labels as $key => $value ) {
@@ -72,19 +72,19 @@ function rpress_setup_rpress_post_types() {
 
 	/** Payment Post Type */
 	$payment_labels = array(
-		'name'               => _x( 'Payments', 'post type general name', 'restro-press' ),
-		'singular_name'      => _x( 'Payment', 'post type singular name', 'restro-press' ),
-		'add_new'            => __( 'Add New', 'restro-press' ),
-		'add_new_item'       => __( 'Add New Payment', 'restro-press' ),
-		'edit_item'          => __( 'Edit Payment', 'restro-press' ),
-		'new_item'           => __( 'New Payment', 'restro-press' ),
-		'all_items'          => __( 'All Payments', 'restro-press' ),
-		'view_item'          => __( 'View Payment', 'restro-press' ),
-		'search_items'       => __( 'Search Payments', 'restro-press' ),
-		'not_found'          => __( 'No Payments found', 'restro-press' ),
-		'not_found_in_trash' => __( 'No Payments found in Trash', 'restro-press' ),
+		'name'               => _x( 'Payments', 'post type general name', 'restropress' ),
+		'singular_name'      => _x( 'Payment', 'post type singular name', 'restropress' ),
+		'add_new'            => __( 'Add New', 'restropress' ),
+		'add_new_item'       => __( 'Add New Payment', 'restropress' ),
+		'edit_item'          => __( 'Edit Payment', 'restropress' ),
+		'new_item'           => __( 'New Payment', 'restropress' ),
+		'all_items'          => __( 'All Payments', 'restropress' ),
+		'view_item'          => __( 'View Payment', 'restropress' ),
+		'search_items'       => __( 'Search Payments', 'restropress' ),
+		'not_found'          => __( 'No Payments found', 'restropress' ),
+		'not_found_in_trash' => __( 'No Payments found in Trash', 'restropress' ),
 		'parent_item_colon'  => '',
-		'menu_name'          => __( 'Order History', 'restro-press' )
+		'menu_name'          => __( 'Order History', 'restropress' )
 	);
 
 
@@ -102,19 +102,19 @@ function rpress_setup_rpress_post_types() {
 
 	/** Discounts Post Type */
 	$discount_labels = array(
-		'name'               => _x( 'Discounts', 'post type general name', 'restro-press' ),
-		'singular_name'      => _x( 'Discount', 'post type singular name', 'restro-press' ),
-		'add_new'            => __( 'Add New', 'restro-press' ),
-		'add_new_item'       => __( 'Add New Discount', 'restro-press' ),
-		'edit_item'          => __( 'Edit Discount', 'restro-press' ),
-		'new_item'           => __( 'New Discount', 'restro-press' ),
-		'all_items'          => __( 'All Discounts', 'restro-press' ),
-		'view_item'          => __( 'View Discount', 'restro-press' ),
-		'search_items'       => __( 'Search Discounts', 'restro-press' ),
-		'not_found'          => __( 'No Discounts found', 'restro-press' ),
-		'not_found_in_trash' => __( 'No Discounts found in Trash', 'restro-press' ),
+		'name'               => _x( 'Discounts', 'post type general name', 'restropress' ),
+		'singular_name'      => _x( 'Discount', 'post type singular name', 'restropress' ),
+		'add_new'            => __( 'Add New', 'restropress' ),
+		'add_new_item'       => __( 'Add New Discount', 'restropress' ),
+		'edit_item'          => __( 'Edit Discount', 'restropress' ),
+		'new_item'           => __( 'New Discount', 'restropress' ),
+		'all_items'          => __( 'All Discounts', 'restropress' ),
+		'view_item'          => __( 'View Discount', 'restropress' ),
+		'search_items'       => __( 'Search Discounts', 'restropress' ),
+		'not_found'          => __( 'No Discounts found', 'restropress' ),
+		'not_found_in_trash' => __( 'No Discounts found in Trash', 'restropress' ),
 		'parent_item_colon'  => '',
-		'menu_name'          => __( 'Discounts', 'restro-press' )
+		'menu_name'          => __( 'Discounts', 'restropress' )
 	);
 
 	$discount_args = array(
@@ -141,8 +141,8 @@ add_action( 'init', 'rpress_setup_rpress_post_types', 1 );
  */
 function rpress_get_default_labels() {
 	$defaults = array(
-	   'singular' => __( 'Food Item', 'restro-press' ),
-	   'plural'   => __( 'Food Items','restro-press' )
+	   'singular' => __( 'Food Item', 'restropress' ),
+	   'plural'   => __( 'Food Items','restropress' )
 	);
 	return apply_filters( 'rpress_default_fooditems_name', $defaults );
 }
@@ -182,7 +182,7 @@ function rpress_change_default_title( $title ) {
 	 // If a frontend plugin uses this filter (check extensions before changing this function)
 	 if ( !is_admin() ) {
 		$label = rpress_get_label_singular();
-		$title = sprintf( __( 'Enter %s name here', 'restro-press' ), $label );
+		$title = sprintf( __( 'Enter %s name here', 'restropress' ), $label );
 		return $title;
 	 }
 
@@ -190,7 +190,7 @@ function rpress_change_default_title( $title ) {
 
 	 if ( 'fooditem' == $screen->post_type ) {
 		$label = rpress_get_label_singular();
-		$title = sprintf( __( 'Enter %s name here', 'restro-press' ), $label );
+		$title = sprintf( __( 'Enter %s name here', 'restropress' ), $label );
 	 }
 
 	 return $title;
@@ -209,17 +209,17 @@ function rpress_setup_fooditem_taxonomies() {
 
 	/** Categories */
 	$category_labels = array(
-		'name'              => sprintf( _x( ' Addon Category', 'taxonomy general name', 'restro-press' ), rpress_get_label_singular() ),
-		'singular_name'     => sprintf( _x( ' Addon Category', 'taxonomy singular name', 'restro-press' ), rpress_get_label_singular() ),
-		'search_items'      => sprintf( __( 'Search Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'all_items'         => sprintf( __( 'All Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'parent_item'       => sprintf( __( 'Parent Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'parent_item_colon' => sprintf( __( 'Parent Addon Category:', 'restro-press' ), rpress_get_label_singular() ),
-		'edit_item'         => sprintf( __( 'Edit Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'update_item'       => sprintf( __( 'Update Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'add_new_item'      => sprintf( __( 'Add New Addon Category', 'restro-press' ), rpress_get_label_singular() ),
-		'new_item_name'     => sprintf( __( 'New Addon Category Name', 'restro-press' ), rpress_get_label_singular() ),
-		'menu_name'         => __( 'Addon Category', 'restro-press' ),
+		'name'              => sprintf( _x( ' Addon Category', 'taxonomy general name', 'restropress' ), rpress_get_label_singular() ),
+		'singular_name'     => sprintf( _x( ' Addon Category', 'taxonomy singular name', 'restropress' ), rpress_get_label_singular() ),
+		'search_items'      => sprintf( __( 'Search Addon Category', 'restropress' ), rpress_get_label_singular() ),
+		'all_items'         => sprintf( __( 'All Addon Category', 'restropress' ), rpress_get_label_singular() ),
+		'parent_item'       => sprintf( __( 'Parent Addon Category', 'restropress' ), rpress_get_label_singular() ),
+		'parent_item_colon' => sprintf( __( 'Parent Addon Category:', 'restropress' ), rpress_get_label_singular() ),
+		'edit_item'         => sprintf( __( 'Edit Addon Category', 'restropress' ), rpress_get_label_singular() ),
+		'update_item'       => sprintf( __( 'Update Addon Category', 'restropress' ), rpress_get_label_singular() ),
+		'add_new_item'      => sprintf( __( 'Add New Addon Category', 'restropress' ), rpress_get_label_singular() ),
+		'new_item_name'     => sprintf( __( 'New Addon Category Name', 'restropress' ), rpress_get_label_singular() ),
+		'menu_name'         => __( 'Addon Category', 'restropress' ),
 	);
 
 	$category_args = apply_filters( 'rpress_addon_category_args', array(
@@ -236,18 +236,18 @@ function rpress_setup_fooditem_taxonomies() {
 
 	/** Tags */
 	$tag_labels = array(
-		'name'                  => sprintf( _x( '%s Tags', 'taxonomy general name', 'restro-press' ), rpress_get_label_singular() ),
-		'singular_name'         => sprintf( _x( '%s Tag', 'taxonomy singular name', 'restro-press' ), rpress_get_label_singular() ),
-		'search_items'          => sprintf( __( 'Search %s Tags', 'restro-press' ), rpress_get_label_singular() ),
-		'all_items'             => sprintf( __( 'All %s Tags', 'restro-press' ), rpress_get_label_singular() ),
-		'parent_item'           => sprintf( __( 'Parent %s Tag', 'restro-press' ), rpress_get_label_singular() ),
-		'parent_item_colon'     => sprintf( __( 'Parent %s Tag:', 'restro-press' ), rpress_get_label_singular() ),
-		'edit_item'             => sprintf( __( 'Edit %s Tag', 'restro-press' ), rpress_get_label_singular() ),
-		'update_item'           => sprintf( __( 'Update %s Tag', 'restro-press' ), rpress_get_label_singular() ),
-		'add_new_item'          => sprintf( __( 'Add New %s Tag', 'restro-press' ), rpress_get_label_singular() ),
-		'new_item_name'         => sprintf( __( 'New %s Tag Name', 'restro-press' ), rpress_get_label_singular() ),
-		'menu_name'             => __( 'Tags', 'restro-press' ),
-		'choose_from_most_used' => sprintf( __( 'Choose from most used %s tags', 'restro-press' ), rpress_get_label_singular() ),
+		'name'                  => sprintf( _x( '%s Tags', 'taxonomy general name', 'restropress' ), rpress_get_label_singular() ),
+		'singular_name'         => sprintf( _x( '%s Tag', 'taxonomy singular name', 'restropress' ), rpress_get_label_singular() ),
+		'search_items'          => sprintf( __( 'Search %s Tags', 'restropress' ), rpress_get_label_singular() ),
+		'all_items'             => sprintf( __( 'All %s Tags', 'restropress' ), rpress_get_label_singular() ),
+		'parent_item'           => sprintf( __( 'Parent %s Tag', 'restropress' ), rpress_get_label_singular() ),
+		'parent_item_colon'     => sprintf( __( 'Parent %s Tag:', 'restropress' ), rpress_get_label_singular() ),
+		'edit_item'             => sprintf( __( 'Edit %s Tag', 'restropress' ), rpress_get_label_singular() ),
+		'update_item'           => sprintf( __( 'Update %s Tag', 'restropress' ), rpress_get_label_singular() ),
+		'add_new_item'          => sprintf( __( 'Add New %s Tag', 'restropress' ), rpress_get_label_singular() ),
+		'new_item_name'         => sprintf( __( 'New %s Tag Name', 'restropress' ), rpress_get_label_singular() ),
+		'menu_name'             => __( 'Tags', 'restropress' ),
+		'choose_from_most_used' => sprintf( __( 'Choose from most used %s tags', 'restropress' ), rpress_get_label_singular() ),
 	);
 
 	$tag_args = apply_filters( 'rpress_fooditem_tag_args', array(
@@ -307,72 +307,72 @@ function rpress_get_taxonomy_labels( $taxonomy = 'addon_category' ) {
 function rpress_register_post_type_statuses() {
 	// Payment Statuses
 	register_post_status( 'refunded', array(
-		'label'                     => _x( 'Refunded', 'Refunded payment status', 'restro-press' ),
+		'label'                     => _x( 'Refunded', 'Refunded payment status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Refunded <span class="count">(%s)</span>', 'Refunded <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Refunded <span class="count">(%s)</span>', 'Refunded <span class="count">(%s)</span>', 'restropress' )
 	) );
 
 	register_post_status( 'paid', array(
-		'label'                     => _x( 'Paid', 'Paid payment status', 'restro-press' ),
+		'label'                     => _x( 'Paid', 'Paid payment status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Paid <span class="count">(%s)</span>', 'Paid <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Paid <span class="count">(%s)</span>', 'Paid <span class="count">(%s)</span>', 'restropress' )
 	) );
 		
 	register_post_status( 'failed', array(
-		'label'                     => _x( 'Failed', 'Failed payment status', 'restro-press' ),
+		'label'                     => _x( 'Failed', 'Failed payment status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Failed <span class="count">(%s)</span>', 'Failed <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Failed <span class="count">(%s)</span>', 'Failed <span class="count">(%s)</span>', 'restropress' )
 	)  );
 	register_post_status( 'revoked', array(
-		'label'                     => _x( 'Revoked', 'Revoked payment status', 'restro-press' ),
+		'label'                     => _x( 'Revoked', 'Revoked payment status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Revoked <span class="count">(%s)</span>', 'Revoked <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Revoked <span class="count">(%s)</span>', 'Revoked <span class="count">(%s)</span>', 'restropress' )
 	)  );
 	register_post_status( 'abandoned', array(
-		'label'                     => _x( 'Abandoned', 'Abandoned payment status', 'restro-press' ),
+		'label'                     => _x( 'Abandoned', 'Abandoned payment status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Abandoned <span class="count">(%s)</span>', 'Abandoned <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Abandoned <span class="count">(%s)</span>', 'Abandoned <span class="count">(%s)</span>', 'restropress' )
 	)  );
 	register_post_status( 'processing', array(
-		'label'                     => _x( 'Processing', 'Processing payment status', 'restro-press' ),
+		'label'                     => _x( 'Processing', 'Processing payment status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'restropress' )
 	)  );
 
 	// Discount Code Statuses
 	register_post_status( 'active', array(
-		'label'                     => _x( 'Active', 'Active discount code status', 'restro-press' ),
+		'label'                     => _x( 'Active', 'Active discount code status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Active <span class="count">(%s)</span>', 'Active <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Active <span class="count">(%s)</span>', 'Active <span class="count">(%s)</span>', 'restropress' )
 	)  );
 	register_post_status( 'inactive', array(
-		'label'                     => _x( 'Inactive', 'Inactive discount code status', 'restro-press' ),
+		'label'                     => _x( 'Inactive', 'Inactive discount code status', 'restropress' ),
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'Inactive <span class="count">(%s)</span>', 'Inactive <span class="count">(%s)</span>', 'restro-press' )
+		'label_count'               => _n_noop( 'Inactive <span class="count">(%s)</span>', 'Inactive <span class="count">(%s)</span>', 'restropress' )
 	)  );
 
 }
@@ -395,11 +395,11 @@ function rpress_updated_messages( $messages ) {
 	$url3 = '</a>';
 
 	$messages['fooditem'] = array(
-		1 => sprintf( __( '%2$s updated. %1$sView %2$s%3$s.', 'restro-press' ), $url1, $url2, $url3 ),
-		4 => sprintf( __( '%2$s updated. %1$sView %2$s%3$s.', 'restro-press' ), $url1, $url2, $url3 ),
-		6 => sprintf( __( '%2$s published. %1$sView %2$s%3$s.', 'restro-press' ), $url1, $url2, $url3 ),
-		7 => sprintf( __( '%2$s saved. %1$sView %2$s%3$s.', 'restro-press' ), $url1, $url2, $url3 ),
-		8 => sprintf( __( '%2$s submitted. %1$sView %2$s%3$s.', 'restro-press' ), $url1, $url2, $url3 )
+		1 => sprintf( __( '%2$s updated. %1$sView %2$s%3$s.', 'restropress' ), $url1, $url2, $url3 ),
+		4 => sprintf( __( '%2$s updated. %1$sView %2$s%3$s.', 'restropress' ), $url1, $url2, $url3 ),
+		6 => sprintf( __( '%2$s published. %1$sView %2$s%3$s.', 'restropress' ), $url1, $url2, $url3 ),
+		7 => sprintf( __( '%2$s saved. %1$sView %2$s%3$s.', 'restropress' ), $url1, $url2, $url3 ),
+		8 => sprintf( __( '%2$s submitted. %1$sView %2$s%3$s.', 'restropress' ), $url1, $url2, $url3 )
 	);
 
 	return $messages;
@@ -419,11 +419,11 @@ function rpress_bulk_updated_messages( $bulk_messages, $bulk_counts ) {
 	$plural   = rpress_get_label_plural();
 
 	$bulk_messages['fooditem'] = array(
-		'updated'   => sprintf( _n( '%1$s %2$s updated.', '%1$s %3$s updated.', $bulk_counts['updated'], 'restro-press' ), $bulk_counts['updated'], $singular, $plural ),
-		'locked'    => sprintf( _n( '%1$s %2$s not updated, somebody is editing it.', '%1$s %3$s not updated, somebody is editing them.', $bulk_counts['locked'], 'restro-press' ), $bulk_counts['locked'], $singular, $plural ),
-		'deleted'   => sprintf( _n( '%1$s %2$s permanently deleted.', '%1$s %3$s permanently deleted.', $bulk_counts['deleted'], 'restro-press' ), $bulk_counts['deleted'], $singular, $plural ),
-		'trashed'   => sprintf( _n( '%1$s %2$s moved to the Trash.', '%1$s %3$s moved to the Trash.', $bulk_counts['trashed'], 'restro-press' ), $bulk_counts['trashed'], $singular, $plural ),
-		'untrashed' => sprintf( _n( '%1$s %2$s restored from the Trash.', '%1$s %3$s restored from the Trash.', $bulk_counts['untrashed'], 'restro-press' ), $bulk_counts['untrashed'], $singular, $plural )
+		'updated'   => sprintf( _n( '%1$s %2$s updated.', '%1$s %3$s updated.', $bulk_counts['updated'], 'restropress' ), $bulk_counts['updated'], $singular, $plural ),
+		'locked'    => sprintf( _n( '%1$s %2$s not updated, somebody is editing it.', '%1$s %3$s not updated, somebody is editing them.', $bulk_counts['locked'], 'restropress' ), $bulk_counts['locked'], $singular, $plural ),
+		'deleted'   => sprintf( _n( '%1$s %2$s permanently deleted.', '%1$s %3$s permanently deleted.', $bulk_counts['deleted'], 'restropress' ), $bulk_counts['deleted'], $singular, $plural ),
+		'trashed'   => sprintf( _n( '%1$s %2$s moved to the Trash.', '%1$s %3$s moved to the Trash.', $bulk_counts['trashed'], 'restropress' ), $bulk_counts['trashed'], $singular, $plural ),
+		'untrashed' => sprintf( _n( '%1$s %2$s restored from the Trash.', '%1$s %3$s restored from the Trash.', $bulk_counts['untrashed'], 'restropress' ), $bulk_counts['untrashed'], $singular, $plural )
 	);
 
 	return $bulk_messages;

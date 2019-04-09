@@ -23,7 +23,7 @@ function rpress_upgrades_screen() {
 	?>
 
 	<div class="wrap">
-	<h2><?php _e( 'RestroPress - Upgrades', 'restro-press' ); ?></h2>
+	<h2><?php _e( 'RestroPress - Upgrades', 'restropress' ); ?></h2>
 	<?php
 	if ( is_callable( 'rpress_upgrade_render_' . $action ) ) {
 
@@ -64,10 +64,10 @@ function rpress_upgrades_screen() {
 			<?php if( ! empty( $action ) ) : ?>
 
 				<div id="rpress-upgrade-status">
-					<p><?php _e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restro-press' ); ?></p>
+					<p><?php _e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restropress' ); ?></p>
 
 					<?php if( ! empty( $total ) ) : ?>
-						<p><strong><?php printf( __( 'Step %d of approximately %d running', 'restro-press' ), $step, $steps ); ?></strong></p>
+						<p><strong><?php printf( __( 'Step %d of approximately %d running', 'restropress' ), $step, $steps ); ?></strong></p>
 					<?php endif; ?>
 				</div>
 				<script type="text/javascript">
@@ -78,7 +78,7 @@ function rpress_upgrades_screen() {
 
 				<div id="rpress-upgrade-status">
 					<p>
-						<?php _e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restro-press' ); ?>
+						<?php _e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restropress' ); ?>
 						<img src="<?php echo RPRESS_PLUGIN_URL . '/assets/images/loading.gif'; ?>" id="rpress-upgrade-loader"/>
 					</p>
 				</div>

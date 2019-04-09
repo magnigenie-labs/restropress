@@ -75,7 +75,7 @@ class RPRESS_Gateway_Error_Log_Table extends WP_List_Table {
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'error' :
-				return get_the_title( $item['ID'] ) ? get_the_title( $item['ID'] ) : __( 'Payment Error', 'restro-press' );
+				return get_the_title( $item['ID'] ) ? get_the_title( $item['ID'] ) : __( 'Payment Error', 'restropress' );
 			default:
 				return $item[ $column_name ];
 		}
@@ -90,7 +90,7 @@ class RPRESS_Gateway_Error_Log_Table extends WP_List_Table {
 	 */
 	public function column_message( $item ) {
 	?>
-		<a href="#TB_inline?width=640&amp;inlineId=log-message-<?php echo $item['ID']; ?>" class="thickbox"><?php _e( 'View Log Message', 'restro-press' ); ?></a>
+		<a href="#TB_inline?width=640&amp;inlineId=log-message-<?php echo $item['ID']; ?>" class="thickbox"><?php _e( 'View Log Message', 'restropress' ); ?></a>
 		<div id="log-message-<?php echo $item['ID']; ?>" style="display:none;">
 			<?php
 
@@ -104,7 +104,7 @@ class RPRESS_Gateway_Error_Log_Table extends WP_List_Table {
 				$data   = substr( $log_message, $serialized, strlen( $log_message ) - 1 );
 
 				echo wpautop( $intro );
-				echo '<strong>' . wpautop( __( 'Log data:', 'restro-press' ) ) . '</strong>';
+				echo '<strong>' . wpautop( __( 'Log data:', 'restropress' ) ) . '</strong>';
 				echo '<div style="word-wrap: break-word;">' . wpautop( $data ) . '</div>';
 			} else {
 				// No serialized data found
@@ -123,12 +123,12 @@ class RPRESS_Gateway_Error_Log_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'ID'         => __( 'Log ID', 'restro-press' ),
-			'payment_id' => __( 'Payment ID', 'restro-press' ),
-			'error'      => __( 'Error', 'restro-press' ),
-			'message'    => __( 'Error Message', 'restro-press' ),
-			'gateway'    => __( 'Gateway', 'restro-press' ),
-			'date'       => __( 'Date', 'restro-press' ),
+			'ID'         => __( 'Log ID', 'restropress' ),
+			'payment_id' => __( 'Payment ID', 'restropress' ),
+			'error'      => __( 'Error', 'restropress' ),
+			'message'    => __( 'Error Message', 'restropress' ),
+			'gateway'    => __( 'Gateway', 'restropress' ),
+			'date'       => __( 'Date', 'restropress' ),
 		);
 
 		return $columns;

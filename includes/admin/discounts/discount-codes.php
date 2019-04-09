@@ -30,7 +30,7 @@ function rpress_discounts_page() {
 		$discount_codes_table->prepare_items();
 	?>
 	<div class="wrap">
-		<h1><?php _e( 'Discount Codes', 'restro-press' ); ?><a href="<?php echo esc_url( add_query_arg( array( 'rpress-action' => 'add_discount' ) ) ); ?>" class="add-new-h2"><?php _e( 'Add New', 'restro-press' ); ?></a></h1>
+		<h1><?php _e( 'Discount Codes', 'restropress' ); ?><a href="<?php echo esc_url( add_query_arg( array( 'rpress-action' => 'add_discount' ) ) ); ?>" class="add-new-h2"><?php _e( 'Add New', 'restropress' ); ?></a></h1>
 		<?php do_action( 'rpress_discounts_page_top' ); ?>
 		<form id="rpress-discounts-filter" method="get" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-discounts' ); ?>">
 			<?php $discount_codes_table->search_box( __( 'Search', 'restr-press' ), 'rpress-discounts' ); ?>

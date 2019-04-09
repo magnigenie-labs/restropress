@@ -126,7 +126,7 @@ class RPRESS_Batch_Export extends RPRESS_Export {
 	public function process_step() {
 
 		if ( ! $this->can_export() ) {
-			wp_die( __( 'You do not have permission to export data.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to export data.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 		}
 
 		if( $this->step < 2 ) {

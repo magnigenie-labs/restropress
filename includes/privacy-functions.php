@@ -30,19 +30,19 @@ function rpress_register_privacy_policy_template() {
 - Respond to your queries, refund requests, or complaints.
 - Process payments and to prevent fraudulent transactions. We do this on the basis of our legitimate business interests.
 - Set up and administer your account, provide technical and/or customer support, and to verify your identity.
-', 'restro-press' ) ) );
+', 'restropress' ) ) );
 
 	$additional_collection = array(
-		__( 'Location and traffic data (including IP address and browser type) if you place an order, or if we need to estimate taxes and shipping costs based on your location.', 'restro-press' ),
-		__( 'Product pages visited and content viewed while your session is active.', 'restro-press' ),
-		__( 'Your comments and product reviews if you choose to leave them on our website.', 'restro-press' ),
-		__( 'Account email/password to allow you to access your account, if you have one.', 'restro-press' ),
-		__( 'If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.', 'restro-press' ),
+		__( 'Location and traffic data (including IP address and browser type) if you place an order, or if we need to estimate taxes and shipping costs based on your location.', 'restropress' ),
+		__( 'Product pages visited and content viewed while your session is active.', 'restropress' ),
+		__( 'Your comments and product reviews if you choose to leave them on our website.', 'restropress' ),
+		__( 'Account email/password to allow you to access your account, if you have one.', 'restropress' ),
+		__( 'If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.', 'restropress' ),
 	);
 
 	$additional_collection = apply_filters( 'rpress_privacy_policy_additional_collection', $additional_collection );
 
-	$content .= __( 'Additionally we may also collect the following information:', 'restro-press' ) . "\n";
+	$content .= __( 'Additionally we may also collect the following information:', 'restropress' ) . "\n";
 	if ( ! empty( $additional_collection ) ) {
 		foreach ( $additional_collection as $item ) {
 			$content .= '- ' . $item . "\n";
@@ -241,7 +241,7 @@ function _rpress_anonymize_customer( $customer_id = 0 ) {
 
 	$customer = new RPRESS_Customer( $customer_id );
 	if ( empty( $customer->id ) ) {
-		return array( 'success' => false, 'message' => sprintf( __( 'No customer with ID %d', 'restro-press' ), $customer_id ) );
+		return array( 'success' => false, 'message' => sprintf( __( 'No customer with ID %d', 'restropress' ), $customer_id ) );
 	}
 
 	/**
@@ -279,7 +279,7 @@ function _rpress_anonymize_customer( $customer_id = 0 ) {
 		if ( 'none' === $action ) {
 			return array(
 				'success' => false,
-				'message' => __( 'Customer could not be anonymized due to payments that could not be anonymized or deleted.', 'restro-press' )
+				'message' => __( 'Customer could not be anonymized due to payments that could not be anonymized or deleted.', 'restropress' )
 			);
 		}
 	}
@@ -294,7 +294,7 @@ function _rpress_anonymize_customer( $customer_id = 0 ) {
 	}
 
 	$customer->update( array(
-		'name'         => __( 'Anonymized Customer', 'restro-press' ),
+		'name'         => __( 'Anonymized Customer', 'restropress' ),
 		'email'        => rpress_anonymize_email( $customer->email ),
 		'date_created' => date( 'Y-m-d H:i:s', 0 ),
 		'notes'        => '',
@@ -313,8 +313,8 @@ function _rpress_anonymize_customer( $customer_id = 0 ) {
 	 */
 	do_action( 'rpress_anonymize_customer', $customer );
 
-	$customer->add_note( __( 'Customer anonymized successfully', 'restro-press' ) );
-	return array( 'success' => true, 'message' => sprintf( __( 'Customer ID %d successfully anonymized.', 'restro-press' ), $customer_id ) );
+	$customer->add_note( __( 'Customer anonymized successfully', 'restropress' ) );
+	return array( 'success' => true, 'message' => sprintf( __( 'Customer ID %d successfully anonymized.', 'restropress' ), $customer_id ) );
 
 }
 
@@ -337,7 +337,7 @@ function _rpress_anonymize_payment( $payment_id = 0 ) {
 
 	$payment = rpress_get_payment( $payment_id );
 	if ( false === $payment ) {
-		return array( 'success' => false, 'message' => sprintf( __( 'No payment with ID %d.', 'restro-press' ), $payment_id ) );
+		return array( 'success' => false, 'message' => sprintf( __( 'No payment with ID %d.', 'restropress' ), $payment_id ) );
 	}
 
 	/**
@@ -370,7 +370,7 @@ function _rpress_anonymize_payment( $payment_id = 0 ) {
 		default:
 			$return = array(
 				'success' => false,
-				'message' => sprintf( __( 'Payment not modified, due to status: %s.', 'restro-press' ), $payment->status )
+				'message' => sprintf( __( 'Payment not modified, due to status: %s.', 'restropress' ), $payment->status )
 			);
 			break;
 
@@ -379,7 +379,7 @@ function _rpress_anonymize_payment( $payment_id = 0 ) {
 
 			$return = array(
 				'success' => true,
-				'message' => sprintf( __( 'Payment %d with status %s deleted.', 'restro-press' ), $payment->ID, $payment->status )
+				'message' => sprintf( __( 'Payment %d with status %s deleted.', 'restropress' ), $payment->ID, $payment->status )
 			);
 			break;
 
@@ -407,8 +407,8 @@ function _rpress_anonymize_payment( $payment_id = 0 ) {
 
 			wp_update_post( array(
 				'ID' => $payment->ID,
-				'post_title' => __( 'Anonymized Customer', 'restro-press' ),
-				'post_name'  => sanitize_title( __( 'Anonymized Customer', 'restro-press' ) ),
+				'post_title' => __( 'Anonymized Customer', 'restropress' ),
+				'post_name'  => sanitize_title( __( 'Anonymized Customer', 'restropress' ) ),
 			) );
 
 			// Because we changed the post_name, WordPress sets a meta on the item for the `old slug`, we need to kill that.
@@ -429,7 +429,7 @@ function _rpress_anonymize_payment( $payment_id = 0 ) {
 			$payment->save();
 			$return = array(
 				'success' => true,
-				'message' => sprintf( __( 'Payment ID %d successfully anonymized.', 'restro-press' ), $payment_id )
+				'message' => sprintf( __( 'Payment ID %d successfully anonymized.', 'restropress' ), $payment_id )
 			);
 			break;
 	}
@@ -524,23 +524,23 @@ function _rpress_privacy_get_customer_id_for_email( $email_address ) {
 function rpress_register_privacy_exporters( $exporters ) {
 
 	$exporters[] = array(
-		'exporter_friendly_name' => __( 'Customer Record', 'restro-press' ),
+		'exporter_friendly_name' => __( 'Customer Record', 'restropress' ),
 		'callback'               => 'rpress_privacy_customer_record_exporter',
 	);
 
 	$exporters[] = array(
-		'exporter_friendly_name' => __( 'Billing Information', 'restro-press' ),
+		'exporter_friendly_name' => __( 'Billing Information', 'restropress' ),
 		'callback'               => 'rpress_privacy_billing_information_exporter',
 	);
 
 
 	$exporters[] = array(
-		'exporter_friendly_name' => __( 'Food Items', 'restro-press' ),
+		'exporter_friendly_name' => __( 'Food Items', 'restropress' ),
 		'callback'               => 'rpress_privacy_file_fooditem_log_exporter',
 	);
 
 	$exporters[] = array(
-		'exporter_friendly_name' => __( 'API Access Logs', 'restro-press' ),
+		'exporter_friendly_name' => __( 'API Access Logs', 'restropress' ),
 		'callback'               => 'rpress_privacy_api_access_log_exporter',
 	);
 
@@ -568,27 +568,27 @@ function rpress_privacy_customer_record_exporter( $email_address = '', $page = 1
 
 	$export_data = array(
 		'group_id'    => 'rpress-customer-record',
-		'group_label' => __( 'Customer Record', 'restro-press' ),
+		'group_label' => __( 'Customer Record', 'restropress' ),
 		'item_id'     => "rpress-customer-record-{$customer->id}",
 		'data'        => array(
 			array(
-				'name'  => __( 'Customer ID', 'restro-press' ),
+				'name'  => __( 'Customer ID', 'restropress' ),
 				'value' => $customer->id
 			),
 			array(
-				'name'  => __( 'Primary Email', 'restro-press' ),
+				'name'  => __( 'Primary Email', 'restropress' ),
 				'value' => $customer->email
 			),
 			array(
-				'name'  => __( 'Name', 'restro-press' ),
+				'name'  => __( 'Name', 'restropress' ),
 				'value' => $customer->name
 			),
 			array(
-				'name'  => __( 'Date Created', 'restro-press' ),
+				'name'  => __( 'Date Created', 'restropress' ),
 				'value' => $customer->date_created
 			),
 			array(
-				'name'  => __( 'All Email Addresses', 'restro-press' ),
+				'name'  => __( 'All Email Addresses', 'restropress' ),
 				'value' => implode( ', ', $customer->emails )
 			),
 		)
@@ -598,7 +598,7 @@ function rpress_privacy_customer_record_exporter( $email_address = '', $page = 1
 	if ( ! empty( $agree_to_terms_time ) ) {
 		foreach ( $agree_to_terms_time as $timestamp ) {
 			$export_data['data'][] = array(
-				'name' => __( 'Agreed to Terms', 'restro-press' ),
+				'name' => __( 'Agreed to Terms', 'restropress' ),
 				'value' => date_i18n( get_option( 'date_format' ) . ' H:i:s', $timestamp )
 			);
 		}
@@ -608,7 +608,7 @@ function rpress_privacy_customer_record_exporter( $email_address = '', $page = 1
 	if ( ! empty( $agree_to_privacy_time ) ) {
 		foreach ( $agree_to_privacy_time as $timestamp ) {
 			$export_data['data'][] = array(
-				'name' => __( 'Agreed to Privacy Policy', 'restro-press' ),
+				'name' => __( 'Agreed to Privacy Policy', 'restropress' ),
 				'value' => date_i18n( get_option( 'date_format' ) . ' H:i:s', $timestamp )
 			);
 		}
@@ -723,41 +723,41 @@ function rpress_privacy_billing_information_exporter( $email_address = '', $page
 
 		$data_points = array(
 			array(
-				'name'  => __( 'Order ID / Number', 'restro-press' ),
+				'name'  => __( 'Order ID / Number', 'restropress' ),
 				'value' => $payment->number,
 			),
 			array(
-				'name' => __( 'Order Date', 'restro-press' ),
+				'name' => __( 'Order Date', 'restropress' ),
 				'value' => date_i18n( get_option( 'date_format' ) . ' H:i:s', strtotime( $payment->date ) ),
 			),
 			array(
-				'name' => __( 'Order Completed Date', 'restro-press' ),
+				'name' => __( 'Order Completed Date', 'restropress' ),
 				'value' =>  ! empty( $payment->completed_date )
 					? date_i18n( get_option( 'date_format' ) . ' H:i:s', strtotime( $payment->completed_date ) )
 					: '',
 			),
 			array(
-				'name' => __( 'Order Total', 'restro-press' ),
+				'name' => __( 'Order Total', 'restropress' ),
 				'value' => rpress_currency_filter( rpress_format_amount( $payment->total ), $payment->currency ),
 			),
 			array(
-				'name' => __( 'Order Items', 'restro-press' ),
+				'name' => __( 'Order Items', 'restropress' ),
 				'value' => $items_purchased,
 			),
 			array(
-				'name'  => __( 'Email Address', 'restro-press' ),
+				'name'  => __( 'Email Address', 'restropress' ),
 				'value' => ! empty( $payment->email ) ? $payment->email : '',
 			),
 			array(
-				'name'  => __( 'Billing Address', 'restro-press' ),
+				'name'  => __( 'Billing Address', 'restropress' ),
 				'value' => $full_billing_address,
 			),
 			array(
-				'name'  => __( 'IP Address', 'restro-press' ),
+				'name'  => __( 'IP Address', 'restropress' ),
 				'value' => ! empty( $payment->ip ) ? $payment->ip : '',
 			),
 			array(
-				'name'  => __( 'Status', 'restro-press' ),
+				'name'  => __( 'Status', 'restropress' ),
 				'value' => rpress_get_payment_status_label( $payment->status ),
 			),
 		);
@@ -766,7 +766,7 @@ function rpress_privacy_billing_information_exporter( $email_address = '', $page
 
 		$export_items[] = array(
 			'group_id'    => 'rpress-order-details',
-			'group_label' => __( 'Customer Orders', 'restro-press' ),
+			'group_label' => __( 'Customer Orders', 'restropress' ),
 			'item_id'     => "rpress-order-details-{$payment->ID}",
 			'data'        => $data_points,
 		);
@@ -832,27 +832,27 @@ function rpress_privacy_file_fooditem_log_exporter( $email_address = '', $page =
 
 		$data_points = array(
 			array(
-				'name' => __( 'Date of Order', 'restro-press' ),
+				'name' => __( 'Date of Order', 'restropress' ),
 				'value' => date_i18n( get_option( 'date_format' ) . ' H:i:s', strtotime( $log->post_date ) ),
 			),
 			array(
-				'name' => __( 'Food Item Name', 'restro-press' ),
+				'name' => __( 'Food Item Name', 'restropress' ),
 				'value' =>  $fooditem->get_name(),
 			),
 			array(
-				'name' => __( 'Order ID', 'restro-press' ),
+				'name' => __( 'Order ID', 'restropress' ),
 				'value' => $log_meta['_rpress_log_payment_id'][0],
 			),
 			array(
-				'name' => __( 'Customer ID', 'restro-press' ),
+				'name' => __( 'Customer ID', 'restropress' ),
 				'value' => $log_meta['_rpress_log_customer_id'][0],
 			),
 			array(
-				'name'  => __( 'User ID', 'restro-press' ),
+				'name'  => __( 'User ID', 'restropress' ),
 				'value' => $log_meta['_rpress_log_user_id'][0],
 			),
 			array(
-				'name'  => __( 'IP Address', 'restro-press' ),
+				'name'  => __( 'IP Address', 'restropress' ),
 				'value' => $log_meta['_rpress_log_ip'][0],
 			),
 		);
@@ -916,15 +916,15 @@ function rpress_privacy_api_access_log_exporter( $email_address = '', $page = 1 
 
 		$data_points = array(
 			array(
-				'name' => __( 'Date', 'restro-press' ),
+				'name' => __( 'Date', 'restropress' ),
 				'value' => date_i18n( get_option( 'date_format' ) . ' H:i:s', strtotime( $log->post_date ) ),
 			),
 			array(
-				'name'  => __( 'Request', 'restro-press' ),
+				'name'  => __( 'Request', 'restropress' ),
 				'value' => $log->post_excerpt,
 			),
 			array(
-				'name'  => __( 'IP Address', 'restro-press' ),
+				'name'  => __( 'IP Address', 'restropress' ),
 				'value' => $ip_address,
 			),
 		);
@@ -933,7 +933,7 @@ function rpress_privacy_api_access_log_exporter( $email_address = '', $page = 1 
 
 		$export_items[] = array(
 			'group_id'    => 'rpress-api-access-logs',
-			'group_label' => __( 'API Access Logs', 'restro-press' ),
+			'group_label' => __( 'API Access Logs', 'restropress' ),
 			'item_id'     => "rpress-api-access-logs-{$log->ID}",
 			'data'        => $data_points,
 		);
@@ -996,7 +996,7 @@ function rpress_privacy_prefetch_customer_id( $email_address, $page = 1 ) {
  */
 function rpress_register_privacy_eraser_customer_id_removal( $erasers = array() ) {
 	$erasers[] = array(
-		'eraser_friendly_name' => __( 'Possibly Delete Customer', 'restro-press' ),
+		'eraser_friendly_name' => __( 'Possibly Delete Customer', 'restropress' ),
 		'callback'             => 'rpress_privacy_maybe_delete_customer_eraser',
 	);
 
@@ -1062,7 +1062,7 @@ function rpress_privacy_maybe_delete_customer_eraser( $email_address, $page = 1 
 			'items_removed'  => false,
 			'items_retained' => false,
 			'messages'       => array(
-				sprintf( __( 'Customer for %s not deleted, due to remaining payments.', 'restro-press' ), $email_address ),
+				sprintf( __( 'Customer for %s not deleted, due to remaining payments.', 'restropress' ), $email_address ),
 			),
 			'done'           => true,
 		);
@@ -1080,7 +1080,7 @@ function rpress_privacy_maybe_delete_customer_eraser( $email_address, $page = 1 
 				'items_removed'  => true,
 				'items_retained' => false,
 				'messages'       => array(
-					sprintf( __( 'Customer for %s successfully deleted.', 'restro-press' ), $email_address ),
+					sprintf( __( 'Customer for %s successfully deleted.', 'restropress' ), $email_address ),
 				),
 				'done'           => true,
 			);
@@ -1091,7 +1091,7 @@ function rpress_privacy_maybe_delete_customer_eraser( $email_address, $page = 1 
 			'items_removed'  => false,
 			'items_retained' => false,
 			'messages'       => array(
-				sprintf( __( 'Customer for %s failed to be deleted.', 'restro-press' ), $email_address ),
+				sprintf( __( 'Customer for %s failed to be deleted.', 'restropress' ), $email_address ),
 			),
 			'done'           => true,
 		);
@@ -1110,18 +1110,18 @@ function rpress_register_privacy_erasers( $erasers = array() ) {
 	// properties of the customer like email.
 
 	$erasers[] = array(
-		'eraser_friendly_name' => __( 'Customer Record', 'restro-press' ),
+		'eraser_friendly_name' => __( 'Customer Record', 'restropress' ),
 		'callback'             => 'rpress_privacy_customer_anonymizer',
 	);
 
 	$erasers[] = array(
-		'eraser_friendly_name' => __( 'Payment Record', 'restro-press' ),
+		'eraser_friendly_name' => __( 'Payment Record', 'restropress' ),
 		'callback'             => 'rpress_privacy_payment_eraser',
 	);
 
 
 	$erasers[] = array(
-		'eraser_friendly_name' => __( 'API Access Logs', 'restro-press' ),
+		'eraser_friendly_name' => __( 'API Access Logs', 'restropress' ),
 		'callback'             => 'rpress_privacy_api_access_logs_eraser',
 	);
 
@@ -1154,7 +1154,7 @@ function rpress_privacy_customer_anonymizer( $email_address, $page = 1 ) {
 	return array(
 		'items_removed'  => true,
 		'items_retained' => false,
-		'messages'       => array( sprintf( __( 'Customer for %s has been anonymized.', 'restro-press' ), $email_address ) ),
+		'messages'       => array( sprintf( __( 'Customer for %s has been anonymized.', 'restropress' ), $email_address ) ),
 		'done'           => true,
 	);
 }
@@ -1179,8 +1179,8 @@ function rpress_privacy_payment_eraser( $email_address, $page = 1 ) {
 	if ( empty( $payments ) ) {
 
 		$message = 1 === $page ?
-			sprintf( __( 'No payments found for %s.', 'restro-press' ), $email_address ) :
-			sprintf( __( 'All eligible payments anonymized or deleted for %s.', 'restro-press' ), $email_address );
+			sprintf( __( 'No payments found for %s.', 'restropress' ), $email_address ) :
+			sprintf( __( 'All eligible payments anonymized or deleted for %s.', 'restropress' ), $email_address );
 
 		return array(
 			'items_removed'  => false,
@@ -1253,7 +1253,7 @@ function rpress_privacy_file_fooditem_logs_eraser( $email_address, $page = 1 ) {
 		return array(
 			'items_removed'  => false,
 			'items_retained' => false,
-			'messages'       => array( sprintf( __( 'All eligible file fooditem logs anonymized or deleted for %s.', 'restro-press' ), $email_address ) ),
+			'messages'       => array( sprintf( __( 'All eligible file fooditem logs anonymized or deleted for %s.', 'restropress' ), $email_address ) ),
 			'done'           => true,
 		);
 	}
@@ -1302,7 +1302,7 @@ function rpress_privacy_api_access_logs_eraser( $email_address, $page = 1 ) {
 		return array(
 			'items_removed'  => false,
 			'items_retained' => false,
-			'messages'       => array( sprintf( __( 'No User found for %s, no access logs to remove.', 'restro-press' ), $email_address ) ),
+			'messages'       => array( sprintf( __( 'No User found for %s, no access logs to remove.', 'restropress' ), $email_address ) ),
 			'done'           => true,
 		);
 	}
@@ -1327,7 +1327,7 @@ function rpress_privacy_api_access_logs_eraser( $email_address, $page = 1 ) {
 		return array(
 			'items_removed'  => false,
 			'items_retained' => false,
-			'messages'       => array( sprintf( __( 'All API access logs deleted for %s.', 'restro-press' ), $email_address ) ),
+			'messages'       => array( sprintf( __( 'All API access logs deleted for %s.', 'restropress' ), $email_address ) ),
 			'done'           => true,
 		);
 	}

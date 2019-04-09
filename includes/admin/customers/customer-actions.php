@@ -14,7 +14,7 @@ function rpress_edit_customer( $args ) {
 	$customer_edit_role = apply_filters( 'rpress_edit_customers_role', 'edit_shop_payments' );
 
 	if ( ! is_admin() || ! current_user_can( $customer_edit_role ) ) {
-		wp_die( __( 'You do not have permission to edit this customer.', 'restro-press' ) );
+		wp_die( __( 'You do not have permission to edit this customer.', 'restropress' ) );
 	}
 
 	if ( empty( $args ) ) {
@@ -26,7 +26,7 @@ function rpress_edit_customer( $args ) {
 	$nonce         = $args['_wpnonce'];
 
 	if ( ! wp_verify_nonce( $nonce, 'edit-customer' ) ) {
-		wp_die( __( 'Cheatin\' eh?!', 'restro-press' ) );
+		wp_die( __( 'Cheatin\' eh?!', 'restropress' ) );
 	}
 
 	$customer = new RPRESS_Customer( $customer_id );
@@ -43,20 +43,20 @@ function rpress_edit_customer( $args ) {
 	$customer_info = wp_parse_args( $customer_info, $defaults );
 
 	if ( ! is_email( $customer_info['email'] ) ) {
-		rpress_set_error( 'rpress-invalid-email', __( 'Please enter a valid email address.', 'restro-press' ) );
+		rpress_set_error( 'rpress-invalid-email', __( 'Please enter a valid email address.', 'restropress' ) );
 	}
 
 	if ( (int) $customer_info['user_id'] != (int) $customer->user_id ) {
 
 		// Make sure we don't already have this user attached to a customer
 		if ( ! empty( $customer_info['user_id'] ) && false !== RPRESS()->customers->get_customer_by( 'user_id', $customer_info['user_id'] ) ) {
-			rpress_set_error( 'rpress-invalid-customer-user_id', sprintf( __( 'The User ID %d is already associated with a different customer.', 'restro-press' ), $customer_info['user_id'] ) );
+			rpress_set_error( 'rpress-invalid-customer-user_id', sprintf( __( 'The User ID %d is already associated with a different customer.', 'restropress' ), $customer_info['user_id'] ) );
 		}
 
 		// Make sure it's actually a user
 		$user = get_user_by( 'id', $customer_info['user_id'] );
 		if ( ! empty( $customer_info['user_id'] ) && false === $user ) {
-			rpress_set_error( 'rpress-invalid-user_id', sprintf( __( 'The User ID %d does not exist. Please assign an existing user.', 'restro-press' ), $customer_info['user_id'] ) );
+			rpress_set_error( 'rpress-invalid-user_id', sprintf( __( 'The User ID %d does not exist. Please assign an existing user.', 'restropress' ), $customer_info['user_id'] ) );
 		}
 
 	}
@@ -80,7 +80,7 @@ function rpress_edit_customer( $args ) {
 		if ( $user ) {
 			$user_id = $user->ID;
 		} else {
-			rpress_set_error( 'rpress-invalid-user-string', sprintf( __( 'Failed to attach user. The login or email address %s was not found.', 'restro-press' ), $customer_info['user_login'] ) );
+			rpress_set_error( 'rpress-invalid-user-string', sprintf( __( 'Failed to attach user. The login or email address %s was not found.', 'restropress' ), $customer_info['user_login'] ) );
 		}
 	}
 
@@ -183,7 +183,7 @@ function rpress_add_customer_email( $args ) {
 	$customer_edit_role = apply_filters( 'rpress_edit_customers_role', 'edit_shop_payments' );
 
 	if ( ! is_admin() || ! current_user_can( $customer_edit_role ) ) {
-		wp_die( __( 'You do not have permission to edit this customer.', 'restro-press' ) );
+		wp_die( __( 'You do not have permission to edit this customer.', 'restropress' ) );
 	}
 
 	$output = array();
@@ -193,25 +193,25 @@ function rpress_add_customer_email( $args ) {
 		$output['success'] = false;
 
 		if ( empty( $args['email'] ) ) {
-			$output['message'] = __( 'Email address is required.', 'restro-press' );
+			$output['message'] = __( 'Email address is required.', 'restropress' );
 		} else if ( empty( $args['customer_id'] ) ) {
-			$output['message'] = __( 'Customer ID is required.', 'restro-press' );
+			$output['message'] = __( 'Customer ID is required.', 'restropress' );
 		} else {
-			$output['message'] = __( 'An error has occured. Please try again.', 'restro-press' );
+			$output['message'] = __( 'An error has occured. Please try again.', 'restropress' );
 		}
 
 	} else if ( ! wp_verify_nonce( $args['_wpnonce'], 'rpress-add-customer-email' ) ) {
 
 		$output = array(
 			'success' => false,
-			'message' => __( 'Nonce verification failed.', 'restro-press' ),
+			'message' => __( 'Nonce verification failed.', 'restropress' ),
 		);
 
 	} else if ( ! is_email( $args['email'] ) ) {
 
 		$output = array(
 			'success' => false,
-			'message' => __( 'Invalid email address.', 'restro-press' ),
+			'message' => __( 'Invalid email address.', 'restropress' ),
 		);
 
 	} else {
@@ -227,14 +227,14 @@ function rpress_add_customer_email( $args ) {
 
 				$output = array(
 					'success'  => false,
-					'message'  => __( 'Email already associated with this customer.', 'restro-press' ),
+					'message'  => __( 'Email already associated with this customer.', 'restropress' ),
 				);
 
 			} else {
 
 				$output = array(
 					'success' => false,
-					'message' => __( 'Email address is already associated with another customer.', 'restro-press' ),
+					'message' => __( 'Email address is already associated with another customer.', 'restropress' ),
 				);
 
 			}
@@ -244,17 +244,17 @@ function rpress_add_customer_email( $args ) {
 			$redirect = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer_id . '&rpress-message=email-added' );
 			$output = array(
 				'success'  => true,
-				'message'  => __( 'Email successfully added to customer.', 'restro-press' ),
+				'message'  => __( 'Email successfully added to customer.', 'restropress' ),
 				'redirect' => $redirect,
 			);
 
 			$user          = wp_get_current_user();
 			$user_login    = ! empty( $user->user_login ) ? $user->user_login : 'RPRESSBot';
-			$customer_note = sprintf( __( 'Email address %s added by %s', 'restro-press' ), $email, $user_login );
+			$customer_note = sprintf( __( 'Email address %s added by %s', 'restropress' ), $email, $user_login );
 			$customer->add_note( $customer_note );
 
 			if ( $primary ) {
-				$customer_note =  sprintf( __( 'Email address %s set as primary by %s', 'restro-press' ), $email, $user_login );
+				$customer_note =  sprintf( __( 'Email address %s set as primary by %s', 'restropress' ), $email, $user_login );
 				$customer->add_note( $customer_note );
 			}
 
@@ -298,7 +298,7 @@ function rpress_remove_customer_email() {
 
 	$nonce = $_GET['_wpnonce'];
 	if ( ! wp_verify_nonce( $nonce, 'rpress-remove-customer-email' ) ) {
-		wp_die( __( 'Nonce verification failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$customer = new RPRESS_Customer( $_GET['id'] );
@@ -308,7 +308,7 @@ function rpress_remove_customer_email() {
 
 		$user          = wp_get_current_user();
 		$user_login    = ! empty( $user->user_login ) ? $user->user_login : 'RPRESSBot';
-		$customer_note = sprintf( __( 'Email address %s removed by %s', 'restro-press' ), sanitize_email( $_GET['email'] ), $user_login );
+		$customer_note = sprintf( __( 'Email address %s removed by %s', 'restropress' ), sanitize_email( $_GET['email'] ), $user_login );
 		$customer->add_note( $customer_note );
 
 	} else {
@@ -342,7 +342,7 @@ function rpress_set_customer_primary_email() {
 
 	$nonce = $_GET['_wpnonce'];
 	if ( ! wp_verify_nonce( $nonce, 'rpress-set-customer-primary-email' ) ) {
-		wp_die( __( 'Nonce verification failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$customer = new RPRESS_Customer( $_GET['id'] );
@@ -352,7 +352,7 @@ function rpress_set_customer_primary_email() {
 
 		$user          = wp_get_current_user();
 		$user_login    = ! empty( $user->user_login ) ? $user->user_login : 'RPRESSBot';
-		$customer_note = sprintf( __( 'Email address %s set as primary by %s', 'restro-press' ), sanitize_email( $_GET['email'] ), $user_login );
+		$customer_note = sprintf( __( 'Email address %s set as primary by %s', 'restropress' ), sanitize_email( $_GET['email'] ), $user_login );
 		$customer->add_note( $customer_note );
 
 	} else {
@@ -376,7 +376,7 @@ function rpress_customer_save_note( $args ) {
 	$customer_view_role = apply_filters( 'rpress_view_customers_role', 'view_shop_reports' );
 
 	if ( ! is_admin() || ! current_user_can( $customer_view_role ) ) {
-		wp_die( __( 'You do not have permission to edit this customer.', 'restro-press' ) );
+		wp_die( __( 'You do not have permission to edit this customer.', 'restropress' ) );
 	}
 
 	if ( empty( $args ) ) {
@@ -388,11 +388,11 @@ function rpress_customer_save_note( $args ) {
 	$nonce         = $args['add_customer_note_nonce'];
 
 	if ( ! wp_verify_nonce( $nonce, 'add-customer-note' ) ) {
-		wp_die( __( 'Cheatin\' eh?!', 'restro-press' ) );
+		wp_die( __( 'Cheatin\' eh?!', 'restropress' ) );
 	}
 
 	if ( empty( $customer_note ) ) {
-		rpress_set_error( 'empty-customer-note', __( 'A note is required', 'restro-press' ) );
+		rpress_set_error( 'empty-customer-note', __( 'A note is required', 'restropress' ) );
 	}
 
 	if ( rpress_get_errors() ) {
@@ -443,7 +443,7 @@ function rpress_customer_delete( $args ) {
 	$customer_edit_role = apply_filters( 'rpress_edit_customers_role', 'edit_shop_payments' );
 
 	if ( ! is_admin() || ! current_user_can( $customer_edit_role ) ) {
-		wp_die( __( 'You do not have permission to delete this customer.', 'restro-press' ) );
+		wp_die( __( 'You do not have permission to delete this customer.', 'restropress' ) );
 	}
 
 	if ( empty( $args ) ) {
@@ -456,11 +456,11 @@ function rpress_customer_delete( $args ) {
 	$nonce         = $args['_wpnonce'];
 
 	if ( ! wp_verify_nonce( $nonce, 'delete-customer' ) ) {
-		wp_die( __( 'Cheatin\' eh?!', 'restro-press' ) );
+		wp_die( __( 'Cheatin\' eh?!', 'restropress' ) );
 	}
 
 	if ( ! $confirm ) {
-		rpress_set_error( 'customer-delete-no-confirm', __( 'Please confirm you want to delete this customer', 'restro-press' ) );
+		rpress_set_error( 'customer-delete-no-confirm', __( 'Please confirm you want to delete this customer', 'restropress' ) );
 	}
 
 	if ( rpress_get_errors() ) {
@@ -501,14 +501,14 @@ function rpress_customer_delete( $args ) {
 
 		} else {
 
-			rpress_set_error( 'rpress-customer-delete-failed', __( 'Error deleting customer', 'restro-press' ) );
+			rpress_set_error( 'rpress-customer-delete-failed', __( 'Error deleting customer', 'restropress' ) );
 			$redirect = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=delete&id=' . $customer_id );
 
 		}
 
 	} else {
 
-		rpress_set_error( 'rpress-customer-delete-invalid-id', __( 'Invalid Customer ID', 'restro-press' ) );
+		rpress_set_error( 'rpress-customer-delete-invalid-id', __( 'Invalid Customer ID', 'restropress' ) );
 		$redirect = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers' );
 
 	}
@@ -531,7 +531,7 @@ function rpress_disconnect_customer_user_id( $args ) {
 	$customer_edit_role = apply_filters( 'rpress_edit_customers_role', 'edit_shop_payments' );
 
 	if ( ! is_admin() || ! current_user_can( $customer_edit_role ) ) {
-		wp_die( __( 'You do not have permission to edit this customer.', 'restro-press' ) );
+		wp_die( __( 'You do not have permission to edit this customer.', 'restropress' ) );
 	}
 
 	if ( empty( $args ) ) {
@@ -542,7 +542,7 @@ function rpress_disconnect_customer_user_id( $args ) {
 	$nonce         = $args['_wpnonce'];
 
 	if ( ! wp_verify_nonce( $nonce, 'edit-customer' ) ) {
-		wp_die( __( 'Cheatin\' eh?!', 'restro-press' ) );
+		wp_die( __( 'Cheatin\' eh?!', 'restropress' ) );
 	}
 
 	$customer = new RPRESS_Customer( $customer_id );
@@ -566,7 +566,7 @@ function rpress_disconnect_customer_user_id( $args ) {
 	} else {
 
 		$output['success'] = false;
-		rpress_set_error( 'rpress-disconnect-user-fail', __( 'Failed to disconnect user from customer', 'restro-press' ) );
+		rpress_set_error( 'rpress-disconnect-user-fail', __( 'Failed to disconnect user from customer', 'restropress' ) );
 	}
 
 	do_action( 'rpress_post_customer_disconnect_user_id', $customer_id );
@@ -600,7 +600,7 @@ function rpress_process_admin_user_verification() {
 
 	$nonce = $_GET['_wpnonce'];
 	if ( ! wp_verify_nonce( $nonce, 'rpress-verify-user' ) ) {
-		wp_die( __( 'Nonce verification failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$customer = new RPRESS_Customer( $_GET['id'] );

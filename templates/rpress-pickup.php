@@ -12,7 +12,7 @@
 				$preorder_class = 'preorder-enable';
 		?>
 
-		<div class="delivery-time-text"><?php echo __('Select order date', 'restro-press'); ?></div>
+		<div class="delivery-time-text"><?php echo __('Select order date', 'restropress'); ?></div>
 		<input type="text" name="" class="rpress_get_delivery_dates">
 		<?php
 			endif;
@@ -21,7 +21,7 @@
 
 	<!-- Pickup Time Starts Here -->
 	<div class="rpress-pickup-time-wrap rpress-time-wrap  <?php echo $preorder_class; ?>">
-		<div class="pickup-time-text"><?php echo __('Select a pickup time', 'restro-press'); ?></div>
+		<div class="pickup-time-text"><?php echo __('Select a pickup time', 'restropress'); ?></div>
 		<!-- <input type="text" class="<?php echo $preorder_class; ?> rpress-pickup rpress-allowed-pickup-hrs rpress-hrs rp-form-control" id="rpress-pickup-hours" name="rpress_allowed_hours"> -->
 		<select class="<?php echo $preorder_class; ?> rpress-pickup rpress-allowed-pickup-hrs rpress-hrs rp-form-control" id="rpress-pickup-hours" name="rpress_allowed_hours">
 			<?php

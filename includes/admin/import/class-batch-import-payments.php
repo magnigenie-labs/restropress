@@ -73,7 +73,7 @@ class RPRESS_Batch_Payments_Import extends RPRESS_Batch_Import {
 		$more = false;
 
 		if ( ! $this->can_import() ) {
-			wp_die( __( 'You do not have permission to import data.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to import data.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 		}
 
 		// Remove certain actions to ensure they don't fire when creating the payments
@@ -281,7 +281,7 @@ class RPRESS_Batch_Payments_Import extends RPRESS_Batch_Import {
 
 		if( ! empty( $this->field_mapping['fooditems'] ) && ! empty( $row[ $this->field_mapping['fooditems'] ] ) ) {
 
-			if( __( 'Products (Raw)', 'restro-press' ) == $this->field_mapping['fooditems'] ) {
+			if( __( 'Products (Raw)', 'restropress' ) == $this->field_mapping['fooditems'] ) {
 
 				// This is an RPRESS export so we can extract prices
 				$fooditems = $this->get_fooditems_from_rpress( $row[ $this->field_mapping['fooditems'] ] );
@@ -599,6 +599,6 @@ class RPRESS_Batch_Payments_Import extends RPRESS_Batch_Import {
 	 * @return string
 	 */
 	public function get_import_type_label() {
-		return __( 'payments', 'restro-press' );
+		return __( 'payments', 'restropress' );
 	}
 }

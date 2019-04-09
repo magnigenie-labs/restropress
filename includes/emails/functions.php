@@ -42,11 +42,11 @@ function rpress_email_purchase_receipt( $payment_id, $admin_notice = true, $to_e
 		$to_email = $payment->email;
 	}
 
-	$subject      = rpress_get_option( 'purchase_subject', __( 'Purchase Receipt', 'restro-press' ) );
+	$subject      = rpress_get_option( 'purchase_subject', __( 'Purchase Receipt', 'restropress' ) );
 	$subject      = apply_filters( 'rpress_purchase_subject', wp_strip_all_tags( $subject ), $payment_id );
 	$subject      = wp_specialchars_decode( rpress_do_email_tags( $subject, $payment_id ) );
 
-	$heading      = rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restro-press' ) );
+	$heading      = rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restropress' ) );
 	$heading      = apply_filters( 'rpress_purchase_heading', $heading, $payment_id, $payment_data );
 	$heading      = rpress_do_email_tags( $heading, $payment_id );
 
@@ -84,11 +84,11 @@ function rpress_email_test_purchase_receipt() {
 	$from_email  = rpress_get_option( 'from_email', get_bloginfo( 'admin_email' ) );
 	$from_email  = apply_filters( 'rpress_test_purchase_from_address', $from_email, 0, array() );
 
-	$subject     = rpress_get_option( 'purchase_subject', __( 'Purchase Receipt', 'restro-press' ) );
+	$subject     = rpress_get_option( 'purchase_subject', __( 'Purchase Receipt', 'restropress' ) );
 	$subject     = apply_filters( 'rpress_purchase_subject', wp_strip_all_tags( $subject ), 0 );
 	$subject     = rpress_do_email_tags( $subject, 0 );
 
-	$heading     = rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restro-press' ) );
+	$heading     = rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restropress' ) );
 	$heading     = apply_filters( 'rpress_purchase_heading', $heading, 0, array() );
 
 	$attachments = apply_filters( 'rpress_receipt_attachments', array(), 0, array() );
@@ -133,11 +133,11 @@ function rpress_admin_email_notice( $payment_id = 0, $payment_data = array() ) {
 	$from_email  = rpress_get_option( 'from_email', get_bloginfo( 'admin_email' ) );
 	$from_email  = apply_filters( 'rpress_admin_order_from_address', $from_email, $payment_id, $payment_data );
 
-	$subject     = rpress_get_option( 'order_notification_subject', sprintf( __( 'New fooditem order - Order #%1$s', 'restro-press' ), $payment_id ) );
+	$subject     = rpress_get_option( 'order_notification_subject', sprintf( __( 'New fooditem order - Order #%1$s', 'restropress' ), $payment_id ) );
 	$subject     = apply_filters( 'rpress_admin_order_notification_subject', wp_strip_all_tags( $subject ), $payment_id );
 	$subject     = wp_specialchars_decode( rpress_do_email_tags( $subject, $payment_id ) );
 
-	$heading     = rpress_get_option( 'order_notification_heading', __( 'New Order Placed!', 'restro-press' ) );
+	$heading     = rpress_get_option( 'order_notification_heading', __( 'New Order Placed!', 'restropress' ) );
 	$heading     = apply_filters( 'rpress_admin_order_notification_heading', $heading, $payment_id, $payment_data );
 	$heading     = rpress_do_email_tags( $heading, $payment_id );
 
@@ -197,13 +197,13 @@ function rpress_admin_notices_disabled( $payment_id = 0 ) {
  * @return string $message
  */
 function rpress_get_default_sale_notification_email() {
-	$default_email_body = __( 'Hello', 'restro-press' ) . "\n\n" . sprintf( __( 'A %s purchase has been made', 'restro-press' ), rpress_get_label_plural() ) . ".\n\n";
-	$default_email_body .= sprintf( __( '%s sold:', 'restro-press' ), rpress_get_label_plural() ) . "\n\n";
+	$default_email_body = __( 'Hello', 'restropress' ) . "\n\n" . sprintf( __( 'A %s purchase has been made', 'restropress' ), rpress_get_label_plural() ) . ".\n\n";
+	$default_email_body .= sprintf( __( '%s sold:', 'restropress' ), rpress_get_label_plural() ) . "\n\n";
 	$default_email_body .= '{fooditem_list}' . "\n\n";
-	$default_email_body .= __( 'Purchased by: ', 'restro-press' ) . ' {name}' . "\n";
-	$default_email_body .= __( 'Amount: ', 'restro-press' ) . ' {price}' . "\n";
-	$default_email_body .= __( 'Payment Method: ', 'restro-press' ) . ' {payment_method}' . "\n\n";
-	$default_email_body .= __( 'Thank you', 'restro-press' );
+	$default_email_body .= __( 'Purchased by: ', 'restropress' ) . ' {name}' . "\n";
+	$default_email_body .= __( 'Amount: ', 'restropress' ) . ' {price}' . "\n";
+	$default_email_body .= __( 'Payment Method: ', 'restropress' ) . ' {payment_method}' . "\n\n";
+	$default_email_body .= __( 'Thank you', 'restropress' );
 
 	$message = rpress_get_option( 'order_notification', false );
 	$message = ! empty( $message ) ? $message : $default_email_body;

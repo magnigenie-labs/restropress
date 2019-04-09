@@ -46,7 +46,7 @@ function rpress_do_ajax_export() {
 	}
 
 	if ( ! $export->is_writable ) {
-		echo json_encode( array( 'error' => true, 'message' => __( 'Export location or file not writable', 'restro-press' ) ) ); exit;
+		echo json_encode( array( 'error' => true, 'message' => __( 'Export location or file not writable', 'restropress' ) ) ); exit;
 	}
 
 	$export->set_properties( $_REQUEST );
@@ -65,11 +65,11 @@ function rpress_do_ajax_export() {
 
 	} elseif ( true === $export->is_empty ) {
 
-		echo json_encode( array( 'error' => true, 'message' => __( 'No data found for export parameters', 'restro-press' ) ) ); exit;
+		echo json_encode( array( 'error' => true, 'message' => __( 'No data found for export parameters', 'restropress' ) ) ); exit;
 
 	} elseif ( true === $export->done && true === $export->is_void ) {
 
-		$message = ! empty( $export->message ) ? $export->message : __( 'Batch Processing Complete', 'restro-press' );
+		$message = ! empty( $export->message ) ? $export->message : __( 'Batch Processing Complete', 'restropress' );
 		echo json_encode( array( 'success' => true, 'message' => $message ) ); exit;
 
 	} else {

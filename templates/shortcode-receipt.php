@@ -9,7 +9,7 @@ $payment   = get_post( $rpress_receipt_args['id'] );
 if( empty( $payment ) ) : ?>
 
 	<div class="rpress_errors rpress-alert rpress-alert-error">
-		<?php _e( 'The specified receipt ID appears to be invalid', 'restro-press' ); ?>
+		<?php _e( 'The specified receipt ID appears to be invalid', 'restropress' ); ?>
 	</div>
 
 <?php
@@ -28,7 +28,7 @@ $status    = rpress_get_payment_status( $payment, true );
 
 		<?php if ( filter_var( $rpress_receipt_args['payment_id'], FILTER_VALIDATE_BOOLEAN ) ) : ?>
 		<tr>
-			<th><strong><?php _e( 'Payment', 'restro-press' ); ?>:</strong></th>
+			<th><strong><?php _e( 'Payment', 'restropress' ); ?>:</strong></th>
 			<th><?php echo rpress_get_payment_number( $payment->ID ); ?></th>
 		</tr>
 		<?php endif; ?>
@@ -37,33 +37,33 @@ $status    = rpress_get_payment_status( $payment, true );
 	<tbody>
 
 		<tr>
-			<td class="rpress_receipt_payment_status"><strong><?php _e( 'Payment Status', 'restro-press' ); ?>:</strong></td>
+			<td class="rpress_receipt_payment_status"><strong><?php _e( 'Payment Status', 'restropress' ); ?>:</strong></td>
 			<td class="rpress_receipt_payment_status <?php echo strtolower( $status ); ?>"><?php echo $status; ?></td>
 		</tr>
 
 		<?php if ( filter_var( $rpress_receipt_args['payment_key'], FILTER_VALIDATE_BOOLEAN ) ) : ?>
 			<tr>
-				<td><strong><?php _e( 'Payment Key', 'restro-press' ); ?>:</strong></td>
+				<td><strong><?php _e( 'Payment Key', 'restropress' ); ?>:</strong></td>
 				<td><?php echo rpress_get_payment_meta( $payment->ID, '_rpress_payment_purchase_key', true ); ?></td>
 			</tr>
 		<?php endif; ?>
 
 		<?php if ( filter_var( $rpress_receipt_args['payment_method'], FILTER_VALIDATE_BOOLEAN ) ) : ?>
 			<tr>
-				<td><strong><?php _e( 'Payment Method', 'restro-press' ); ?>:</strong></td>
+				<td><strong><?php _e( 'Payment Method', 'restropress' ); ?>:</strong></td>
 				<td><?php echo rpress_get_gateway_checkout_label( rpress_get_payment_gateway( $payment->ID ) ); ?></td>
 			</tr>
 		<?php endif; ?>
 		<?php if ( filter_var( $rpress_receipt_args['date'], FILTER_VALIDATE_BOOLEAN ) ) : ?>
 		<tr>
-			<td><strong><?php _e( 'Date', 'restro-press' ); ?>:</strong></td>
+			<td><strong><?php _e( 'Date', 'restropress' ); ?>:</strong></td>
 			<td><?php echo date_i18n( get_option( 'date_format' ), strtotime( $meta['date'] ) ); ?></td>
 		</tr>
 		<?php endif; ?>
 
 		<?php if ( ( $fees = rpress_get_payment_fees( $payment->ID, 'fee' ) ) ) : ?>
 		<tr>
-			<td><strong><?php _e( 'Fees', 'restro-press' ); ?>:</strong></td>
+			<td><strong><?php _e( 'Fees', 'restropress' ); ?>:</strong></td>
 			<td>
 				<ul class="rpress_receipt_fees">
 				<?php foreach( $fees as $fee ) : ?>
@@ -80,14 +80,14 @@ $status    = rpress_get_payment_status( $payment, true );
 
 		<?php if ( filter_var( $rpress_receipt_args['discount'], FILTER_VALIDATE_BOOLEAN ) && isset( $user['discount'] ) && $user['discount'] != 'none' ) : ?>
 			<tr>
-				<td><strong><?php _e( 'Discount(s)', 'restro-press' ); ?>:</strong></td>
+				<td><strong><?php _e( 'Discount(s)', 'restropress' ); ?>:</strong></td>
 				<td><?php echo $user['discount']; ?></td>
 			</tr>
 		<?php endif; ?>
 
 		<?php if( rpress_use_taxes() ) : ?>
 			<tr>
-				<td><strong><?php _e( 'Tax', 'restro-press' ); ?>:</strong></td>
+				<td><strong><?php _e( 'Tax', 'restropress' ); ?>:</strong></td>
 				<td><?php echo rpress_payment_tax( $payment->ID ); ?></td>
 			</tr>
 		<?php endif; ?>
@@ -97,7 +97,7 @@ $status    = rpress_get_payment_status( $payment, true );
 			
 
 			<tr>
-				<td><strong><?php _e( 'Total Price', 'restro-press' ); ?>:</strong></td>
+				<td><strong><?php _e( 'Total Price', 'restropress' ); ?>:</strong></td>
 				<td><?php echo rpress_payment_amount( $payment->ID ); ?></td>
 			</tr>
 
@@ -111,12 +111,12 @@ $status    = rpress_get_payment_status( $payment, true );
 
 <?php if ( filter_var( $rpress_receipt_args['products'], FILTER_VALIDATE_BOOLEAN ) ) : ?>
 
-	<h3><?php echo apply_filters( 'rpress_payment_receipt_products_title', __( 'Products', 'restro-press' ) ); ?></h3>
+	<h3><?php echo apply_filters( 'rpress_payment_receipt_products_title', __( 'Products', 'restropress' ) ); ?></h3>
 
 	<table id="rpress_purchase_receipt_products" class="rpress-table">
 		<thead>
-			<th><?php _e( 'Name', 'restro-press' ); ?></th>
-			<th><?php _e( 'Price', 'restro-press' ); ?></th>
+			<th><?php _e( 'Name', 'restropress' ); ?></th>
+			<th><?php _e( 'Price', 'restropress' ); ?></th>
 		</thead>
 
 		<tbody>

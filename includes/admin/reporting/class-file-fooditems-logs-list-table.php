@@ -148,13 +148,13 @@ class RPRESS_File_RestroPress_Log_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'ID'         => __( 'Log ID', 'restro-press' ),
+			'ID'         => __( 'Log ID', 'restropress' ),
 			'fooditem'   => rpress_get_label_singular(),
-			'customer'   => __( 'Customer', 'restro-press' ),
-			'payment_id' => __( 'Payment ID', 'restro-press' ),
-			'file'       => __( 'File', 'restro-press' ),
-			'ip'         => __( 'IP Address', 'restro-press' ),
-			'date'       => __( 'Date', 'restro-press' ),
+			'customer'   => __( 'Customer', 'restropress' ),
+			'payment_id' => __( 'Payment ID', 'restropress' ),
+			'file'       => __( 'File', 'restropress' ),
+			'ip'         => __( 'IP Address', 'restropress' ),
+			'date'       => __( 'Date', 'restropress' ),
 		);
 		return $columns;
 	}
@@ -317,7 +317,7 @@ class RPRESS_File_RestroPress_Log_Table extends WP_List_Table {
 
 		if ( $fooditems ) {
 			echo '<select name="fooditem" id="rpress-log-fooditem-filter">';
-				echo '<option value="0">' . __( 'All', 'restro-press' ) . '</option>';
+				echo '<option value="0">' . __( 'All', 'restropress' ) . '</option>';
 				foreach ( $fooditems as $fooditem ) {
 					echo '<option value="' . $fooditem . '"' . selected( $fooditem, $this->get_filtered_fooditem() ) . '>' . esc_html( get_the_title( $fooditem ) ) . '</option>';
 				}

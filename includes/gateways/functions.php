@@ -22,17 +22,17 @@ function rpress_get_payment_gateways() {
 	// Default, built-in gateways
 	$gateways = array(
 		'paypal' => array(
-			'admin_label'    => __( 'PayPal Standard', 'restro-press' ),
-			'checkout_label' => __( 'PayPal', 'restro-press' ),
+			'admin_label'    => __( 'PayPal Standard', 'restropress' ),
+			'checkout_label' => __( 'PayPal', 'restropress' ),
 			'supports'       => array( 'buy_now' )
 		),
 		'manual' => array(
-			'admin_label'    => __( 'Test Payment', 'restro-press' ),
-			'checkout_label' => __( 'Test Payment', 'restro-press' )
+			'admin_label'    => __( 'Test Payment', 'restropress' ),
+			'checkout_label' => __( 'Test Payment', 'restropress' )
 		),
 		'cash_on_delivery' => array(
-			'admin_label'    => __( 'Cash On Delivery', 'restro-press' ),
-			'checkout_label' => __( 'Cash On Delivery', 'restro-press' )
+			'admin_label'    => __( 'Cash On Delivery', 'restropress' ),
+			'checkout_label' => __( 'Cash On Delivery', 'restropress' )
 		),
 	);
 
@@ -122,7 +122,7 @@ function rpress_get_gateway_admin_label( $gateway ) {
 
 	if( $gateway == 'manual' && $payment ) {
 		if( rpress_get_payment_amount( $payment ) == 0 ) {
-			$label = __( 'Free Purchase', 'restro-press' );
+			$label = __( 'Free Purchase', 'restropress' );
 		}
 	}
 
@@ -141,7 +141,7 @@ function rpress_get_gateway_checkout_label( $gateway ) {
 	$label    = isset( $gateways[ $gateway ] ) ? $gateways[ $gateway ]['checkout_label'] : $gateway;
 
 	if( $gateway == 'manual' ) {
-		$label = __( 'Free Purchase', 'restro-press' );
+		$label = __( 'Free Purchase', 'restropress' );
 	}
 
 	return apply_filters( 'rpress_gateway_checkout_label', $label, $gateway );
@@ -223,7 +223,7 @@ function rpress_build_straight_to_gateway_data( $fooditem_id = 0, $options = arr
 
 		// Make sure a valid price ID was supplied
 		if( ! isset( $prices[ $price_id ] ) ) {
-			wp_die( __( 'The requested price ID does not exist.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 404 ) );
+			wp_die( __( 'The requested price ID does not exist.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 404 ) );
 		}
 
 		$price_options = array(
@@ -425,7 +425,7 @@ function rpress_count_sales_by_gateway( $gateway_id = 'paypal', $status = 'publi
 */
 function rpress_cash_on_delivery_payment( $purchase_data ) {
 	if( ! wp_verify_nonce( $purchase_data['gateway_nonce'], 'rpress-gateway' ) ) {
-		wp_die( __( 'Nonce verification has failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification has failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$payment_data = array(
@@ -450,7 +450,7 @@ function rpress_cash_on_delivery_payment( $purchase_data ) {
 		rpress_admin_email_notice($payment, $payment_data);
 		rpress_send_to_success_page();
 	} else {
-		rpress_record_gateway_error( __( 'Payment Error', 'restro-press' ), sprintf( __( 'Payment creation failed while processing with Cash On delivery order. Payment data: %s', 'restro-press' ), json_encode( $payment_data ) ), $payment );
+		rpress_record_gateway_error( __( 'Payment Error', 'restropress' ), sprintf( __( 'Payment creation failed while processing with Cash On delivery order. Payment data: %s', 'restropress' ), json_encode( $payment_data ) ), $payment );
 		// If errors are present, send the user back to the purchase page so they can be corrected
 		rpress_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['rpress-gateway'] );
 	}

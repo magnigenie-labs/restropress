@@ -316,34 +316,34 @@ function rpress_is_host( $host = false ) {
  */
 function rpress_get_currencies() {
 	$currencies = array(
-		'USD'  => __( 'US Dollars (&#36;)', 'restro-press' ),
-		'EUR'  => __( 'Euros (&euro;)', 'restro-press' ),
-		'GBP'  => __( 'Pound Sterling (&pound;)', 'restro-press' ),
-		'AUD'  => __( 'Australian Dollars (&#36;)', 'restro-press' ),
-		'BRL'  => __( 'Brazilian Real (R&#36;)', 'restro-press' ),
-		'CAD'  => __( 'Canadian Dollars (&#36;)', 'restro-press' ),
-		'CZK'  => __( 'Czech Koruna', 'restro-press' ),
-		'DKK'  => __( 'Danish Krone', 'restro-press' ),
-		'HKD'  => __( 'Hong Kong Dollar (&#36;)', 'restro-press' ),
-		'HUF'  => __( 'Hungarian Forint', 'restro-press' ),
-		'ILS'  => __( 'Israeli Shekel (&#8362;)', 'restro-press' ),
-		'JPY'  => __( 'Japanese Yen (&yen;)', 'restro-press' ),
-		'MYR'  => __( 'Malaysian Ringgits', 'restro-press' ),
-		'MXN'  => __( 'Mexican Peso (&#36;)', 'restro-press' ),
-		'NZD'  => __( 'New Zealand Dollar (&#36;)', 'restro-press' ),
-		'NOK'  => __( 'Norwegian Krone', 'restro-press' ),
-		'PHP'  => __( 'Philippine Pesos', 'restro-press' ),
-		'PLN'  => __( 'Polish Zloty', 'restro-press' ),
-		'SGD'  => __( 'Singapore Dollar (&#36;)', 'restro-press' ),
-		'SEK'  => __( 'Swedish Krona', 'restro-press' ),
-		'CHF'  => __( 'Swiss Franc', 'restro-press' ),
-		'TWD'  => __( 'Taiwan New Dollars', 'restro-press' ),
-		'THB'  => __( 'Thai Baht (&#3647;)', 'restro-press' ),
-		'INR'  => __( 'Indian Rupee (&#8377;)', 'restro-press' ),
-		'TRY'  => __( 'Turkish Lira (&#8378;)', 'restro-press' ),
-		'RIAL' => __( 'Iranian Rial (&#65020;)', 'restro-press' ),
-		'RUB'  => __( 'Russian Rubles', 'restro-press' ),
-		'AOA'  => __( 'Angolan Kwanza', 'restro-press' ),
+		'USD'  => __( 'US Dollars (&#36;)', 'restropress' ),
+		'EUR'  => __( 'Euros (&euro;)', 'restropress' ),
+		'GBP'  => __( 'Pound Sterling (&pound;)', 'restropress' ),
+		'AUD'  => __( 'Australian Dollars (&#36;)', 'restropress' ),
+		'BRL'  => __( 'Brazilian Real (R&#36;)', 'restropress' ),
+		'CAD'  => __( 'Canadian Dollars (&#36;)', 'restropress' ),
+		'CZK'  => __( 'Czech Koruna', 'restropress' ),
+		'DKK'  => __( 'Danish Krone', 'restropress' ),
+		'HKD'  => __( 'Hong Kong Dollar (&#36;)', 'restropress' ),
+		'HUF'  => __( 'Hungarian Forint', 'restropress' ),
+		'ILS'  => __( 'Israeli Shekel (&#8362;)', 'restropress' ),
+		'JPY'  => __( 'Japanese Yen (&yen;)', 'restropress' ),
+		'MYR'  => __( 'Malaysian Ringgits', 'restropress' ),
+		'MXN'  => __( 'Mexican Peso (&#36;)', 'restropress' ),
+		'NZD'  => __( 'New Zealand Dollar (&#36;)', 'restropress' ),
+		'NOK'  => __( 'Norwegian Krone', 'restropress' ),
+		'PHP'  => __( 'Philippine Pesos', 'restropress' ),
+		'PLN'  => __( 'Polish Zloty', 'restropress' ),
+		'SGD'  => __( 'Singapore Dollar (&#36;)', 'restropress' ),
+		'SEK'  => __( 'Swedish Krona', 'restropress' ),
+		'CHF'  => __( 'Swiss Franc', 'restropress' ),
+		'TWD'  => __( 'Taiwan New Dollars', 'restropress' ),
+		'THB'  => __( 'Thai Baht (&#3647;)', 'restropress' ),
+		'INR'  => __( 'Indian Rupee (&#8377;)', 'restropress' ),
+		'TRY'  => __( 'Turkish Lira (&#8378;)', 'restropress' ),
+		'RIAL' => __( 'Iranian Rial (&#65020;)', 'restropress' ),
+		'RUB'  => __( 'Russian Rubles', 'restropress' ),
+		'AOA'  => __( 'Angolan Kwanza', 'restropress' ),
 	);
 
 	return apply_filters( 'rpress_currencies', $currencies );
@@ -532,11 +532,11 @@ function _rpress_deprecated_function( $function, $version, $replacement = null, 
 	// Allow plugin to filter the output error trigger
 	if ( WP_DEBUG && apply_filters( 'rpress_deprecated_function_trigger_error', $show_errors ) ) {
 		if ( ! is_null( $replacement ) ) {
-			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since RestroPress version %2$s! Use %3$s instead.', 'restro-press' ), $function, $version, $replacement ) );
+			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since RestroPress version %2$s! Use %3$s instead.', 'restropress' ), $function, $version, $replacement ) );
 			trigger_error(  print_r( $backtrace, 1 ) ); // Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
 			// Alternatively we could dump this to a file.
 		} else {
-			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since RestroPress version %2$s with no alternative available.', 'restro-press' ), $function, $version ) );
+			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since RestroPress version %2$s with no alternative available.', 'restropress' ), $function, $version ) );
 			trigger_error( print_r( $backtrace, 1 ) );// Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
 			// Alternatively we could dump this to a file.
 		}
@@ -573,11 +573,11 @@ function _rpress_deprected_argument( $argument, $function, $version, $replacemen
 	// Allow plugin to filter the output error trigger
 	if ( WP_DEBUG && apply_filters( 'rpress_deprecated_argument_trigger_error', $show_errors ) ) {
 		if ( ! is_null( $replacement ) ) {
-			trigger_error( sprintf( __( 'The %1$s argument of %2$s is <strong>deprecated</strong> since RestroPress version %3$s! Please use %4$s instead.', 'restro-press' ), $argument, $function, $version, $replacement ) );
+			trigger_error( sprintf( __( 'The %1$s argument of %2$s is <strong>deprecated</strong> since RestroPress version %3$s! Please use %4$s instead.', 'restropress' ), $argument, $function, $version, $replacement ) );
 			trigger_error(  print_r( $backtrace, 1 ) ); // Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
 			// Alternatively we could dump this to a file.
 		} else {
-			trigger_error( sprintf( __( 'The %1$s argument of %2$s is <strong>deprecated</strong> since RestroPress version %3$s with no alternative available.', 'restro-press' ), $argument, $function, $version ) );
+			trigger_error( sprintf( __( 'The %1$s argument of %2$s is <strong>deprecated</strong> since RestroPress version %3$s with no alternative available.', 'restropress' ), $argument, $function, $version ) );
 			trigger_error( print_r( $backtrace, 1 ) );// Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
 			// Alternatively we could dump this to a file.
 		}

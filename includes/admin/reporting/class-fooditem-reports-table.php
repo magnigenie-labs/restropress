@@ -91,7 +91,7 @@ class RPRESS_Fooditem_Reports_Table extends WP_List_Table {
 			case 'average_earnings' :
 				return rpress_currency_filter( rpress_format_amount( $item[ $column_name ] ) );
 			case 'details' :
-				return '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&view=fooditems&fooditem-id=' . $item['ID'] ) . '">' . __( 'View Detailed Report', 'restro-press' ) . '</a>';
+				return '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&view=fooditems&fooditem-id=' . $item['ID'] ) . '">' . __( 'View Detailed Report', 'restropress' ) . '</a>';
 			default:
 				return $item[ $column_name ];
 		}
@@ -106,11 +106,11 @@ class RPRESS_Fooditem_Reports_Table extends WP_List_Table {
 	public function get_columns() {
 		$columns = array(
 			'title'            => rpress_get_label_singular(),
-			'sales'            => __( 'Sales', 'restro-press' ),
-			'earnings'         => __( 'Earnings', 'restro-press' ),
-			'average_sales'    => __( 'Monthly Average Sales', 'restro-press' ),
-			'average_earnings' => __( 'Monthly Average Earnings', 'restro-press' ),
-			'details'          => __( 'Detailed Report', 'restro-press' ),
+			'sales'            => __( 'Sales', 'restropress' ),
+			'earnings'         => __( 'Earnings', 'restropress' ),
+			'average_sales'    => __( 'Monthly Average Sales', 'restropress' ),
+			'average_earnings' => __( 'Monthly Average Earnings', 'restropress' ),
+			'details'          => __( 'Detailed Report', 'restropress' ),
 		);
 
 		return $columns;

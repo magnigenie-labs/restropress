@@ -24,7 +24,7 @@ function rpress_update_payment_details( $data ) {
 
 	$addon_data = array();
 	if( ! current_user_can( 'edit_shop_payments', $data['rpress_payment_id'] ) ) {
-		wp_die( __( 'You do not have permission to edit this payment record', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	check_admin_referer( 'rpress_update_payment_details_nonce' );
@@ -191,7 +191,7 @@ function rpress_update_payment_details( $data ) {
 		$names      = isset( $data['rpress-new-customer-name'] ) ? sanitize_text_field( $data['rpress-new-customer-name'] ) : '';
 
 		if ( empty( $email ) || empty( $names ) ) {
-			wp_die( __( 'New Customers require a name and email address', 'restro-press' ) );
+			wp_die( __( 'New Customers require a name and email address', 'restropress' ) );
 		}
 
 		$customer = new RPRESS_Customer( $email );
@@ -206,7 +206,7 @@ function rpress_update_payment_details( $data ) {
 				// Failed to crete the new customer, assume the previous customer
 				$customer_changed = false;
 				$customer = new RPRESS_Customer( $curr_customer_id );
-				rpress_set_error( 'rpress-payment-new-customer-fail', __( 'Error creating new customer', 'restro-press' ) );
+				rpress_set_error( 'rpress-payment-new-customer-fail', __( 'Error creating new customer', 'restropress' ) );
 			}
 		}
 
@@ -307,7 +307,7 @@ function rpress_update_payment_details( $data ) {
 	$updated = $payment->save();
 
 	if ( 0 === $updated ) {
-		wp_die( __( 'Error Updating Payment', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 400 ) );
+		wp_die( __( 'Error Updating Payment', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 400 ) );
 	}
 
 	do_action( 'rpress_updated_edited_purchase', $payment_id );
@@ -330,7 +330,7 @@ function rpress_trigger_purchase_delete( $data ) {
 		$payment_id = absint( $data['purchase_id'] );
 
 		if( ! current_user_can( 'delete_shop_payments', $payment_id ) ) {
-			wp_die( __( 'You do not have permission to edit this payment record', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 		}
 
 		rpress_delete_purchase( $payment_id );
@@ -346,7 +346,7 @@ function rpress_ajax_store_payment_note() {
 	$note       = wp_kses( $_POST['note'], array() );
 
 	if( ! current_user_can( 'edit_shop_payments', $payment_id ) ) {
-		wp_die( __( 'You do not have permission to edit this payment record', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if( empty( $payment_id ) )
@@ -373,7 +373,7 @@ function rpress_trigger_payment_note_deletion( $data ) {
 		return;
 
 	if( ! current_user_can( 'edit_shop_payments', $data['payment_id'] ) ) {
-		wp_die( __( 'You do not have permission to edit this payment record', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$edit_order_url = admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details&rpress-message=payment-note-deleted&id=' . absint( $data['payment_id'] ) );
@@ -393,7 +393,7 @@ add_action( 'rpress_delete_payment_note', 'rpress_trigger_payment_note_deletion'
 function rpress_ajax_delete_payment_note() {
 
 	if( ! current_user_can( 'edit_shop_payments', $_POST['payment_id'] ) ) {
-		wp_die( __( 'You do not have permission to edit this payment record', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if( rpress_delete_payment_note( $_POST['note_id'], $_POST['payment_id'] ) ) {

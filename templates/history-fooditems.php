@@ -1,6 +1,6 @@
 <?php if( ! empty( $_GET['rpress-verify-success'] ) ) : ?>
 	<p class="rpress-account-verified rpress_success">
-	<?php _e( 'Your account has been successfully verified!', 'restro-press' ); ?>
+	<?php _e( 'Your account has been successfully verified!', 'restropress' ); ?>
 	</p>
 <?php
 endif;
@@ -14,9 +14,9 @@ if ( $purchases ) :
 		<thead>
 			<tr class="rpress_fooditem_history_row">
 				<?php do_action( 'rpress_fooditem_history_header_start' ); ?>
-				<th class="rpress_fooditem_fooditem_name"><?php _e( 'Food Item Name', 'restro-press' ); ?></th>
+				<th class="rpress_fooditem_fooditem_name"><?php _e( 'Food Item Name', 'restropress' ); ?></th>
 				<?php if ( ! rpress_no_refooditem() ) : ?>
-					<th class="rpress_fooditem_fooditem_files"><?php _e( 'Files', 'restro-press' ); ?></th>
+					<th class="rpress_fooditem_fooditem_files"><?php _e( 'Files', 'restropress' ); ?></th>
 				<?php endif; //End if no refooditem?>
 				<?php do_action( 'rpress_fooditem_history_header_end' ); ?>
 			</tr>
@@ -71,12 +71,12 @@ if ( $purchases ) :
 										endforeach;
 
 									else :
-										_e( 'No fooditemable files found.', 'restro-press' );
+										_e( 'No fooditemable files found.', 'restropress' );
 									endif; // End if payment complete
 
 								else : ?>
 									<span class="rpress_fooditem_payment_status">
-										<?php printf( __( 'Payment status is %s', 'restro-press' ), rpress_get_payment_status( $payment, true) ); ?>
+										<?php printf( __( 'Payment status is %s', 'restropress' ), rpress_get_payment_status( $payment, true) ); ?>
 									</span>
 									<?php
 								endif; // End if $fooditem_files
@@ -106,5 +106,5 @@ if ( $purchases ) :
 	</div>
 	<?php do_action( 'rpress_after_fooditem_history' ); ?>
 <?php else : ?>
-	<p class="rpress-no-fooditems"><?php _e( 'You have not purchased any fooditems', 'restro-press' ); ?></p>
+	<p class="rpress-no-fooditems"><?php _e( 'You have not purchased any fooditems', 'restropress' ); ?></p>
 <?php endif; ?>

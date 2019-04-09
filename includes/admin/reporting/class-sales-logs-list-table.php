@@ -125,12 +125,12 @@ class RPRESS_Sales_Log_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'ID'         => __( 'Log ID', 'restro-press' ),
-			'customer'   => __( 'Customer', 'restro-press' ),
+			'ID'         => __( 'Log ID', 'restropress' ),
+			'customer'   => __( 'Customer', 'restropress' ),
 			'fooditem'   => rpress_get_label_singular(),
-			'amount'     => __( 'Item Amount', 'restro-press' ),
-			'payment_id' => __( 'Payment ID', 'restro-press' ),
-			'date'       => __( 'Date', 'restro-press' ),
+			'amount'     => __( 'Item Amount', 'restropress' ),
+			'payment_id' => __( 'Payment ID', 'restropress' ),
+			'date'       => __( 'Date', 'restropress' ),
 		);
 
 		return $columns;
@@ -278,7 +278,7 @@ class RPRESS_Sales_Log_Table extends WP_List_Table {
 
 		if ( $fooditems ) {
 			echo '<select name="fooditem" id="rpress-log-fooditem-filter">';
-				echo '<option value="0">' . __( 'All', 'restro-press' ) . '</option>';
+				echo '<option value="0">' . __( 'All', 'restropress' ) . '</option>';
 				foreach ( $fooditems as $fooditem ) {
 					echo '<option value="' . $fooditem . '"' . selected( $fooditem, $this->get_filtered_fooditem() ) . '>' . esc_html( get_the_title( $fooditem ) ) . '</option>';
 				}

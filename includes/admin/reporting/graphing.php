@@ -330,8 +330,8 @@ function rpress_reports_graph() {
 	}
 
 	$data = array(
-		__( 'Earnings', 'restro-press' ) => $earnings_data,
-		__( 'Sales', 'restro-press' )    => $sales_data
+		__( 'Earnings', 'restropress' ) => $earnings_data,
+		__( 'Sales', 'restropress' )    => $sales_data
 	);
 
 	// start our own output buffer
@@ -340,7 +340,7 @@ function rpress_reports_graph() {
 	<div id="rpress-dashboard-widgets-wrap">
 		<div class="metabox-holder" style="padding-top: 0;">
 			<div class="postbox">
-				<h3><span><?php _e('Earnings Over Time','restro-press' ); ?></span></h3>
+				<h3><span><?php _e('Earnings Over Time','restropress' ); ?></span></h3>
 
 				<div class="inside">
 					<?php
@@ -358,7 +358,7 @@ function rpress_reports_graph() {
 					<p class="rpress_graph_totals">
 						<strong>
 							<?php
-								_e( 'Total earnings for period shown: ', 'restro-press' );
+								_e( 'Total earnings for period shown: ', 'restropress' );
 								echo rpress_currency_filter( rpress_format_amount( $earnings_totals ) );
 							?>
 						</strong>
@@ -366,13 +366,13 @@ function rpress_reports_graph() {
 							<sup>&dagger;</sup>
 						<?php endif; ?>
 					</p>
-					<p class="rpress_graph_totals"><strong><?php _e( 'Total sales for period shown: ', 'restro-press' ); echo rpress_format_amount( $sales_totals, false ); ?></strong></p>
+					<p class="rpress_graph_totals"><strong><?php _e( 'Total sales for period shown: ', 'restropress' ); echo rpress_format_amount( $sales_totals, false ); ?></strong></p>
 
 					<?php if( ! empty( $dates['range'] ) && 'this_month' == $dates['range'] ) : ?>
 						<p class="rpress_graph_totals">
 							<strong>
 								<?php
-									_e( 'Estimated monthly earnings: ', 'restro-press' );
+									_e( 'Estimated monthly earnings: ', 'restropress' );
 									echo rpress_currency_filter( rpress_format_amount( $estimated['earnings'] ) );
 								?>
 							</strong>
@@ -380,14 +380,14 @@ function rpress_reports_graph() {
 								<sup>&dagger;</sup>
 							<?php endif; ?>
 						</p>
-						<p class="rpress_graph_totals"><strong><?php _e( 'Estimated monthly sales: ', 'restro-press' ); echo rpress_format_amount( $estimated['sales'], false ); ?></strong></p>
+						<p class="rpress_graph_totals"><strong><?php _e( 'Estimated monthly sales: ', 'restropress' ); echo rpress_format_amount( $estimated['sales'], false ); ?></strong></p>
 					<?php endif; ?>
 
 					<?php do_action( 'rpress_reports_graph_additional_stats' ); ?>
 
 					<p class="rpress_graph_notes">
 						<?php if ( false === $include_taxes ) : ?>
-							<em><sup>&dagger;</sup> <?php _e( 'Excludes sales tax.', 'restro-press' ); ?></em>
+							<em><sup>&dagger;</sup> <?php _e( 'Excludes sales tax.', 'restropress' ); ?></em>
 						<?php endif; ?>
 					</p>
 
@@ -631,14 +631,14 @@ function rpress_reports_graph_of_fooditem( $fooditem_id = 0 ) {
 	}
 
 	$data = array(
-		__( 'Earnings', 'restro-press' ) => $earnings_data,
-		__( 'Sales', 'restro-press' )    => $sales_data
+		__( 'Earnings', 'restropress' ) => $earnings_data,
+		__( 'Sales', 'restropress' )    => $sales_data
 	);
 
 	?>
 	<div class="metabox-holder" style="padding-top: 0;">
 		<div class="postbox">
-			<h3><span><?php printf( __('Earnings Over Time for %s', 'restro-press' ), get_the_title( $fooditem_id ) ); ?></span></h3>
+			<h3><span><?php printf( __('Earnings Over Time for %s', 'restropress' ), get_the_title( $fooditem_id ) ); ?></span></h3>
 
 			<div class="inside">
 				<?php
@@ -648,10 +648,10 @@ function rpress_reports_graph_of_fooditem( $fooditem_id = 0 ) {
 				$graph->set( 'multiple_y_axes', true );
 				$graph->display();
 				?>
-				<p class="rpress_graph_totals"><strong><?php _e( 'Total earnings for period shown: ', 'restro-press' ); echo rpress_currency_filter( rpress_format_amount( $earnings_totals ) ); ?></strong></p>
-				<p class="rpress_graph_totals"><strong><?php _e( 'Total sales for period shown: ', 'restro-press' ); echo $sales_totals; ?></strong></p>
-				<p class="rpress_graph_totals"><strong><?php printf( __( 'Average monthly earnings: %s', 'restro-press' ), rpress_currency_filter( rpress_format_amount( rpress_get_average_monthly_fooditem_earnings( $fooditem_id ) ) ) ); ?>
-				<p class="rpress_graph_totals"><strong><?php printf( __( 'Average monthly sales: %s', 'restro-press' ), number_format( rpress_get_average_monthly_fooditem_sales( $fooditem_id ), 0 ) ); ?>
+				<p class="rpress_graph_totals"><strong><?php _e( 'Total earnings for period shown: ', 'restropress' ); echo rpress_currency_filter( rpress_format_amount( $earnings_totals ) ); ?></strong></p>
+				<p class="rpress_graph_totals"><strong><?php _e( 'Total sales for period shown: ', 'restropress' ); echo $sales_totals; ?></strong></p>
+				<p class="rpress_graph_totals"><strong><?php printf( __( 'Average monthly earnings: %s', 'restropress' ), rpress_currency_filter( rpress_format_amount( rpress_get_average_monthly_fooditem_earnings( $fooditem_id ) ) ) ); ?>
+				<p class="rpress_graph_totals"><strong><?php printf( __( 'Average monthly sales: %s', 'restropress' ), number_format( rpress_get_average_monthly_fooditem_sales( $fooditem_id ), 0 ) ); ?>
 			</div>
 		</div>
 	</div>
@@ -667,18 +667,18 @@ function rpress_reports_graph_of_fooditem( $fooditem_id = 0 ) {
 */
 function rpress_reports_graph_controls() {
 	$date_options = apply_filters( 'rpress_report_date_options', array(
-		'today'        => __( 'Today', 'restro-press' ),
-		'yesterday'    => __( 'Yesterday', 'restro-press' ),
-		'this_week'    => __( 'This Week', 'restro-press' ),
-		'last_week'    => __( 'Last Week', 'restro-press' ),
-		'last_30_days' => __( 'Last 30 Days', 'restro-press' ),
-		'this_month'   => __( 'This Month', 'restro-press' ),
-		'last_month'   => __( 'Last Month', 'restro-press' ),
-		'this_quarter' => __( 'This Quarter', 'restro-press' ),
-		'last_quarter' => __( 'Last Quarter', 'restro-press' ),
-		'this_year'    => __( 'This Year', 'restro-press' ),
-		'last_year'    => __( 'Last Year', 'restro-press' ),
-		'other'        => __( 'Custom', 'restro-press' )
+		'today'        => __( 'Today', 'restropress' ),
+		'yesterday'    => __( 'Yesterday', 'restropress' ),
+		'this_week'    => __( 'This Week', 'restropress' ),
+		'last_week'    => __( 'Last Week', 'restropress' ),
+		'last_30_days' => __( 'Last 30 Days', 'restropress' ),
+		'this_month'   => __( 'This Month', 'restropress' ),
+		'last_month'   => __( 'Last Month', 'restropress' ),
+		'this_quarter' => __( 'This Quarter', 'restropress' ),
+		'last_quarter' => __( 'Last Quarter', 'restropress' ),
+		'this_year'    => __( 'This Year', 'restropress' ),
+		'last_year'    => __( 'Last Year', 'restropress' ),
+		'other'        => __( 'Custom', 'restropress' )
 	) );
 
 	$dates   = rpress_get_report_dates();
@@ -710,7 +710,7 @@ function rpress_reports_graph_controls() {
 				</select>
 
 				<div id="rpress-date-range-options" <?php echo $display; ?>>
-					<span><?php _e( 'From', 'restro-press' ); ?>&nbsp;</span>
+					<span><?php _e( 'From', 'restropress' ); ?>&nbsp;</span>
 					<select id="rpress-graphs-month-start" name="m_start">
 						<?php for ( $i = 1; $i <= 12; $i++ ) : ?>
 							<option value="<?php echo absint( $i ); ?>" <?php selected( $i, $dates['m_start'] ); ?>><?php echo rpress_month_num_to_name( $i ); ?></option>
@@ -726,7 +726,7 @@ function rpress_reports_graph_controls() {
 							<option value="<?php echo absint( $i ); ?>" <?php selected( $i, $dates['year'] ); ?>><?php echo $i; ?></option>
 						<?php endfor; ?>
 					</select>
-					<span><?php _e( 'To', 'restro-press' ); ?>&nbsp;</span>
+					<span><?php _e( 'To', 'restropress' ); ?>&nbsp;</span>
 					<select id="rpress-graphs-month-end" name="m_end">
 						<?php for ( $i = 1; $i <= 12; $i++ ) : ?>
 							<option value="<?php echo absint( $i ); ?>" <?php selected( $i, $dates['m_end'] ); ?>><?php echo rpress_month_num_to_name( $i ); ?></option>
@@ -746,12 +746,12 @@ function rpress_reports_graph_controls() {
 
 				<div class="rpress-graph-filter-options graph-option-section">
 					<input type="checkbox" id="exclude_taxes" <?php checked( false, $taxes, true ); ?> value="1" name="exclude_taxes" />
-					<label for="exclude_taxes"><?php _e( 'Exclude Taxes', 'restro-press' ); ?></label>
+					<label for="exclude_taxes"><?php _e( 'Exclude Taxes', 'restropress' ); ?></label>
 				</div>
 
 				<div class="rpress-graph-filter-submit graph-option-section">
 					<input type="hidden" name="rpress_action" value="filter_reports" />
-					<input type="submit" class="button-secondary" value="<?php _e( 'Filter', 'restro-press' ); ?>"/>
+					<input type="submit" class="button-secondary" value="<?php _e( 'Filter', 'restropress' ); ?>"/>
 				</div>
 			</div>
 		</div>
@@ -971,7 +971,7 @@ function rpress_reports_refresh_button() {
 		'rpress-message' => 'refreshed-reports'
 	) ), 'rpress-refresh-reports' );
 
-	echo '<a href="' . $url . '" title="' . __( 'Clicking this will clear the reports cache', 'restro-press' ) . '"  class="button rpress-refresh-reports-button">' . __( 'Refresh Reports', 'restro-press' ) . '</a>';
+	echo '<a href="' . $url . '" title="' . __( 'Clicking this will clear the reports cache', 'restropress' ) . '"  class="button rpress-refresh-reports-button">' . __( 'Refresh Reports', 'restropress' ) . '</a>';
 
 }
 

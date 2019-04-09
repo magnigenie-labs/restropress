@@ -843,9 +843,9 @@ class RPRESS_Cart {
 				$label = '&nbsp;&ndash;&nbsp;';
 
 				if ( rpress_prices_show_tax_on_checkout() ) {
-					$label .= sprintf( __( 'includes %s tax', 'restro-press' ), rpress_get_formatted_tax_rate() );
+					$label .= sprintf( __( 'includes %s tax', 'restropress' ), rpress_get_formatted_tax_rate() );
 				} else {
-					$label .= sprintf( __( 'excludes %s tax', 'restro-press' ), rpress_get_formatted_tax_rate() );
+					$label .= sprintf( __( 'excludes %s tax', 'restropress' ), rpress_get_formatted_tax_rate() );
 				}
 
 				$label = apply_filters( 'rpress_cart_item_tax_description', $label, $item_id, $options );
@@ -1381,8 +1381,8 @@ class RPRESS_Cart {
 
 		$messages['rpress_cart_save_successful'] = sprintf(
 			'<strong>%1$s</strong>: %2$s',
-			__( 'Success', 'restro-press' ),
-			__( 'Cart saved successfully. You can restore your cart using this URL:', 'restro-press' ) . ' ' . '<a href="' .  rpress_get_checkout_uri() . '?rpress_action=restore_cart&rpress_cart_token=' . $token . '">' .  rpress_get_checkout_uri() . '?rpress_action=restore_cart&rpress_cart_token=' . $token . '</a>'
+			__( 'Success', 'restropress' ),
+			__( 'Cart saved successfully. You can restore your cart using this URL:', 'restropress' ) . ' ' . '<a href="' .  rpress_get_checkout_uri() . '?rpress_action=restore_cart&rpress_cart_token=' . $token . '">' .  rpress_get_checkout_uri() . '?rpress_action=restore_cart&rpress_cart_token=' . $token . '</a>'
 		);
 
 		RPRESS()->session->set( 'rpress_cart_messages', $messages );
@@ -1417,7 +1417,7 @@ class RPRESS_Cart {
 			}
 
 			if ( isset( $_GET['rpress_cart_token'] ) && ! hash_equals( $_GET['rpress_cart_token'], $token ) ) {
-				$messages['rpress_cart_restoration_failed'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Error', 'restro-press' ), __( 'Cart restoration failed. Invalid token.', 'restro-press' ) );
+				$messages['rpress_cart_restoration_failed'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Error', 'restropress' ), __( 'Cart restoration failed. Invalid token.', 'restropress' ) );
 				RPRESS()->session->set( 'rpress_cart_messages', $messages );
 			}
 
@@ -1425,16 +1425,16 @@ class RPRESS_Cart {
 			delete_user_meta( $user_id, 'rpress_cart_token' );
 
 			if ( isset( $_GET['rpress_cart_token'] ) && $_GET['rpress_cart_token'] != $token ) {
-				return new WP_Error( 'invalid_cart_token', __( 'The cart cannot be restored. Invalid token.', 'restro-press' ) );
+				return new WP_Error( 'invalid_cart_token', __( 'The cart cannot be restored. Invalid token.', 'restropress' ) );
 			}
 		} elseif ( ! is_user_logged_in() && isset( $_COOKIE['rpress_saved_cart'] ) && $token ) {
 			$saved_cart = $_COOKIE['rpress_saved_cart'];
 
 			if ( ! hash_equals( $_GET['rpress_cart_token'], $token ) ) {
-				$messages['rpress_cart_restoration_failed'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Error', 'restro-press' ), __( 'Cart restoration failed. Invalid token.', 'restro-press' ) );
+				$messages['rpress_cart_restoration_failed'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Error', 'restropress' ), __( 'Cart restoration failed. Invalid token.', 'restropress' ) );
 				RPRESS()->session->set( 'rpress_cart_messages', $messages );
 
-				return new WP_Error( 'invalid_cart_token', __( 'The cart cannot be restored. Invalid token.', 'restro-press' ) );
+				return new WP_Error( 'invalid_cart_token', __( 'The cart cannot be restored. Invalid token.', 'restropress' ) );
 			}
 
 			$saved_cart = json_decode( stripslashes( $saved_cart ), true );
@@ -1443,7 +1443,7 @@ class RPRESS_Cart {
 			setcookie( 'rpress_cart_token', '', time()-3600, COOKIEPATH, COOKIE_DOMAIN );
 		}
 
-		$messages['rpress_cart_restoration_successful'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Success', 'restro-press' ), __( 'Cart restored successfully.', 'restro-press' ) );
+		$messages['rpress_cart_restoration_successful'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Success', 'restropress' ), __( 'Cart restored successfully.', 'restropress' ) );
 		RPRESS()->session->set( 'rpress_cart', $saved_cart );
 		RPRESS()->session->set( 'rpress_cart_messages', $messages );
 

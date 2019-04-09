@@ -44,9 +44,9 @@ function rpress_fooditem_shortcode( $atts, $content = null ) {
 	// Override text only if not provided / empty
 	if ( ! $atts['text'] ) {
 		if( $atts['direct'] == '1' || $atts['direct'] == 'true' ) {
-			$atts['text'] = rpress_get_option( 'buy_now_text', __( 'Buy Now', 'restro-press' ) );
+			$atts['text'] = rpress_get_option( 'buy_now_text', __( 'Buy Now', 'restropress' ) );
 		} else {
-			$atts['text'] = rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restro-press' ) );
+			$atts['text'] = rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restropress' ) );
 		}
 	}
 
@@ -267,7 +267,7 @@ function rpress_discounts_shortcode( $atts, $content = null ) {
 		}
 
 	} else {
-		$discounts_list .= '<li class="rpress_discount">' . __( 'No discounts found', 'restro-press' ) . '</li>';
+		$discounts_list .= '<li class="rpress_discount">' . __( 'No discounts found', 'restropress' ) . '</li>';
 	}
 
 	$discounts_list .= '</ul>';
@@ -291,7 +291,7 @@ function rpress_purchase_collection_shortcode( $atts, $content = null ) {
 	extract( shortcode_atts( array(
 			'taxonomy'	=> '',
 			'terms'		=> '',
-			'text'		=> __('Purchase All Items','restro-press' ),
+			'text'		=> __('Purchase All Items','restropress' ),
 			'style'     => rpress_get_option( 'button_style', 'button' ),
 			'color'     => rpress_get_option( 'checkout_color', 'red' ),
 			'class'		=> 'rpress-submit'
@@ -486,7 +486,7 @@ function get_rpress_fooditems( $atts, $content = null ) {
 	rpress_get_template_part( 'rpress', 'after-fooditem' );
 
 	else:
-		$display = sprintf( _x( 'No %s found', 'fooditem post type name', 'restro-press' ), rpress_get_label_plural() );
+		$display = sprintf( _x( 'No %s found', 'fooditem post type name', 'restropress' ), rpress_get_label_plural() );
 	endif;
 
 
@@ -542,7 +542,7 @@ function rpress_receipt_shortcode( $atts, $content = null ) {
 	global $rpress_receipt_args;
 
 	$rpress_receipt_args = shortcode_atts( array(
-		'error'           => __( 'Sorry, trouble retrieving payment receipt.', 'restro-press' ),
+		'error'           => __( 'Sorry, trouble retrieving payment receipt.', 'restropress' ),
 		'price'           => true,
 		'discount'        => true,
 		'products'        => true,
@@ -577,7 +577,7 @@ function rpress_receipt_shortcode( $atts, $content = null ) {
 
 		ob_start();
 
-		echo '<p class="rpress-alert rpress-alert-warn">' . __( 'You must be logged in to view this payment receipt.', 'restro-press' ) . '</p>';
+		echo '<p class="rpress-alert rpress-alert-warn">' . __( 'You must be logged in to view this payment receipt.', 'restropress' ) . '</p>';
 		rpress_get_template_part( 'shortcode', 'login' );
 
 		$login_form = ob_get_clean();
@@ -589,7 +589,7 @@ function rpress_receipt_shortcode( $atts, $content = null ) {
 
 	// If this was a guest checkout and the purchase session is empty, output a relevant error message
 	if ( empty( $session ) && ! is_user_logged_in() && ! $user_can_view ) {
-		return '<p class="rpress-alert rpress-alert-error">' . apply_filters( 'rpress_receipt_guest_error_message', __( 'Receipt could not be retrieved, your purchase session has expired.', 'restro-press' ) ) . '</p>';
+		return '<p class="rpress-alert rpress-alert-error">' . apply_filters( 'rpress_receipt_guest_error_message', __( 'Receipt could not be retrieved, your purchase session has expired.', 'restropress' ) ) . '</p>';
 	}
 
 	/*
@@ -719,7 +719,7 @@ function rpress_process_profile_editor_updates( $data ) {
 	// New password
 	if ( ! empty( $data['rpress_new_user_pass1'] ) ) {
 		if ( $data['rpress_new_user_pass1'] !== $data['rpress_new_user_pass2'] ) {
-			rpress_set_error( 'password_mismatch', __( 'The passwords you entered do not match. Please try again.', 'restro-press' ) );
+			rpress_set_error( 'password_mismatch', __( 'The passwords you entered do not match. Please try again.', 'restropress' ) );
 		} else {
 			$userdata['user_pass'] = $data['rpress_new_user_pass1'];
 		}
@@ -729,12 +729,12 @@ function rpress_process_profile_editor_updates( $data ) {
 	if( $email != $old_user_data->user_email ) {
 		// Make sure the new email is valid
 		if( ! is_email( $email ) ) {
-			rpress_set_error( 'email_invalid', __( 'The email you entered is invalid. Please enter a valid email.', 'restro-press' ) );
+			rpress_set_error( 'email_invalid', __( 'The email you entered is invalid. Please enter a valid email.', 'restropress' ) );
 		}
 
 		// Make sure the new email doesn't belong to another user
 		if( email_exists( $email ) ) {
-			rpress_set_error( 'email_exists', __( 'The email you entered belongs to another user. Please use another.', 'restro-press' ) );
+			rpress_set_error( 'email_exists', __( 'The email you entered belongs to another user. Please use another.', 'restropress' ) );
 		}
 	}
 
@@ -805,11 +805,11 @@ function rpress_process_profile_editor_remove_email() {
 
 		$user          = wp_get_current_user();
 		$user_login    = ! empty( $user->user_login ) ? $user->user_login : 'RPRESSBot';
-		$customer_note = sprintf( __( 'Email address %s removed by %s', 'restro-press' ), sanitize_email( $_GET['email'] ), $user_login );
+		$customer_note = sprintf( __( 'Email address %s removed by %s', 'restropress' ), sanitize_email( $_GET['email'] ), $user_login );
 		$customer->add_note( $customer_note );
 
 	} else {
-		rpress_set_error( 'profile-remove-email-failure', __( 'Error removing email address from profile. Please try again later.', 'restro-press' ) );
+		rpress_set_error( 'profile-remove-email-failure', __( 'Error removing email address from profile. Please try again later.', 'restropress' ) );
 		$url = $_GET['redirect'];
 	}
 

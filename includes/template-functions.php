@@ -58,7 +58,7 @@ function rpress_get_purchase_link( $args = array() ) {
 		}
 
 
-		rpress_set_error( 'set_checkout', sprintf( __( 'No checkout page has been configured. Visit <a href="%s">Settings</a> to set one.', 'restro-press' ), admin_url( 'edit.php?post_type=fooditem&page=rpress-settings' ) ) );
+		rpress_set_error( 'set_checkout', sprintf( __( 'No checkout page has been configured. Visit <a href="%s">Settings</a> to set one.', 'restropress' ), admin_url( 'edit.php?post_type=fooditem&page=rpress-settings' ) ) );
 		rpress_print_errors();
 
 		$no_checkout_error_displayed = true;
@@ -75,8 +75,8 @@ function rpress_get_purchase_link( $args = array() ) {
 		'price'       => (bool) true,
 		'price_id'    => isset( $args['price_id'] ) ? $args['price_id'] : false,
 		'direct'      => $button_behavior == 'direct' ? true : false,
-		'text'        => $button_behavior == 'direct' ? rpress_get_option( 'buy_now_text', __( 'Buy Now', 'restro-press' ) ) : rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restro-press' ) ),
-		'checkout'    => rpress_get_option( 'checkout_button_text', _x( 'Checkout', 'text shown on the Add to Cart Button when the product is already in the cart', 'restro-press' ) ),
+		'text'        => $button_behavior == 'direct' ? rpress_get_option( 'buy_now_text', __( 'Buy Now', 'restropress' ) ) : rpress_get_option( 'add_to_cart_text', __( 'Purchase', 'restropress' ) ),
+		'checkout'    => rpress_get_option( 'checkout_button_text', _x( 'Checkout', 'text shown on the Add to Cart Button when the product is already in the cart', 'restropress' ) ),
 		'style'       => rpress_get_option( 'button_style', 'button' ),
 		'color'       => rpress_get_option( 'checkout_color', 'red' ),
 		'class'       => 'rpress-submit'
@@ -141,7 +141,7 @@ function rpress_get_purchase_link( $args = array() ) {
 	if ( false !== $price ) {
 
 		if ( 0 == $price ) {
-			$args['text'] = __( 'Free', 'restro-press' ) . $button_text;
+			$args['text'] = __( 'Free', 'restropress' ) . $button_text;
 		} else {
 			$args['text'] = rpress_currency_filter( rpress_format_amount( $price ) ) . $button_text;
 		}
@@ -184,7 +184,7 @@ function rpress_get_purchase_link( $args = array() ) {
 
 			if ( ! rpress_is_ajax_disabled() ) {
 
-				echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label">' . __('+', 'restro-press') . '</span> </a>';
+				echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label">' . __('+', 'restropress') . '</span> </a>';
 
 			}
 			
@@ -196,7 +196,7 @@ function rpress_get_purchase_link( $args = array() ) {
 						<svg class="rpress-icon rpress-icon-check" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
 							<path d="M26.11 8.844c0 .39-.157.78-.44 1.062L12.234 23.344c-.28.28-.672.438-1.062.438s-.78-.156-1.06-.438l-7.782-7.78c-.28-.282-.438-.673-.438-1.063s.156-.78.438-1.06l2.125-2.126c.28-.28.672-.438 1.062-.438s.78.156 1.062.438l4.594 4.61L21.42 5.656c.282-.28.673-.438 1.063-.438s.78.155 1.062.437l2.125 2.125c.28.28.438.672.438 1.062z"/>
 						</svg>
-						<?php echo __( 'Added to cart', 'restro-press' ); ?>
+						<?php echo __( 'Added to cart', 'restropress' ); ?>
 					</span>
 				</span>
 			<?php endif; ?>
@@ -407,35 +407,35 @@ add_filter( 'the_content', 'rpress_after_fooditem_content' );
 function rpress_get_button_colors() {
 	$colors = array(
 		'gray'      => array(
-			'label' => __( 'Gray', 'restro-press' ),
+			'label' => __( 'Gray', 'restropress' ),
 			'hex'   => '#f0f0f0'
 		),
 		'blue'      => array(
-			'label' => __( 'Blue', 'restro-press' ),
+			'label' => __( 'Blue', 'restropress' ),
 			'hex'   => '#428bca'
 		),
 		'red'       => array(
-			'label' => __( 'Red', 'restro-press' ),
+			'label' => __( 'Red', 'restropress' ),
 			'hex'   => '#d9534f'
 		),
 		'green'     => array(
-			'label' => __( 'Green', 'restro-press' ),
+			'label' => __( 'Green', 'restropress' ),
 			'hex'   => '#5cb85c'
 		),
 		'yellow'    => array(
-			'label' => __( 'Yellow', 'restro-press' ),
+			'label' => __( 'Yellow', 'restropress' ),
 			'hex'   => '#f0ad4e'
 		),
 		'orange'    => array(
-			'label' => __( 'Orange', 'restro-press' ),
+			'label' => __( 'Orange', 'restropress' ),
 			'hex'   => '#ed9c28'
 		),
 		'dark-gray' => array(
-			'label' => __( 'Dark Gray', 'restro-press' ),
+			'label' => __( 'Dark Gray', 'restropress' ),
 			'hex'   => '#363636'
 		),
 		'inherit'	=> array(
-			'label' => __( 'Inherit', 'restro-press' ),
+			'label' => __( 'Inherit', 'restropress' ),
 			'hex'   => ''
 		)
 	);
@@ -453,8 +453,8 @@ function rpress_get_button_colors() {
  */
 function rpress_get_button_styles() {
 	$styles = array(
-		'button'	=> __( 'Button', 'restro-press' ),
-		'plain'     => __( 'Plain Text', 'restro-press' )
+		'button'	=> __( 'Button', 'restropress' ),
+		'plain'     => __( 'Plain Text', 'restropress' )
 	);
 
 	return apply_filters( 'rpress_button_styles', $styles );

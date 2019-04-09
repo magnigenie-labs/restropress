@@ -211,7 +211,7 @@ final class RPRESS_Amazon_Payments {
 	public function check_config() {
 		$is_enabled = rpress_is_gateway_active( $this->gateway_id );
 		if ( ( ! $is_enabled || false === $this->is_setup() ) && 'amazon' == rpress_get_chosen_gateway() ) {
-			rpress_set_error( 'amazon_gateway_not_configured', __( 'There is an error with the Amazon Payments configuration.', 'restro-press' ) );
+			rpress_set_error( 'amazon_gateway_not_configured', __( 'There is an error with the Amazon Payments configuration.', 'restropress' ) );
 		}
 	}
 
@@ -282,8 +282,8 @@ final class RPRESS_Amazon_Payments {
 
 		$default_amazon_info = array(
 			$this->gateway_id => array(
-				'admin_label'    => __( 'Amazon', 'restro-press' ),
-				'checkout_label' => __( 'Amazon', 'restro-press' ),
+				'admin_label'    => __( 'Amazon', 'restropress' ),
+				'checkout_label' => __( 'Amazon', 'restropress' ),
 				'supports'       => array(),
 			),
 		);
@@ -333,7 +333,7 @@ final class RPRESS_Amazon_Payments {
 	 * @return array                   Added Amazon Payments into sub-sections
 	 */
 	public function register_gateway_section( $gateway_sections ) {
-		$gateway_sections['amazon'] = __( 'Amazon Payments', 'restro-press' );
+		$gateway_sections['amazon'] = __( 'Amazon Payments', 'restropress' );
 
 		return $gateway_sections;
 	}
@@ -350,52 +350,52 @@ final class RPRESS_Amazon_Payments {
 		$default_amazon_settings = array(
 			'amazon' => array(
 				'id'   => 'amazon',
-				'name' => '<strong>' . __( 'Amazon Payments Settings', 'restro-press' ) . '</strong>',
+				'name' => '<strong>' . __( 'Amazon Payments Settings', 'restropress' ) . '</strong>',
 				'type' => 'header',
 			),
 			'amazon_register' => array(
 				'id'   => 'amazon_register',
-				'name' => __( 'Register with Amazon', 'restro-press' ),
+				'name' => __( 'Register with Amazon', 'restropress' ),
 				'desc' => '<p><a href="' . $this->get_registration_url() . '" class="button" target="_blank">' .
-						__( 'Connect RestroPress to Amazon', 'restro-press' ) .
+						__( 'Connect RestroPress to Amazon', 'restropress' ) .
 						'</a></p>' .
 						'<p class="description">' .
-						__( 'Once registration is complete, enter your API credentials below.', 'restro-press' ) .
+						__( 'Once registration is complete, enter your API credentials below.', 'restropress' ) .
 						'</p>',
 				'type' => 'descriptive_text',
 			),
 			'amazon_seller_id' => array(
 				'id'   => 'amazon_seller_id',
-				'name' => __( 'Seller ID', 'restro-press' ),
-				'desc' => __( 'Found in the Integration settings. Also called a Merchant ID', 'restro-press' ),
+				'name' => __( 'Seller ID', 'restropress' ),
+				'desc' => __( 'Found in the Integration settings. Also called a Merchant ID', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular',
 			),
 			'amazon_mws_access_key' => array(
 				'id'   => 'amazon_mws_access_key',
-				'name' => __( 'MWS Access Key', 'restro-press' ),
-				'desc' => __( 'Found on Seller Central in the MWS Keys section', 'restro-press' ),
+				'name' => __( 'MWS Access Key', 'restropress' ),
+				'desc' => __( 'Found on Seller Central in the MWS Keys section', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular',
 			),
 			'amazon_mws_secret_key' => array(
 				'id'   => 'amazon_mws_secret_key',
-				'name' => __( 'MWS Secret Key', 'restro-press' ),
-				'desc' => __( 'Found on Seller Central in the MWS Keys section', 'restro-press' ),
+				'name' => __( 'MWS Secret Key', 'restropress' ),
+				'desc' => __( 'Found on Seller Central in the MWS Keys section', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular',
 			),
 			'amazon_client_id' => array(
 				'id'   => 'amazon_client_id',
-				'name' => __( 'Client ID', 'restro-press' ),
-				'desc' => __( 'The Amazon Client ID. Should look like `amzn1.application-oa2...`', 'restro-press' ),
+				'name' => __( 'Client ID', 'restropress' ),
+				'desc' => __( 'The Amazon Client ID. Should look like `amzn1.application-oa2...`', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular',
 			),
 			'amazon_mws_callback_url' => array(
 				'id'       => 'amazon_callback_url',
-				'name'     => __( 'Amazon MWS Callback URL', 'restro-press' ),
-				'desc'     => __( 'The Return URL to provide in your MWS Application. Enter this under your Login and Pay &rarr; Web Settings', 'restro-press' ),
+				'name'     => __( 'Amazon MWS Callback URL', 'restropress' ),
+				'desc'     => __( 'The Return URL to provide in your MWS Application. Enter this under your Login and Pay &rarr; Web Settings', 'restropress' ),
 				'type'     => 'text',
 				'size'     => 'large',
 				'std'      => $this->get_amazon_authenticate_redirect(),
@@ -403,8 +403,8 @@ final class RPRESS_Amazon_Payments {
 			),
 			'amazon_mws_ipn_url' => array(
 				'id'       => 'amazon_ipn_url',
-				'name'     => __( 'Amazon Merchant IPN URL', 'restro-press' ),
-				'desc'     => sprintf( __( 'The IPN URL to provide in your MWS account. Enter this under your <a href="%s">Integration Settings</a>', 'restro-press' ), 'https://sellercentral.amazon.com/gp/pyop/seller/account/settings/user-settings-edit.html' ),
+				'name'     => __( 'Amazon Merchant IPN URL', 'restropress' ),
+				'desc'     => sprintf( __( 'The IPN URL to provide in your MWS account. Enter this under your <a href="%s">Integration Settings</a>', 'restropress' ), 'https://sellercentral.amazon.com/gp/pyop/seller/account/settings/user-settings-edit.html' ),
 				'type'     => 'text',
 				'size'     => 'large',
 				'std'      => $this->get_amazon_ipn_url(),
@@ -708,8 +708,8 @@ final class RPRESS_Amazon_Payments {
 		ob_start(); ?>
 		<fieldset id="rpress_cc_fields" class="rpress-amazon-fields">
 			<p class="rpress-amazon-profile-wrapper">
-				<?php _e( 'Currently logged into Amazon as', 'restro-press' ); ?>: <span class="rpress-amazon-profile-name"><?php echo $profile['name']; ?></span>
-				<span class="rpress-amazon-logout">(<a id="Logout"><?php _e( 'Logout', 'restro-press' ); ?></a>)</span>
+				<?php _e( 'Currently logged into Amazon as', 'restropress' ); ?>: <span class="rpress-amazon-profile-name"><?php echo $profile['name']; ?></span>
+				<span class="rpress-amazon-logout">(<a id="Logout"><?php _e( 'Logout', 'restropress' ); ?></a>)</span>
 			</p>
 			<?php if( rpress_use_taxes() ) : ?>
 				<div id="rpress-amazon-address-box"></div>
@@ -864,7 +864,7 @@ final class RPRESS_Amazon_Payments {
 
 		// should validate that we have a reference ID here, perhaps even fire the API call here
 		if( empty( $post_data['rpress_amazon_reference_id'] ) ) {
-			rpress_set_error( 'missing_reference_id', __( 'Missing Reference ID, please try again', 'restro-press' ) );
+			rpress_set_error( 'missing_reference_id', __( 'Missing Reference ID, please try again', 'restropress' ) );
 		}
 	}
 
@@ -878,7 +878,7 @@ final class RPRESS_Amazon_Payments {
 	public function process_purchase( $purchase_data ) {
 
 		if( empty( $purchase_data['post_data']['rpress_amazon_reference_id'] ) ) {
-			rpress_set_error( 'missing_reference_id', __( 'Missing Reference ID, please try again', 'restro-press' ) );
+			rpress_set_error( 'missing_reference_id', __( 'Missing Reference ID, please try again', 'restropress' ) );
 		}
 
 		$errors = rpress_get_errors();
@@ -914,7 +914,7 @@ final class RPRESS_Amazon_Payments {
 			if( 'Declined' === $status ) {
 
 				$reason = $charge['AuthorizeResult']['AuthorizationDetails']['AuthorizationStatus']['ReasonCode'];
-				rpress_set_error( 'payment_declined', sprintf( __( 'Your payment could not be authorized, please try a different payment method. Reason: %s', 'restro-press' ), $reason ) );
+				rpress_set_error( 'payment_declined', sprintf( __( 'Your payment could not be authorized, please try a different payment method. Reason: %s', 'restropress' ), $reason ) );
 				rpress_send_back_to_checkout( '?payment-mode=amazon&amazon_reference_id=' . $purchase_data['post_data']['rpress_amazon_reference_id'] );
 			}
 
@@ -961,7 +961,7 @@ final class RPRESS_Amazon_Payments {
 		} else {
 
 			// Set an error
-			rpress_set_error( 'amazon_error',sprintf( __( 'There was an issue processing your payment. Amazon error: %s', 'restro-press' ), print_r( $charge, true ) ) );
+			rpress_set_error( 'amazon_error',sprintf( __( 'There was an issue processing your payment. Amazon error: %s', 'restropress' ), print_r( $charge, true ) ) );
 			rpress_send_back_to_checkout( '?payment-mode=amazon&amazon_reference_id=' . $purchase_data['post_data']['rpress_amazon_reference_id'] );
 
 		}
@@ -1091,7 +1091,7 @@ final class RPRESS_Amazon_Payments {
 			$seller_id = $data['SellerId'];
 
 			if( $seller_id != rpress_get_option( 'amazon_seller_id', '' ) ) {
-				wp_die( __( 'Invalid Amazon seller ID', 'restro-press' ), __( 'IPN Error', 'restro-press' ), array( 'response' => 401 ) );
+				wp_die( __( 'Invalid Amazon seller ID', 'restropress' ), __( 'IPN Error', 'restropress' ), array( 'response' => 401 ) );
 			}
 
 			switch( $data['NotificationType'] ) {
@@ -1115,7 +1115,7 @@ final class RPRESS_Amazon_Payments {
 
 						rpress_update_payment_status( $payment_id, 'failed' );
 
-						rpress_insert_payment_note( $payment_id, __( 'Capture declined in Amazon', 'restro-press' ) );
+						rpress_insert_payment_note( $payment_id, __( 'Capture declined in Amazon', 'restropress' ) );
 
 					}
 
@@ -1133,7 +1133,7 @@ final class RPRESS_Amazon_Payments {
 
 						rpress_update_payment_status( $payment_id, 'refunded' );
 
-						rpress_insert_payment_note( $payment_id, sprintf( __( 'Refund completed in Amazon. Refund ID: %s', 'restro-press' ), $data['RefundDetails']['AmazonRefundId'] ) );
+						rpress_insert_payment_note( $payment_id, sprintf( __( 'Refund completed in Amazon. Refund ID: %s', 'restropress' ), $data['RefundDetails']['AmazonRefundId'] ) );
 
 					}
 
@@ -1145,7 +1145,7 @@ final class RPRESS_Amazon_Payments {
 
 		} catch( Exception $e ) {
 
-			wp_die( $e->getErrorMessage(), __( 'IPN Error', 'restro-press' ), array( 'response' => 401 ) );
+			wp_die( $e->getErrorMessage(), __( 'IPN Error', 'restropress' ), array( 'response' => 401 ) );
 
 		}
 
@@ -1212,20 +1212,20 @@ final class RPRESS_Amazon_Payments {
 				case 'Declined' :
 
 					$code   = $refund['RefundResult']['RefundDetails']['RefundStatus']['ReasonCode'];
-					$note   = __( 'Refund declined in Amazon. Refund ID: %s', 'restro-press' );
+					$note   = __( 'Refund declined in Amazon. Refund ID: %s', 'restropress' );
 
 					break;
 
 				case 'Completed' :
 
 					$refund_id = $refund['RefundResult']['RefundDetails']['AmazonRefundId'];
-					$note      = sprintf( __( 'Refund completed in Amazon. Refund ID: %s', 'restro-press' ), $refund_id );
+					$note      = sprintf( __( 'Refund completed in Amazon. Refund ID: %s', 'restropress' ), $refund_id );
 
 					break;
 
 				case 'Pending' :
 
-					$note = sprintf( __( 'Refund initiated in Amazon. Reference ID: %s', 'restro-press' ), $reference_id );
+					$note = sprintf( __( 'Refund initiated in Amazon. Reference ID: %s', 'restropress' ), $reference_id );
 
 					break;
 			}
@@ -1234,7 +1234,7 @@ final class RPRESS_Amazon_Payments {
 
 		} else {
 
-			rpress_insert_payment_note( $payment_id, __( 'Refund request failed in Amazon.', 'restro-press' ) );
+			rpress_insert_payment_note( $payment_id, __( 'Refund request failed in Amazon.', 'restropress' ) );
 
 		}
 

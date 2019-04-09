@@ -70,10 +70,10 @@ function rpress_view_order_details_title( $admin_title, $title ) {
 	switch( $_GET['rpress-action'] ) :
 
 		case 'view-order-details' :
-			$title = __( 'View Order Details', 'restro-press' ) . ' - ' . $admin_title;
+			$title = __( 'View Order Details', 'restropress' ) . ' - ' . $admin_title;
 			break;
 		case 'edit-payment' :
-			$title = __( 'Edit Payment', 'restro-press' ) . ' - ' . $admin_title;
+			$title = __( 'Edit Payment', 'restropress' ) . ' - ' . $admin_title;
 			break;
 		default:
 			$title = $admin_title;

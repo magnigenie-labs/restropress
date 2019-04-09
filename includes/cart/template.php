@@ -173,7 +173,7 @@ function get_addon_item_formatted($addon_items) {
  * @return string Cart is empty message
  */
 function rpress_empty_cart_message() {
-	return apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'Your cart is empty', 'restro-press' ) . '</span>' );
+	return apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'Your cart is empty', 'restropress' ) . '</span>' );
 }
 
 /**
@@ -235,9 +235,9 @@ function rpress_save_cart_button() {
 	$color = ( $color == 'inherit' ) ? '' : $color;
 
 	if ( rpress_is_cart_saved() ) : ?>
-		<a class="rpress-cart-saving-button rpress-submit button<?php echo ' ' . $color; ?>" id="rpress-restore-cart-button" href="<?php echo esc_url( add_query_arg( array( 'rpress_action' => 'restore_cart', 'rpress_cart_token' => rpress_get_cart_token() ) ) ); ?>"><?php _e( 'Restore Previous Cart', 'restro-press' ); ?></a>
+		<a class="rpress-cart-saving-button rpress-submit button<?php echo ' ' . $color; ?>" id="rpress-restore-cart-button" href="<?php echo esc_url( add_query_arg( array( 'rpress_action' => 'restore_cart', 'rpress_cart_token' => rpress_get_cart_token() ) ) ); ?>"><?php _e( 'Restore Previous Cart', 'restropress' ); ?></a>
 	<?php endif; ?>
-	<a class="rpress-cart-saving-button rpress-submit button<?php echo ' ' . $color; ?>" id="rpress-save-cart-button" href="<?php echo esc_url( add_query_arg( 'rpress_action', 'save_cart' ) ); ?>"><?php _e( 'Save Cart', 'restro-press' ); ?></a>
+	<a class="rpress-cart-saving-button rpress-submit button<?php echo ' ' . $color; ?>" id="rpress-save-cart-button" href="<?php echo esc_url( add_query_arg( 'rpress_action', 'save_cart' ) ); ?>"><?php _e( 'Save Cart', 'restropress' ); ?></a>
 	<?php
 }
 
@@ -253,7 +253,7 @@ function rpress_empty_cart_restore_cart_link() {
 		return;
 
 	if( rpress_is_cart_saved() ) {
-		echo ' <a class="rpress-cart-saving-link" id="rpress-restore-cart-link" href="' . esc_url( add_query_arg( array( 'rpress_action' => 'restore_cart', 'rpress_cart_token' => rpress_get_cart_token() ) ) ) . '">' . __( 'Restore Previous Cart.', 'restro-press' ) . '</a>';
+		echo ' <a class="rpress-cart-saving-link" id="rpress-restore-cart-link" href="' . esc_url( add_query_arg( array( 'rpress_action' => 'restore_cart', 'rpress_cart_token' => rpress_get_cart_token() ) ) ) . '">' . __( 'Restore Previous Cart.', 'restropress' ) . '</a>';
 	}
 }
 add_action( 'rpress_cart_empty', 'rpress_empty_cart_restore_cart_link' );
@@ -271,7 +271,7 @@ function rpress_update_cart_button() {
 	$color = rpress_get_option( 'checkout_color', 'red' );
 	$color = ( $color == 'inherit' ) ? '' : $color;
 ?>
-	<input type="submit" name="rpress_update_cart_submit" class="rpress-submit rpress-no-js button<?php echo ' ' . $color; ?>" value="<?php _e( 'Update Cart', 'restro-press' ); ?>"/>
+	<input type="submit" name="rpress_update_cart_submit" class="rpress-submit rpress-no-js button<?php echo ' ' . $color; ?>" value="<?php _e( 'Update Cart', 'restropress' ); ?>"/>
 	<input type="hidden" name="rpress_action" value="update_cart"/>
 <?php
 
@@ -328,8 +328,8 @@ function rpress_show_added_to_cart_messages( $fooditem_id ) {
 			$fooditem_id = absint( $_POST['fooditem_id'] );
 
 		$alert = '<div class="rpress_added_to_cart_alert">'
-		. sprintf( __('You have successfully added %s to your shopping cart.','restro-press' ), get_the_title( $fooditem_id ) )
-		. ' <a href="' . rpress_get_checkout_uri() . '" class="rpress_alert_checkout_link">' . __('Checkout.','restro-press' ) . '</a>'
+		. sprintf( __('You have successfully added %s to your shopping cart.','restropress' ), get_the_title( $fooditem_id ) )
+		. ' <a href="' . rpress_get_checkout_uri() . '" class="rpress_alert_checkout_link">' . __('Checkout.','restropress' ) . '</a>'
 		. '</div>';
 
 		echo apply_filters( 'rpress_show_added_to_cart_messages', $alert );

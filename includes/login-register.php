@@ -87,10 +87,10 @@ function rpress_process_login_form( $data ) {
 
 				rpress_log_user_in( $user_data->ID, $data['rpress_user_login'], $data['rpress_user_pass'], $data['rememberme'] );
 			} else {
-				rpress_set_error( 'password_incorrect', __( 'The password you entered is incorrect', 'restro-press' ) );
+				rpress_set_error( 'password_incorrect', __( 'The password you entered is incorrect', 'restropress' ) );
 			}
 		} else {
-			rpress_set_error( 'username_incorrect', __( 'The username you entered does not exist', 'restro-press' ) );
+			rpress_set_error( 'username_incorrect', __( 'The username you entered does not exist', 'restropress' ) );
 		}
 		// Check for errors and redirect if none present
 		$errors = rpress_get_errors();
@@ -144,35 +144,35 @@ function rpress_process_register_form( $data ) {
 	do_action( 'rpress_pre_process_register_form' );
 
 	if( empty( $data['rpress_user_login'] ) ) {
-		rpress_set_error( 'empty_username', __( 'Invalid username', 'restro-press' ) );
+		rpress_set_error( 'empty_username', __( 'Invalid username', 'restropress' ) );
 	}
 
 	if( username_exists( $data['rpress_user_login'] ) ) {
-		rpress_set_error( 'username_unavailable', __( 'Username already taken', 'restro-press' ) );
+		rpress_set_error( 'username_unavailable', __( 'Username already taken', 'restropress' ) );
 	}
 
 	if( ! validate_username( $data['rpress_user_login'] ) ) {
-		rpress_set_error( 'username_invalid', __( 'Invalid username', 'restro-press' ) );
+		rpress_set_error( 'username_invalid', __( 'Invalid username', 'restropress' ) );
 	}
 
 	if( email_exists( $data['rpress_user_email'] ) ) {
-		rpress_set_error( 'email_unavailable', __( 'Email address already taken', 'restro-press' ) );
+		rpress_set_error( 'email_unavailable', __( 'Email address already taken', 'restropress' ) );
 	}
 
 	if( empty( $data['rpress_user_email'] ) || ! is_email( $data['rpress_user_email'] ) ) {
-		rpress_set_error( 'email_invalid', __( 'Invalid email', 'restro-press' ) );
+		rpress_set_error( 'email_invalid', __( 'Invalid email', 'restropress' ) );
 	}
 
 	if( ! empty( $data['rpress_payment_email'] ) && $data['rpress_payment_email'] != $data['rpress_user_email'] && ! is_email( $data['rpress_payment_email'] ) ) {
-		rpress_set_error( 'payment_email_invalid', __( 'Invalid payment email', 'restro-press' ) );
+		rpress_set_error( 'payment_email_invalid', __( 'Invalid payment email', 'restropress' ) );
 	}
 
 	if( empty( $_POST['rpress_user_pass'] ) ) {
-		rpress_set_error( 'empty_password', __( 'Please enter a password', 'restro-press' ) );
+		rpress_set_error( 'empty_password', __( 'Please enter a password', 'restropress' ) );
 	}
 
 	if( ( ! empty( $_POST['rpress_user_pass'] ) && empty( $_POST['rpress_user_pass2'] ) ) || ( $_POST['rpress_user_pass'] !== $_POST['rpress_user_pass2'] ) ) {
-		rpress_set_error( 'password_mismatch', __( 'Passwords do not match', 'restro-press' ) );
+		rpress_set_error( 'password_mismatch', __( 'Passwords do not match', 'restropress' ) );
 	}
 
 	do_action( 'rpress_process_register_form' );

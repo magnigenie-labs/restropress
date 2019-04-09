@@ -69,8 +69,8 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 
 		// Set parent defaults
 		parent::__construct( array(
-			'singular' => __( 'Customer', 'restro-press' ),
-			'plural'   => __( 'Customers', 'restro-press' ),
+			'singular' => __( 'Customer', 'restropress' ),
+			'plural'   => __( 'Customers', 'restropress' ),
 			'ajax'     => false,
 		) );
 
@@ -150,16 +150,16 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 
 	public function column_name( $item ) {
 		$name        = '#' . $item['id'] . ' ';
-		$name       .= ! empty( $item['name'] ) ? $item['name'] : '<em>' . __( 'Unnamed Customer','restro-press' ) . '</em>';
+		$name       .= ! empty( $item['name'] ) ? $item['name'] : '<em>' . __( 'Unnamed Customer','restropress' ) . '</em>';
 		$user        = ! empty( $item['user_id'] ) ? $item['user_id'] : $item['email'];
 		$view_url    = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $item['id'] );
 		$actions     = array(
-			'view'   => '<a href="' . $view_url . '">' . __( 'View', 'restro-press' ) . '</a>',
-			'delete' => '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=delete&id=' . $item['id'] ) . '">' . __( 'Delete', 'restro-press' ) . '</a>'
+			'view'   => '<a href="' . $view_url . '">' . __( 'View', 'restropress' ) . '</a>',
+			'delete' => '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=delete&id=' . $item['id'] ) . '">' . __( 'Delete', 'restropress' ) . '</a>'
 		);
 
 		$customer = new RPRESS_Customer( $item['id'] );
-		$pending  = rpress_user_pending_verification( $customer->user_id ) ? ' <em>' . __( '(Pending Verification)', 'restro-press' ) . '</em>' : '';
+		$pending  = rpress_user_pending_verification( $customer->user_id ) ? ' <em>' . __( '(Pending Verification)', 'restropress' ) . '</em>' : '';
 
 		return '<a href="' . esc_url( $view_url ) . '">' . $name . '</a>' . $pending . $this->row_actions( $actions );
 	}
@@ -172,11 +172,11 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'name'          => __( 'Name', 'restro-press' ),
-			'email'         => __( 'Primary Email', 'restro-press' ),
-			'num_purchases' => __( 'Numbers Of Order', 'restro-press' ),
-			'amount_spent'  => __( 'Total Order Price', 'restro-press' ),
-			'date_created'  => __( 'Date Created', 'restro-press' ),
+			'name'          => __( 'Name', 'restropress' ),
+			'email'         => __( 'Primary Email', 'restropress' ),
+			'num_purchases' => __( 'Numbers Of Order', 'restropress' ),
+			'amount_spent'  => __( 'Total Order Price', 'restropress' ),
+			'date_created'  => __( 'Date Created', 'restropress' ),
 		);
 
 		return apply_filters( 'rpress_report_customer_columns', $columns );

@@ -28,7 +28,7 @@ function rpress_process_purchase_form() {
 	// Make sure the cart isn't empty
 	if ( ! rpress_get_cart_contents() && ! rpress_cart_has_fees() ) {
 		$valid_data = false;
-		rpress_set_error( 'empty_cart', __( 'Your cart is empty', 'restro-press' ) );
+		rpress_set_error( 'empty_cart', __( 'Your cart is empty', 'restropress' ) );
 	} else {
 		// Validate the form $_POST data
 		$valid_data = rpress_purchase_form_validate_fields();
@@ -195,7 +195,7 @@ function rpress_checkout_check_existing_email( $valid_data, $post ) {
 		if ( $email != strtolower( $customer->email ) && ( is_array( $customer->emails ) && ! in_array( $email, array_map( 'strtolower', $customer->emails ) ) ) ) {
 			$found_customer = new RPRESS_Customer( $email );
 			if ( $found_customer->id > 0 ) {
-				rpress_set_error( 'rpress-customer-email-exists', sprintf( __( 'The email address %s is already in use.', 'restro-press' ), $email ) );
+				rpress_set_error( 'rpress-customer-email-exists', sprintf( __( 'The email address %s is already in use.', 'restropress' ), $email ) );
 			}
 		}
 
@@ -325,7 +325,7 @@ function rpress_purchase_form_validate_gateway() {
 
 		} elseif ( ! rpress_is_gateway_active( $gateway ) ) {
 
-			rpress_set_error( 'invalid_gateway', __( 'The selected payment gateway is not enabled', 'restro-press' ) );
+			rpress_set_error( 'invalid_gateway', __( 'The selected payment gateway is not enabled', 'restropress' ) );
 
 		}
 
@@ -358,7 +358,7 @@ function rpress_purchase_form_validate_discounts() {
 	$error = false;
 
 	// Check for valid discount(s) is present
-	if ( ! empty( $_POST['rpress-discount'] ) && __( 'Enter discount', 'restro-press' ) != $_POST['rpress-discount'] ) {
+	if ( ! empty( $_POST['rpress-discount'] ) && __( 'Enter discount', 'restropress' ) != $_POST['rpress-discount'] ) {
 		// Check for a posted discount
 		$posted_discount = isset( $_POST['rpress-discount'] ) ? trim( $_POST['rpress-discount'] ) : false;
 
@@ -385,7 +385,7 @@ function rpress_purchase_form_validate_discounts() {
 	}
 
 	if ( $error ) {
-		rpress_set_error( 'invalid_discount', __( 'One or more of the discounts you entered is invalid', 'restro-press' ) );
+		rpress_set_error( 'invalid_discount', __( 'One or more of the discounts you entered is invalid', 'restropress' ) );
 	}
 
 	return implode( ', ', $discounts );
@@ -402,7 +402,7 @@ function rpress_purchase_form_validate_agree_to_terms() {
 	// Validate agree to terms
 	if ( ! isset( $_POST['rpress_agree_to_terms'] ) || $_POST['rpress_agree_to_terms'] != 1 ) {
 		// User did not agree
-		rpress_set_error( 'agree_to_terms', apply_filters( 'rpress_agree_to_terms_text', __( 'You must agree to the terms of use', 'restro-press' ) ) );
+		rpress_set_error( 'agree_to_terms', apply_filters( 'rpress_agree_to_terms_text', __( 'You must agree to the terms of use', 'restropress' ) ) );
 	}
 }
 
@@ -416,7 +416,7 @@ function rpress_purchase_form_validate_agree_to_privacy_policy() {
 	// Validate agree to terms
 	if ( ! isset( $_POST['rpress_agree_to_privacy_policy'] ) || $_POST['rpress_agree_to_privacy_policy'] != 1 ) {
 		// User did not agree
-		rpress_set_error( 'agree_to_privacy_policy', apply_filters( 'rpress_agree_to_privacy_policy_text', __( 'You must agree to the privacy policy', 'restro-press' ) ) );
+		rpress_set_error( 'agree_to_privacy_policy', apply_filters( 'rpress_agree_to_privacy_policy_text', __( 'You must agree to the privacy policy', 'restropress' ) ) );
 	}
 }
 
@@ -431,11 +431,11 @@ function rpress_purchase_form_required_fields() {
 	$required_fields = array(
 		'rpress_email' => array(
 			'error_id' => 'invalid_email',
-			'error_message' => __( 'Please enter a valid email address', 'restro-press' )
+			'error_message' => __( 'Please enter a valid email address', 'restropress' )
 		),
 		'rpress_first' => array(
 			'error_id' => 'invalid_first_name',
-			'error_message' => __( 'Please enter your first name', 'restro-press' )
+			'error_message' => __( 'Please enter your first name', 'restropress' )
 		)
 	);
 
@@ -445,19 +445,19 @@ function rpress_purchase_form_required_fields() {
 	if ( $require_address ) {
 		$required_fields['card_zip'] = array(
 			'error_id' => 'invalid_zip_code',
-			'error_message' => __( 'Please enter your zip / postal code', 'restro-press' )
+			'error_message' => __( 'Please enter your zip / postal code', 'restropress' )
 		);
 		$required_fields['card_city'] = array(
 			'error_id' => 'invalid_city',
-			'error_message' => __( 'Please enter your billing city', 'restro-press' )
+			'error_message' => __( 'Please enter your billing city', 'restropress' )
 		);
 		$required_fields['billing_country'] = array(
 			'error_id' => 'invalid_country',
-			'error_message' => __( 'Please select your billing country', 'restro-press' )
+			'error_message' => __( 'Please select your billing country', 'restropress' )
 		);
 		$required_fields['card_state'] = array(
 			'error_id' => 'invalid_state',
-			'error_message' => __( 'Please enter billing state / province', 'restro-press' )
+			'error_message' => __( 'Please enter billing state / province', 'restropress' )
 		);
 
 		// Check if the Customer's Country has been passed in and if it has no states.
@@ -514,12 +514,12 @@ function rpress_purchase_form_validate_logged_in_user() {
 			);
 
 			if ( ! is_email( $valid_user_data['user_email'] ) ) {
-				rpress_set_error( 'email_invalid', __( 'Invalid email', 'restro-press' ) );
+				rpress_set_error( 'email_invalid', __( 'Invalid email', 'restropress' ) );
 			}
 
 		} else {
 			// Set invalid user error
-			rpress_set_error( 'invalid_user', __( 'The user information is invalid', 'restro-press' ) );
+			rpress_set_error( 'invalid_user', __( 'The user information is invalid', 'restropress' ) );
 		}
 	}
 
@@ -567,21 +567,21 @@ function rpress_purchase_form_validate_new_user() {
 		// We have an user name, check if it already exists
 		if ( username_exists( $user_login ) ) {
 			// Username already registered
-			rpress_set_error( 'username_unavailable', __( 'Username already taken', 'restro-press' ) );
+			rpress_set_error( 'username_unavailable', __( 'Username already taken', 'restropress' ) );
 			// Check if it's valid
 		} else if ( ! rpress_validate_username( $user_login ) ) {
 				// Invalid username
 				if ( is_multisite() )
-					rpress_set_error( 'username_invalid', __( 'Invalid username. Only lowercase letters (a-z) and numbers are allowed', 'restro-press' ) );
+					rpress_set_error( 'username_invalid', __( 'Invalid username. Only lowercase letters (a-z) and numbers are allowed', 'restropress' ) );
 				else
-					rpress_set_error( 'username_invalid', __( 'Invalid username', 'restro-press' ) );
+					rpress_set_error( 'username_invalid', __( 'Invalid username', 'restropress' ) );
 			} else {
 			// All the checks have run and it's good to go
 			$valid_user_data['user_login'] = $user_login;
 		}
 	} else {
 		if ( rpress_no_guest_checkout() ) {
-			rpress_set_error( 'registration_required', __( 'You must register or login to complete your purchase', 'restro-press' ) );
+			rpress_set_error( 'registration_required', __( 'You must register or login to complete your purchase', 'restropress' ) );
 		}
 	}
 
@@ -589,12 +589,12 @@ function rpress_purchase_form_validate_new_user() {
 	if ( $user_email && strlen( $user_email ) > 0 ) {
 		// Validate email
 		if ( ! is_email( $user_email ) ) {
-			rpress_set_error( 'email_invalid', __( 'Invalid email', 'restro-press' ) );
+			rpress_set_error( 'email_invalid', __( 'Invalid email', 'restropress' ) );
 			// Check if email exists
 		} else {
 			$customer = new RPRESS_Customer( $user_email );
 			if ( $registering_new_user && email_exists( $user_email ) ) {
-				rpress_set_error( 'email_used', __( 'Email already used. Login or use a different email to complete your order.', 'restro-press' ) );
+				rpress_set_error( 'email_used', __( 'Email already used. Login or use a different email to complete your order.', 'restropress' ) );
 			} else {
 				// All the checks have run and it's good to go
 				$valid_user_data['user_email'] = $user_email;
@@ -602,7 +602,7 @@ function rpress_purchase_form_validate_new_user() {
 		}
 	} else {
 		// No email
-		rpress_set_error( 'email_empty', __( 'Enter an email', 'restro-press' ) );
+		rpress_set_error( 'email_empty', __( 'Enter an email', 'restropress' ) );
 	}
 
 	// Check password
@@ -610,7 +610,7 @@ function rpress_purchase_form_validate_new_user() {
 		// Verify confirmation matches
 		if ( $user_pass != $pass_confirm ) {
 			// Passwords do not match
-			rpress_set_error( 'password_mismatch', __( 'Passwords don\'t match', 'restro-press' ) );
+			rpress_set_error( 'password_mismatch', __( 'Passwords don\'t match', 'restropress' ) );
 		} else {
 			// All is good to go
 			$valid_user_data['user_pass'] = $user_pass;
@@ -619,10 +619,10 @@ function rpress_purchase_form_validate_new_user() {
 		// Password or confirmation missing
 		if ( ! $user_pass && $registering_new_user ) {
 			// The password is invalid
-			rpress_set_error( 'password_empty', __( 'Enter a password', 'restro-press' ) );
+			rpress_set_error( 'password_empty', __( 'Enter a password', 'restropress' ) );
 		} else if ( ! $pass_confirm && $registering_new_user ) {
 			// Confirmation password is invalid
-			rpress_set_error( 'confirmation_empty', __( 'Enter the password confirmation', 'restro-press' ) );
+			rpress_set_error( 'confirmation_empty', __( 'Enter the password confirmation', 'restropress' ) );
 		}
 	}
 
@@ -646,7 +646,7 @@ function rpress_purchase_form_validate_user_login() {
 
 	// Username
 	if ( empty( $_POST['rpress_user_login'] ) && rpress_no_guest_checkout() ) {
-		rpress_set_error( 'must_log_in', __( 'You must log in or register to complete your purchase', 'restro-press' ) );
+		rpress_set_error( 'must_log_in', __( 'You must log in or register to complete your purchase', 'restropress' ) );
 		return $valid_user_data;
 	}
 
@@ -673,7 +673,7 @@ function rpress_purchase_form_validate_user_login() {
 				rpress_set_error(
 					'password_incorrect',
 					sprintf(
-						__( 'The password you entered is incorrect. %sReset Password%s', 'restro-press' ),
+						__( 'The password you entered is incorrect. %sReset Password%s', 'restropress' ),
 						'<a href="' . wp_lostpassword_url( rpress_get_checkout_uri() ) . '">',
 						'</a>'
 					)
@@ -692,11 +692,11 @@ function rpress_purchase_form_validate_user_login() {
 			}
 		} else {
 			// Empty password
-			rpress_set_error( 'password_empty', __( 'Enter a password', 'restro-press' ) );
+			rpress_set_error( 'password_empty', __( 'Enter a password', 'restropress' ) );
 		}
 	} else {
 		// no username
-		rpress_set_error( 'username_incorrect', __( 'The username you entered does not exist', 'restro-press' ) );
+		rpress_set_error( 'username_incorrect', __( 'The username you entered does not exist', 'restropress' ) );
 	}
 
 	return $valid_user_data;
@@ -718,7 +718,7 @@ function rpress_purchase_form_validate_guest_user() {
 
 	// Show error message if user must be logged in
 	if ( rpress_logged_in_only() ) {
-		rpress_set_error( 'logged_in_only', __( 'You must be logged into an account to purchase', 'restro-press' ) );
+		rpress_set_error( 'logged_in_only', __( 'You must be logged into an account to purchase', 'restropress' ) );
 	}
 
 	// Get the guest email
@@ -729,14 +729,14 @@ function rpress_purchase_form_validate_guest_user() {
 		// Validate email
 		if ( ! is_email( $guest_email ) ) {
 			// Invalid email
-			rpress_set_error( 'email_invalid', __( 'Invalid email', 'restro-press' ) );
+			rpress_set_error( 'email_invalid', __( 'Invalid email', 'restropress' ) );
 		} else {
 			// All is good to go
 			$valid_user_data['user_email'] = $guest_email;
 		}
 	} else {
 		// No email
-		rpress_set_error( 'email_empty', __( 'Enter an email', 'restro-press' ) );
+		rpress_set_error( 'email_empty', __( 'Enter an email', 'restropress' ) );
 	}
 
 	// Loop through required fields and show error messages
@@ -840,7 +840,7 @@ function rpress_get_purchase_form_user( $valid_data = array() ) {
 
 			// Login user
 			if ( empty( $user ) || $user['user_id'] == -1 ) {
-				rpress_set_error( 'invalid_user', __( 'The user information is invalid', 'restro-press' ) );
+				rpress_set_error( 'invalid_user', __( 'The user information is invalid', 'restropress' ) );
 				return false;
 			} else {
 				rpress_log_user_in( $user['user_id'], $user['user_login'], $user['user_pass'] );
@@ -904,7 +904,7 @@ function rpress_purchase_form_validate_cc() {
 	// Validate the card zip
 	if ( ! empty( $card_data['card_zip'] ) && rpress_get_cart_total() > 0.00 ) {
 		if ( ! rpress_purchase_form_validate_cc_zip( $card_data['card_zip'], $card_data['card_country'] ) ) {
-			rpress_set_error( 'invalid_cc_zip', __( 'The zip / postal code you entered for your billing address is invalid', 'restro-press' ) );
+			rpress_set_error( 'invalid_cc_zip', __( 'The zip / postal code you entered for your billing address is invalid', 'restropress' ) );
 		}
 	}
 
@@ -1153,7 +1153,7 @@ function rpress_check_purchase_email( $valid_data, $posted ) {
 	foreach ( $user_emails as $email ) {
 		if ( rpress_is_email_banned( $email ) ) {
 			// Set an error and give the customer a general error (don't alert them that they were banned)
-			rpress_set_error( 'email_banned', __( 'An internal error has occurred, please try again or contact support.', 'restro-press' ) );
+			rpress_set_error( 'email_banned', __( 'An internal error has occurred, please try again or contact support.', 'restropress' ) );
 			break;
 		}
 	}
@@ -1189,7 +1189,7 @@ function rpress_process_straight_to_gateway( $data ) {
 			rpress_add_to_cart( $fooditem['id'], $options );
 		}
 
-		rpress_set_error( 'rpress-straight-to-gateway-error', __( 'There was an error completing your order. Please try again.', 'restro-press' ) );
+		rpress_set_error( 'rpress-straight-to-gateway-error', __( 'There was an error completing your order. Please try again.', 'restropress' ) );
 		wp_redirect( rpress_get_checkout_uri() );
 		exit;
 	}

@@ -1,14 +1,14 @@
 === RestroPress - Online Food Ordering System ===
-Contributors: magnigenie,kshirod-patel
+Contributors: magnigenie,kshirod-patel,sagarseth9
 Tags: Food Ordering System,Online Food Ordering System,Food Ordering, WordPress Restaurant Ordering System, Restaurant Orders, WordPress Ordering system, Restaurant Menu
 Requires at least: 4.0
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 2.0.1
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-RestroPress is a WordPress Food Ordering System which will help the restaurant owners to sell their food online.
+RestroPress is a Food Ordering System for WordPress which helps the restaurant owners to sell their food online.
 
 == Description ==
 
@@ -19,10 +19,10 @@ RestroPress has a user friendly frontend and backend interface which will allow 
 = Restropress In action =
 [youtube https://www.youtube.com/watch?v=c5oWarsCYf0]
 
-Check  [RestroPress Website](http://restropress.magnigenie.com/) for details and support.
+Check  [RestroPress Website](https://restropress.com/) for details and support.
 
 = Restropress Demo =
-Check  [RestroPress Demo Website](https://demo.restropress.com/) 
+Check  [RestroPress Demo Website](https://demo.restropress.com/)
 
 = Benefits: =
 * 100% Free and easy to install and setup.
@@ -35,7 +35,7 @@ Check  [RestroPress Demo Website](https://demo.restropress.com/)
 * Allows you to add multiple add-on options for your food.
 * Custom user login, register and dashboard.
 * Receive payments using paypal and option to add new payment gateway.
-* Developer frieldly with sufficient hooks.
+* Developer friendly with sufficient hooks.
 * And much more coming soon...
 
 If you have any suggestions for a new plugin, feel free to email us at info@magnigenie.com
@@ -50,6 +50,18 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 == ChangeLog ==
 
+= Version 2.1 =
+* Fixed issue with the subtotal calculation.
+* Fixed issue with duplicate quantity bug.
+* Food items pages to automatically create upon installation.
+* Fixed issues related to popup styling.
+* Code clean up.
+* Renamed text domain restro-press to restropress.
+* Added translation files.
+* Fixed responsive issues for the food items display.
+* Fixed design issues on checkout page.
+*
+
 = Version 2.0.1 =
 * Fixed popup z-index issue
 * fixed template part issue for before and after fooditems
@@ -60,10 +72,10 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 * Removed view option from admin food category
 * Fixed cart shortcode template issue
 * Added delivery hours hooks for the addon
-* Renamed food item addon category into addon category
+* Renamed food item addon category to addon category
 * Added option whether to use internal bootsrap js
 
- 
+
 
 = Version 2.0 =
 * Changed checkout layout
@@ -71,7 +83,7 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 * fixed css issues
 * fixed option for color theme
 * js modified for change delivery options
-* Added addons page in the admin 
+* Added addons page in the admin
 
 
 = Version 1.0.7 =

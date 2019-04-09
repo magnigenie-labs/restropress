@@ -143,7 +143,7 @@ function rpress_process_fooditem() {
 
 		$supported_streams = stream_get_wrappers();
 		if ( strtoupper( substr( PHP_OS, 0, 3 ) ) !== 'WIN' && isset( $file_details['scheme'] ) && ! in_array( $file_details['scheme'], $supported_streams ) ) {
-			wp_die( __( 'Error fooditeming file. Please contact support.', 'restro-press' ), __( 'File fooditem error', 'restro-press' ), 501 );
+			wp_die( __( 'Error fooditeming file. Please contact support.', 'restropress' ), __( 'File fooditem error', 'restropress' ), 501 );
 		}
 
 		if ( ( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemes ) ) && isset( $file_details['path'] ) && file_exists( $requested_file ) ) {
@@ -289,8 +289,8 @@ function rpress_process_fooditem() {
 
 		rpress_die();
 	} else {
-		$error_message = __( 'You do not have permission to fooditem this file', 'restro-press' );
-		wp_die( apply_filters( 'rpress_deny_fooditem_message', $error_message, __( 'Purchase Verification Failed', 'restro-press' ) ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		$error_message = __( 'You do not have permission to fooditem this file', 'restropress' );
+		wp_die( apply_filters( 'rpress_deny_fooditem_message', $error_message, __( 'Purchase Verification Failed', 'restropress' ) ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	exit;
@@ -878,7 +878,7 @@ function rpress_process_signed_fooditem_url( $args ) {
 
 	// Check to make sure not at fooditem limit
 	if ( rpress_is_file_at_fooditem_limit( $order_parts[1], $order_parts[0], $order_parts[2], $order_parts[3] ) ) {
-		wp_die( apply_filters( 'rpress_fooditem_limit_reached_text', __( 'Sorry but you have hit your fooditem limit for this file.', 'restro-press' ) ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( apply_filters( 'rpress_fooditem_limit_reached_text', __( 'Sorry but you have hit your fooditem limit for this file.', 'restropress' ) ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$args['expire']      = $_GET['ttl'];
@@ -954,15 +954,15 @@ function rpress_check_file_url_head( $requested_file, $args, $method ) {
 
 			$valid   = false;
 			$message = $request;
-			$title   = __( 'Invalid file', 'restro-press' );
+			$title   = __( 'Invalid file', 'restropress' );
 
 		}
 
 		if( 404 === wp_remote_retrieve_response_code( $request ) ) {
 
 			$valid   = false;
-			$message = __( 'The requested file could not be found. Error 404.', 'restro-press' );
-			$title   = __( 'File not found', 'restro-press' );
+			$message = __( 'The requested file could not be found. Error 404.', 'restropress' );
+			$title   = __( 'File not found', 'restropress' );
 
 		}
 

@@ -22,32 +22,32 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_set_custom_taxonomies() {
 
 	$addon_item_label = array(
-		'name'              => _x( 'Addon Item', 'taxonomy general name', 'restro-press' ),
-		'singular_name'     => _x( 'Addon item', 'taxonomy singular name', 'restro-press' ),
-		'search_items'      => __( 'Search Addon Item', 'restro-press' ),
-		'all_items'         => __( 'All Addon Item', 'restro-press' ),
+		'name'              => _x( 'Addon Item', 'taxonomy general name', 'restropress' ),
+		'singular_name'     => _x( 'Addon item', 'taxonomy singular name', 'restropress' ),
+		'search_items'      => __( 'Search Addon Item', 'restropress' ),
+		'all_items'         => __( 'All Addon Item', 'restropress' ),
 		'parent_item'       => __( 'Parent Addon Item', 'textdomain' ),
 		'parent_item_colon' => __( 'Parent Addon Item:', 'textdomain' ),
-		'edit_item'         => __( 'Edit Addon Item', 'restro-press' ),
-		'update_item'       => __( 'Update Addon item', 'restro-press' ),
-		'add_new_item'      => __( 'Add New Addon Item', 'restro-press' ),
-		'new_item_name'     => __( 'New Addon Item', 'restro-press' ),
-		'menu_name'         => __( 'Addon Item', 'restro-press' ),
+		'edit_item'         => __( 'Edit Addon Item', 'restropress' ),
+		'update_item'       => __( 'Update Addon item', 'restropress' ),
+		'add_new_item'      => __( 'Add New Addon Item', 'restropress' ),
+		'new_item_name'     => __( 'New Addon Item', 'restropress' ),
+		'menu_name'         => __( 'Addon Item', 'restropress' ),
 	);
 
 
 	$food_category_label = array(
-		'name'              => _x( 'Food Category', 'taxonomy general name', 'restro-press' ),
-		'singular_name'     => _x( 'Food Category', 'taxonomy singular name', 'restro-press' ),
-		'search_items'      => __( 'Search Food Category', 'restro-press' ),
-		'all_items'         => __( 'All Food Category', 'restro-press' ),
+		'name'              => _x( 'Food Category', 'taxonomy general name', 'restropress' ),
+		'singular_name'     => _x( 'Food Category', 'taxonomy singular name', 'restropress' ),
+		'search_items'      => __( 'Search Food Category', 'restropress' ),
+		'all_items'         => __( 'All Food Category', 'restropress' ),
 		'parent_item'       => __( 'Parent Food Category', 'textdomain' ),
 		'parent_item_colon' => __( 'Parent Food Category:', 'textdomain' ),
-		'edit_item'         => __( 'Edit Food Category', 'restro-press' ),
-		'update_item'       => __( 'Update Food Category', 'restro-press' ),
-		'add_new_item'      => __( 'Add New Food Category', 'restro-press' ),
-		'new_item_name'     => __( 'New Food Category', 'restro-press' ),
-		'menu_name'         => __( 'Food Category', 'restro-press' ),
+		'edit_item'         => __( 'Edit Food Category', 'restropress' ),
+		'update_item'       => __( 'Update Food Category', 'restropress' ),
+		'add_new_item'      => __( 'Add New Food Category', 'restropress' ),
+		'new_item_name'     => __( 'New Food Category', 'restropress' ),
+		'menu_name'         => __( 'Food Category', 'restropress' ),
 	);
 
 	$food_item_args = array(
@@ -117,16 +117,16 @@ function rpress_enque_scripts() {
   $fooditem_popup_enable = rpress_get_option( 'enable_food_image_popup', false );
 
   wp_localize_script( 'rpress-custom', 'RpressVars', array(
-  	'wait_text' 		=> __( 'Please Wait', 'restro-press' ),
-  	'add_to_cart' 		=> __( 'Add To Cart', 'restro-press' ),
-  	'added_into_cart' 	=> __( 'Added Into Cart', 'restro-press' ),
-  	'estimated_tax'		=> __( 'Estimated Tax', 'restro-press'),
-  	'total_text'		=> __( 'Subtotal', 'restro-press'),
+  	'wait_text' 		=> __( 'Please Wait', 'restropress' ),
+  	'add_to_cart' 		=> __( 'Add To Cart', 'restropress' ),
+  	'added_into_cart' 	=> __( 'Added Into Cart', 'restropress' ),
+  	'estimated_tax'		=> __( 'Estimated Tax', 'restropress'),
+  	'total_text'		=> __( 'Subtotal', 'restropress'),
   	'google_api'			=> rpress_get_option('map_api_key'),
   	'enable_google_autocomplete' => rpress_get_option('enable_google_map_api'),
   	'is_checkout_page' => rpress_is_checkout(),
-  	'store_closed'		=> __('Store is closed', 'restro-press'),
-  	'delivery_closed' => __('Delivery is closed', 'restro-press'),
+  	'store_closed'		=> __('Store is closed', 'restropress'),
+  	'delivery_closed' => __('Delivery is closed', 'restropress'),
   	'enable_fooditem_popup' => $fooditem_popup_enable,
   ));
 }
@@ -233,18 +233,18 @@ function addon_category_taxonomy_custom_fields($tag) {
 
 <tr class="form-field">  
 	<th scope="row" valign="top">  
-  	<label for="use_it_as"><?php _e('Use it like', 'restro-press'); ?></label>
+  	<label for="use_it_as"><?php _e('Use it like', 'restropress'); ?></label>
   </th>  
   <td>
   	<div class="use-it-like-wrap">
   		<label for="use_like_radio">
   			<input id="use_like_radio" type="radio" value="radio" name="term_meta[use_it_like]" <?php checked($use_addon_like, 'radio'); ?> >
-  			<?php _e('Single Select', 'restro-press'); ?>
+  			<?php _e('Single Select', 'restropress'); ?>
   		</label>
   		<br/><br/>
   		<label for="use_like_checkbox">
   			<input id="use_like_checkbox" type="radio" value="checkbox" name="term_meta[use_it_like]" <?php checked($use_addon_like, 'checkbox'); ?> >
-  			<?php _e('Multi Select', 'restro-press'); ?>
+  			<?php _e('Multi Select', 'restropress'); ?>
   		</label>
   	</div>
   	
@@ -383,12 +383,12 @@ if( ! function_exists( 'rpress_get_food_cats' ) ) {
 		?>
 		<div class="rp-col-lg-2 rp-col-md-2 rp-col-sm-3 rp-col-xs-12 sticky-sidebar cat-lists">
 			<div class="rpress-filter-toggle">
-				<span class="rpress-filter-toggle-text"><?php echo __('Categories By', 'restro-press'); ?></span>
+				<span class="rpress-filter-toggle-text"><?php echo __('Categories By', 'restropress'); ?></span>
 			</div>
 
 			<div class="rpress-filter-wrapper">
 				<div class="rpress-categories-menu">
-					<h6><?php echo __('Categories', 'restro-press'); ?></h6>
+					<h6><?php echo __('Categories', 'restropress'); ?></h6>
 					<?php do_action('rpress_before_category_list'); ?>
 					<?php 
 					if( is_array($get_all_items) && !empty($get_all_items) ) :
@@ -414,7 +414,7 @@ if( ! function_exists( 'rpress_get_food_cats' ) ) {
 if( !function_exists('rpress_search_form') ) {
 	function rpress_search_form() {
 		$search  = '<div class="rpress-search-wrap rpress-live-search">';
-		$search .= '<input id="rpress-food-search" type="text" placeholder="'.__('Search Food Item', 'restro-press').'">';
+		$search .= '<input id="rpress-food-search" type="text" placeholder="'.__('Search Food Item', 'restropress').'">';
 		$search .= '</div>';
 		return $search;
 	}
@@ -628,7 +628,7 @@ function get_delivery_options($changeble) {
 	if( $changeble ) {
 		if( isset($_COOKIE['deliveryMethod']) 
 		&& $_COOKIE['deliveryMethod'] !== '' ) :
-			$html .= '<span class="delivery-change '.$color.' ">'.__('Change?', 'restro-press').'</span>';
+			$html .= '<span class="delivery-change '.$color.' ">'.__('Change?', 'restropress').'</span>';
 		endif;
 	}
 	
@@ -839,9 +839,9 @@ function rpress_display_checkout_fields() {
 
 	<?php if($enable_phone): ?>
 		<p id="rpress-phone-wrap">
-  		<label class="rpress-label" for="rpress-phone"><?php _e('Phone Number', 'restro-press'); ?><span class="rpress-required-indicator">*</span></label>
+  		<label class="rpress-label" for="rpress-phone"><?php _e('Phone Number', 'restropress'); ?><span class="rpress-required-indicator">*</span></label>
     	<span class="rpress-description">
-    		<?php _e('Enter your phone number so we can get in touch with you.', 'restro-press'); ?>
+    		<?php _e('Enter your phone number so we can get in touch with you.', 'restropress'); ?>
     	</span>
     	<input class="rpress-input" type="text" name="rpress_phone" id="rpress-phone" placeholder="Phone Number" />
     </p>
@@ -850,36 +850,36 @@ function rpress_display_checkout_fields() {
   <?php if($google_map_opts) :  ?>
   	
   	<p id="rpress-google-address">
-  		<label class="rpress-address" for="rpress-address"><?php _e('Address', 'restro-press') ?></label>
+  		<label class="rpress-address" for="rpress-address"><?php _e('Address', 'restropress') ?></label>
     	<span class="rpress-description">
-    		<?php _e('Enter Your Address', 'restro-press'); ?> 
+    		<?php _e('Enter Your Address', 'restropress'); ?> 
     	</span>
     	<input class="rpress-input autocomplete" id="autocomplete" name="address" placeholder="Enter your address"
               type="text"/>
   	</p>
 
   	<p id="rpress-street-address">
-  		<label class="rpress-street-address" for="rpress-street-address"><?php _e('Street Address', 'restro-press') ?></label>
+  		<label class="rpress-street-address" for="rpress-street-address"><?php _e('Street Address', 'restropress') ?></label>
     	<input class="rpress-input rpress-street-number" type="text" name="route" id="route"  />
   	</p>
 
   	<p id="rpress-city">
-  		<label class="rpress-city" for="rpress-city"><?php _e('City', 'restro-press') ?></label>
+  		<label class="rpress-city" for="rpress-city"><?php _e('City', 'restropress') ?></label>
     	<input class="rpress-input rpress-street-number" autocomplete="off" type="text" name="locality" id="locality"  />
   	</p>
 
   	<p id="rpress-state">
-  		<label class="rpress-state" for="rpress-state"><?php _e('State', 'restro-press') ?></label>
+  		<label class="rpress-state" for="rpress-state"><?php _e('State', 'restropress') ?></label>
     	<input class="rpress-input rpress-street-number" autocomplete="off" type="text" name="administrative_area_level_1" id="administrative_area_level_1"  />
   	</p>
 
   	<p id="rpress-zip">
-  		<label class="rpress-zip" for="rpress-zip"><?php _e('Zip code', 'restro-press') ?></label>
+  		<label class="rpress-zip" for="rpress-zip"><?php _e('Zip code', 'restropress') ?></label>
     	<input class="rpress-input rpress-zip" autocomplete="off" type="text" name="postal_code" id="postal_code"  />
   	</p>
 
   	<p id="rpress-country">
-  		<label class="rpress-country" for="rpress-country"><?php _e('Country', 'restro-press') ?></label>
+  		<label class="rpress-country" for="rpress-country"><?php _e('Country', 'restropress') ?></label>
     	<input class="rpress-input rpress-country" autocomplete="off" type="text" name="country" id="country"  />
     	<input type="hidden" id="rpress_geo_address" name="rpress_geo_address" value="">
   	</p>
@@ -890,9 +890,9 @@ function rpress_display_checkout_fields() {
   <?php if($enable_flat) : ?>
   	<?php if( $delivery_method !== 'pickup') : ?>
     <p id="rpress-door-flat">
-  		<label class="rpress-flat" for="rpress-flat"><?php _e('Door/Flat No.', 'restro-press'); ?><span class="rpress-required-indicator">*</span></label>
+  		<label class="rpress-flat" for="rpress-flat"><?php _e('Door/Flat No.', 'restropress'); ?><span class="rpress-required-indicator">*</span></label>
     	<span class="rpress-description">
-    		<?php _e('Enter your Door/Flat number', 'restro-press'); ?> 
+    		<?php _e('Enter your Door/Flat number', 'restropress'); ?> 
     	</span>
     	<input class="rpress-input" type="text" name="rpress_door_flat" id="rpress-door-flat" placeholder="Door/Flat Number" />
     </p>
@@ -902,9 +902,9 @@ function rpress_display_checkout_fields() {
   <?php if($enable_landmark): ?>
   	<?php if( $delivery_method !== 'pickup') : ?>
     <p id="rpress-landmark">
-  	<label class="rpress-landmark" for="rpress-landmark"><?php _e('Land Mark', 'restro-press') ?><span class="rpress-required-indicator">*</span></label>
+  	<label class="rpress-landmark" for="rpress-landmark"><?php _e('Land Mark', 'restropress') ?><span class="rpress-required-indicator">*</span></label>
     <span class="rpress-description">
-    	<?php _e('Enter Landmark Near By You', 'restro-press'); ?> 
+    	<?php _e('Enter Landmark Near By You', 'restropress'); ?> 
     </span>
     <input class="rpress-input" type="text" name="rpress_landmark" id="rpress-landmark" placeholder="Landmark" />
     </p>
@@ -931,7 +931,7 @@ function rpress_required_checkout_fields( $required_fields ) {
 	if( $enable_phone ) :
 		$required_fields['rpress_phone'] = array(
 			'error_id' 			=> 'invalid_phone',
-			'error_message' =>  __('Please enter a valid Phone number', 'restro-press')
+			'error_message' =>  __('Please enter a valid Phone number', 'restropress')
 		);
 	endif;
 
@@ -939,7 +939,7 @@ function rpress_required_checkout_fields( $required_fields ) {
 		if( $delivery_method !== 'pickup' ) :
   		$required_fields['rpress_door_flat'] = array(
   		'error_id' 			=> 'invalid_door_flat',
-    	'error_message' => __('Please enter your door flat', 'restro-press')
+    	'error_message' => __('Please enter your door flat', 'restropress')
   		);
   	endif;
   endif;
@@ -948,7 +948,7 @@ function rpress_required_checkout_fields( $required_fields ) {
   	if( $delivery_method !== 'pickup' ) :
   		$required_fields['rpress_landmark'] = array(
   		'error_id' 			=> 'invalid_landmark',
-    	'error_message' => __('Please enter landmark', 'restro-press')
+    	'error_message' => __('Please enter landmark', 'restropress')
   	);
   	endif;
   endif;
@@ -1025,21 +1025,21 @@ function rpress_view_order_details( $payment_meta, $user_info ) {
   	<div class="column">
   		<?php if( $phone ) : ?>
    			<div style="margin-top:10px; margin-bottom:10px;">
-    			<strong><?php echo __('Phone:', 'restro-press'); ?> </strong>
+    			<strong><?php echo __('Phone:', 'restropress'); ?> </strong>
     			<?php echo $phone; ?>
     		</div>
     	<?php endif; ?>
 
     	<?php if( $flat ) : ?>
     		<div style="margin-bottom:10px;">
-    			<strong><?php echo __('Flat:', 'restro-press'); ?> </strong>
+    			<strong><?php echo __('Flat:', 'restropress'); ?> </strong>
     			<?php echo $flat; ?>
     		</div>
     	<?php endif; ?>
 
     	<?php if( $landmark) : ?>
     		<div style="margin-bottom:10px;">
-    			<strong><?php echo __('Landmark:', 'restro-press'); ?> </strong>
+    			<strong><?php echo __('Landmark:', 'restropress'); ?> </strong>
     		 	<?php echo $landmark; ?>
     		</div>
     	<?php endif; ?>

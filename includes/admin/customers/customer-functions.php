@@ -34,9 +34,9 @@ add_filter( 'rpress_customer_views', 'rpress_register_default_customer_views', 1
 function rpress_register_default_customer_tabs( $tabs ) {
 
 	$default_tabs = array(
-		'overview' => array( 'dashicon' => 'dashicons-admin-users', 'title' => _x( 'Profile', 'Customer Details tab title', 'restro-press' ) ),
-		'notes'    => array( 'dashicon' => 'dashicons-admin-comments', 'title' => _x( 'Notes', 'Customer Notes tab title', 'restro-press' ) ),
-		'tools'    => array( 'dashicon' => 'dashicons-admin-tools', 'title' => _x( 'Tools', 'Customer Tools tab title', 'restro-press' ) ),
+		'overview' => array( 'dashicon' => 'dashicons-admin-users', 'title' => _x( 'Profile', 'Customer Details tab title', 'restropress' ) ),
+		'notes'    => array( 'dashicon' => 'dashicons-admin-comments', 'title' => _x( 'Notes', 'Customer Notes tab title', 'restropress' ) ),
+		'tools'    => array( 'dashicon' => 'dashicons-admin-tools', 'title' => _x( 'Tools', 'Customer Tools tab title', 'restropress' ) ),
 	);
 
 	return array_merge( $tabs, $default_tabs );
@@ -52,7 +52,7 @@ add_filter( 'rpress_customer_tabs', 'rpress_register_default_customer_tabs', 1, 
  */
 function rpress_register_delete_customer_tab( $tabs ) {
 
-	$tabs['delete'] = array( 'dashicon' => 'dashicons-trash', 'title' => _x( 'Delete', 'Delete Customer tab title', 'restro-press' ) );
+	$tabs['delete'] = array( 'dashicon' => 'dashicons-trash', 'title' => _x( 'Delete', 'Delete Customer tab title', 'restropress' ) );
 
 	return $tabs;
 }
@@ -100,8 +100,8 @@ function rpress_maybe_remove_menu_profile_links() {
 
 		if( defined( 'IS_PROFILE_PAGE' ) && true === IS_PROFILE_PAGE ) {
 			$url     = esc_url( rpress_get_user_verification_request_url() );
-			$message = sprintf( __( 'Your account is pending verification. Please click the link in your email to activate your account. No email? <a href="%s">Click here</a> to send a new activation code.', 'restro-press' ), $url );
-			$title   = __( 'Account Pending Verification', 'restro-press' );
+			$message = sprintf( __( 'Your account is pending verification. Please click the link in your email to activate your account. No email? <a href="%s">Click here</a> to send a new activation code.', 'restropress' ), $url );
+			$title   = __( 'Account Pending Verification', 'restropress' );
 			$args    = array(
 				'response' => 403,
 			);

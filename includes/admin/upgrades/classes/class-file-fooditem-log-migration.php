@@ -147,8 +147,8 @@ class RPRESS_File_Download_Log_Migration extends RPRESS_Batch_Export {
 
 		if ( ! $this->can_export() ) {
 			wp_die(
-				__( 'You do not have permission to run this upgrade.', 'restro-press' ),
-				__( 'Error', 'restro-press' ),
+				__( 'You do not have permission to run this upgrade.', 'restropress' ),
+				__( 'Error', 'restropress' ),
 				array( 'response' => 403 ) );
 		}
 
@@ -161,7 +161,7 @@ class RPRESS_File_Download_Log_Migration extends RPRESS_Batch_Export {
 			$this->delete_data( 'rpress_file_fooditem_log_ids' );
 
 			$this->done    = true;
-			$this->message = __( 'File fooditem logs updated successfully.', 'restro-press' );
+			$this->message = __( 'File fooditem logs updated successfully.', 'restropress' );
 			rpress_set_upgrade_complete( 'update_file_fooditem_log_data' );
 			return false;
 		}

@@ -43,7 +43,7 @@ class RPRESS_Cron {
 		// Adds once weekly to the existing schedules.
 		$schedules['weekly'] = array(
 			'interval' => 604800,
-			'display'  => __( 'Once Weekly', 'restro-press' )
+			'display'  => __( 'Once Weekly', 'restropress' )
 		);
 
 		return $schedules;

@@ -468,7 +468,7 @@ add_action( 'wp_ajax_nopriv_rpress_update_cart_items', 'rpress_ajax_update_cart_
 function rpress_clear_cart_items() {
 	rpress_empty_cart();
 	$return['status'] = 'success';
-	$return['response'] = '<li class="cart_item empty"><span class="rpress_empty_cart">'.apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'Your cart is empty.', 'restro-press' ) . '</span>' ).'</span></li>';
+	$return['response'] = '<li class="cart_item empty"><span class="rpress_empty_cart">'.apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'Your cart is empty.', 'restropress' ) . '</span>' ).'</span></li>';
 	echo json_encode( $return );
 	rpress_die();
 }
@@ -964,7 +964,7 @@ function rpress_ajax_fooditem_search() {
 
 		$results[] = array(
 			'id'   => 0,
-			'name' => __( 'No results found', 'restro-press' )
+			'name' => __( 'No results found', 'restropress' )
 		);
 
 	}
@@ -1016,7 +1016,7 @@ function rpress_ajax_customer_search() {
 
 		$customers[] = array(
 			'id'   => 0,
-			'name' => __( 'No results found', 'restro-press' )
+			'name' => __( 'No results found', 'restropress' )
 		);
 
 	}
@@ -1065,7 +1065,7 @@ function rpress_ajax_user_search() {
 
 		$results[] = array(
 			'id'   => 0,
-			'name' => __( 'No users found', 'restro-press' )
+			'name' => __( 'No users found', 'restropress' )
 		);
 
 	}
@@ -1141,7 +1141,7 @@ function rpress_ajax_search_users() {
 				$user_list .= '<li><a href="#" data-userid="' . esc_attr( $user->ID ) . '" data-login="' . esc_attr( $user->user_login ) . '">' . esc_html( $user->user_login ) . '</a></li>';
 			}
 		} else {
-			$user_list .= '<li>' . __( 'No users found', 'restro-press' ) . '</li>';
+			$user_list .= '<li>' . __( 'No users found', 'restropress' ) . '</li>';
 		}
 		$user_list .= '</ul>';
 

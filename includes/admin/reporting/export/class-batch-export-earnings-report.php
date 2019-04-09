@@ -58,8 +58,8 @@ class RPRESS_Batch_Earnings_Report_Export extends RPRESS_Batch_Export {
 
 		// Always start with the date column.
 		$pre_status_columns = array(
-			__( 'Monthly Sales Activity', 'restro-press' ),
-			__( 'Gross Activity', 'restro-press' ),
+			__( 'Monthly Sales Activity', 'restropress' ),
+			__( 'Gross Activity', 'restropress' ),
 		);
 
 		$status_cols = $this->get_status_cols();
@@ -68,7 +68,7 @@ class RPRESS_Batch_Earnings_Report_Export extends RPRESS_Batch_Export {
 		$cols = array_merge( $pre_status_columns, $status_cols );
 
 		// Include the 'net' after all other columns.
-		$cols[] = __( 'Net Activity', 'restro-press' );
+		$cols[] = __( 'Net Activity', 'restropress' );
 
 		return $cols;
 
@@ -143,8 +143,8 @@ class RPRESS_Batch_Earnings_Report_Export extends RPRESS_Batch_Export {
 
 		$col_data .= ',';
 		for ( $i = 1; $i <= $number_cols; $i++ ) {
-			$col_data .= __( 'Order Count', 'restro-press' ) . ',';
-			$col_data .= __( 'Gross Amount', 'restro-press' );
+			$col_data .= __( 'Order Count', 'restropress' ) . ',';
+			$col_data .= __( 'Gross Amount', 'restropress' );
 
 			if ( $number_cols !== $i ) {
 				$col_data .= ',';

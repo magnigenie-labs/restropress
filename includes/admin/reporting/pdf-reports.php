@@ -26,24 +26,24 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_generate_pdf( $data ) {
 
 	if( ! current_user_can( 'view_shop_reports' ) ) {
-		wp_die( __( 'You do not have permission to generate PDF sales reports', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to generate PDF sales reports', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'rpress_generate_pdf' ) ) {
-		wp_die( __( 'Nonce verification failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	require_once RPRESS_PLUGIN_DIR . '/includes/libraries/fpdf/fpdf.php';
 	require_once RPRESS_PLUGIN_DIR . '/includes/libraries/fpdf/rpress_pdf.php';
 
-	$daterange = date_i18n( get_option( 'date_format' ), mktime( 0, 0, 0, 1, 1, date( 'Y' ) ) ) . ' ' . utf8_decode( __( 'to', 'restro-press' ) ) . ' ' . date_i18n( get_option( 'date_format' ) );
+	$daterange = date_i18n( get_option( 'date_format' ), mktime( 0, 0, 0, 1, 1, date( 'Y' ) ) ) . ' ' . utf8_decode( __( 'to', 'restropress' ) ) . ' ' . date_i18n( get_option( 'date_format' ) );
 
 	$pdf = new rpress_pdf();
 	$pdf->AddPage( 'L', 'A4' );
 
-	$pdf->SetTitle( utf8_decode( __( 'Sales and earnings reports for the current year for all products','restro-press' ) ) );
-	$pdf->SetAuthor( utf8_decode( __( 'RestroPress', 'restro-press' ) ) );
-	$pdf->SetCreator( utf8_decode( __( 'RestroPress', 'restro-press' ) ) );
+	$pdf->SetTitle( utf8_decode( __( 'Sales and earnings reports for the current year for all products','restropress' ) ) );
+	$pdf->SetAuthor( utf8_decode( __( 'RestroPress', 'restropress' ) ) );
+	$pdf->SetCreator( utf8_decode( __( 'RestroPress', 'restropress' ) ) );
 
 	$pdf->Image( RPRESS_PLUGIN_URL . 'assets/images/rpress-logo-pdf.png', 205, 10 );
 
@@ -52,26 +52,26 @@ function rpress_generate_pdf( $data ) {
 
 	$pdf->SetFont( 'Helvetica', '', 16 );
 	$pdf->SetTextColor( 50, 50, 50 );
-	$pdf->Cell( 0, 3, utf8_decode( __( 'Sales and earnings reports for the current year for all products', 'restro-press' ) ), 0, 2, 'L', false );
+	$pdf->Cell( 0, 3, utf8_decode( __( 'Sales and earnings reports for the current year for all products', 'restropress' ) ), 0, 2, 'L', false );
 
 	$pdf->SetFont( 'Helvetica', '', 13 );
 	$pdf->Ln();
 	$pdf->SetTextColor( 150, 150, 150 );
-	$pdf->Cell( 0, 6, utf8_decode( __( 'Date Range: ', 'restro-press' ) ) . $daterange, 0, 2, 'L', false );
+	$pdf->Cell( 0, 6, utf8_decode( __( 'Date Range: ', 'restropress' ) ) . $daterange, 0, 2, 'L', false );
 	$pdf->Ln();
 	$pdf->SetTextColor( 50, 50, 50 );
 	$pdf->SetFont( 'Helvetica', '', 14 );
-	$pdf->Cell( 0, 10, utf8_decode( __( 'Table View', 'restro-press' ) ), 0, 2, 'L', false );
+	$pdf->Cell( 0, 10, utf8_decode( __( 'Table View', 'restropress' ) ), 0, 2, 'L', false );
 	$pdf->SetFont( 'Helvetica', '', 12 );
 
 	$pdf->SetFillColor( 238, 238, 238 );
-	$pdf->Cell( 70, 6, utf8_decode( __( 'Product Name', 'restro-press' ) ), 1, 0, 'L', true );
-	$pdf->Cell( 30, 6, utf8_decode( __( 'Price', 'restro-press' ) ), 1, 0, 'L', true );
+	$pdf->Cell( 70, 6, utf8_decode( __( 'Product Name', 'restropress' ) ), 1, 0, 'L', true );
+	$pdf->Cell( 30, 6, utf8_decode( __( 'Price', 'restropress' ) ), 1, 0, 'L', true );
 	$category_labels = rpress_get_taxonomy_labels( 'addon_category' );
 	$pdf->Cell( 50, 6, utf8_decode( $category_labels['name'] ), 1, 0, 'L', true );
-	$pdf->Cell( 50, 6, utf8_decode( __( 'Tags', 'restro-press' ) ), 1, 0, 'L', true );
-	$pdf->Cell( 45, 6, utf8_decode( __( 'Number of Sales', 'restro-press' ) ), 1, 0, 'L', true );
-	$pdf->Cell( 35, 6, utf8_decode( __( 'Earnings to Date', 'restro-press' ) ), 1, 1, 'L', true );
+	$pdf->Cell( 50, 6, utf8_decode( __( 'Tags', 'restropress' ) ), 1, 0, 'L', true );
+	$pdf->Cell( 45, 6, utf8_decode( __( 'Number of Sales', 'restropress' ) ), 1, 0, 'L', true );
+	$pdf->Cell( 35, 6, utf8_decode( __( 'Earnings to Date', 'restropress' ) ), 1, 1, 'L', true );
 
 	$year = date('Y');
 	$fooditems = get_posts( array( 'post_type' => 'fooditem', 'year' => $year, 'posts_per_page' => -1 ) );
@@ -124,14 +124,14 @@ function rpress_generate_pdf( $data ) {
 		endforeach;
 	else:
 		$pdf->SetWidths( array( 280 ) );
-		$title = utf8_decode( sprintf( __( 'No %s found.', 'restro-press' ), rpress_get_label_plural() ) );
+		$title = utf8_decode( sprintf( __( 'No %s found.', 'restropress' ), rpress_get_label_plural() ) );
 		$pdf->Row( array( $title ) );
 	endif;
 
 	$pdf->Ln();
 	$pdf->SetTextColor( 50, 50, 50 );
 	$pdf->SetFont( 'Helvetica', '', 14 );
-	$pdf->Cell( 0, 10, utf8_decode( __('Graph View','restro-press' ) ), 0, 2, 'L', false );
+	$pdf->Cell( 0, 10, utf8_decode( __('Graph View','restropress' ) ), 0, 2, 'L', false );
 	$pdf->SetFont( 'Helvetica', '', 12 );
 
 	$image = html_entity_decode( urldecode( rpress_draw_chart_image() ) );
@@ -203,7 +203,7 @@ function rpress_draw_chart_image() {
 		$earnings_array[11]
 	) );
 
-	$data->setLegend( __( 'Earnings', 'restro-press' ) );
+	$data->setLegend( __( 'Earnings', 'restropress' ) );
 	$data->setColor( '1b58a3' );
 	$chart->addData( $data );
 
@@ -220,11 +220,11 @@ function rpress_draw_chart_image() {
 	$chart->addMarker( $value_marker );
 
 	$data = new GoogleChartData( array( $sales_array[0], $sales_array[1], $sales_array[2], $sales_array[3], $sales_array[4], $sales_array[5], $sales_array[6], $sales_array[7], $sales_array[8], $sales_array[9], $sales_array[10], $sales_array[11] ) );
-	$data->setLegend( __( 'Sales', 'restro-press' ) );
+	$data->setLegend( __( 'Sales', 'restropress' ) );
 	$data->setColor( 'ff6c1c' );
 	$chart->addData( $data );
 
-	$chart->setTitle( __( 'Sales and Earnings by Month for all Products', 'restro-press' ), '336699', 18 );
+	$chart->setTitle( __( 'Sales and Earnings by Month for all Products', 'restropress' ), '336699', 18 );
 
 	$chart->setScale( 0, $max_earnings );
 
@@ -235,18 +235,18 @@ function rpress_draw_chart_image() {
 	$x_axis = new GoogleChartAxis( 'x' );
 	$x_axis->setTickMarks( 5 );
 	$x_axis->setLabels( array(
-		__('Jan','restro-press' ),
-		__('Feb','restro-press' ),
-		__('Mar','restro-press' ),
-		__('Apr','restro-press' ),
-		__('May','restro-press' ),
-		__('June','restro-press' ),
-		__('July','restro-press' ),
-		__('Aug','restro-press' ),
-		__('Sept','restro-press' ),
-		__('Oct','restro-press' ),
-		__('Nov','restro-press' ),
-		__('Dec','restro-press' )
+		__('Jan','restropress' ),
+		__('Feb','restropress' ),
+		__('Mar','restropress' ),
+		__('Apr','restropress' ),
+		__('May','restropress' ),
+		__('June','restropress' ),
+		__('July','restropress' ),
+		__('Aug','restropress' ),
+		__('Sept','restropress' ),
+		__('Oct','restropress' ),
+		__('Nov','restropress' ),
+		__('Dec','restropress' )
 	) );
 	$chart->addAxis( $x_axis );
 

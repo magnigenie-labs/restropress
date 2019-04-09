@@ -264,7 +264,7 @@ function rpress_process_paypal_ipn() {
 		}
 
 	} else {
-		wp_mail( get_bloginfo('admin_email'), __( 'Invalid IPN', 'restro-press' ), $listener->getTextReport() );
+		wp_mail( get_bloginfo('admin_email'), __( 'Invalid IPN', 'restropress' ), $listener->getTextReport() );
 	}
 }
 add_action( 'rpress_verify_paypal_ipn', 'rpress_process_paypal_ipn' );

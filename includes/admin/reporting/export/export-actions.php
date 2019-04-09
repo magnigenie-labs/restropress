@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 function rpress_process_batch_export_fooditem() {
 
 	if( ! wp_verify_nonce( $_REQUEST['nonce'], 'rpress-batch-export' ) ) {
-		wp_die( __( 'Nonce verification failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export.php';

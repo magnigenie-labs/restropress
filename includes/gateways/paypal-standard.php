@@ -30,7 +30,7 @@ add_action( 'rpress_paypal_cc_form', '__return_false' );
  * @return array                    Gateway subsections with PayPal Standard
  */
 function rpress_register_paypal_gateway_section( $gateway_sections ) {
-	$gateway_sections['paypal'] = __( 'PayPal Standard', 'restro-press' );
+	$gateway_sections['paypal'] = __( 'PayPal Standard', 'restropress' );
 
 	return $gateway_sections;
 }
@@ -48,46 +48,46 @@ function rpress_register_paypal_gateway_settings( $gateway_settings ) {
 		$paypal_settings = array (
 			'paypal_settings' => array(
 				'id'   => 'paypal_settings',
-				'name' => '<strong>' . __( 'PayPal Standard Settings', 'restro-press' ) . '</strong>',
+				'name' => '<strong>' . __( 'PayPal Standard Settings', 'restropress' ) . '</strong>',
 				'type' => 'header',
 			),
 			'paypal_email' => array(
 				'id'   => 'paypal_email',
-				'name' => __( 'PayPal Email', 'restro-press' ),
-				'desc' => __( 'Enter your PayPal account\'s email', 'restro-press' ),
+				'name' => __( 'PayPal Email', 'restropress' ),
+				'desc' => __( 'Enter your PayPal account\'s email', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular',
 			),
 			'paypal_image_url' => array(
 				'id'   => 'paypal_image_url',
-				'name' => __( 'PayPal Image URL', 'restro-press' ),
-				'desc' => __( 'Upload an image to display on the PayPal checkout page.', 'restro-press' ),
+				'name' => __( 'PayPal Image URL', 'restropress' ),
+				'desc' => __( 'Upload an image to display on the PayPal checkout page.', 'restropress' ),
 				'type' => 'upload',
 				'size' => 'regular',
 			),
 		);
 
 		$pdt_desc = sprintf(
-			__( 'Enter your PayPal Identity Token in order to enable Payment Data Transfer (PDT). This allows payments to be verified without relying on the PayPal IPN. See our <a href="%s" target="_blank">documentation</a> for further information.', 'restro-press' ),
+			__( 'Enter your PayPal Identity Token in order to enable Payment Data Transfer (PDT). This allows payments to be verified without relying on the PayPal IPN. See our <a href="%s" target="_blank">documentation</a> for further information.', 'restropress' ),
 			'http://docs.fooditems.com/article/918-paypal-standard'
 		);
 
 		$paypal_settings['paypal_identify_token'] = array(
 			'id'   => 'paypal_identity_token',
-			'name' => __( 'PayPal Identity Token', 'restro-press' ),
+			'name' => __( 'PayPal Identity Token', 'restropress' ),
 			'type' => 'text',
 			'desc' => $pdt_desc,
 			'size' => 'regular',
 		);
 
 		$disable_ipn_desc = sprintf(
-			__( 'If you are unable to use Payment Data Transfer and payments are not getting marked as complete, then check this box. This forces the site to use a slightly less secure method of verifying purchases. See our <a href="%s" target="_blank">FAQ</a> for further information.', 'restro-press' ),
+			__( 'If you are unable to use Payment Data Transfer and payments are not getting marked as complete, then check this box. This forces the site to use a slightly less secure method of verifying purchases. See our <a href="%s" target="_blank">FAQ</a> for further information.', 'restropress' ),
 			'http://docs.fooditems.com/article/190-payments-not-marked-as-complete'
 		);
 
 		$paypal_settings['disable_paypal_verification'] = array(
 			'id'   => 'disable_paypal_verification',
-			'name' => __( 'Disable PayPal IPN Verification', 'restro-press' ),
+			'name' => __( 'Disable PayPal IPN Verification', 'restropress' ),
 			'desc' => $disable_ipn_desc,
 			'type' => 'checkbox',
 		);
@@ -95,52 +95,52 @@ function rpress_register_paypal_gateway_settings( $gateway_settings ) {
 		$api_key_settings = array(
 			'paypal_api_keys_desc' => array(
 				'id'   => 'paypal_api_keys_desc',
-				'name' => __( 'API Credentials', 'restro-press' ),
+				'name' => __( 'API Credentials', 'restropress' ),
 				'type' => 'descriptive_text',
 				'desc' => sprintf(
-					__( 'API credentials are necessary to process PayPal refunds from inside WordPress. These can be obtained from <a href="%s" target="_blank">your PayPal account</a>.', 'restro-press' ),
+					__( 'API credentials are necessary to process PayPal refunds from inside WordPress. These can be obtained from <a href="%s" target="_blank">your PayPal account</a>.', 'restropress' ),
 					'https://developer.paypal.com/docs/classic/api/apiCredentials/#creating-an-api-signature'
 				)
 			),
 			'paypal_live_api_username' => array(
 				'id'   => 'paypal_live_api_username',
-				'name' => __( 'Live API Username', 'restro-press' ),
-				'desc' => __( 'Your PayPal live API username. ', 'restro-press' ),
+				'name' => __( 'Live API Username', 'restropress' ),
+				'desc' => __( 'Your PayPal live API username. ', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular'
 			),
 			'paypal_live_api_password' => array(
 				'id'   => 'paypal_live_api_password',
-				'name' => __( 'Live API Password', 'restro-press' ),
-				'desc' => __( 'Your PayPal live API password.', 'restro-press' ),
+				'name' => __( 'Live API Password', 'restropress' ),
+				'desc' => __( 'Your PayPal live API password.', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular'
 			),
 			'paypal_live_api_signature' => array(
 				'id'   => 'paypal_live_api_signature',
-				'name' => __( 'Live API Signature', 'restro-press' ),
-				'desc' => __( 'Your PayPal live API signature.', 'restro-press' ),
+				'name' => __( 'Live API Signature', 'restropress' ),
+				'desc' => __( 'Your PayPal live API signature.', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular'
 			),
 			'paypal_test_api_username' => array(
 				'id'   => 'paypal_test_api_username',
-				'name' => __( 'Test API Username', 'restro-press' ),
-				'desc' => __( 'Your PayPal test API username.', 'restro-press' ),
+				'name' => __( 'Test API Username', 'restropress' ),
+				'desc' => __( 'Your PayPal test API username.', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular'
 			),
 			'paypal_test_api_password' => array(
 				'id'   => 'paypal_test_api_password',
-				'name' => __( 'Test API Password', 'restro-press' ),
-				'desc' => __( 'Your PayPal test API password.', 'restro-press' ),
+				'name' => __( 'Test API Password', 'restropress' ),
+				'desc' => __( 'Your PayPal test API password.', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular'
 			),
 			'paypal_test_api_signature' => array(
 				'id'   => 'paypal_test_api_signature',
-				'name' => __( 'Test API Signature', 'restro-press' ),
-				'desc' => __( 'Your PayPal test API signature.', 'restro-press' ),
+				'name' => __( 'Test API Signature', 'restropress' ),
+				'desc' => __( 'Your PayPal test API signature.', 'restropress' ),
 				'type' => 'text',
 				'size' => 'regular'
 			)
@@ -165,7 +165,7 @@ add_filter( 'rpress_settings_gateways', 'rpress_register_paypal_gateway_settings
  */
 function rpress_process_paypal_purchase( $purchase_data ) {
 	if( ! wp_verify_nonce( $purchase_data['gateway_nonce'], 'rpress-gateway' ) ) {
-		wp_die( __( 'Nonce verification has failed', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'Nonce verification has failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	// Collect payment data
@@ -188,7 +188,7 @@ function rpress_process_paypal_purchase( $purchase_data ) {
 	// Check payment
 	if ( ! $payment ) {
 		// Record the error
-		rpress_record_gateway_error( __( 'Payment Error', 'restro-press' ), sprintf( __( 'Payment creation failed before sending buyer to PayPal. Payment data: %s', 'restro-press' ), json_encode( $payment_data ) ), $payment );
+		rpress_record_gateway_error( __( 'Payment Error', 'restropress' ), sprintf( __( 'Payment creation failed before sending buyer to PayPal. Payment data: %s', 'restropress' ), json_encode( $payment_data ) ), $payment );
 		// Problems? send back
 		rpress_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['rpress-gateway'] );
 	} else {
@@ -446,14 +446,14 @@ function rpress_process_paypal_ipn() {
 		$api_response = wp_remote_post( rpress_get_paypal_redirect( true, true ), $remote_post_vars );
 
 		if ( is_wp_error( $api_response ) ) {
-			rpress_record_gateway_error( __( 'IPN Error', 'restro-press' ), sprintf( __( 'Invalid IPN verification response. IPN data: %s', 'restro-press' ), json_encode( $api_response ) ) );
+			rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid IPN verification response. IPN data: %s', 'restropress' ), json_encode( $api_response ) ) );
 			rpress_debug_log( 'Invalid IPN verification response. IPN data: ' . print_r( $api_response, true ) );
 
 			return; // Something went wrong
 		}
 
 		if ( wp_remote_retrieve_body( $api_response ) !== 'VERIFIED' && rpress_get_option( 'disable_paypal_verification', false ) ) {
-			rpress_record_gateway_error( __( 'IPN Error', 'restro-press' ), sprintf( __( 'Invalid IPN verification response. IPN data: %s', 'restro-press' ), json_encode( $api_response ) ) );
+			rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid IPN verification response. IPN data: %s', 'restropress' ), json_encode( $api_response ) ) );
 			rpress_debug_log( 'Invalid IPN verification response. IPN data: ' . print_r( $api_response, true ) );
 
 			return; // Response not okay
@@ -542,20 +542,20 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 
 	// Verify payment recipient
 	if ( strcasecmp( $business_email, trim( rpress_get_option( 'paypal_email', false ) ) ) != 0 ) {
-		rpress_record_gateway_error( __( 'IPN Error', 'restro-press' ), sprintf( __( 'Invalid business email in IPN response. IPN data: %s', 'restro-press' ), json_encode( $data ) ), $payment_id );
+		rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid business email in IPN response. IPN data: %s', 'restropress' ), json_encode( $data ) ), $payment_id );
 		rpress_debug_log( 'Invalid business email in IPN response. IPN data: ' . print_r( $data, true ) );
 		rpress_update_payment_status( $payment_id, 'failed' );
-		rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid PayPal business email.', 'restro-press' ) );
+		rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid PayPal business email.', 'restropress' ) );
 		return;
 	}
 
 	// Verify payment currency
 	if ( $currency_code != strtolower( $payment->currency ) ) {
 
-		rpress_record_gateway_error( __( 'IPN Error', 'restro-press' ), sprintf( __( 'Invalid currency in IPN response. IPN data: %s', 'restro-press' ), json_encode( $data ) ), $payment_id );
+		rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid currency in IPN response. IPN data: %s', 'restropress' ), json_encode( $data ) ), $payment_id );
 		rpress_debug_log( 'Invalid currency in IPN response. IPN data: ' . print_r( $data, true ) );
 		rpress_update_payment_status( $payment_id, 'failed' );
-		rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid currency in PayPal IPN.', 'restro-press' ) );
+		rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid currency in PayPal IPN.', 'restropress' ) );
 		return;
 	}
 
@@ -612,24 +612,24 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 
 		if ( number_format( (float) $paypal_amount, 2 ) < number_format( (float) $payment_amount, 2 ) ) {
 			// The prices don't match
-			rpress_record_gateway_error( __( 'IPN Error', 'restro-press' ), sprintf( __( 'Invalid payment amount in IPN response. IPN data: %s', 'restro-press' ), json_encode( $data ) ), $payment_id );
+			rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid payment amount in IPN response. IPN data: %s', 'restropress' ), json_encode( $data ) ), $payment_id );
 			rpress_debug_log( 'Invalid payment amount in IPN response. IPN data: ' . printf( $data, true ) );
 			rpress_update_payment_status( $payment_id, 'failed' );
-			rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid amount in PayPal IPN.', 'restro-press' ) );
+			rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid amount in PayPal IPN.', 'restropress' ) );
 			return;
 		}
 		if ( $purchase_key != rpress_get_payment_key( $payment_id ) ) {
 			// Purchase keys don't match
 			rpress_debug_log( 'Invalid purchase key in IPN response. IPN data: ' . printf( $data, true ) );
-			rpress_record_gateway_error( __( 'IPN Error', 'restro-press' ), sprintf( __( 'Invalid purchase key in IPN response. IPN data: %s', 'restro-press' ), json_encode( $data ) ), $payment_id );
+			rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid purchase key in IPN response. IPN data: %s', 'restropress' ), json_encode( $data ) ), $payment_id );
 			rpress_update_payment_status( $payment_id, 'failed' );
-			rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid purchase key in PayPal IPN.', 'restro-press' ) );
+			rpress_insert_payment_note( $payment_id, __( 'Payment failed due to invalid purchase key in PayPal IPN.', 'restropress' ) );
 			return;
 		}
 
 		if ( 'completed' == $payment_status || rpress_is_test_mode() ) {
 
-			rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Transaction ID: %s', 'restro-press' ) , $data['txn_id'] ) );
+			rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Transaction ID: %s', 'restropress' ) , $data['txn_id'] ) );
 			rpress_set_payment_transaction_id( $payment_id, $data['txn_id'] );
 			rpress_update_payment_status( $payment_id, 'processing' );
 
@@ -643,57 +643,57 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 
 				case 'echeck' :
 
-					$note = __( 'Payment made via eCheck and will clear automatically in 5-8 days', 'restro-press' );
+					$note = __( 'Payment made via eCheck and will clear automatically in 5-8 days', 'restropress' );
 					$payment->status = 'processing';
 					$payment->save();
 					break;
 
 				case 'address' :
 
-					$note = __( 'Payment requires a confirmed customer address and must be accepted manually through PayPal', 'restro-press' );
+					$note = __( 'Payment requires a confirmed customer address and must be accepted manually through PayPal', 'restropress' );
 
 					break;
 
 				case 'intl' :
 
-					$note = __( 'Payment must be accepted manually through PayPal due to international account regulations', 'restro-press' );
+					$note = __( 'Payment must be accepted manually through PayPal due to international account regulations', 'restropress' );
 
 					break;
 
 				case 'multi-currency' :
 
-					$note = __( 'Payment received in non-shop currency and must be accepted manually through PayPal', 'restro-press' );
+					$note = __( 'Payment received in non-shop currency and must be accepted manually through PayPal', 'restropress' );
 
 					break;
 
 				case 'paymentreview' :
 				case 'regulatory_review' :
 
-					$note = __( 'Payment is being reviewed by PayPal staff as high-risk or in possible violation of government regulations', 'restro-press' );
+					$note = __( 'Payment is being reviewed by PayPal staff as high-risk or in possible violation of government regulations', 'restropress' );
 
 					break;
 
 				case 'unilateral' :
 
-					$note = __( 'Payment was sent to non-confirmed or non-registered email address.', 'restro-press' );
+					$note = __( 'Payment was sent to non-confirmed or non-registered email address.', 'restropress' );
 
 					break;
 
 				case 'upgrade' :
 
-					$note = __( 'PayPal account must be upgraded before this payment can be accepted', 'restro-press' );
+					$note = __( 'PayPal account must be upgraded before this payment can be accepted', 'restropress' );
 
 					break;
 
 				case 'verify' :
 
-					$note = __( 'PayPal account is not verified. Verify account in order to accept this payment', 'restro-press' );
+					$note = __( 'PayPal account is not verified. Verify account in order to accept this payment', 'restropress' );
 
 					break;
 
 				case 'other' :
 
-					$note = __( 'Payment is pending for unknown reasons. Contact PayPal support for assistance', 'restro-press' );
+					$note = __( 'Payment is pending for unknown reasons. Contact PayPal support for assistance', 'restropress' );
 
 					break;
 
@@ -746,13 +746,13 @@ function rpress_process_paypal_refund( $data, $payment_id = 0 ) {
 
 	if ( number_format( (float) $refund_amount, 2 ) < number_format( (float) $payment_amount, 2 ) ) {
 
-		rpress_insert_payment_note( $payment_id, sprintf( __( 'Partial PayPal refund processed: %s', 'restro-press' ), $data['parent_txn_id'] ) );
+		rpress_insert_payment_note( $payment_id, sprintf( __( 'Partial PayPal refund processed: %s', 'restropress' ), $data['parent_txn_id'] ) );
 		return; // This is a partial refund
 
 	}
 
-	rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Payment #%s Refunded for reason: %s', 'restro-press' ), $data['parent_txn_id'], $data['reason_code'] ) );
-	rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Refund Transaction ID: %s', 'restro-press' ), $data['txn_id'] ) );
+	rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Payment #%s Refunded for reason: %s', 'restropress' ), $data['parent_txn_id'], $data['reason_code'] ) );
+	rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Refund Transaction ID: %s', 'restropress' ), $data['txn_id'] ) );
 	rpress_update_payment_status( $payment_id, 'refunded' );
 }
 
@@ -1009,7 +1009,7 @@ function rpress_paypal_refund_admin_js( $payment_id = 0 ) {
 	}
 
 	// Localize the refund checkbox label.
-	$label = __( 'Refund Payment in PayPal', 'restro-press' );
+	$label = __( 'Refund Payment in PayPal', 'restropress' );
 
 	?>
 	<script type="text/javascript">
@@ -1156,7 +1156,7 @@ function rpress_refund_paypal_purchase( $payment ) {
 			if( isset( $body['L_LONGMESSAGE0'] ) ) {
 				$error_msg = $body['L_LONGMESSAGE0'];
 			} else {
-				$error_msg = __( 'PayPal refund failed for unknown reason.', 'restro-press' );
+				$error_msg = __( 'PayPal refund failed for unknown reason.', 'restropress' );
 			}
 		}
 
@@ -1166,11 +1166,11 @@ function rpress_refund_paypal_purchase( $payment ) {
 
 		// Prevents the PayPal Express one-time gateway from trying to process the refundl
 		$payment->update_meta( '_rpress_paypal_refunded', true );
-		$payment->add_note( sprintf( __( 'PayPal refund transaction ID: %s', 'restro-press' ), $body['REFUNDTRANSACTIONID'] ) );
+		$payment->add_note( sprintf( __( 'PayPal refund transaction ID: %s', 'restropress' ), $body['REFUNDTRANSACTIONID'] ) );
 
 	} else {
 
-		$payment->add_note( sprintf( __( 'PayPal refund failed: %s', 'restro-press' ), $error_msg ) );
+		$payment->add_note( sprintf( __( 'PayPal refund failed: %s', 'restropress' ), $error_msg ) );
 
 	}
 

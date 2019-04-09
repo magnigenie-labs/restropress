@@ -16,7 +16,7 @@
  * @since 1.0.0
  */
 function rpress_profile_editor_logged_out() {
-	echo '<p class="rpress-logged-out">' . esc_html__( 'You need to log in to edit your profile.', 'restro-press' ) . '</p>';
+	echo '<p class="rpress-logged-out">' . esc_html__( 'You need to log in to edit your profile.', 'restropress' ) . '</p>';
 	echo rpress_login_form(); // WPCS: XSS ok.
 }
 add_action( 'rpress_profile_editor_logged_out', 'rpress_profile_editor_logged_out' );
@@ -29,6 +29,6 @@ add_action( 'rpress_profile_editor_logged_out', 'rpress_profile_editor_logged_ou
  * @since 1.0.0
  */
 function rpress_login_form_logged_in() {
-	echo '<p class="rpress-logged-in">' . esc_html__( 'You are already logged in', 'restro-press' ) . '</p>';
+	echo '<p class="rpress-logged-in">' . esc_html__( 'You are already logged in', 'restropress' ) . '</p>';
 }
 add_action( 'rpress_login_form_logged_in', 'rpress_login_form_logged_in' );

@@ -218,7 +218,7 @@ function rpress_show_has_purchased_item_message() {
 		return;
 
 	if ( rpress_has_user_purchased( $user_ID, $post->ID ) ) {
-		$alert = '<p class="rpress_has_purchased">' . __( 'You have already purchased this item, but you may purchase it again.', 'restro-press' ) . '</p>';
+		$alert = '<p class="rpress_has_purchased">' . __( 'You have already purchased this item, but you may purchase it again.', 'restropress' ) . '</p>';
 		echo apply_filters( 'rpress_show_has_purchased_item_message', $alert );
 	}
 }
@@ -298,22 +298,22 @@ function rpress_get_cart_amount( $add_taxes = true, $local_override = false ) {
  * @return string $tags
  */
 function rpress_get_purchase_receipt_template_tags() {
-	$tags = __('Enter the email that is sent to users after completing a successful purchase. HTML is accepted. Available template tags:','restro-press' ) . '<br/>' .
-			'{fooditem_list} - ' . __('A list of fooditem purchased','restro-press' ) . '<br/>' .
-			'{name} - ' . __('The buyer\'s first name','restro-press' ) . '<br/>' .
-			'{fullname} - ' . __('The buyer\'s full name, first and last','restro-press' ) . '<br/>' .
-			'{username} - ' . __('The buyer\'s user name on the site, if they registered an account','restro-press' ) . '<br/>' .
-			'{user_email} - ' . __('The buyer\'s email address','restro-press' ) . '<br/>' .
-			'{billing_address} - ' . __('The buyer\'s billing address','restro-press' ) . '<br/>' .
-			'{date} - ' . __('The date of the purchase','restro-press' ) . '<br/>' .
-			'{subtotal} - ' . __('The price of the purchase before taxes','restro-press' ) . '<br/>' .
-			'{tax} - ' . __('The taxed amount of the purchase','restro-press' ) . '<br/>' .
-			'{price} - ' . __('The total price of the purchase','restro-press' ) . '<br/>' .
-			'{payment_id} - ' . __('The unique ID number for this purchase','restro-press' ) . '<br/>' .
-			'{receipt_id} - ' . __('The unique ID number for this purchase receipt','restro-press' ) . '<br/>' .
-			'{payment_method} - ' . __('The method of payment used for this purchase','restro-press' ) . '<br/>' .
-			'{sitename} - ' . __('Your site name','restro-press' ) . '<br/>' .
-			'{receipt_link} - ' . __( 'Adds a link so users can view their receipt directly on your website if they are unable to view it in the browser correctly.', 'restro-press' );
+	$tags = __('Enter the email that is sent to users after completing a successful purchase. HTML is accepted. Available template tags:','restropress' ) . '<br/>' .
+			'{fooditem_list} - ' . __('A list of fooditem purchased','restropress' ) . '<br/>' .
+			'{name} - ' . __('The buyer\'s first name','restropress' ) . '<br/>' .
+			'{fullname} - ' . __('The buyer\'s full name, first and last','restropress' ) . '<br/>' .
+			'{username} - ' . __('The buyer\'s user name on the site, if they registered an account','restropress' ) . '<br/>' .
+			'{user_email} - ' . __('The buyer\'s email address','restropress' ) . '<br/>' .
+			'{billing_address} - ' . __('The buyer\'s billing address','restropress' ) . '<br/>' .
+			'{date} - ' . __('The date of the purchase','restropress' ) . '<br/>' .
+			'{subtotal} - ' . __('The price of the purchase before taxes','restropress' ) . '<br/>' .
+			'{tax} - ' . __('The taxed amount of the purchase','restropress' ) . '<br/>' .
+			'{price} - ' . __('The total price of the purchase','restropress' ) . '<br/>' .
+			'{payment_id} - ' . __('The unique ID number for this purchase','restropress' ) . '<br/>' .
+			'{receipt_id} - ' . __('The unique ID number for this purchase receipt','restropress' ) . '<br/>' .
+			'{payment_method} - ' . __('The method of payment used for this purchase','restropress' ) . '<br/>' .
+			'{sitename} - ' . __('Your site name','restropress' ) . '<br/>' .
+			'{receipt_link} - ' . __( 'Adds a link so users can view their receipt directly on your website if they are unable to view it in the browser correctly.', 'restropress' );
 
 	return apply_filters( 'rpress_purchase_receipt_template_tags_description', $tags );
 }
@@ -330,22 +330,22 @@ function rpress_get_purchase_receipt_template_tags() {
  * @return string $tags
  */
 function rpress_get_sale_notification_template_tags() {
-	$tags = __( 'Enter the email that is sent to sale notification emails after completion of a purchase. HTML is accepted. Available template tags:', 'restro-press' ) . '<br/>' .
-			'{fooditem_list} - ' . __('A list of fooditem purchased','restro-press' ) . '<br/>' .
-			'{file_urls} - ' . __('A plain-text list of fooditem URLs for each fooditem purchased','restro-press' ) . '<br/>' .
-			'{name} - ' . __('The buyer\'s first name','restro-press' ) . '<br/>' .
-			'{fullname} - ' . __('The buyer\'s full name, first and last','restro-press' ) . '<br/>' .
-			'{username} - ' . __('The buyer\'s user name on the site, if they registered an account','restro-press' ) . '<br/>' .
-			'{user_email} - ' . __('The buyer\'s email address','restro-press' ) . '<br/>' .
-			'{billing_address} - ' . __('The buyer\'s billing address','restro-press' ) . '<br/>' .
-			'{date} - ' . __('The date of the purchase','restro-press' ) . '<br/>' .
-			'{subtotal} - ' . __('The price of the purchase before taxes','restro-press' ) . '<br/>' .
-			'{tax} - ' . __('The taxed amount of the purchase','restro-press' ) . '<br/>' .
-			'{price} - ' . __('The total price of the purchase','restro-press' ) . '<br/>' .
-			'{payment_id} - ' . __('The unique ID number for this purchase','restro-press' ) . '<br/>' .
-			'{receipt_id} - ' . __('The unique ID number for this purchase receipt','restro-press' ) . '<br/>' .
-			'{payment_method} - ' . __('The method of payment used for this purchase','restro-press' ) . '<br/>' .
-			'{sitename} - ' . __('Your site name','restro-press' );
+	$tags = __( 'Enter the email that is sent to sale notification emails after completion of a purchase. HTML is accepted. Available template tags:', 'restropress' ) . '<br/>' .
+			'{fooditem_list} - ' . __('A list of fooditem purchased','restropress' ) . '<br/>' .
+			'{file_urls} - ' . __('A plain-text list of fooditem URLs for each fooditem purchased','restropress' ) . '<br/>' .
+			'{name} - ' . __('The buyer\'s first name','restropress' ) . '<br/>' .
+			'{fullname} - ' . __('The buyer\'s full name, first and last','restropress' ) . '<br/>' .
+			'{username} - ' . __('The buyer\'s user name on the site, if they registered an account','restropress' ) . '<br/>' .
+			'{user_email} - ' . __('The buyer\'s email address','restropress' ) . '<br/>' .
+			'{billing_address} - ' . __('The buyer\'s billing address','restropress' ) . '<br/>' .
+			'{date} - ' . __('The date of the purchase','restropress' ) . '<br/>' .
+			'{subtotal} - ' . __('The price of the purchase before taxes','restropress' ) . '<br/>' .
+			'{tax} - ' . __('The taxed amount of the purchase','restropress' ) . '<br/>' .
+			'{price} - ' . __('The total price of the purchase','restropress' ) . '<br/>' .
+			'{payment_id} - ' . __('The unique ID number for this purchase','restropress' ) . '<br/>' .
+			'{receipt_id} - ' . __('The unique ID number for this purchase receipt','restropress' ) . '<br/>' .
+			'{payment_method} - ' . __('The method of payment used for this purchase','restropress' ) . '<br/>' .
+			'{sitename} - ' . __('Your site name','restropress' );
 
 	return apply_filters( 'rpress_sale_notification_template_tags_description', $tags );
 }
@@ -513,7 +513,7 @@ function rpress_verify_fooditem_link( $fooditem_id = 0, $key = '', $email = '', 
 
 					// Check to see if the file fooditem limit has been reached
 					if ( rpress_is_file_at_fooditem_limit( $cart_item['id'], $payment->ID, $file_key, $price_id ) )
-						wp_die( apply_filters( 'rpress_fooditem_limit_reached_text', __( 'Sorry but you have hit your fooditem limit for this file.', 'restro-press' ) ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+						wp_die( apply_filters( 'rpress_fooditem_limit_reached_text', __( 'Sorry but you have hit your fooditem limit for this file.', 'restropress' ) ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 
 					// If this fooditem has variable prices, we have to confirm that this file was included in their purchase
 					if ( ! empty( $price_options ) && $file_condition != 'all' && rpress_has_variable_prices( $cart_item['id'] ) ) {
@@ -528,7 +528,7 @@ function rpress_verify_fooditem_link( $fooditem_id = 0, $key = '', $email = '', 
 					}
 
 					if ( current_time( 'timestamp' ) > $expire ) {
-						wp_die( apply_filters( 'rpress_fooditem_link_expired_text', __( 'Sorry but your fooditem link has expired.', 'restro-press' ) ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+						wp_die( apply_filters( 'rpress_fooditem_link_expired_text', __( 'Sorry but your fooditem link has expired.', 'restropress' ) ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 					}
 					return $payment->ID; // Payment has been verified and link is still valid
 				}
@@ -538,7 +538,7 @@ function rpress_verify_fooditem_link( $fooditem_id = 0, $key = '', $email = '', 
 		}
 
 	} else {
-		wp_die( __( 'No payments matching your request were found.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'No payments matching your request were found.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 	// Payment not verified
 	return false;

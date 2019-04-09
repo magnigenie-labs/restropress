@@ -23,7 +23,7 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
 // Load RPRESS file.
-include_once( 'restro-press.php' );
+include_once( 'restropress.php' );
 
 global $wpdb, $wp_roles;
 

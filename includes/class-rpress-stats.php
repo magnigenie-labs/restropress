@@ -76,16 +76,16 @@ class RPRESS_Stats {
 	 */
 	public function get_predefined_dates() {
 		$predefined = array(
-			'today'        => __( 'Today',        'restro-press' ),
-			'yesterday'    => __( 'Yesterday',    'restro-press' ),
-			'this_week'    => __( 'This Week',    'restro-press' ),
-			'last_week'    => __( 'Last Week',    'restro-press' ),
-			'this_month'   => __( 'This Month',   'restro-press' ),
-			'last_month'   => __( 'Last Month',   'restro-press' ),
-			'this_quarter' => __( 'This Quarter', 'restro-press' ),
-			'last_quarter' => __( 'Last Quarter',  'restro-press' ),
-			'this_year'    => __( 'This Year',    'restro-press' ),
-			'last_year'    => __( 'Last Year',    'restro-press' )
+			'today'        => __( 'Today',        'restropress' ),
+			'yesterday'    => __( 'Yesterday',    'restropress' ),
+			'this_week'    => __( 'This Week',    'restropress' ),
+			'last_week'    => __( 'Last Week',    'restropress' ),
+			'this_month'   => __( 'This Month',   'restropress' ),
+			'last_month'   => __( 'Last Month',   'restropress' ),
+			'this_quarter' => __( 'This Quarter', 'restropress' ),
+			'last_quarter' => __( 'Last Quarter',  'restropress' ),
+			'this_year'    => __( 'This Year',    'restropress' ),
+			'last_year'    => __( 'Last Year',    'restropress' )
 		);
 		return apply_filters( 'rpress_stats_predefined_dates', $predefined );
 	}
@@ -429,7 +429,7 @@ class RPRESS_Stats {
 
 		} else {
 
-			return new WP_Error( 'invalid_date', __( 'Improper date provided.', 'restro-press' ) );
+			return new WP_Error( 'invalid_date', __( 'Improper date provided.', 'restropress' ) );
 
 		}
 

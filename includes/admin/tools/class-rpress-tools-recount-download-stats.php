@@ -220,7 +220,7 @@ class RPRESS_Tools_Recount_Download_Stats extends RPRESS_Batch_Export {
 	public function process_step() {
 
 		if ( ! $this->can_export() ) {
-			wp_die( __( 'You do not have permission to export data.', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+			wp_die( __( 'You do not have permission to export data.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 		}
 
 		$had_data = $this->get_data();
@@ -232,7 +232,7 @@ class RPRESS_Tools_Recount_Download_Stats extends RPRESS_Batch_Export {
 			$this->delete_data( 'rpress_recount_total_' . $this->fooditem_id );
 			$this->delete_data( 'rpress_temp_recount_fooditem_stats' );
 			$this->done    = true;
-			$this->message = sprintf( __( 'Earnings and sales stats successfully recounted for %s.', 'restro-press' ), get_the_title( $this->fooditem_id ) );
+			$this->message = sprintf( __( 'Earnings and sales stats successfully recounted for %s.', 'restropress' ), get_the_title( $this->fooditem_id ) );
 			return false;
 		}
 	}

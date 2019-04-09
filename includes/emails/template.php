@@ -51,9 +51,9 @@ function rpress_email_template_tags( $message, $payment_data, $payment_id, $admi
  */
 function rpress_email_preview_template_tags( $message ) {
 	$fooditem_list = '<ul>';
-	$fooditem_list .= '<li>' . __( 'Sample Product Title', 'restro-press' ) . '<br />';
+	$fooditem_list .= '<li>' . __( 'Sample Product Title', 'restropress' ) . '<br />';
 	$fooditem_list .= '<div>';
-	$fooditem_list .= '<a href="#">' . __( 'Sample Food Item Name', 'restro-press' ) . '</a> - <small>' . __( 'Optional notes about this fooditem.', 'restro-press' ) . '</small>';
+	$fooditem_list .= '<a href="#">' . __( 'Sample Food Item Name', 'restropress' ) . '</a> - <small>' . __( 'Optional notes about this fooditem.', 'restropress' ) . '</small>';
 	$fooditem_list .= '</div>';
 	$fooditem_list .= '</li>';
 	$fooditem_list .= '</ul>';
@@ -66,7 +66,7 @@ function rpress_email_preview_template_tags( $message ) {
 
 	$receipt_id = strtolower( md5( uniqid() ) );
 
-	$notes = __( 'These are some sample notes added to a product.', 'restro-press' );
+	$notes = __( 'These are some sample notes added to a product.', 'restropress' );
 
 	$tax = rpress_currency_filter( rpress_format_amount( 1.00 ) );
 
@@ -109,8 +109,8 @@ function rpress_email_template_preview() {
 
 	ob_start();
 	?>
-	<a href="<?php echo esc_url( add_query_arg( array( 'rpress_action' => 'preview_email' ), home_url() ) ); ?>" class="button-secondary" target="_blank"><?php _e( 'Preview Order Receipt', 'restro-press' ); ?></a>
-	<a href="<?php echo wp_nonce_url( add_query_arg( array( 'rpress_action' => 'send_test_email' ) ), 'rpress-test-email' ); ?>" class="button-secondary"><?php _e( 'Send Test Email', 'restro-press' ); ?></a>
+	<a href="<?php echo esc_url( add_query_arg( array( 'rpress_action' => 'preview_email' ), home_url() ) ); ?>" class="button-secondary" target="_blank"><?php _e( 'Preview Order Receipt', 'restropress' ); ?></a>
+	<a href="<?php echo wp_nonce_url( add_query_arg( array( 'rpress_action' => 'send_test_email' ) ), 'rpress-test-email' ); ?>" class="button-secondary"><?php _e( 'Send Test Email', 'restropress' ); ?></a>
 	<?php
 	echo ob_get_clean();
 }
@@ -137,7 +137,7 @@ function rpress_display_email_template_preview() {
 	}
 
 
-	RPRESS()->emails->heading = rpress_email_preview_template_tags( rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restro-press' ) ) );
+	RPRESS()->emails->heading = rpress_email_preview_template_tags( rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restropress' ) ) );
 
 	echo RPRESS()->emails->build_email( rpress_email_preview_template_tags( rpress_get_email_body_content( 0, array() ) ) );
 
@@ -155,8 +155,8 @@ add_action( 'template_redirect', 'rpress_display_email_template_preview' );
  * @return string $email_body Body of the email
  */
 function rpress_get_email_body_content( $payment_id = 0, $payment_data = array() ) {
-	$default_email_body = __( "Dear", "restro-press" ) . " {name},\n\n";
-	$default_email_body .= __( "Thank you for your order. Here are the list of items that you have ordered", "restro-press" ) . "\n\n";
+	$default_email_body = __( "Dear", "restropress" ) . " {name},\n\n";
+	$default_email_body .= __( "Thank you for your order. Here are the list of items that you have ordered", "restropress" ) . "\n\n";
 	$default_email_body .= "{fooditem_list}\n\n";
 	$default_email_body .= "{sitename}";
 
@@ -208,13 +208,13 @@ function rpress_get_order_notification_body_content( $payment_id = 0, $payment_d
 
 	$gateway = rpress_get_gateway_admin_label( $payment->gateway );
 
-	$default_email_body = __( 'Hello', 'restro-press' ) . "\n\n" . sprintf( __( 'A %s purchase has been made', 'restro-press' ), rpress_get_label_plural() ) . ".\n\n";
-	$default_email_body .= sprintf( __( '%s sold:', 'restro-press' ), rpress_get_label_plural() ) . "\n\n";
+	$default_email_body = __( 'Hello', 'restropress' ) . "\n\n" . sprintf( __( 'A %s purchase has been made', 'restropress' ), rpress_get_label_plural() ) . ".\n\n";
+	$default_email_body .= sprintf( __( '%s sold:', 'restropress' ), rpress_get_label_plural() ) . "\n\n";
 	$default_email_body .= $fooditem_list . "\n\n";
-	$default_email_body .= __( 'Ordered by: ', 'restro-press' ) . " " . html_entity_decode( $name, ENT_COMPAT, 'UTF-8' ) . "\n";
-	$default_email_body .= __( 'Amount: ', 'restro-press' ) . " " . html_entity_decode( rpress_currency_filter( rpress_format_amount( $payment->total ) ), ENT_COMPAT, 'UTF-8' ) . "\n";
-	$default_email_body .= __( 'Payment Method: ', 'restro-press' ) . " " . $gateway . "\n\n";
-	$default_email_body .= __( 'Thank you', 'restro-press' );
+	$default_email_body .= __( 'Ordered by: ', 'restropress' ) . " " . html_entity_decode( $name, ENT_COMPAT, 'UTF-8' ) . "\n";
+	$default_email_body .= __( 'Amount: ', 'restropress' ) . " " . html_entity_decode( rpress_currency_filter( rpress_format_amount( $payment->total ) ), ENT_COMPAT, 'UTF-8' ) . "\n";
+	$default_email_body .= __( 'Payment Method: ', 'restropress' ) . " " . $gateway . "\n\n";
+	$default_email_body .= __( 'Thank you', 'restropress' );
 
 	$message = rpress_get_option( 'order_notification', false );
 	$message   = $message ? stripslashes( $message ) : $default_email_body;
@@ -238,7 +238,7 @@ function rpress_get_order_notification_body_content( $payment_id = 0, $payment_d
  */
 function rpress_render_receipt_in_browser() {
 	if ( ! isset( $_GET['payment_key'] ) )
-		wp_die( __( 'Missing order key.', 'restro-press' ), __( 'Error', 'restro-press' ) );
+		wp_die( __( 'Missing order key.', 'restropress' ), __( 'Error', 'restropress' ) );
 
 	$key = urlencode( $_GET['payment_key'] );
 
@@ -253,7 +253,7 @@ function rpress_render_receipt_in_browser() {
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title><?php _e( 'Receipt', 'restro-press' ); ?></title>
+		<title><?php _e( 'Receipt', 'restropress' ); ?></title>
 		<meta charset="utf-8" />
 		<meta name="robots" content="noindex, nofollow" />
 		<?php wp_head(); ?>

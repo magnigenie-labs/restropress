@@ -56,28 +56,28 @@ class RPRESS_Payments_Export extends RPRESS_Export {
 	 */
 	public function csv_cols() {
 		$cols = array(
-			'id'       => __( 'ID',   'restro-press' ), // unaltered payment ID (use for querying)
-			'seq_id'   => __( 'Payment Number',   'restro-press' ), // sequential payment ID
-			'email'    => __( 'Email', 'restro-press' ),
-			'first'    => __( 'First Name', 'restro-press' ),
-			'last'     => __( 'Last Name', 'restro-press' ),
-			'address1' => __( 'Address', 'restro-press' ),
-			'address2' => __( 'Address (Line 2)', 'restro-press' ),
-			'city'     => __( 'City', 'restro-press' ),
-			'state'    => __( 'State', 'restro-press' ),
-			'country'  => __( 'Country', 'restro-press' ),
-			'zip'      => __( 'Zip / Postal Code', 'restro-press' ),
-			'products' => __( 'Products', 'restro-press' ),
-			'skus'     => __( 'SKUs', 'restro-press' ),
-			'amount'   => __( 'Amount', 'restro-press' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
-			'tax'      => __( 'Tax', 'restro-press' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
-			'discount' => __( 'Discount Code', 'restro-press' ),
-			'gateway'  => __( 'Payment Method', 'restro-press' ),
-			'trans_id' => __( 'Transaction ID', 'restro-press' ),
-			'key'      => __( 'Purchase Key', 'restro-press' ),
-			'date'     => __( 'Date', 'restro-press' ),
-			'user'     => __( 'User', 'restro-press' ),
-			'status'   => __( 'Status', 'restro-press' )
+			'id'       => __( 'ID',   'restropress' ), // unaltered payment ID (use for querying)
+			'seq_id'   => __( 'Payment Number',   'restropress' ), // sequential payment ID
+			'email'    => __( 'Email', 'restropress' ),
+			'first'    => __( 'First Name', 'restropress' ),
+			'last'     => __( 'Last Name', 'restropress' ),
+			'address1' => __( 'Address', 'restropress' ),
+			'address2' => __( 'Address (Line 2)', 'restropress' ),
+			'city'     => __( 'City', 'restropress' ),
+			'state'    => __( 'State', 'restropress' ),
+			'country'  => __( 'Country', 'restropress' ),
+			'zip'      => __( 'Zip / Postal Code', 'restropress' ),
+			'products' => __( 'Products', 'restropress' ),
+			'skus'     => __( 'SKUs', 'restropress' ),
+			'amount'   => __( 'Amount', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
+			'tax'      => __( 'Tax', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
+			'discount' => __( 'Discount Code', 'restropress' ),
+			'gateway'  => __( 'Payment Method', 'restropress' ),
+			'trans_id' => __( 'Transaction ID', 'restropress' ),
+			'key'      => __( 'Purchase Key', 'restropress' ),
+			'date'     => __( 'Date', 'restropress' ),
+			'user'     => __( 'User', 'restropress' ),
+			'status'   => __( 'Status', 'restropress' )
 		);
 
 		if( ! rpress_use_skus() ){
@@ -181,12 +181,12 @@ class RPRESS_Payments_Export extends RPRESS_Export {
 				'skus'     => $skus,
 				'amount'   => html_entity_decode( rpress_format_amount( $total ) ),
 				'tax'      => html_entity_decode( rpress_format_amount( rpress_get_payment_tax( $payment->ID, $payment_meta ) ) ),
-				'discount' => isset( $user_info['discount'] ) && $user_info['discount'] != 'none' ? $user_info['discount'] : __( 'none', 'restro-press' ),
+				'discount' => isset( $user_info['discount'] ) && $user_info['discount'] != 'none' ? $user_info['discount'] : __( 'none', 'restropress' ),
 				'gateway'  => rpress_get_gateway_admin_label( rpress_get_payment_meta( $payment->ID, '_rpress_payment_gateway', true ) ),
 				'trans_id' => rpress_get_payment_transaction_id( $payment->ID ),
 				'key'      => $payment_meta['key'],
 				'date'     => $payment->post_date,
-				'user'     => $user ? $user->display_name : __( 'guest', 'restro-press' ),
+				'user'     => $user ? $user->display_name : __( 'guest', 'restropress' ),
 				'status'   => rpress_get_payment_status( $payment, true )
 			);
 

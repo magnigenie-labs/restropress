@@ -36,14 +36,14 @@ class RPRESS_Batch_API_Requests_Export extends RPRESS_Batch_Export {
 	 */
 	public function csv_cols() {
 		$cols = array(
-			'ID'      => __( 'Log ID',   'restro-press' ),
-			'request' => __( 'API Request', 'restro-press' ),
-			'ip'      => __( 'IP Address', 'restro-press' ),
-			'user'    => __( 'API User', 'restro-press' ),
-			'key'     => __( 'API Key', 'restro-press' ),
-			'version' => __( 'API Version', 'restro-press' ),
-			'speed'   => __( 'Request Speed', 'restro-press' ),
-			'date'    => __( 'Date', 'restro-press' )
+			'ID'      => __( 'Log ID',   'restropress' ),
+			'request' => __( 'API Request', 'restropress' ),
+			'ip'      => __( 'IP Address', 'restropress' ),
+			'user'    => __( 'API User', 'restropress' ),
+			'key'     => __( 'API Key', 'restropress' ),
+			'version' => __( 'API Version', 'restropress' ),
+			'speed'   => __( 'Request Speed', 'restropress' ),
+			'date'    => __( 'Date', 'restropress' )
 		);
 
 		return $cols;

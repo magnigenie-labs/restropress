@@ -61,24 +61,24 @@ class RPRESS_Customers_Export extends RPRESS_Export {
 	public function csv_cols() {
 		if ( ! empty( $_POST['rpress_export_fooditem'] ) ) {
 			$cols = array(
-				'first_name' => __( 'First Name',   'restro-press' ),
-				'last_name'  => __( 'Last Name',   'restro-press' ),
-				'email'      => __( 'Email', 'restro-press' ),
-				'date'       => __( 'Date Purchased', 'restro-press' )
+				'first_name' => __( 'First Name',   'restropress' ),
+				'last_name'  => __( 'Last Name',   'restropress' ),
+				'email'      => __( 'Email', 'restropress' ),
+				'date'       => __( 'Date Purchased', 'restropress' )
 			);
 		} else {
 
 			$cols = array();
 
 			if( 'emails' != $_POST['rpress_export_option'] ) {
-				$cols['name'] = __( 'Name',   'restro-press' );
+				$cols['name'] = __( 'Name',   'restropress' );
 			}
 
-			$cols['email'] = __( 'Email',   'restro-press' );
+			$cols['email'] = __( 'Email',   'restropress' );
 
 			if( 'full' == $_POST['rpress_export_option'] ) {
-				$cols['purchases'] = __( 'Total Purchases',   'restro-press' );
-				$cols['amount']    = __( 'Total Purchased', 'restro-press' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')';
+				$cols['purchases'] = __( 'Total Purchases',   'restropress' );
+				$cols['amount']    = __( 'Total Purchased', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')';
 			}
 
 		}

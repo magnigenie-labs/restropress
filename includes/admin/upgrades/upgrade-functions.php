@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_trigger_upgrades() {
 
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	$rpress_version = get_option( 'rpress_version' );
@@ -196,8 +196,8 @@ function rpress_v134_upgrades() {
 	// Failed Purchase Page
 	$failed = wp_insert_post(
 		array(
-			'post_title'     => __( 'Transaction Failed', 'restro-press' ),
-			'post_content'   => __( 'Your transaction failed, please try again or contact site support.', 'restro-press' ),
+			'post_title'     => __( 'Transaction Failed', 'restropress' ),
+			'post_content'   => __( 'Your transaction failed, please try again or contact site support.', 'restropress' ),
 			'post_status'    => 'publish',
 			'post_author'    => 1,
 			'post_type'      => 'page',
@@ -343,7 +343,7 @@ function rpress_v20_upgrades() {
 function rpress_v20_upgrade_sequential_payment_numbers() {
 
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	ignore_user_abort( true );
@@ -425,7 +425,7 @@ function rpress_v21_upgrade_customers_db() {
 	global $wpdb;
 
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	ignore_user_abort( true );
@@ -536,7 +536,7 @@ add_action( 'rpress_upgrade_customers_db', 'rpress_v21_upgrade_customers_db' );
 function rpress_v226_upgrade_payments_price_logs_db() {
 	global $wpdb;
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 	ignore_user_abort( true );
 	if ( ! rpress_is_func_disabled( 'set_time_limit' ) ) {
@@ -633,7 +633,7 @@ add_action( 'rpress_upgrade_payments_price_logs_db', 'rpress_v226_upgrade_paymen
 function rpress_v23_upgrade_payment_taxes() {
 	global $wpdb;
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 	ignore_user_abort( true );
 	if ( ! rpress_is_func_disabled( 'set_time_limit' ) ) {
@@ -707,7 +707,7 @@ function rpress_v23_upgrade_customer_purchases() {
 	global $wpdb;
 
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	ignore_user_abort( true );
@@ -835,7 +835,7 @@ function rpress_upgrade_user_api_keys() {
 	global $wpdb;
 
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	ignore_user_abort( true );
@@ -920,7 +920,7 @@ function rpress_remove_refunded_sale_logs() {
 	global $wpdb, $rpress_logs;
 
 	if( ! current_user_can( 'manage_shop_settings' ) ) {
-		wp_die( __( 'You do not have permission to do shop upgrades', 'restro-press' ), __( 'Error', 'restro-press' ), array( 'response' => 403 ) );
+		wp_die( __( 'You do not have permission to do shop upgrades', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
 	ignore_user_abort( true );
@@ -996,7 +996,7 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 	if ( $migration_complete ) : ?>
 		<div id="rpress-sl-migration-complete" class="notice notice-success">
 			<p>
-				<?php _e( '<strong>Migration complete:</strong> You have already completed the update to the file fooditem logs.', 'restro-press' ); ?>
+				<?php _e( '<strong>Migration complete:</strong> You have already completed the update to the file fooditem logs.', 'restropress' ); ?>
 			</p>
 		</div>
 		<?php return; ?>
@@ -1004,15 +1004,15 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 
 	<div id="rpress-migration-ready" class="notice notice-success" style="display: none;">
 		<p>
-			<?php _e( '<strong>Database Upgrade Complete:</strong> All database upgrades have been completed.', 'restro-press' ); ?>
+			<?php _e( '<strong>Database Upgrade Complete:</strong> All database upgrades have been completed.', 'restropress' ); ?>
 			<br /><br />
-			<?php _e( 'You may now leave this page.', 'restro-press' ); ?>
+			<?php _e( 'You may now leave this page.', 'restropress' ); ?>
 		</p>
 	</div>
 
 	<div id="rpress-migration-nav-warn" class="notice notice-info">
 		<p>
-			<?php _e( '<strong>Important:</strong> Please leave this screen open and do not navigate away until the process completes.', 'restro-press' ); ?>
+			<?php _e( '<strong>Important:</strong> Please leave this screen open and do not navigate away until the process completes.', 'restropress' ); ?>
 		</p>
 	</div>
 
@@ -1055,12 +1055,12 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 	<div class="metabox-holder">
 		<div class="postbox">
 			<h2 class="hndle">
-				<span><?php _e( 'Update file fooditem logs', 'restro-press' ); ?></span>
+				<span><?php _e( 'Update file fooditem logs', 'restropress' ); ?></span>
 				<span class="dashicons dashicons-yes"></span>
 			</h2>
 			<div class="inside migrate-file-fooditem-logs-control">
 				<p>
-					<?php _e( 'This will update the file fooditem logs to remove some <abbr title="Personally Identifiable Information">PII</abbr> and make file fooditem counts more accurate.', 'restro-press' ); ?>
+					<?php _e( 'This will update the file fooditem logs to remove some <abbr title="Personally Identifiable Information">PII</abbr> and make file fooditem counts more accurate.', 'restropress' ); ?>
 				</p>
 				<form method="post" id="rpress-fix-file-fooditem-logs-form" class="rpress-export-form rpress-import-export-form">
 			<span class="step-instructions-wrapper">
@@ -1069,11 +1069,11 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 
 				<?php if ( ! $migration_complete ) : ?>
 					<span class="rpress-migration allowed">
-						<input type="submit" id="migrate-logs-submit" value="<?php _e( 'Update File Download Logs', 'restro-press' ); ?>" class="button-primary"/>
+						<input type="submit" id="migrate-logs-submit" value="<?php _e( 'Update File Download Logs', 'restropress' ); ?>" class="button-primary"/>
 					</span>
 				<?php else: ?>
-					<input type="submit" disabled="disabled" id="migrate-logs-submit" value="<?php _e( 'Update File Download Logs', 'restro-press' ); ?>" class="button-secondary"/>
-					&mdash; <?php _e( 'File fooditem logs have already been updated.', 'restro-press' ); ?>
+					<input type="submit" disabled="disabled" id="migrate-logs-submit" value="<?php _e( 'Update File Download Logs', 'restropress' ); ?>" class="button-secondary"/>
+					&mdash; <?php _e( 'File fooditem logs have already been updated.', 'restropress' ); ?>
 				<?php endif; ?>
 
 				<input type="hidden" name="rpress-export-class" value="RPRESS_File_Download_Log_Migration" />

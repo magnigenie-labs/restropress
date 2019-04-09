@@ -41,7 +41,7 @@ class RPRESS_Roles {
 	 * @return void
 	 */
 	public function add_roles() {
-		add_role( 'shop_manager', __( 'Shop Manager', 'restro-press' ), array(
+		add_role( 'shop_manager', __( 'Shop Manager', 'restropress' ), array(
 			'read'                   => true,
 			'edit_posts'             => true,
 			'delete_posts'           => true,
@@ -72,20 +72,20 @@ class RPRESS_Roles {
 			'read_private_posts'     => true
 		) );
 
-		add_role( 'shop_accountant', __( 'Shop Accountant', 'restro-press' ), array(
+		add_role( 'shop_accountant', __( 'Shop Accountant', 'restropress' ), array(
 		    'read'                   => true,
 		    'edit_posts'             => false,
 		    'delete_posts'           => false
 		) );
 
-		add_role( 'shop_worker', __( 'Shop Worker', 'restro-press' ), array(
+		add_role( 'shop_worker', __( 'Shop Worker', 'restropress' ), array(
 			'read'                   => true,
 			'edit_posts'             => false,
 			'upload_files'           => true,
 			'delete_posts'           => false
 		) );
 
-		add_role( 'shop_vendor', __( 'Shop Vendor', 'restro-press' ), array(
+		add_role( 'shop_vendor', __( 'Shop Vendor', 'restropress' ), array(
 			'read'                   => true,
 			'edit_posts'             => false,
 			'upload_files'           => true,

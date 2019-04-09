@@ -40,10 +40,10 @@ class RPRESS_HTML_Elements {
 			'number'      => 30,
 			'bundles'     => true,
 			'variations'  => false,
-			'placeholder' => sprintf( __( 'Choose a %s', 'restro-press' ), rpress_get_label_singular() ),
+			'placeholder' => sprintf( __( 'Choose a %s', 'restropress' ), rpress_get_label_singular() ),
 			'data'        => array(
 				'search-type'        => 'fooditem',
-				'search-placeholder' => sprintf( __( 'Type to search all %s', 'restro-press' ), rpress_get_label_plural() )
+				'search-placeholder' => sprintf( __( 'Type to search all %s', 'restropress' ), rpress_get_label_plural() )
 			),
 		);
 
@@ -238,11 +238,11 @@ class RPRESS_HTML_Elements {
 			'multiple'    => false,
 			'selected'    => 0,
 			'chosen'      => true,
-			'placeholder' => __( 'Select a Customer', 'restro-press' ),
+			'placeholder' => __( 'Select a Customer', 'restropress' ),
 			'number'      => 30,
 			'data'        => array(
 				'search-type'        => 'customer',
-				'search-placeholder' => __( 'Type to search all Customers', 'restro-press' )
+				'search-placeholder' => __( 'Type to search all Customers', 'restropress' )
 			),
 		);
 
@@ -255,12 +255,12 @@ class RPRESS_HTML_Elements {
 		$options = array();
 
 		if ( $customers ) {
-			$options[0] = __( 'No customer attached', 'restro-press' );
+			$options[0] = __( 'No customer attached', 'restropress' );
 			foreach ( $customers as $customer ) {
 				$options[ absint( $customer->id ) ] = esc_html( $customer->name . ' (' . $customer->email . ')' );
 			}
 		} else {
-			$options[0] = __( 'No customers found', 'restro-press' );
+			$options[0] = __( 'No customers found', 'restropress' );
 		}
 
 		if( ! empty( $args['selected'] ) ) {
@@ -314,11 +314,11 @@ class RPRESS_HTML_Elements {
 			'multiple'    => false,
 			'selected'    => 0,
 			'chosen'      => true,
-			'placeholder' => __( 'Select a User', 'restro-press' ),
+			'placeholder' => __( 'Select a User', 'restropress' ),
 			'number'      => 30,
 			'data'        => array(
 				'search-type'        => 'user',
-				'search-placeholder' => __( 'Type to search all Users', 'restro-press' ),
+				'search-placeholder' => __( 'Type to search all Users', 'restropress' ),
 			),
 		);
 
@@ -336,7 +336,7 @@ class RPRESS_HTML_Elements {
 				$options[ $user->ID ] = esc_html( $user->display_name );
 			}
 		} else {
-			$options[0] = __( 'No users found', 'restro-press' );
+			$options[0] = __( 'No users found', 'restropress' );
 		}
 
 		// If a selected user has been specified, we need to ensure it's in the initial list of user displayed
@@ -396,7 +396,7 @@ class RPRESS_HTML_Elements {
 				$options[ absint( $discount->ID ) ] = esc_html( get_the_title( $discount->ID ) );
 			}
 		} else {
-			$options[0] = __( 'No discounts found', 'restro-press' );
+			$options[0] = __( 'No discounts found', 'restropress' );
 		}
 
 		$output = $this->select( array(
@@ -404,7 +404,7 @@ class RPRESS_HTML_Elements {
 			'selected'         => $selected,
 			'options'          => $options,
 			'show_option_all'  => false,
-			'show_option_none' => __( 'Select a discount', 'restro-press' ),
+			'show_option_none' => __( 'Select a discount', 'restropress' ),
 		) );
 
 		return $output;
@@ -431,7 +431,7 @@ class RPRESS_HTML_Elements {
 			'name'             => $name,
 			'selected'         => $selected,
 			'options'          => $options,
-			'show_option_all'  => sprintf( _x( 'All %s', 'plural: Example: "All Categories"', 'restro-press' ), $category_labels['name'] ),
+			'show_option_all'  => sprintf( _x( 'All %s', 'plural: Example: "All Categories"', 'restropress' ), $category_labels['name'] ),
 			'show_option_none' => false
 		) );
 
@@ -519,8 +519,8 @@ class RPRESS_HTML_Elements {
 			'chosen'           => false,
 			'placeholder'      => null,
 			'multiple'         => false,
-			'show_option_all'  => _x( 'All', 'all dropdown items', 'restro-press' ),
-			'show_option_none' => _x( 'None', 'no dropdown items', 'restro-press' ),
+			'show_option_all'  => _x( 'All', 'all dropdown items', 'restropress' ),
+			'show_option_none' => _x( 'None', 'no dropdown items', 'restropress' ),
 			'data'             => array(),
 			'readonly'         => false,
 			'disabled'         => false,
@@ -778,7 +778,7 @@ class RPRESS_HTML_Elements {
 		$defaults = array(
 			'name'        => 'user_id',
 			'value'       => null,
-			'placeholder' => __( 'Enter username', 'restro-press' ),
+			'placeholder' => __( 'Enter username', 'restropress' ),
 			'label'       => null,
 			'desc'        => null,
 			'class'       => '',
@@ -793,7 +793,7 @@ class RPRESS_HTML_Elements {
 
 		$output  = '<span class="rpress_user_search_wrap">';
 			$output .= $this->text( $args );
-			$output .= '<span class="rpress_user_search_results hidden"><a class="rpress-ajax-user-cancel" aria-label="' . __( 'Cancel', 'restro-press' ) . '" href="#">x</a><span></span></span>';
+			$output .= '<span class="rpress_user_search_results hidden"><a class="rpress-ajax-user-cancel" aria-label="' . __( 'Cancel', 'restropress' ) . '" href="#">x</a><span></span></span>';
 		$output .= '</span>';
 
 		return $output;

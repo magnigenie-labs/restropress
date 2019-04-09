@@ -29,7 +29,7 @@ if( is_array($store_timings) && isset($store_timings['enable']) ) {
 				<?php if( $delivery_options == 1 ) : ?>
 					<li class="nav-item">
 						<a class="nav-link <?php echo $color; ?>" id="nav-delivery-tab" data-delivery-type="delivery" data-toggle="tab" href="#nav-delivery" role="tab" aria-controls="nav-delivery" aria-selected="false">
-							<?php echo __('Delivery', 'restro-press'); ?>
+							<?php echo __('Delivery', 'restropress'); ?>
 						</a>
 					</li>
 				<?php endif; ?>
@@ -38,7 +38,7 @@ if( is_array($store_timings) && isset($store_timings['enable']) ) {
 				<?php if( $pickup_options == 1 ) : ?>
 					<li class="nav-item">
 						<a class="nav-link <?php echo $color; ?>" id="nav-pickup-tab" data-delivery-type="pickup" data-toggle="tab" href="#nav-pickup" role="tab" aria-controls="nav-pickup" aria-selected="false">
-							<?php echo __('Pickup', 'restro-press'); ?>	
+							<?php echo __('Pickup', 'restropress'); ?>	
 						</a>
 					</li>
 				<?php endif; ?>
@@ -54,7 +54,7 @@ if( is_array($store_timings) && isset($store_timings['enable']) ) {
 					<?php rpress_get_template_part( 'rpress', 'pickup' ); ?>
 				<?php endif; ?>
 				<button type="button" data-food-id='{FoodID}' class="btn btn-primary btn-block rpress-delivery-opt-update <?php echo $color;?> ">
-					<?php echo __('Update','restro-press'); ?> 
+					<?php echo __('Update','restropress'); ?> 
 				</button>
 			</div>
 		</div>

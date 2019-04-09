@@ -73,7 +73,7 @@ function rpress_display_product_tabs() {
 		?>
 
 		<a href="<?php echo admin_url( 'post-new.php?post_type=fooditem' ); ?>" class="page-title-action">
-			<?php _e( 'Add New', 'restro-press' ); // No text domain so it just follows what WP Core does ?>
+			<?php _e( 'Add New', 'restropress' ); // No text domain so it just follows what WP Core does ?>
 		</a>
 	</h2>
 	<br />

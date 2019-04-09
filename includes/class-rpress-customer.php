@@ -198,7 +198,7 @@ class RPRESS_Customer {
 
 		} else {
 
-			return new WP_Error( 'rpress-customer-invalid-property', sprintf( __( 'Can\'t get property %s', 'restro-press' ), $key ) );
+			return new WP_Error( 'rpress-customer-invalid-property', sprintf( __( 'Can\'t get property %s', 'restropress' ), $key ) );
 
 		}
 

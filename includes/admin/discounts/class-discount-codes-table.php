@@ -122,9 +122,9 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 		$inactive_count = '&nbsp;<span class="count">(' . $this->inactive_count  . ')</span>';
 
 		$views = array(
-			'all'      => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( 'status', $base ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All', 'restro-press') . $total_count ),
-			'active'   => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'active', $base ), $current === 'active' ? ' class="current"' : '', __('Active', 'restro-press') . $active_count ),
-			'inactive' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'inactive', $base ), $current === 'inactive' ? ' class="current"' : '', __('Inactive', 'restro-press') . $inactive_count ),
+			'all'      => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( 'status', $base ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All', 'restropress') . $total_count ),
+			'active'   => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'active', $base ), $current === 'active' ? ' class="current"' : '', __('Active', 'restropress') . $active_count ),
+			'inactive' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'inactive', $base ), $current === 'inactive' ? ' class="current"' : '', __('Inactive', 'restropress') . $inactive_count ),
 		);
 
 		return $views;
@@ -139,13 +139,13 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 	public function get_columns() {
 		$columns = array(
 			'cb'         => '<input type="checkbox" />',
-			'name'       => __( 'Name', 'restro-press' ),
-			'code'       => __( 'Code', 'restro-press' ),
-			'amount'     => __( 'Amount', 'restro-press' ),
-			'uses'       => __( 'Uses', 'restro-press' ),
-			'start_date' => __( 'Start Date', 'restro-press' ),
-			'expiration' => __( 'Expiration', 'restro-press' ),
-			'status'     => __( 'Status', 'restro-press' ),
+			'name'       => __( 'Name', 'restropress' ),
+			'code'       => __( 'Code', 'restropress' ),
+			'amount'     => __( 'Amount', 'restropress' ),
+			'uses'       => __( 'Uses', 'restropress' ),
+			'start_date' => __( 'Start Date', 'restropress' ),
+			'expiration' => __( 'Expiration', 'restropress' ),
+			'status'     => __( 'Status', 'restropress' ),
 		);
 
 		return $columns;
@@ -204,15 +204,15 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 		$discount     = get_post( $item['ID'] );
 		$row_actions  = array();
 
-		$row_actions['edit'] = '<a href="' . add_query_arg( array( 'rpress-action' => 'edit_discount', 'discount' => $discount->ID ) ) . '">' . __( 'Edit', 'restro-press' ) . '</a>';
+		$row_actions['edit'] = '<a href="' . add_query_arg( array( 'rpress-action' => 'edit_discount', 'discount' => $discount->ID ) ) . '">' . __( 'Edit', 'restropress' ) . '</a>';
 
 		if( strtolower( $item['status'] ) == 'active' ) {
-			$row_actions['deactivate'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rpress-action' => 'deactivate_discount', 'discount' => $discount->ID ) ), 'rpress_discount_nonce' ) ) . '">' . __( 'Deactivate', 'restro-press' ) . '</a>';
+			$row_actions['deactivate'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rpress-action' => 'deactivate_discount', 'discount' => $discount->ID ) ), 'rpress_discount_nonce' ) ) . '">' . __( 'Deactivate', 'restropress' ) . '</a>';
 		} elseif( strtolower( $item['status'] ) == 'inactive' ) {
-			$row_actions['activate'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rpress-action' => 'activate_discount', 'discount' => $discount->ID ) ), 'rpress_discount_nonce' ) ) . '">' . __( 'Activate', 'restro-press' ) . '</a>';
+			$row_actions['activate'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rpress-action' => 'activate_discount', 'discount' => $discount->ID ) ), 'rpress_discount_nonce' ) ) . '">' . __( 'Activate', 'restropress' ) . '</a>';
 		}
 
-		$row_actions['delete'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_discount', 'discount' => $discount->ID ) ), 'rpress_discount_nonce' ) ) . '">' . __( 'Delete', 'restro-press' ) . '</a>';
+		$row_actions['delete'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_discount', 'discount' => $discount->ID ) ), 'rpress_discount_nonce' ) ) . '">' . __( 'Delete', 'restropress' ) . '</a>';
 
 		$row_actions = apply_filters( 'rpress_discount_row_actions', $row_actions, $discount );
 
@@ -251,7 +251,7 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 	 * @since 1.0.6
 	 */
 	function no_items() {
-		_e( 'No discounts found.', 'restro-press' );
+		_e( 'No discounts found.', 'restropress' );
 	}
 
 	/**
@@ -262,9 +262,9 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'activate'   => __( 'Activate', 'restro-press' ),
-			'deactivate' => __( 'Deactivate', 'restro-press' ),
-			'delete'     => __( 'Delete', 'restro-press' ),
+			'activate'   => __( 'Activate', 'restropress' ),
+			'deactivate' => __( 'Deactivate', 'restropress' ),
+			'delete'     => __( 'Delete', 'restropress' ),
 		);
 
 		return $actions;
@@ -366,13 +366,13 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 				if ( ! empty( $start_date ) ) {
 					$discount_start_date =  date_i18n( get_option( 'date_format' ), strtotime( $start_date ) );
 				} else {
-					$discount_start_date = __( 'No start date', 'restro-press' );
+					$discount_start_date = __( 'No start date', 'restropress' );
 				}
 
 				if ( rpress_get_discount_expiration( $discount->ID ) ) {
 					$expiration = date_i18n( get_option( 'date_format' ), strtotime( rpress_get_discount_expiration( $discount->ID ) ) );
 				} else {
-					$expiration = __( 'No expiration', 'restro-press' );
+					$expiration = __( 'No expiration', 'restropress' );
 				}
 
 				$discount_codes_data[] = array(

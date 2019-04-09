@@ -36,17 +36,17 @@ class RPRESS_Batch_Sales_Export extends RPRESS_Batch_Export {
 	 */
 	public function csv_cols() {
 		$cols = array(
-			'ID'          => __( 'Log ID', 'restro-press' ),
-			'user_id'     => __( 'User', 'restro-press' ),
-			'customer_id' => __( 'Customer ID', 'restro-press' ),
-			'email'       => __( 'Email', 'restro-press' ),
-			'first_name'  => __( 'First Name', 'restro-press' ),
-			'last_name'   => __( 'Last Name', 'restro-press' ),
+			'ID'          => __( 'Log ID', 'restropress' ),
+			'user_id'     => __( 'User', 'restropress' ),
+			'customer_id' => __( 'Customer ID', 'restropress' ),
+			'email'       => __( 'Email', 'restropress' ),
+			'first_name'  => __( 'First Name', 'restropress' ),
+			'last_name'   => __( 'Last Name', 'restropress' ),
 			'fooditem'    => rpress_get_label_singular(),
-			'amount'      => __( 'Item Amount', 'restro-press' ),
-			'payment_id'  => __( 'Payment ID', 'restro-press' ),
-			'price_id'    => __( 'Price ID', 'restro-press' ),
-			'date'        => __( 'Date', 'restro-press' ),
+			'amount'      => __( 'Item Amount', 'restropress' ),
+			'payment_id'  => __( 'Payment ID', 'restropress' ),
+			'price_id'    => __( 'Price ID', 'restropress' ),
+			'date'        => __( 'Date', 'restropress' ),
 		);
 
 		return $cols;

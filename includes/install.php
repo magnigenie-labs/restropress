@@ -89,7 +89,7 @@ function rpress_run_install() {
 		// Checkout Page
 		$checkout = wp_insert_post(
 			array(
-				'post_title'     => __( 'Checkout', 'restro-press' ),
+				'post_title'     => __( 'Checkout', 'restropress' ),
 				'post_content'   => '[fooditem_checkout]',
 				'post_status'    => 'publish',
 				'post_author'    => 1,
@@ -108,8 +108,8 @@ function rpress_run_install() {
 		// Purchase Confirmation (Success) Page
 		$success = wp_insert_post(
 			array(
-				'post_title'     => __( 'Purchase Confirmation', 'restro-press' ),
-				'post_content'   => __( 'Thank you for your purchase! [rpress_receipt]', 'restro-press' ),
+				'post_title'     => __( 'Purchase Confirmation', 'restropress' ),
+				'post_content'   => __( 'Thank you for your purchase! [rpress_receipt]', 'restropress' ),
 				'post_status'    => 'publish',
 				'post_author'    => 1,
 				'post_parent'    => $checkout,
@@ -126,8 +126,8 @@ function rpress_run_install() {
 		// Failed Purchase Page
 		$failed = wp_insert_post(
 			array(
-				'post_title'     => __( 'Transaction Failed', 'restro-press' ),
-				'post_content'   => __( 'Your transaction failed, please try again or contact site support.', 'restro-press' ),
+				'post_title'     => __( 'Transaction Failed', 'restropress' ),
+				'post_content'   => __( 'Your transaction failed, please try again or contact site support.', 'restropress' ),
 				'post_status'    => 'publish',
 				'post_author'    => 1,
 				'post_type'      => 'page',
@@ -144,7 +144,7 @@ function rpress_run_install() {
 		// Order History (History) Page
 		$history = wp_insert_post(
 			array(
-				'post_title'     => __( 'Orders', 'restro-press' ),
+				'post_title'     => __( 'Orders', 'restropress' ),
 				'post_content'   => '[order_history]',
 				'post_status'    => 'publish',
 				'post_author'    => 1,
@@ -162,7 +162,7 @@ function rpress_run_install() {
 		// Food Item (Food Item) Page
 		$fooditem = wp_insert_post(
 			array(
-				'post_title'     => __( 'Food Items', 'restro-press' ),
+				'post_title'     => __( 'Food Items', 'restropress' ),
 				'post_content'   => '[fooditems]',
 				'post_status'    => 'publish',
 				'post_author'    => 1,
