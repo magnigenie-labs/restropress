@@ -186,6 +186,7 @@ function rpress_ajax_add_to_cart() {
 			foreach( $get_all_items as $key => $get_all_item ) {
 				$item_qty = explode('|', $get_all_item['value']);
 
+
 				if( is_array($item_qty) && !empty($item_qty) ) {
 					
 					$addon_item_like = isset($item_qty[3]) ? $item_qty[3] : 'checkbox';
@@ -207,27 +208,28 @@ function rpress_ajax_add_to_cart() {
 			}
 		}
 
-		$key = rpress_add_to_cart( $_POST['fooditem_id'], $options, $itemQty );
+		$key = rpress_add_to_cart( $_POST['fooditem_id'], $options );
+		//Not required
+		// $options_price_array = array();
+		// if( isset($options['addon_items']) && is_array($options['addon_items']) ) {
+		// 	foreach( $options['addon_items'] as  $val ) {
+		// 		if( $val['price'] !== '' ) {
+		// 			array_push($options_price_array, $val['price']);
+		// 		}
+		// 	}
+		// }
 
-		$options_price_array = array();
-		if( isset($options['addon_items']) && is_array($options['addon_items']) ) {
-			foreach( $options['addon_items'] as  $val ) {
-				if( $val['price'] !== '' ) {
-					array_push($options_price_array, $val['price']);
-				}
-			}
-		}
+		// $options_price = array_sum( $options_price_array );
 
-		$options_price = array_sum($options_price_array);
 
-			$item = array(
-				'id'      => $_POST['fooditem_id'],
-				'options' => $options
-			);
+		$item = array(
+			'id'      => $_POST['fooditem_id'],
+			'options' => $options
+		);
 
-			$item   = apply_filters( 'rpress_ajax_pre_cart_item_template', $item );
-			//$items .= html_entity_decode( rpress_get_cart_item_template( $key, $item, true ), ENT_COMPAT, 'UTF-8' );
-			$items .= rpress_get_cart_item_template( $key, $item, true, $data_key = '' );
+		$item   = apply_filters( 'rpress_ajax_pre_cart_item_template', $item );
+		//$items .= html_entity_decode( rpress_get_cart_item_template( $key, $item, true ), ENT_COMPAT, 'UTF-8' );
+		$items .= rpress_get_cart_item_template( $key, $item, true, $data_key = '' );
 
 
 		$return = array(

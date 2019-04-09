@@ -386,6 +386,7 @@ class RPRESS_Cart {
 	 * @return array $cart Updated cart object
 	 */
 	public function add( $fooditem_id, $options = array() ) {
+		
 		$fooditem = new RPRESS_Fooditem( $fooditem_id );
 
 		if ( empty( $fooditem->ID ) ) {
@@ -408,18 +409,12 @@ class RPRESS_Cart {
 			$options['price_id'] = explode( ',', $options['price_id'] );
 		}
 
-		$items = array();
-
-
-		$items[] = array(
+		$items = array(
 				'id'       => $fooditem_id,
 				'quantity' => $quantity,
 			);
 
 		$this->contents[] = $options;
-
-		unset( $item );
-
 
 		$this->update_cart();
 
@@ -428,7 +423,6 @@ class RPRESS_Cart {
 		// Clear all the checkout errors, if any
 		rpress_clear_errors();
 		
-
 		return count( $this->contents ) - 1;
 	}
 
