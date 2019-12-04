@@ -82,7 +82,6 @@ function rpress_add_ons_get_feed() {
 				$deactive_class = 'show';
 			}
 
-
 			$item_link = isset($item->link) ? $item->link : '';
 			ob_start();
 			?>

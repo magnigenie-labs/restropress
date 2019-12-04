@@ -911,6 +911,22 @@ input.rpress_submit_plain {
 }
 
 /* Gray Color */
+
+.rpress.item-order a.rpress-clear-cart.gray {
+    color: #f0f0f0;
+}
+.cart-action-wrap a.rpress-remove-from-cart i.gray {
+    color: #f0f0f0;
+}
+.rpress-category-link.nav-scroller-item.gray.active:after {
+	background: #f0f0f0;
+}
+.rpress-category-item .gray.active {
+	color: #f0f0f0;
+}
+.rpress-category-item a.gray:hover {
+	color: #f0f0f0;
+}
 a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart span.cart-total.gray, 
 .special-margin.gray a, 
 .special-inst.gray a, 
@@ -977,6 +993,23 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 }
 
 /* Blue Color */
+
+.rpress.item-order a.rpress-clear-cart.blue {
+    color: #428bca;
+}
+.cart-action-wrap a.rpress-remove-from-cart i.blue, 
+.cart-action-wrap a.rpress-edit-from-cart i.blue:hover {
+    color: #428bca;
+} 
+.rpress-category-link.nav-scroller-item.blue.active:after {
+	background: #428bca;
+}
+.rpress-category-item .blue.active {
+	color: #428bca;
+}
+.rpress-category-item a.blue:hover {
+	color: #428bca;
+}
 .rpress-submit.button.blue {
 	color: #fff;
 	background: #428bca;
@@ -1013,6 +1046,19 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 }
 
 /* Red Color */
+
+.rpress.item-order a.rpress-clear-cart.red {
+    color: #d4413c;
+}
+.cart-action-wrap a.rpress-remove-from-cart i.red {
+    color: #d4413c;
+}
+.rpress-category-link.nav-scroller-item.red.active:after {
+	background: #d4413c;
+}
+.rpress-category-link.nav-scroller-item.red.active {
+	color: #d4413c;
+}
 .rpress-submit.button.red {
 	color: #fff;
 	background: #d9534f;
@@ -1049,6 +1095,23 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 }
 
 /* Green Color */
+
+.rpress.item-order a.rpress-clear-cart.green {
+    color: #5cb85c;
+}
+.cart-action-wrap a.rpress-remove-from-cart i.green, 
+.cart-action-wrap a.rpress-edit-from-cart i.green:hover {
+    color: #5cb85c;
+}
+.rpress-category-link.nav-scroller-item.green.active:after {
+	background: #5cb85c;
+}
+.rpress-category-item .green.active {
+	color: #5cb85c;
+}
+.rpress-category-item a.green:hover {
+	color: #5cb85c;
+}
 .rpress-submit.button.green {
 	color: #fff;
 	background: #5cb85c;
@@ -1089,6 +1152,22 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 }
 
 /* Yellow Color */
+
+.rpress.item-order a.rpress-clear-cart.yellow {
+    color: #f0ad4e;
+}
+.cart-action-wrap a.rpress-remove-from-cart i.yellow {
+    color: #f0ad4e;
+}
+.rpress-category-link.nav-scroller-item.yellow.active:after {
+	background: #f0ad4e;
+}
+.rpress-category-item .yellow.active {
+	color: #f0ad4e;
+}
+.rpress-category-item a.yellow:hover {
+	color: #f0ad4e;
+}
 .rpress-submit.button.yellow {
 	color: #fff;
 	background: #f0ad4e;
@@ -1131,6 +1210,27 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 }
 
 /* Orange Color */
+
+.rpress.item-order a.rpress-clear-cart.orange {
+    color: #ed9c28;
+}
+.cart-action-wrap a.rpress-remove-from-cart i.orange {
+    color: #ed9c28;
+}
+.rpress-category-link.nav-scroller-item.orange.active:after {
+	background: #ed9c28;
+}
+.rpress-category-item .orange.active {
+	color: #ed9c28;
+}
+.rpress-category-item a.orange:hover {
+	color: #ed9c28;
+}
+.rpress-submit.button.orange {
+	color: #fff;
+	background: #ed9c28;
+	border-color: #357ebd
+}
 .rpress-submit.button.orange {
 	color: #fff;
 	background: #ed9c28;
@@ -1166,6 +1266,38 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 }
 
 /* Dark Gray Color */ 
+
+.rpress-popup-actions .submit-fooditem-button.dark-gray,
+.btn.btn-block.btn-primary.dark-gray,
+.rpress-cart .rpress_checkout.dark-gray a,
+ html body #rpressModal .rpress-delivery-wrap.dark-gray .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.dark-gray .nav-pills > html body #rpressModal .rpress-delivery-wrap.dark-gray li.active > html body #rpressModal .rpress-delivery-wrap.gray a:hover {
+	background: #363636;
+}
+
+.rpress-cart .cart_item.rpress_checkout.dark-gray a,
+.rpress-submit.button.dark-gray:active,
+.rpress-submit.button.dark-gray:focus,
+.rpress-submit.button.dark-gray:hover,
+.rpress-submit.button.dark-gray:active,
+.rpress-submit.button.dark-gray:focus,
+.rpress-submit.button.dark-gray:hover {
+	color: #333;
+	background: #ebebeb;
+	border-color: #adadad
+}
+.cart-action-wrap a.rpress-remove-from-cart i.dark-gray {
+    color: #363636;
+}
+.rpress-category-link.nav-scroller-item.dark-gray.active:after {
+	background: #363636;
+}
+.rpress-category-item .dark-gray.active {
+	color: #363636;
+}
+.rpress-category-item a.dark-gray:hover {
+	color: #363636;
+}
 .rpress-submit.button.dark-gray {
 	color: #fff;
 	background: #363636;

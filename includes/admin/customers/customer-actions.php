@@ -633,7 +633,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_batch_single_cust
 function rpress_include_single_customer_recount_tool_batch_processer( $class ) {
 
 	if ( 'RPRESS_Tools_Recount_Single_Customer_Stats' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-single-customer-stats.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-single-customer-stats.php';
 	}
 
 }

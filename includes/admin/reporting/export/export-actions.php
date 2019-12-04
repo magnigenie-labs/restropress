@@ -23,7 +23,7 @@ function rpress_process_batch_export_fooditem() {
 		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export.php';
 
 	do_action( 'rpress_batch_export_class_include', $_REQUEST['class'] );
 
@@ -43,7 +43,7 @@ add_action( 'rpress_fooditem_batch_export', 'rpress_process_batch_export_foodite
  * @return void
  */
 function rpress_export_all_customers() {
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export-customers.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/class-export-customers.php';
 
 	$customer_export = new RPRESS_Customers_Export();
 
@@ -58,7 +58,7 @@ add_action( 'rpress_email_export', 'rpress_export_all_customers' );
  * @return void
  */
 function rpress_export_all_fooditems_history() {
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export-fooditem-history.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/class-export-fooditem-history.php';
 
 	$file_fooditem_export = new RPRESS_RestroPress_History_Export();
 
@@ -98,7 +98,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_payments_batch_ex
 function rpress_include_payments_batch_processer( $class ) {
 
 	if ( 'RPRESS_Batch_Payments_Export' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-payments.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-payments.php';
 	}
 
 }
@@ -122,7 +122,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_customers_batch_e
 function rpress_include_customers_batch_processer( $class ) {
 
 	if ( 'RPRESS_Batch_Customers_Export' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-customers.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-customers.php';
 	}
 
 }
@@ -147,7 +147,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_fooditems_batch_e
 function rpress_include_fooditems_batch_processer( $class ) {
 
 	if ( 'RPRESS_Batch_RestroPress_Export' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-fooditems.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-fooditems.php';
 	}
 
 }
@@ -171,7 +171,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_file_fooditems_ba
 function rpress_include_file_fooditems_batch_processer( $class ) {
 
 	if ( 'RPRESS_Batch_File_Downloads_Export' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-file-fooditems.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-file-fooditems.php';
 	}
 
 }
@@ -195,7 +195,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_sales_export_batc
  */
 function rpress_include_sales_export_batch_processer( $class ) {
 	if ( 'RPRESS_Batch_Sales_Export' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-sales.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-sales.php';
 	}
 }
 
@@ -218,7 +218,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_earnings_report_b
  */
 function rpress_include_earnings_report_batch_processer( $class ) {
 	if ( 'RPRESS_Batch_Earnings_Report_Export' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-earnings-report.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-earnings-report.php';
 	}
 }
 
@@ -241,6 +241,6 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_api_requests_batc
  */
 function rpress_include_api_requests_batch_processer( $class ) {
 	if ( 'RPRESS_Batch_API_Requests_Export' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-api-requests.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-api-requests.php';
 	}
 }

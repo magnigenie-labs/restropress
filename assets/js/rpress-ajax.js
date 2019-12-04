@@ -1,78 +1,65 @@
 var rpress_scripts;
+
 jQuery(document).ready(function ($) {
 
 	// Set Cookie
-function rpress_setCookie(cname, cvalue, exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  var expires = "expires="+d.toUTCString();
-  document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/";
-}
+	function rpress_setCookie(cname, cvalue, exdays) {
+	  var d = new Date();
+	  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	  var expires = "expires="+d.toUTCString();
+	  document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/";
+	}
 
-// Get Cookie
-function rpress_getCookie(cname) {
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0; i<ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1);
-    if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
-  }
-  return "";
-}
-
-	$('input#rpress-allowed-hours').timepicker({
-		startTime: rpress_scripts.open_hours,
-		minTime: rpress_scripts.open_hours,
-	    maxTime: rpress_scripts.close_hours,
-	    defaultTime: rpress_scripts.open_hours,
-	    dropdown: true,
-	    scrollbar: true
-	});
+	// Get Cookie
+	function rpress_getCookie(cname) {
+	  var name = cname + "=";
+	  var ca = document.cookie.split(';');
+	  for(var i=0; i<ca.length; i++) {
+	    var c = ca[i];
+	    while (c.charAt(0)==' ') c = c.substring(1);
+	    if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
+	  }
+	  return "";
+	}
 
 
 	// Hide unneeded elements. These are things that are required in case JS breaks or isn't present
-	$('.rpress-no-js').hide();
-	$('a.rpress-add-to-cart').addClass('rpress-has-js');
+	$( '.rpress-no-js' ).hide();
+	$( 'a.rpress-add-to-cart' ).addClass( 'rpress-has-js' );
 
 	// Send Remove from Cart requests
-	$(document.body).on('click.rpressRemoveFromCart', '.rpress-remove-from-cart', function (event) {
-		var $this  = $(this),
-			item   = $this.data('cart-item'),
-			action = $this.data('action'),
-			id     = $this.data('fooditem-id'),
+	$( '.rpress-sidebar-cart' ).on('click', '.rpress-remove-from-cart', function ( event ) {
+    var $this  = $( this ),
+      item   = $this.data( 'cart-item' ),
+			action = $this.data( 'action' ),
+			id     = $this.data( 'fooditem-id' ),
 			data   = {
 				action: action,
 				cart_item: item
 			};
 
-		 $.ajax({
-			type: "POST",
-			data: data,
-			dataType: "json",
+		$.ajax({
+			type 			: "POST",
+			data 			: data,
+			dataType 	: "json",
 			url: rpress_scripts.ajaxurl,
 			xhrFields: {
 				withCredentials: true
 			},
-			success: function (response) {
-				if (response.removed) {
+			success: function ( response ) {
+        if ( response.removed ) {
+          console.log()
 
-					if ( ( parseInt( rpress_scripts.position_in_cart, 10 ) === parseInt( item, 10 ) ) || rpress_scripts.has_purchase_links ) {
-						window.location = window.location;
-						return false;
-					}
-
-					// Remove the selected cart item
-					$('.rpress-cart').each( function() {
-						$(this).find("[data-cart-item='" + item + "']").parent().remove();
+          // Remove the selected cart item
+					$( '.rpress-cart .rpress-cart-item' ).each( function() {
+						$( this ).find( "[data-cart-item='" + item + "']" ).parents( '.rpress-cart-item' ).remove();
 					});
 
 					//Reset the data-cart-item attributes to match their new values in the RPRESS session cart array
-					$('.rpress-cart').each( function() {
-						var cart_item_counter = 0;
-						$(this).find("[data-cart-item]").each( function() {
-							$(this).attr('data-cart-item', cart_item_counter);
-							cart_item_counter = cart_item_counter + 1;
+					$( '.rpress-cart >li.rpress-cart-item' ).each( function() {
+					 var cart_item_counter = $(this).data('cart-key');
+            $( this ).find( "[data-cart-item]" ).each( function() {
+							$( this ).attr( 'data-cart-item', cart_item_counter );
 						});
 					});
 
@@ -80,41 +67,53 @@ function rpress_getCookie(cname) {
 					// Check to see if the purchase form(s) for this fooditem is present on this page
 					if( $( '[id^=rpress_purchase_' + id + ']' ).length ) {
 						$( '[id^=rpress_purchase_' + id + '] .rpress_go_to_checkout' ).hide();
-						$( '[id^=rpress_purchase_' + id + '] a.rpress-add-to-cart' ).show().removeAttr('data-rpress-loading');
+						$( '[id^=rpress_purchase_' + id + '] a.rpress-add-to-cart' ).show().removeAttr( 'data-rpress-loading' );
+						
 						if ( rpress_scripts.quantities_enabled == '1' ) {
 							$( '[id^=rpress_purchase_' + id + '] .rpress_fooditem_quantity_wrapper' ).show();
 						}
+
 					}
 
-					$('span.rpress-cart-quantity').text( response.cart_quantity );
-					$(document.body).trigger('rpress_quantity_updated', [ response.cart_quantity ]);
+					$( 'span.rpress-cart-quantity' ).text( response.cart_quantity );
+					$( document.body ).trigger( 'rpress_quantity_updated', [ response.cart_quantity ] );
+					
 					if ( rpress_scripts.taxes_enabled ) {
-						$('.cart_item.rpress_subtotal span').html( response.subtotal );
-						$('.cart_item.rpress_cart_tax span').html( response.tax );
+						$( '.cart_item.rpress_subtotal span' ).html( response.subtotal );
+						$( '.cart_item.rpress_cart_tax span' ).html( response.tax );
 					}
 
-					$('.cart_item.rpress_total span').html( response.total );
+					$( '.cart_item.rpress_total span' ).html( response.total );
 
 					if( response.cart_quantity == 0 ) {
-						$('.cart_item.rpress_subtotal,.rpress-cart-number-of-items,.cart_item.rpress_checkout,.cart_item.rpress_cart_tax,.cart_item.rpress_total').hide();
-						$('.rpress-cart').each( function() {
 
-							var cart_wrapper = $(this).parent();
+						
+						$( '.cart_item.rpress_subtotal,.rpress-cart-number-of-items,.cart_item.rpress_checkout,.cart_item.rpress_cart_tax,.cart_item.rpress_total' ).hide();
+						$( '.rpress-cart' ).each( function() {
+
+							var cart_wrapper = $( this ).parent();
+							
 							if ( cart_wrapper ) {
-								cart_wrapper.addClass('cart-empty')
-								cart_wrapper.removeClass('cart-not-empty');
+								cart_wrapper.addClass( 'cart-empty' )
+								cart_wrapper.removeClass( 'cart-not-empty' );
 							}
 
-							$(this).append('<li class="cart_item empty">' + rpress_scripts.empty_cart_message + '</li>');
+							$( this ).append( '<li class="cart_item empty hello">' + rpress_scripts.empty_cart_message + '</li>' );
 						});
 					}
 
-					$(document.body).trigger('rpress_cart_item_removed', [ response ]);
+					$( document.body ).trigger( 'rpress_cart_item_removed', [ response ] );
+					
+					// check if no item in cart left
+					if ( $( 'li.rpress-cart-item' ).length == 0 ){
+						$( 'li.delivery-items-options' ).hide();
+						$( 'a.rpress-clear-cart' ).hide();
+					}
+
 				}
 			}
 		}).fail(function (response) {
 			if ( window.console && window.console.log ) {
-				console.log( response );
 			}
 		}).done(function (response) {
 
@@ -124,35 +123,28 @@ function rpress_getCookie(cname) {
 	});
 
 	//Check Local Storage Data
-	function GetStorageDate() {
+	function rp_get_storage_dates() {
 		var DeliveryMethod = rpress_getCookie('deliveryMethod');
 		var DeliveryTime = rpress_getCookie('deliveryTime');
 
-		if( DeliveryMethod == undefined || DeliveryMethod == '' ) 
+		if( typeof DeliveryMethod == undefined || DeliveryMethod == '' )
 			return false;
 		else
-			return true; 
+			return true;
 	}
 
-	var unavailableDates = rpress_scripts.rpress_holidays;
+	$( '.rpress-add-to-cart' ).click(function(e) {
+		
+		var rp_get_delivery_data = rp_get_storage_dates();
+		
+		$( '#rpressModal' ).removeClass( 'rpress-delivery-options' );
+		$( '#rpressModal' ).removeClass( 'rpress-food-options' );
+		$( '#rpressModal .qty' ).val( 1 );
 
-  function unavailable(date) {
-		ymd = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-
-    if( $.inArray(ymd, unavailableDates) !== -1 ) {
-    	return { classes: 'holidays' };
-    }
-  }
-
-	$('.rpress-add-to-cart').click(function(e) {
-		var GetDeliveryData = GetStorageDate();
-		$('#rpressModal').removeClass('rpress-delivery-options');
-		$('#rpressModal').removeClass('rpress-food-options');
-
-		if( ! GetDeliveryData ) {
+		if( ! rp_get_delivery_data ) {
+		
 			var action = 'rpress_show_delivery_options';
 			var baseClass = 'rpress-delivery-options';
-			var Title = 'Your Order Settings';
 
 			if( rpress_scripts.check_delivery_fee_enabled == 1 ) {
 				setTimeout(function(){initAutocomplete()},'2000');
@@ -161,132 +153,61 @@ function rpress_getCookie(cname) {
 		else {
 			var action = 'rpress_show_products';
 			var baseClass = 'rpress-food-options';
-			var Title = $(this).attr('data-title');
 		}
-		
+
 		e.preventDefault();
-		var $this = $(this);
-		var pid 	= $this.attr('data-fooditem-id');
-		var price = $this.attr('data-price');
+		var $this = $( this );
+		var pid 	= $this.attr( 'data-fooditem-id' );
+		var price = $this.attr( 'data-price' );
 		var action = action;
 
-
-		var data   = {
-			action: action,
-			fooditem_id: pid,
-			fooditem_price: price,
+		var data = {
+			action     			: action,
+			fooditem_id			: pid,
+			fooditem_price 	: price,
 		};
 
 		$.fancybox.open({
 			type     : 'html',
-			afterShow : function(instance, current) {
+			afterShow : function( instance, current ) {
 				instance.showLoading( current );
 			}
 		});
 
 		$.ajax({
-			type: "POST",
-			data: data,
+			type : "POST",
+			data : data,
 			dataType: "json",
 			url: rpress_scripts.ajaxurl,
 			xhrFields: {
 				withCredentials: true
 			},
-			success: function(response) {
+			
+			success: function( response ) {
 
-				$.fancybox.close(true);
-				$('#rpressModal .modal-title').html(Title);
-				$('#rpressModal .modal-body').html(response);
+				$.fancybox.close( true );
+				
+				$( '#rpressModal .modal-title' ).html( response.data.html_title );
+				$( '#rpressModal .modal-body' ).html( response.data.html );
 
-				$('#rpressModal').addClass(baseClass);
+				$( '#rpressModal' ).addClass( baseClass );
 
 				if( pid !== '' && price !== '' ) {
-					$('#rpressModal').find('.submit-fooditem-button').attr('data-item-id', pid); //setter
-					$('#rpressModal').find('.submit-fooditem-button').attr('data-item-price', price);
+					$( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-item-id', pid ); //setter
+					$( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-item-price', price );
+          $( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-item-qty', 1 );
 				}
-				$('#rpressModal').find('.submit-fooditem-button').attr('data-cart-action', 'add-cart');
-				$('#rpressModal').find('.submit-fooditem-button').text(rpress_scripts.add_to_cart);
 				
-				$('#rpressModal').modal();
-				
-				// Date picker disable past dates
-				var date = new Date();
-				date.setDate(date.getDate());
+				$( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-cart-action', 'add-cart' );
+				$( '#rpressModal' ).find( '.submit-fooditem-button' ).text( rpress_scripts.add_to_cart );
 
-				if( $('.rpress_get_delivery_dates').length ) {
-					setTimeout(function(){initAutocomplete()},'1000');
-
-					$('.rpress_get_delivery_dates').datepicker({
-    				autoclose: true,
-    				format: 'yyyy-mm-dd',
-    				todayHighlight: true,
-    				endDate : rpress_scripts.rpress_pre_order_until,
-    				beforeShowDay: unavailable,
-    				startDate: date
-  				});
-
-  				$(".rpress_get_delivery_dates").bind("changeDate", function(e) {
-						var unavailableDates = rpress_scripts.rpress_holidays;
-						var SelectedDate = $(this).val();
-
-						if( $.inArray(SelectedDate, unavailableDates) !== -1 ) {
-							//Show Holiday Message
-							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').addClass('holiday');
-							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text(rpress_scripts.holiday_message);
-							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
-							$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
-    					//$(this).parents('.rpress-delivery-wrap').find('.rpress-store-closed-info').show();
-    				}
-    				else {
-    					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('holiday');
-    					$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
-    					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
-							var d = new Date(SelectedDate);
-							var dayName = d.getDay()
-    					
-    					if( dayName !== '' ) {
-    						var getTimes = rpress_scripts.cutoff_hours[dayName];
-    						var getOpenHrs = rpress_scripts.store_open_hours[dayName];
-    						$('input#rpress-delivery-hours').val('');
-    						$('input#rpress-delivery-hours').timepicker('remove');
-
-	  						$('input#rpress-delivery-hours').timepicker({
-									'minTime' :  getOpenHrs.open_time,
-									'maxTime' :  getOpenHrs.close_time,
-									'disableTimeRanges': [
-											[getTimes.cutoff_starts, getTimes.cutoff_ends],
-										]
-								});
-
-    						$('input#rpress-pickup-hours').val('');
-    						$('input#rpress-pickup-hours').timepicker('remove');
-
-
-    						$('input#rpress-pickup-hours').timepicker({
-									'minTime' :  getOpenHrs.open_time,
-									'maxTime' :  getOpenHrs.close_time,
-								});
-    					}
-    				
-    					//$(this).parents('.rpress-delivery-wrap').find('.rpress-store-closed-info').hide();
-    				}
-					});
-
-				}
-
-				else {
-					$('.rpress-delivery-options input.rpress-hrs').timepicker({
-						'scrollDefault': 'now',
-						'minTime' :  rpress_scripts.open_hours,
-						'maxTime' :  rpress_scripts.close_hours
-					});
-				}
+				$( '#rpressModal' ).modal();
 
 				// Make the tab open
 				if( $('.rpress-tabs-wrapper').length ) {
 					$('#rpressdeliveryTab > li:first-child > a')[0].click();
 				}
-				
+
 			}
 		});
 		return false;
@@ -317,20 +238,19 @@ function rpress_getCookie(cname) {
 			Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
 			return false;
 		}
-		
+
 		if( DeliveryTime == '' ) {
 			Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text('Please select time for ' + DeliveryMethod);
 			Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
 			return false;
 		}
 
-
 		Selected.parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
 		Selected.text(rpress_scripts.please_wait);
 
 		rpress_setCookie('deliveryMethod', DeliveryMethod, 1);
 		rpress_setCookie('deliveryTime', DeliveryTime, 1);
-		rpress_setCookie('OrderDate', DeliveryDates, 1);
+		rpress_setCookie('DeliveryDate', DeliveryDates, 1);
 
 		if( FoodItemId ) {
 			$('#rpressModal').modal('hide');
@@ -345,8 +265,8 @@ function rpress_getCookie(cname) {
       var DeliveryTime = rpress_getCookie('deliveryTime');
 
       if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
-      	$('.delivery-items-options').find('.delivery-opts').html('<span class="delMethod">' +DeliveryMethod+ '</span> <span class="delTime"> at '+DeliveryTime+ '</span>' ); 
-      	$('#rpressModal').modal('hide');     
+      	$('.delivery-items-options').find('.delivery-opts').html('<span class="delMethod">' +DeliveryMethod+ '</span> <span class="delTime"> at '+DeliveryTime+ '</span>' );
+      	$('#rpressModal').modal('hide');
       }
 		}
 	});
@@ -451,7 +371,7 @@ function rpress_getCookie(cname) {
 	//Update delivery process
   $('body').on('click', '.delivery-change', function(e) {
     e.preventDefault();
-    
+
     var action = 'rpress_show_delivery_options';
 		var baseClass = 'fancybox-delivery-options';
 		$('#rpressModal').removeClass('rpress-food-options');
@@ -481,108 +401,39 @@ function rpress_getCookie(cname) {
 
 				$.fancybox.close(true);
 
-				$('#rpressModal .modal-title').html('Update Order Settings');
+				$('#rpressModal .modal-title').html(response.data.html_title);
 
 				$('#rpressModal').addClass('rpress-delivery-options');
 
-
-				$('#rpressModal .modal-body').html(response);
+				$('#rpressModal .modal-body').html(response.data.html);
 				$('#rpressModal').modal();
 
 				var DeliveryMethod = rpress_getCookie('deliveryMethod');
 				var DeliveryTime = rpress_getCookie('deliveryTime');
-				var OrderDate = rpress_getCookie('OrderDate');
+				var DeliveryDate = rpress_getCookie('DeliveryDate');
+
+        console.log(DeliveryTime);
 
 				if( DeliveryMethod !== '' || DeliveryMethod !== undefined ) {
-					// $('.rpress-delivery-wrap').find('.rpress-'+DeliveryMethod+'-time-wrap' ).show();
-					// $('.rpress-delivery-wrap').find('.rpress-'+ DeliveryMethod ).val(DeliveryTime);
 					$('.rpress-delivery-wrap').find('.rpress-pickup').val(DeliveryTime);
 					$('.rpress-delivery-wrap').find('.rpress-delivery').val(DeliveryTime);
-					//$('#rpressModal').find('rpress-pickup-time-wrap.rpress-time-wrap').show();
 					$('.rpress-delivery-wrap').find('.rpress-delivery-time-wrap' ).show();
 					$('.rpress-delivery-wrap').find('.rpress-pickup-time-wrap' ).show();
-
 				}
 
-				if( OrderDate !== '' || OrderDate != undefined ) {
-					$('.rpress-delivery-wrap').find('.rpress_get_delivery_dates').val(OrderDate);
+				if( DeliveryDate !== '' || DeliveryDate != undefined ) {
+					$('.rpress-delivery-wrap').find('.rpress_get_delivery_dates').val(DeliveryDate);
 				}
 
 				var date = new Date();
 				date.setDate(date.getDate());
 
-				if( $('.rpress_get_delivery_dates').length ) {
-					$('.rpress_get_delivery_dates').datepicker({
-    				autoclose: true,
-    				format: 'yyyy-mm-dd',
-    				todayHighlight: true,
-    				endDate : rpress_scripts.rpress_pre_order_until,
-    				//beforeShowDay: unavailable,
-    				startDate: date
-  				});
-
-  				var unavailableDates = rpress_scripts.rpress_holidays;
-
-  				$(".rpress_get_delivery_dates").bind("changeDate", function(e) {
-						
-						var SelectedDate = $(this).val();
-
-						if( $.inArray(SelectedDate, unavailableDates) !== -1 ) {
-							//Show Holiday Message
-							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').addClass('holiday');
-							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').text(rpress_scripts.holiday_message);
-							$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('disabled').addClass('enable');
-							$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').hide();
-    				}
-    				else {
-    					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('holiday');
-    					$(this).parents('#rpressModal').find('.delivery-settings-wrapper.active .rpress-time-wrap').show();
-    					$(this).parents('.rpress-delivery-wrap').find('.rpress-errors-wrap').removeClass('enable').addClass('disabled');
-							var d = new Date(SelectedDate);
-							var dayName = d.getDay();
-    					
-    					if( dayName !== '' ) {
-    						var getTimes = rpress_scripts.cutoff_hours[dayName];
-    						var getOpenHrs = rpress_scripts.store_open_hours[dayName];
-    						
-    						$('input#rpress-delivery-hours').val('');
-    						$('input#rpress-pickup-hours').val('');
-
-    						$('input#rpress-delivery-hours').timepicker('remove');
-    						$('input#rpress-pickup-hours').timepicker('remove');
-
-    						$('input#rpress-delivery-hours').timepicker({
-									'scrollDefault': 'now',
-									'minTime' :  getOpenHrs.open_time,
-									'maxTime' :  getOpenHrs.close_time,
-									'disableTimeRanges': [
-										[getTimes.cutoff_starts, getTimes.cutoff_ends],
-										]
-								});
-
-    						$('input#rpress-pickup-hours').timepicker({
-									'scrollDefault': 'now',
-									'minTime' :  getOpenHrs.open_time,
-									'maxTime' :  getOpenHrs.close_time,
-								});
-    					}
-    				}
-					});
-				}
-
-				else {
-					$('.rpress-delivery-options input.rpress-hrs').timepicker({
-						'scrollDefault': 'now',
-						'minTime' :  rpress_scripts.open_hours,
-						'maxTime' :  rpress_scripts.close_hours
-					});
-				}
 
 				// Make the tab open
 				if( $('.rpress-tabs-wrapper').length ) {
 					$('.rpress-delivery-wrap').find('a#nav-'+ DeliveryMethod + '-tab').trigger('click');
 				}
-				
+
 			}
 		});
 		return false;
@@ -727,7 +578,7 @@ var placeSearch, autocomplete;
       	// fields in the form.
       	autocomplete.addListener('place_changed', fillInAddress);
     	//}
-      
+
     }
 
     function fillInAddress() {
@@ -738,7 +589,7 @@ var placeSearch, autocomplete;
 
       // Get each component of the address from the place details
       // and fill the corresponding field on the form.
-     
+
     }
 
     // Bias the autocomplete object to the user's geographical location,
@@ -785,5 +636,3 @@ function rpress_load_gateway( payment_mode ) {
 		}
 	);
 }
-
-

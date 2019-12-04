@@ -107,7 +107,7 @@ class RPRESS_Pie_Graph extends RPRESS_Graph {
 	public function load_additional_scripts() {
 		// Use minified libraries if SCRIPT_DEBUG is turned off
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		wp_enqueue_script( 'jquery-flot-pie', RPRESS_PLUGIN_URL . 'assets/js/jquery.flot.pie' . $suffix . '.js' );
+		wp_enqueue_script( 'jquery-flot-pie', RP_PLUGIN_URL . 'assets/js/jquery.flot.pie' . $suffix . '.js' );
 	}
 
 	/**

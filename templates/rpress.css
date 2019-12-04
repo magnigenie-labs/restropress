@@ -230,7 +230,9 @@
 #rpress_checkout_form_wrap input[type=tel],
 #rpress_checkout_form_wrap input[type=text],
 #rpress_checkout_form_wrap textarea {
-	padding: 4px 6px
+	padding: 4px 6px;
+	border: 1px solid #ebebeb;
+	background: #fff;
 }
 
 #rpress_checkout_form_wrap input[type=radio] {
@@ -324,7 +326,7 @@
 }
 
 #rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-submit {
-	padding: 3px 12px;
+	padding: 8px 12px;
 	margin-bottom: 2px
 }
 
@@ -911,11 +913,11 @@ input.rpress_submit_plain {
 }
 
 /* Gray Color */
-a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart span.cart-total.gray, 
-.special-margin.gray a, 
-.special-inst.gray a, 
-.rpress-submit.button.gray .rpress-add-to-cart-label, 
-.btn.btn-block.btn-primary.gray:hover, 
+a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart span.cart-total.gray,
+.special-margin.gray a,
+.special-inst.gray a,
+.rpress-submit.button.gray .rpress-add-to-cart-label,
+.btn.btn-block.btn-primary.gray:hover,
 .delivery-change.gray {
 	color: #ccc;
 }
@@ -935,7 +937,7 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 .rpress-popup-actions .submit-fooditem-button.gray,
 .btn.btn-block.btn-primary.gray,
 .rpress-cart .rpress_checkout.gray a,
- html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > li.active > a,
  html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > html body #rpressModal .rpress-delivery-wrap.gray li.active > html body #rpressModal .rpress-delivery-wrap.gray a:hover {
 	background: #f0f0f0;
 }
@@ -999,7 +1001,7 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 .rpress-popup-actions .submit-fooditem-button.blue,
 .btn.btn-block.btn-primary.blue,
 .rpress-cart .rpress_checkout.blue a,
- html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > li.active > a,
  html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > html body #rpressModal .rpress-delivery-wrap.blue li.active > html body #rpressModal .rpress-delivery-wrap.blue a:hover {
 	background: #3276b1;
 }
@@ -1043,7 +1045,7 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 .rpress-popup-actions .submit-fooditem-button.red,
 .btn.btn-block.btn-primary.red,
 .rpress-cart .rpress_checkout.red a,
- html body #rpressModal .rpress-delivery-wrap.red .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.red .nav-pills > li.active > a,
  html body #rpressModal .rpress-delivery-wrap.red .nav-pills > html body #rpressModal .rpress-delivery-wrap.red li.active > html body #rpressModal .rpress-delivery-wrap.red a:hover {
 	background-color: #ac2925;
 }
@@ -1067,10 +1069,10 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 	background-image: none
 }
 
-.rpress-sidebar-cart-wrap .rpress-clear-cart.green:hover, .rpress_fooditems_list h5.rpress-cat.green, ul.rpress-cart span.cart-total.green, 
-.special-margin.green a, .special-inst.green a, 
-.rpress-submit.button.green .rpress-add-to-cart-label, 
-.btn.btn-block.btn-primary.green:hover, 
+.rpress-sidebar-cart-wrap .rpress-clear-cart.green:hover, .rpress_fooditems_list h5.rpress-cat.green, ul.rpress-cart span.cart-total.green,
+.special-margin.green a, .special-inst.green a,
+.rpress-submit.button.green .rpress-add-to-cart-label,
+.btn.btn-block.btn-primary.green:hover,
 .delivery-change.green, a.nav-link.green:hover {
 	color: #5cb85c;
 }
@@ -1079,7 +1081,7 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 .rpress-popup-actions .submit-fooditem-button.green,
 .btn.btn-block.btn-primary.green,
 .rpress-cart .rpress_checkout.green a,
- html body #rpressModal .rpress-delivery-wrap.green .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.green .nav-pills > li.active > a,
  html body #rpressModal .rpress-delivery-wrap.green .nav-pills > html body #rpressModal .rpress-delivery-wrap.green li.active > html body #rpressModal .rpress-delivery-wrap.green a:hover {
 	background: #47a447;
 }
@@ -1107,11 +1109,11 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 	background-image: none
 }
 
-.rpress-sidebar-cart-wrap .rpress-clear-cart.yellow:hover, .rpress_fooditems_list h5.rpress-cat.yellow, ul.rpress-cart span.cart-total.yellow, 
-.special-margin.yellow a, 
-.special-inst.yellow a, 
-.rpress-submit.button.yellow .rpress-add-to-cart-label, 
-.btn.btn-block.btn-primary.yellow:hover, 
+.rpress-sidebar-cart-wrap .rpress-clear-cart.yellow:hover, .rpress_fooditems_list h5.rpress-cat.yellow, ul.rpress-cart span.cart-total.yellow,
+.special-margin.yellow a,
+.special-inst.yellow a,
+.rpress-submit.button.yellow .rpress-add-to-cart-label,
+.btn.btn-block.btn-primary.yellow:hover,
 .delivery-change.yellow, a.nav-link.yellow:hover {
 	color: #f0ad4e;
 }
@@ -1125,7 +1127,7 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 .rpress-popup-actions .submit-fooditem-button.yellow,
 .btn.btn-block.btn-primary.yellow,
 .rpress-cart .rpress_checkout.yellow a,
- html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > li.active > a,
  html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > html body #rpressModal .rpress-delivery-wrap.yellow li.active > html body #rpressModal .rpress-delivery-wrap.yellow a:hover {
 	background-color: #d58512;
 }
@@ -1148,7 +1150,7 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 .rpress-popup-actions .submit-fooditem-button.orange,
 .btn.btn-block.btn-primary.orange,
 .rpress-cart .rpress_checkout.orange a,
- html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > li.active > a, 
+ html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > li.active > a,
  html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > html body #rpressModal .rpress-delivery-wrap.orange li.active > html body #rpressModal .rpress-delivery-wrap.orange a:hover {
 	background-color: #ed9c28;
 }
@@ -1165,7 +1167,7 @@ a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart
 	background-image: none
 }
 
-/* Dark Gray Color */ 
+/* Dark Gray Color */
 .rpress-submit.button.dark-gray {
 	color: #fff;
 	background: #363636;

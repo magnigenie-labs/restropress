@@ -23,7 +23,7 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
 // Load RPRESS file.
-include_once( 'restropress.php' );
+include_once( 'restro-press.php' );
 
 global $wpdb, $wp_roles;
 
@@ -98,7 +98,6 @@ if( rpress_get_option( 'uninstall_on_delete' ) ) {
 	// Remove all database tables
 	$wpdb->query( "DROP TABLE IF EXISTS " . $wpdb->prefix . "rpress_customers" );
 	$wpdb->query( "DROP TABLE IF EXISTS " . $wpdb->prefix . "rpress_customermeta" );
-	$wpdb->query( "DROP TABLE IF EXISTS " . $wpdb->prefix . "rpress_order_notification" );
 
 	/** Cleanup Cron Events */
 	wp_clear_scheduled_hook( 'rpress_daily_scheduled_events' );

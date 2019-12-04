@@ -1,1 +1,1 @@
-<div class="rpress_fooditems_list rp-col-lg-7 rp-col-md-7 rp-col-sm-9 rp-col-xs-12">
+<div class="rpress-section rp-col-lg-12 rp-col-md-12 rp-col-sm-12 rp-col-xs-12">

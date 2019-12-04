@@ -1,43 +1,5 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="528.899px" height="528.899px" viewBox="0 0 528.899 528.899" style="enable-background:new 0 0 528.899 528.899;"
-	 xml:space="preserve">
-<g>
-	<path d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
-		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
-		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
-		L27.473,390.597L0.3,512.69z"/>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="13.497" height="13.431" viewBox="0 0 13.497 13.431">
+  <g id="pencil-edit-button" transform="translate(73.502 58)">
+    <path id="Path_11" data-name="Path 11" d="M8.393,3.53l2.746,2.746-6.95,6.95L1.445,10.48Zm4.829-.662L12,1.644a1.215,1.215,0,0,0-1.716,0L9.109,2.817l2.746,2.746,1.368-1.368A.936.936,0,0,0,13.223,2.868ZM.008,14.339a.312.312,0,0,0,.378.372l3.06-.742L.7,11.224Z" transform="translate(-73.503 -59.289)" fill="#2e2e2e"/>
+  </g>
 </svg>

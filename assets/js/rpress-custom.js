@@ -11,11 +11,12 @@ jQuery(function($) {
     return "";
   }
 
-	$( document ).on( "click", ".submit-fooditem-button", function() { 
+	$( document ).on( "click", ".submit-fooditem-button", function() {
 
     if( $(this).attr('data-cart-action') == 'add-cart' ) {
-    
-      var Selected = $(this);  	   
+
+      var Selected = $(this);
+      Selected.addClass('disable_click');
   		var Form = $(this).parents('.rpress-food-options').find('form#fooditem-details');
   		var itemId = $(this).attr('data-item-id');
   		var itemPrice = $(this).attr('data-item-price');
@@ -34,7 +35,7 @@ jQuery(function($) {
   			special_instruction: SpecialInstruction,
   			post_data: Form.serializeArray()
   		};
-		
+
   		if( itemId !== '' ) {
   			$.ajax({
   				type: "POST",
@@ -45,9 +46,11 @@ jQuery(function($) {
   					withCredentials: true
   				},
   				success: function(response) {
+            // console.log(response);
   				  if( response ) {
+              Selected.removeClass('disable_click');
               Selected.text(RpressVars.added_into_cart);
-              
+
               var DeliveryMethod = rpress_getCookie('deliveryMethod');
               var DeliveryTime = rpress_getCookie('deliveryTime');
               var DeliveryFee = rpress_getCookie('rpress_delivery_price');
@@ -58,18 +61,17 @@ jQuery(function($) {
               $('ul.rpress-cart').find('li.cart_item.rpress_cart_tax').remove();
               $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress-delivery-fee').remove();
               $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress_subtotal').remove();
-              
+
               if( response.delivery_fee !== undefined ) {
-                $( "<li class='cart_item rpress-cart-meta rpress-delivery-fee'>Delivery Fee <span class='cart-delivery-fee'>"+response.delivery_fee+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress_total" );
-                $( "<li class='cart_item rpress-cart-meta rpress_subtotal'>Subtotal <span class='cart-sub-total'>"+response.subtotal+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress-delivery-fee" );
+                // $( "<li class='cart_item rpress-cart-meta rpress-delivery-fee'>Delivery Fee <span class='cart-delivery-fee'>"+response.delivery_fee+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress_total" );
+                // $( "<li class='cart_item rpress-cart-meta rpress_subtotal'>Subtotal <span class='cart-sub-total'>"+response.subtotal+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress-delivery-fee" );
                 $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress-cart-meta.rpress_subtotal');
               }
               else {
                 $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
               }
-  						
-  						$('.rpress-cart-number-of-items').find('.rpress-cart-quantity').text(response.cart_quantity);
-  						$('.rpress-cart-number-of-items').css('display', 'block');
+
+  						$('.rpress_total').find('.rpress-cart-quantity').show().text(response.cart_quantity);
   						$('.cart_item.rpress-cart-meta.rpress_total').find('.cart-total').text(response.total);
               $('.cart_item.rpress-cart-meta.rpress_subtotal').find('.subtotal').text(response.total);
   						$('.cart_item.rpress-cart-meta.rpress_total').css('display', 'block');
@@ -78,14 +80,14 @@ jQuery(function($) {
   						$('.cart_item.rpress_checkout').css('display', 'block');
 
 
-              
+
               if( DeliveryMethod !== '' &&  DeliveryTime !== '' ) {
                 $('.delivery-items-options').find('.delivery-opts').html('<span class="delMethod">'+ DeliveryMethod +'</span><span class="delTime"> at '+ DeliveryTime + '</span>' );
 
                 if( $('.delivery-wrap .delivery-change').length == 0 ) {
                   $( "<span class='delivery-change'>Change?</span>" ).insertBefore( ".delivery-opts" );
                 }
-                
+
               }
 
   						$('.delivery-items-options').css('display', 'block');
@@ -96,6 +98,13 @@ jQuery(function($) {
                 $(TaxHtml).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
                 $(TotalHtml).insertBefore('ul.rpress-cart li.cart_item.rpress_cart_tax');
               }
+
+              if ( $( 'li.rpress-cart-item' ).length > 0 ){
+                $( 'a.rpress-clear-cart' ).show();
+              }else {
+                $( 'a.rpress-clear-cart' ).hide();
+              }
+
   						$('#rpressModal').modal('hide');
   					}
   				}
@@ -104,13 +113,15 @@ jQuery(function($) {
     }
 	});
 
-	jQuery(document).on('click', 'a.rpress-edit-from-cart', function() {
-		var CartItemId = $(this).attr('data-remove-item');
-		var FoodItemId = $(this).attr('data-item-id');
-		var FoodItemName = $(this).attr('data-item-name');
-		var FoodItemPrice = $(this).attr('data-item-price');
+	jQuery( '.rpress-sidebar-cart' ).on( 'click', 'a.rpress-edit-from-cart', function() {
+    $( this ).parents( '.rpress-cart-item' ).addClass( 'edited' );
+		var CartItemId = $( this ).attr( 'data-remove-item' );
+		var FoodItemId = $( this ).attr( 'data-item-id' );
+		var FoodItemName = $( this ).attr( 'data-item-name' );
+		var FoodItemPrice = $( this ).attr( 'data-item-price' );
+    var FoodQuantity = $( this ).parents( '.rpress-cart-item' ).find( '.cart-item-quantity-wrap' ).children( '.rpress-cart-item-qty' ).text();
 		var action = 'rpress_edit_food_item';
-    $('#rpressModal').removeClass('rpress-delivery-options');
+    $( '#rpressModal' ).removeClass( 'rpress-delivery-options' );
 
 		var data   = {
 			action: action,
@@ -138,16 +149,16 @@ jQuery(function($) {
 			},
 			success: function(response) {
         $.fancybox.close();
-				$('#rpressModal .modal-title').html(FoodItemName);
-        $('#rpressModal .modal-body').html(response);
+				$( '#rpressModal .modal-title' ).html( FoodItemName );
+        $( '#rpressModal .modal-body').html( response );
+        $( "input[name='quantity']" ).val(FoodQuantity);
+        $( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-item-id', FoodItemId ); //setter
+        $( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-item-price', FoodItemPrice );
+        $( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-cart-key', CartItemId );
+        $( '#rpressModal' ).find( '.submit-fooditem-button' ).attr( 'data-cart-action', 'update-cart' );
+        $( '#rpressModal' ).find( '.submit-fooditem-button' ).text( rpress_scripts.update_cart );
 
-        $('#rpressModal').find('.submit-fooditem-button').attr('data-item-id', FoodItemId); //setter
-        $('#rpressModal').find('.submit-fooditem-button').attr('data-item-price', FoodItemPrice);
-        $('#rpressModal').find('.submit-fooditem-button').attr('data-cart-key', CartItemId);
-        $('#rpressModal').find('.submit-fooditem-button').attr('data-cart-action', 'update-cart');
-        $('#rpressModal').find('.submit-fooditem-button').text(rpress_scripts.update_cart);
-        
-        $('#rpressModal').modal();
+        $( '#rpressModal' ).modal();
 			}
 		});
 		}
@@ -157,7 +168,7 @@ jQuery(function($) {
 	$( document ).on( "click", ".submit-fooditem-button", function() {
     if( $(this).attr('data-cart-action') == 'update-cart' ) {
       var Selected = $(this);
-      var selectedList = $(this).parents('li.rpress-cart-item');     
+      var selectedList = $(this).parents('li.rpress-cart-item');
       var Form      = $(this).parents('#rpressModal').find('form#fooditem-update-details');
       var itemId    = $(this).attr('data-item-id');
       var itemPrice = $(this).attr('data-item-price');
@@ -191,35 +202,32 @@ jQuery(function($) {
           success: function(response) {
             if( response ) {
               Selected.text(RpressVars.added_into_cart);
-            
-              $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, element) {
-                if( index == cartKey ) {
-                  $(this).remove();
-                }
-              });
 
-              $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress-delivery-fee').remove();
-              $('ul.rpress-cart').find('li.cart_item.rpress-cart-meta.rpress_subtotal').remove();
-            
+              // $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, element) {
+              //   if( index == cartKey ) {
+              //     $(this).remove();
+              //   }
+              // });
+
               $('ul.rpress-cart').find('li.rpress_total .cart-total').text(response.total);
               $('ul.rpress-cart').find('li.cart_item.empty').remove();
 
               if( typeof response.delivery_fee !== "undefined" ) {
-                $( "<li class='cart_item rpress-cart-meta rpress-delivery-fee'>Delivery Fee <span class='cart-delivery-fee'>"+response.delivery_fee+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress_total" );
-                $( "<li class='cart_item rpress-cart-meta rpress_subtotal'>Subtotal <span class='cart-sub-total'>"+response.subtotal+"</span></li>" ).insertBefore( "ul.rpress-cart li.cart_item.rpress-delivery-fee" );
                 $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress-cart-meta.rpress_subtotal');
               }
               else {
-                $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
+                // $(response.cart_item).insertBefore('ul.rpress-cart li.cart_item.rpress_total');
+                $( 'ul.rpress-cart' ).find( 'li.edited' ).replaceWith( response.cart_item );
               }
 
-              $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, item) {
-                $(item).attr('data-cart-key', index);
-                $(item).find('.rpress-edit-from-cart').attr('data-cart-item', index);
-                $(item).find('.rpress-edit-from-cart').attr('data-remove-item', index);
-                $(item).find('.rpress-remove-from-cart').attr('data-cart-item', index);
-              });
-            
+              $( 'ul.rpress-cart' ).find( 'li' ).removeClass( 'edited' );
+              // $('ul.rpress-cart').find('li.rpress-cart-item').each(function(index, item) {
+              //   $(item).attr('data-cart-key', index);
+              //   $(item).find('.rpress-edit-from-cart').attr('data-cart-item', index);
+              //   $(item).find('.rpress-edit-from-cart').attr('data-remove-item', index);
+              //   $(item).find('.rpress-remove-from-cart').attr('data-cart-item', index);
+              // });
+
               $('#rpressModal').modal('hide');
             }
           }
@@ -232,13 +240,13 @@ jQuery(function($) {
 	$( document ).on('click', 'a.rpress-clear-cart', function(e) {
 		e.preventDefault();
     var Selected = $(this);
-    var OldText = $(this).text();
+    var OldText = $(this).html();
 		var action = 'rpress_clear_cart';
 		var data = {
 			action: action
 		}
     $(this).text(RpressVars.wait_text);
-		
+
 		$.ajax({
 			type: "POST",
 			data: data,
@@ -259,7 +267,8 @@ jQuery(function($) {
 					$('ul.rpress-cart').append(response.response);
 					$('.rpress-cart-number-of-items').css('display','none');
           $('.delivery-items-options').css('display', 'none');
-          Selected.text(OldText);
+          Selected.html(OldText);
+          Selected.hide();
 				}
 			}
 		});
@@ -267,31 +276,30 @@ jQuery(function($) {
 
 
 	//quantity Minus
-	var liveQtyVal; 
+	var liveQtyVal;
 
 	$(document).on('click', '.qtyminus', function(e) {
 		// Stop acting like a button
     e.preventDefault();
-    
+
     // Get the field name
-    fieldName = $(this).attr('field');
-    
+    fieldName = 'quantity';
+
     // Get its current value
     var currentVal = parseInt($('input[name='+fieldName+']').val());
-       
+
     // If it isn't undefined or its greater than 0
     if (!isNaN(currentVal) && currentVal > 1) {
-            
+
     // Decrement one only if value is > 1
     	$('input[name='+fieldName+']').val(currentVal - 1);
-      $('.qtyplus').val("+").removeAttr('style');
+      $('.qtyplus').removeAttr('style');
       liveQtyVal = currentVal - 1;
-    } 
+    }
     else {
     	// Otherwise put a 0 there
       $('input[name='+fieldName+']').val(1);
-      $('.qtyminus').val("-").css('color','#aaa');
-      $('.qtyminus').val("-").css('cursor','not-allowed');
+      $('.qtyminus').css('color','#aaa').css('cursor','not-allowed');
       liveQtyVal = 1;
     }
     $(this).parents('div.modal-footer').find('a.submit-fooditem-button').attr('data-item-qty', liveQtyVal);
@@ -300,24 +308,30 @@ jQuery(function($) {
 	});
 
   //Show Image on Modal
-  $('.rpress-pop').on('click', function() {
-      $('.imagepreview').attr('src', $(this).find('img').attr('src'));
-      $('#rpressImageModal').modal('show');   
-    }); 
+  $(".rpress-thumbnail-popup").fancybox({
+    openEffect  : 'elastic',
+    closeEffect : 'elastic',
+
+    helpers : {
+      title : {
+        type : 'inside'
+      }
+    }
+  });
 
 
 	$(document).on('click', '.qtyplus', function(e) {
 		// Stop acting like a button
     e.preventDefault();
-    
+
     // Get the field name
-    fieldName = $(this).attr('field');
+    fieldName = 'quantity';
     // Get its current value
     var currentVal = parseInt($('input[name='+fieldName+']').val());
     // If is not undefined
     if (!isNaN(currentVal)) {
     	$('input[name='+fieldName+']').val(currentVal + 1);
-      $('.qtyminus').val("-").removeAttr('style');
+      $('.qtyminus').removeAttr('style');
       liveQtyVal = currentVal + 1;
     } else {
     	// Otherwise put a 0 there
@@ -379,8 +393,8 @@ jQuery(function($) {
           ErrorHtml += '<div class="RPressMinOrderWrap">';
           ErrorHtml += '<p id="RPressMinOrder">'+ ErrorString +'';
           ErrorHtml += '<a href="javascript:void(0)" title="Close" id="rpress-err-close-button">&times;</a>';
-          ErrorHtml += '</p></div>'; 
-             
+          ErrorHtml += '</p></div>';
+
           document.body.insertAdjacentHTML('beforeend' , ErrorHtml );
           $("#RPressError").fancybox().trigger('click');
         }
@@ -392,7 +406,7 @@ jQuery(function($) {
     });
   });
 
-  if ($(window).width() > 991) {      
+  if ($(window).width() > 991) {
     var TotalHeight = 120;
 
     if (jQuery(".sticky-sidebar").length != '') {
@@ -422,7 +436,7 @@ jQuery(function($) {
     }, 500);
   }
 
-  
+
   //jQuery live search
   $('.rpress_fooditems_list').find('.rpress-title-holder a').each(function(){
     $(this).attr('data-search-term', $(this).text().toLowerCase());
@@ -448,7 +462,7 @@ jQuery(function($) {
             $(this).addClass('not-matched');
           }
         });
-      } 
+      }
       else {
         $(this).parents('.rpress_fooditem').hide();
         $('.rpress_fooditems_list').find('.rpress-element-title').each(function(index, elem) {
@@ -465,10 +479,10 @@ jQuery(function($) {
 
   //Init Google map
   if( RpressVars.enable_google_autocomplete == '1'
-    && RpressVars.is_checkout_page == '1' 
+    && RpressVars.is_checkout_page == '1'
     && RpressVars.google_api !== '' ) {
     setTimeout(function(){initAutocomplete()},'3000');
-    
+
     jQuery('input.rpress-gateway').on('change', function() {
       setTimeout(function(){initAutocomplete()},'3000');
     });
@@ -499,7 +513,7 @@ jQuery(function($) {
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
       //}
-      
+
     }
 
     function fillInAddress() {
@@ -512,7 +526,7 @@ jQuery(function($) {
       // and fill the corresponding field on the form.
       for ( var i = 0; i < place.address_components.length; i++ ) {
         var addressType = place.address_components[i].types[0];
-        
+
         if ( componentForm[addressType] ) {
           var val = place.address_components[i][componentForm[addressType]];
           document.getElementById(addressType).value = val;
@@ -539,5 +553,17 @@ jQuery(function($) {
       }
     }
   }
+
+
+  // $(window).on('scroll', function() {
+  //   /* Activate menu on page scroll and menu click */
+  //   $('.menu-category-wrap').each(function() {
+  //     if($(window).scrollTop() >= $(this).position().top) {
+  //       var id = $(this).attr('data-cat-id');
+  //       $('.rpress-category-item a').removeClass('active');
+  //       $('.rpress-category-item a[href=#'+ id +']').addClass('active');
+  //     }
+  //   });
+  // });
 
 });

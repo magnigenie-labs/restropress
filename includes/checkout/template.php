@@ -43,7 +43,7 @@ function rpress_checkout_form() {
 
 						do_action( 'rpress_purchase_form' );
 					} elseif ( rpress_show_gateways() ) {
-						
+
 						do_action( 'rpress_payment_mode_select'  );
 					} else {
 						do_action( 'rpress_purchase_form' );
@@ -98,7 +98,7 @@ function rpress_checkout_user_account() {
 					</a>
 				</div>
 			</div>
-			
+
 		</div>
 	<?php
 	echo ob_get_clean();
@@ -243,7 +243,7 @@ function rpress_user_info_fields() {
 		<?php do_action( 'rpress_purchase_form_user_info' ); ?>
 		<?php do_action( 'rpress_purchase_form_user_info_fields' ); ?>
 	</fieldset>
-	
+
 	<?php
 }
 add_action( 'rpress_purchase_form_after_user_info', 'rpress_user_info_fields' );
@@ -737,7 +737,7 @@ function rpress_show_payment_icons() {
 
 	echo '</div>';
 	echo '</fieldset>';
-	
+
 }
 add_action( 'rpress_after_payment_gateways', 'rpress_show_payment_icons' );
 //add_action( 'rpress_checkout_form_top', 'rpress_show_payment_icons' );
@@ -777,10 +777,10 @@ function rpress_discount_field() {
 				</label>
 				<span class="rpress-description"><?php _e( 'Enter a coupon code if you have one.', 'restropress' ); ?></span>
 				<span class="rpress-discount-code-field-wrap">
-					<input class="rpress-input" type="text" id="rpress-discount" name="rpress-discount" placeholder="<?php _e( 'Enter discount', 'restropress' ); ?>"/>
+					<input class="rpress-input" type="text" id="rpress-discount" name="rpress-discount" placeholder="<?php _e( 'Enter coupon code', 'restropress' ); ?>"/>
 					<input type="submit" class="rpress-apply-discount rpress-submit <?php echo $color . ' ' . $style; ?>" value="<?php echo _x( 'Apply', 'Apply discount at checkout', 'restropress' ); ?>"/>
 				</span>
-				
+
 				<span id="rpress-discount-error-wrap" class="rpress_error rpress-alert rpress-alert-error" aria-hidden="true" style="display:none;"></span>
 			</p>
 		</fieldset>

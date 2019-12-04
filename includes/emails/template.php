@@ -155,8 +155,8 @@ add_action( 'template_redirect', 'rpress_display_email_template_preview' );
  * @return string $email_body Body of the email
  */
 function rpress_get_email_body_content( $payment_id = 0, $payment_data = array() ) {
-	$default_email_body = __( "Dear", "restropress" ) . " {name},\n\n";
-	$default_email_body .= __( "Thank you for your order. Here are the list of items that you have ordered", "restropress" ) . "\n\n";
+	$default_email_body = __( "Dear", "restro-press" ) . " {name},\n\n";
+	$default_email_body .= __( "Thank you for your order. Here are the list of items that you have ordered", "restro-press" ) . "\n\n";
 	$default_email_body .= "{fooditem_list}\n\n";
 	$default_email_body .= "{sitename}";
 
@@ -191,25 +191,18 @@ function rpress_get_order_notification_body_content( $payment_id = 0, $payment_d
 		$name = $payment->email;
 	}
 
-	$fooditem_list = '';
+	ob_start();
 
-	if( is_array( $payment->fooditems ) ) {
-		foreach( $payment->fooditems as $item ) {
-			$fooditem = new RPRESS_Fooditem( $item['id'] );
-			$title    = $fooditem->get_name();
-			if( isset( $item['options'] ) ) {
-				if( isset( $item['options']['price_id'] ) ) {
-					$title .= ' - ' . rpress_get_price_option_name( $item['id'], $item['options']['price_id'], $payment_id );
-				}
-			}
-			$fooditem_list .= html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) . "\n";
-		}
-	}
+	set_query_var( 'rpress_email_fooditems', $payment->fooditems );
+
+	rpress_get_template_part( 'email', 'foodlist' );
+
+	$fooditem_list = ob_get_clean();
 
 	$gateway = rpress_get_gateway_admin_label( $payment->gateway );
 
-	$default_email_body = __( 'Hello', 'restropress' ) . "\n\n" . sprintf( __( 'A %s purchase has been made', 'restropress' ), rpress_get_label_plural() ) . ".\n\n";
-	$default_email_body .= sprintf( __( '%s sold:', 'restropress' ), rpress_get_label_plural() ) . "\n\n";
+	$default_email_body = __( 'Hello', 'restropress' ) . "\n\n" . __( 'A new order has been received', 'restropress' ) . ".\n\n";
+	$default_email_body .= sprintf( __( '%s ordered:', 'restropress' ), rpress_get_label_plural() ) . "\n\n";
 	$default_email_body .= $fooditem_list . "\n\n";
 	$default_email_body .= __( 'Ordered by: ', 'restropress' ) . " " . html_entity_decode( $name, ENT_COMPAT, 'UTF-8' ) . "\n";
 	$default_email_body .= __( 'Amount: ', 'restropress' ) . " " . html_entity_decode( rpress_currency_filter( rpress_format_amount( $payment->total ) ), ENT_COMPAT, 'UTF-8' ) . "\n";

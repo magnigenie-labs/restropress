@@ -469,7 +469,7 @@ function rpress_reports_tab_logs() {
 		return;
 	}
 
-	require( RPRESS_PLUGIN_DIR . 'includes/admin/reporting/logs.php' );
+	require( RP_PLUGIN_DIR . 'includes/admin/reporting/logs.php' );
 
 	$current_view = 'file_fooditems';
 	$log_views    = rpress_log_default_views();

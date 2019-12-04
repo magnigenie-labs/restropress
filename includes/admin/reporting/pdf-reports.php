@@ -33,8 +33,8 @@ function rpress_generate_pdf( $data ) {
 		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	require_once RPRESS_PLUGIN_DIR . '/includes/libraries/fpdf/fpdf.php';
-	require_once RPRESS_PLUGIN_DIR . '/includes/libraries/fpdf/rpress_pdf.php';
+	require_once RP_PLUGIN_DIR . '/includes/libraries/fpdf/fpdf.php';
+	require_once RP_PLUGIN_DIR . '/includes/libraries/fpdf/rpress_pdf.php';
 
 	$daterange = date_i18n( get_option( 'date_format' ), mktime( 0, 0, 0, 1, 1, date( 'Y' ) ) ) . ' ' . utf8_decode( __( 'to', 'restropress' ) ) . ' ' . date_i18n( get_option( 'date_format' ) );
 
@@ -45,7 +45,7 @@ function rpress_generate_pdf( $data ) {
 	$pdf->SetAuthor( utf8_decode( __( 'RestroPress', 'restropress' ) ) );
 	$pdf->SetCreator( utf8_decode( __( 'RestroPress', 'restropress' ) ) );
 
-	$pdf->Image( RPRESS_PLUGIN_URL . 'assets/images/rpress-logo-pdf.png', 205, 10 );
+	$pdf->Image( RP_PLUGIN_URL . 'assets/images/rpress-logo-pdf.png', 205, 10 );
 
 	$pdf->SetMargins( 8, 8, 8 );
 	$pdf->SetX( 8 );
@@ -160,9 +160,9 @@ add_action( 'rpress_generate_pdf', 'rpress_generate_pdf' );
  * @return string $chart->getUrl() URL for the Google Chart
  */
 function rpress_draw_chart_image() {
-	require_once RPRESS_PLUGIN_DIR . '/includes/libraries/googlechartlib/GoogleChart.php';
-	require_once RPRESS_PLUGIN_DIR . '/includes/libraries/googlechartlib/markers/GoogleChartShapeMarker.php';
-	require_once RPRESS_PLUGIN_DIR . '/includes/libraries/googlechartlib/markers/GoogleChartTextMarker.php';
+	require_once RP_PLUGIN_DIR . '/includes/libraries/googlechartlib/GoogleChart.php';
+	require_once RP_PLUGIN_DIR . '/includes/libraries/googlechartlib/markers/GoogleChartShapeMarker.php';
+	require_once RP_PLUGIN_DIR . '/includes/libraries/googlechartlib/markers/GoogleChartTextMarker.php';
 
 	$chart = new GoogleChart( 'lc', 900, 330 );
 

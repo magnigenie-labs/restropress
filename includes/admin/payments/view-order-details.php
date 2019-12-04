@@ -123,7 +123,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 										<?php do_action( 'rpress_view_order_details_update_inner', $payment_id ); ?>
 
-										
+
 
 										<?php
 										$fees = $payment->fees;
@@ -212,16 +212,17 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 							<?php endif; ?>
 
 
-							<?php 
-								if( !empty($payment_id) ) :
+							<?php
+								if( !empty( $payment_id ) ) :
 
-									$delivery_type =  $payment->get_meta('_rpress_delivery_type');
-									$delivery_time = $payment->get_meta( '_rpress_delivery_time');
-									$delivery_fee = $payment->get_meta( '_rpress_delivery_price');
-									$delivery_location = $payment->get_meta( '_rpress_delivery_location');
-									$delivery_location_pos = $payment->get_meta( '_rpress_delivery_location_pos');
+									$delivery_type =  $payment->get_meta( '_rpress_delivery_type' );
+									$delivery_time = $payment->get_meta( '_rpress_delivery_time' );
+									$delivery_fee = $payment->get_meta( '_rpress_delivery_price' );
+									$delivery_location = $payment->get_meta( '_rpress_delivery_location' );
+									$delivery_location_pos = $payment->get_meta( '_rpress_delivery_location_pos' );
+                  $delivery_date = $payment->get_meta( '_rpress_delivery_date' );
 
-									if( !empty($delivery_type) ) : 
+									if( !empty($delivery_type) ) :
 							?>
 							<div id="rpress-delivery-details" class="postbox rpress-order-data">
 								<h3 class="hndle">
@@ -238,7 +239,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
 													<span class="label"><?php _e( 'Delivery Time:', 'restropress' ); ?></span>&nbsp;
-													<?php  
+													<?php
 														if( !empty($delivery_time) ) :
 															echo $delivery_time;
 														endif;
@@ -246,13 +247,24 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 												</p>
 											</div>
 
+                      <div class="rpress-delivery-details rpress-admin-box-inside">
+                        <p>
+                          <span class="label"><?php _e( 'Delivery Date:', 'restropress' ); ?></span>&nbsp;
+                          <?php
+                            if( !empty($delivery_date) ) :
+                              echo $delivery_date;
+                            endif;
+                          ?>
+                        </p>
+                      </div>
+
 											<?php if( !empty($delivery_fee) ) : ?>
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
 													<span class="label"><?php _e( 'Delivery Fee:', 'restropress' ); ?></span>&nbsp;
-													<?php  
+													<?php
 														if( !empty($delivery_fee) ) :
-															 echo rpress_currency_filter( rpress_format_amount( $delivery_fee) ); 
+															 echo rpress_currency_filter( rpress_format_amount( $delivery_fee) );
 														endif;
 													?>
 												</p>
@@ -263,9 +275,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
 													<span class="label"><?php _e( 'Deliver Address:', 'restropress' ); ?></span>&nbsp;
-													<?php  
+													<?php
 														if( !empty($delivery_location) ) :
-															 echo $delivery_location; 
+															 echo $delivery_location;
 														endif;
 													?>
 												</p>
@@ -276,9 +288,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											<div class="rpress-delivery-details rpress-admin-box-inside">
 												<p>
 													<span class="label"><?php _e( 'Deliver Address Cordinates:', 'restropress' ); ?></span>&nbsp;
-													<?php  
+													<?php
 														if( !empty($delivery_location_pos) ) :
-															 echo $delivery_location_pos; 
+															 echo $delivery_location_pos;
 														endif;
 													?>
 												</p>
@@ -288,9 +300,9 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										</div><!-- /.column-container -->
 									</div><!-- /.inside -->
 								</div><!-- /#rpress-order-data -->
-							<?php 
+							<?php
 							endif;
-							endif; 
+							endif;
 							?>
 
 							<div id="rpress-order-details" class="postbox rpress-order-data">
@@ -336,7 +348,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 										</div>
 										<?php endif; ?>
 
-										
+
 
 										<?php do_action( 'rpress_view_order_details_payment_meta_after', $payment_id ); ?>
 
@@ -358,7 +370,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 										<div class="rpress-admin-box-inside">
 
-											
+
 											<p>
 												<?php $purchase_url = admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&user=' . esc_attr( rpress_get_payment_user_email( $payment_id ) ) ); ?>
 												<a href="<?php echo $purchase_url; ?>"><?php _e( 'View all orders for this customer', 'restropress' ); ?></a>
@@ -469,11 +481,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													</span>
 													<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][id]" class="rpress-payment-details-fooditem-id" value="<?php echo esc_attr( $item_id ); ?>"/>
 													<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][price_id]" class="rpress-payment-details-fooditem-price-id" value="<?php echo esc_attr( $price_id ); ?>"/>
-
-													<?php// if( ! rpress_item_quantities_enabled() ) : ?>
-
-														<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][quantity]" class="rpress-payment-details-fooditem-quantity" value="<?php echo esc_attr( $quantity ); ?>"/>
-													<?php //endif; ?>
+													<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][quantity]" class="rpress-payment-details-fooditem-quantity" value="<?php echo esc_attr( $quantity ); ?>"/>
 
 													<?php if ( ! rpress_use_taxes() ): ?>
 														<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][item_tax]" class="rpress-payment-details-fooditem-item-tax" value="<?php echo $item_tax; ?>" />
@@ -495,7 +503,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													</span>
 													<?php echo rpress_currency_symbol( $currency_code ); ?>
 													<input type="text" class="medium-text rpress-price-field rpress-payment-details-fooditem-item-price rpress-payment-item-input" name="rpress-payment-details-fooditems[<?php echo $key; ?>][item_price]" value="<?php echo rpress_format_amount( $item_price ); ?>" />
-													
+
 														&nbsp;&times;&nbsp;
 														<input type="number" name="rpress-payment-details-fooditems[<?php echo $key; ?>][quantity]" class="small-text rpress-payment-details-fooditem-quantity rpress-payment-item-input" min="1" step="1" value="<?php echo $quantity; ?>" />
 												</li>
@@ -530,7 +538,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 											</div>
 
 											<div class="rpress-addon-items">
-												<?php 
+												<?php
 												if( !empty($fooditem->ID) ) :
 
 													$terms = getFooditemCategoryById($fooditem->ID);
@@ -543,11 +551,11 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													<?php
 													if( is_array($get_formatted_cats) ) :
 
-														if( is_array($cart_item['addon_items']) 
+														if( is_array($cart_item['addon_items'])
 															&& !empty($cart_item['addon_items']) ) :
 
 															foreach( $cart_item['addon_items'] as $data => $addon_rows ) {
-																if( is_array($addon_rows) && 
+																if( is_array($addon_rows) &&
 																!empty($addon_rows) ) {
 																	$addons_array[] = $addon_rows['addon_id'];
 																	?>
@@ -562,7 +570,7 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 
 															if( !in_array($get_formatted_cat['id'], $addons_array) ) {
 															?>
-															<option data-price="<?php echo $get_formatted_cat['price']; ?>" 
+															<option data-price="<?php echo $get_formatted_cat['price']; ?>"
 																value="<?php echo $get_formatted_cat['name'];?>|<?php echo $get_formatted_cat['id']; ?>|<?php echo $get_formatted_cat['price'];?>|1" ><?php echo $get_formatted_cat['name'].' ( '.html_entity_decode( rpress_currency_filter( rpress_format_amount( $get_formatted_cat['price'] ) ), ENT_COMPAT, 'UTF-8' ).' ) '; ?></option>
 															<?php
 															}
@@ -586,11 +594,11 @@ $customer       = new RPRESS_Customer( $payment->customer_id );
 													 ?>
 												</span>
 											<?php endif; ?>
-											
+
 										</div>
 									<?php
 									$i++;
-									
+
 									endforeach; ?>
 								</div>
 							<?php else : $key = 0; ?>

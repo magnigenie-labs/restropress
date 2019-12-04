@@ -86,12 +86,12 @@ class RPRESS_Session {
 			}
 
 			if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
-				require_once RPRESS_PLUGIN_DIR . 'includes/libraries/class-recursive-arrayaccess.php';
+				require_once RP_PLUGIN_DIR . 'includes/libraries/class-recursive-arrayaccess.php';
 			}
 
 			if ( ! class_exists( 'WP_Session' ) ) {
-				require_once RPRESS_PLUGIN_DIR . 'includes/libraries/class-wp-session.php';
-				require_once RPRESS_PLUGIN_DIR . 'includes/libraries/wp-session.php';
+				require_once RP_PLUGIN_DIR . 'includes/libraries/class-wp-session.php';
+				require_once RP_PLUGIN_DIR . 'includes/libraries/wp-session.php';
 			}
 
 			add_filter( 'wp_session_expiration_variant', array( $this, 'set_expiration_variant_time' ), 99999 );

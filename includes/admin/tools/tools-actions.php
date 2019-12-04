@@ -33,7 +33,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_batch_recount_sto
 function rpress_include_recount_store_earnings_tool_batch_processer( $class ) {
 
 	if ( 'RPRESS_Tools_Recount_Store_Earnings' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-store-earnings.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-store-earnings.php';
 	}
 
 }
@@ -57,7 +57,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_batch_recount_foo
 function rpress_include_recount_fooditem_tool_batch_processer( $class ) {
 
 	if ( 'RPRESS_Tools_Recount_Download_Stats' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-fooditem-stats.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-fooditem-stats.php';
 	}
 
 }
@@ -81,7 +81,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_batch_recount_all
 function rpress_include_recount_all_tool_batch_processer( $class ) {
 
 	if ( 'RPRESS_Tools_Recount_All_Stats' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-all-stats.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-all-stats.php';
 	}
 
 }
@@ -105,7 +105,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_batch_reset_tool'
 function rpress_include_reset_tool_batch_processer( $class ) {
 
 	if ( 'RPRESS_Tools_Reset_Stats' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-reset-stats.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-reset-stats.php';
 	}
 
 }
@@ -129,7 +129,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_batch_customer_re
 function rpress_include_customer_recount_tool_batch_processer( $class ) {
 
 	if ( 'RPRESS_Tools_Recount_Customer_Stats' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-customer-stats.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/tools/class-rpress-tools-recount-customer-stats.php';
 	}
 
 }

@@ -42,7 +42,7 @@ a.rpress-delete:hover {
 }
 
 .rpress-help-tip {
-  cursor: help;
+  cursor: help
 }
 
 .rpress-ui-tooltip {
@@ -538,36 +538,6 @@ textarea#rpress-payment-note {
 #rpress-purchased-files .rpress-purchased-files-list-wrapper .rpress-purchased-option {
   color: #666
 }
-
-/* Add On Items
--------------------------------------------------------------- */
-div.restropress-addons-all {
-  margin-bottom: 40px;
-  padding-top: 40px;
-}
-
-div.restropress-addons-all .restropress-addon-item {
-  box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 1 auto;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -.5rem;
-    margin-left: -.5rem;
-}
-
 
 ul.rpress-purchased-files-list-wrapper input.rpress-payment-details-fooditem-item-price, span#rpress-rpress-order-fooditem-price-wrap .rpress-order-fooditem-price {
 	width: 60px;

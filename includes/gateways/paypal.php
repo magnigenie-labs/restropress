@@ -191,7 +191,7 @@ function rpress_process_paypal_ipn() {
 
 	// instantiate the IpnListener class
 	if( !class_exists( 'IpnListener' ) ) {
-		include_once( RPRESS_PLUGIN_DIR . 'includes/gateways/libraries/paypal/ipnlistener.php' );
+		include_once( RP_PLUGIN_DIR . 'includes/gateways/libraries/paypal/ipnlistener.php' );
 	}
 
 	$listener = new IpnListener();

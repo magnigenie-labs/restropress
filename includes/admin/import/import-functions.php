@@ -25,7 +25,7 @@ function rpress_do_ajax_import_file_upload() {
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 	}
 
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
 
 	if( ! wp_verify_nonce( $_REQUEST['rpress_ajax_import'], 'rpress_ajax_import' ) ) {
 		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restropress' ) ) );
@@ -107,7 +107,7 @@ add_action( 'rpress_upload_import_file', 'rpress_do_ajax_import_file_upload' );
  */
 function rpress_do_ajax_import() {
 
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
 
 	if( ! wp_verify_nonce( $_REQUEST['nonce'], 'rpress_ajax_import' ) ) {
 		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restropress' ), 'request' => $_REQUEST ) );

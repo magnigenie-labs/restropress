@@ -30,7 +30,7 @@ function rpress_complete_purchase( $payment_id, $new_status, $old_status ) {
 	}
 
 	// Make sure the payment completion is only processed when new status is complete
-	if ( $new_status != 'publish' && $new_status != 'complete' ) {
+	if ( $new_status != 'publish' && $new_status != 'processing' ) {
 		return;
 	}
 
@@ -451,7 +451,7 @@ function rpress_recover_payment() {
 		return;
 	}
 
-	
+
 
 
 	if (
@@ -477,7 +477,7 @@ function rpress_recover_payment() {
 
 	// Recover any fooditems.
 	foreach ( $payment->cart_details as $key => $fooditem ) {
-		
+
 		$fooditem['item_number']['options']['id'] = $fooditem['id'];
 
 		$fooditem['item_number']['options']['addon_items'] = $fooditem['item_number']['options'];

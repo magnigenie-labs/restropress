@@ -332,6 +332,7 @@ function rpress_get_currencies() {
 		'MXN'  => __( 'Mexican Peso (&#36;)', 'restropress' ),
 		'NZD'  => __( 'New Zealand Dollar (&#36;)', 'restropress' ),
 		'NOK'  => __( 'Norwegian Krone', 'restropress' ),
+    'PKR'  => __( 'Pakistani Rupee', 'restropress' ),
 		'PHP'  => __( 'Philippine Pesos', 'restropress' ),
 		'PLN'  => __( 'Polish Zloty', 'restropress' ),
 		'SGD'  => __( 'Singapore Dollar (&#36;)', 'restropress' ),
@@ -383,6 +384,9 @@ function rpress_currency_symbol( $currency = '' ) {
 		case "EUR" :
 			$symbol = '&euro;';
 			break;
+    case "INR" :
+      $symbol = '&#8377;';
+      break;
 		case "USD" :
 		case "AUD" :
 		case "NZD" :

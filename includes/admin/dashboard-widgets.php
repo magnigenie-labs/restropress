@@ -38,7 +38,7 @@ add_action('wp_dashboard_setup', 'rpress_register_dashboard_widgets', 10 );
  * @return void
  */
 function rpress_dashboard_sales_widget( ) {
-	echo '<p><img src=" ' . esc_attr( set_url_scheme( RPRESS_PLUGIN_URL . 'assets/images/loading.gif', 'relative' ) ) . '"/></p>';
+	echo '<p><img src=" ' . esc_attr( set_url_scheme( RP_PLUGIN_URL . 'assets/images/loading.gif', 'relative' ) ) . '"/></p>';
 }
 
 /**

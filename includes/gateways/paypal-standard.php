@@ -433,7 +433,7 @@ function rpress_process_paypal_ipn() {
 				'connection'   => 'close',
 				'content-type' => 'application/x-www-form-urlencoded',
 				'post'         => '/cgi-bin/webscr HTTP/1.1',
-				'user-agent'   => 'RPRESS IPN Verification/' . RPRESS_VERSION . '; ' . get_bloginfo( 'url' )
+				'user-agent'   => 'RPRESS IPN Verification/' . RP_VERSION . '; ' . get_bloginfo( 'url' )
 
 			),
 			'sslverify'   => false,
@@ -899,7 +899,7 @@ function rpress_paypal_process_pdt_on_return() {
 				'connection'   => 'close',
 				'content-type' => 'application/x-www-form-urlencoded',
 				'post'         => '/cgi-bin/webscr HTTP/1.1',
-				'user-agent'   => 'RPRESS PDT Verification/' . RPRESS_VERSION . '; ' . get_bloginfo( 'url' )
+				'user-agent'   => 'RPRESS PDT Verification/' . RP_VERSION . '; ' . get_bloginfo( 'url' )
 
 			),
 			'sslverify'   => false,

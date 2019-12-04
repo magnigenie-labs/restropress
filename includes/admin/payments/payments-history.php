@@ -25,9 +25,9 @@ function rpress_payment_history_page() {
 	$rpress_payment = get_post_type_object( 'rpress_payment' );
 
 	if ( isset( $_GET['view'] ) && 'view-order-details' == $_GET['view'] ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/payments/view-order-details.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/payments/view-order-details.php';
 	} else {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/payments/class-payments-table.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/payments/class-payments-table.php';
 		$payments_table = new RPRESS_Payment_History_Table();
 		$payments_table->prepare_items();
 	?>

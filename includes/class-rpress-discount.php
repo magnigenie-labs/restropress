@@ -1445,7 +1445,7 @@ class RPRESS_Discount {
 				// Discount has pased the start date
 				$return = true;
 			} elseif( $set_error ) {
-				rpress_set_error( 'rpress-discount-error', _x( 'This discount is invalid.', 'error shown when attempting to use a discount before its start date', 'restropress' ) );
+				rpress_set_error( 'rpress-discount-error', _x( 'Coupon code is not valid.', 'error shown when attempting to use a discount before its start date', 'restropress' ) );
 			}
 		} else {
 			// No start date for this discount, so has to be true
@@ -1815,7 +1815,7 @@ class RPRESS_Discount {
 				$return = true;
 			}
 		} elseif( $set_error ) {
-			rpress_set_error( 'rpress-discount-error', _x( 'This discount is invalid.', 'error for when a discount is invalid based on its configuration' , 'restropress' ) );
+			rpress_set_error( 'rpress-discount-error', _x( 'Coupon code is not valid.', 'error for when a discount is invalid based on its configuration' , 'restropress' ) );
 		}
 
 		/**

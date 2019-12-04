@@ -374,114 +374,13 @@ add_action( 'rpress_add_email_tags', 'rpress_setup_email_tags' );
 function rpress_email_tag_fooditem_list( $payment_id ) {
 	$payment = new RPRESS_Payment( $payment_id );
 
-	$payment_data  = $payment->get_meta();
-	$fooditem_list = '<ul>';
-	$cart_items    = $payment->cart_details;
-	$email         = $payment->email;
+	ob_start();
 
-	if ( $cart_items ) {
-		$show_names = apply_filters( 'rpress_email_show_names', true );
-		$show_links = apply_filters( 'rpress_email_show_links', true );
+	set_query_var( 'rpress_email_fooditems', $payment->fooditems );
 
-		foreach ( $cart_items as $item ) {
+	rpress_get_template_part( 'email', 'foodlist' );
 
-			if ( rpress_use_skus() ) {
-				$sku = rpress_get_fooditem_sku( $item['id'] );
-			}
-
-			if ( rpress_item_quantities_enabled() ) {
-				$quantity = $item['quantity'];
-			}
-
-			$price_id = rpress_get_cart_item_price_id( $item );
-			if ( $show_names ) {
-
-				$title = '<strong>' . get_the_title( $item['id'] ) . '</strong>';
-
-				if ( ! empty( $quantity ) && $quantity > 1 ) {
-					$title .= "&nbsp;&ndash;&nbsp;" . __( 'Quantity', 'restropress' ) . ': ' . $quantity;
-				}
-
-				if ( ! empty( $sku ) ) {
-					$title .= "&nbsp;&ndash;&nbsp;" . __( 'SKU', 'restropress' ) . ': ' . $sku;
-				}
-
-				if( ! empty( $price_id ) && 0 !== $price_id ){
-					$title .= "&nbsp;&ndash;&nbsp;" . rpress_get_price_option_name( $item['id'], $price_id, $payment_id );
-				}
-
-				$fooditem_list .= '<li>' . apply_filters( 'rpress_email_receipt_fooditem_title', $title, $item, $price_id, $payment_id ) . '<br/>';
-			}
-
-			$files = rpress_get_fooditem_files( $item['id'], $price_id );
-
-			if ( ! empty( $files ) ) {
-
-				foreach ( $files as $filekey => $file ) {
-
-					if ( $show_links ) {
-						$fooditem_list .= '<div>';
-							$file_url = rpress_get_fooditem_file_url( $payment_data['key'], $email, $filekey, $item['id'], $price_id );
-							$fooditem_list .= '<a href="' . esc_url_raw( $file_url ) . '">' . rpress_get_file_name( $file ) . '</a>';
-							$fooditem_list .= '</div>';
-					} else {
-						$fooditem_list .= '<div>';
-							$fooditem_list .= rpress_get_file_name( $file );
-						$fooditem_list .= '</div>';
-					}
-
-				}
-
-			} elseif ( rpress_is_bundled_product( $item['id'] ) ) {
-
-				$bundled_products = apply_filters( 'rpress_email_tag_bundled_products', rpress_get_bundled_products( $item['id'], $price_id ), $item, $payment_id, 'fooditem_list' );
-
-				foreach ( $bundled_products as $bundle_item ) {
-
-					$fooditem_list .= '<div class="rpress_bundled_product"><strong>' . get_the_title( $bundle_item ) . '</strong></div>';
-
-					$fooditem_files = rpress_get_fooditem_files( rpress_get_bundle_item_id( $bundle_item ), rpress_get_bundle_item_price_id( $bundle_item ) );
-
-					foreach ( $fooditem_files as $filekey => $file ) {
-						if ( $show_links ) {
-							$fooditem_list .= '<div>';
-							$file_url = rpress_get_fooditem_file_url( $payment_data['key'], $email, $filekey, $bundle_item, $price_id );
-							$fooditem_list .= '<a href="' . esc_url( $file_url ) . '">' . rpress_get_file_name( $file ) . '</a>';
-							$fooditem_list .= '</div>';
-						} else {
-							$fooditem_list .= '<div>';
-							$fooditem_list .= rpress_get_file_name( $file );
-							$fooditem_list .= '</div>';
-						}
-					}
-				}
-
-			} else {
-
-				$no_fooditems_message = apply_filters( 'rpress_receipt_no_files_found_text', __( 'No fooditemable files found.', 'restropress' ), $item['id'] );
-				$no_fooditems_message = apply_filters( 'rpress_email_receipt_no_fooditems_message', $no_fooditems_message, $item['id'], $price_id, $payment_id );
-
-				if ( ! empty( $no_fooditems_message ) ){
-					$fooditem_list .= '<div>';
-						$fooditem_list .= $no_fooditems_message;
-					$fooditem_list .= '</div>';
-				}
-			}
-
-
-			if ( '' != rpress_get_product_notes( $item['id'] ) ) {
-				$fooditem_list .= ' &mdash; <small>' . rpress_get_product_notes( $item['id'] ) . '</small>';
-			}
-
-
-			if ( $show_names ) {
-				$fooditem_list .= '</li>';
-			}
-		}
-	}
-	$fooditem_list .= '</ul>';
-
-	return $fooditem_list;
+	return ob_get_clean();
 }
 
 /**

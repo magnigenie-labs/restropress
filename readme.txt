@@ -1,14 +1,14 @@
 === RestroPress - Online Food Ordering System ===
-Contributors: magnigenie,kshirod-patel,sagarseth9
+Contributors: magnigenie,sagarseth9,kshirod-patel
 Tags: Food Ordering System,Online Food Ordering System,Food Ordering, WordPress Restaurant Ordering System, Restaurant Orders, WordPress Ordering system, Restaurant Menu
 Requires at least: 4.0
 Requires PHP: 5.4
-Tested up to: 5.1
-Stable tag: 2.1
+Tested up to: 5.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-RestroPress is a Food Ordering System for WordPress which helps the restaurant owners to sell their food online.
+RestroPress is a WordPress Food Ordering System which will help the restaurant owners to sell their food online.
 
 == Description ==
 
@@ -19,7 +19,7 @@ RestroPress has a user friendly frontend and backend interface which will allow 
 = Restropress In action =
 [youtube https://www.youtube.com/watch?v=c5oWarsCYf0]
 
-Check  [RestroPress Website](https://restropress.com/) for details and support.
+Check  [RestroPress Website](https://www.restropress.com/) for details and support.
 
 = Restropress Demo =
 Check  [RestroPress Demo Website](https://demo.restropress.com/)
@@ -34,7 +34,7 @@ Check  [RestroPress Demo Website](https://demo.restropress.com/)
 * Reporting system to view sales, customers etc.
 * Allows you to add multiple add-on options for your food.
 * Custom user login, register and dashboard.
-* Receive payments using paypal and option to add new payment gateway.
+* Receive payments using PayPal, Amazon and Cash On Delivery and more options coming soon.
 * Developer friendly with sufficient hooks.
 * And much more coming soon...
 
@@ -50,40 +50,57 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 
 == ChangeLog ==
 
-= Version 2.1 =
-* Fixed issue with the subtotal calculation.
-* Fixed issue with duplicate quantity bug.
-* Food items pages to automatically create upon installation.
-* Fixed issues related to popup styling.
-* Code clean up.
-* Renamed text domain restro-press to restropress.
-* Added translation files.
-* Fixed responsive issues for the food items display.
-* Fixed design issues on checkout page.
-*
+= Version 2.0.4 =
+* Fixed empty cart message
+* Added email tags for service time {service_time} and service type {service_type}
+* Added shortcode for showing fooditems by category wise
+* Fixed store timings
+* Updated admin settings
+* css and js optimized
+* Fixed issue for total costs on payment gateway
+* Code optimized.
+
+= Version 2.0.3 =
+* Fixed bugs with the price calculation.
+* Fixed issue with add-on price.
+* Fixed remove cart item reload issue.
+* Disabled past time display on dropdown of pickup/delivery time.
+* Updated delivery/pickup time options on admin.
+* Updated categories display.
+* Updated cart layout.
+
+= Version 2.0.2 =
+* Fixed issues with push notifications.
+* Fixed issues with emails.
+* Fixed subtotal calculation issue.
+* Fixed discount calculation issue.
+* Fixed problems with checkbox/radio options.
+* Fixed issues with the image popup display.
+* Updated to automatically create the food items page.
+* Updated admin settings.
+* Added option for to add sound to push notifications.
 
 = Version 2.0.1 =
 * Fixed popup z-index issue
-* fixed template part issue for before and after fooditems
-* added prefix rp for bootstrap classes
-* made functionality for show food item featured image in the popup
-* Removed view option from admin fooditems
-* Removed view option from admin addon category
+* fixed template part issue for before and after food items
+* Added prefix rp for bootstrap classes
+* Added option to open the food image in lighbox.
+* Removed view option from admin food items
+* Removed view option from admin add-on category
 * Removed view option from admin food category
 * Fixed cart shortcode template issue
-* Added delivery hours hooks for the addon
-* Renamed food item addon category to addon category
-* Added option whether to use internal bootsrap js
-
-
+* Added delivery hours hooks for the add-on
+* Renamed food item add-on category into add-on category
+* Added option to choose if you want to disable the bootstrap files of the plugin.
+* Fixed email template issue when order placed
 
 = Version 2.0 =
 * Changed checkout layout
 * Changed quantity box design
-* fixed css issues
-* fixed option for color theme
-* js modified for change delivery options
-* Added addons page in the admin
+* Fixed css issues
+* Fixed option for color theme
+* Js modified for change delivery options
+* Added add-ons page in the admin
 
 
 = Version 1.0.7 =
@@ -91,23 +108,20 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 * Fixed store open hours issue
 * Replaced bootstrap modal with fancybox
 * Fixed responsive issues
-* js modified
-* css fixed
+* Styles and script modified.
 
 = Version 1.0.6 =
-* js modified
-* Discount code functionality added in admin
-* Discount code functionality added in frontend
-* Minimum order price option added
-* Google address autocomplete added in checkout
-* Made option to select delivery and pickup on load
+* Discount code functionality added.
+* Minimum order price option added.
+* Option to use google address autocomplete on checkout page.
+* Modified process to ask for pickup or delivery before adding item to cart.
 * Cash on delivery method added in the payment gateway
 * Fixed issue for address in order history
-* css fixed
+* Design fixes.
 
 = Version 1.0.5 =
 * Payment gateway link modified
-* minor code optimized
+* Minor code optimized
 
 = Version 1.0.4 =
 * Fixed css conflict issue with theme
@@ -116,7 +130,7 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 * Fixed template override method
 * jQuery live search for food items implemented
 * Checked plugin compatibility with different themes
-* Removed slug generation from fooditems custom post type
+* Removed slug generation from food items custom post type
 
 = Version 1.0.3 =
 * Added loader in popup when ajax calls
@@ -125,7 +139,7 @@ If you have any suggestions for a new plugin, feel free to email us at info@magn
 * Added heading for delivery time select
 
 = Version 1.0.2 =
-* Fixed issue with currency option in addon food items.
+* Fixed issue with currency option in add-on food items.
 
 = Version 1.0.1 =
 * Fixed design issues.

@@ -1196,6 +1196,7 @@
       return null;
     }
 
+
     if ($.type(settings.timeFormat) === "function") {
       return settings.timeFormat(time);
     }
@@ -1260,7 +1261,6 @@
           output += code;
       }
     }
-
     return output;
   }
 

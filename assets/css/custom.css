@@ -1,0 +1,992 @@
+html body .rpress_fooditems_list .rpress_fooditem {
+	clear: both;
+}
+div.rpress_fooditems_list .rpress_fooditem {width: 100%;}
+
+div.rpress_fooditems_list .rpress_fooditem h3.rpress_fooditem_title {float: left;}
+div.rpress_fooditems_list .rpress_fooditem .rpress_fooditem_buy_button {float: right;}
+div.rpress_fooditems_list .rpress_fooditem {
+	display: block;
+	clear: both;
+	margin: 6px 0px;
+}
+div.rpress_fooditems_list .rpress_fooditem:last-child {
+	border-bottom: none;
+}
+
+.food-item-list label {
+	font-weight: normal;
+	display: inline-block;
+}
+
+.food-item-list {
+	/*border-bottom: 1px solid #ccc;*/
+	margin-bottom: 8px;
+}
+span.cat_price {
+	float: right;
+}
+.rpress-popup-actions {
+	display: block;
+	margin-top: 30px;
+}
+.rpress-popup-actions a.submit-fooditem-button, .rpress-popup-actions a.update-fooditem-button {
+	cursor: pointer;
+}
+.rpress-close-button, .rpress-edit-from-cart {
+	cursor: pointer;
+}
+.rpress-item-quantity-wrap {
+	width: 50%;
+	margin-top: 20px;
+}
+.rpress-item-quantity-wrap .qty {
+	display: inline-block;
+	width: 40%;
+}
+.rpress-item-quantity-wrap .qtyminus {
+	display: inline-block;
+	float: left;
+}
+.rpress-item-quantity-wrap .qtyplus {
+	display: inline-block;
+	float: right;
+}
+.rpress-cart-item-qty {
+	padding-right: 10px;
+}
+.rpress_checkout_cart_item_qty {
+	padding-right: 20px;
+}
+div.rpress-different-cat {
+    text-decoration: underline;
+    width: 100%;
+    margin-bottom: 20px;
+    color: #d4413c;
+    text-transform: capitalize;
+}
+div.rpress-tabs ul.tabs {
+	list-style: none;
+}
+div.rpress-tabs ul.tabs li {
+	float: left;
+	display: inline-block;
+	margin-right: 30px;
+}
+
+.rpress-tabs div.rpress-Tabs-panel#tab-menu {
+	width: 100%;
+	display: block;
+}
+html body .entry-content {
+	width: 100% !important;
+	display: block !important;
+}
+div.tab-pane div.menu {
+	margin-top: 20px;
+}
+div.nav.nav-tabs .nav-item.nav-link {
+	margin-right: 10px;
+}
+ul.rpress-list {
+	list-style: none;
+}
+ul.rpress-list .rpress-category-item {
+	padding: 10px;
+    border-bottom: 1px solid #f3f3f3;
+    font-size: 13px;
+    margin-left: -25px;
+    color: #9c9c9c;
+    text-transform: capitalize;
+}
+.order-addon-items {
+	
+}
+.rpress_purchase_submit_wrapper {
+	line-height: 50px;
+}
+.rpress_purchase_submit_wrapper a {
+	border-radius: 20px;
+	background-color: transparent !important;
+}
+.rpress-submit {
+	font-size: 21px;
+    font-weight: 500;
+    line-height: 1;
+}
+.rpress-add-to-cart-label {
+	color: #d4413c;
+}
+
+
+.entry-content a:hover {
+   -webkit-box-shadow: none !important;
+
+}
+.menu  .pull-right {
+	box-shadow: 0px 0px 10px 1px #ccc;
+}
+.rpress-cart li {
+   list-style: none;
+}
+.menu .pull-right h1 {
+	text-align: center;
+    color: black;
+    font-weight: 500;
+    margin-top: 25px;
+}
+.pull-right h2 {
+	font-weight: 500;
+}
+.rpress-cart .delivery-opts label {
+	display: inline-block;
+}
+.rpress-cart .delivery-opts label[for=delivery] {
+	margin-right: 12px;
+}
+.rpress_fooditem_inner {
+	display: flow-root;
+    border-bottom: 1px solid #ebedf3;
+    padding-bottom: 17px;
+    padding-left: 0px;
+}
+.rpress-clear-cart {
+	float: right;
+}
+.rpress-cart-number-of-items {
+	clear:both;
+}
+.rpress-clear-cart {
+	font-size: 15px;
+}
+.rpress_purchase_submit_wrapper a {
+	height: 27px;
+	width: 27px;
+}
+.rpress-add-to-cart-label {
+	line-height: 25px;
+}
+.rpress-clear-cart {
+	font-size: 13px;
+}
+.rpress-cart-number-of-items{
+	display: none;
+}
+.rpress-cart {
+	clear: both;
+}
+.rpress_total {
+	padding-left: 4%;
+}
+span.cart-total {
+	float: right;
+    color: #c33332;
+    font-weight: 600;
+    margin-right: 47px;
+}
+.cart_item .rpress_checkout {
+	padding-left: 28%;
+}
+.addon-item-wrap li {
+	margin-top: 20px;
+}
+.rpress-cart-meta.rpress_total {
+	font-weight: 500;
+}
+.rpress-cart-item{
+	padding: 10px;
+	padding-right: 0px;
+}
+.rpress-edit-from-cart{
+	margin-left: 5px;
+}
+.rpress-cart li {
+	margin-top: 10px;
+}
+.entry-content a {
+	box-shadow: none !important;
+}
+.rpress_checkout {
+	text-align: center !important;
+}
+.rpress-cart .rpress_checkout a {
+	padding: 10px;
+    background-color: #c33332;
+    display: block;
+    border-radius: 3px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: normal;
+    text-transform: uppercase;
+    width: 100%;
+    color: #ffffff;
+
+}
+.thumbnail-holder, .title-holder {
+	display: inline-block;
+}
+.thumbnail-holder img {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    width: 65px;
+    height: 65px;
+}
+.food-title {
+    font-size: 17px;
+    font-weight: 500;
+    margin-left: 7px;
+}
+.rpress_fooditem_inner .rpress_fooditem_excerpt p {
+	font-size: 12px;
+    color: #a9a9a9;
+    display: block;
+    line-height: 16px;
+}
+.rpress_fooditem_excerpt {
+    display: inline-block;
+    margin-left: 7px;
+    position: absolute;
+    margin-top: 30px;
+    left: 84px;
+}
+.cat_icon img {
+    width: 16px;
+    height: auto;
+}
+.cart_icon img {
+    width: 13px;
+    height: auto;
+}
+.remove_icon img {
+    width: 19px !important;
+    height: auto;
+    float: none !important;
+}
+.order-icn img {
+	width: 16px;
+    height: auto;
+}
+.item-order {
+	display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-left: 6px;
+}
+.cart_icon, .order-icn {
+    display: inline-block;
+}
+#nav-tab.nav.nav-tabs {
+    width: 79%;
+    float: right;
+}
+div.cat_icon {
+    margin-left: -15px;
+    padding-right: 25px;
+    display: inline-block;
+}
+div.item_cat {
+	display: inline-block;
+}
+div.item-price {
+	display: inline-block;
+    position: absolute;
+    margin-top: 55px;
+    left: 90px;
+    color: #d4413c;
+}
+.rpress-term-list div.item_cat {
+    padding-bottom: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-left: -16px;
+}
+.rpress_fooditems_list .rpress_fooditem {
+    margin-top: -9px !important;
+}
+.rpress-left {
+    margin-top: -45px;
+}
+
+.view-food-item-wrap input[type="checkbox"] {
+	background: #EEE;
+	box-shadow: 0 0 0 0 #d4413c inset, 0 0 0 2px #666666 inset, 0 0 0 8px #EEE inset, 0 0 0 0 #ddd inset, 0 0 0 0 #ddd;
+	padding: 2px;
+	border-radius: 2px;
+	display: inline-block;
+	transition: all .2s;
+	zoom: 1;
+}
+
+.view-food-item-wrap input[type="checkbox"]:active {
+	background: #ddd;
+	box-shadow: 0 0 0 0 #d4413c inset, 0 0 0 2px #666666 inset, 0 0 0 0 #EEE inset, 0 0 0 8px #ddd inset, 0 0 0 4px #ddd;
+}
+.view-food-item-wrap input[type="checkbox"]:checked {
+	background: #F9F9F9;
+	box-shadow: 0 0 0 8px #2d3138 inset, 0 0 0 0 #666666 inset, 0 0 0 8px #EEE inset, 0 0 0 0 #ddd inset, 0 0 0 0 #ddd;
+  	content: url('../images/checkbox.png');
+  	position: relative;
+  	top: 2px;
+}
+
+.rpress-cart-item span {
+	font-size: 15px;
+}
+input.pick {
+	margin-left: 7px !important;
+}
+.rpress-open-hrs {
+	display: inline-block;
+    width: 37%;
+}
+.delivery-opts {
+	display: inline-block;
+}
+.ui-timepicker-standard a {
+	font-size: 14px;
+    margin-left: -22px;
+}
+.delivery-items-options h3.delivery-options-heading {
+	text-align: left;
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 30px;
+}
+.pull-right {
+	padding-top: 10px;
+}
+a.rpress-clear-cart:hover {
+	color: #c33332 !important;
+}
+input#rpress-allowed-hours {
+    background: #f7f7f700;
+}
+section.fullwidth.nav {
+	display: none;
+    margin-bottom: 20px;
+}
+.rpress-category-item a:hover {
+	color: #d4413c !important;
+}
+.row-top.update-bottom {
+    border-top: 1px solid #d9dbe080;
+    padding: 16px 12px 0px 30px;
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    background-color: #ffffff;
+    left: 0;
+    bottom: 14px;
+}
+.qty-button {
+    border: 1px solid #d9dbe080;
+    border-radius: 100px;
+    width: 35% !important;
+
+}
+.col-sm-3.left, .col-sm-3.right {
+	padding-left: 0px;
+}
+.col-sm-3.cent {
+	padding-right: 0px;
+}
+#rpress_checkout_user_info input[type="text"] {
+    border: 1px solid #bbb !important;
+    line-height: 1.5;
+    text-align: left;
+}
+#rpress_purchase_submit .rpress-submit, #rpress_login_submit, #rpress-purchase-button {
+	padding: 5px 15px;
+}
+#rpress_checkout_cart a.rpress-cart-saving-button {
+    padding: 5px 15px;
+    font-size: 16px;
+}
+#rpress_checkout_cart .rpress_cart_header_row th {
+    padding: 15px;
+    font-weight: 600;
+}
+.rpress_cart_item_price, 
+.rpress_cart_actions {
+	text-align: center !important;
+}
+#rpress_checkout_cart td img {
+	width: 40px;
+}
+.tb-cart {
+	display: inline-block;
+}
+#rpress_checkout_form_wrap .rpress-payment-icons {
+    height: 45px;
+}
+.cart_icon {
+	float: right;
+	padding-left: 11px;
+}
+span.addon-item-price {
+	float: right;
+}
+span.cart-total {
+	margin-right: 0px;
+}
+
+.ui-menu-item a {
+	font-size: 12px;
+}
+.cart_item.rpress_checkout {
+	margin-top: 15px;
+}
+ul.rpress-cart li.rpress-cart-item:first-child {
+    border-top: 0;
+}
+ul.rpress-cart li.rpress-cart-item {
+	border-top: 1px dashed #22242626;
+}
+.sticky-cat {
+    position: fixed !important;
+    top: 15px;
+}
+.sticky-category {
+	position: fixed !important;
+    top: 31%;
+}
+div.col-md-3 {
+	width: 19%;
+}
+div.rpress_fooditems_list.col-md-5 {
+	width: 46.666667%;
+}
+#rpress_user_history tr:nth-child(even) {
+	background: #f8f8f8;
+}
+#rpress_user_history tr:nth-child(odd) {
+	background: #ffffff;
+}
+#rpress_user_history th {
+    background: #e4e4e4;
+}
+.fancybox-first {
+	cursor: pointer;
+    height: 511px !important;
+    top: 0px;
+    position: absolute;
+    margin: 0px auto;
+    overflow: auto;
+    padding: 24px;
+    text-align: left;
+    width: 100%;
+    left: 0;
+}
+.fancybox-close-small {
+	right: 32px;
+	top: 14px;
+}
+.view-food-item-wrap {
+    cursor: pointer;
+    height: 511px !important;
+    top: 0px;
+    position: absolute;
+    margin: 0px auto;
+    overflow: auto;
+    padding: 24px;
+    text-align: left;
+    width: 100%;
+    left: 0;
+}
+table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
+	font-weight: 600;
+}
+ /*=================== Style sheet for pop-up =======================
+   ===================                        =======================*/
+   .qtyminus-style {
+   	    font-weight: bold !important;
+        padding: 15px 20px !important;
+   }
+   .qtyplus-style {
+   	   font-weight: bold !important;
+       padding: 15px 27px 15px 20px  !important;
+   }
+   .qty-style {
+   	    padding: 9px 6px !important;
+   	    margin-bottom: 0px !important;  
+   	}
+   	.md-4-mar-lft {
+   		margin-left: 10px;
+   	}
+   	#fooditem-details {
+   		padding: 25px;
+   	}
+   	.md-4-top {
+   		margin-top: 10px !important;
+   	}
+   	.bold {
+   		margin-left: 14px;
+   	}
+   	.rpress-popup-actions .submit-fooditem-button {
+	    font-size: 12px;
+	    letter-spacing: 0.72px;
+	    text-transform: uppercase;
+	    text-align: center;
+	    height: 56px;
+	    background-color: #d4413c;
+	    color: rgb(255, 255, 255);
+	    font-weight: 600;
+	    border-radius: 28px;
+	    line-height: 54px;
+	    width: 64%;
+	    margin-left: 7px;
+   	}
+   	.update-fooditem-button {
+	    font-size: 12px;
+	    letter-spacing: 0.72px;
+	    text-transform: uppercase;
+	    text-align: center;
+	    height: 56px;
+	    background-color: #d4413c;
+	    color: rgb(255, 255, 255);
+	    font-weight: 600;
+	    border-radius: 28px;
+	    line-height: 54px;
+	    width: 61%;
+	    display: inline-block;
+	    margin-left: 10px;
+   	}
+   	.edit-pop-up-custom-button {
+   		margin-top: 0px;
+   	}
+   	.edit-pop-up-custom-button a {
+   		color: #ffffff;
+   	}
+   	input[type="button"] {
+	    height: 56px;
+	    color: #2d3138 !important;
+	    background-color: #fff !important;
+        border-radius: 40px !important;
+   	}
+   	
+   	.fancybox-container input[type="text"] {
+   		border: 0px solid #bbb !important;
+	    line-height: 37px;
+	    text-align: center;
+   	}
+   	div.btn-count {
+   	border: 1px solid #d9dbe080;
+    border-radius: 100px;
+    width: 35%;
+	}
+	.clearfix:after, .container:after, .container-fluid:after, 
+	.row:after, .btn-toolbar:after, .nav:after, 
+	.navbar:after, .navbar-header:after, .navbar-collapse:after, 
+	.pager:after, .panel-body:after, .modal-header:after, .modal-footer:after {
+		clear: none !important;
+	}
+	input[type="radio"], input[type="checkbox"] {
+		display: inline-block;
+	}
+	.rpress-popup-actions.edit-rpress-popup-actions {
+        border-top: 1px solid #d9dbe080;
+	   	padding: 8px 12px 0px 30px;
+	    width: 100%;
+	    margin: 0 auto;
+	    position: absolute;
+	    background-color: #ffffff;
+	    left: 0;
+	    bottom: 14px;
+	}
+	button:hover {
+		background: #76767600 !important;
+	    color: #d4413c;
+	}
+	form#fooditem-details h6, 
+	form#fooditem-update-details h6 {
+	    border-bottom: 1px solid rgba(217, 219, 224, 0.5);
+    	padding-bottom: 8px;
+    	font-weight: 600;
+	}
+	.view-food-item-wrap h1 {
+		float: left;
+	    font-size: 25px;
+	    font-weight: 600;
+	    margin-left: 8px;
+	}
+
+   	/*===================Edit pop-up===============
+   	=================================================*/
+   	#fooditem-update-details {
+   		padding: 28px;
+   	}
+  
+    .view-food-item-wrap .qtyplus{
+        font-weight: bold;
+        padding: 17px 27px 17px 21px;
+	  }
+	.view-food-item-wrap .qtyminus {
+	  	font-weight: bold;
+        padding: 17px 20px;
+	  }
+	  .special-margin {
+	  	margin-top: 10px;
+	  }
+	  .special-margin textarea, 
+	  .special-inst textarea {
+	  	border: 1px solid #e4e4e4;
+	  }
+	  .special-margin a, 
+	  .special-inst a {
+	  	color: #d4413c;
+	    font-weight: 500;
+	    margin-bottom: 8px;
+	    display: block;
+	  }
+	  #fooditem-details, 
+	  #fooditem-update-details {
+	  	margin-bottom: -15px;
+	  }
+	  .fancybox-can-drag .fancybox-content {
+     	cursor: pointer;
+	    height: 600px !important;
+	    top: 33px;
+	    position: absolute;
+	    margin: 0px auto;
+	    left: 28%;
+     }
+	  .fancybox-content {
+	  	position: relative;
+	  }   
+	  .edit-rpress-popup-actions  {
+	  	position: absolute;
+	  	bottom: 20px;
+	  }
+	  .price-text-left {
+	  	margin-left: 15px;
+	  	margin-top: 5px;
+	  }
+	  .row-top {
+	  	margin-top: 8px;
+	  }
+	  .edit-value {
+	  	margin-left: 12px;
+	  }
+	  .md-4-mar-lft {
+        margin-left:10px; 
+	  }
+	  .md-12-top {
+	  	margin-top: 10px;
+	  }
+	  .qty_plus_font{
+         font-weight: bold !important;
+	  }
+
+/*=========================css for responsive=====================
+===================================================================*/
+@media only screen and (max-width: 1024px) {
+    .fancybox-can-drag .fancybox-content {
+		left: 21%;
+    }
+}
+@media only screen and (max-width: 1024px) {
+@media (min-width: 992px)
+.col-md-3 {
+    width: 30%;
+}
+}
+@media only screen and (max-width: 991px) {
+    div.btn-count {
+		float: left;
+    }
+    .rpress-popup-actions .submit-fooditem-button {
+    	display: inline-block;
+    }
+    /*.plus-symb {
+    	padding-right: 0px !important;
+    }*/
+}
+
+@media only screen and (max-width: 768px) {
+    div.item-cart {
+        float: none !important;
+        padding-bottom: 1px;
+        margin-bottom: 40px;
+    }
+    ul.rpress-list li {
+    display: inline-block;
+    border-color: #c33332;
+    font-weight: 600;
+    height: 50px;
+    background: #fff!important;
+    border-width: 0 0 5px;
+    border-style: solid;
+    padding: .85714286em 1.142857em !important;
+	}
+	#nav-tab.nav.nav-tabs {
+		width: 100%;
+		margin-bottom: 60px;
+		float: none;
+	}
+	ul.rpress-list .rpress-category-item {
+		font-size: 15px;
+	}
+	.fancybox-can-drag .fancybox-content {
+		left: 11%;
+	}
+	.rpress-popup-actions.edit-rpress-popup-actions {
+		left: 11%;
+	}
+	div.btn-count {
+		width: 60%;
+	}
+	section.fullwidth.nav {
+	display: block;
+	margin-left: -15px;
+	margin-right: -15px;
+	}
+	// https://benfrain.com/a-horizontal-scrolling-navigation-pattern-for-touch-and-mouse-with-moving-current-indicator/
+	// https://codepen.io/benfrain/pen/zZZLaP
+	.nav-scroller-wrapper {
+	  position: relative;
+	  overflow: hidden;
+	  padding: 0 30px;
+	}
+
+
+  .nav-scroller {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    font-size: 0;
+    padding-bottom: 20px;
+    margin-bottom: -20px;
+  }
+
+
+	.nav-scroller-content {
+	  position: relative;
+	  display: flex;
+	  justify-content: space-around;
+	  float: left;
+	  width: min-content;
+	  min-width: 100%;
+	  transition: transform .4s ease-in-out;
+	}
+
+    .no-transition {
+      transition: none;
+    }
+
+
+  .nav-scroller-item {
+    display: block;
+    font-size: 1.125rem;
+    text-align: center;
+    padding: .5rem;
+  }
+
+
+  .nav-scroller-btn {
+    position: absolute;
+    top: 65px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 1.25rem;
+    transition: opacity .3s;
+    height: 46px;
+    background-color: #ffffff !important;
+    border-color: #337ab700 !important;
+
+    &:not(.active) {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  .nav-scroller-btn--left {
+    left: 0;
+  }
+
+  .nav-scroller-btn--right {
+    right: 0;
+    margin-right: 11px;
+  }
+	body {
+	  background-color: #ccc;
+	}
+
+	.fullwidth {
+	  padding: 15px 0;
+	  margin: 15px 0;
+	  background-color: #fff;
+	}
+	.rpress-term-list.rpress-left {
+		width: 100%;
+	}
+	.scroll-class {
+		width: 100% !important;
+	} 
+	.btn-primary:hover {
+		background-color: #ffffff !important;
+	}
+	.nav-scroller {
+		overflow: hidden;
+	    overflow-x: hidden;
+	}
+	.rpress-list {
+		display: none;
+	}
+	.btn-primary {
+		color: #efefef !important;
+		font-size: 27px !important;
+	}
+	.nav-scroller-item.selected {
+	    border-bottom: 1px solid #c33332;
+    	font-weight: 600;
+    	border-width: 0 0 4px;
+	}
+	.btn-sm, .btn-group-sm > .btn {
+		padding: 5px 4px !important;
+	}
+	.btn:active, .btn.active {
+		color: #c33332 !important;
+		box-shadow: inset 0 0px 0px rgba(0, 0, 0, .125) !important;
+	}
+	.nav-scroller-item:hover {
+		border-bottom: 1px solid #ececec;
+	    border-width: 0 0 4px;
+	}
+	.nav-scroller-content a {
+		font-size: 15px;
+	}
+	.container.scroll-class {
+	    padding-right: 50px;
+    	padding-left: 50px;
+	}
+	.fullwidth.nav {
+	    border: 1px solid #e7e7e7;
+        box-shadow: 0px 0px 10px 1px #efefef;
+	}
+	button.nav-scroller-btn--left {
+	    margin-left: 22px;
+	}
+	button.nav-scroller-btn--right {
+		margin-right: 22px;
+	}
+	.sticky-cat {
+	    position: fixed !important;
+	    top: 104px !important;
+   	    margin-left: -63px !important;
+    	z-index: 9;
+    	width: 100%;
+	    border-bottom: 1px solid #e7e7e7 !important;
+	    box-shadow: 0px 0px 0px 0px #efefef !important;
+        border-top: 0 !important;
+	}
+	.sticky-cat button.nav-scroller-btn--left, 
+	.sticky-cat button.nav-scroller-btn--right {
+	    margin-top: -56px;
+    	padding-bottom: 45px !important;
+	}
+	.nav-scroller-btn--left, 
+	.nav-scroller-btn--right {
+	    padding-bottom: 43px !important;
+	}
+	.sticky-category {
+	    position: unset !important;
+	}
+	.cat-lists, div.rpress_fooditems_list.col-md-5 {
+		width: 100% !important;
+	}
+}
+@media only screen and (max-width: 625px) {
+    .fancybox-can-drag .fancybox-content, 
+    .rpress-popup-actions.edit-rpress-popup-actions {
+        width: 540px !important;
+        left: 7%;
+    }
+    .sticky-cat {
+    	top: -15px !important;
+	    margin-left: -51px !important;
+    }
+}
+@media only screen and (max-width: 768px) {
+@media (min-width: 768px){
+.col-sm-3 {
+    width: 15% !important;
+}
+.view-food-item-wrap .col-sm-3 {
+    width: 17%;
+} 
+}
+}
+@media only screen and (max-width: 425px) {
+	input[type="text"] {
+		    width: 65% !important;
+	}
+	.col-xs-3 {
+	    width: 18%;
+	} 
+	.view-food-item-wrap .col-xs-3  {
+	    width: 20%;
+	}
+	.view-food-item-wrap .col-xs-4  {
+		width: 28.333333%;
+	}
+	.fancybox-can-drag .fancybox-content, 
+	.rpress-popup-actions.edit-rpress-popup-actions {
+		width: 398px !important;
+    	left: 3%;
+	}
+	.sticky-cat {
+	    margin-left: -45px !important;
+    }
+
+}
+
+@media only screen and (max-width: 375px) {
+input[type="text"] {
+	    width: 100% !important;
+}
+.qtyplus-style {
+    font-weight: bold !important;
+    padding: 15px 20px 15px 20px !important;
+}
+}
+
+@media only screen and (max-width: 320px) {
+   .qtyplus-style {
+    font-weight: bold !important;
+    padding: 14px 21px 15px 19px !important;
+}
+.qty_plus_font{
+    padding: 16px 20px !important;
+}
+}
+.delivery-wrap, .delivery-wrap select {
+	width: 100%;
+}
+html body .delivery-options h3 {
+	text-align: center;
+	display: block;
+	border-top: 1px solid #ccc;
+	padding-top: 8px;
+}
+html body .rpress-open-hrs {
+	display: block;
+	padding: 0;
+	margin: 0;
+	margin-top: -20px;
+	width: 100%;
+}
+html .rpress-open-hrs #rpress-allowed-hours {
+	border: 1px solid #ccc !important;
+	padding: 0px 10px;
+	width: 40%;
+	background: #f9f9f9;
+}
+.restro-instruction {
+	font-weight: bold;
+	display: inline-block;
+	margin-top: 10px;
+}

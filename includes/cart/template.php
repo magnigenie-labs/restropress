@@ -85,15 +85,16 @@ function rpress_get_cart_item_template( $cart_key, $item, $ajax = false, $data_k
 
 	$edit_item_url = rpress_edit_cart_item( $cart_key, $item );
 	$remove_url = rpress_remove_item_url( $cart_key );
-	
+
 	$title      = get_the_title( $id );
 	$options    = !empty( $item['options'] ) ? $item['options'] : array();
 	$quantity   = rpress_get_cart_item_quantity( $id, $options );
 	$price      = rpress_get_cart_item_price( $id, $options );
 	$addon_itm  = get_addon_item_formatted($item);
 	$instruction = get_special_instruction($item);
-	$delivery_options = get_delivery_options(true);
+	$delivery_options = get_delivery_options( true );
 	$item_qty   = rpress_get_item_qty_by_key( $cart_key );
+	$color = rpress_get_option( 'checkout_color', 'red' );
 
 	ob_start();
 
@@ -119,6 +120,7 @@ function rpress_get_cart_item_template( $cart_key, $item, $ajax = false, $data_k
 	$item = str_replace( '{remove_url}', $remove_url, $item );
 	$item = str_replace( '{edit_food_item}', $edit_item_url, $item );
 	$item = str_replace( '{special_instruction}', $instruction, $item );
+	$item = str_replace( '{color}', $color, $item );
   	$subtotal = '';
   	if ( $ajax ){
    	 $subtotal = rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) ) ;
@@ -139,11 +141,10 @@ function rpress_edit_cart_item( $cart_key, $item ) {
 function get_addon_item_formatted($addon_items) {
 	$html = '';
 	if( is_array($addon_items) && !empty($addon_items['options']) ) {
-		$html .= '<ul class="addon-item-wrap test">';
+		$html .= '<ul class="addon-item-wrap">';
 		if( isset($addon_items['options']['addon_items']) ) {
 			foreach( $addon_items['options']['addon_items'] as $key => $addon_item ) {
-				if( $addon_item['addon_item_name'] !== '' 
-					&& $addon_item['price'] !== '' )
+				if( $addon_item['addon_item_name'] !== '' )
 					$html .= '<li class="t rpress-cart-item"><span class="rpress-cart-item-title">'.$addon_item['addon_item_name'].'</span><span class="addon-item-price cart-item-quantity-wrap"><span class="rpress-cart-item-price qty-class">'.rpress_currency_filter( rpress_format_amount( $addon_item['price'])).'</span></li>';
 			}
 		}
@@ -152,13 +153,13 @@ function get_addon_item_formatted($addon_items) {
 	}
 	else {
 		if( is_array($addon_items) && !empty($addon_items['addon_items']) ) {
-			$html .= '<ul class="addon-item-wrap test">';
-			
+			$html .= '<ul class="addon-item-wrap">';
+
 			foreach( $addon_items['addon_items'] as $k => $val ) {
 				if( is_array($val) ) {
 					$html .= '<li class="t y f rpress-cart-item"><span class="rpress-cart-item-title">'.$val['addon_item_name'].'</span><span class="addon-item-price cart-item-quantity-wrap"><span class="rpress-cart-item-price qty-class">'.rpress_currency_filter( rpress_format_amount( $val['price'] ) ).'</span></li>';
 				}
-				
+
 			}
 			$html .='</ul>';
 		}
@@ -173,7 +174,7 @@ function get_addon_item_formatted($addon_items) {
  * @return string Cart is empty message
  */
 function rpress_empty_cart_message() {
-	return apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'Your cart is empty', 'restropress' ) . '</span>' );
+	return apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'CHOOSE AN ITEM FROM THE MENU TO GET STARTED.', 'restropress' ) . '</span>' );
 }
 
 /**

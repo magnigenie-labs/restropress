@@ -10,7 +10,7 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 /**
@@ -165,63 +165,67 @@ function rpress_register_settings() {
 		add_option( 'rpress_settings' );
 	}
 
-	foreach ( rpress_get_registered_settings() as $tab => $sections ) {
-		foreach ( $sections as $section => $settings) {
+  $registered_settings = rpress_get_registered_settings();
 
-			// Check for backwards compatibility
-			$section_tabs = rpress_get_settings_tab_sections( $tab );
-			if ( ! is_array( $section_tabs ) || ! array_key_exists( $section, $section_tabs ) ) {
-				$section = 'main';
-				$settings = $sections;
-			}
+  if( is_array( $registered_settings ) && !empty( $registered_settings ) ) {
 
-			add_settings_section(
-				'rpress_settings_' . $tab . '_' . $section,
-				__return_null(),
-				'__return_false',
-				'rpress_settings_' . $tab . '_' . $section
-			);
+    foreach ( $registered_settings as $tab => $sections ) {
+      foreach ( $sections as $section => $settings) {
 
-			foreach ( $settings as $option ) {
-				// For backwards compatibility
-				if ( empty( $option['id'] ) ) {
-					continue;
-				}
+        // Check for backwards compatibility
+        $section_tabs = rpress_get_settings_tab_sections( $tab );
+        if ( ! is_array( $section_tabs ) || ! array_key_exists( $section, $section_tabs ) ) {
+          $section = 'main';
+          $settings = $sections;
+        }
 
-				$args = wp_parse_args( $option, array(
-				    'section'       => $section,
-				    'id'            => null,
-				    'desc'          => '',
-				    'name'          => '',
-				    'size'          => null,
-				    'options'       => '',
-				    'std'           => '',
-				    'min'           => null,
-				    'max'           => null,
-				    'step'          => null,
-				    'chosen'        => null,
-				    'multiple'      => null,
-				    'placeholder'   => null,
-				    'allow_blank'   => true,
-				    'readonly'      => false,
-				    'faux'          => false,
-				    'tooltip_title' => false,
-				    'tooltip_desc'  => false,
-				    'field_class'   => '',
-				) );
+        add_settings_section(
+          'rpress_settings_' . $tab . '_' . $section,
+          __return_null(),
+          '__return_false',
+          'rpress_settings_' . $tab . '_' . $section
+        );
 
-				add_settings_field(
-					'rpress_settings[' . $args['id'] . ']',
-					$args['name'],
-					function_exists( 'rpress_' . $args['type'] . '_callback' ) ? 'rpress_' . $args['type'] . '_callback' : 'rpress_missing_callback',
-					'rpress_settings_' . $tab . '_' . $section,
-					'rpress_settings_' . $tab . '_' . $section,
-					$args
-				);
-			}
-		}
+        foreach ( $settings as $option ) {
+          // For backwards compatibility
+          if ( empty( $option['id'] ) ) {
+            continue;
+          }
 
-	}
+          $args = wp_parse_args( $option, array(
+              'section'       => $section,
+              'id'            => null,
+              'desc'          => '',
+              'name'          => '',
+              'size'          => null,
+              'options'       => '',
+              'std'           => '',
+              'min'           => null,
+              'max'           => null,
+              'step'          => null,
+              'chosen'        => null,
+              'multiple'      => null,
+              'placeholder'   => null,
+              'allow_blank'   => true,
+              'readonly'      => false,
+              'faux'          => false,
+              'tooltip_title' => false,
+              'tooltip_desc'  => false,
+              'field_class'   => '',
+          ) );
+
+          add_settings_field(
+            'rpress_settings[' . $args['id'] . ']',
+            $args['name'],
+            function_exists( 'rpress_' . $args['type'] . '_callback' ) ? 'rpress_' . $args['type'] . '_callback' : 'rpress_missing_callback',
+            'rpress_settings_' . $tab . '_' . $section,
+            'rpress_settings_' . $tab . '_' . $section,
+            $args
+          );
+        }
+      }
+    }
+  }
 
 	// Creates our settings in the options table
 	register_setting( 'rpress_settings', 'rpress_settings', 'rpress_settings_sanitize' );
@@ -259,9 +263,9 @@ function rpress_get_registered_settings() {
 					),
 					'allow_minimum_order' => array(
 						'id'   => 'allow_minimum_order',
-						'name' => __( 'Allow minimum order amount', 'restropress' ),
+						'name' => __( 'Minimum order price', 'restropress' ),
 						'desc' => sprintf(
-							__( 'By checking this the users have to place an order with minimum amount of set price', 'restropress' )
+							__( 'Restrict users to purchase a minimum amout of food.', 'restropress' )
 						),
 						'type' => 'checkbox',
 					),
@@ -270,41 +274,25 @@ function rpress_get_registered_settings() {
 						'size' => 'small',
 						'name' => __( 'Minimum order price', 'restropress' ),
 						'desc' => sprintf(
-							__( 'Minimum order price that should be made on the store', 'restropress' )
+							__( 'The minimum order price which the users have to purchase to place the order.', 'restropress' )
 						),
 						'std'  => '100',
 						'type' => 'number',
 					),
 					'minimum_order_error' => array(
 						'id'   => 'minimum_order_error',
-						'name' => __( 'Minimum order price error', 'restropress' ),
+						'name' => __( 'Minimum order error message', 'restropress' ),
 						'desc' => sprintf(
-							__( 'This would be the error message when someone tries to place an order with less than that price, You can use {min_order_price} variable', 'restropress' )
+							__( 'This would be the error message when someone tries to place an order with less than the minimum order amount, You can use {min_order_price} variable in the message.', 'restropress' )
 						),
 						'std'  => 'We accept order for at least {min_order_price} ',
 						'type' => 'textarea',
 					),
-					'style_settings' => array(
-						'id'   => 'style_settings',
-						'name' => '<h3>' . __( 'Plugin Layout Style', 'restropress' ) . '</h3>',
-						'desc' => '',
-						'type' => 'header',
-						'tooltip_title' => __( 'Plugin Layout Style', 'restropress' ),
-						'tooltip_desc'  => __( 'This plugin internally uses bootstrap for style. If you make this option checked then it will take style from plugin file. Otherwise it will take style from theme css.' ),
-					),
-					'allow_using_style' => array(
-						'id'   => 'allow_using_style',
-						'name' => __( 'Use internal css?', 'restropress' ),
-						'desc' => sprintf(
-							__( 'This plugin internally uses bootstrap for style. If you make this option checked then it will take style from plugin file. Otherwise it will take style from theme css.', 'restropress' )
-						),
-						'type' => 'checkbox',
-					),
 					'use_external_bootstrap_script' => array(
 						'id'   => 'use_external_bootstrap_script',
-						'name' => __( 'Use external resource for bootstrap js', 'restropress' ),
+						'name' => __( 'Remove restropress bootstrap script', 'restropress' ),
 						'desc' => sprintf(
-							__( 'This plugin uses bootstrap js for showing the popup. If your child theme uses bootstrap js then you can check this checkbox so that the plugin will use your theme js file', 'restropress' )
+							__( 'If your theme uses bootstrap and your site is experiencing issues with the popup display then enable this.', 'restropress' )
 						),
 						'type' => 'checkbox',
 					),
@@ -318,7 +306,7 @@ function rpress_get_registered_settings() {
 					),
 					'purchase_page' => array(
 						'id'          => 'purchase_page',
-						'name'        => __( 'Primary Checkout Page', 'restropress' ),
+						'name'        => __( 'Checkout Page', 'restropress' ),
 						'desc'        => __( 'This is the checkout page where buyers will complete their purchases. The [fooditem_checkout] shortcode must be on this page.', 'restropress' ),
 						'type'        => 'select',
 						'options'     => rpress_get_pages(),
@@ -443,7 +431,7 @@ function rpress_get_registered_settings() {
 						'class'       => 'store_lat_lng',
 					),
 				),
-				
+
 				//Currency Settings Here
 				'currency' => array(
 					'currency' => array(
@@ -494,7 +482,7 @@ function rpress_get_registered_settings() {
 					'enable_order_notification' => array(
 						'id'   => 'enable_order_notification',
 						'name' => __( 'Enable Notification', 'restropress' ),
-						'desc' => __( 'Enable checkbox for order notification', 'restropress' ),
+						'desc' => __( 'Enable order notification', 'restropress' ),
 						'type' => 'checkbox',
 					),
 					'notification_title' => array(
@@ -506,8 +494,27 @@ function rpress_get_registered_settings() {
 					'notification_body' => array(
 						'id' => 'notification_body',
 						'name'    => __( 'Description', 'restropress' ),
-						'desc'    => __( 'Enter notification desc. Available place holder {username}, {order_id}, {order_total}', 'restropress' ),
+						'desc'    => __( 'Enter notification desc. Available place holder {order_id}', 'restropress' ),
 						'type' => 'textarea',
+					),
+					'notification_sound' => array(
+						'id' => 'notification_sound',
+						'name'    => __( 'Notification sound', 'restropress' ),
+						'desc'    => __( 'Select mp3 file for the notification sound.', 'restropress' ),
+						'type' => 'upload',
+					),
+					'notification_sound_loop' => array(
+						'id' => 'notification_sound_loop',
+						'name'    => __( 'Play notification sound in loop', 'restropress' ),
+						'desc'    => __( 'Enable this if you want the notificaiton sound to not stop until the notification duration.', 'restropress' ),
+						'type' => 'checkbox',
+						'std'		=> '1'
+					),
+					'notification_icon' => array(
+						'id' => 'notification_icon',
+						'name'    => __( 'Notification Icon', 'restropress' ),
+						'desc'    => __( 'Select an image to use as the notification icon.', 'restropress' ),
+						'type' => 'upload',
 					),
 					'notification_duration' => array(
 						'id' => 'notification_duration',
@@ -518,39 +525,42 @@ function rpress_get_registered_settings() {
 				),
 
 				//Delivery Settings Starts Here
-				'delivery_options' => array(
-					'delivery_settings' => array(
-						'id'   => 'delivery_settings',
-						'name' => '<h3>' . __( 'Delivery Settings', 'restropress' ) . '</h3>',
+				'service_options' => array(
+					'service_settings' => array(
+						'id'   => 'service_settings',
+						'name' => '<h3>' . __( 'Service Settings', 'restropress' ) . '</h3>',
 						'desc' => '',
 						'type' => 'header',
 						'tooltip_title' => __( 'Plugin Layout Style', 'restropress' ),
 					),
-					'enable_delivery' => array(
-						'id' => 'enable_delivery',
-						'name'    => __( 'Enable Delivery', 'restropress' ),
-						'desc'    => __( 'Check this option to enable delivery', 'restropress' ),
-						'type' => 'checkbox',
-					),
-					'enable_pickup' => array(
-						'id' => 'enable_pickup',
-						'name'    => __( 'Enable Pickup', 'restropress' ),
-						'desc'    => __( 'Check this option to enable pickup', 'restropress' ),
-						'type' => 'checkbox',
+					'enable_service' => array(
+						'id' => 'enable_service',
+						'name'    => __( 'Choose Services', 'restropress' ),
+						'type' => 'radio',
+						'options' => array(
+							'delivery_and_pickup' => __( 'Delivery and Pickup Both' ),
+							'delivery'  => __( 'Delivery Only', 'restropress' ),
+							'pickup'  => __( 'Pickup Only', 'restropress' ),
+						),
+						'std' => 'delivery_and_pickup',
 					),
 					'open_time' => array(
 						'id'            => 'open_time',
 						'name'          => __( 'Open Time', 'restropress' ),
 						'desc'          => __( 'Select restaurant open time', 'restropress' ),
 						'type'          => 'text',
+            'std'       => '9:00am',
 						'field_class' 	=> 'rpress_timings',
+						'allow_blank'	=> false,
 					),
 					'close_time' => array(
 						'id'            => 'close_time',
 						'name'          => __( 'Close Time', 'restropress' ),
 						'desc'          => __( 'Select restaurant close time', 'restropress' ),
 						'type'          => 'text',
-						'field_class' 	=> 'rpress_timings'
+            'std'           => '10:00pm',
+						'field_class' 	=> 'rpress_timings',
+						'allow_blank'	=> false,
 					),
 				),
 
@@ -625,6 +635,8 @@ function rpress_get_registered_settings() {
 				),
 			)
 		),
+
+
 		/** Emails Settings */
 		'emails' => apply_filters('rpress_settings_emails',
 			array(
@@ -687,9 +699,9 @@ function rpress_get_registered_settings() {
 					'purchase_receipt' => array(
 						'id'   => 'purchase_receipt',
 						'name' => __( 'Purchase Receipt', 'restropress' ),
-						'desc' => __('Enter the text that is sent as purchase receipt email to users after completion of a successful purchase. HTML is accepted. Available template tags:','restropress' ) . '<br/>' . rpress_get_emails_tags_list(),
+						'desc' => __('Enter the text that is sent as purchase receipt email to users after completion of a successful purchase. HTML is accepted. Available template tags:','restropress' ),
 						'type' => 'rich_editor',
-						'std'  => __( "Dear", "restropress" ) . " {name},\n\n" . __( "Thank you for your purchase. Please click on the link(s) below to fooditem your files.", "restropress" ) . "\n\n{fooditem_list}\n\n{sitename}",
+						'std'  => __( "Dear", "restro-press" ) . " {name},\n\n" . __( "Thank you for your purchase. Please click on the link(s) below to fooditem your files.", "restro-press" ) . "\n\n{fooditem_list}\n\n{sitename}",
 					),
 				),
 				'new_order_notifications' => array(
@@ -698,19 +710,19 @@ function rpress_get_registered_settings() {
 						'name' => __( 'Order Notification Subject', 'restropress' ),
 						'desc' => __( 'Enter the subject line for the order notification email.', 'restropress' ),
 						'type' => 'text',
-						'std'  => 'New Order Placed - Order #{payment_id}',
+						'std'  => 'New Order Received - Order #{payment_id}',
 					),
 					'order_notification_heading' => array(
 						'id'   => 'order_notification_heading',
 						'name' => __( 'Order Notification Heading', 'restropress' ),
 						'desc' => __( 'Enter the heading for the order notification email.', 'restropress' ),
 						'type' => 'text',
-						'std'  => __( 'New Order Placed!', 'restropress' ),
+						'std'  => __( 'New Order Received!', 'restropress' ),
 					),
 					'order_notification' => array(
 						'id'   => 'order_notification',
 						'name' => __( 'Order Notification', 'restropress' ),
-						'desc' => __( 'Enter the text that is sent as order notification email after completion of a purchase. HTML is accepted. Available template tags:', 'restropress' ) . '<br/>' . rpress_get_emails_tags_list(),
+						'desc' => __( 'Enter the text that is sent as order notification email after completion of a purchase. HTML is accepted. Available template tags:', 'restropress' ),
 						'type' => 'rich_editor',
 						'std'  => rpress_get_default_sale_notification_email(),
 					),
@@ -744,8 +756,8 @@ function rpress_get_registered_settings() {
 					),
 					'enable_food_image_popup' => array(
 						'id'            => 'enable_food_image_popup',
-						'name'          => __( 'Enable food image in popup', 'restropress' ),
-						'desc'          => __( 'Check this to enable food items image to be shown in the popup, The food items image should be greater than 200X200', 'restropress' ),
+						'name'          => __( 'Food Image Popup', 'restropress' ),
+						'desc'          => __( 'If you want people to click on the food images to view the full food image then enable this.', 'restropress' ),
 						'type'          => 'checkbox',
 					),
 					'button_header' => array(
@@ -865,7 +877,7 @@ function rpress_get_registered_settings() {
 						'desc' => __( 'Check this to force users to be redirected to the secure checkout page. You must have an SSL certificate installed to use this option.', 'restropress' ),
 						'type' => 'checkbox',
 					),
-					
+
 					'show_register_form' => array(
 						'id'      => 'show_register_form',
 						'name'    => __( 'Show Register / Login Form?', 'restropress' ),
@@ -879,7 +891,7 @@ function rpress_get_registered_settings() {
 							'none'         => __( 'None', 'restropress' ),
 						),
 					),
-					
+
 					'enable_cart_saving' => array(
 						'id'   => 'enable_cart_saving',
 						'name' => __( 'Enable Cart Saving', 'restropress' ),
@@ -948,32 +960,7 @@ function rpress_get_registered_settings() {
 				),
 			)
 		),
-		'privacy' => apply_filters( 'rpress_settings_privacy',
-			array(
-				'general' => array(
-					'show_agree_to_privacy_policy' => array(
-						'id'   => 'show_agree_to_privacy_policy',
-						'name' => __( 'Agree to Privacy Policy', 'restropress' ),
-						'desc' => __( 'Check this to show an agree to Privacy Policy on checkout that users must agree to before creating orders.', 'restropress' ),
-						'type' => 'checkbox',
-					),
-					'agree_privacy_label' => array(
-						'id'   => 'privacy_agree_label',
-						'name' => __( 'Agree to Privacy Policy Label', 'restropress' ),
-						'desc' => __( 'Label shown next to the agree to Privacy Policy checkbox.', 'restropress' ),
-						'type' => 'text',
-						'size' => 'regular',
-					),
-					'show_privacy_policy_on_checkout' => array(
-						'id'   => 'show_privacy_policy_on_checkout',
-						'name' => __( 'Show the Privacy Policy on checkout', 'restropress' ),
-						'desc' => __( 'Display your Privacy Policy on checkout.', 'restropress' ) . ' <a href="' . esc_attr( admin_url( 'privacy.php' ) ) . '">' . __( 'Set your Privacy Policy here', 'restropress' ) .'</a>.',
-						'type' => 'checkbox',
-					),
-				),
-				'export_erase' => array()
-			)
-		),
+    'sms_notification' => apply_filters( 'rpress_settings_sms_notification', array() ),
 	);
 
 	$payment_statuses = rpress_get_payment_statuses();
@@ -1039,7 +1026,6 @@ function rpress_get_registered_settings() {
 		$rpress_settings['misc']['button_text']['buy_now_text']['tooltip_title'] = __( 'Buy Now Disabled', 'restropress' );
 		$rpress_settings['misc']['button_text']['buy_now_text']['tooltip_desc']  = __( 'Buy Now buttons are only available for stores that have a single supported gateway active and that do not use taxes.', 'restropress' );
 	}
-
 	return apply_filters( 'rpress_registered_settings', $rpress_settings );
 }
 
@@ -1451,7 +1437,7 @@ function rpress_get_registered_settings_sections() {
 			'main'               => __( 'General', 'restropress' ),
 			'currency'           => __( 'Currency', 'restropress' ),
 			'order_notification'   => __( 'Order Notification', 'restropress' ),
-			'delivery_options'   => __( 'Delivery Options', 'restropress' ),
+			'service_options'   => __( 'Service Options', 'restropress' ),
 			'checkout_options'   => __( 'Checkout Options', 'restropress' ),
 		) ),
 		'gateways'   => apply_filters( 'rpress_settings_sections_gateways', array(
@@ -1483,7 +1469,8 @@ function rpress_get_registered_settings_sections() {
 			'general'      => __( 'General', 'restropress' ),
 			'export_erase' => __( 'Export & Erase', 'restropress' ),
 		) ),
-		
+    'sms_notification' => apply_filters( 'rpress_settings_section_sms_notification', array() ),
+
 		// 'notification'     => apply_filters( 'rpress_settings_sections_notification', array(
 		// 	'main'               => __( 'General Settings', 'restropress' ),
 		// 	'active_notification'           => __( 'Active Notifications', 'restropress' ),

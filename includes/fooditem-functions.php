@@ -171,31 +171,7 @@ function rpress_price( $fooditem_id = 0, $echo = true, $price_id = false ) {
 		$fooditem_id = get_the_ID();
 	}
 
-	if ( rpress_has_variable_prices( $fooditem_id ) ) {
-
-		$prices = rpress_get_variable_prices( $fooditem_id );
-
-		if ( false !== $price_id && isset( $prices[$price_id] ) ) {
-
-			$price = rpress_get_price_option_amount( $fooditem_id, $price_id );
-
-		} elseif( $default = rpress_get_default_variable_price( $fooditem_id ) ) {
-
-			$price = rpress_get_price_option_amount( $fooditem_id, $default );
-
-		} else {
-
-			$price = rpress_get_lowest_price_option( $fooditem_id );
-
-		}
-
-		$price = rpress_sanitize_amount( $price );
-
-	} else {
-
-		$price = rpress_get_fooditem_price( $fooditem_id );
-
-	}
+	$price = rpress_get_fooditem_price( $fooditem_id );
 
 	$price           = apply_filters( 'rpress_fooditem_price', rpress_sanitize_amount( $price ), $fooditem_id, $price_id );
 	$formatted_price = '<span class="rpress_price" id="rpress_price_' . $fooditem_id . '">' . $price . '</span>';
@@ -293,7 +269,7 @@ function rpress_get_default_variable_price( $fooditem_id = 0 ) {
 		if( is_array( $prices) ) {
 			$default_price_id = current( array_keys( $prices ) );
 		}
-		
+
 	}
 
 	return apply_filters( 'rpress_variable_default_price_id', absint( $default_price_id ), $fooditem_id );

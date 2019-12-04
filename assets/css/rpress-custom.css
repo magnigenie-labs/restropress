@@ -7,8 +7,12 @@ div.rpress-element-title, input[type="button"], input[type="text"] {
 html body .rpress_fooditems_list .rpress_fooditem {
 	clear: both;
 }
+html body .rpress_fooditems_list {
+	position: relative;
+}
 a.rpress-popup {display: block;}
 div.rpress_fooditems_list .rpress_fooditem {width: 100%;}
+.fancybox-container{ z-index: 99999; }
 
 div.rpress_fooditems_list .rpress_fooditem h3.rpress_fooditem_title {display: block; margin: 0;}
 div.rpress_fooditems_list .rpress_fooditem .rpress_fooditem_buy_button {float: right;}
@@ -36,12 +40,13 @@ html body .delivery-items-options .delivery-change {
 	display: block;
 	text-align: right;
 	cursor: pointer;
-	font-size: 12px;
+	font-size: 13px;
+    font-weight: 600;
 }
 
 html body .datepicker.datepicker-dropdown { width: 24%; }
 html body .ui-timepicker-wrapper {
-	z-index: 999999 !important; 
+	z-index: 999999 !important;
 	width: 290px;
 	text-align: center;
 }
@@ -69,7 +74,7 @@ html body #rpressModal .modal-body{
 }
 html body #rpressModal.rpress-delivery-options .modal-body {
 	max-height: 100%;
-	overflow-y: auto; 
+	overflow-y: auto;
 }
 html body .datepicker-days .today.day {
 	background: #c33332;
@@ -104,16 +109,13 @@ html body #rpressModal
 	margin: 0 auto 10px;
 	text-align: center;
 }
-.rpress-delivery-wrap .rpress-store-closed-info.disabled {
-	/*display: none;*/
-}
 .rpress-delivery-options ul#rpressdeliveryTab{
 	display: inline-block;
 	border: 2px solid #ccc;
 	margin: 0;
 }
 html body .modal-backdrop.fade.in {z-index: 99999;}
-html body div#rpressModal, html body div#rpressImageModal{z-index: 999999;}
+html body div#rpressModal{z-index: 999999;}
 html body div#rpressModal button.close {
 	position: absolute;
 	right: 11px;
@@ -139,7 +141,7 @@ html body .pickup-time-text, html body .delivery-time-text {text-transform: capi
 div.rpress-thumbnail-holder {
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: center;   
+	background-position: center;
 }
 div.rpress_fooditems_list .rpress_fooditem:last-child {
 	border-bottom: none;
@@ -159,10 +161,6 @@ div.rpress_fooditems_list .rpress_fooditem:last-child {
 
 div.food-item-list span.cat_price {
 	float: right;
-}
-.rpress-popup-actions {
-	/*display: block;
-	margin-top: 30px;*/
 }
 .rpress-popup-actions a.submit-fooditem-button, .rpress-popup-actions a.update-fooditem-button {
 	cursor: pointer;
@@ -195,6 +193,7 @@ div.food-item-list span.cat_price {
 }
 .rpress-cart-item-qty {
 	padding-right: 10px;
+	color: #20AC76;
 }
 .rpress_checkout_cart_item_qty {
 	padding-right: 20px;
@@ -255,7 +254,7 @@ div.rpress-tabs ul.tabs li {
 }
 
 div.rpress-search-wrap {
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	display: block;
 	clear: both;
 }
@@ -274,15 +273,16 @@ div.rpress-search-wrap input[type="text"] {
 	border: none;
 	text-transform: initial;
 	color: #666666;
-	font-weight: 600;
+	font-weight: 500;
 	letter-spacing: 1px;
 	border-bottom: 1px solid #ebedf3;
 	padding: 0;
 	font-size: 12px;
 	height: 43px;
 	line-height: 43px;
-	box-shadow: none;
 	width: 100%;
+    box-shadow: 0px 1px 10px -3px #888888;
+    border-radius: 4px;
 }
 a.rpress-order-time {text-align: left; display: block;}
 
@@ -296,7 +296,7 @@ a.rpress-order-time {text-align: left; display: block;}
 div.rpress-search-wrap #rpress-food-search {
 	background-image: url('../svg/search-icon.svg');
 	background-repeat: no-repeat;
-	background-size: 14px;
+	background-size: 17px;
 	background-position: 98% center;
 	outline: none;
 	padding: 6px 10px;
@@ -355,6 +355,13 @@ html body .rpress_get_delivery_dates {
 	font-size: 13px;
 	position: relative;
 	top: 0px;
+	color: #404040;
+    font-weight: 500;
+    display: inline-block;
+    width: 108px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
 
 #rpress_checkout_wrap  span.rpress-cart-item-title {width: 60%;}
@@ -400,19 +407,19 @@ ul.rpress-category-lists {
 	padding: 0;
 }
 ul.rpress-category-lists .rpress-category-item {
-	padding: 10px 10px 10px 0px ;
-	border-bottom: 1px solid #f3f3f3;
+	padding: 10px 0px 10px 0px ;
 	font-size: 13px;
 	color: #9c9c9c;
 	text-transform: capitalize;
 	text-align: left;
 	list-style: none;
+	border-bottom: 1px solid #9c9c9c2b;
 }
 
 .rpress-categories-menu h6 {
 	background-image: url('../svg/restaurant.svg');
 	background-repeat: no-repeat;
-	background-size: 16px;
+	background-size: 8%;
 	background-position: 0px 2px;
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -457,10 +464,10 @@ ul.rpress-category-lists .rpress-category-item {
    -webkit-box-shadow: none !important;
 }
 .rpress-section .rpress-sidebar-cart-wrap {
-	box-shadow: 0px 0px 10px 1px #ccc;
-	-moz-box-shadow: 0px 0px 10px 1px #ccc;
-	-webkit-box-shadow: 0px 0px 10px 1px #ccc;
-	padding: 10px;
+	box-shadow: 0px 0px 2px 0px #ccc;
+	-moz-box-shadow: 0px 0px 2px 0px #ccc;
+	-webkit-box-shadow: 0px 0px 2px 0px #ccc;
+	padding: 15px 15px 10px 15px;
 }
 .rpress-cart li {
    list-style: none;
@@ -504,7 +511,7 @@ html body .rpress_fooditem_inner {
 	text-align: left;
 	color: #333;
 	display: block;
-}	
+}
 
 
 .rpress_purchase_submit_wrapper a {
@@ -516,7 +523,7 @@ html body .rpress_fooditem_inner {
 	position: relative;
 	width: 22px;
 	height: 22px;
-	padding: 0;	
+	padding: 0;
 	margin: 0;
 }
 
@@ -533,7 +540,7 @@ html body .rpress_fooditem_inner {
 ul.rpress-cart span.cart-total {
 	float: right;
 	font-weight: 600;
-	margin-right: 47px;
+	margin-right: 50px;
 }
 .cart_item .rpress_checkout {
 	padding-left: 28%;
@@ -547,9 +554,19 @@ ul.rpress-cart span.cart-total {
 .rpress-cart-meta.rpress_total {
 	font-weight: 500;
 }
-
-html body .rpress-section ul li {
-	padding: 10px 0 10px 0 !important;
+ul.rpress-cart li.rpress-cart-item:nth-child(even) {
+	background-color: #f2f2f2;
+    padding-left: 8px;
+    padding-top: 2px;
+}
+ul.rpress-cart li.rpress-cart-item:nth-child(odd) {
+    padding-left: 8px;
+}
+ul.addon-item-wrap li.rpress-cart-item:nth-child(even) {
+	background-color: inherit;
+}
+html body .rpress-section ul li.delivery-items-options {
+	padding: 25px 0 10px 0;
 }
 .rpress-edit-from-cart{
 	margin-left: 5px;
@@ -569,11 +586,13 @@ html body .rpress-section ul li {
 .rpress-cart .cart-action-wrap a {
 	font-size: 12px;
 }
-.rpress-cart .cart-action-wrap .rpress-edit-from-cart {
-	background-image: url('../svg/pencil-edit-button.svg');
+.rpress-cart .cart-action-wrap .rpress-edit-from-cart:before {
+	/* font-family: "Font Awesome 5 Free"; 
+	content: "\f303"; */
 }
-.rpress-cart .cart-action-wrap .rpress-remove-from-cart {
-	background-image: url('../svg/rubbish-bin.svg');
+.rpress-cart .cart-action-wrap .rpress-remove-from-cart:before {
+	/* font-family: "Font Awesome 5 Free"; 
+	content: "\f2ed"; */
 }
 .rpress-cart .cart-action-wrap .rpress-remove-from-cart, .rpress-cart .cart-action-wrap .rpress-edit-from-cart {
 	background-repeat: no-repeat;
@@ -583,17 +602,52 @@ html body .rpress-section ul li {
 	padding-top: 0px;
 	font-weight: bold;
 	display: inline-block;
-	width: 12px;
-	height: 12px;
+}
+.rpress-cart .cart-action-wrap .rpress-edit-from-cart {
+	width: 13px;
+	height: 15px;
+}
+.rpress-cart .cart-action-wrap .rpress-remove-from-cart {
+	width: 11px;
+	height: 15px;
+	margin-left: 2px;
 }
 .rpress-cart li.rpress-cart-meta:first-child {
 	margin-top: 10px;
 }
-.entry-content a {
-	box-shadow: none !important;
+.rpress.item-order a.rpress-clear-cart {
+	font-weight: 600;
+    font-size: 11px;
 }
-.rpress_checkout {
-	text-align: center !important;
+li.cart_item.empty:before{
+	content: '';
+	background: url(../svg/plate.png);
+	background-repeat: no-repeat;
+	float: right;
+    width: 228px;
+    height: 219px;
+    margin-top: 16px;
+    background-position: center;
+   }
+span.rpress_empty_cart {
+   	display: inline-block;
+   }
+.sticky-sidebar.cat-lists {
+	/*border-right: 1px solid #e4e4e4;*/
+	padding-right: 20px;
+}
+ul.rpress-category-lists li.rpress-category-item a {
+	padding-right: 35px;
+}
+.rpress-category-link.nav-scroller-item.active:after {
+	content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    float: right;
+}
+.rpress-cart .rpress_checkout {
+	text-align: center;
 }
 .rpress-cart .rpress_checkout a {
 	padding: 10px;
@@ -643,16 +697,13 @@ html body .rpress-section ul li {
 	border-bottom: 1px solid #ebedf3;
 }
 .rpress.item-order h6 {
-	background-image: url('../svg/shopping-purse-icon.svg');
-	background-repeat: no-repeat;
-	background-size: 14%;
-	background-position: 0px 0px;
-	padding-left: 28px;
-	font-size: 14px;
-	padding-top: 0px;
-	letter-spacing: 1px;
-	font-weight: bold;
-	display: inline-block;
+	font-size: 18px;
+    padding-top: 0px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    display: inline-block;
+    color: #404040;
+    margin-bottom: 15px;
 }
 .rpress_purchase_submit_wrapper .rpress-add-to-cart-label {
 	font-size: 20px;
@@ -687,6 +738,7 @@ html body .rpress-section ul li {
 .rpress_fooditem_excerpt {
 	display: block;
 	margin-left: 7px;
+	width: 90%;
 }
 .rpress-cart .cat_icon img {
 	width: 16px;
@@ -697,7 +749,7 @@ html body .rpress-section ul li {
 	height: auto;
 }
 .rpress_checkout_wrap .rpress-cart .remove_icon img {
-	width: 13px !important;
+	width: 13px;
 }
 #rpress_purchase_form #rpress-purchase-button, #rpress_purchase_form #rpress-user-login-submit input {
 	padding: 9px 24px;
@@ -709,7 +761,7 @@ html body .rpress-section ul li {
 	margin-top: 20px;
 }
 .rpress-checkout-button-actions span {
-	display: block; 
+	display: block;
 	text-align: center;
 	margin-bottom: 10px;
 }
@@ -719,9 +771,9 @@ html body .rpress-section ul li {
 	padding: 4px 10px;
 }
 .rpress-cart .remove_icon img {
-	width: 13px !important;
+	width: 13px;
 	height: auto;
-	float: none !important;
+	float: none;
 }
 .rpress-cart .order-icn img {
 	width: 16px;
@@ -744,7 +796,7 @@ html body .rpress-section ul li {
 	float: right;
 }
 .rpress_fooditems_list .rpress_fooditem {
-	margin-top: -9px !important;
+	margin-top: -9px;
 }
 
 .food-item-list input[type="radio"] {
@@ -806,7 +858,7 @@ html body .rpress-section ul li {
 	font-size: 15px;
 }
 input.pick {
-	margin-left: 7px !important;
+	margin-left: 7px;
 }
 .rpress-open-hrs {
 	display: inline-block;
@@ -817,9 +869,11 @@ input.pick {
 }
 .delivery-opts span.delMethod{
 	text-transform: capitalize;
+	font-size: 17px;
 }
 .delivery-opts span.delTime {
 	text-transform: lowercase;
+	font-size: 17px;
 }
 .ui-timepicker-standard a {
 	font-size: 14px;
@@ -842,9 +896,6 @@ section.fullwidth.nav {
 	display: none;
     margin-bottom: 20px;
 }
-.rpress-category-item a:hover {
-	color: #d4413c !important;
-}
 .row-top.update-bottom {
 	border-top: 1px solid #d9dbe080;
 	padding: 16px 12px 0px 30px;
@@ -858,7 +909,7 @@ section.fullwidth.nav {
 .qty-button {
 	border: 1px solid #d9dbe080;
 	border-radius: 100px;
-	width: 35% !important;
+	width: 35%;
 }
 .rpress-section .rp-col-sm-3.left, .rpress-section .rp-col-sm-3.right {
 	padding-left: 0px;
@@ -867,7 +918,7 @@ section.fullwidth.nav {
 	padding-right: 0px;
 }
 #rpress_checkout_user_info input[type="text"] , #rpress_checkout_addrs input[type="text"]  {
-    border: 1px solid #bbb !important;
+    border: 1px solid #bbb;
     line-height: 1.5;
     text-align: left;
 }
@@ -893,9 +944,9 @@ section.fullwidth.nav {
     padding: 15px;
     font-weight: 600;
 }
-.rpress_cart_item_price, 
+.rpress_cart_item_price,
 .rpress_cart_actions {
-	text-align: center !important;
+	text-align: center;
 }
 #rpress_checkout_cart td img {
 	width: 40px;
@@ -930,8 +981,8 @@ section.fullwidth.nav {
 	width: 30%;
 }
 .rpress-cart .addon-item-wrap span.addon-item-price {
-	width: 45%;
-	text-align: left;
+	width: 91px;
+    text-align: left;
 }
 .rpress-cart .cart-item-quantity-wrap span {
 	font-size: 13px;
@@ -950,14 +1001,27 @@ section.fullwidth.nav {
 	float: right;
 }
 .rpress-cart .rpress_total {
-	font-size: 14px;
-	padding: 9px;
+    padding: 7px 2px 0px 8px;
+    color: #404040;
+    font-weight: 500;
+    font-size: 15px;
+    border-top: 1px solid #E9E9E9;
+}
+.rpress-category-item .active {
+	font-weight: 500;
 }
 .rpress-cart .cart-item-quantity-wrap span.separator {
 	padding: 0 2px;
+	margin-right: 17px;
+	color: #404040;
 }
 .rpress-cart .cart-item-quantity-wrap .qty-class {
 	font-weight: 500;
+	color: #404040;
+}
+ul.addon-item-wrap .rpress-cart-item-title {
+	color: #8a8a8a;
+	margin-left: 10px;
 }
 span.addon-item-price {
 	float: right;
@@ -973,20 +1037,17 @@ span.addon-item-price {
 	margin-top: 15px;
 }
 
-ul.rpress-cart li.rpress-cart-item {
-	border-bottom: 1px solid #ebedf3;
-}
 .rpress-cart .addon-item-wrap li.rpress-cart-item {
 	margin-top: 0;
 	padding-bottom: 0;
 	border-bottom: none;
 }
 .sticky-cat {
-    position: fixed !important;
+    position: fixed;
     top: 15px;
 }
 .sticky-category {
-	position: fixed !important;
+	position: fixed;
     top: 31%;
 }
 
@@ -1024,16 +1085,16 @@ table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
  /*=================== Style sheet for pop-up =======================
    ===================                        =======================*/
 .qtyminus-style {
-	font-weight: bold !important;
-	padding: 15px 20px !important;
+	font-weight: bold;
+	padding: 15px 20px;
 }
 .qtyplus-style {
-	font-weight: bold !important;
-	padding: 15px 27px 15px 20px  !important;
+	font-weight: bold;
+	padding: 15px 27px 15px 20px;
 }
 .qty-style {
-	padding: 9px 6px !important;
-	margin-bottom: 0px !important;  
+	padding: 9px 6px;
+	margin-bottom: 0px;
 }
 .press-popup-actions .md-4-mar-lft {
 	margin-left: 10px;
@@ -1041,17 +1102,37 @@ table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
 #fooditem-details {
 	padding: 0px 16px;
 }
-.press-popup-actions .md-4-top {
-	margin-top: 10px !important;
+.rpress-popup-actions .md-4-top {
+	margin-top: 10px;
 }
-.press-popup-actions .bold {
+.rpress-popup-actions .bold {
 	margin-left: 14px;
 }
-.rpress-popup-actions .qtyminus-style { 
+.rpress-popup-actions  {
+	display: block;
+	clear: both;
+	overflow: hidden;
+	padding: 0;
+}
+.rpress-popup-actions .rp-col-md-4 {
+	padding: 0;
+	height: 45px;
+}
+.rpress-popup-actions .qtyminus-style {
   color: #F00;
   font-size: 16px;
 }
-html body .rpress-popup-actions input.qty.qty-style {text-align: center; height: 42px; margin-top: 2px;}
+html body .rpress-popup-actions input.qty.qty-style {
+	text-align: center;
+	text-align: center;
+	height: 43px;
+	margin-top: 0;
+	width: 100%;
+	border-radius: unset;
+	border: 1px #ecedef solid;
+	border-top: 0;
+	border-bottom: 0;
+}
 .rpress-popup-actions .submit-fooditem-button {
 	font-size: 12px;
 	letter-spacing: 0.72px;
@@ -1087,23 +1168,23 @@ html body .rpress-popup-actions input.qty.qty-style {text-align: center; height:
 
 div.rpress-popup-actions input[type="button"] {
 	border-color: transparent;
-	color: #2d3138 !important;
-	background-color: #fff !important;
-	position: absolute;
-	top: -14px !important;
-	left: 15px;
-	background-color: transparent !important;
-	font-size: 28px !important;
-	font-weight: normal !important; 
+	color: #2d3138 ;
+	background-color: transparent ;
+	font-size: 28px ;
+	font-weight: normal ;
+	padding: 0 ;
+	box-shadow: none;
+	height: 100%;
+	width: 100%;
 }
 
 div.btn-count {
 	border: 1px solid #d9dbe080;
 	border-radius: 5px;
 }
-.clearfix:after, .container:after, .container-fluid:after, 
-.row:after, .btn-toolbar:after, .nav:after, 
-.navbar:after, .navbar-header:after, .navbar-collapse:after, 
+.clearfix:after, .container:after, .container-fluid:after,
+.row:after, .btn-toolbar:after, .nav:after,
+.navbar:after, .navbar-header:after, .navbar-collapse:after,
 .pager:after, .panel-body:after, .modal-header:after, .modal-footer:after {
 	clear: none !important;
 }
@@ -1115,7 +1196,7 @@ button:hover {
 	background: #76767600 !important;
 	color: #d4413c;
 }
-form#fooditem-details h6, 
+form#fooditem-details h6,
 form#fooditem-update-details h6 {
 	border-bottom: 1px solid rgba(217, 219, 224, 0.5);
 	padding-bottom: 8px;
@@ -1144,28 +1225,28 @@ form#fooditem-update-details h6 {
 .special-margin {
 	margin-top: 10px;
 }
-.special-margin textarea, 
+.special-margin textarea,
 .special-inst textarea {
 	border: 1px solid #e4e4e4;
 }
-.special-margin a, 
+.special-margin a,
 .special-inst a {
   font-weight: 500;
   margin-bottom: 8px;
   display: block;
 }
-#fooditem-details, 
+#fooditem-details,
 #fooditem-update-details {
 	margin-bottom: -15px;
 }
 .RPressMinOrderWrap {display: none;}
 #RPressMinOrder {
 	width:400px;
-	overflow:auto; 
+	overflow:auto;
   padding : 30px 0px ;
-  background : #FFFFFF ; 
+  background : #FFFFFF ;
   position : relative ;
-  color : #666; 
+  color : #666;
 }
 #RPressMinOrder a {
 	background: white;
@@ -1176,12 +1257,6 @@ form#fooditem-update-details h6 {
 	right: 0;
 	margin-right: 2px;
 	border-radius: 50px;
-}
-  
-.edit-rpress-popup-actions  {
-	display: block;
-	clear: both;
-	overflow: hidden;
 }
 .price-text-left {
 	margin-left: 15px;
@@ -1194,7 +1269,7 @@ form#fooditem-update-details h6 {
 	margin-left: 12px;
 }
 .md-4-mar-lft {
-    margin-left:10px; 
+    margin-left:10px;
 }
 .md-12-top {
 	margin-top: 10px;
@@ -1215,7 +1290,7 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 /*=========================css for responsive=====================
 ===================================================================*/
 @media only screen and (max-width: 1024px) {
-	
+
 }
 
 @media only screen and (max-width: 1024px) and (min-width: 992px) {
@@ -1355,7 +1430,7 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	}
 	.scroll-class {
 		width: 100% !important;
-	} 
+	}
 	.btn-primary:hover {
 		background-color: #ffffff !important;
 	}
@@ -1416,12 +1491,12 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 		box-shadow: 0px 0px 0px 0px #efefef !important;
 		border-top: 0 !important;
 	}
-	.sticky-cat button.nav-scroller-btn--left, 
+	.sticky-cat button.nav-scroller-btn--left,
 	.sticky-cat button.nav-scroller-btn--right {
 	  margin-top: -56px;
     padding-bottom: 45px !important;
 	}
-	.nav-scroller-btn--left, 
+	.nav-scroller-btn--left,
 	.nav-scroller-btn--right {
 	  padding-bottom: 43px !important;
 	}
@@ -1433,7 +1508,7 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	}
 }
 
-@media only screen and (max-width: 625px) {	
+@media only screen and (max-width: 625px) {
 	.sticky-cat {
   	top: -15px !important;
 	  margin-left: -51px !important;
@@ -1441,14 +1516,14 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
   html body #RPressMinOrder {
   	position : absolute ;
   	left : 8%;
-  	top: 42%; 
+  	top: 42%;
   	width: 85%;
 	}
 }
 @media only screen and (max-width: 768px) {
 	.view-food-item-wrap .rp-col-sm-3 {
   	width: 17%;
-	} 
+	}
 }
 
 @media only screen and (max-width: 425px) {
@@ -1457,7 +1532,7 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 	}
 	.rp-col-xs-3 {
 	  width: 18%;
-	} 
+	}
 	.view-food-item-wrap .rp-col-xs-3  {
 	  width: 20%;
 	}
@@ -1508,3 +1583,16 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 }
 
 html body.fancybox-active {padding-right: 0px; margin: 0 auto;}
+
+
+
+/* Additional CSS for popup design */
+.quantity::-webkit-inner-spin-button, 
+.quantity::-webkit-outer-spin-button { 
+  -webkit-appearance: none !important; 
+  margin: 0 !important; 
+}
+
+.disable_click {
+	pointer-events: none;
+}

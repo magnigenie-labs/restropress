@@ -301,6 +301,15 @@ class RPRESS_Payment {
 	 */
 	protected $delivery_location_pos = '';
 
+
+  /**
+   * Delivery Date
+   *
+   * @since  2.0.5
+   * @var string
+   */
+  protected $delivery_date = '';
+
 	/**
 	 * IP Address payment was made from
 	 *
@@ -690,12 +699,12 @@ class RPRESS_Payment {
 
 
 
-
 		// If we have something pending, let's save it
 		if ( ! empty( $this->pending ) ) {
 
 			$total_increase = 0;
 			$total_decrease = 0;
+
 
 			foreach ( $this->pending as $key => $value ) {
 				switch( $key ) {
@@ -955,7 +964,7 @@ class RPRESS_Payment {
 					case 'delivery_type':
 
 						$delivery_type = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : '';
-						
+
 						$this->update_meta( '_rpress_delivery_type', $delivery_type );
 						break;
 
@@ -963,6 +972,11 @@ class RPRESS_Payment {
 						$delivery_time = isset($_COOKIE['deliveryTime']) ? $_COOKIE['deliveryTime'] : '';
 						$this->update_meta( '_rpress_delivery_time', $delivery_time );
 						break;
+
+          case 'delivery_date':
+            $delivery_date = isset($_COOKIE['DeliveryDate']) ? $_COOKIE['DeliveryDate'] : '';
+            $this->update_meta( '_rpress_delivery_date', $delivery_date );
+            break;
 
 					case 'delivery_fee':
 						$delivery_fee = isset($_COOKIE['rpress_delivery_price']) ? $_COOKIE['rpress_delivery_price'] : '';
@@ -1159,9 +1173,9 @@ class RPRESS_Payment {
 			setcookie("deliveryMethod", "", time() - 300,"/");
 		endif;
 
-		if( isset($_COOKIE['OrderDate']) ) :
-			unset($_COOKIE['OrderDate']);
-			setcookie("OrderDate", "", time() - 300,"/");
+		if( isset($_COOKIE['DeliveryDate']) ) :
+			unset($_COOKIE['DeliveryDate']);
+			setcookie("DeliveryDate", "", time() - 300,"/");
 		endif;
 
 		if( isset($_COOKIE['rpress_delivery_price']) ) :
@@ -1194,7 +1208,7 @@ class RPRESS_Payment {
 	public function add_fooditem( $fooditem_id = 0, $args = array(), $options = array() ) {
 
 
-		
+
 		$fooditem = new RPRESS_Fooditem( $fooditem_id );
 
 		// Bail if this post isn't a fooditem
@@ -2275,7 +2289,7 @@ class RPRESS_Payment {
 	 * @return float The payment total
 	 */
 	private function setup_total() {
-		
+
 		$amount = $this->get_meta( '_rpress_payment_total', true );
 
 		if ( empty( $amount ) && '0.00' != $amount ) {

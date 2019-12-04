@@ -154,7 +154,6 @@ function rpress_get_payment_by( $field = '', $value = '' ) {
  */
 function rpress_insert_payment( $payment_data = array() ) {
 
-	
 	if ( empty( $payment_data ) ) {
 		return false;
 	}
@@ -208,8 +207,6 @@ function rpress_insert_payment( $payment_data = array() ) {
 	}
 
 
-
-
 	if( is_array( $payment_data['cart_details'] ) && ! empty( $payment_data['cart_details'] ) ) {
 
 
@@ -228,7 +225,7 @@ function rpress_insert_payment( $payment_data = array() ) {
 
 			$options = isset( $item['item_number']['addon_items'] ) ? $item['item_number']['addon_items'] : array();
 
-			
+
 
 			$payment->add_fooditem( $item['id'], $args, $options );
 		}
@@ -266,6 +263,7 @@ function rpress_insert_payment( $payment_data = array() ) {
 	$payment->delivery_fee      = isset($_COOKIE['rpress_delivery_price']) ? $_COOKIE['rpress_delivery_price'] : ''  ;
 	$payment->delivery_location      = isset($_COOKIE['rpress_delivery_location']) ? $_COOKIE['rpress_delivery_location'] : ''  ;
 	$payment->delivery_location_pos     = isset($_COOKIE['rpress_delivery_location_pos']) ? $_COOKIE['rpress_delivery_location_pos'] : ''  ;
+  $payment->delivery_date     = isset($_COOKIE['DeliveryDate']) ? $_COOKIE['DeliveryDate'] : ''  ;
 
 
 	if ( isset( $payment_data['post_date'] ) ) {
@@ -794,7 +792,7 @@ function rpress_get_payment_statuses() {
 		'publish'   => __( 'Delivered', 'restropress' ),
 		'refunded'  => __( 'Refunded', 'restropress' ),
 		'failed'    => __( 'Failed', 'restropress' ),
-		'processing' => __( 'Out For Delivery', 'restropress' ),
+		'processing' => __( 'Processing', 'restropress' ),
 	);
 
 	return apply_filters( 'rpress_payment_statuses', $payment_statuses );

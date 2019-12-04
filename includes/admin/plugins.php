@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function rpress_plugin_action_links( $links, $file ) {
 	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-settings' ) . '">' . esc_html__( 'General Settings', 'restropress' ) . '</a>';
-	if ( $file == 'restropress/restropress.php' )
+	if ( $file == 'restro-press/restro-press.php' )
 		array_unshift( $links, $settings_link );
 
 	return $links;
@@ -43,7 +43,7 @@ add_filter( 'plugin_action_links', 'rpress_plugin_action_links', 10, 2 );
  * @return array $input
  */
 function rpress_plugin_row_meta( $input, $file ) {
-	if ( $file != 'restropress/restropress.php' )
+	if ( $file != 'restro-press/restro-press.php' )
 		return $input;
 
 	$rpress_link = esc_url( add_query_arg( array(

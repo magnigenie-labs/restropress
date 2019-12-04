@@ -27,6 +27,16 @@ a.rpress-delete:hover {
 	color: #f00;
 }
 
+/* Restropress icon style */
+ul#adminmenu li#menu-posts-fooditem img {
+  width: 22px;
+  height: auto;
+  position: relative;
+  top: -2px;
+  left: 0px;
+  filter: grayscale(1);
+}
+
 /* General Settings Styles
 -------------------------------------------------------------- */
 
@@ -90,6 +100,7 @@ a.rpress-delete:hover {
 	margin: 0 0 15px;
 }
 .rpress-add-ons-view-wrapper {
+	height: 50px;
 }
 #rpress-add-ons h2 .button-primary {
 	position: absolute;
@@ -131,141 +142,6 @@ a.rpress-delete:hover {
 #rpress-add-ons .rpress-extension .wp-post-image {
 	width: 100%;
 	height: auto;
-}
-
-/* Add On Items
--------------------------------------------------------------- */
-div.restropress-addons-all {
-  margin-bottom: 40px;
-  padding-top: 40px;
-}
-
-div.restropress-addons-all .restropress-addon-item {
-  box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 1 auto;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -.5rem;
-    margin-left: -.5rem;
-}
-.restropress-addon-img-wrap img {
-	width: 100%;
-	box-shadow: 0 0 2em #ddd;
-	margin: 0;
-	max-width: 100%;
-	height: auto;
-	vertical-align: top;
-	border: 7px solid #FFF;
-}
-.rpress-purchased-wrap {
-	display: block;
-	clear: both;
-	margin-top: 30px;
-}
-.rpress-license-wrapper {
-	display: block;
-	margin-top: 13px;
-	clear: both;
-	overflow: hidden;
-}
-.rpress-license-wrapper.rpress-updated {
-	display: none;
-}
-.rpress-license-deactivate-wrapper {
-	clear: both;
-	overflow: hidden;
-	margin-top: 10px;
-	height: 35px;
-}
-.rpress-license-deactivate-wrapper.hide {display: none;}
-.rpress-license-deactivate-wrapper.show {display: block;}
-div.rpress-add-ons-view-wrapper .row+.row {
-	margin-top: 2em;
-	margin-bottom: 2em;
-	padding-top: 2em;
-	border-top: 1px solid #ddd;
-}
-div.rpress-add-ons-view-wrapper .restropress-addon-item.inactive .rpress-addon-details-section{
-	display: none;
-}
-div.restropress-installed-wrap {
-	display: block;
-	clear: both;
-	overflow: hidden;
-	width: 45%;
-}
-.restropress-addon-item .inside h3 {
-	margin: 3px 0 1.33em 0;
-    font-size: 1.2em;
-    line-height: inherit;
-    color: #23282d;
-    display: inline-block;
-}
-.restropress-addon-item .inside .rpress-addon-item-pricing {
-	background: white;
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    margin-left: 5px;
-    font-weight: bold;
-}
-div.restropress-btn-group.rpress-purchase-section span {
-	border-radius: 5px 0 0 5px;
-	-webkit-border-radius: 5px 0 0 5px;
-	-moz-border-radius: 5px 0 0 5px;
-	margin-right: -4px;
-
-}
-.restropress-addons-all .restropress-btn-group span.button-secondary {
-	border-radius: 3px 0 0 3px;
-	-webkit-border-radius: 3px 0 0 3px;
-	-moz-border-radius: 3px 0 0 3px;
-}
-.restropress-addons-all .restropress-btn-group a.button-primary {
-	border-radius: 0px 3px 3px 0px;
-	-webkit-border-radius: 0px 3px 3px 0px;
-	-moz-border-radius: 0px 3px 3px 0px;
-}
-.restropress-addon-item.inactive .restropress-btn-group.rpress-installed-section,
-div.restropress-addon-item.installed div.restropress-btn-group.rpress-purchase-section {
-	display: none;
-}
-.rpress-license-wrapper .rpress-license-field {
-	width: 70%; 
-	height: 37px;
-	border-radius: 5px 0px 0px 5px;
-	-webkit-border-radius: 5px 0px 0px 5px;
-	-moz-border-radius: 5px 0px 0px 5px;
-}
-.rpress-license-wrapper button.button {
-	width: 29%; 
-	height: 35px;
-	border-radius: 0 5px 5px 0;
-	-webkit-border-radius: 0 5px 5px 0;
-	-moz-border-radius: 0 5px 5px 0;
-}
-.restropress-addon-item.inactive .rpress-license-wrapper{ display: none; }
-.rpress-license-response { margin-top: 10px; text-align: center; }
-
-li.menu-icon-fooditem .wp-menu-image {
-	position: relative;
-}
-
-li.menu-icon-fooditem .wp-menu-image:before {
-	position: absolute;
 }
 
 /* Discount Code Styles
@@ -659,11 +535,6 @@ input[class*="rpress-price-field"] {
 .rpress_remove_repeatable:focus  {
 	background-position: -10px 0 !important;
 }
-
-/* Admin Store Info */
-.rpress-store-pos-info { font-style: italic; display: block; margin-top: 10px; margin-bottom: 10px; }
-.store_lat_lng {display: none;}
-
 
 /* Payment Details
 -------------------------------------------------------------- */
@@ -1958,13 +1829,31 @@ form#delivery-options label {
 	font-weight: bold;
 }
 
+.dashicons-fooditem:before{
+	width: 32px;
+	content: " ";
+    position: absolute;
+    left: 2px;
+    top: 0px;
+	filter: grayscale(100%); /* Current draft standard */
+    -webkit-filter: grayscale(100%); /* New WebKit */
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%); 
+    -o-filter: grayscale(100%); /* Not yet supported in Gecko, Opera or IE */ 
+    filter: gray; /* IE */
+    -webkit-filter: grayscale(1); /* Old WebKit */
+	background-image: url('../svg/restropress-icon.svg');
+	background-position: center;
+	background-size: 70%;
+	background-repeat: no-repeat;
+}
 
 .menu-icon-fooditem div.wp-menu-image img {
-	width: 20px;
-	height: 30px;
-	filter: grayscale(100%);
-	position: relative;
-	top: -6px;
+  width: 20px;
+  height: 30px;
+  filter: grayscale(100%);
+  position: relative;
+  top: -6px;
 }
 
 /* Admin Styles
@@ -1976,7 +1865,142 @@ form#delivery-options label {
 }
 
 .rpress-about-body .about-description, .rpress-about-body .about-text {
-	font-weight: 400;
-	line-height: 1.6em;
-	font-size: 19px;
+  font-weight: 400;
+  line-height: 1.6em;
+  font-size: 19px;
+}
+
+/* Add On Items
+-------------------------------------------------------------- */
+div.restropress-addons-all {
+  margin-bottom: 40px;
+  padding-top: 40px;
+}
+
+div.restropress-addons-all .restropress-addon-item {
+  box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -.5rem;
+    margin-left: -.5rem;
+}
+.restropress-addon-img-wrap img {
+  width: 100%;
+  box-shadow: 0 0 2em #ddd;
+  margin: 0;
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+  border: 7px solid #FFF;
+}
+.rpress-purchased-wrap {
+  display: block;
+  clear: both;
+  margin-top: 30px;
+}
+.rpress-license-wrapper {
+  display: block;
+  margin-top: 13px;
+  clear: both;
+  overflow: hidden;
+}
+.rpress-license-wrapper.rpress-updated {
+  display: none;
+}
+.rpress-license-deactivate-wrapper {
+  clear: both;
+  overflow: hidden;
+  margin-top: 10px;
+  height: 35px;
+}
+.rpress-license-deactivate-wrapper.hide {display: none;}
+.rpress-license-deactivate-wrapper.show {display: block;}
+div.rpress-add-ons-view-wrapper .row+.row {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding-top: 2em;
+  border-top: 1px solid #ddd;
+}
+div.rpress-add-ons-view-wrapper .restropress-addon-item.inactive .rpress-addon-details-section{
+  display: none;
+}
+div.restropress-installed-wrap {
+  display: block;
+  clear: both;
+  overflow: hidden;
+  width: 45%;
+}
+.restropress-addon-item .inside h3 {
+  margin: 3px 0 1.33em 0;
+    font-size: 1.2em;
+    line-height: inherit;
+    color: #23282d;
+    display: inline-block;
+}
+.restropress-addon-item .inside .rpress-addon-item-pricing {
+  background: white;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+div.restropress-btn-group.rpress-purchase-section span {
+  border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  margin-right: -4px;
+
+}
+.restropress-addons-all .restropress-btn-group span.button-secondary {
+  border-radius: 3px 0 0 3px;
+  -webkit-border-radius: 3px 0 0 3px;
+  -moz-border-radius: 3px 0 0 3px;
+}
+.restropress-addons-all .restropress-btn-group a.button-primary {
+  border-radius: 0px 3px 3px 0px;
+  -webkit-border-radius: 0px 3px 3px 0px;
+  -moz-border-radius: 0px 3px 3px 0px;
+}
+.restropress-addon-item.inactive .restropress-btn-group.rpress-installed-section,
+div.restropress-addon-item.installed div.restropress-btn-group.rpress-purchase-section {
+  display: none;
+}
+.rpress-license-wrapper .rpress-license-field {
+  width: 70%; 
+  height: 37px;
+  border-radius: 5px 0px 0px 5px;
+  -webkit-border-radius: 5px 0px 0px 5px;
+  -moz-border-radius: 5px 0px 0px 5px;
+}
+.rpress-license-wrapper button.button {
+  width: 29%; 
+  height: 35px;
+  border-radius: 0 5px 5px 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  -moz-border-radius: 0 5px 5px 0;
+}
+.restropress-addon-item.inactive .rpress-license-wrapper{ display: none; }
+.rpress-license-response { margin-top: 10px; text-align: center; }
+
+li.menu-icon-fooditem .wp-menu-image {
+  position: relative;
+}
+
+li.menu-icon-fooditem .wp-menu-image:before {
+  position: absolute;
 }

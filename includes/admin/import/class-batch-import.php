@@ -86,7 +86,7 @@ class RPRESS_Batch_Import {
 	public function __construct( $_file = '', $_step = 1 ) {
 
 		if( ! class_exists( 'parseCSV' ) ) {
-			require_once RPRESS_PLUGIN_DIR . 'includes/libraries/parsecsv.lib.php';
+			require_once RP_PLUGIN_DIR . 'includes/libraries/parsecsv.lib.php';
 		}
 
 		$this->step  = $_step;

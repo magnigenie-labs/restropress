@@ -10,7 +10,7 @@
  * @version 1.0.4
  */
 
-global $rpress_fooditem_shortcode_item_atts, $rpress_fooditem_shortcode_item_i;
+global $rpress_fooditem_shortcode_item_atts, $rpress_fooditem_shortcode_item_i, $rpress_food_item_cats;
 
 ?>
 

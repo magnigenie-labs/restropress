@@ -13,7 +13,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export.php';
+require_once RP_PLUGIN_DIR . 'includes/admin/reporting/class-export.php';
 
 /**
  * Exports earnings for a specified time period
@@ -23,7 +23,7 @@ require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export.php';
  * @return void
  */
 function rpress_export_earnings() {
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export-earnings.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/class-export-earnings.php';
 
 	$earnings_export = new RPRESS_Earnings_Export();
 
@@ -39,7 +39,7 @@ add_action( 'rpress_earnings_export', 'rpress_export_earnings' );
  * @return void
  */
 function rpress_export_payment_history() {
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export-payments.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/class-export-payments.php';
 
 	$payments_export = new RPRESS_Payments_Export();
 
@@ -57,7 +57,7 @@ add_action( 'rpress_payment_export', 'rpress_export_payment_history' );
  * @return void
  */
 function rpress_export_all_customers() {
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export-customers.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/class-export-customers.php';
 
 	$customer_export = new RPRESS_Customers_Export();
 
@@ -72,7 +72,7 @@ add_action( 'rpress_email_export', 'rpress_export_all_customers' );
  * @return void
  */
 function rpress_export_all_fooditems_history() {
-	require_once RPRESS_PLUGIN_DIR . 'includes/admin/reporting/class-export-fooditem-history.php';
+	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/class-export-fooditem-history.php';
 
 	$file_fooditem_export = new RPRESS_Fooditem_History_Export();
 

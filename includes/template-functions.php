@@ -187,7 +187,7 @@ function rpress_get_purchase_link( $args = array() ) {
 				echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label">' . __('+', 'restropress') . '</span> </a>';
 
 			}
-			
+
 			?>
 
 			<?php if ( ! rpress_is_ajax_disabled() ) : ?>
@@ -200,7 +200,7 @@ function rpress_get_purchase_link( $args = array() ) {
 					</span>
 				</span>
 			<?php endif; ?>
-			
+
 		</div><!--end .rpress_purchase_submit_wrapper-->
 
 		<input type="hidden" name="fooditem_id" value="<?php echo esc_attr( $fooditem->ID ); ?>">
@@ -222,7 +222,7 @@ function rpress_get_purchase_link( $args = array() ) {
 
 	</form><!--end #<?php echo esc_attr( $form_id ); ?>-->
 
-	
+
 <?php
 	$purchase_form = ob_get_clean();
 
@@ -532,7 +532,7 @@ function rpress_get_purchase_fooditem_links( $payment_id = 0 ) {
  * @return string
  */
 function rpress_get_templates_dir() {
-	return RPRESS_PLUGIN_DIR . 'templates';
+	return RP_PLUGIN_DIR . 'templates';
 }
 
 /**
@@ -542,7 +542,7 @@ function rpress_get_templates_dir() {
  * @return string
  */
 function rpress_get_templates_url() {
-	return RPRESS_PLUGIN_URL . 'templates';
+	return RP_PLUGIN_URL . 'templates';
 }
 
 /**
@@ -830,7 +830,7 @@ add_action( 'wp_head', 'rpress_checkout_meta_tags' );
  * @return void
 */
 function rpress_version_in_header(){
-	echo '<meta name="generator" content="RestroPress v' . RPRESS_VERSION . '" />' . "\n";
+	echo '<meta name="generator" content="RestroPress v' . RP_VERSION . '" />' . "\n";
 }
 add_action( 'wp_head', 'rpress_version_in_header' );
 
@@ -856,28 +856,34 @@ function rpress_is_order_history_page() {
 function rpress_add_body_classes( $class ) {
 	$classes = (array) $class;
 
-	if( rpress_is_checkout() ) {
-		$classes[] = 'rpress-checkout';
-		$classes[] = 'rpress-page';
-	}
+	switch ( true ) {
+		case rpress_is_checkout():
+			$classes[] = 'rpress-checkout';
+			$classes[] = 'rpress-page';
+			break;
 
-	if( rpress_is_success_page() ) {
-		$classes[] = 'rpress-success';
-		$classes[] = 'rpress-page';
-	}
+		case rpress_is_success_page():
+			$classes[] = 'rpress-success';
+			$classes[] = 'rpress-page';
+			break;
 
-	if( rpress_is_failed_transaction_page() ) {
-		$classes[] = 'rpress-failed-transaction';
-		$classes[] = 'rpress-page';
-	}
+		case rpress_is_failed_transaction_page():
+			$classes[] = 'rpress-failed-transaction';
+			$classes[] = 'rpress-page';
+			break;
 
-	if( rpress_is_order_history_page() ) {
-		$classes[] = 'rpress-payment-history';
-		$classes[] = 'rpress-page';
-	}
+		case rpress_is_order_history_page():
+			$classes[] = 'rpress-payment-history';
+			$classes[] = 'rpress-page';
+			break;
 
-	if( rpress_is_test_mode() ) {
-		$classes[] = 'rpress-test-mode';
+		case rpress_is_test_mode():
+			$classes[] = 'rpress-test-mode';
+			break;
+		
+		default:
+			$classes[] = 'rpress';
+			break;
 	}
 
 	return array_unique( $classes );
@@ -1041,13 +1047,18 @@ function rpress_get_bundle_item_price_id( $bundle_item ) {
  */
 function rpress_fooditem_shortcode_item( $atts, $i ) {
 	global $rpress_fooditem_shortcode_item_atts, $rpress_fooditem_shortcode_item_i;
-
 	/**
 	 * The variables are registered as part of the global scope so the template can access them.
 	 */
 	$rpress_fooditem_shortcode_item_atts = $atts;
 	$rpress_fooditem_shortcode_item_i = $i;
-
 	rpress_get_template_part( 'shortcode', 'fooditem' );
 }
 add_action( 'rpress_fooditem_shortcode_item', 'rpress_fooditem_shortcode_item', 10, 2 );
+
+function rpress_get_category_title($id, $var) {
+  global $rpress_fooditem_id, $var;
+  rpress_get_template_part( 'rpress', 'fooditem-category-title' );
+}
+
+add_action('rpress_fooditems_category_title', 'rpress_get_category_title', 10, 2);

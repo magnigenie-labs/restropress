@@ -31,7 +31,7 @@ function rpress_system_info() {
 	global $wpdb, $rpress_options;
 
 	if ( ! class_exists( 'Browser' ) )
-		require_once RPRESS_PLUGIN_DIR . 'includes/libraries/browser.php';
+		require_once RP_PLUGIN_DIR . 'includes/libraries/browser.php';
 
 	$browser = new Browser();
 	if ( get_bloginfo( 'version' ) < '3.4' ) {
@@ -65,7 +65,7 @@ Multisite:                <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n"
 SITE_URL:                 <?php echo site_url() . "\n"; ?>
 HOME_URL:                 <?php echo home_url() . "\n"; ?>
 
-RPRESS Version:              <?php echo RPRESS_VERSION . "\n"; ?>
+RPRESS Version:              <?php echo RP_VERSION . "\n"; ?>
 Upgraded From:            <?php echo get_option( 'rpress_version_upgraded_from', 'None' ) . "\n"; ?>
 WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
 Permalink Structure:      <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
@@ -131,7 +131,7 @@ $request['cmd'] = '_notify-validate';
 $params = array(
 	'sslverify'		=> false,
 	'timeout'		=> 60,
-	'user-agent'	=> 'RPRESS/' . RPRESS_VERSION,
+	'user-agent'	=> 'RPRESS/' . RP_VERSION,
 	'body'			=> $request
 );
 

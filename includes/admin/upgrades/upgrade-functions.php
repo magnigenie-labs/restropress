@@ -38,7 +38,7 @@ function rpress_trigger_upgrades() {
 		add_option( 'rpress_version', $rpress_version );
 	}
 
-	if ( version_compare( RPRESS_VERSION, $rpress_version, '>' ) ) {
+	if ( version_compare( RP_VERSION, $rpress_version, '>' ) ) {
 		rpress_v131_upgrades();
 	}
 
@@ -58,7 +58,7 @@ function rpress_trigger_upgrades() {
 		rpress_v20_upgrades();
 	}
 
-	update_option( 'rpress_version', RPRESS_VERSION );
+	update_option( 'rpress_version', RP_VERSION );
 
 	if ( DOING_AJAX )
 		die( 'complete' ); // Let AJAX know that the upgrade is complete
@@ -327,7 +327,7 @@ function rpress_v20_upgrades() {
 		$rpress_options['show_register_form'] = 'none';
 	}
 
-	
+
 	$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_wp_session_expires_%' AND option_value+0 < 2789308218" );
 
 	update_option( 'rpress_settings', $rpress_options );
@@ -518,7 +518,7 @@ function rpress_v21_upgrade_customers_db() {
 
 		// No more customers found, finish up
 
-		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 		delete_option( 'rpress_doing_upgrade' );
 
 		wp_redirect( admin_url() ); exit;
@@ -551,7 +551,7 @@ function rpress_v226_upgrade_payments_price_logs_db() {
 		$has_variable = $wpdb->get_col( $sql );
 		if( empty( $has_variable ) ) {
 			// We had no variable priced products, so go ahead and just complete
-			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 			delete_option( 'rpress_doing_upgrade' );
 			wp_redirect( admin_url() ); exit;
 		}
@@ -574,7 +574,7 @@ function rpress_v226_upgrade_payments_price_logs_db() {
 			$variable_fooditem_ids = array_unique( wp_list_pluck( $variable_fooditems, 'id' ) );
 			$unique_fooditem_ids   = implode( ',', $variable_fooditem_ids );
 			if ( empty( $unique_fooditem_ids ) ) {
-				continue; // If there were no fooditems, just fees, move along
+				continue; // If there were no food addons, just fees, move along
 			}
 			// Get all Log Ids where the post parent is in the set of fooditem IDs we found in the cart meta
 			$logs = $wpdb->get_results( "SELECT m.post_id AS log_id, p.post_parent AS fooditem_id FROM $wpdb->postmeta m LEFT JOIN $wpdb->posts p ON m.post_id = p.ID WHERE meta_key = '_rpress_log_payment_id' AND meta_value = $payment_id AND p.post_parent IN ($unique_fooditem_ids)", ARRAY_A );
@@ -617,7 +617,7 @@ function rpress_v226_upgrade_payments_price_logs_db() {
 		wp_redirect( $redirect ); exit;
 	} else {
 		// No more payments found, finish up
-		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 		delete_option( 'rpress_doing_upgrade' );
 		wp_redirect( admin_url() ); exit;
 	}
@@ -651,7 +651,7 @@ function rpress_v23_upgrade_payment_taxes() {
 
 		if( empty( $has_payments ) ) {
 			// We had no payments, just complete
-			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 			rpress_set_upgrade_complete( 'upgrade_payment_taxes' );
 			delete_option( 'rpress_doing_upgrade' );
 			wp_redirect( admin_url() ); exit;
@@ -689,7 +689,7 @@ function rpress_v23_upgrade_payment_taxes() {
 		wp_redirect( $redirect ); exit;
 	} else {
 		// No more payments found, finish up
-		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 		rpress_set_upgrade_complete( 'upgrade_payment_taxes' );
 		delete_option( 'rpress_doing_upgrade' );
 		wp_redirect( admin_url() ); exit;
@@ -727,7 +727,7 @@ function rpress_v23_upgrade_customer_purchases() {
 
 		if( empty( $has_payments ) ) {
 			// We had no payments, just complete
-			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 			rpress_set_upgrade_complete( 'upgrade_customer_payments_association' );
 			delete_option( 'rpress_doing_upgrade' );
 			wp_redirect( admin_url() ); exit;
@@ -816,7 +816,7 @@ function rpress_v23_upgrade_customer_purchases() {
 
 		// No more customers found, finish up
 
-		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 		rpress_set_upgrade_complete( 'upgrade_customer_payments_association' );
 		delete_option( 'rpress_doing_upgrade' );
 
@@ -855,7 +855,7 @@ function rpress_upgrade_user_api_keys() {
 
 		if( empty( $has_key ) ) {
 			// We had no key, just complete
-			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+			update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 			rpress_set_upgrade_complete( 'upgrade_user_api_keys' );
 			delete_option( 'rpress_doing_upgrade' );
 			wp_redirect( admin_url() ); exit;
@@ -901,7 +901,7 @@ function rpress_upgrade_user_api_keys() {
 
 		// No more customers found, finish up
 
-		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 		rpress_set_upgrade_complete( 'upgrade_user_api_keys' );
 		delete_option( 'rpress_doing_upgrade' );
 
@@ -969,7 +969,7 @@ function rpress_remove_refunded_sale_logs() {
 
 		// No more refunded payments found, finish up
 
-		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RPRESS_VERSION ) );
+		update_option( 'rpress_version', preg_replace( '/[^0-9.].*/', '', RP_VERSION ) );
 		rpress_set_upgrade_complete( 'remove_refunded_sale_logs' );
 		delete_option( 'rpress_doing_upgrade' );
 
@@ -1097,7 +1097,7 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_batch_file_foodit
 function rpress_include_file_fooditem_log_migration_batch_processor( $class ) {
 
 	if ( 'RPRESS_File_Download_Log_Migration' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/upgrades/classes/class-file-fooditem-log-migration.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/upgrades/classes/class-file-fooditem-log-migration.php';
 	}
 
 }

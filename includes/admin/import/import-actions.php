@@ -44,7 +44,7 @@ add_action( 'rpress_register_batch_importer', 'rpress_register_payments_batch_im
 function rpress_include_payments_batch_import_processer( $class ) {
 
 	if ( 'RPRESS_Batch_Payments_Import' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/class-batch-import-payments.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import-payments.php';
 	}
 
 }
@@ -69,7 +69,7 @@ add_action( 'rpress_register_batch_importer', 'rpress_register_fooditems_batch_i
 function rpress_include_fooditems_batch_import_processer( $class ) {
 
 	if ( 'RPRESS_Batch_RestroPress_Import' === $class ) {
-		require_once RPRESS_PLUGIN_DIR . 'includes/admin/import/class-batch-import-fooditems.php';
+		require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import-fooditems.php';
 	}
 
 }

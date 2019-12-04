@@ -190,10 +190,10 @@ class RPRESS_Cart {
 						unset( $cart[ $key ] );
 					}
 				}
-				
+
 			}
 		}
-		
+
 
 		// We've removed items, reset the cart session
 		if ( count( $cart ) < $cart_count ) {
@@ -218,17 +218,12 @@ class RPRESS_Cart {
 	public function get_contents_details() {
 		global $rpress_is_last_cart_item, $rpress_flat_discount_total;
 
-		//print_r($this->contents);
-
-
 		if ( empty( $this->contents ) ) {
 			return array();
 		}
 
 		$details = array();
 		$length  = count( $this->contents ) - 1;
-
-
 		foreach ( $this->contents as $key => $item ) {
 			if( $key >= $length ) {
 				$rpress_is_last_cart_item = true;
@@ -238,7 +233,6 @@ class RPRESS_Cart {
 				return;
 
 
-			$item['quantity'] = rpress_item_quantities_enabled() ? absint( $item['quantity'] ) : 1;
 			$item['quantity'] = max( 1, $item['quantity'] ); // Force quantity to 1
 
 			$options = isset( $item['options'] ) ? $item['options'] : array();
@@ -248,10 +242,20 @@ class RPRESS_Cart {
 			$item_price = $this->get_item_price( $item['id'], $options );
 			$discount   = $this->get_item_discount_amount( $item );
 			$discount   = apply_filters( 'rpress_get_cart_content_details_item_discount_amount', $discount, $item );
-			$quantity   = $this->get_item_quantity( $item['id'], $options );
+			$quantity   = $item['quantity'];
 			$fees       = $this->get_fees( 'fee', $item['id'], $price_id );
 			$subtotal   = floatval( $item_price ) * $quantity;
 
+      $addon_prices = 0;
+
+      if( isset($item['addon_items']) && !empty($item['addon_items']) ) {
+        $addon_prices = wp_list_pluck($item['addon_items'], 'price');
+        $addon_prices = array_sum($addon_prices);
+        $addon_prices = floatval($addon_prices) * $quantity;
+        $subtotal += $addon_prices;
+      }
+
+      
 			// Subtotal for tax calculation must exclude fees that are greater than 0. See $this->get_tax_on_fees()
 			$subtotal_for_tax = $subtotal;
 
@@ -269,6 +273,7 @@ class RPRESS_Cart {
 
 			$tax = $this->get_item_tax( $item['id'], $options, $subtotal_for_tax - $discount );
 
+
 			if ( rpress_prices_include_tax() ) {
 				$subtotal -= round( $tax, rpress_currency_decimal_filter() );
 			}
@@ -278,6 +283,7 @@ class RPRESS_Cart {
 			if ( $total < 0 ) {
 				$total = 0;
 			}
+
 
 			$details[ $key ]  = array(
 				'name'        => get_the_title( $item['id'] ),
@@ -386,7 +392,6 @@ class RPRESS_Cart {
 	 * @return array $cart Updated cart object
 	 */
 	public function add( $fooditem_id, $options = array() ) {
-		
 		$fooditem = new RPRESS_Fooditem( $fooditem_id );
 
 		if ( empty( $fooditem->ID ) ) {
@@ -422,7 +427,7 @@ class RPRESS_Cart {
 
 		// Clear all the checkout errors, if any
 		rpress_clear_errors();
-		
+
 		return count( $this->contents ) - 1;
 	}
 
@@ -590,12 +595,15 @@ class RPRESS_Cart {
 		if ( ! isset( $item['options'] ) ) {
 			$item['options'] = array();
 		}
-
+		if ( ! isset( $item['addon_items'] ) ) {
+			$item['addon_items'] = array();
+		}
 		$amount           = 0;
-		$price            = $this->get_item_price( $item['id'], $item['options'] );
+		$price            = $this->get_item_price( $item['id'], $item['addon_items'] );
 		$discounted_price = $price;
 
 		$discounts = false === $discount ? $this->get_discounts() : array( $discount );
+
 
 		if ( ! empty( $discounts ) ) {
 			foreach ( $discounts as $discount ) {
@@ -630,7 +638,7 @@ class RPRESS_Cart {
 							$cart_items        = $this->get_contents();
 							foreach ( $cart_items as $cart_item ) {
 								if ( ! in_array( $cart_item['id'], $excluded_products ) ) {
-									$item_price      = $this->get_item_price( $cart_item['id'], $cart_item['options'] );
+									$item_price      = $this->get_item_price( $cart_item['id'], $cart_item['addon_items'] );
 									$items_subtotal += $item_price * $cart_item['quantity'];
 								}
 							}
@@ -866,22 +874,22 @@ class RPRESS_Cart {
 	 */
 	public function get_item_price( $fooditem_id = 0, $options = array(), $remove_tax_from_inclusive = false ) {
 		$price = 0;
-		$variable_prices = rpress_has_variable_prices( $fooditem_id );
+		$addon_price = 0;
+		// $sum = array();
 
-		if ( $variable_prices ) {
-			$prices = rpress_get_variable_prices( $fooditem_id );
-
-			if ( $prices ) {
-				if ( ! empty( $options ) ) {
-					$price = isset( $prices[ $options['price_id'] ] ) ? $prices[ $options['price_id'] ]['amount'] : false;
-				} else {
-					$price = false;
-				}
-			}
-		}
-
-		if ( ! $variable_prices || false === $price ) {
-			// Get the standard Download price if not using variable prices
+		// if( count( $options ) > 0 ){
+		// 	foreach ($options as $key => $value) {
+		// 		$sum = $value['price'];
+		// 	}
+		// 	// print_r($sum);
+		// 	// echo "string";
+		// 	$prices = wp_list_pluck( $options, 'price' );
+		// 	$addon_price = array_sum( $prices );
+		// 	$price = rpress_get_fooditem_price( $fooditem_id );
+		// 	$price = $price + $sum;
+		// }
+		if ( ! $addon_price || false === $price ) {
+			// Get the standard food item price if no prices
 			$price = rpress_get_fooditem_price( $fooditem_id );
 		}
 
@@ -1043,9 +1051,6 @@ class RPRESS_Cart {
 	public function get_subtotal() {
 		$items    = $this->get_contents_details();
 		$subtotal = $this->get_items_subtotal( $items );
-		$options_price = (float) $this->get_options_amount();
-
-		$subtotal = $subtotal + $options_price;
 		return apply_filters( 'rpress_get_cart_subtotal', $subtotal );
 	}
 
@@ -1059,34 +1064,6 @@ class RPRESS_Cart {
 		return esc_html( rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) ) );
 	}
 
-	/**
-	*
-	* @since 1.0
-	* @return Get the product options price as total
-	*/
-
-	public function get_options_amount() {
-		$amount = 0.00;
-		$items  = $this->get_contents_details();
-		$options_arr = array();
-		if( is_array($items) ) {
-			foreach( $items as $key => $item ) {
-				foreach( $item['item_number'] as $k => $v ) {
-					if( is_array($v) ) {
-						foreach( $v as $data => $data_val ) {
-							if( isset($data_val['price']) ) {
-								array_push($options_arr, $data_val['price']);
-							}
-						}
-					}
-				}
-			}
-		}
-
-		$amount = array_sum($options_arr);
-
-		return $amount;
-	}
 
 	/**
 	 * Get Total Cart Amount.
@@ -1115,9 +1092,7 @@ class RPRESS_Cart {
 		else {
 			$this->total = (float) apply_filters( 'rpress_get_cart_total', $total );
 		}
-
-
-		return $this->total;
+		return round( $this->total, 2 );
 	}
 
 	/**
@@ -1475,3 +1450,5 @@ class RPRESS_Cart {
 		return apply_filters( 'rpress_generate_cart_token', md5( mt_rand() . time() ) );
 	}
 }
+
+new RPRESS_Cart();

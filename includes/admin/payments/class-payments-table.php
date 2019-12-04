@@ -220,7 +220,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			'publish'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'deleverd' ? ' class="current"' : '', __('Delivered','restropress' ) . $delivered_count ),
 			'pending'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'pending', 'paged' => FALSE ) ), $current === 'pending' ? ' class="current"' : '', __('Pending','restropress' ) . $pending_count ),
 			'paid' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'paid', 'paged' => FALSE ) ), $current === 'paid' ? ' class="current"' : '', __('Paid','restropress' ) . $paid_count ),
-			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Out For Delivery','restropress' ) . $out_for_deliver_count)
+			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Processing','restropress' ) . $out_for_deliver_count)
 		);
 
 		return apply_filters( 'rpress_payments_table_views', $views );

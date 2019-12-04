@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_load_scripts() {
 	global $post;
 
-	$js_dir = RPRESS_PLUGIN_URL . 'assets/js/';
+	$js_dir = RP_PLUGIN_URL . 'assets/js/';
 
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
@@ -43,15 +43,15 @@ function rpress_load_scripts() {
 
 	if ( rpress_is_checkout() ) {
 		if ( rpress_is_cc_verify_enabled() ) {
-			wp_register_script( 'creditCardValidator', $js_dir . 'jquery.creditCardValidator' . $suffix . '.js', array( 'jquery' ), RPRESS_VERSION, $in_footer );
+			wp_register_script( 'creditCardValidator', $js_dir . 'jquery.creditCardValidator' . $suffix . '.js', array( 'jquery' ), RP_VERSION, $in_footer );
 
 			// Registered so gateways can enqueue it when they support the space formatting. wp_enqueue_script( 'jQuery.payment' );
-			wp_register_script( 'jQuery.payment', $js_dir . 'jquery.payment.min.js', array( 'jquery' ), RPRESS_VERSION, $in_footer );
+			wp_register_script( 'jQuery.payment', $js_dir . 'jquery.payment.min.js', array( 'jquery' ), RP_VERSION, $in_footer );
 
 			wp_enqueue_script( 'creditCardValidator' );
 		}
 
-		wp_register_script( 'rpress-checkout-global', $js_dir . 'rpress-checkout-global' . $suffix . '.js', array( 'jquery' ), RPRESS_VERSION, $in_footer );
+		wp_register_script( 'rpress-checkout-global', $js_dir . 'rpress-checkout-global' . $suffix . '.js', array( 'jquery' ), RP_VERSION, $in_footer );
 		wp_enqueue_script( 'rpress-checkout-global' );
 
 		wp_localize_script( 'rpress-checkout-global', 'rpress_global_vars', apply_filters( 'rpress_global_checkout_script_vars', array(
@@ -64,42 +64,20 @@ function rpress_load_scripts() {
 			'thousands_separator'   => rpress_get_option( 'thousands_separator', ',' ),
 			'no_gateway'            => __( 'Please select a payment method', 'restropress' ),
 			'no_discount'           => __( 'Please enter a discount code', 'restropress' ), // Blank discount code message
-			'enter_discount'        => __( 'Enter discount', 'restropress' ),
+			'enter_discount'        => __( 'Enter coupon code', 'restropress' ),
 			'discount_applied'      => __( 'Discount Applied', 'restropress' ), // Discount verified message
 			'no_email'              => __( 'Please enter an email address before applying a discount code', 'restropress' ),
 			'no_username'           => __( 'Please enter a username before applying a discount code', 'restropress' ),
 			'purchase_loading'      => __( 'Please Wait...', 'restropress' ),
 			'complete_purchase'     => rpress_get_checkout_button_purchase_label(),
 			'taxes_enabled'         => rpress_use_taxes() ? '1' : '0',
-			'rpress_version'           => RPRESS_VERSION
+			'rpress_version'        => RP_VERSION
 		) ) );
 	}
 
-
-	// Get Delivery Cutoff Hours 
-	$cutof_hours = Rpress_Delivery_Cut_Hours();
-	$cutoff_start_time = '';
-	$cutof_end_time = '';
-	if( is_array($cutof_hours) ) {
-		$cutoff_start_time = isset($cutof_hours['cutoff_start_time']) ? $cutof_hours['cutoff_start_time'] : '';
-		$cutof_end_time = isset($cutof_hours['cutoff_end_time']) ? $cutof_hours['cutoff_end_time'] : '';
-	}
-
-	$cutoff_hours = array();
-	$open_hours = array();
-	$get_holiday_message = '';
-	if( class_exists('RestroPress_Store_Timing') ) {
-		$store_timings = new RestroPress_Store_Timing();
-		$cutoff_hours = $store_timings->get_all_cutoff_hours();
-		$open_hours = $store_timings->get_all_open_hours();
-		$get_holiday_message = $store_timings->get_holiday_message();
-	}
-	
-	
-
 	// Load AJAX scripts, if enabled
 	if ( ! rpress_is_ajax_disabled() ) {
-		wp_register_script( 'rpress-ajax', $js_dir . 'rpress-ajax.js', array( 'jquery' ), RPRESS_VERSION, $in_footer );
+		wp_register_script( 'rpress-ajax', $js_dir . 'rpress-ajax.js', array( 'jquery' ), RP_VERSION, $in_footer );
 		wp_enqueue_script( 'rpress-ajax' );
 
 		wp_localize_script( 'rpress-ajax', 'rpress_scripts', apply_filters( 'rpress_ajax_script_vars', array(
@@ -119,16 +97,9 @@ function rpress_load_scripts() {
 			'taxes_enabled'           => rpress_use_taxes() ? '1' : '0', // Adding here for widget, but leaving in checkout vars for backcompat
 			'open_hours'          	  => rpress_get_option('open_time'),
 			'close_hours'          	  => rpress_get_option('close_time'),
-			'please_wait'							=> __('Please Wait', 'restropress'),
-			'rpress_holidays' 				=> rpress_get_holidays_lists(),
-			'rpress_pre_order_until' 	=> rpress_show_preorder_until(),
-			'rpress_cutoff_starts'		=> $cutoff_start_time,
-			'rpress_cutoff_ends'			=> $cutof_end_time,
-			'cutoff_hours'						=> $cutoff_hours,
-			'store_open_hours'				=> $open_hours,
-			'holiday_message'					=> $get_holiday_message,
-			'add_to_cart'							=> __('Add To Cart', 'restropress'),
-			'update_cart'							=> __('Update Cart', 'restropress'),
+			'please_wait'							=> __( 'Please Wait', 'restropress'),
+			'add_to_cart'							=> __( 'Add To Cart', 'restropress'),
+			'update_cart'							=> __( 'Update Cart', 'restropress'),
 			'button_color'   					=> rpress_get_option( 'checkout_color', 'red' ),
 			'check_delivery_fee_enabled'		=> check_delivery_fee_enabled()
 		) ) );
@@ -180,7 +151,7 @@ function rpress_register_styles() {
 		$url = trailingslashit( rpress_get_templates_url() ) . $file;
 	}
 
-	wp_register_style( 'rpress-styles', $url, array(), RPRESS_VERSION, 'all' );
+	wp_register_style( 'rpress-styles', $url, array(), RP_VERSION, 'all' );
 	wp_enqueue_style( 'rpress-styles' );
 }
 add_action( 'wp_enqueue_scripts', 'rpress_register_styles' );
@@ -197,23 +168,19 @@ add_action( 'wp_enqueue_scripts', 'rpress_register_styles' );
  */
 function rpress_load_admin_scripts( $hook ) {
 
-	// if ( ! apply_filters( 'rpress_load_admin_scripts', rpress_is_admin_page(), $hook ) ) {
-	// 	return;
-	// }
-
 	global $post;
 
-	$js_dir  = RPRESS_PLUGIN_URL . 'assets/js/';
-	$css_dir = RPRESS_PLUGIN_URL . 'assets/css/';
+	$js_dir  = RP_PLUGIN_URL . 'assets/js/';
+	$css_dir = RP_PLUGIN_URL . 'assets/css/';
 
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	//$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	$suffix  = '';
 	// These have to be global
-	wp_register_style( 'jquery-chosen', $css_dir . 'chosen' . $suffix . '.css', array(), RPRESS_VERSION );
+	wp_register_style( 'jquery-chosen', $css_dir . 'chosen' . $suffix . '.css', array(), RP_VERSION );
 	wp_enqueue_style( 'jquery-chosen' );
 
-	wp_register_script( 'jquery-chosen', $js_dir . 'chosen.jquery' . $suffix . '.js', array( 'jquery' ), RPRESS_VERSION );
+	wp_register_script( 'jquery-chosen', $js_dir . 'chosen.jquery' . $suffix . '.js', array( 'jquery' ), RP_VERSION );
 	wp_enqueue_script( 'jquery-chosen' );
 
 	wp_enqueue_script( 'jquery-form' );
@@ -226,13 +193,13 @@ function rpress_load_admin_scripts( $hook ) {
 		$admin_deps = array( 'jquery', 'jquery-form' );
 	}
 
-	wp_register_script( 'rpress-admin-scripts', $js_dir . 'admin-scripts' . $suffix . '.js', $admin_deps, RPRESS_VERSION, false );
+	wp_register_script( 'rpress-admin-scripts', $js_dir . 'admin-scripts' . $suffix . '.js', $admin_deps, RP_VERSION, false );
 
 	wp_enqueue_script( 'rpress-admin-scripts' );
 
 	wp_localize_script( 'rpress-admin-scripts', 'rpress_vars', array(
 		'post_id'                     => isset( $post->ID ) ? $post->ID : null,
-		'rpress_version'                 => RPRESS_VERSION,
+		'rpress_version'                 => RP_VERSION,
 		'add_new_fooditem'            => __( 'Add New Food Item', 'restropress' ),
 		'use_this_file'               => __( 'Use This File', 'restropress' ),
 		'quick_edit_warning'          => __( 'Sorry, not available for variable priced products.', 'restropress' ),
@@ -267,9 +234,11 @@ function rpress_load_admin_scripts( $hook ) {
 		'unsupported_browser'         => __( 'We are sorry but your browser is not compatible with this kind of file upload. Please upgrade your browser.', 'restropress' ),
 		'show_advanced_settings'      => __( 'Show advanced settings', 'restropress' ),
 		'hide_advanced_settings'      => __( 'Hide advanced settings', 'restropress' ),
-		'is_admin'					  => is_admin(),
-		'desktop_notification_duration'	=> rpress_get_option('notification_duration') ,
-		'enable_order_notification'  =>  rpress_get_option('enable_order_notification'),   
+		'is_admin'					  				=> is_admin(),
+		'notification_duration'				=> rpress_get_option( 'notification_duration' ) ,
+		'enable_order_notification'  	=>  rpress_get_option( 'enable_order_notification' ),
+		'enable_order_notification'  	=>  rpress_get_option( 'enable_order_notification' ),
+		'loopsound'										=>	rpress_get_option( 'notification_sound_loop' )
 	));
 
 	/*
@@ -277,7 +246,7 @@ function rpress_load_admin_scripts( $hook ) {
 	 * while we transition to an entire new markup. They should not be relied on for long-term usage.
 	 *
 	 */
-	wp_register_script( 'rpress-admin-scripts-compatibility', $js_dir . 'admin-backwards-compatibility' . $suffix . '.js', array( 'jquery', 'rpress-admin-scripts' ), RPRESS_VERSION );
+	wp_register_script( 'rpress-admin-scripts-compatibility', $js_dir . 'admin-backwards-compatibility' . $suffix . '.js', array( 'jquery', 'rpress-admin-scripts' ), RP_VERSION );
 	wp_localize_script( 'rpress-admin-scripts-compatibility', 'rpress_backcompat_vars', array(
 		'purchase_limit_settings'     => __( 'Purchase Limit Settings', 'restropress' ),
 		'simple_shipping_settings'    => __( 'Simple Shipping Settings', 'restropress' ),
@@ -312,7 +281,7 @@ function rpress_load_admin_scripts( $hook ) {
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_style( 'thickbox' );
 
-	wp_register_style( 'rpress-admin', $css_dir . 'rpress-admin' . $suffix . '.css', array(), RPRESS_VERSION );
+	wp_register_style( 'rpress-admin', $css_dir . 'rpress-admin' . $suffix . '.css', array(), RP_VERSION );
 	wp_enqueue_style( 'rpress-admin' );
 }
 add_action( 'admin_enqueue_scripts', 'rpress_load_admin_scripts', 100 );
@@ -328,17 +297,30 @@ add_action( 'admin_enqueue_scripts', 'rpress_load_admin_scripts', 100 );
 */
 function rpress_admin_fooditems_icon() {
 
-	$images_url      = RPRESS_PLUGIN_URL . 'assets/images/';
-	$menu_icon       = '\f316';
-	$icon_cpt_url    = $images_url . 'rpress-cpt.png';
-	$icon_cpt_2x_url = $images_url . 'rpress-cpt-2x.png';
+  $svg_images_url  = RP_PLUGIN_URL . 'assets/svg/restropress-icon.svg';
 	?>
 	<style type="text/css" media="screen">
 		#dashboard_right_now .fooditem-count:before {
-			content: '<?php echo $menu_icon; ?>';
+      background-image: url(<?php echo $svg_images_url; ?>);
+			content: '';
+      width: 20px;
+      height: 20px;
+      background-repeat: no-repeat;
+      filter: grayscale(1);
+      background-size: 80%;
+      -webkit-background-size: 80%;
+      -moz-background-size: 80%;
 		}
 		#icon-edit.icon32-posts-fooditem {
-			background: url(<?php echo $icon_cpt_url; ?>) -7px -5px no-repeat;
+			background-image: url(<?php echo $svg_images_url; ?>);
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-repeat: no-repeat;
+      filter: grayscale(1);
+      background-size: 80%;
+      -webkit-background-size: 80%;
+      -moz-background-size: 80%;
 		}
 		@media
 		only screen and (-webkit-min-device-pixel-ratio: 1.5),
@@ -347,8 +329,15 @@ function rpress_admin_fooditems_icon() {
 		only screen and (        min-device-pixel-ratio: 1.5),
 		only screen and (        		 min-resolution: 1.5dppx) {
 			#icon-edit.icon32-posts-fooditem {
-				background: url(<?php echo $icon_cpt_2x_url; ?>) no-repeat -7px -5px !important;
-				background-size: 55px 45px !important;
+				background-image: url(<?php echo $svg_images_url; ?>);
+        content: '';
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        filter: grayscale(1);
+        background-size: 80%;
+        -webkit-background-size: 80%;
+        -moz-background-size: 80%;
 			}
 		}
 	</style>
@@ -414,4 +403,135 @@ add_action( 'wp_head', 'rpress_load_head_styles' );
  */
 function rpress_scripts_in_footer() {
 	return apply_filters( 'rpress_load_scripts_in_footer', true );
+}
+
+add_action( 'wp_loaded', 'rp_register_google_script' );
+
+function rp_register_google_script() {
+  $map_api_key = rpress_get_option( 'map_api_key' );
+  $enable_google_api = rpress_get_option( 'enable_google_map_api' );
+
+  if( $enable_google_api && $map_api_key !== '' ) {
+    wp_register_script( 'rpress-map-script', 'https://maps.googleapis.com/maps/api/js?&key=' . $map_api_key . '&libraries=places', array(), '', true );
+  }
+}
+
+function rpress_enqueue_scripts() {
+
+  wp_register_style( 'rpress-fancybox-stylesheet', plugins_url( 'assets/css/jquery.fancybox.css', RP_PLUGIN_FILE ), array(), RP_VERSION );
+  wp_enqueue_style( 'rpress-fancybox-stylesheet' );
+
+  //Add fancybox script
+  wp_register_script( 'rpress-fancybox', plugins_url( 'assets/js/jquery.fancybox.js', RP_PLUGIN_FILE ), array( 'jquery'), RP_VERSION, true );
+  wp_enqueue_script( 'rpress-fancybox' );
+
+  //Add Sticky bar
+  wp_register_script( 'rpress-sticky-sidebar', plugins_url( 'assets/js/rpress-sticky-sidebar.js', RP_PLUGIN_FILE ), array( 'jquery' ), RP_VERSION, true );
+  wp_enqueue_script( 'rpress-sticky-sidebar' );
+
+  //Add Google Map js
+  if( rpress_get_option('enable_google_map_api')
+  && rpress_get_option('map_api_key') != '' ) :
+    wp_enqueue_script('rpress-map-script');
+  endif;
+
+  wp_register_style( 'rpress-datepicker-stylesheet', plugins_url( 'assets/css/rpress-datepicker.css', RP_PLUGIN_FILE ), array(), RP_VERSION );
+  wp_enqueue_style( 'rpress-datepicker-stylesheet' );
+
+  wp_register_script( 'rpress-datepicker', plugins_url( 'assets/js/rpress-datepicker.js', RP_PLUGIN_FILE ), array( 'jquery' ), RP_VERSION, true );
+  wp_enqueue_script( 'rpress-datepicker' );
+
+  //Add custom js script
+  wp_enqueue_script( 'rpress-custom', plugins_url( 'assets/js/rpress-frontend.js', RP_PLUGIN_FILE ), array( 'jquery', 'rpress-sticky-sidebar', 'rpress-datepicker' ), RP_VERSION, true );
+
+  // Add custom css
+  wp_register_style( 'rpress-stylesheet', plugins_url( 'assets/css/rpress.css', RP_PLUGIN_FILE ), array(), RP_VERSION );
+  wp_enqueue_style( 'rpress-stylesheet' );
+
+  $fooditem_popup_enable = rpress_get_option( 'enable_food_image_popup', false );
+
+  wp_localize_script( 'rpress-custom', 'RpressVars', array(
+    'wait_text'         => __( 'Please Wait', 'restropress' ),
+    'add_to_cart'       => __( 'Add To Cart', 'restropress' ),
+    'added_into_cart'   => __( 'Added Into Cart', 'restropress' ),
+    'estimated_tax'     => __( 'Estimated Tax', 'restropress'),
+    'total_text'        => __( 'Subtotal', 'restropress'),
+    'google_api'            => rpress_get_option( 'map_api_key' ),
+    'enable_google_autocomplete' => rpress_get_option( 'enable_google_map_api' ),
+    'is_checkout_page' => rpress_is_checkout(),
+    'store_closed'      => __('Store is closed', 'restropress'),
+    'delivery_closed' => __('Delivery is closed', 'restropress'),
+    'enable_fooditem_popup' => $fooditem_popup_enable,
+  ));
+}
+add_action( 'wp_enqueue_scripts',  'rpress_enqueue_scripts' );
+
+
+add_action( 'admin_enqueue_scripts', 'rpress_admin_scripts' );
+
+function rpress_admin_scripts() {
+  wp_register_style( 'rpress-timepicker', plugins_url( 'assets/css/jquery.timepicker.css', RP_PLUGIN_FILE ), array(), RP_VERSION );
+
+  wp_register_script( 'rpress-timepicker-script', plugins_url( 'assets/js/jquery.timepicker.js', RP_PLUGIN_FILE ), RP_VERSION, true);
+  
+  wp_register_style( 'rpress-addon-bootstrap-style', plugins_url( 'assets/css/rpress-bootstrap.css', RP_PLUGIN_FILE ), array(), RP_VERSION);
+
+  wp_register_style( 'rpress-addon-style', plugins_url( 'assets/css/rpress-admin.css', RP_PLUGIN_FILE ), array(), RP_VERSION );
+
+  if( isset($_GET['page']) && $_GET['page'] == 'rpress-addons' ) {
+    wp_enqueue_style( 'rpress-addon-bootstrap-style' );
+    wp_enqueue_style( 'rpress-addon-style' );
+  }
+
+  wp_enqueue_style( 'rpress-timepicker' );
+  wp_enqueue_script( 'rpress-timepicker-script' );
+
+}
+
+function rpress_enqueue_base_scripts() {
+  // css
+  wp_register_style('rpress_bootstrap_style', plugins_url( 'assets/css/rpress-bootstrap.css', RP_PLUGIN_FILE ), array(), RP_VERSION );
+  wp_enqueue_style( 'rpress_bootstrap_style' );
+
+  if( rpress_get_option('use_external_bootstrap_script') !== '1' ) {
+    // js
+    wp_register_script( 'rpress_bootstrap_script', plugins_url( 'assets/js/rpress-bootstrap.js', RP_PLUGIN_FILE ), array( 'jquery' ), RP_VERSION, true );
+    wp_enqueue_script( 'rpress_bootstrap_script' );
+  }
+  wp_register_style( 'font-awesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
+  wp_enqueue_style( 'font-awesome' );
+}
+
+add_action( 'wp_enqueue_scripts',  'rpress_enqueue_base_scripts' );
+
+add_action( 'admin_enqueue_scripts', 'load_admin_scripts' );
+
+function load_admin_scripts() {
+
+  wp_register_style( 'rpress-toast-style', plugins_url( 'assets/css/jquery.toast.css', RP_PLUGIN_FILE ), array(), RP_VERSION );
+  wp_enqueue_style( 'rpress-toast-style' );
+
+  //Add Toast on admin
+  wp_register_script( 'rpress-toast-script', plugins_url( 'assets/js/jquery.toast.js', RP_PLUGIN_FILE ), RP_VERSION, true);
+  wp_enqueue_script( 'rpress-toast-script' );
+  
+  $page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+  if( rpress_get_option( 'enable_google_map_api' )
+    && $page == 'rpress-settings'
+        && rpress_get_option('map_api_key') !== '' ) :
+        wp_enqueue_script( 'rpress-map-script' );
+    endif;
+
+
+  //Add admin custom js script
+  wp_enqueue_script( 'admin-rpress-script', plugins_url( 'assets/js/admin-custom.js', RP_PLUGIN_FILE ), array( 'jquery', 'rpress-toast-script' ), RP_VERSION, true );
+
+  $params = array(
+    'ajaxurl'         => rpress_get_ajax_url(),
+    'custom_address'  => rpress_get_option('use_custom_latlng'),
+  );
+
+  wp_localize_script('admin-rpress-script', 'rpress_admin_vars',
+        $params
+    );
 }

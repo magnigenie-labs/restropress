@@ -67,7 +67,7 @@ class RPRESS_Tracking {
 		$theme      = $theme_data->Name . ' ' . $theme_data->Version;
 
 		$data['php_version'] = phpversion();
-		$data['rpress_version'] = RPRESS_VERSION;
+		$data['rpress_version'] = RP_VERSION;
 		$data['wp_version']  = get_bloginfo( 'version' );
 		$data['server']      = isset( $_SERVER['SERVER_SOFTWARE'] ) ? $_SERVER['SERVER_SOFTWARE'] : '';
 
@@ -141,7 +141,7 @@ class RPRESS_Tracking {
 			'httpversion' => '1.1',
 			'blocking'    => false,
 			'body'        => $this->data,
-			'user-agent'  => 'RPRESS/' . RPRESS_VERSION . '; ' . get_bloginfo( 'url' )
+			'user-agent'  => 'RPRESS/' . RP_VERSION . '; ' . get_bloginfo( 'url' )
 		) );
 
 		update_option( 'rpress_tracking_last_send', time() );

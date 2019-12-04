@@ -9,7 +9,7 @@ jQuery(function($){
 
 	$('input.rpress_timings').timepicker({
 		dropdown: true,
-    	scrollbar: true
+    scrollbar: true,
 	});
 
 	//Validate License
@@ -123,85 +123,84 @@ jQuery(function($){
 		}
 	});
 
+
 	//Show latitude longitude field for store location
 	$('body').on('click', '.store_lat_lng_position', function(e) {
 		e.preventDefault();
 		$(this).parents('table').find('.store_lat_lng').show();
 	});
 
-	//Init Google map
-  
-  setTimeout(function(){initAutocomplete()},'3000');
-    
-    
-    var placeSearch, autocomplete;
-    var componentForm = {
-      street_number: 'short_name',
-      route: 'long_name',
-      locality: 'long_name',
-      administrative_area_level_1: 'short_name',
-      country: 'short_name',
-      postal_code: 'short_name'
-    };
+  // //Init Google map
+  // setTimeout(function(){initAutocomplete()},'4000');
 
-    function initAutocomplete() {
-    	//if( typeof google !== 'undefined') {
-    		// Create the autocomplete object, restricting the search to geographical
-      	// location types.
-      	autocomplete = new google.maps.places.Autocomplete(
+  //   var placeSearch, autocomplete;
+  //   var componentForm = {
+  //     street_number: 'short_name',
+  //     route: 'long_name',
+  //     locality: 'long_name',
+  //     administrative_area_level_1: 'short_name',
+  //     country: 'short_name',
+  //     postal_code: 'short_name'
+  //   };
 
-      	/** @type {!HTMLInputElement} */(document.getElementsByClassName("autocomplete")[0]),
+  //   function initAutocomplete() {
+  //   	//if( typeof google !== 'undefined') {
+  //   		// Create the autocomplete object, restricting the search to geographical
+  //     	// location types.
+  //     	autocomplete = new google.maps.places.Autocomplete(
 
-      	{types: ['geocode']});
+  //     	/** @type {!HTMLInputElement} */(document.getElementsByClassName("autocomplete")[0]),
+
+  //     	{types: ['geocode']});
 
 
-      	// When the user selects an address from the dropdown, populate the address
-      	// fields in the form.
-      	autocomplete.addListener('place_changed', fillInAddress);
-    	//}
-    }
+  //     	// When the user selects an address from the dropdown, populate the address
+  //     	// fields in the form.
+  //     	autocomplete.addListener('place_changed', fillInAddress);
+  //   	//}
+  //   }
 
-    function fillInAddress() {
-      // Get the place details from the autocomplete object.
-      var place = autocomplete.getPlace();
-      var LatLng = place.geometry.location.lat() + '-' + place.geometry.location.lng();
-      jQuery('#rpress_geo_address').val(LatLng);
+  //   function fillInAddress() {
+  //     // Get the place details from the autocomplete object.
+  //     var place = autocomplete.getPlace();
+  //     var LatLng = place.geometry.location.lat() + '-' + place.geometry.location.lng();
+  //     jQuery('#rpress_geo_address').val(LatLng);
 
-      // Get each component of the address from the place details
-      // and fill the corresponding field on the form.
-      for ( var i = 0; i < place.address_components.length; i++ ) {
-        var addressType = place.address_components[i].types[0];
+  //     // Get each component of the address from the place details
+  //     // and fill the corresponding field on the form.
+  //     for ( var i = 0; i < place.address_components.length; i++ ) {
+  //       var addressType = place.address_components[i].types[0];
         
-        if ( componentForm[addressType] ) {
-          var val = place.address_components[i][componentForm[addressType]];
-          //document.getElementById(addressType).value = val;
-        }
-      }
-    }
+  //       if ( componentForm[addressType] ) {
+  //         var val = place.address_components[i][componentForm[addressType]];
+  //         //document.getElementById(addressType).value = val;
+  //       }
+  //     }
+  //   }
 
-    // Bias the autocomplete object to the user's geographical location,
-    // as supplied by the browser's 'navigator.geolocation' object.
-    function geolocate() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var geolocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+  //   // Bias the autocomplete object to the user's geographical location,
+  //   // as supplied by the browser's 'navigator.geolocation' object.
+  //   function geolocate() {
+  //     if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition(function(position) {
+  //         var geolocation = {
+  //           lat: position.coords.latitude,
+  //           lng: position.coords.longitude
+  //         };
 
-          var circle = new google.maps.Circle({
-            center: geolocation,
-            radius: position.coords.accuracy
-          });
-          autocomplete.setBounds(circle.getBounds());
-        });
-      }
-    }
+  //         var circle = new google.maps.Circle({
+  //           center: geolocation,
+  //           radius: position.coords.accuracy
+  //         });
+  //         autocomplete.setBounds(circle.getBounds());
+  //       });
+  //     }
+  //   }
 
-    //Show Custom Lat Lng values by set
-    if( rpress_admin_vars.custom_address == '1' ) {
-    	$('tr.store_lat_lng').show();
-    }
+  //   //Show Custom Lat Lng values by set
+  //   if( rpress_admin_vars.custom_address == '1' ) {
+  //   	$('tr.store_lat_lng').show();
+  //   }
   
 
 });

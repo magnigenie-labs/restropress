@@ -936,7 +936,7 @@ function rpress_tools_sysinfo_get() {
 	global $wpdb;
 
 	if( !class_exists( 'Browser' ) )
-		require_once RPRESS_PLUGIN_DIR . 'includes/libraries/browser.php';
+		require_once RP_PLUGIN_DIR . 'includes/libraries/browser.php';
 
 	$browser = new Browser();
 
@@ -1006,7 +1006,7 @@ function rpress_tools_sysinfo_get() {
 	$params = array(
 		'sslverify'     => false,
 		'timeout'       => 60,
-		'user-agent'    => 'RPRESS/' . RPRESS_VERSION,
+		'user-agent'    => 'RPRESS/' . RP_VERSION,
 		'body'          => $request
 	);
 
@@ -1029,7 +1029,7 @@ function rpress_tools_sysinfo_get() {
 
 	// RPRESS configuration
 	$return .= "\n" . '-- RPRESS Configuration' . "\n\n";
-	$return .= 'Version:                  ' . RPRESS_VERSION . "\n";
+	$return .= 'Version:                  ' . RP_VERSION . "\n";
 	$return .= 'Upgraded From:            ' . get_option( 'rpress_version_upgraded_from', 'None' ) . "\n";
 	$return .= 'Test Mode:                ' . ( rpress_is_test_mode() ? "Enabled\n" : "Disabled\n" );
 	$return .= 'AJAX:                     ' . ( ! rpress_is_ajax_disabled() ? "Enabled\n" : "Disabled\n" );

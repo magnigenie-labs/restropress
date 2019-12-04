@@ -8,10 +8,9 @@ $display       = $cart_quantity > 0 ? '' : ' style="display:none;"';
 $color = rpress_get_option( 'checkout_color', 'red' );
 ?>
 <div class="rpress item-order">
-	<h6><?php echo __('Your Order', 'restropress'); ?></h6>
-	<a class="rpress-clear-cart <?php echo $color; ?>" href="#">[<?php echo __('Clear Order', 'restropress'); ?>]</a>
+	<h6><?php echo apply_filters('rpress_cart_title', __('Your Order', 'restropress')); ?></h6>
+	<a class="rpress-clear-cart <?php echo $color; ?>" href="#" <?php echo $display ?> > <i class="fa fa-ban"></i> <?php echo __('Clear Order', 'restropress') ?> </a>
 </div>
-<p class="rpress-cart-number-of-items"<?php echo $display; ?>><?php _e( 'Number of items in cart', 'restropress' ); ?>: <span class="rpress-cart-quantity"><?php echo $cart_quantity; ?></span></p>
 <ul class="rpress-cart">
 <?php if( $cart_items ) : 
 	?>

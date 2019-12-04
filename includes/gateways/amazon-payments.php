@@ -97,7 +97,7 @@ final class RPRESS_Amazon_Payments {
 	private function config() {
 
 		if ( ! defined( 'RPRESS_AMAZON_CLASS_DIR' ) ) {
-			$path = trailingslashit( plugin_dir_path( RPRESS_PLUGIN_FILE ) ) . 'includes/gateways/libs/amazon';
+			$path = trailingslashit( plugin_dir_path( RP_PLUGIN_FILE ) ) . 'includes/gateways/libs/amazon';
 			define( 'RPRESS_AMAZON_CLASS_DIR', trailingslashit( $path ) );
 		}
 

@@ -101,7 +101,7 @@ class RPRESS_Register_Meta {
 				'sanitize_callback' => array( $this, 'sanitize_price' ),
 				'type'              => 'float',
 				'description'       => __( 'The price of the product.', 'restropress' ),
-				'show_in_rest'      => true,
+				'show_in_rest'      => false,
 			)
 		);
 
@@ -116,7 +116,7 @@ class RPRESS_Register_Meta {
 				'sanitize_callback' => array( $this, 'sanitize_variable_prices'),
 				'type'              => 'array',
 				'description'       => __( 'An array of variable prices for the product.', 'restropress' ),
-				'show_in_rest'      => true,
+				'show_in_rest'      => false,
 			)
 		);
 
@@ -145,7 +145,7 @@ class RPRESS_Register_Meta {
 				'sanitize_callback' => array( $this, 'sanitize_array' ),
 				'type'              => 'array',
 				'description'       => __( 'An array of product IDs to associate with a bundle.', 'restropress' ),
-				'show_in_rest'      => true,
+				'show_in_rest'      => false,
 			)
 		);
 
@@ -160,7 +160,7 @@ class RPRESS_Register_Meta {
 				'sanitize_callback' => 'sanitize_text_field',
 				'type'              => 'string',
 				'description'       => __( "Defines how this product's 'Purchase' button should behave, either add to cart or buy now", 'restropress' ),
-				'show_in_rest'      => true,
+				'show_in_rest'      => false,
 			)
 		);
 
@@ -175,7 +175,7 @@ class RPRESS_Register_Meta {
 				'sanitize_callback' => array( $this, 'intval_wrapper' ),
 				'type'              => 'int',
 				'description'       => __( 'When variable pricing is enabled, this value defines which option should be chosen by default.', 'restropress' ),
-				'show_in_rest'      => true,
+				'show_in_rest'      => false,
 			)
 		);
 

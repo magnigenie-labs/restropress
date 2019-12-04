@@ -594,8 +594,8 @@ jQuery(document).ready(function ($) {
 				var clone = $('#rpress-purchased-files div.row:last').clone();
 
 				var Name = $('#rpress-purchased-files div.row:last').find('select').attr('name');
-				
-				
+
+
 
 				clone.find( '.fooditem span' ).html( '<a href="post.php?post=' + fooditem_id + '&action=edit"></a>' );
 				clone.find( '.fooditem span a' ).text( fooditem_title );
@@ -636,14 +636,14 @@ jQuery(document).ready(function ($) {
 				// Flag the RestroPress section as changed
 				$('#rpress-payment-fooditems-changed').val(1);
 
-				setTimeout(function(){ 
+				setTimeout(function(){
 					var data = rpress_get_addon_items_list(fooditem_id);
 					console.log(data);
 				 }, 2000);
 
-				
+
 				//Ajax callback to get addon item if they are available
-				
+
 				clone.find('select').chosen();
 				clone.find('div.chosen-container').last().remove();
 				clone.find('select.addon-items-list').val('').trigger('chosen:updated');
@@ -706,7 +706,7 @@ jQuery(document).ready(function ($) {
 				var addonTotal = 0;
 
 				$(".addon-items-list").each(function(key, item) {
-					
+
 					addonTotalPrice = $(this).val();
 
 					if( addonTotalPrice !== null ) {
@@ -2183,7 +2183,7 @@ var rpressLegendFormatterEarnings = function (label, series) {
 }
 
 
-//get Addon item for a food item in the admin 
+//get Addon item for a food item in the admin
 function rpress_get_addon_items_list(fooditem_id) {
 	if( parseInt(fooditem_id) > 0 ) {
 		var Options;
@@ -2236,51 +2236,65 @@ jQuery(function($) {
       		console.log('Permission wasn\'t granted. Allow a retry.');
       		return;
       	}
-      	
+
       	if (result === 'default') {
       		console.log('The permission request was dismissed.');
         	return;
       	}
-      
+
       	setInterval(function () {
       		$.ajax({
-       			type: "POST",
+       			type: 'POST',
           	data: {
-							action: 'rpress_display_order_notifications'
+							action: 'rpress_check_new_orders'
 						},
 						url: ajaxurl,
           	success: function (response) {
-          		if (response != 0) {
-            		for (x = 0; x < response.length; x++) {
-									var theTitle = response[x].title;
-                	var options = { body: response[x].description }
-                	var n = new Notification(theTitle, options);
+							if (response != '0') {
 
-                	n.custom_options = { url: response[x].url }
-                	
-                	n.onclick = function (event) {
-                		console.log('Click on notification');
-                  	event.preventDefault(); // prevent the browser from focusing the Notification's tab
-                  	window.open(notification.custom_options.url, '_blank');
-                	};
+								if( typeof response.title === "undefined" ) return;
 
-									//set time to notify is show
-									var time_notify = parseInt(rpress_vars.desktop_notification_duration);
-									
-									if (time_notify > 0) {
-    								new_time_notify = time_notify * 1000;
-    								setTimeout(n.close.bind(n), new_time_notify);
-									}
-
-									n.onclose = function (event) {
-    								event.preventDefault();
-									};
+								var notifyTitle = response.title;
+								var options = {
+										body: response.body,
+										icon: response.icon,
+										sound: response.sound,
+								};
+								var n = new Notification(notifyTitle, options);
+								n.custom_options = {
+										url: response.url,
 								}
-            	}
+								n.onclick = function (event) {
+										event.preventDefault(); // prevent the browser from focusing the Notification's tab
+										window.open(n.custom_options.url, '_blank');
+								};
+
+								//add audio notify because, this property is not currently supported in any browser.
+								if (response.sound != '') {
+									var loopsound =  '1' == rpress_vars.loopsound ? 'loop' : '';
+									$("<audio controls "+loopsound+" class='rpress_notify_audio'></audio>").attr({
+											'src': response.sound,
+									}).appendTo("body");
+									$('.rpress_notify_audio').trigger("play");
+								}
+
+								//set time to notify is show
+								var time_notify = parseInt(rpress_vars.notification_duration);
+								if (time_notify > 0) {
+										time_notify = time_notify * 1000;
+										setTimeout(n.close.bind(n), time_notify);
+								}
+
+								n.onclose = function (event) {
+										event.preventDefault();
+										$('.rpress_notify_audio').remove();
+								};
+							}
+
           	},
           	complete: function () { }
         	});
-				}, 2000);
+				}, 10000);
     	});
 		}
 	}

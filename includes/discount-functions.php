@@ -862,9 +862,6 @@ function rpress_get_cart_discounts_html( $discounts = false ) {
 /**
  * Show the fully formatted cart discount
  *
- * Note the $formatted paramter was removed from the display_cart_discount() function
- * within RPRESS_Cart in 2.7 as it was a redundant parameter.
- *
  * @since 1.0
  * @param bool $formatted
  * @param bool $echo Echo?
@@ -1130,10 +1127,6 @@ function rpress_set_discounts_cache( $hash, $data ) {
 
 	$rpress_get_discounts_cache[ $hash ] = $data;
 }
-
-/**
-add_action( 'rpress_daily_scheduled_events', 'rpress_discount_status_cleanup' );
- */
 
 /**
  * Used during rpress_discount_status_cleanup to filter out a meta query properly
