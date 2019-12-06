@@ -345,6 +345,7 @@ function rpress_get_currencies() {
 		'RIAL' => __( 'Iranian Rial (&#65020;)', 'restropress' ),
 		'RUB'  => __( 'Russian Rubles', 'restropress' ),
 		'AOA'  => __( 'Angolan Kwanza', 'restropress' ),
+    'NGN'  => __( 'Nigerian Naira (&#8358;)', 'restropress' ),
 	);
 
 	return apply_filters( 'rpress_currencies', $currencies );
@@ -402,6 +403,9 @@ function rpress_currency_symbol( $currency = '' ) {
 		case "AOA" :
 			$symbol = 'Kz';
 			break;
+    case "NGN" :
+      $symbol = '&#8358;';
+      break;
 		default :
 			$symbol = $currency;
 			break;
@@ -610,7 +614,6 @@ function rpress_is_func_disabled( $function ) {
  *
  * @since  1.0.0
  * @usedby rpress_settings()
- * @author Chris Christoff
  *
  * @param unknown $v
  * @return int
@@ -709,7 +712,6 @@ add_action( 'rpress_cleanup_file_symlinks', 'rpress_cleanup_file_symlinks' );
  * Checks if SKUs are enabled
  *
  * @since  1.0.0
- * @author Daniel J Griffiths
  * @return bool $ret True if SKUs are enabled, false otherwise
  */
 function rpress_use_skus() {

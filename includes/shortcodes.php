@@ -304,64 +304,14 @@ function rpress_purchase_collection_shortcode( $atts, $content = null ) {
 }
 add_shortcode( 'purchase_collection', 'rpress_purchase_collection_shortcode' );
 
-/**
- * RestroPress Shortcode
- *
- * arguments specified when using the shortcode. A list of the arguments
- * can be found from the RPRESS Dccumentation. The shortcode will take all the
- * parameters and display the fooditems queried in a valid HTML <div> tags.
- *
- * @since 1.0.0
- * @internal Incomplete shortcode
- * @param array $atts Shortcode attributes
- * @param string $content
- * @return string $display Output generated from the fooditems queried
- */
-function rpress_fooditems_tabs( $atts, $content = null ) {
-
-  // Tabs filter to hook custom tabs
-  $tabs = apply_filters( 'rpress_product_tabs', array() );
-
-  if ( ! empty( $tabs ) ) : ?>
-    <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <?php foreach ( $tabs as $key => $tab ) :
-          $active_class = ( esc_attr( $key ) == 'menu') ? 'active' : '';
-          ?>
-          <a class="nav-item nav-link  <?php echo $active_class; ?>" id="nav-<?php echo esc_attr( $key ); ?>-tab" data-toggle="tab" href="#nav-<?php echo esc_attr( $key ); ?>" role="tab" aria-controls="nav-<?php echo esc_attr( $key ); ?>" aria-selected="true"><?php echo apply_filters( 'rpress_product_' . $key . '_tab_title', esc_html( $tab['title'] ), $key ); ?></a>
-        <?php endforeach; ?>
-      </div>
-    </nav>
-
-    <div class="tab-content" id="nav-tabContent">
-      <?php foreach ( $tabs as $key => $tab ) :
-        $active_class = ( esc_attr( $key ) == 'menu') ? 'active in' : '';
-        ?>
-        <div class="tab-pane row fade show <?php echo $active_class; ?>" id="nav-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="nav-<?php echo esc_attr( $key ); ?>-tab">
-          <div class="rp-col-md-12 <?php echo esc_attr( $key ); ?>">
-            <?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-<?php endif;
-
-}
-
-add_shortcode( 'rpress_fooditems', 'rpress_fooditems_tabs' );
 
 add_shortcode( 'fooditems', 'rpress_fooditems_query' );
 
 function rpress_fooditems_query( $atts, $content = null ) {
 
-add_shortcode( 'rpress_fooditems', 'rpress_fooditems_tabs' );
-
   $color = rpress_get_option( 'checkout_color', 'red' );
   
-  $get_all_items = get_terms( array(
-    'taxonomy' => 'food-category',
-    'hide_empty' => true,
-  ));
+  $get_all_items = rp_get_categories();
 
   $all_terms = $query = array();
 

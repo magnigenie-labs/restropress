@@ -886,9 +886,9 @@ class RPRESS_Fooditem {
 	public function can_purchase() {
 		$can_purchase = true;
 
-		if ( ! current_user_can( 'edit_post', $this->ID ) && $this->post_status != 'publish' ) {
-			$can_purchase = false;
-		}
+    if ( $this->post_status != 'publish' ) {
+      $can_purchase = false;
+    }
 
 		return (bool) apply_filters( 'rpress_can_purchase_fooditem', $can_purchase, $this );
 	}

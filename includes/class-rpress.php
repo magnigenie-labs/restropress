@@ -330,6 +330,7 @@ final class RestroPress {
 
 		//Addon License Functions
 		require_once RP_PLUGIN_DIR . 'includes/rpress-license.php';
+
 	}
 
 

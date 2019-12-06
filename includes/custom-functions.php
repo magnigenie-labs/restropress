@@ -266,50 +266,6 @@ if( !function_exists('food_item_list_after') ) {
 }
 
 
-add_filter( 'rpress_food_cats', 'rpress_get_food_cats' );
-
-if( ! function_exists( 'rpress_get_food_cats' ) ) {
-	function rpress_get_food_cats(){
-
-		$taxonomy_name = 'food-category';
-
-		$get_all_items = get_terms( array(
-    	'taxonomy' => $taxonomy_name,
-    	'hide_empty' => true,
-		) );
-
-		$html = '';
-
-		$html .= '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 sticky-sidebar cat-lists">';
-
-		//filter toggle for mobile
-		$html .= '<div class="rpress-filter-toggle">';
-		$html .= '<span class="rpress-filter-toggle-text">'.__('Categories By', 'rpress').'</span>';
-		$html .= '</div>';
-
-		//filter wrapper starts here
-		$html .= '<div class="rpress-filter-wrapper">';
-		$html .= '<div class="rpress-categories-menu">';
-		$html .= '<h6>'.__('Categories', 'rpress').'</h6>';
-
-		if( is_array($get_all_items) && !empty($get_all_items) ) :
-			$html .= '<ul class="rpress-category-lists">';
-			foreach ($get_all_items as $key => $get_all_item) :
-				$html .= '<li class="rpress-category-item "><a href="javascript:void(0)" data-id="'.$get_all_item->term_id.'" class="rpress-category-link  nav-scroller-item  ">'.$get_all_item->name.'</a></li>';
-			endforeach;
-
-			$html .= '</ul>';
-		endif;
-
-		$html .= '</div>';
-		$html .= '</div>';
-		//filter wrapper ends here
-
-		$html .= '</div>';
-		return $html;
-	}
-}
-
 add_filter('rpress_fooditems_search', 'rpress_implement_search');
 if( !function_exists('rpress_implement_search') ) {
 	function rpress_implement_search() {

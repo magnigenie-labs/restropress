@@ -219,7 +219,6 @@ class RPRESS_Roles {
 
 				break;
 		}
-
 		return $caps;
 
 	}

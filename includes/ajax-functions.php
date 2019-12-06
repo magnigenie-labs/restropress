@@ -641,7 +641,6 @@ function rpress_ajax_apply_discount() {
 			$amount    = rpress_format_discount_rate( rpress_get_discount_type( $discount->ID ), rpress_get_discount_amount( $discount->ID ) );
 			$discounts = rpress_set_cart_discount( $discount_code );
 			$total     = rpress_get_cart_total( $discounts );
-			// print_r( $total );
 			$return = array(
 				'msg'         => 'valid',
 				'amount'      => $amount,

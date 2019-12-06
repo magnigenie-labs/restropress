@@ -831,3 +831,19 @@ function rp_get_current_time() {
   }
   return $current_time;
 }
+
+function rp_get_categories() {
+  $taxonomy_name = 'food-category';
+
+  $term_args = array(
+    'taxonomy'    => $taxonomy_name,
+    'hide_empty'  => true,
+  );
+
+  $term_args = apply_filters( 'rp_get_categories', $term_args );
+
+  $get_all_items = get_terms( $term_args );
+
+  return $get_all_items;
+
+}

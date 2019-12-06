@@ -55,14 +55,14 @@ function rpress_setup_rpress_post_types() {
 	$fooditem_args = array(
 		'labels'             => $fooditem_labels,
 		'public'             => false,
+    'map_meta_cap'       => true,
 		'publicly_queryable' => true,
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
-		'menu_icon'          => plugin_dir_url('').'restropress/assets/svg/restropress-icon.svg',
+		'menu_icon'          => plugin_dir_url('') . 'restropress/assets/svg/restropress-icon.svg',
 		'rewrite'            => false,
 		'capability_type'    => 'product',
-		'map_meta_cap'       => true,
 		'has_archive'        => false,
 		'hierarchical'       => false,
 		'supports'           => apply_filters( 'rpress_fooditem_supports', array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ) ),
@@ -174,7 +174,7 @@ function rpress_get_label_plural( $lowercase = false ) {
 /**
  * Change default "Enter title here" input
  *
- * @since  1.0.0.0.2
+ * @since  1.0.2
  * @param string $title Default title placeholder text
  * @return string $title New placeholder text
  */

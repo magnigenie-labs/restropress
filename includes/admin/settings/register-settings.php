@@ -1470,11 +1470,6 @@ function rpress_get_registered_settings_sections() {
 			'export_erase' => __( 'Export & Erase', 'restropress' ),
 		) ),
     'sms_notification' => apply_filters( 'rpress_settings_section_sms_notification', array() ),
-
-		// 'notification'     => apply_filters( 'rpress_settings_sections_notification', array(
-		// 	'main'               => __( 'General Settings', 'restropress' ),
-		// 	'active_notification'           => __( 'Active Notifications', 'restropress' ),
-		// ) ),
 	);
 
 	$sections = apply_filters( 'rpress_settings_sections', $sections );
