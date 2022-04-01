@@ -248,24 +248,6 @@ only screen and (max-width:640px) {
   width: 100%
 }
 
-.rpress_files_name_label {
-  width: 225px;
-  float: left
-}
-
-.rpress_files_url_label {
-  width: 220px;
-  float: left
-}
-
-#postbox-container-1 .rpress_files_name_label {
-  width: 80px
-}
-
-#postbox-container-1 .rpress_files_url_label {
-  width: 80px
-}
-
 .rpress-add-repeatable-row {
   margin: 10px 0
 }
@@ -530,16 +512,19 @@ textarea#rpress-payment-note {
   height: 4em;
   margin: 0
 }
+#rpress-purchased-items{
+  padding: 15px;
+}
 
-#rpress-purchased-files .row .rpress-purchased-files-list-wrapper .fooditem {
+#rpress-purchased-items .row .rpress-purchased-items-list-wrapper .fooditem {
   line-height: 1.4
 }
 
-#rpress-purchased-files .rpress-purchased-files-list-wrapper .rpress-purchased-option {
+#rpress-purchased-items .rpress-purchased-items-list-wrapper .rpress-purchased-option {
   color: #666
 }
 
-ul.rpress-purchased-files-list-wrapper input.rpress-payment-details-fooditem-item-price, span#rpress-rpress-order-fooditem-price-wrap .rpress-order-fooditem-price {
+ul.rpress-purchased-items-list-wrapper input.rpress-payment-details-fooditem-item-price, span#rpress-rpress-order-fooditem-price-wrap .rpress-order-fooditem-price {
 	width: 60px;
 }
 
@@ -717,7 +702,9 @@ span.order-addon-items {
 .rpress-edit-purchase-element .rpress-select-chosen {
   width: 196px
 }
-
+#rpress-customer-details h3{
+  margin: 5px 0px;
+}
 #rpress-customer-details .order-data-address input,
 #rpress-customer-details .order-data-column p.data input,
 #rpress-edit-order-form .column input,
@@ -879,7 +866,7 @@ span.order-addon-items {
     padding-top: 10px
   }
   .rpress-add-fooditem-to-purchase-header,
-  .rpress-purchased-files-header {
+  .rpress-purchased-items-header {
     display: none
   }
   .rpress-payment-details-label-mobile {

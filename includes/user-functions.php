@@ -193,74 +193,6 @@ function rpress_get_users_ordered_products( $user = 0, $status = 'complete' ) {
 }
 
 /**
- * Has User Purchased
- *
- * Checks to see if a user has purchased a fooditem.
- *
- * @since       1.0
- * @param       int $user_id - the ID of the user to check
- * @param       array $fooditems - Array of IDs to check if purchased. If an int is passed, it will be converted to an array
- * @param       int $variable_price_id - the variable price ID to check for
- * @return      boolean - true if has purchased, false otherwise
- */
-function rpress_has_user_purchased( $user_id, $fooditems, $variable_price_id = null ) {
-
-	if( empty( $user_id ) ) {
-		return false;
-	}
-
-	/**
-	 * @since 1.0.0
-	 *
-	 * Allow 3rd parties to take actions before the history is queried.
-	 */
-	do_action( 'rpress_has_user_ordered_before', $user_id, $fooditems, $variable_price_id );
-
-	$users_purchases = rpress_get_users_orders( $user_id );
-
-	$return = false;
-
-	if ( ! is_array( $fooditems ) ) {
-		$fooditems = array( $fooditems );
-	}
-
-	if ( $users_purchases ) {
-		foreach ( $users_purchases as $purchase ) {
-			$payment         = new RPRESS_Payment( $purchase->ID );
-			$purchased_files = $payment->cart_details;
-
-			if ( is_array( $purchased_files ) ) {
-				foreach ( $purchased_files as $fooditem ) {
-					if ( in_array( $fooditem['id'], $fooditems ) ) {
-						$variable_prices = rpress_has_variable_prices( $fooditem['id'] );
-						if ( $variable_prices && ! is_null( $variable_price_id ) && $variable_price_id !== false ) {
-							if ( isset( $fooditem['item_number']['options']['price_id'] ) && $variable_price_id == $fooditem['item_number']['options']['price_id'] ) {
-								$return = true;
-								break 2; // Get out to prevent this value being overwritten if the customer has purchased item twice
-							} else {
-								$return = false;
-							}
-						} else {
-							$return = true;
-							break 2;  // Get out to prevent this value being overwritten if the customer has purchased item twice
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * @since 1.0.0
-	 *
-	 * Filter has purchased result
-	 */
-	$return = apply_filters( 'rpress_has_user_purchased', $return, $user_id, $fooditems, $variable_price_id );
-
-	return $return;
-}
-
-/**
  * Has Purchases
  *
  * Checks to see if a user has purchased at least one item.
@@ -912,7 +844,7 @@ function rpress_validate_user_verification_token( $url = '' ) {
  */
 function rpress_process_user_verification_request() {
 
-	if( ! wp_verify_nonce( $_GET['_wpnonce'], 'rpress-request-verification' ) ) {
+	if( ! wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ), 'rpress-request-verification' ) ) {
 		wp_die( __( 'Nonce verification failed.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
@@ -969,7 +901,7 @@ function rpress_process_user_account_verification() {
 		wp_die( __( 'Invalid verification token provided.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	rpress_set_user_to_verified( absint( $_GET['user_id'] ) );
+	rpress_set_user_to_verified( absint( $_GET['user_id'] )  );
 
 	do_action( 'rpress_user_verification_token_validated' );
 

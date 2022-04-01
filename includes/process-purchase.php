@@ -25,19 +25,24 @@ function rpress_process_purchase_form() {
 
 	do_action( 'rpress_pre_process_purchase' );
 
+	$data = rpress_sanitize_array( $_POST );
+
 	// Make sure the cart isn't empty
 	if ( ! rpress_get_cart_contents() && ! rpress_cart_has_fees() ) {
+
 		$valid_data = false;
 		rpress_set_error( 'empty_cart', __( 'Your cart is empty', 'restropress' ) );
+
 	} else {
+
 		// Validate the form $_POST data
 		$valid_data = rpress_purchase_form_validate_fields();
 
 		// Allow themes and plugins to hook to errors
-		do_action( 'rpress_checkout_error_checks', $valid_data, $_POST );
+		do_action( 'rpress_checkout_error_checks', $valid_data, $data );
 	}
 
-	$is_ajax = isset( $_POST['rpress_ajax'] );
+	$is_ajax = isset( $_POST['rpress_ajax'] ) && !empty( $_POST['rpress_ajax'] ) ? sanitize_text_field( $_POST['rpress_ajax'] ) : null;
 
 	// Process the login form
 	if ( isset( $_POST['rpress_login_submit'] ) ) {
@@ -48,7 +53,7 @@ function rpress_process_purchase_form() {
 	$user = rpress_get_purchase_form_user( $valid_data );
 
 	// Let extensions validate fields after user is logged in if user has used login/registration form
-	do_action( 'rpress_checkout_user_error_checks', $user, $valid_data, $_POST );
+	do_action( 'rpress_checkout_user_error_checks', $user, $valid_data, $data );
 
 	if ( false === $valid_data || rpress_get_errors() || ! $user ) {
 		if ( $is_ajax ) {
@@ -132,18 +137,17 @@ function rpress_process_purchase_form() {
 		'user_email'   => $user['user_email'],
 		'date'         => date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ),
 		'user_info'    => stripslashes_deep( $user_info ),
-		'post_data'    => $_POST,
+		'post_data'    => $data,
 		'cart_details' => rpress_get_cart_content_details(),
 		'gateway'      => $valid_data['gateway'],
 		'card_info'    => $valid_data['cc_info'],
 	);
 
-
 	// Add the user data for hooks
 	$valid_data['user'] = $user;
 
 	// Allow themes and plugins to hook before the gateway
-	do_action( 'rpress_checkout_before_gateway', $_POST, $user_info, $valid_data );
+	do_action( 'rpress_checkout_before_gateway', $data, $user_info, $valid_data );
 
 	// If the total amount in the cart is 0, send to the manual gateway. This emulates a free fooditem purchase
 	if ( !$purchase_data['price'] ) {
@@ -199,10 +203,7 @@ function rpress_checkout_check_existing_email( $valid_data, $post ) {
 				rpress_set_error( 'rpress-customer-email-exists', sprintf( __( 'The email address %s is already in use.', 'restropress' ), $email ) );
 			}
 		}
-
-
 	}
-
 }
 add_action( 'rpress_checkout_error_checks', 'rpress_checkout_check_existing_email', 10, 2 );
 
@@ -215,7 +216,7 @@ add_action( 'rpress_checkout_error_checks', 'rpress_checkout_check_existing_emai
  */
 function rpress_process_purchase_login() {
 
-	$is_ajax = isset( $_POST['rpress_ajax'] );
+	$is_ajax = isset( $_POST['rpress_ajax'] ) ? sanitize_text_field( $_POST['rpress_ajax'] ) : null;
 
 	$user_data = rpress_purchase_form_validate_user_login();
 
@@ -253,15 +254,18 @@ function rpress_purchase_form_validate_fields() {
 
 	// Start an array to collect valid data
 	$valid_data = array(
-		'gateway'          => rpress_purchase_form_validate_gateway(), // Gateway fallback
-		'discount'         => rpress_purchase_form_validate_discounts(),    // Set default discount
-		'need_new_user'    => false,     // New user flag
-		'need_user_login'  => false,     // Login user flag
-		'logged_user_data' => array(),   // Logged user collected data
-		'new_user_data'    => array(),   // New user collected data
-		'login_user_data'  => array(),   // Login user collected data
-		'guest_user_data'  => array(),   // Guest user collected data
-		'cc_info'          => rpress_purchase_form_validate_cc()    // Credit card info
+		'gateway'          		=> rpress_purchase_form_validate_gateway(), // Gateway fallback
+		'discount'         		=> rpress_purchase_form_validate_discounts(), // Set default discount
+		'need_new_user'			=> false, // New user flag
+		'need_user_login'  		=> false, // Login user flag
+		'logged_user_data' 		=> array(), // Logged user collected data
+		'new_user_data'    		=> array(), // New user collected data
+		'login_user_data'  		=> array(), // Login user collected data
+		'guest_user_data'  		=> array(), // Guest user collected data
+		'cc_info'          		=> rpress_purchase_form_validate_cc(), // Credit card info
+		'rpress_phone'     		=> rpress_validate_phone_field(), // Valid phone number
+		'min_order_slot'   		=> rpress_validate_order(),
+		'empty_service_type' 	=> rpress_validate_service_type(),
 	);
 
 	// Validate of min order amount is enabled and the cart contains the order amount
@@ -272,11 +276,6 @@ function rpress_purchase_form_validate_fields() {
 	// Validate agree to terms
 	if ( '1' === rpress_get_option( 'show_agree_to_terms', false ) ) {
 		rpress_purchase_form_validate_agree_to_terms();
-	}
-
-	// Validate agree to privacy policy
-	if ( '1' === rpress_get_option( 'show_agree_to_privacy_policy', false ) ) {
-		rpress_purchase_form_validate_agree_to_privacy_policy();
 	}
 
 	if ( is_user_logged_in() ) {
@@ -302,6 +301,63 @@ function rpress_purchase_form_validate_fields() {
 
 	// Return collected data
 	return $valid_data;
+}
+
+/**
+* Phone number field verification
+*
+* @since 2.5
+* @return bool
+*/
+function rpress_validate_phone_field() {
+
+	if ( !empty( $_POST['rpress_phone'] ) ) :
+
+    $isPhoneValidated = true;
+
+    $phone = isset( $_POST['rpress_phone'] ) && !empty( $_POST['rpress_phone'] ) ? sanitize_text_field( $_POST['rpress_phone'] ) : null;
+
+    $phoneDigitsLength = strlen( $phone );
+
+    if ( $phoneDigitsLength < 8 || $phoneDigitsLength > 15 ) {
+      $isPhoneValidated = false;
+    }
+
+    if ( ! $isPhoneValidated ) {
+      rpress_set_error( 'invalid_phone', __( 'Please enter a valid phone number', 'restropress' ) );
+    }
+    else {
+      return true;
+    }
+
+  endif;
+}
+
+/**
+* Validate order for time slot and minimum order amount
+*
+* @since 2.5
+* @return bool
+*/
+function rpress_validate_order() {
+	$response = rpress_pre_validate_order();
+	if( $response['status'] == 'error' ){
+		rpress_set_error( 'order_error', $response['error_msg'] );
+	}
+}
+
+/**
+* Validate order for service type
+*
+* @since 2.7.2
+* @return bool
+*/
+function rpress_validate_service_type() {
+	if( empty( $_COOKIE['service_type'] ) ) {
+		rpress_set_error( 'empty_service_type', __( 'Please select a Service.', 'restropress' ) );
+	} else {
+		return true;
+	}
 }
 
 /**
@@ -361,7 +417,7 @@ function rpress_purchase_form_validate_discounts() {
 	// Check for valid discount(s) is present
 	if ( ! empty( $_POST['rpress-discount'] ) && __( 'Enter coupon code', 'restropress' ) != $_POST['rpress-discount'] ) {
 		// Check for a posted discount
-		$posted_discount = isset( $_POST['rpress-discount'] ) ? trim( $_POST['rpress-discount'] ) : false;
+		$posted_discount = isset( $_POST['rpress-discount'] ) ? trim( sanitize_text_field( $_POST['rpress-discount'] ) ) : false;
 
 		// Add the posted discount to the discounts
 		if ( $posted_discount && ( empty( $discounts ) || rpress_multiple_discounts_allowed() ) && rpress_is_discount_valid( $posted_discount, $user ) ) {
@@ -410,7 +466,7 @@ function rpress_purchase_form_validate_agree_to_terms() {
 /**
  * Purchase Form Validate Agree To Privacy Policy
  *
- * @since       2.9.1
+ * @since       2.5
  * @return      void
  */
 function rpress_purchase_form_validate_agree_to_privacy_policy() {
@@ -425,7 +481,7 @@ function rpress_purchase_form_validate_agree_to_privacy_policy() {
  * Purchase Form Required Fields
  *
  * @access      private
- * @since       1.5
+ * @since       1.0
  * @return      array
  */
 function rpress_purchase_form_required_fields() {
@@ -437,11 +493,32 @@ function rpress_purchase_form_required_fields() {
 		'rpress_first' => array(
 			'error_id' => 'invalid_first_name',
 			'error_message' => __( 'Please enter your first name', 'restropress' )
+		),
+		'rpress_phone' => array(
+			'error_id' => 'invalid_phone',
+			'error_message' =>  __('Please enter a valid phone number', 'restropress')
 		)
 	);
 
+	//Delivery address fields if it's a delivery
+	$require_delivery_address = apply_filters( 'rpress_require_delivery_address', rpress_selected_service() == 'delivery' );
+	if( $require_delivery_address ){
+		$required_fields['rpress_street_address'] = array(
+			'error_id' => 'invalid_street_address',
+			'error_message' => __( 'Please enter your street address', 'restropress' )
+		);
+		$required_fields['rpress_postcode'] = array(
+			'error_id' => 'invalid_postcode',
+			'error_message' => __( 'Please enter your zip / postal code', 'restropress' )
+		);
+		$required_fields['rpress_city'] = array(
+			'error_id' => 'invalid_city',
+			'error_message' => __( 'Please select your town / city', 'restropress' )
+		);
+	}
+
 	// Let payment gateways and other extensions determine if address fields should be required
-	$require_address = apply_filters( 'rpress_require_billing_address', rpress_use_taxes() && rpress_get_cart_total() );
+	$require_address = apply_filters( 'rpress_require_billing_address', false );
 
 	if ( $require_address ) {
 		$required_fields['card_zip'] = array(
@@ -464,7 +541,7 @@ function rpress_purchase_form_required_fields() {
 		// Check if the Customer's Country has been passed in and if it has no states.
 		if ( isset( $_POST['billing_country'] ) && isset( $required_fields['card_state'] ) ){
 			$customer_billing_country = sanitize_text_field( $_POST['billing_country'] );
-			$states = rpress_get_shop_states( $customer_billing_country );
+			$states = rpress_get_states( $customer_billing_country );
 
 			// If this country has no states, remove the requirement of a card_state.
 			if ( empty( $states ) ){
@@ -549,10 +626,9 @@ function rpress_purchase_form_validate_new_user() {
 	);
 
 	// Check the new user's credentials against existing ones
-	$user_login   = isset( $_POST["rpress_user_login"] ) ? trim( $_POST["rpress_user_login"] ) : false;
-	$user_email   = isset( $_POST['rpress_email'] ) ? trim( $_POST['rpress_email'] ) : false;
-	$user_pass    = isset( $_POST["rpress_user_pass"] ) ? trim( $_POST["rpress_user_pass"] ) : false;
-	$pass_confirm = isset( $_POST["rpress_user_pass_confirm"] ) ? trim( $_POST["rpress_user_pass_confirm"] ) : false;
+	$user_login   = isset( $_POST["rpress_user_login"] ) ? trim( sanitize_text_field( $_POST["rpress_user_login"] ) ) : false;
+	$user_email   = isset( $_POST['rpress_email'] ) ? trim( sanitize_text_field( $_POST['rpress_email'] ) ) : false;
+	$user_pass    = isset( $_POST["rpress_user_pass"] ) ? trim( sanitize_text_field( $_POST["rpress_user_pass"] )  ) : false;
 
 	// Loop through required fields and show error messages
 	foreach ( rpress_purchase_form_required_fields() as $field_name => $value ) {
@@ -607,26 +683,16 @@ function rpress_purchase_form_validate_new_user() {
 	}
 
 	// Check password
-	if ( $user_pass && $pass_confirm ) {
-		// Verify confirmation matches
-		if ( $user_pass != $pass_confirm ) {
-			// Passwords do not match
-			rpress_set_error( 'password_mismatch', __( 'Passwords don\'t match', 'restropress' ) );
-		} else {
-			// All is good to go
-			$valid_user_data['user_pass'] = $user_pass;
-		}
+	if ( $user_pass ) {
+		// All is good to go
+		$valid_user_data['user_pass'] = $user_pass;
 	} else {
 		// Password or confirmation missing
 		if ( ! $user_pass && $registering_new_user ) {
 			// The password is invalid
 			rpress_set_error( 'password_empty', __( 'Enter a password', 'restropress' ) );
-		} else if ( ! $pass_confirm && $registering_new_user ) {
-			// Confirmation password is invalid
-			rpress_set_error( 'confirmation_empty', __( 'Enter the password confirmation', 'restropress' ) );
 		}
 	}
-
 	return $valid_user_data;
 }
 
@@ -651,7 +717,7 @@ function rpress_purchase_form_validate_user_login() {
 		return $valid_user_data;
 	}
 
-	$login_or_email = strip_tags( $_POST['rpress_user_login'] );
+	$login_or_email = strip_tags( sanitize_text_field( $_POST['rpress_user_login'] ) );
 
 	if ( is_email( $login_or_email ) ) {
 		// Get the user by email
@@ -664,7 +730,7 @@ function rpress_purchase_form_validate_user_login() {
 	// Check if user exists
 	if ( $user_data ) {
 		// Get password
-		$user_pass = isset( $_POST["rpress_user_pass"] ) ? $_POST["rpress_user_pass"] : false;
+		$user_pass = isset( $_POST["rpress_user_pass"] ) ? sanitize_text_field( $_POST["rpress_user_pass"] ) : false;
 
 		// Check user_pass
 		if ( $user_pass ) {
@@ -718,12 +784,12 @@ function rpress_purchase_form_validate_guest_user() {
 	);
 
 	// Show error message if user must be logged in
-	if ( rpress_logged_in_only() ) {
+	if ( rpress_no_guest_checkout() ) {
 		rpress_set_error( 'logged_in_only', __( 'You must be logged into an account to purchase', 'restropress' ) );
 	}
 
 	// Get the guest email
-	$guest_email = isset( $_POST['rpress_email'] ) ? $_POST['rpress_email'] : false;
+	$guest_email = isset( $_POST['rpress_email'] ) ? sanitize_email( $_POST['rpress_email'] ) : false;
 
 	// Check email
 	if ( $guest_email && strlen( $guest_email ) > 0 ) {
@@ -816,7 +882,7 @@ function rpress_get_purchase_form_user( $valid_data = array() ) {
 		return true;
 	} else if ( is_user_logged_in() ) {
 		// Set the valid user as the logged in collected data
-		$user = $valid_data['logged_in_user'];
+		$user = isset( $valid_data['logged_in_user'] ) ? $valid_data['logged_in_user'] : false;
 	} else if ( $valid_data['need_new_user'] === true || $valid_data['need_user_login'] === true  ) {
 		// New user registration
 		if ( $valid_data['need_new_user'] === true ) {
@@ -863,12 +929,28 @@ function rpress_get_purchase_form_user( $valid_data = array() ) {
 
 	// Get user first name
 	if ( ! isset( $user['user_first'] ) || strlen( trim( $user['user_first'] ) ) < 1 ) {
-		$user['user_first'] = isset( $_POST["rpress_first"] ) ? strip_tags( trim( $_POST["rpress_first"] ) ) : '';
+		$user['user_first'] = isset( $_POST['rpress_first'] ) ? sanitize_text_field( trim( $_POST['rpress_first'] ) ) : '';
 	}
 
 	// Get user last name
 	if ( ! isset( $user['user_last'] ) || strlen( trim( $user['user_last'] ) ) < 1 ) {
-		$user['user_last'] = isset( $_POST["rpress_last"] ) ? strip_tags( trim( $_POST["rpress_last"] ) ) : '';
+		$user['user_last'] = isset( $_POST['rpress_last'] ) ? sanitize_text_field( trim( $_POST['rpress_last'] ) ) : '';
+	}
+
+	// Store the user's phone number so the cart can be pre-populated
+	if ( ! empty( $user['user_id'] ) && $user['user_id'] > 0 && !empty( $_POST["rpress_phone"] ) ) {
+		update_user_meta( $user['user_id'], '_rpress_phone', sanitize_text_field( $_POST["rpress_phone"] ) );
+	}
+
+	if( ! empty( $user['user_id'] ) && $user['user_id'] > 0 && rpress_selected_service() == 'delivery' ){
+		// Get the user's delivery address details
+		$user['delivery_address'] = array();
+		$user['delivery_address']['address']   	= ! empty( $_POST['rpress_street_address'] ) ? sanitize_text_field( $_POST['rpress_street_address'] ) : '';
+		$user['delivery_address']['flat']   		= ! empty( $_POST['rpress_apt_suite'] ) ? sanitize_text_field( $_POST['rpress_apt_suite'] ) : '';
+		$user['delivery_address']['city']    		= ! empty( $_POST['rpress_city'] ) ? sanitize_text_field( $_POST['rpress_city'] ) : '';
+		$user['delivery_address']['postcode']   = ! empty( $_POST['rpress_postcode'] ) ? sanitize_text_field( $_POST['rpress_postcode'] ) : '';
+		// Store the address in the user's meta so the cart can be pre-populated with it on return purchases
+		update_user_meta( $user['user_id'], '_rpress_user_delivery_address', $user['delivery_address'] );
 	}
 
 	// Get the user's billing address details
@@ -923,7 +1005,7 @@ function rpress_purchase_form_validate_cc() {
 function rpress_get_purchase_cc_info() {
 	$cc_info = array();
 	$cc_info['card_name']      = isset( $_POST['card_name'] )       ? sanitize_text_field( $_POST['card_name'] )       : '';
-	$cc_info['card_number']    = isset( $_POST['card_number'] )     ? sanitize_text_field( $_POST['card_number'] )     : '';
+	$cc_info['card_number']    = isset( $_POST['card_number'] )     ? sanitize_text_field( str_replace( ' ', '', $_POST['card_number'] ) )     : '';
 	$cc_info['card_cvc']       = isset( $_POST['card_cvc'] )        ? sanitize_text_field( $_POST['card_cvc'] )        : '';
 	$cc_info['card_exp_month'] = isset( $_POST['card_exp_month'] )  ? sanitize_text_field( $_POST['card_exp_month'] )  : '';
 	$cc_info['card_exp_year']  = isset( $_POST['card_exp_year'] )   ? sanitize_text_field( $_POST['card_exp_year'] )   : '';
@@ -1205,15 +1287,23 @@ function rpress_check_minimum_order_amount() {
 	$enable_minimum_order = rpress_get_option('allow_minimum_order');
 
 	if( $enable_minimum_order ) :
-		$minimum_order_price = rpress_get_option('minimum_order_price');
-		$minimum_price_error = rpress_get_option('minimum_order_error') !== '' ? rpress_get_option('minimum_order_error') : 'Please add more items';
 
-		$minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price ) );
-		$minimum_price_error = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error);
+		$minimum_order_price_delivery = rpress_get_option('minimum_order_price');
 
-		if( rpress_get_cart_total() < $minimum_order_price ) :
-			rpress_set_error( 'rpress_checkout_error', $minimum_price_error );
-		endif;
+		$minimum_order_price_pickup = rpress_get_option('minimum_order_price_pickup');
+
+
+		$minimum_price_error_delivery = rpress_get_option('minimum_order_error') !== '' ? rpress_get_option('minimum_order_error') : 'Please add more items';
+
+		$minimum_price_error_pickup = rpress_get_option('minimum_order_error_pickup') !== '' ? rpress_get_option('minimum_order_error_pickup') : 'Please add more items';
+
+		$minimum_order_delivery_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price_delivery ) );
+
+		$minimum_order_pickup_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price_pickup) );
+
+		$minimum_price_error_delivery = str_replace('{min_order_price}', $minimum_order_delivery_formatted, $minimum_price_error_delivery);
+
+		$minimum_price_error_pickup = str_replace('{min_order_price}', $minimum_order_pickup_formatted, $minimum_price_error_pickup);
 
 	endif;
 

@@ -51,10 +51,10 @@ class rpress_cart_widget extends WP_Widget {
 
 		$title = apply_filters( 'widget_title', $instance['title'], $instance, $args['id'] );
 
-		echo $args['before_widget'];
+		echo esc_html( $args['before_widget'] );
 
 		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo esc_html( $args['before_title'] . $title . $args['after_title'] );
 		}
 
 		do_action( 'rpress_before_cart_widget' );
@@ -63,7 +63,7 @@ class rpress_cart_widget extends WP_Widget {
 
 		do_action( 'rpress_after_cart_widget' );
 
-		echo $args['after_widget'];
+		echo esc_html( $args['after_widget'] );
 	}
 
 	/** @see WP_Widget::update */
@@ -88,20 +88,20 @@ class rpress_cart_widget extends WP_Widget {
 
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'restropress' ); ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo $instance['title']; ?>"/>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'restropress' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_html( $instance['title'] ); ?>"/>
 		</p>
 
 		<!-- Hide on Checkout Page -->
 		<p>
 			<input <?php checked( $instance['hide_on_checkout'], true ); ?> id="<?php echo esc_attr( $this->get_field_id( 'hide_on_checkout' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'hide_on_checkout' ) ); ?>" type="checkbox" />
-			<label for="<?php echo esc_attr( $this->get_field_id( 'hide_on_checkout' ) ); ?>"><?php _e( 'Hide on Checkout Page', 'restropress' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'hide_on_checkout' ) ); ?>"><?php esc_html_e( 'Hide on Checkout Page', 'restropress' ); ?></label>
 		</p>
 
 		<!-- Hide when cart is empty -->
 		<p>
 			<input <?php checked( $instance['hide_on_empty'], true ); ?> id="<?php echo esc_attr( $this->get_field_id( 'hide_on_empty' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'hide_on_empty' ) ); ?>" type="checkbox" />
-			<label for="<?php echo esc_attr( $this->get_field_id( 'hide_on_empty' ) ); ?>"><?php _e( 'Hide if cart is empty', 'restropress' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'hide_on_empty' ) ); ?>"><?php esc_html_e( 'Hide if cart is empty', 'restropress' ); ?></label>
 		</p>
 
 		<?php
@@ -160,10 +160,10 @@ class rpress_categories_tags_widget extends WP_Widget {
 		$count      = isset( $instance['count'] ) && $instance['count'] == 'on' ? 1 : 0;
 		$hide_empty = isset( $instance['hide_empty'] ) && $instance['hide_empty'] == 'on' ? 1 : 0;
 
-		echo $args['before_widget'];
+		echo esc_html( $args['before_widget'] );
 
 		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo esc_html( $args['before_title'] . $title . $args['after_title'] );
 		}
 
 		do_action( 'rpress_before_taxonomy_widget' );
@@ -174,7 +174,7 @@ class rpress_categories_tags_widget extends WP_Widget {
 
 		do_action( 'rpress_after_taxonomy_widget' );
 
-		echo $args['after_widget'];
+		echo esc_html( $args['after_widget'] );
 	}
 
 	/** @see WP_Widget::update */
@@ -199,27 +199,27 @@ class rpress_categories_tags_widget extends WP_Widget {
 
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'restropress' ); ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo $instance['title']; ?>"/>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'restropress' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_html( $instance['title'] ); ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'taxonomy' ) ); ?>"><?php _e( 'Taxonomy:', 'restropress' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'taxonomy' ) ); ?>"><?php esc_html_e( 'Taxonomy:', 'restropress' ); ?></label>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'taxonomy' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'taxonomy' ) ); ?>">
 				<?php
 				$category_labels = rpress_get_taxonomy_labels( 'addon_category' );
 				$tag_labels      = rpress_get_taxonomy_labels( 'fooditem_tag' );
 				?>
-				<option value="addon_category" <?php selected( 'addon_category', $instance['taxonomy'] ); ?>><?php echo $category_labels['name']; ?></option>
-				<option value="fooditem_tag" <?php selected( 'fooditem_tag', $instance['taxonomy'] ); ?>><?php echo $tag_labels['name']; ?></option>
+				<option value="addon_category" <?php selected( 'addon_category', $instance['taxonomy'] ); ?>><?php echo esc_html( $category_labels['name'] ); ?></option>
+				<option value="fooditem_tag" <?php selected( 'fooditem_tag', $instance['taxonomy'] ); ?>><?php echo esc_html( $tag_labels['name'] ); ?></option>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Show Count:', 'restropress' ); ?></label>
-			<input <?php checked( $instance['count'], 'on' ); ?> id="<?php echo $this->get_field_id( 'count' ); ?>" name="<?php echo $this->get_field_name( 'count' ); ?>" type="checkbox" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'count' ) ); ?>"><?php esc_html_e( 'Show Count:', 'restropress' ); ?></label>
+			<input <?php checked( $instance['count'], 'on' ); ?> id="<?php echo esc_attr( $this->get_field_id( 'count' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'count' ) ); ?>" type="checkbox" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'hide_empty' ); ?>"><?php _e( 'Hide Empty Categories:', 'restropress' ); ?></label>
-			<input <?php checked( $instance['hide_empty'], 'on' ); ?> id="<?php echo $this->get_field_id( 'hide_empty' ); ?>" name="<?php echo $this->get_field_name( 'hide_empty' ); ?>" type="checkbox" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'hide_empty' ) ); ?>"><?php esc_html_e( 'Hide Empty Categories:', 'restropress' ); ?></label>
+			<input <?php checked( $instance['hide_empty'], 'on' ); ?> id="<?php echo esc_attr( $this->get_field_id( 'hide_empty' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'hide_empty' ) ); ?>" type="checkbox" />
 		</p>
 	<?php
 	}
@@ -285,21 +285,21 @@ class RPRESS_Product_Details_Widget extends WP_Widget {
 		$tags            = $instance['tags'] ? $instance['tags'] : '';
 
 		// Used by themes. Opens the widget.
-		echo $args['before_widget'];
+		echo esc_html( $args['before_widget'] );
 
 		// Display the widget title.
 		if( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo esc_html( $args['before_title'] . $title . $args['after_title'] );
 		}
 
 		do_action( 'rpress_product_details_widget_before_title' , $instance , $fooditem_id );
 
 		// fooditem title.
-		echo $fooditem_title;
+		echo esc_html( $fooditem_title );
 
 		do_action( 'rpress_product_details_widget_before_purchase_button' , $instance , $fooditem_id );
 		// purchase button.
-		echo $purchase_button;
+		echo esc_html( $purchase_button );
 
 		// categories and tags.
 		$category_list  = false;
@@ -357,7 +357,7 @@ class RPRESS_Product_Details_Widget extends WP_Widget {
 		do_action( 'rpress_product_details_widget_before_end', $instance, $fooditem_id );
 
 		// Used by themes. Closes the widget.
-		echo $args['after_widget'];
+		echo esc_html( $args['after_widget'] );
 	}
 
 	/** @see WP_Widget::form */
@@ -387,19 +387,19 @@ class RPRESS_Product_Details_Widget extends WP_Widget {
 
 		<!-- Title -->
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'restropress' ) ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'restropress' ) ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_html( $instance['title'] ); ?>" />
 		</p>
 
 		<p>
-			<?php _e( 'Display Type:', 'restropress' ); ?><br />
-			<input type="radio" onchange="jQuery(this).parent().next('.fooditem-details-selector').hide();" <?php checked( 'current', $instance['display_type'], true ); ?> value="current" name="<?php echo esc_attr( $this->get_field_name( 'display_type' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-current"><label for="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-current"><?php _e( 'Current', 'restropress' ); ?></label>
-			<input type="radio" onchange="jQuery(this).parent().next('.fooditem-details-selector').show();" <?php checked( 'specific', $instance['display_type'], true ); ?> value="specific" name="<?php echo esc_attr( $this->get_field_name( 'display_type' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-specific"><label for="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-specific"><?php _e( 'Specific', 'restropress' ); ?></label>
+			<?php esc_html_e( 'Display Type:', 'restropress' ); ?><br />
+			<input type="radio" onchange="jQuery(this).parent().next('.fooditem-details-selector').hide();" <?php checked( 'current', $instance['display_type'], true ); ?> value="current" name="<?php echo esc_attr( $this->get_field_name( 'display_type' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-current"><label for="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-current"><?php esc_html_e( 'Current', 'restropress' ); ?></label>
+			<input type="radio" onchange="jQuery(this).parent().next('.fooditem-details-selector').show();" <?php checked( 'specific', $instance['display_type'], true ); ?> value="specific" name="<?php echo esc_attr( $this->get_field_name( 'display_type' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-specific"><label for="<?php echo esc_attr( $this->get_field_id( 'display_type' ) ); ?>-specific"><?php esc_html_e( 'Specific', 'restropress' ); ?></label>
 		</p>
 
 		<!-- RestroPress -->
 		<?php $display = 'current' === $instance['display_type'] ? ' style="display: none;"' : ''; ?>
-		<p class="fooditem-details-selector" <?php echo $display; ?>>
+		<p class="fooditem-details-selector" <?php echo esc_html( $display ); ?>>
 		<label for="<?php echo esc_attr( $this->get_field_id( 'fooditem_id' ) ); ?>"><?php printf( __( '%s:', 'restropress' ), rpress_get_label_singular() ); ?></label>
 		<?php $fooditem_count = wp_count_posts( 'fooditem' ); ?>
 		<?php if ( $fooditem_count->publish < 1000 ) : ?>
@@ -413,7 +413,7 @@ class RPRESS_Product_Details_Widget extends WP_Widget {
 			?>
 			<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'fooditem_id' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'fooditem_id' ) ); ?>">
 			<?php foreach ( $fooditems as $fooditem ) { ?>
-				<option <?php selected( absint( $instance['fooditem_id'] ), $fooditem->ID ); ?> value="<?php echo esc_attr( $fooditem->ID ); ?>"><?php echo $fooditem->post_title; ?></option>
+				<option <?php selected( absint( $instance['fooditem_id'] ), $fooditem->ID ); ?> value="<?php echo esc_attr( $fooditem->ID ); ?>"><?php echo esc_html( $fooditem->post_title ); ?></option>
 			<?php } ?>
 			</select>
 		<?php else: ?>
@@ -431,7 +431,7 @@ class RPRESS_Product_Details_Widget extends WP_Widget {
 		<!-- Show purchase button -->
 		<p>
 			<input <?php checked( $instance['purchase_button'], 'on' ); ?> id="<?php echo esc_attr( $this->get_field_id( 'purchase_button' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'purchase_button' ) ); ?>" type="checkbox" />
-			<label for="<?php echo esc_attr( $this->get_field_id( 'purchase_button' ) ); ?>"><?php _e( 'Show Purchase Button', 'restropress' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'purchase_button' ) ); ?>"><?php esc_html_e( 'Show Purchase Button', 'restropress' ); ?></label>
 		</p>
 
 		<!-- Show fooditem categories -->

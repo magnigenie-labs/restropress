@@ -38,24 +38,23 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 	public function csv_cols() {
 
 		$cols = array(
-			'ID'                       => __( 'ID',   'restropress' ),
-			'post_name'                => __( 'Slug',   'restropress' ),
-			'post_title'               => __( 'Name',   'restropress' ),
-			'post_date'                => __( 'Date Created',   'restropress' ),
-			'post_author'              => __( 'Author',   'restropress' ),
-			'post_content'             => __( 'Description',   'restropress' ),
-			'post_excerpt'             => __( 'Excerpt',   'restropress' ),
-			'post_status'              => __( 'Status',   'restropress' ),
-			'categories'               => __( 'Categories',   'restropress' ),
-			'tags'                     => __( 'Tags',   'restropress' ),
-			'rpress_price'                => __( 'Price',   'restropress' ),
-			'_rpress_files'               => __( 'Files',   'restropress' ),
-			'_rpress_fooditem_limit'      => __( 'File RestroPress Limit',   'restropress' ),
-			'_thumbnail_id'            => __( 'Featured Image',   'restropress' ),
-			'rpress_sku'                  => __( 'SKU',   'restropress' ),
-			'rpress_product_notes'        => __( 'Notes',   'restropress' ),
-			'_rpress_fooditem_sales'      => __( 'Sales',   'restropress' ),
-			'_rpress_fooditem_earnings'   => __( 'Earnings',   'restropress' ),
+			'ID'                       	=> __( 'ID', 'restropress' ),
+			'post_name'                	=> __( 'Slug', 'restropress' ),
+			'post_title'               	=> __( 'Name', 'restropress' ),
+			'post_date'                	=> __( 'Date Created', 'restropress' ),
+			'post_author'              	=> __( 'Author', 'restropress' ),
+			'post_content'             	=> __( 'Description', 'restropress' ),
+			'post_excerpt'             	=> __( 'Excerpt', 'restropress' ),
+			'post_status'              	=> __( 'Status', 'restropress' ),
+			'categories'               	=> __( 'Categories', 'restropress' ),
+			'addons'               		=> __( 'Addons', 'restropress' ),
+			'tags'                     	=> __( 'Tags', 'restropress' ),
+			'rpress_price' 				=> __( 'Price', 'restropress' ),
+			'_thumbnail_id'            	=> __( 'Featured Image', 'restropress' ),
+			'rpress_sku' 				=> __( 'SKU', 'restropress' ),
+			'rpress_product_notes' 		=> __( 'Notes', 'restropress' ),
+			'_rpress_fooditem_sales' 	=> __( 'Sales', 'restropress' ),
+			'_rpress_fooditem_earnings'	=> __( 'Earnings', 'restropress' ),
 		);
 
 		return $cols;
@@ -73,8 +72,6 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 
 		$meta = array(
 			'rpress_price',
-			'_rpress_files',
-			'_rpress_fooditem_limit',
 			'_thumbnail_id',
 			'rpress_sku',
 			'rpress_product_notes',
@@ -132,27 +129,6 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 
 								break;
 
-							case '_rpress_files' :
-
-
-								$files = array();
-								foreach( rpress_get_fooditem_files( $fooditem->ID ) as $file ) {
-									$f = $file['file'];
-
-									if ( rpress_has_variable_prices( $fooditem->ID ) ) {
-										$condition = isset( $file['condition'] ) ? $file['condition'] : 'all';
-										$f .= ';' . $condition;
-									}
-
-									$files[] = $f;
-
-									unset( $file );
-								}
-
-								$row[ $key ] = implode( ' | ', $files );
-
-								break;
-
 							default :
 
 								$row[ $key ] = get_post_meta( $fooditem->ID, $key, true );
@@ -161,7 +137,7 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 
 						}
 
-					} elseif( isset( $fooditem->$key ) ) {
+					} else if( isset( $fooditem->$key ) ) {
 
 						switch( $key ) {
 
@@ -178,7 +154,7 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 								break;
 						}
 
-					} elseif( 'tags' == $key ) {
+					} else if( 'tags' == $key ) {
 
 						$terms = get_the_terms( $fooditem->ID, 'fooditem_tag' );
 						if( $terms ) {
@@ -187,7 +163,15 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 						}
 
 
-					} elseif( 'categories' == $key ) {
+					} else if( 'categories' == $key ) {
+
+						$terms = get_the_terms( $fooditem->ID, 'food-category' );
+						if( $terms ) {
+							$terms = wp_list_pluck( $terms, 'name' );
+							$row[ $key ] = implode( ' | ', $terms );
+						}
+
+					} else if( 'addons' == $key ) {
 
 						$terms = get_the_terms( $fooditem->ID, 'addon_category' );
 						if( $terms ) {

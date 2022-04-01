@@ -4,7 +4,7 @@
  *
  * @package     RPRESS
  * @subpackage  Gateways
- * @copyright   Copyright (c) 2018, Magnigenie
+ * @copyright   Copyright (c) 2018, MagniGenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
  */
@@ -25,7 +25,7 @@ add_action( 'rpress_paypal_cc_form', '__return_false' );
 /**
  * Register the PayPal Standard gateway subsection
  *
- * @since  1.0.0
+ * @since  1.0
  * @param  array $gateway_sections  Current Gateway Tab subsections
  * @return array                    Gateway subsections with PayPal Standard
  */
@@ -39,7 +39,7 @@ add_filter( 'rpress_settings_sections_gateways', 'rpress_register_paypal_gateway
 /**
  * Registers the PayPal Standard settings for the PayPal Standard subsection
  *
- * @since  1.0.0
+ * @since  1.0
  * @param  array $gateway_settings  Gateway tab settings
  * @return array                    Gateway tab settings with the PayPal Standard settings
  */
@@ -69,7 +69,7 @@ function rpress_register_paypal_gateway_settings( $gateway_settings ) {
 
 		$pdt_desc = sprintf(
 			__( 'Enter your PayPal Identity Token in order to enable Payment Data Transfer (PDT). This allows payments to be verified without relying on the PayPal IPN. See our <a href="%s" target="_blank">documentation</a> for further information.', 'restropress' ),
-			'http://docs.fooditems.com/article/918-paypal-standard'
+			'http://docs.restropress.com/paypal-standard'
 		);
 
 		$paypal_settings['paypal_identify_token'] = array(
@@ -80,10 +80,7 @@ function rpress_register_paypal_gateway_settings( $gateway_settings ) {
 			'size' => 'regular',
 		);
 
-		$disable_ipn_desc = sprintf(
-			__( 'If you are unable to use Payment Data Transfer and payments are not getting marked as complete, then check this box. This forces the site to use a slightly less secure method of verifying purchases. See our <a href="%s" target="_blank">FAQ</a> for further information.', 'restropress' ),
-			'http://docs.fooditems.com/article/190-payments-not-marked-as-complete'
-		);
+		$disable_ipn_desc = __( 'If you are unable to use Payment Data Transfer and payments are not getting marked as complete, then check this box. This forces the site to use a slightly less secure method of verifying purchases.', 'restropress' );
 
 		$paypal_settings['disable_paypal_verification'] = array(
 			'id'   => 'disable_paypal_verification',
@@ -164,6 +161,8 @@ add_filter( 'rpress_settings_gateways', 'rpress_register_paypal_gateway_settings
  * @return void
  */
 function rpress_process_paypal_purchase( $purchase_data ) {
+
+
 	if( ! wp_verify_nonce( $purchase_data['gateway_nonce'], 'rpress-gateway' ) ) {
 		wp_die( __( 'Nonce verification has failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
@@ -226,6 +225,7 @@ function rpress_process_paypal_purchase( $purchase_data ) {
 			'notify_url'    => $listener_url,
 			'image_url'     => rpress_get_paypal_image_url(),
 			'cbt'           => get_bloginfo( 'name' ),
+			'bn'            => 'RestroPress_SP'
 		);
 
 		if ( ! empty( $purchase_data['user_info']['address'] ) ) {
@@ -258,10 +258,6 @@ function rpress_process_paypal_purchase( $purchase_data ) {
 				$paypal_args['quantity_' . $i ]  = $item['quantity'];
 				$paypal_args['amount_' . $i ]    = $item_amount;
 
-				if ( rpress_use_skus() ) {
-					$paypal_args['item_number_' . $i ] = rpress_get_fooditem_sku( $item['id'] );
-				}
-
 				$paypal_sum += ( $item_amount * $item['quantity'] );
 
 				$i++;
@@ -276,13 +272,13 @@ function rpress_process_paypal_purchase( $purchase_data ) {
 			foreach ( $purchase_data['fees'] as $fee ) {
 				if ( empty( $fee['fooditem_id'] ) && floatval( $fee['amount'] ) > '0' ) {
 					// this is a positive fee
-					$paypal_args['item_name_' . $i ] = stripslashes_deep( html_entity_decode( wp_strip_all_tags( $fee['label'] ), ENT_COMPAT, 'UTF-8' ) );
+					$paypal_args['item_name_' . $i ] = stripslashes_deep( html_entity_decode( wp_strip_all_tags( $fee['label']."\n"."slkk" ), ENT_COMPAT, 'UTF-8' ) );
 					$paypal_args['quantity_' . $i ]  = '1';
 					$paypal_args['amount_' . $i ]    = rpress_sanitize_amount( $fee['amount'] );
 					$i++;
 				} else if ( empty( $fee['fooditem_id'] ) ) {
 
-					// This is a negative fee (discount) not assigned to a specific Download
+					// This is a negative fee (discount) not assigned to a specific fooditem
 					$discounted_amount += abs( $fee['amount'] );
 				}
 			}
@@ -316,7 +312,6 @@ function rpress_process_paypal_purchase( $purchase_data ) {
 
 		// Fix for some sites that encode the entities
 		$paypal_redirect = str_replace( '&amp;', '&', $paypal_redirect );
-
 		// Redirect to PayPal
 		wp_redirect( $paypal_redirect );
 		exit;
@@ -333,9 +328,19 @@ add_action( 'rpress_gateway_paypal', 'rpress_process_paypal_purchase' );
  */
 function rpress_listen_for_paypal_ipn() {
 	// Regular PayPal IPN
-	if ( isset( $_GET['rpress-listener'] ) && $_GET['rpress-listener'] == 'IPN' ) {
+	if ( isset( $_GET['rpress-listener'] ) && 'ipn' === strtolower( $_GET['rpress-listener'] ) ) {
 
 		rpress_debug_log( 'PayPal IPN endpoint loaded' );
+
+		/**
+		 * This is necessary to delay execution of PayPal PDT and to avoid a race condition causing the order status
+		 * updates to be triggered twice.
+		 *
+		 */
+		$token = rpress_get_option( 'paypal_identity_token' );
+		if ( $token ) {
+			sleep( 5 );
+		}
 
 		do_action( 'rpress_verify_paypal_ipn' );
 	}
@@ -359,13 +364,6 @@ function rpress_process_paypal_ipn() {
 	// Set initial post data to empty string
 	$post_data = '';
 
-	// Fallback just in case post_max_size is lower than needed
-	if ( ini_get( 'allow_url_fopen' ) ) {
-		$post_data = file_get_contents( 'php://input' );
-	} else {
-		// If allow_url_fopen is not enabled, then make sure that post_max_size is large enough
-		ini_set( 'post_max_size', '12M' );
-	}
 	// Start the encoded data collection with notification command
 	$encoded_data = 'cmd=_notify-validate';
 
@@ -382,8 +380,9 @@ function rpress_process_paypal_ipn() {
 			// Nothing to do
 			return;
 		} else {
+			$data = rpress_sanitize_array( $_POST );
 			// Loop through each POST
-			foreach ( $_POST as $key => $value ) {
+			foreach ( $data as $key => $value ) {
 				// Encode the value and append the data
 				$encoded_data .= $arg_separator . "$key=" . urlencode( $value );
 			}
@@ -410,7 +409,7 @@ function rpress_process_paypal_ipn() {
 	 *
 	 * Allows filtering the IPN Verification data that PayPal passes back in via IPN with PayPal Standard
 	 *
-	 * @since 1.0
+	 * @since 2.8.13
 	 *
 	 * @param array $data      The PayPal Web Accept Data
 	 */
@@ -421,7 +420,7 @@ function rpress_process_paypal_ipn() {
 	if ( ! rpress_get_option( 'disable_paypal_verification' ) ) {
 
 		// Validate the IPN
-
+		$host = rpress_is_test_mode() ? 'sandbox.paypal.com' : 'www.paypal.com';
 		$remote_post_vars = array(
 			'method'      => 'POST',
 			'timeout'     => 45,
@@ -429,11 +428,11 @@ function rpress_process_paypal_ipn() {
 			'httpversion' => '1.1',
 			'blocking'    => true,
 			'headers'     => array(
-				'host'         => 'www.paypal.com',
+				'host'         => $host,
 				'connection'   => 'close',
 				'content-type' => 'application/x-www-form-urlencoded',
 				'post'         => '/cgi-bin/webscr HTTP/1.1',
-				'user-agent'   => 'RPRESS IPN Verification/' . RP_VERSION . '; ' . get_bloginfo( 'url' )
+				'user-agent'   => 'RPRESS IPN Verification/' . RPRESS_VERSION . '; ' . get_bloginfo( 'url' )
 
 			),
 			'sslverify'   => false,
@@ -500,7 +499,7 @@ add_action( 'rpress_verify_paypal_ipn', 'rpress_process_paypal_ipn' );
 /**
  * Process web accept (one time) payment IPNs
  *
- * @since  1.0.0
+ * @since 1.0
  * @param array   $data IPN Data
  * @return void
  */
@@ -596,6 +595,19 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 
 	}
 
+	if( empty( $customer ) ) {
+
+		$customer = new RPRESS_Customer( $payment->customer_id );
+
+	}
+
+	// Record the payer email on the RPRESS_Customer record if it is different than the email entered on checkout
+	if( ! empty( $data['payer_email'] ) && ! in_array( strtolower( $data['payer_email'] ), array_map( 'strtolower', $customer->emails ) ) ) {
+
+		$customer->add_email( strtolower( $data['payer_email'] ) );
+
+	}
+
 	if ( $payment_status == 'refunded' || $payment_status == 'reversed' ) {
 
 		// Process a refund
@@ -631,7 +643,7 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 
 			rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Transaction ID: %s', 'restropress' ) , $data['txn_id'] ) );
 			rpress_set_payment_transaction_id( $payment_id, $data['txn_id'] );
-			rpress_update_payment_status( $payment_id, 'processing' );
+			rpress_update_payment_status( $payment_id, 'publish' );
 
 		} else if ( 'pending' == $payment_status && isset( $data['pending_reason'] ) ) {
 
@@ -714,7 +726,7 @@ add_action( 'rpress_paypal_web_accept', 'rpress_process_paypal_web_accept_and_ca
 /**
  * Process PayPal IPN Refunds
  *
- * @since  1.0.0
+ * @since 1.0
  * @param array   $data IPN Data
  * @return void
  */
@@ -808,7 +820,7 @@ function rpress_get_paypal_redirect( $ssl_check = false, $ipn = false ) {
 /**
  * Get the image for the PayPal purchase page.
  *
- * @since 1.0.0
+ * @since 1.0
  * @return string
  */
 function rpress_get_paypal_image_url() {
@@ -821,7 +833,7 @@ function rpress_get_paypal_image_url() {
  *
  * This helps address the Race Condition, as detailed in issue #1839
  *
- * @since  1.0.0
+ * @since 1.0
  * @return string
  */
 function rpress_paypal_success_page_content( $content ) {
@@ -860,7 +872,6 @@ add_filter( 'rpress_payment_confirm_paypal', 'rpress_paypal_success_page_content
 /**
  * Mark payment as complete on return from PayPal if a PayPal Identity Token is present.
  *
- *
  * @since 1.0
  * @return void
  */
@@ -882,12 +893,23 @@ function rpress_paypal_process_pdt_on_return() {
 		return;
 	}
 
-	$payment = new RPRESS_Payment( $payment_id );
+	$purchase_session = rpress_get_purchase_session();
+	$payment          = new RPRESS_Payment( $payment_id );
+
+	// If there is no purchase session, don't try and fire PDT.
+	if ( empty( $purchase_session ) ) {
+		return;
+	}
+
+	// Do not fire a PDT verification if the purchase session does not match the payment-id PDT is asking to verify.
+	if ( ! empty( $purchase_session['purchase_key'] ) && $payment->key !== $purchase_session['purchase_key'] ) {
+		return;
+	}
 
 	if( $token && ! empty( $_GET['tx'] ) && $payment->ID > 0 ) {
 
 		// An identity token has been provided in settings so let's immediately verify the purchase
-
+		$host = rpress_is_test_mode() ? 'sandbox.paypal.com' : 'www.paypal.com';
 		$remote_post_vars = array(
 			'method'      => 'POST',
 			'timeout'     => 45,
@@ -895,7 +917,7 @@ function rpress_paypal_process_pdt_on_return() {
 			'httpversion' => '1.1',
 			'blocking'    => true,
 			'headers'     => array(
-				'host'         => 'www.paypal.com',
+				'host'         => $host,
 				'connection'   => 'close',
 				'content-type' => 'application/x-www-form-urlencoded',
 				'post'         => '/cgi-bin/webscr HTTP/1.1',
@@ -915,17 +937,95 @@ function rpress_paypal_process_pdt_on_return() {
 		$debug_args['body']['at'] = str_pad( substr( $debug_args['body']['at'], -6 ), strlen( $debug_args['body']['at'] ), '*', STR_PAD_LEFT );
 		rpress_debug_log( 'Attempting to verify PayPal payment with PDT. Args: ' . print_r( $debug_args, true ) );
 
-		$request = wp_remote_post( rpress_get_paypal_redirect( true, true ), $remote_post_vars );
+		rpress_debug_log( 'Sending PDT Verification request to ' . rpress_get_paypal_redirect() );
+
+		$request = wp_remote_post( rpress_get_paypal_redirect(), $remote_post_vars );
 
 		if ( ! is_wp_error( $request ) ) {
 
 			$body = wp_remote_retrieve_body( $request );
 
-			if( false !== strpos( $body, 'SUCCESS' ) ) {
+			// parse the data
+			$lines = explode( "\n", trim( $body ) );
+			$data  = array();
+			if ( strcmp ( $lines[0], "SUCCESS" ) == 0 ) {
 
-				// Purchase verified, set to completed
-				$payment->status = 'publish';
+				for ( $i = 1; $i < count( $lines ); $i++ ) {
+					$parsed_line = explode( "=", $lines[ $i ],2 );
+					$data[ urldecode( $parsed_line[0] ) ] = urldecode( $parsed_line[1] );
+				}
+
+				if ( isset( $data['mc_gross'] ) ) {
+
+					$total = $data['mc_gross'];
+
+				} else if ( isset( $data['payment_gross'] ) ) {
+
+					$total = $data['payment_gross'];
+
+				} else if ( isset( $_REQUEST['amt'] ) ) {
+
+					$total = sanitize_text_field( $_REQUEST['amt'] ) ;
+
+				} else {
+
+					$total = null;
+
+				}
+
+				if ( is_null( $total ) ) {
+
+					rpress_debug_log( 'Attempt to verify PayPal payment with PDT failed due to payment total missing' );
+					$payment->add_note( __( 'Payment could not be verified while validating PayPal PDT. Missing payment total fields.', 'restropress' ) );
+					$payment->status = 'pending';
+
+				} elseif ( (float) $total < (float) $payment->total ) {
+
+					/**
+					 * Here we account for payments that are less than the expected results only. There are times that
+					 * PayPal will sometimes round and have $0.01 more than the amount. The goal here is to protect store owners
+					 * from getting paid less than expected.
+					 */
+					rpress_debug_log( 'Attempt to verify PayPal payment with PDT failed due to payment total discrepancy' );
+					$payment->add_note( sprintf( __( 'Payment failed while validating PayPal PDT. Amount expected: %f. Amount Received: %f', 'restropress' ), $payment->total, $data['payment_gross'] ) );
+					$payment->status = 'failed';
+
+				} else {
+
+					// Verify the status
+					switch( strtolower( $data['payment_status'] ) ) {
+
+						case 'completed':
+							$payment->status = 'publish';
+							break;
+
+						case 'failed':
+							$payment->status = 'failed';
+							break;
+
+						default:
+							$payment->status = 'pending';
+							break;
+
+					}
+
+				}
+
 				$payment->transaction_id = sanitize_text_field( $_GET['tx'] );
+				$payment->save();
+
+			} elseif ( strcmp ( $lines[0], "FAIL" ) == 0 ) {
+
+				rpress_debug_log( 'Attempt to verify PayPal payment with PDT failed due to PDT failure response: ' . print_r( $body, true ) );
+				$payment->add_note( __( 'Payment failed while validating PayPal PDT.', 'restropress' ) );
+				$payment->status = 'failed';
+				$payment->save();
+
+			} else {
+
+				rpress_debug_log( 'Attempt to verify PayPal payment with PDT met with an unexpected result: ' . print_r( $body, true ) );
+				$payment->add_note( __( 'PayPal PDT encountered an unexpected result, payment set to pending', 'restropress' ) );
+				$payment->status = 'pending';
 				$payment->save();
 
 			}
@@ -943,7 +1043,7 @@ add_action( 'template_redirect', 'rpress_paypal_process_pdt_on_return' );
 /**
  * Given a Payment ID, extract the transaction ID
  *
- * @since  2.1
+ * @since  1.0
  * @param  string $payment_id       Payment ID
  * @return string                   Transaction ID
  */
@@ -966,7 +1066,7 @@ add_filter( 'rpress_get_payment_transaction_id-paypal', 'rpress_paypal_get_payme
 /**
  * Given a transaction ID, generate a link to the PayPal transaction ID details
  *
- * @since 1.0
+ * @since  1.0
  * @param  string $transaction_id The Transaction ID
  * @param  int    $payment_id     The payment ID for this transaction
  * @return string                 A link to the PayPal transaction details
@@ -986,7 +1086,7 @@ add_filter( 'rpress_payment_details_transaction_id-paypal', 'rpress_paypal_link_
 /**
  * Shows checkbox to automatically refund payments made in PayPal.
  *
- * @since  1.0.0.0
+ * @since  1.0
  *
  * @param int $payment_id The current payment ID.
  * @return void
@@ -1017,7 +1117,7 @@ function rpress_paypal_refund_admin_js( $payment_id = 0 ) {
 			$('select[name=rpress-payment-status]').change(function() {
 				if ( 'refunded' == $(this).val() ) {
 					$(this).parent().parent().append('<input type="checkbox" id="rpress-paypal-refund" name="rpress-paypal-refund" value="1" style="margin-top:0">');
-					$(this).parent().parent().append('<label for="rpress-paypal-refund"><?php echo $label; ?></label>');
+					$(this).parent().parent().append('<label for="rpress-paypal-refund"><?php echo esc_html( $label ); ?></label>');
 				} else {
 					$('#rpress-paypal-refund').remove();
 					$('label[for="rpress-paypal-refund"]').remove();
@@ -1032,7 +1132,7 @@ add_action( 'rpress_view_order_details_before', 'rpress_paypal_refund_admin_js',
 /**
  * Possibly refunds a payment made with PayPal Standard or PayPal Express.
  *
- * @since  1.0.0.0
+ * @since  1.0
  *
  * @param int $payment_id The current payment ID.
  * @return void
@@ -1074,7 +1174,7 @@ add_action( 'rpress_pre_refund_payment', 'rpress_maybe_refund_paypal_purchase', 
 /**
  * Refunds a purchase made via PayPal.
  *
- * @since  1.0.0.0
+ * @since  1.0
  *
  * @param object|int $payment The payment ID or object to refund.
  * @return void

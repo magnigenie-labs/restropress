@@ -36,17 +36,6 @@ function rpress_manual_payment( $purchase_data ) {
 	/*
 	* Purchase data comes in like this
 	*
-	$purchase_data = array(
-		'fooditems' => array of fooditem IDs,
-		'price' => total price of cart contents,
-		'purchase_key' =>  // Random key
-		'user_email' => $user_email,
-		'date' => date('Y-m-d H:i:s'),
-		'user_id' => $user_id,
-		'post_data' => $_POST,
-		'user_info' => array of user's information and used discount code
-		'cart_details' => array of cart details,
-	);
 	*/
 
 	$payment_data = array(

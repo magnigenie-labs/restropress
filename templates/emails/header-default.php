@@ -66,27 +66,27 @@ $heading    = RPRESS()->emails->get_heading();
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title><?php echo get_bloginfo( 'name' ); ?></title>
+		<title><?php echo esc_html( get_bloginfo( 'name' ) ); ?></title>
 	</head>
-	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="<?php echo $body; ?>">
-		<div style="<?php echo $wrapper; ?>">
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="<?php echo wp_kses_post( $body ); ?>">
+		<div style="<?php echo wp_kses_post( $wrapper ); ?>">
 		<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
 			<tr>
 				<td align="center" valign="top">
 					<?php if( ! empty( $header_img ) ) : ?>
 						<div id="template_header_image">
-							<?php echo '<p style="margin-top:0;"><img src="' . esc_url( $header_img ) . '" alt="' . get_bloginfo( 'name' ) . '" /></p>'; ?>
+							<?php echo '<p style="margin-top:0;"><img src="' . esc_url( $header_img ) . '" alt="' . esc_html( get_bloginfo( 'name' ) ) . '" /></p>'; ?>
 						</div>
 					<?php endif; ?>
-					<table border="0" cellpadding="0" cellspacing="0" width="520" id="template_container" style="<?php echo $template_container; ?>">
+					<table border="0" cellpadding="0" cellspacing="0" width="520" id="template_container" style="<?php echo wp_kses_post( $template_container ); ?>">
 						<?php if ( ! empty ( $heading ) ) : ?>
 							<tr>
 								<td align="center" valign="top">
 									<!-- Header -->
-									<table border="0" cellpadding="0" cellspacing="0" width="520" id="template_header" style="<?php echo $template_header; ?>" bgcolor="#ffffff">
+									<table border="0" cellpadding="0" cellspacing="0" width="520" id="template_header" style="<?php echo wp_kses_post( $template_header ) ; ?>" bgcolor="#ffffff">
 										<tr>
 											<td>
-												<h1 style="<?php echo $header_content_h1; ?>"><?php echo $heading; ?></h1>
+												<h1 style="<?php echo wp_kses_post( $header_content_h1 ); ?>"><?php echo wp_kses_post( $heading ); ?></h1>
 											</td>
 										</tr>
 									</table>
@@ -99,9 +99,9 @@ $heading    = RPRESS()->emails->get_heading();
 								<!-- Body -->
 								<table border="0" cellpadding="0" cellspacing="0" width="520" id="template_body">
 									<tr>
-										<td valign="top" style="<?php echo $body_content; ?>">
+										<td valign="top" style="<?php echo wp_kses_post( $body_content ); ?>">
 											<!-- Content -->
 											<table border="0" cellpadding="20" cellspacing="0" width="100%">
 												<tr>
 													<td valign="top">
-														<div style="<?php echo $body_content_inner; ?>">
+														<div style="<?php echo wp_kses_post( $body_content_inner ); ?>">

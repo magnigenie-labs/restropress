@@ -711,7 +711,6 @@ function rpress_set_cart_discount( $code = '' ) {
 		$discounts = array();
 		$discounts[] = $code;
 	}
-
 	RPRESS()->session->set( 'cart_discounts', implode( '|', $discounts ) );
 
 	do_action( 'rpress_cart_discount_set', $code, $discounts );
@@ -838,6 +837,8 @@ function rpress_get_cart_discounts_html( $discounts = false ) {
 		$discount_id = rpress_get_discount_id_by_code( $discount );
 		$rate        = rpress_format_discount_rate( rpress_get_discount_type( $discount_id ), rpress_get_discount_amount( $discount_id ) );
 
+		$discount_value = rpress_get_discount_value( $discount );
+
 		$remove_url  = add_query_arg(
 			array(
 				'rpress_action'    => 'remove_cart_discount',
@@ -847,11 +848,16 @@ function rpress_get_cart_discounts_html( $discounts = false ) {
 			rpress_get_checkout_uri()
 		);
 
-		$discount_html = '';
-		$discount_html .= "<span class=\"rpress_discount\">\n";
-			$discount_html .= "<span class=\"rpress_discount_rate\">$discount&nbsp;&ndash;&nbsp;$rate</span>\n";
-			$discount_html .= "<a href=\"$remove_url\" data-code=\"$discount\" class=\"rpress_discount_remove\"></a>\n";
-		$discount_html .= "</span>\n";
+		$coupon_text = esc_html( 'Coupon', 'restropress' );
+
+        $discount_html = '';
+        $discount_html .= "<span class=\"rpress_discount\">";
+        $discount_html .= "<span class=\"rpress_discount_label\">$coupon_text:&nbsp;$discount</span>";
+        $discount_html .= "<span class=\"rpress_discount_rate_wrap\">";
+        $discount_html .= "<span class=\"rpress_discount_rate\">$discount_value</span>\n";
+        $discount_html .= "<a href=\"$remove_url\" data-code=\"$discount\" class=\"rpress_discount_remove\"></a>\n";
+        $discount_html .= "</span>";
+        $discount_html .= "</span>\n";
 
 		$html .= apply_filters( 'rpress_get_cart_discount_html', $discount_html, $discount, $rate, $remove_url );
 	}
@@ -888,7 +894,7 @@ function rpress_remove_cart_discount() {
 
 	do_action( 'rpress_pre_remove_cart_discount', absint( $_GET['discount_id'] ) );
 
-	rpress_unset_cart_discount( urldecode( $_GET['discount_code'] ) );
+	rpress_unset_cart_discount( urldecode( sanitize_text_field( $_GET['discount_code'] ) ) );
 
 	do_action( 'rpress_post_remove_cart_discount', absint( $_GET['discount_id'] ) );
 
@@ -946,7 +952,7 @@ function rpress_listen_for_cart_discount() {
 		return;
 	}
 
-	$code = preg_replace('/[^a-zA-Z0-9-_]+/', '', $_REQUEST['discount'] );
+	$code = preg_replace('/[^a-zA-Z0-9-_]+/', '', sanitize_text_field( $_REQUEST['discount'] ) );
 
 	RPRESS()->session->set( 'preset_discount', $code );
 }
@@ -1137,4 +1143,72 @@ function rpress_set_discounts_cache( $hash, $data ) {
  */
 function rpress_filter_discount_code_cleanup( $sql ) {
 	return str_replace( "'mt1.meta_value'", "mt1.meta_value", $sql );
+}
+
+/**
+ * Get applied discount value
+ *
+ * @since  2.5.6
+ * @param  $discount_code
+ * @return discount value.
+ */
+function rpress_get_discount_value( $discount, $type = 'currency' ) {
+    if ( empty( $discount ) ) {
+        return;
+    }
+   	$discount  			 	= rpress_get_discount_by_code( $discount );
+    $discount_type 		 	= rpress_get_discount_type( $discount->ID );
+    $subtotal 		 		= rpress_get_cart_subtotal();
+    $discount_amount 	 	= rpress_get_discount_amount( $discount->ID );
+    $is_not_global 			= rpress_is_discount_not_global(  $discount->ID );
+   	$included_food_items 	= rpress_get_discount_product_reqs( $discount->ID );
+   	$cart_item_ids 		 	= wp_list_pluck( rpress_get_cart_content_details(), 'id' );
+   	$cart_item_quanties  	= wp_list_pluck( rpress_get_cart_content_details(), 'quantity' );
+   	$cart_item_number 		= wp_list_pluck( rpress_get_cart_content_details(), 'item_number' );
+   	$cart_item_addon_items 	= array_column( $cart_item_number, 'addon_items' );
+
+   	$discount_value 	 = 0 ;
+
+   	if( $subtotal < $discount_amount && 'flat' === $discount_type ) $discount_amount = $subtotal;
+
+    if( !$is_not_global || empty( $included_food_items ) )
+    	if( 'flat' === $discount_type ){
+    		$discount_value = $discount_amount;
+    	}else{
+    		$discount_value = ( $discount_amount / 100 ) * $subtotal;
+    	}
+    else{
+    	foreach ( $cart_item_ids as $key => $cart_item_id ) {
+    		if ( ! empty( $included_food_items ) ) {
+    			if ( in_array( $cart_item_id, $included_food_items ) ) {
+
+    				$price_id 			= rpress_get_cart_item_price_id( $cart_item_id );
+    				$price 				= rpress_get_cart_item_price( $cart_item_id, [], $price_id, '' );
+    				$quantity 			= $cart_item_quanties[$key];
+    				$item_cart_price 	= $price * $quantity;
+					$cart_item_addon_price = 0.00;
+    				if ( !empty( $cart_item_addon_items[$key] ) ) {
+    					
+        				foreach ( $cart_item_addon_items[$key] as $key => $cart_item_addon_item ) {
+        					$cart_item_addon_price = (float)$cart_item_addon_price + (float)$cart_item_addon_item['price'];
+        				}
+    				}
+
+    				$cart_item_addon_price = $cart_item_addon_price * $quantity;
+
+    				$item_cart_total_price = $cart_item_addon_price + $item_cart_price;
+    				if ( $discount_type == 'percent' ) {
+    					$discount_value += ( $discount_amount / 100 ) * $item_cart_total_price;
+				    } else {
+				        $discount_value = $discount_amount;
+				    }
+
+    			}
+    		}
+    	}
+    }
+    $discount_value = apply_filters( 'rpress_get_discount_price_value', $discount_value );
+    $discount_price_value = rpress_currency_filter( rpress_format_amount( $discount_value ) );
+    
+	return $type == 'currency' ? $discount_price_value : $discount_value;
 }

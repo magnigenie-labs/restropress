@@ -3,7 +3,7 @@
  * RestroPress setup
  *
  * @package RestroPress
- * @since   2.0.4
+ * @since   2.2
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -21,11 +21,11 @@ final class RestroPress {
    *
    * @var string
    */
-  public $version = '2.0.5';
+  public $version = '2.8.5';
 
 	/**
    * The single instance of the class.
-   * 
+   *
    * @var RestroPress
    * @since  1.0
    */
@@ -125,7 +125,7 @@ final class RestroPress {
 	public static function instance() {
     if ( ! isset( self::$instance ) && ! ( self::$instance instanceof RestroPress ) ) {
       self::$instance = new RestroPress;
-      
+
       add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
 
       self::$instance->includes();
@@ -150,7 +150,7 @@ final class RestroPress {
 	 * @since 2.1
 	 */
 	public function __clone() {
-		wc_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'restropress' ), '2.3.4' );
+		_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'restropress' ), '2.6.1' );
 	}
 
 	/**
@@ -159,7 +159,7 @@ final class RestroPress {
 	 * @since 2.1
 	 */
 	public function __wakeup() {
-		wc_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'restropress' ), '2.3.4' );
+		_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'restropress' ), '2.6.1' );
 	}
 
 
@@ -175,9 +175,9 @@ final class RestroPress {
 	 * Define RPRESS Constants.
 	 */
 	private function define_constants() {
-    $this->define( 'RP_VERSION', $this->version );
-    $this->define( 'RP_PLUGIN_DIR', plugin_dir_path( RP_PLUGIN_FILE ) );
-    $this->define( 'RP_PLUGIN_URL', plugin_dir_url( RP_PLUGIN_FILE ) );
+		$this->define( 'RP_VERSION', $this->version );
+		$this->define( 'RP_PLUGIN_DIR', plugin_dir_path( RP_PLUGIN_FILE ) );
+		$this->define( 'RP_PLUGIN_URL', plugin_dir_url( RP_PLUGIN_FILE ) );
 		$this->define( 'CAL_GREGORIAN', 1 );
 	}
 
@@ -194,23 +194,43 @@ final class RestroPress {
 	}
 
 	/**
+	* What type of request is this?
+	*
+	* @param  string $type admin, ajax, cron or frontend.
+	* @return bool
+	*/
+	private function is_request( $type ) {
+		switch ( $type ) {
+			case 'admin':
+		    	return is_admin();
+		  	case 'ajax':
+		    	return defined( 'DOING_AJAX' );
+		  	case 'cron':
+		    	return defined( 'DOING_CRON' );
+		  	case 'frontend':
+		    	return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
+		}
+	}
+
+	/**
 	 * Include required core files used in admin and on the frontend.
 	 */
 	public function includes() {
+
 		global $rpress_options;
 
 		require_once RP_PLUGIN_DIR . 'includes/admin/settings/register-settings.php';
 
 		$rpress_options = rpress_get_settings();
 
-		require_once RP_PLUGIN_DIR . 'includes/actions.php';
+		require_once RP_PLUGIN_DIR . 'includes/rp-actions.php';
 
 		if( file_exists( RP_PLUGIN_DIR . 'includes/deprecated-functions.php' ) ) {
 			require_once RP_PLUGIN_DIR . 'includes/deprecated-functions.php';
 		}
-		require_once RP_PLUGIN_DIR . 'includes/ajax-functions.php';
 
-
+		require_once RP_PLUGIN_DIR . 'includes/rp-ajax-functions.php';
+		include_once RP_PLUGIN_DIR . 'includes/class-rpress-ajax.php';
 		require_once RP_PLUGIN_DIR . 'includes/template-functions.php';
 		require_once RP_PLUGIN_DIR . 'includes/template-actions.php';
 		require_once RP_PLUGIN_DIR . 'includes/checkout/template.php';
@@ -224,10 +244,10 @@ final class RestroPress {
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-db-customer-meta.php';
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-customer-query.php';
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-customer.php';
+		require_once RP_PLUGIN_DIR . 'includes/class-rpress-print-receipts.php';
+		require_once RP_PLUGIN_DIR . 'includes/class-rpress-license-handler.php';
 
-		// Discount Class
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-discount.php';
-
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-fooditem.php';
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-cache-helper.php';
 
@@ -241,8 +261,7 @@ final class RestroPress {
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-roles.php';
 		require_once RP_PLUGIN_DIR . 'includes/country-functions.php';
 		require_once RP_PLUGIN_DIR . 'includes/formatting.php';
-		require_once RP_PLUGIN_DIR . 'includes/misc-functions.php';
-		require_once RP_PLUGIN_DIR . 'includes/mime-types.php';
+		require_once RP_PLUGIN_DIR . 'includes/rp-core-functions.php';
 		require_once RP_PLUGIN_DIR . 'includes/gateways/actions.php';
 		require_once RP_PLUGIN_DIR . 'includes/gateways/functions.php';
 
@@ -253,20 +272,21 @@ final class RestroPress {
 		require_once RP_PLUGIN_DIR . 'includes/gateways/paypal-standard.php';
 		require_once RP_PLUGIN_DIR . 'includes/gateways/manual.php';
 
-
 		//Add frontend discount functionality
 		require_once RP_PLUGIN_DIR . 'includes/discount-functions.php';
+
+		require_once RP_PLUGIN_DIR . 'includes/admin/orders/actions.php';
 		require_once RP_PLUGIN_DIR . 'includes/payments/functions.php';
 		require_once RP_PLUGIN_DIR . 'includes/payments/actions.php';
 		require_once RP_PLUGIN_DIR . 'includes/payments/class-payment-stats.php';
 		require_once RP_PLUGIN_DIR . 'includes/payments/class-payments-query.php';
 		require_once RP_PLUGIN_DIR . 'includes/payments/class-rpress-payment.php';
 		require_once RP_PLUGIN_DIR . 'includes/fooditem-functions.php';
-		require_once RP_PLUGIN_DIR . 'includes/scripts.php';
 		require_once RP_PLUGIN_DIR . 'includes/post-types.php';
 		require_once RP_PLUGIN_DIR . 'includes/plugin-compatibility.php';
 		require_once RP_PLUGIN_DIR . 'includes/emails/class-rpress-emails.php';
 		require_once RP_PLUGIN_DIR . 'includes/emails/class-rpress-email-tags.php';
+    	require_once RP_PLUGIN_DIR . 'includes/emails/email-tags.php';
 		require_once RP_PLUGIN_DIR . 'includes/emails/functions.php';
 		require_once RP_PLUGIN_DIR . 'includes/emails/template.php';
 		require_once RP_PLUGIN_DIR . 'includes/emails/actions.php';
@@ -276,17 +296,33 @@ final class RestroPress {
 		require_once RP_PLUGIN_DIR . 'includes/tax-functions.php';
 		require_once RP_PLUGIN_DIR . 'includes/process-purchase.php';
 		require_once RP_PLUGIN_DIR . 'includes/login-register.php';
-		require_once RP_PLUGIN_DIR . 'includes/shortcodes.php';
-		require_once RP_PLUGIN_DIR . 'includes/admin/tracking.php'; // Must be loaded on frontend to ensure cron runs
+		// Must be loaded on frontend to ensure cron runs
+		require_once RP_PLUGIN_DIR . 'includes/admin/tracking.php';
 		require_once RP_PLUGIN_DIR . 'includes/privacy-functions.php';
+		require_once RP_PLUGIN_DIR . 'includes/shortcodes.php';
 
-		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+		/**
+		 * Migrating 3.0 Features to 2.x
+		 *
+		 * @since 2.4.2
+		 */
+		include_once RP_PLUGIN_DIR . 'includes/class-rpress-shortcodes.php';
+		include_once RP_PLUGIN_DIR . 'includes/shortcodes/class-shortcode-fooditems.php';
+
+		if ( $this->is_request( 'admin' ) || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+
+			/**
+			* Migrating 3.0 Features to 2.x
+			*
+			* @since 2.4.2
+			*/
+			include_once RP_PLUGIN_DIR . 'includes/admin/includes-rp-admin.php';
+
 			require_once RP_PLUGIN_DIR . 'includes/admin/add-ons.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/admin-actions.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/class-rpress-notices.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/admin-pages.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/dashboard-widgets.php';
-			require_once RP_PLUGIN_DIR . 'includes/admin/upload-functions.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/fooditems/dashboard-columns.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/customers/customers.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/customers/customer-functions.php';
@@ -294,7 +330,7 @@ final class RestroPress {
 			require_once RP_PLUGIN_DIR . 'includes/admin/fooditems/metabox.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/fooditems/contextual-help.php';
 
-			//Add admin discount codes
+			// Add admin discount codes
 			require_once RP_PLUGIN_DIR . 'includes/admin/discounts/discount-actions.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/discounts/discount-codes.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/import/import-actions.php';
@@ -311,40 +347,34 @@ final class RestroPress {
 			require_once RP_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/settings/contextual-help.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/tools.php';
-			require_once RP_PLUGIN_DIR . 'includes/admin/delivery-options.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/plugins.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/upgrades/upgrade-functions.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/upgrades/upgrades.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/class-rpress-heartbeat.php';
 			require_once RP_PLUGIN_DIR . 'includes/admin/tools/tools-actions.php';
+		}
 
-		} else {
-			require_once RP_PLUGIN_DIR . 'includes/process-fooditem.php';
-			require_once RP_PLUGIN_DIR . 'includes/theme-compatibility.php';
+		if ( $this->is_request( 'frontend' ) ) {
+			$this->frontend_includes();
 		}
 
 		require_once RP_PLUGIN_DIR . 'includes/class-rpress-register-meta.php';
 		require_once RP_PLUGIN_DIR . 'includes/install.php';
-
-		require_once RP_PLUGIN_DIR . 'includes/rpress-functions.php';
-
-		//Addon License Functions
-		require_once RP_PLUGIN_DIR . 'includes/rpress-license.php';
-
 	}
 
+	/**
+	* Include required frontend files.
+	*/
+	public function frontend_includes() {
+		include_once RP_PLUGIN_DIR . 'includes/class-rpress-frontend-scripts.php';
+	}
 
 	/**
 	 * Load Localisation files.
 	 *
 	 * Note: the first-loaded translation file overrides any following ones if the same translation is present.
-	 *
-	 * Locales found in:
-	 *      - WP_LANG_DIR/rpress/rpress-LOCALE.mo
-	 *      - WP_LANG_DIR/plugins/rpress-LOCALE.mo
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain( 'restropress', false, dirname( plugin_basename( RP_PLUGIN_FILE ) ). '/languages/' );
 	}
-
 }

@@ -19,23 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function rpress_fooditems_contextual_help() {
-	$screen = get_current_screen();
 
+	$screen = get_current_screen();
 
 	if ( $screen->id != 'fooditem' )
 		return;
-
-
-	$screen->add_help_tab( array(
-		'id'	    => 'rpress-fooditem-configuration',
-		'title'	    => sprintf( __( '%s Settings', 'restropress' ), rpress_get_label_singular() ),
-		'content'	=>
-			'<p>' . __( '<strong>File RestroPress Limit</strong> - Define how many times customers are allowed to fooditem their purchased files. Leave at 0 for unlimited. Resending the purchase receipt will permit the customer one additional fooditem if their limit has already been reached.', 'restropress' ) . '</p>' .
-
-			'<p>' . __( '<strong>Accounting Options</strong> - If enabled, define an individual SKU or product number for this fooditem.', 'restropress' ) . '</p>' .
-
-			'<p>' . __( '<strong>Button Options</strong> - Disable the automatic output of the purchase button. If disabled, no button will be added to the fooditem page unless the <code>[purchase_link]</code> shortcode is used.', 'restropress' ) . '</p>'
-	) );
 
 	$screen->add_help_tab( array(
 		'id'	    => 'rpress-fooditem-prices',
@@ -45,16 +33,6 @@ function rpress_fooditems_contextual_help() {
 
 			'<p>' . __( '<strong>Enable multi-option purchases</strong> - By enabling multi-option purchases customers can add multiple variable price items to their cart at once.', 'restropress' ) . '</p>'
 	) );
-
-	$screen->add_help_tab( array(
-		'id'	    => 'rpress-fooditem-files',
-		'title'	    => sprintf( __( '%s Files', 'restropress' ), rpress_get_label_singular() ),
-		'content'	=>
-			'<p>' . __( '<strong>Product Type Options</strong> - Choose a default product type or a bundle. Bundled products automatically include access to other fooditem&#39;s files when purchased.', 'restropress' ) . '</p>' .
-
-			'<p>' . __( '<strong>File RestroPress</strong> - Define fooditem file names and their respective file URL. Multiple files can be assigned to a single price, or variable prices.', 'restropress' ) . '</p>'
-	) );
-
 
 	$screen->add_help_tab( array(
 		'id'	    => 'rpress-product-notes',
@@ -80,7 +58,7 @@ function rpress_fooditems_contextual_help() {
 				<li><strong>color</strong> - <em>' . implode( '</em> | <em>', $colors ) . '</em></li>
 				<li><strong>class</strong> - ' . __( 'One or more custom CSS classes you want applied to the button.', 'restropress' ) . '</li>
 			</ul>' .
-			'<p>' . sprintf( __( 'For more information, see <a href="%s">using Shortcodes</a> on the WordPress.org Codex or <a href="%s">RestroPress Documentation</a>', 'restropress' ), 'https://codex.wordpress.org/Shortcode', 'http://docs.fooditems.com/article/229-purchaselink' ) . '</p>'
+			'<p>' . sprintf( __( 'For more information, see <a href="%s">using Shortcodes</a> on the WordPress.org Codex or <a href="%s">RestroPress Documentation</a>', 'restropress' ), 'https://codex.wordpress.org/Shortcode', 'http://docs.restropress.com/article/229-purchaselink' ) . '</p>'
 	) );
 
 	/**

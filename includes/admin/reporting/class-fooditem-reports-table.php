@@ -91,7 +91,7 @@ class RPRESS_Fooditem_Reports_Table extends WP_List_Table {
 			case 'average_earnings' :
 				return rpress_currency_filter( rpress_format_amount( $item[ $column_name ] ) );
 			case 'details' :
-				return '<a href="' . admin_url( 'edit.php?post_type=fooditem&page=rpress-reports&view=fooditems&fooditem-id=' . $item['ID'] ) . '">' . __( 'View Detailed Report', 'restropress' ) . '</a>';
+				return '<a href="' . admin_url( 'admin.php?page=rpress-reports&view=fooditems&fooditem-id=' . $item['ID'] ) . '">' . __( 'View Detailed Report', 'restropress' ) . '</a>';
 			default:
 				return $item[ $column_name ];
 		}
@@ -200,8 +200,8 @@ class RPRESS_Fooditem_Reports_Table extends WP_List_Table {
 	 */
 	public function query() {
 
-		$orderby  = isset( $_GET['orderby'] ) ? $_GET['orderby'] : 'title';
-		$order    = isset( $_GET['order'] ) ? $_GET['order'] : 'DESC';
+		$orderby  = isset( $_GET['orderby'] ) ? sanitize_text_field( $_GET['orderby'] )  : 'title';
+		$order    = isset( $_GET['order'] ) ? sanitize_text_field( $_GET['order'] ) : 'DESC';
 		$category = $this->get_category();
 
 		$args = array(

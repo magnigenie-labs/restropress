@@ -22,12 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_settings_contextual_help() {
 	$screen = get_current_screen();
 
-	if ( $screen->id != 'fooditem_page_rpress-settings' )
+	if ( $screen->id != 'restropress_page_rpress-settings' )
 		return;
 
 	$screen->set_help_sidebar(
 		'<p><strong>' . sprintf( __( 'For more information:', 'restropress' ) . '</strong></p>' .
-		'<p>' . sprintf( __( 'Visit the <a href="%s">documentation</a> on the RestroPress website.', 'restropress' ), esc_url( 'http://restropress.magnigenie.com' ) ) ) . '</p>' 
+		'<p>' . sprintf( __( 'Visit the <a href="%s">documentation</a> on the RestroPress website.', 'restropress' ), esc_url( 'https://docs.restropress.com/' ) ) ) . '</p>'
 	);
 
 	$screen->add_help_tab( array(
@@ -78,4 +78,4 @@ function rpress_settings_contextual_help() {
 
 	do_action( 'rpress_settings_contextual_help', $screen );
 }
-add_action( 'load-fooditem_page_rpress-settings', 'rpress_settings_contextual_help' );
+add_action( 'load-restropress_page_rpress-settings', 'rpress_settings_contextual_help' );

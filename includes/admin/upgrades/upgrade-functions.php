@@ -14,8 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 
-
-
 /**
  * Triggers all upgrade functions
  *
@@ -319,14 +317,6 @@ function rpress_v20_upgrades() {
 	} else {
 		$rpress_options['enable_cart_saving'] = '1';
 	}
-
-	// Properly set the register / login form options based on whether they were enabled previously - #2076
-	if( ! empty( $rpress_options['show_register_form'] ) ) {
-		$rpress_options['show_register_form'] = 'both';
-	} else {
-		$rpress_options['show_register_form'] = 'none';
-	}
-
 
 	$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_wp_session_expires_%' AND option_value+0 < 2789308218" );
 
@@ -658,7 +648,7 @@ function rpress_v23_upgrade_payment_taxes() {
 		}
 	}
 
-	$total = isset( $_GET['total'] ) ? absint( $_GET['total'] ) : false;
+	$total = isset( $_GET['total'] ) ? absint( $_GET['total'] ): false;
 	if ( empty( $total ) || $total <= 1 ) {
 		$total_sql = "SELECT COUNT(ID) as total_payments FROM $wpdb->posts WHERE post_type = 'rpress_payment'";
 		$results   = $wpdb->get_row( $total_sql, 0 );
@@ -996,7 +986,7 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 	if ( $migration_complete ) : ?>
 		<div id="rpress-sl-migration-complete" class="notice notice-success">
 			<p>
-				<?php _e( '<strong>Migration complete:</strong> You have already completed the update to the file fooditem logs.', 'restropress' ); ?>
+				<?php esc_html_e( '<strong>Migration complete:</strong> You have already completed the update to the file fooditem logs.', 'restropress' ); ?>
 			</p>
 		</div>
 		<?php return; ?>
@@ -1004,15 +994,15 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 
 	<div id="rpress-migration-ready" class="notice notice-success" style="display: none;">
 		<p>
-			<?php _e( '<strong>Database Upgrade Complete:</strong> All database upgrades have been completed.', 'restropress' ); ?>
+			<?php esc_html_e( '<strong>Database Upgrade Complete:</strong> All database upgrades have been completed.', 'restropress' ); ?>
 			<br /><br />
-			<?php _e( 'You may now leave this page.', 'restropress' ); ?>
+			<?php esc_html_e( 'You may now leave this page.', 'restropress' ); ?>
 		</p>
 	</div>
 
 	<div id="rpress-migration-nav-warn" class="notice notice-info">
 		<p>
-			<?php _e( '<strong>Important:</strong> Please leave this screen open and do not navigate away until the process completes.', 'restropress' ); ?>
+			<?php esc_html_e( '<strong>Important:</strong> Please leave this screen open and do not navigate away until the process completes.', 'restropress' ); ?>
 		</p>
 	</div>
 
@@ -1055,12 +1045,12 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 	<div class="metabox-holder">
 		<div class="postbox">
 			<h2 class="hndle">
-				<span><?php _e( 'Update file fooditem logs', 'restropress' ); ?></span>
+				<span><?php esc_html_e( 'Update file fooditem logs', 'restropress' ); ?></span>
 				<span class="dashicons dashicons-yes"></span>
 			</h2>
 			<div class="inside migrate-file-fooditem-logs-control">
 				<p>
-					<?php _e( 'This will update the file fooditem logs to remove some <abbr title="Personally Identifiable Information">PII</abbr> and make file fooditem counts more accurate.', 'restropress' ); ?>
+					<?php esc_html_e( 'This will update the file fooditem logs to remove some <abbr title="Personally Identifiable Information">PII</abbr> and make file fooditem counts more accurate.', 'restropress' ); ?>
 				</p>
 				<form method="post" id="rpress-fix-file-fooditem-logs-form" class="rpress-export-form rpress-import-export-form">
 			<span class="step-instructions-wrapper">
@@ -1069,11 +1059,11 @@ function rpress_upgrade_render_update_file_fooditem_log_data() {
 
 				<?php if ( ! $migration_complete ) : ?>
 					<span class="rpress-migration allowed">
-						<input type="submit" id="migrate-logs-submit" value="<?php _e( 'Update File Download Logs', 'restropress' ); ?>" class="button-primary"/>
+						<input type="submit" id="migrate-logs-submit" value="<?php esc_html_e( 'Update File Download Logs', 'restropress' ); ?>" class="button-primary"/>
 					</span>
 				<?php else: ?>
-					<input type="submit" disabled="disabled" id="migrate-logs-submit" value="<?php _e( 'Update File Download Logs', 'restropress' ); ?>" class="button-secondary"/>
-					&mdash; <?php _e( 'File fooditem logs have already been updated.', 'restropress' ); ?>
+					<input type="submit" disabled="disabled" id="migrate-logs-submit" value="<?php esc_html_e( 'Update File Download Logs', 'restropress' ); ?>" class="button-secondary"/>
+					&mdash; <?php esc_html_e( 'File fooditem logs have already been updated.', 'restropress' ); ?>
 				<?php endif; ?>
 
 				<input type="hidden" name="rpress-export-class" value="RPRESS_File_Download_Log_Migration" />

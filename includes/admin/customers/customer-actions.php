@@ -241,7 +241,7 @@ function rpress_add_customer_email( $args ) {
 
 		} else {
 
-			$redirect = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer_id . '&rpress-message=email-added' );
+			$redirect = admin_url( 'admin.php?page=rpress-customers&view=overview&id=' . $customer_id . '&rpress-message=email-added' );
 			$output = array(
 				'success'  => true,
 				'message'  => __( 'Email successfully added to customer.', 'restropress' ),
@@ -296,15 +296,15 @@ function rpress_remove_customer_email() {
 		return false;
 	}
 
-	$nonce = $_GET['_wpnonce'];
+	$nonce = sanitize_text_field( $_GET['_wpnonce'] );
 	if ( ! wp_verify_nonce( $nonce, 'rpress-remove-customer-email' ) ) {
 		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	$customer = new RPRESS_Customer( $_GET['id'] );
-	if ( $customer->remove_email( $_GET['email'] ) ) {
+	$customer = new RPRESS_Customer( absint( $_GET['id'] ) );
+	if ( $customer->remove_email( sanitize_email( $_GET['email'] ) ) ) {
 
-		$url = add_query_arg( 'rpress-message', 'email-removed', admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer->id ) );
+		$url = add_query_arg( 'rpress-message', 'email-removed', admin_url( 'admin.php?page=rpress-customers&view=overview&id=' . $customer->id ) );
 
 		$user          = wp_get_current_user();
 		$user_login    = ! empty( $user->user_login ) ? $user->user_login : 'RPRESSBot';
@@ -312,7 +312,7 @@ function rpress_remove_customer_email() {
 		$customer->add_note( $customer_note );
 
 	} else {
-		$url = add_query_arg( 'rpress-message', 'email-remove-failed', admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer->id ) );
+		$url = add_query_arg( 'rpress-message', 'email-remove-failed', admin_url( 'admin.php?page=rpress-customers&view=overview&id=' . $customer->id ) );
 	}
 
 	wp_safe_redirect( $url );
@@ -340,15 +340,15 @@ function rpress_set_customer_primary_email() {
 		return false;
 	}
 
-	$nonce = $_GET['_wpnonce'];
+	$nonce = sanitize_text_field( $_GET['_wpnonce'] );
 	if ( ! wp_verify_nonce( $nonce, 'rpress-set-customer-primary-email' ) ) {
 		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	$customer = new RPRESS_Customer( $_GET['id'] );
-	if ( $customer->set_primary_email( $_GET['email'] ) ) {
+	$customer = new RPRESS_Customer( absint( $_GET['id'] ) );
+	if ( $customer->set_primary_email( sanitize_email( $_GET['email'] ) ) ){
 
-		$url = add_query_arg( 'rpress-message', 'primary-email-updated', admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer->id ) );
+		$url = add_query_arg( 'rpress-message', 'primary-email-updated', admin_url( 'admin.php?page=rpress-customers&view=overview&id=' . $customer->id ) );
 
 		$user          = wp_get_current_user();
 		$user_login    = ! empty( $user->user_login ) ? $user->user_login : 'RPRESSBot';
@@ -356,7 +356,7 @@ function rpress_set_customer_primary_email() {
 		$customer->add_note( $customer_note );
 
 	} else {
-		$url = add_query_arg( 'rpress-message', 'primary-email-failed', admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer->id ) );
+		$url = add_query_arg( 'rpress-message', 'primary-email-failed', admin_url( 'admin.php?page=rpress-customers&view=overview&id=' . $customer->id ) );
 	}
 
 	wp_safe_redirect( $url );
@@ -418,7 +418,7 @@ function rpress_customer_save_note( $args ) {
 		ob_end_clean();
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			echo $output;
+			echo wp_kses_data( $output );
 			exit;
 		}
 
@@ -464,7 +464,7 @@ function rpress_customer_delete( $args ) {
 	}
 
 	if ( rpress_get_errors() ) {
-		wp_redirect( admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer_id ) );
+		wp_redirect( admin_url( 'admin.php?page=rpress-customers&view=overview&id=' . $customer_id ) );
 		exit;
 	}
 
@@ -497,19 +497,19 @@ function rpress_customer_delete( $args ) {
 
 			}
 
-			$redirect = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&rpress-message=customer-deleted' );
+			$redirect = admin_url( 'admin.php?page=rpress-customers&rpress-message=customer-deleted' );
 
 		} else {
 
 			rpress_set_error( 'rpress-customer-delete-failed', __( 'Error deleting customer', 'restropress' ) );
-			$redirect = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=delete&id=' . $customer_id );
+			$redirect = admin_url( 'admin.php?page=rpress-customers&view=delete&id=' . $customer_id );
 
 		}
 
 	} else {
 
 		rpress_set_error( 'rpress-customer-delete-invalid-id', __( 'Invalid Customer ID', 'restropress' ) );
-		$redirect = admin_url( 'edit.php?post_type=fooditem&page=rpress-customers' );
+		$redirect = admin_url( 'admin.php?page=rpress-customers' );
 
 	}
 
@@ -598,17 +598,17 @@ function rpress_process_admin_user_verification() {
 		return false;
 	}
 
-	$nonce = $_GET['_wpnonce'];
+	$nonce = sanitize_text_field( $_GET['_wpnonce'] );
 	if ( ! wp_verify_nonce( $nonce, 'rpress-verify-user' ) ) {
 		wp_die( __( 'Nonce verification failed', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	$customer = new RPRESS_Customer( $_GET['id'] );
+	$customer = new RPRESS_Customer( absint( $_GET['id'] ) );
 	rpress_set_user_to_verified( $customer->user_id );
 
-	$url = add_query_arg( 'rpress-message', 'user-verified', admin_url( 'edit.php?post_type=fooditem&page=rpress-customers&view=overview&id=' . $customer->id ) );
+	$url = add_query_arg( 'rpress-message', 'user-verified', admin_url( 'admin.php?page=rpress-customers&view=overview&id=' . $customer->id ) );
 
-	wp_safe_redirect( $url );
+	wp_safe_redirect( esc_url( $url ) );
 	exit;
 
 }

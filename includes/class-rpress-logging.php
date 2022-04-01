@@ -198,7 +198,7 @@ class RPRESS_Logging {
 		// Set log meta, if any
 		if ( $log_id && ! empty( $log_meta ) ) {
 			foreach ( (array) $log_meta as $key => $meta ) {
-				update_post_meta( $log_id, '_rpress_log_' . sanitize_key( $key ), $meta );
+				update_post_meta( $log_id, '_rpress_log_' . sanitize_text_field( $key ), $meta );
 			}
 		}
 
@@ -233,7 +233,7 @@ class RPRESS_Logging {
 		if ( $log_id && ! empty( $log_meta ) ) {
 			foreach ( (array) $log_meta as $key => $meta ) {
 				if ( ! empty( $meta ) )
-					update_post_meta( $log_id, '_rpress_log_' . sanitize_key( $key ), $meta );
+					update_post_meta( $log_id, '_rpress_log_' . sanitize_text_field( $key ), $meta );
 			}
 		}
 
@@ -251,6 +251,7 @@ class RPRESS_Logging {
 	 * @return mixed array if logs were found, false otherwise
 	 */
 	public function get_connected_logs( $args = array() ) {
+
 		$defaults = array(
 			'post_type'      => 'rpress_log',
 			'posts_per_page' => 20,

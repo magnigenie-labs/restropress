@@ -23,14 +23,16 @@ function rpress_checkout_form() {
 	$form_action  = esc_url( rpress_get_checkout_uri( 'payment-mode=' . $payment_mode ) );
 
 	ob_start();
-		echo '<div id="rpress_checkout_wrap">';
+		echo '<div id="rpress_checkout_wrap" class="rpress-section">';
 		if ( rpress_get_cart_contents() || rpress_cart_has_fees() ) :
 
 			rpress_checkout_cart();
-?>
-			<div id="rpress_checkout_form_wrap" class="rp-col-lg-9 rp-col-md-9 rp-col-sm-12 rp-col-xs-12 ">
+			$login_method = rpress_get_option( 'login_method', 'login_guest' );
+			$login_class = is_user_logged_in() || $login_method == 'guest_only' ? 'rpress-logged-in' : 'rpress-logged-out';
+			?>
+			<div id="rpress_checkout_form_wrap" class="rp-col-lg-8 rp-col-md-8 rp-col-sm-12 rp-col-xs-12 <?php echo esc_attr( $login_class ); ?>">
 				<?php do_action( 'rpress_before_purchase_form' ); ?>
-				<form id="rpress_purchase_form" class="rpress_form" action="<?php echo $form_action; ?>" method="POST">
+				<form id="rpress_purchase_form" class="rpress_form" action="<?php echo esc_attr( $form_action ); ?>" method="POST">
 					<?php
 					/**
 					 * Hooks in at the top of the checkout form
@@ -39,15 +41,9 @@ function rpress_checkout_form() {
 					 */
 					do_action( 'rpress_checkout_form_top' );
 
-					if ( rpress_is_ajax_disabled() && ! empty( $_REQUEST['payment-mode'] ) ) {
+					do_action( 'rpress_purchase_form' );
 
-						do_action( 'rpress_purchase_form' );
-					} elseif ( rpress_show_gateways() ) {
-
-						do_action( 'rpress_payment_mode_select'  );
-					} else {
-						do_action( 'rpress_purchase_form' );
-					}
+					do_action( 'rpress_payment_mode_select'  );
 
 					/**
 					 * Hooks in at the bottom of the checkout form
@@ -76,33 +72,37 @@ function rpress_checkout_form() {
 /**
  * Renders the user account link
  *
- * @since  1.0.8
+ * @since  2.5
  * @return string
  */
-//add_action('rpress_purchase_form_top', 'rpress_checkout_user_account');
-function rpress_checkout_user_account() {
-	ob_start(); ?>
-		<div class="rpress-checkout-account-wrap rpress-checkout-block">
-			<h6><?php echo __('Account', 'restropress'); ?></h6>
-			<p><?php echo __('To place your order now, log into your existing account or signup', 'restropress'); ?></p>
-			<div class="clear"></div>
-			<div class="rpress-checkout-button-actions">
-				<div class="rp-col-md-4 rp-col-lg-4 rp-col-sm-6">
-					<span><?php echo __('Have an account?', 'restropress'); ?></span>
-					<a href="<?php echo esc_url( add_query_arg( 'login', 1 ) ); ?>" class="rpress_checkout_register_login rp-col-md-12 rp-col-lg-12 rp-col-sm-12" data-action="checkout_login"><?php _e( 'Login', 'restropress' ); ?></a>
-				</div>
-				<div class="rp-col-md-5 rp-col-lg-5 rp-col-sm-6">
-					<span><?php echo __('New to RestroPress?', 'restropress'); ?></span>
-					<a href="<?php echo esc_url( remove_query_arg('login') ); ?>" class="rpress_checkout_register_login rp-col-md-12 rp-col-lg-12 rp-col-sm-12" data-action="checkout_register">
-						<?php _e( 'Register', 'restropress' ); if(!rpress_no_guest_checkout()) { echo ' ' . __( 'or checkout as a guest.', 'restropress' ); } ?>
-					</a>
-				</div>
-			</div>
 
+function rpress_checkout_user_account() { ?>
+
+	<fieldset id="rpress_checkout_login_register" class="rpress-checkout-account-wrap rpress-checkout-block">
+		<legend><?php esc_html_e('Account', 'restropress'); ?></legend>
+		<p><?php esc_html_e('To place your order now, log into your existing account or signup now!', 'restropress'); ?></p>
+		<div class="clear"></div>
+		<div class="rpress-checkout-button-actions">
+			<div class="rp-col-md-4 rp-col-lg-4 rp-col-sm-6 rp-col-xs-12">
+				<span><?php esc_html_e('Have an account?', 'restropress'); ?></span>
+				<a href="<?php echo esc_url( add_query_arg( 'login', 1 ) ); ?>" class="rpress_checkout_register_login rpress-submit button rp-col-sm-12" data-action="rpress_checkout_login">
+					<span class="rp-ajax-toggle-text">
+						<?php esc_html_e( 'Login', 'restropress' ); ?>
+					</span>
+				</a>
+			</div>
+			<div class="rp-col-md-8 rp-col-sm-6 rp-col-xs-12">
+				<span><?php echo sprintf( __( 'New to %s?', 'restropress' ), get_bloginfo( 'name' ) ); ?></span>
+				<a href="<?php echo esc_url( remove_query_arg('login') ); ?>" class="rpress_checkout_register_login rpress-submit button" data-action="rpress_checkout_register">
+					<span class="rp-ajax-toggle-text">
+						<?php esc_html_e( 'Register', 'restropress' ); if(!rpress_no_guest_checkout()) { echo ' ' . __( 'or checkout as a guest', 'restropress' ); } ?>
+					</span>
+				</a>
+			</div>
 		</div>
-	<?php
-	echo ob_get_clean();
+	</fieldset> <?php
 }
+add_action('rpress_purchase_login_options', 'rpress_checkout_user_account');
 
 /**
  * Renders the Purchase Form, hooks are provided to add to the purchase form.
@@ -114,7 +114,6 @@ function rpress_checkout_user_account() {
  * @return string
  */
 function rpress_show_purchase_form() {
-	$payment_mode = rpress_get_chosen_gateway();
 
 	/**
 	 * Hooks in at the top of the purchase form
@@ -125,47 +124,15 @@ function rpress_show_purchase_form() {
 
 	if ( rpress_can_checkout() ) {
 
-		do_action( 'rpress_purchase_form_before_register_login' );
+		$login_method = rpress_get_option( 'login_method', 'login_guest' );
 
-		$show_register_form = rpress_get_option( 'show_register_form', 'none' ) ;
-		if( ( $show_register_form === 'registration' || ( $show_register_form === 'both' && ! isset( $_GET['login'] ) ) ) && ! is_user_logged_in() ) : ?>
-			<div id="rpress_checkout_login_register">
-				<?php do_action( 'rpress_purchase_form_register_fields' ); ?>
-			</div>
-		<?php elseif( ( $show_register_form === 'login' || ( $show_register_form === 'both' && isset( $_GET['login'] ) ) ) && ! is_user_logged_in() ) : ?>
-			<div id="rpress_checkout_login_register">
-				<?php do_action( 'rpress_purchase_form_login_fields' ); ?>
-			</div>
-		<?php endif; ?>
-
-		<?php if( ( ! isset( $_GET['login'] ) && is_user_logged_in() ) || ! isset( $show_register_form ) || 'none' === $show_register_form || 'login' === $show_register_form ) {
+		if( ! is_user_logged_in() && $login_method != 'guest_only' ){
+			do_action( 'rpress_purchase_form_before_register_login' );
+			do_action( 'rpress_purchase_login_options' );
+		}
+		else{
 			do_action( 'rpress_purchase_form_after_user_info' );
 		}
-
-		/**
-		 * Hooks in before Credit Card Form
-		 *
-		 * @since  1.0.0
-		 */
-		do_action( 'rpress_purchase_form_before_cc_form' );
-
-		if( rpress_get_cart_total() > 0 ) {
-
-			// Load the credit card form and allow gateways to load their own if they wish
-			if ( has_action( 'rpress_' . $payment_mode . '_cc_form' ) ) {
-				do_action( 'rpress_' . $payment_mode . '_cc_form' );
-			} else {
-				do_action( 'rpress_cc_form' );
-			}
-
-		}
-
-		/**
-		 * Hooks in after Credit Card Form
-		 *
-		 * @since  1.0.0
-		 */
-		do_action( 'rpress_purchase_form_after_cc_form' );
 
 	} else {
 		// Can't checkout
@@ -181,6 +148,36 @@ function rpress_show_purchase_form() {
 }
 add_action( 'rpress_purchase_form', 'rpress_show_purchase_form' );
 
+function rpress_show_cc_form() {
+
+	$payment_mode = rpress_get_chosen_gateway();
+
+	/**
+	 * Hooks in before Credit Card Form
+	 *
+	 * @since  1.0.0
+	 */
+	do_action( 'rpress_purchase_form_before_cc_form' );
+
+	if( rpress_get_cart_total() > 0 ) {
+
+		// Load the credit card form and allow gateways to load their own if they wish
+		if ( has_action( 'rpress_' . $payment_mode . '_cc_form' ) ) {
+			do_action( 'rpress_' . $payment_mode . '_cc_form' );
+		} else {
+			do_action( 'rpress_cc_form' );
+		}
+	}
+
+	/**
+	 * Hooks in after Credit Card Form
+	 *
+	 * @since  1.0.0
+	 */
+	do_action( 'rpress_purchase_form_after_cc_form' );
+
+}
+
 /**
  * Shows the User Info fields in the Personal Info box, more fields can be added
  * via the hooks provided.
@@ -190,7 +187,7 @@ add_action( 'rpress_purchase_form', 'rpress_show_purchase_form' );
  */
 function rpress_user_info_fields() {
 	$customer = RPRESS()->session->get( 'customer' );
-	$customer = wp_parse_args( $customer, array( 'first_name' => '', 'last_name' => '', 'email' => '' ) );
+	$customer = wp_parse_args( $customer, array( 'first_name' => '', 'last_name' => '', 'email' => '', 'phone'	=> '' ) );
 
 	if( is_user_logged_in() ) {
 		$user_data = get_userdata( get_current_user_id() );
@@ -203,52 +200,94 @@ function rpress_user_info_fields() {
 			}
 
 		}
+		$customer['phone']	= get_user_meta( get_current_user_id(), '_rpress_phone', true );
 	}
 	$customer = array_map( 'sanitize_text_field', $customer );
 	?>
 	<fieldset id="rpress_checkout_user_info">
 		<legend><?php echo apply_filters( 'rpress_checkout_personal_info_text', esc_html__( 'Personal Info', 'restropress' ) ); ?></legend>
-		<?php do_action( 'rpress_purchase_form_before_email' ); ?>
-		<p id="rpress-email-wrap">
-			<label class="rpress-label" for="rpress-email">
-				<?php esc_html_e( 'Email Address', 'restropress' ); ?>
-				<?php if( rpress_field_is_required( 'rpress_email' ) ) { ?>
-					<span class="rpress-required-indicator">*</span>
-				<?php } ?>
-			</label>
-			<span class="rpress-description" id="rpress-email-description"><?php esc_html_e( 'We will send the purchase receipt to this address.', 'restropress' ); ?></span>
-			<input class="rpress-input required" type="email" name="rpress_email" placeholder="<?php esc_html_e( 'Email address', 'restropress' ); ?>" id="rpress-email" value="<?php echo esc_attr( $customer['email'] ); ?>" aria-describedby="rpress-email-description"<?php if( rpress_field_is_required( 'rpress_email' ) ) {  echo ' required '; } ?>/>
-		</p>
-		<?php do_action( 'rpress_purchase_form_after_email' ); ?>
-		<p id="rpress-first-name-wrap">
+		<p id="rpress-first-name-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label class="rpress-label" for="rpress-first">
 				<?php esc_html_e( 'First Name', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'rpress_first' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description" id="rpress-first-description"><?php esc_html_e( 'We will use this to personalize your account experience.', 'restropress' ); ?></span>
 			<input class="rpress-input required" type="text" name="rpress_first" placeholder="<?php esc_html_e( 'First Name', 'restropress' ); ?>" id="rpress-first" value="<?php echo esc_attr( $customer['first_name'] ); ?>"<?php if( rpress_field_is_required( 'rpress_first' ) ) {  echo ' required '; } ?> aria-describedby="rpress-first-description" />
 		</p>
-		<p id="rpress-last-name-wrap">
+		<p id="rpress-last-name-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label class="rpress-label" for="rpress-last">
 				<?php esc_html_e( 'Last Name', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'rpress_last' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description" id="rpress-last-description"><?php esc_html_e( 'We will use this as well to personalize your account experience.', 'restropress' ); ?></span>
 			<input class="rpress-input<?php if( rpress_field_is_required( 'rpress_last' ) ) { echo ' required'; } ?>" type="text" name="rpress_last" id="rpress-last" placeholder="<?php esc_html_e( 'Last Name', 'restropress' ); ?>" value="<?php echo esc_attr( $customer['last_name'] ); ?>"<?php if( rpress_field_is_required( 'rpress_last' ) ) {  echo ' required '; } ?> aria-describedby="rpress-last-description"/>
 		</p>
+		<?php do_action( 'rpress_purchase_form_before_email' ); ?>
+		<p id="rpress-email-wrap" class="rp-col-md-6 rp-col-sm-12">
+			<label class="rpress-label" for="rpress-email">
+				<?php esc_html_e( 'Email Address', 'restropress' ); ?>
+				<?php if( rpress_field_is_required( 'rpress_email' ) ) { ?>
+					<span class="rpress-required-indicator">*</span>
+				<?php } ?>
+			</label>
+			<input class="rpress-input required" type="email" name="rpress_email" placeholder="<?php esc_html_e( 'Email address', 'restropress' ); ?>" id="rpress-email" value="<?php echo esc_attr( $customer['email'] ); ?>" aria-describedby="rpress-email-description"<?php if( rpress_field_is_required( 'rpress_email' ) ) {  echo ' required '; } ?>/>
+		</p>
+		<?php do_action( 'rpress_purchase_form_after_email' ); ?>
+		<p id="rpress-phone-wrap" class="rp-col-md-6 rp-col-sm-12">
+      <label class="rpress-label" for="rpress-phone"><?php esc_html_e('Phone Number', 'restropress'); ?><span class="rpress-required-indicator">*</span></label>
+      <input class="rpress-input required" type="text" name="rpress_phone" id="rpress-phone" value="<?php echo esc_attr( $customer['phone'] ); ?>" placeholder="<?php esc_html_e('Phone Number', 'restropress'); ?>" maxlength="16" required />
+    </p>
 		<?php do_action( 'rpress_purchase_form_user_info' ); ?>
 		<?php do_action( 'rpress_purchase_form_user_info_fields' ); ?>
 	</fieldset>
-
 	<?php
 }
-add_action( 'rpress_purchase_form_after_user_info', 'rpress_user_info_fields' );
+add_action( 'rpress_purchase_form_after_user_info', 'rpress_user_info_fields', 10 );
 add_action( 'rpress_register_fields_before', 'rpress_user_info_fields' );
 
+function rpress_order_details_fields(){
+?>
+<!-- Order details fields -->
+<fieldset id="rpress_checkout_order_details">
+	<legend><?php echo apply_filters( 'rpress_checkout_order_details_text', esc_html__( 'Order Details', 'restropress' ) ); ?></legend>
+	<?php do_action( 'rpress_purchase_form_before_order_details' ); ?>
+
+	<?php
+		if( rpress_selected_service() == 'delivery' ) :
+			$checkout_fields = rp_get_checkout_fields();
+
+			foreach ( $checkout_fields as $key => $checkout_field ) {
+				$hidden = $checkout_field['is_hidden'] ? 'hidden' : '';
+				?>
+					<p class="rp-col-md-6 rp-col-sm-12 rpress-checkout-fields <?php echo esc_attr( $hidden ); ?> <?php echo esc_attr( $checkout_field['id'] ); ?>">
+						<label class="<?php echo esc_attr( $checkout_field['id'] ); ?>" for="<?php echo esc_attr( $checkout_field['id'] ); ?>">
+							<?php echo esc_html( $checkout_field['title'], 'restropress' ) ?>
+							<?php
+								if ( $checkout_field['is_required'] ) {
+									echo '<span class="rpress-required-indicator">*</span>';
+								}
+							?>
+						</label>
+						<input class="rpress-input" type="text" name="<?php echo esc_attr( $checkout_field['name'] ); ?>" id="<?php echo esc_attr( $checkout_field['id'] ); ?>" placeholder="<?php echo esc_attr( $checkout_field['placeholder'] ) ?>" value="<?php echo esc_attr( $checkout_field['value'] ); ?>" />
+					</p>
+				<?php
+			}
+		endif;
+	?>
+	<p id="rpress-order-note" class="rp-col-sm-12">
+    <label class="rpress-order-note" for="rpress-order-note"><?php echo sprintf( __('%s Instructions', 'restropress'), rpress_selected_service( 'label' ) ); ?></label>
+    <textarea name="rpress_order_note" class="rpress-input" rows="5" cols="8" placeholder="<?php echo sprintf( __('Add %s instructions (optional)', 'restropress'), strtolower( rpress_selected_service( 'label' ) ) ); ?>"></textarea>
+  </p>
+	<?php do_action( 'rpress_purchase_form_order_details' ); ?>
+	<?php do_action( 'rpress_purchase_form_order_details_fields' ); ?>
+</fieldset>
+
+<?php
+}
+add_action( 'rpress_purchase_form_after_user_info', 'rpress_order_details_fields', 11 );
+add_action( 'rpress_register_fields_after', 'rpress_order_details_fields' );
 /**
  * Renders the credit card info form.
  *
@@ -261,7 +300,7 @@ function rpress_get_cc_form() {
 	<?php do_action( 'rpress_before_cc_fields' ); ?>
 
 	<fieldset id="rpress_cc_fields" class="rpress-do-validate">
-		<legend><?php _e( 'Credit Card Info', 'restropress' ); ?></legend>
+		<legend><?php esc_html_e( 'Credit Card Info', 'restropress' ); ?></legend>
 		<?php if( is_ssl() ) : ?>
 			<div id="rpress_secure_site_wrapper">
 				<span class="padlock">
@@ -269,46 +308,46 @@ function rpress_get_cc_form() {
 						<path d="M5 12h8V9c0-2.203-1.797-4-4-4S5 6.797 5 9v3zm13 1.5v9c0 .828-.672 1.5-1.5 1.5h-15C.672 24 0 23.328 0 22.5v-9c0-.828.672-1.5 1.5-1.5H2V9c0-3.844 3.156-7 7-7s7 3.156 7 7v3h.5c.828 0 1.5.672 1.5 1.5z"/>
 					</svg>
 				</span>
-				<span><?php _e( 'This is a secure SSL encrypted payment.', 'restropress' ); ?></span>
+				<span><?php esc_html_e( 'This is a secure SSL encrypted payment.', 'restropress' ); ?></span>
 			</div>
 		<?php endif; ?>
-		<p id="rpress-card-number-wrap">
+		<p id="rpress-card-number-wrap rp-col-sm-12">
 			<label for="card_number" class="rpress-label">
-				<?php _e( 'Card Number', 'restropress' ); ?>
+				<?php esc_html_e( 'Card Number', 'restropress' ); ?>
 				<span class="rpress-required-indicator">*</span>
 				<span class="card-type"></span>
 			</label>
-			<span class="rpress-description"><?php _e( 'The (typically) 16 digits on the front of your credit card.', 'restropress' ); ?></span>
-			<input type="tel" pattern="^[0-9!@#$%^&* ]*$" autocomplete="off" name="card_number" id="card_number" class="card-number rpress-input required" placeholder="<?php _e( 'Card number', 'restropress' ); ?>" />
+			<span class="rpress-description"><?php esc_html_e( 'The (typically) 16 digits on the front of your credit card.', 'restropress' ); ?></span>
+			<input type="tel" pattern="^[0-9!@#$%^&* ]*$" autocomplete="off" name="card_number" id="card_number" class="card-number rpress-input required" placeholder="<?php esc_html_e( 'Card number', 'restropress' ); ?>" />
 		</p>
-		<p id="rpress-card-cvc-wrap">
+		<p id="rpress-card-cvc-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="card_cvc" class="rpress-label">
-				<?php _e( 'CVC', 'restropress' ); ?>
+				<?php esc_html_e( 'CVC', 'restropress' ); ?>
 				<span class="rpress-required-indicator">*</span>
 			</label>
-			<span class="rpress-description"><?php _e( 'The 3 digit (back) or 4 digit (front) value on your card.', 'restropress' ); ?></span>
-			<input type="tel" pattern="[0-9]{3,4}" size="4" maxlength="4" autocomplete="off" name="card_cvc" id="card_cvc" class="card-cvc rpress-input required" placeholder="<?php _e( 'Security code', 'restropress' ); ?>" />
+			<span class="rpress-description"><?php esc_html_e( 'The 3 digit (back) or 4 digit (front) value on your card.', 'restropress' ); ?></span>
+			<input type="tel" pattern="[0-9]{3,4}" size="4" maxlength="4" autocomplete="off" name="card_cvc" id="card_cvc" class="card-cvc rpress-input required" placeholder="<?php esc_html_e( 'Security code', 'restropress' ); ?>" />
 		</p>
-		<p id="rpress-card-name-wrap">
+		<p id="rpress-card-name-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="card_name" class="rpress-label">
-				<?php _e( 'Name on the Card', 'restropress' ); ?>
+				<?php esc_html_e( 'Name on the Card', 'restropress' ); ?>
 				<span class="rpress-required-indicator">*</span>
 			</label>
-			<span class="rpress-description"><?php _e( 'The name printed on the front of your credit card.', 'restropress' ); ?></span>
-			<input type="text" autocomplete="off" name="card_name" id="card_name" class="card-name rpress-input required" placeholder="<?php _e( 'Card name', 'restropress' ); ?>" />
+			<span class="rpress-description"><?php esc_html_e( 'The name printed on the front of your credit card.', 'restropress' ); ?></span>
+			<input type="text" autocomplete="off" name="card_name" id="card_name" class="card-name rpress-input required" placeholder="<?php esc_html_e( 'Card name', 'restropress' ); ?>" />
 		</p>
 		<?php do_action( 'rpress_before_cc_expiration' ); ?>
-		<p class="card-expiration">
+		<p class="card-expiration rp-col-sm-12">
 			<label for="card_exp_month" class="rpress-label">
-				<?php _e( 'Expiration (MM/YY)', 'restropress' ); ?>
+				<?php esc_html_e( 'Expiration (MM/YY)', 'restropress' ); ?>
 				<span class="rpress-required-indicator">*</span>
 			</label>
-			<span class="rpress-description"><?php _e( 'The date your credit card expires, typically on the front of the card.', 'restropress' ); ?></span>
-			<select id="card_exp_month" name="card_exp_month" class="card-expiry-month rpress-select rpress-select-small required">
+			<span class="rpress-description"><?php esc_html_e( 'The date your credit card expires, typically on the front of the card.', 'restropress' ); ?></span>
+			<select id="card_exp_month" name="card_exp_month" class="card-expiry-month rpress-select rpress-select-small required rp-form-control">
 				<?php for( $i = 1; $i <= 12; $i++ ) { echo '<option value="' . $i . '">' . sprintf ('%02d', $i ) . '</option>'; } ?>
 			</select>
 			<span class="exp-divider"> / </span>
-			<select id="card_exp_year" name="card_exp_year" class="card-expiry-year rpress-select rpress-select-small required">
+			<select id="card_exp_year" name="card_exp_year" class="card-expiry-year rpress-select rpress-select-small required rp-form-control">
 				<?php for( $i = date('Y'); $i <= date('Y') + 30; $i++ ) { echo '<option value="' . $i . '">' . substr( $i, 2 ) . '</option>'; } ?>
 			</select>
 		</p>
@@ -373,57 +412,57 @@ function rpress_default_cc_address_fields() {
 
 	ob_start(); ?>
 	<fieldset id="rpress_cc_address" class="cc-address">
-		<legend><?php _e( 'Billing Details', 'restropress' ); ?></legend>
+		<legend><?php esc_html_e( 'Billing Details', 'restropress' ); ?></legend>
 		<?php do_action( 'rpress_cc_billing_top' ); ?>
-		<p id="rpress-card-address-wrap">
+		<p id="rpress-card-address-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="card_address" class="rpress-label">
-				<?php _e( 'Billing Address', 'restropress' ); ?>
+				<?php esc_html_e( 'Billing Address', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'card_address' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description"><?php _e( 'The primary billing address for your credit card.', 'restropress' ); ?></span>
-			<input type="text" id="card_address" name="card_address" class="card-address rpress-input<?php if( rpress_field_is_required( 'card_address' ) ) { echo ' required'; } ?>" placeholder="<?php _e( 'Address line 1', 'restropress' ); ?>" value="<?php echo $customer['address']['line1']; ?>"<?php if( rpress_field_is_required( 'card_address' ) ) {  echo ' required '; } ?>/>
+			<span class="rpress-description"><?php esc_html_e( 'The primary billing address for your credit card.', 'restropress' ); ?></span>
+			<input type="text" id="card_address" name="card_address" class="card-address rpress-input<?php if( rpress_field_is_required( 'card_address' ) ) { echo ' required'; } ?>" placeholder="<?php esc_html_e( 'Address line 1', 'restropress' ); ?>" value="<?php echo esc_attr( $customer['address']['line1'] ); ?>"<?php if( rpress_field_is_required( 'card_address' ) ) {  echo ' required '; } ?>/>
 		</p>
-		<p id="rpress-card-address-2-wrap">
+		<p id="rpress-card-address-2-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="card_address_2" class="rpress-label">
-				<?php _e( 'Billing Address Line 2 (optional)', 'restropress' ); ?>
+				<?php esc_html_e( 'Billing Address Line 2 (optional)', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'card_address_2' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description"><?php _e( 'The suite, apt no, PO box, etc, associated with your billing address.', 'restropress' ); ?></span>
-			<input type="text" id="card_address_2" name="card_address_2" class="card-address-2 rpress-input<?php if( rpress_field_is_required( 'card_address_2' ) ) { echo ' required'; } ?>" placeholder="<?php _e( 'Address line 2', 'restropress' ); ?>" value="<?php echo $customer['address']['line2']; ?>"<?php if( rpress_field_is_required( 'card_address_2' ) ) {  echo ' required '; } ?>/>
+			<span class="rpress-description"><?php esc_html_e( 'The suite, apt no, etc, associated with your billing address.', 'restropress' ); ?></span>
+			<input type="text" id="card_address_2" name="card_address_2" class="card-address-2 rpress-input<?php if( rpress_field_is_required( 'card_address_2' ) ) { echo ' required'; } ?>" placeholder="<?php esc_html_e( 'Address line 2', 'restropress' ); ?>" value="<?php echo esc_attr( $customer['address']['line2'] ); ?>"<?php if( rpress_field_is_required( 'card_address_2' ) ) {  echo ' required '; } ?>/>
 		</p>
-		<p id="rpress-card-city-wrap">
+		<p id="rpress-card-city-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="card_city" class="rpress-label">
-				<?php _e( 'Billing City', 'restropress' ); ?>
+				<?php esc_html_e( 'Billing City', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'card_city' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description"><?php _e( 'The city for your billing address.', 'restropress' ); ?></span>
-			<input type="text" id="card_city" name="card_city" class="card-city rpress-input<?php if( rpress_field_is_required( 'card_city' ) ) { echo ' required'; } ?>" placeholder="<?php _e( 'City', 'restropress' ); ?>" value="<?php echo $customer['address']['city']; ?>"<?php if( rpress_field_is_required( 'card_city' ) ) {  echo ' required '; } ?>/>
+			<span class="rpress-description"><?php esc_html_e( 'The city for your billing address.', 'restropress' ); ?></span>
+			<input type="text" id="card_city" name="card_city" class="card-city rpress-input<?php if( rpress_field_is_required( 'card_city' ) ) { echo ' required'; } ?>" placeholder="<?php esc_html_e( 'City', 'restropress' ); ?>" value="<?php echo esc_attr( $customer['address']['city'] ); ?>"<?php if( rpress_field_is_required( 'card_city' ) ) {  echo ' required '; } ?>/>
 		</p>
-		<p id="rpress-card-zip-wrap">
+		<p id="rpress-card-zip-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="card_zip" class="rpress-label">
-				<?php _e( 'Billing Zip / Postal Code', 'restropress' ); ?>
+				<?php esc_html_e( 'Billing Zip / Postal Code', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'card_zip' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description"><?php _e( 'The zip or postal code for your billing address.', 'restropress' ); ?></span>
-			<input type="text" size="4" id="card_zip" name="card_zip" class="card-zip rpress-input<?php if( rpress_field_is_required( 'card_zip' ) ) { echo ' required'; } ?>" placeholder="<?php _e( 'Zip / Postal Code', 'restropress' ); ?>" value="<?php echo $customer['address']['zip']; ?>"<?php if( rpress_field_is_required( 'card_zip' ) ) {  echo ' required '; } ?>/>
+			<span class="rpress-description"><?php esc_html_e( 'The zip or postal code for your billing address.', 'restropress' ); ?></span>
+			<input type="text" size="4" id="card_zip" name="card_zip" class="card-zip rpress-input<?php if( rpress_field_is_required( 'card_zip' ) ) { echo ' required'; } ?>" placeholder="<?php esc_html_e( 'Zip / Postal Code', 'restropress' ); ?>" value="<?php echo esc_attr( $customer['address']['zip'] ); ?>"<?php if( rpress_field_is_required( 'card_zip' ) ) {  echo ' required '; } ?>/>
 		</p>
-		<p id="rpress-card-country-wrap">
+		<p id="rpress-card-country-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="billing_country" class="rpress-label">
-				<?php _e( 'Billing Country', 'restropress' ); ?>
+				<?php esc_html_e( 'Billing Country', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'billing_country' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description"><?php _e( 'The country for your billing address.', 'restropress' ); ?></span>
-			<select name="billing_country" id="billing_country" class="billing_country rpress-select<?php if( rpress_field_is_required( 'billing_country' ) ) { echo ' required'; } ?>"<?php if( rpress_field_is_required( 'billing_country' ) ) {  echo ' required '; } ?>>
+			<span class="rpress-description"><?php esc_html_e( 'The country for your billing address.', 'restropress' ); ?></span>
+			<select name="billing_country" id="billing_country" class="billing_country rp-form-control <?php if( rpress_field_is_required( 'billing_country' ) ) { echo ' required'; } ?>"<?php if( rpress_field_is_required( 'billing_country' ) ) {  echo ' required '; } ?>>
 				<?php
 
 				$selected_country = rpress_get_shop_country();
@@ -439,24 +478,24 @@ function rpress_default_cc_address_fields() {
 				?>
 			</select>
 		</p>
-		<p id="rpress-card-state-wrap">
+		<p id="rpress-card-state-wrap" class="rp-col-md-6 rp-col-sm-12">
 			<label for="card_state" class="rpress-label">
-				<?php _e( 'Billing State / Province', 'restropress' ); ?>
+				<?php esc_html_e( 'Billing State / Province', 'restropress' ); ?>
 				<?php if( rpress_field_is_required( 'card_state' ) ) { ?>
 					<span class="rpress-required-indicator">*</span>
 				<?php } ?>
 			</label>
-			<span class="rpress-description"><?php _e( 'The state or province for your billing address.', 'restropress' ); ?></span>
+			<span class="rpress-description"><?php esc_html_e( 'The state or province for your billing address.', 'restropress' ); ?></span>
 			<?php
 			$selected_state = rpress_get_shop_state();
-			$states         = rpress_get_shop_states( $selected_country );
+			$states         = rpress_get_states( $selected_country );
 
 			if( ! empty( $customer['address']['state'] ) ) {
 				$selected_state = $customer['address']['state'];
 			}
 
 			if( ! empty( $states ) ) : ?>
-			<select name="card_state" id="card_state" class="card_state rpress-select<?php if( rpress_field_is_required( 'card_state' ) ) { echo ' required'; } ?>">
+			<select name="card_state" id="card_state" class="card_state rp-form-control <?php if( rpress_field_is_required( 'card_state' ) ) { echo ' required'; } ?>">
 				<?php
 					foreach( $states as $state_code => $state ) {
 						echo '<option value="' . $state_code . '"' . selected( $state_code, $selected_state, false ) . '>' . $state . '</option>';
@@ -465,7 +504,7 @@ function rpress_default_cc_address_fields() {
 			</select>
 			<?php else : ?>
 			<?php $customer_state = ! empty( $customer['address']['state'] ) ? $customer['address']['state'] : ''; ?>
-			<input type="text" size="6" name="card_state" id="card_state" class="card_state rpress-input" value="<?php echo esc_attr( $customer_state ); ?>" placeholder="<?php _e( 'State / Province', 'restropress' ); ?>"/>
+			<input type="text" size="6" name="card_state" id="card_state" class="card_state rpress-input" value="<?php echo esc_attr( $customer_state ); ?>" placeholder="<?php esc_html_e( 'State / Province', 'restropress' ); ?>"/>
 			<?php endif; ?>
 		</p>
 		<?php do_action( 'rpress_cc_billing_bottom' ); ?>
@@ -483,7 +522,7 @@ add_action( 'rpress_after_cc_fields', 'rpress_default_cc_address_fields' );
  * @return void
  */
 function rpress_checkout_tax_fields() {
-	if( rpress_cart_needs_tax_address_fields() && rpress_get_cart_total() )
+	if( rpress_cart_needs_tax_address_fields() && rpress_get_cart_total() && rpress_show_billing_fields() )
 		rpress_default_cc_address_fields();
 }
 add_action( 'rpress_purchase_form_after_cc_form', 'rpress_checkout_tax_fields', 999 );
@@ -498,49 +537,36 @@ add_action( 'rpress_purchase_form_after_cc_form', 'rpress_checkout_tax_fields', 
  * @return string
  */
 function rpress_get_register_fields() {
-	$show_register_form = rpress_get_option( 'show_register_form', 'none' );
-
 	ob_start(); ?>
-	<fieldset id="rpress_register_fields">
+	<div id="rpress_register_fields">
 
-		<?php if( $show_register_form == 'both' ) { ?>
-			<p id="rpress-login-account-wrap"><?php _e( 'Already have an account?', 'restropress' ); ?> <a href="<?php echo esc_url( add_query_arg( 'login', 1 ) ); ?>" class="rpress_checkout_register_login" data-action="checkout_login"><?php _e( 'Login', 'restropress' ); ?></a></p>
-		<?php } ?>
+		<p id="rpress-login-account-wrap"><?php esc_html_e( 'Already have an account?', 'restropress' ); ?> <a href="<?php echo esc_url( add_query_arg( 'login', 1 ) ); ?>" class="rpress_checkout_register_login" data-action="rpress_checkout_login">
+			<span class="rp-ajax-toggle-text"><?php esc_html_e( 'Login', 'restropress' ); ?></span></a></p>
 
 		<?php do_action('rpress_register_fields_before'); ?>
 
 		<fieldset id="rpress_register_account_fields">
-			<legend><?php _e( 'Create an account', 'restropress' ); if( !rpress_no_guest_checkout() ) { echo ' ' . __( '(optional)', 'restropress' ); } ?></legend>
+			<legend><?php esc_html_e( 'Create an account', 'restropress' ); if( !rpress_no_guest_checkout() ) { echo ' ' . __( '(optional)', 'restropress' ); } ?></legend>
 			<?php do_action('rpress_register_account_fields_before'); ?>
-			<p id="rpress-user-login-wrap">
+			<p id="rpress-user-login-wrap" class="rp-col-md-6 rp-col-sm-12">
 				<label for="rpress_user_login">
-					<?php _e( 'Username', 'restropress' ); ?>
+					<?php esc_html_e( 'Username', 'restropress' ); ?>
 					<?php if( rpress_no_guest_checkout() ) { ?>
 					<span class="rpress-required-indicator">*</span>
 					<?php } ?>
 				</label>
-				<span class="rpress-description"><?php _e( 'The username you will use to log into your account.', 'restropress' ); ?></span>
-				<input name="rpress_user_login" id="rpress_user_login" class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" type="text" placeholder="<?php _e( 'Username', 'restropress' ); ?>"/>
+				<span class="rpress-description"><?php esc_html_e( 'The username you will use to log into your account.', 'restropress' ); ?></span>
+				<input name="rpress_user_login" id="rpress_user_login" class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" type="text" placeholder="<?php esc_html_e( 'Username', 'restropress' ); ?>"/>
 			</p>
-			<p id="rpress-user-pass-wrap">
+			<p id="rpress-user-pass-wrap" class="rp-col-md-6 rp-col-sm-12">
 				<label for="rpress_user_pass">
-					<?php _e( 'Password', 'restropress' ); ?>
+					<?php esc_html_e( 'Password', 'restropress' ); ?>
 					<?php if( rpress_no_guest_checkout() ) { ?>
 					<span class="rpress-required-indicator">*</span>
 					<?php } ?>
 				</label>
-				<span class="rpress-description"><?php _e( 'The password used to access your account.', 'restropress' ); ?></span>
-				<input name="rpress_user_pass" id="rpress_user_pass" class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" placeholder="<?php _e( 'Password', 'restropress' ); ?>" type="password"/>
-			</p>
-			<p id="rpress-user-pass-confirm-wrap" class="rpress_register_password">
-				<label for="rpress_user_pass_confirm">
-					<?php _e( 'Password Again', 'restropress' ); ?>
-					<?php if( rpress_no_guest_checkout() ) { ?>
-					<span class="rpress-required-indicator">*</span>
-					<?php } ?>
-				</label>
-				<span class="rpress-description"><?php _e( 'Confirm your password.', 'restropress' ); ?></span>
-				<input name="rpress_user_pass_confirm" id="rpress_user_pass_confirm" class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" placeholder="<?php _e( 'Confirm password', 'restropress' ); ?>" type="password"/>
+				<span class="rpress-description"><?php esc_html_e( 'The password used to access your account.', 'restropress' ); ?></span>
+				<input name="rpress_user_pass" id="rpress_user_pass" class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" placeholder="<?php esc_html_e( 'Password', 'restropress' ); ?>" type="password"/>
 			</p>
 			<?php do_action( 'rpress_register_account_fields_after' ); ?>
 		</fieldset>
@@ -552,7 +578,7 @@ function rpress_get_register_fields() {
 		<?php do_action( 'rpress_purchase_form_user_info' ); ?>
 		<?php do_action( 'rpress_purchase_form_user_register_fields' ); ?>
 
-	</fieldset>
+	</div>
 	<?php
 	echo ob_get_clean();
 }
@@ -567,49 +593,45 @@ add_action( 'rpress_purchase_form_register_fields', 'rpress_get_register_fields'
  * @return string
  */
 function rpress_get_login_fields() {
-	$color = rpress_get_option( 'checkout_color', 'red' );
-	$color = ( $color == 'inherit' ) ? '' : $color;
-	$style = rpress_get_option( 'button_style', 'button' );
-
-	$show_register_form = rpress_get_option( 'show_register_form', 'none' );
 
 	ob_start(); ?>
-		<fieldset id="rpress_login_fields">
-			<?php if( $show_register_form == 'both' ) { ?>
-				<p id="rpress-new-account-wrap">
-					<?php _e( 'Need to create an account?', 'restropress' ); ?>
-					<a href="<?php echo esc_url( remove_query_arg('login') ); ?>" class="rpress_checkout_register_login" data-action="checkout_register">
-						<?php _e( 'Register', 'restropress' ); if(!rpress_no_guest_checkout()) { echo ' ' . __( 'or checkout as a guest.', 'restropress' ); } ?>
-					</a>
-				</p>
-			<?php } ?>
-			<?php do_action('rpress_checkout_login_fields_before'); ?>
-			<p id="rpress-user-login-wrap">
-				<label class="rpress-label" for="rpress-username">
-					<?php _e( 'Username or Email', 'restropress' ); ?>
-					<?php if( rpress_no_guest_checkout() ) { ?>
-					<span class="rpress-required-indicator">*</span>
-					<?php } ?>
-				</label>
-				<input class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" type="text" name="rpress_user_login" id="rpress_user_login" value="" placeholder="<?php _e( 'Your username or email address', 'restropress' ); ?>"/>
-			</p>
-			<p id="rpress-user-pass-wrap" class="rpress_login_password">
-				<label class="rpress-label" for="rpress-password">
-					<?php _e( 'Password', 'restropress' ); ?>
-					<?php if( rpress_no_guest_checkout() ) { ?>
-					<span class="rpress-required-indicator">*</span>
-					<?php } ?>
-				</label>
-				<input class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" type="password" name="rpress_user_pass" id="rpress_user_pass" placeholder="<?php _e( 'Your password', 'restropress' ); ?>"/>
-				<?php if( rpress_no_guest_checkout() ) : ?>
-					<input type="hidden" name="rpress-purchase-var" value="needs-to-login"/>
-				<?php endif; ?>
-			</p>
-			<p id="rpress-user-login-submit">
-				<input type="submit" class="rpress-submit button <?php echo $color; ?>" name="rpress_login_submit" value="<?php _e( 'Login', 'restropress' ); ?>"/>
-			</p>
-			<?php do_action('rpress_checkout_login_fields_after'); ?>
-		</fieldset><!--end #rpress_login_fields-->
+
+	<fieldset id="rpress_login_fields">
+		<p id="rpress-new-account-wrap">
+			<?php esc_html_e( 'Need to create an account?', 'restropress' ); ?>
+			<a href="<?php echo esc_url( remove_query_arg('login') ); ?>" class="rpress_checkout_register_login" data-action="rpress_checkout_register">
+				<span class="rp-ajax-toggle-text">
+					<?php esc_html_e( 'Register', 'restropress' ); if(!rpress_no_guest_checkout()) { echo ' ' . __( 'or checkout as a guest', 'restropress' ); } ?>
+				</span>
+			</a>
+		</p>
+		<?php do_action('rpress_checkout_login_fields_before'); ?>
+		<p id="rpress-user-login-wrap" class="rp-col-md-6 rp-col-sm-12">
+			<label class="rpress-label" for="rpress-username">
+				<?php esc_html_e( 'Username or Email', 'restropress' ); ?>
+				<?php if( rpress_no_guest_checkout() ) { ?>
+				<span class="rpress-required-indicator">*</span>
+				<?php } ?>
+			</label>
+			<input class="<?php if(rpress_no_guest_checkout()) { echo 'required '; } ?>rpress-input" type="text" name="rpress_user_login" id="rpress_user_login" value="" placeholder="<?php esc_html_e( 'Your username or email address', 'restropress' ); ?>"/>
+		</p>
+		<p id="rpress-user-pass-wrap" class="rp-col-md-6 rp-col-sm-12 rpress_login_password">
+			<label class="rpress-label" for="rpress-password">
+				<?php esc_html_e( 'Password', 'restropress' ); ?>
+				<?php if( rpress_no_guest_checkout() ) { ?>
+				<span class="rpress-required-indicator">*</span>
+				<?php } ?>
+			</label>
+			<input class="<?php if( rpress_no_guest_checkout() ) { echo 'required '; } ?>rpress-input" type="password" name="rpress_user_pass" id="rpress_user_pass" placeholder="<?php esc_html_e( 'Your password', 'restropress' ); ?>"/>
+			<?php if( rpress_no_guest_checkout() ) : ?>
+				<input type="hidden" name="rpress-purchase-var" value="needs-to-login"/>
+			<?php endif; ?>
+		</p>
+		<p id="rpress-user-login-submit">
+			<input type="submit" class="rpress-submit button" name="rpress_login_submit" value="<?php esc_html_e( 'Login', 'restropress' ); ?>"/>
+		</p>
+		<?php do_action('rpress_checkout_login_fields_after'); ?>
+	</fieldset><!--end #rpress_login_fields-->
 	<?php
 	echo ob_get_clean();
 }
@@ -632,10 +654,10 @@ function rpress_payment_mode_select() {
 	<div id="rpress_payment_mode_select_wrap">
 		<?php do_action('rpress_payment_mode_top'); ?>
 		<?php if( rpress_is_ajax_disabled() ) { ?>
-		<form id="rpress_payment_mode" action="<?php echo $page_URL; ?>" method="GET">
+		<form id="rpress_payment_mode" action="<?php echo esc_url( $page_URL ); ?>" method="GET">
 		<?php } ?>
 			<fieldset id="rpress_payment_mode_select">
-				<legend><?php _e( 'Select Payment Method', 'restropress' ); ?></legend>
+				<legend><?php esc_html_e( 'Select Payment Method', 'restropress' ); ?></legend>
 				<?php do_action( 'rpress_payment_mode_before_gateways_wrap' ); ?>
 				<div id="rpress-payment-mode-wrap">
 					<?php
@@ -650,6 +672,8 @@ function rpress_payment_mode_select() {
 
 						echo '<label for="rpress-gateway-' . esc_attr( $gateway_id ) . '" class="rpress-gateway-option' . $checked_class . '" id="rpress-gateway-option-' . esc_attr( $gateway_id ) . '">';
 							echo '<input type="radio" name="payment-mode" class="rpress-gateway" id="rpress-gateway-' . esc_attr( $gateway_id ) . '" value="' . esc_attr( $gateway_id ) . '"' . $checked . '>' . esc_html( $label );
+							echo '<div class="control__indicator">';
+							echo '</div>';
 						echo '</label>';
 
 					endforeach;
@@ -740,7 +764,6 @@ function rpress_show_payment_icons() {
 
 }
 add_action( 'rpress_after_payment_gateways', 'rpress_show_payment_icons' );
-//add_action( 'rpress_checkout_form_top', 'rpress_show_payment_icons' );
 
 
 /**
@@ -763,29 +786,27 @@ function rpress_discount_field() {
 
 	if ( rpress_has_active_discounts() && rpress_get_cart_total() ) :
 
-		$color = rpress_get_option( 'checkout_color', 'red' );
-		$color = ( $color == 'inherit' ) ? '' : $color;
-		$style = rpress_get_option( 'button_style', 'button' );
-?>
+		$style = rpress_get_option( 'button_style', 'button' ); ?>
+
 		<fieldset id="rpress_discount_code">
 			<p id="rpress_show_discount" style="display:none;">
-				<?php _e( 'Have a discount code?', 'restropress' ); ?> <a href="#" class="rpress_discount_link"><?php echo _x( 'Click to enter it', 'Entering a discount code', 'restropress' ); ?></a>
+				<?php esc_html_e( 'Have a discount code?', 'restropress' ); ?> <a href="#" class="rpress_discount_link"><?php echo _x( 'Click to enter it', 'Entering a discount code', 'restropress' ); ?></a>
 			</p>
 			<p id="rpress-discount-code-wrap" class="rpress-cart-adjustment">
 				<label class="rpress-label" for="rpress-discount">
-					<?php _e( 'Discount', 'restropress' ); ?>
+					<?php esc_html_e( 'Discount', 'restropress' ); ?>
 				</label>
-				<span class="rpress-description"><?php _e( 'Enter a coupon code if you have one.', 'restropress' ); ?></span>
+				<span class="rpress-description"><?php esc_html_e( 'Enter a coupon code if you have one.', 'restropress' ); ?></span>
 				<span class="rpress-discount-code-field-wrap">
-					<input class="rpress-input" type="text" id="rpress-discount" name="rpress-discount" placeholder="<?php _e( 'Enter coupon code', 'restropress' ); ?>"/>
-					<input type="submit" class="rpress-apply-discount rpress-submit <?php echo $color . ' ' . $style; ?>" value="<?php echo _x( 'Apply', 'Apply discount at checkout', 'restropress' ); ?>"/>
+					<input class="rpress-input" type="text" id="rpress-discount" name="rpress-discount" placeholder="<?php esc_html_e( 'Enter coupon code', 'restropress' ); ?>"/>
+					<input type="submit" class="rpress-apply-discount rpress-submit <?php echo esc_attr( $style ); ?>" value="<?php echo _x( 'Apply', 'Apply discount at checkout', 'restropress' ); ?>"/>
 				</span>
 
 				<span id="rpress-discount-error-wrap" class="rpress_error rpress-alert rpress-alert-error" aria-hidden="true" style="display:none;"></span>
 			</p>
 		</fieldset>
-<?php
-	endif;
+
+	<?php endif;
 }
 add_action( 'rpress_checkout_form_top', 'rpress_discount_field', -1 );
 
@@ -798,12 +819,12 @@ add_action( 'rpress_checkout_form_top', 'rpress_discount_field', -1 );
  * @return void
  */
 function rpress_terms_agreement() {
-	if ( rpress_get_option( 'show_agree_to_terms', false ) ) {
-		$agree_text  = rpress_get_option( 'agree_text', '' );
+	if ( rpress_get_option( 'show_agree_to_terms' ) ) {
+		$agree_text  = rpress_get_option( 'agree_text' );
 		$agree_label = rpress_get_option( 'agree_label', __( 'Agree to Terms?', 'restropress' ) );
 
 		ob_start();
-?>
+	?>
 		<fieldset id="rpress_terms_agreement">
 			<div id="rpress_terms" class="rpress-terms" style="display:none;">
 				<?php
@@ -813,37 +834,10 @@ function rpress_terms_agreement() {
 				?>
 			</div>
 			<div id="rpress_show_terms" class="rpress-show-terms">
-				<a href="#" class="rpress_terms_links"><?php _e( 'Show Terms', 'restropress' ); ?></a>
-				<a href="#" class="rpress_terms_links" style="display:none;"><?php _e( 'Hide Terms', 'restropress' ); ?></a>
+				<a href="#" class="rpress_terms_links"><?php esc_html_e( 'Show Terms', 'restropress' ); ?></a>
+				<a href="#" class="rpress_terms_links" style="display:none;"><?php esc_html_e( 'Hide Terms', 'restropress' ); ?></a>
 			</div>
 
-			<?php if ( '1' !== rpress_get_option( 'show_agree_to_privacy_policy', false ) && '1' === rpress_get_option( 'show_privacy_policy_on_checkout', false ) ) : ?>
-				<?php
-
-				$privacy_page    = get_option( 'wp_page_for_privacy_policy' );
-
-				if ( ! empty( $privacy_page ) ) {
-
-					$privacy_text    = get_post_field( 'post_content', $privacy_page );
-
-					if ( ! empty( $privacy_text  ) ) {
-						?>
-						<div id="rpress-privacy-policy" class="rpress-terms" style="display:none;">
-								<?php
-								do_action( 'rpress_before_privacy_policy' );
-								echo wpautop( do_shortcode( stripslashes( $privacy_text ) ) );
-								do_action( 'rpress_after_privacy_policy' );
-								?>
-						</div>
-						<div id="rpress-show-privacy-policy" class="rpress-show-terms">
-							<a href="#" class="rpress_terms_links"><?php _e( 'Show Privacy Policy', 'restropress' ); ?></a>
-							<a href="#" class="rpress_terms_links" style="display:none;"><?php _e( 'Hide Privacy Policy', 'restropress' ); ?></a>
-						</div>
-						<?php
-					}
-
-				}
-			endif ?>
 			<div class="rpress-terms-agreement">
 				<input name="rpress_agree_to_terms" class="required" type="checkbox" id="rpress_agree_to_terms" value="1"/>
 				<label for="rpress_agree_to_terms"><?php echo stripslashes( $agree_label ); ?></label>
@@ -859,63 +853,6 @@ add_action( 'rpress_purchase_form_before_submit', 'rpress_terms_agreement' );
 
 
 /**
- * Renders the Checkout Agree to Privacy Policy, this displays a checkbox for users to
- * agree the Privacy Policy set in the RPRESS Settings. This is only displayed if T&Cs are
- * set in the RPRESS Settings.
- *
- * @since 2.9.1
- * @return void
- */
-function rpress_privacy_agreement() {
-	if ( '1' === rpress_get_option( 'show_agree_to_privacy_policy', false ) ) {
-		$agree_label     = rpress_get_option( 'privacy_agree_label', __( 'Agree to Terms?', 'restropress' ) );
-
-		ob_start();
-		?>
-		<fieldset id="rpress-privacy-policy-agreement">
-
-			<?php if ( '1' === rpress_get_option( 'show_privacy_policy_on_checkout', false ) ) : ?>
-				<?php
-
-				$privacy_page    = get_option( 'wp_page_for_privacy_policy' );
-
-				if ( ! empty( $privacy_page ) ) {
-
-					$privacy_text    = get_post_field( 'post_content', $privacy_page );
-
-					if ( ! empty( $privacy_text  ) ) {
-						?>
-						<div id="rpress-privacy-policy" class="rpress-terms" style="display:none;">
-							<?php
-							do_action( 'rpress_before_privacy_policy' );
-							echo wpautop( do_shortcode( stripslashes( $privacy_text ) ) );
-							do_action( 'rpress_after_privacy_policy' );
-							?>
-						</div>
-						<div id="rpress-show-privacy-policy" class="rpress-show-terms">
-							<a href="#" class="rpress_terms_links"><?php _e( 'Show Privacy Policy', 'restropress' ); ?></a>
-							<a href="#" class="rpress_terms_links" style="display:none;"><?php _e( 'Hide Privacy Policy', 'restropress' ); ?></a>
-						</div>
-						<?php
-					}
-
-				}
-			endif ?>
-
-			<div class="rpress-privacy-policy-agreement">
-				<input name="rpress_agree_to_privacy_policy" class="required" type="checkbox" id="rpress-agree-to-privacy-policy" value="1"/>
-				<label for="rpress-agree-to-privacy-policy"><?php echo stripslashes( $agree_label ); ?></label>
-			</div>
-		</fieldset>
-		<?php
-		$html_output = ob_get_clean();
-
-		echo apply_filters( 'rpress_checkout_privacy_policy_agreement_html', $html_output );
-	}
-}
-add_action( 'rpress_purchase_form_before_submit', 'rpress_privacy_agreement' );
-
-/**
  * Shows the final purchase total at the bottom of the checkout page
  *
  * @since 1.0
@@ -924,7 +861,7 @@ add_action( 'rpress_purchase_form_before_submit', 'rpress_privacy_agreement' );
 function rpress_checkout_final_total() {
 ?>
 <p id="rpress_final_total_wrap">
-	<strong><?php _e( 'Order Total:', 'restropress' ); ?></strong>
+	<strong><?php esc_html_e( 'Order Total:', 'restropress' ); ?></strong>
 	<span class="rpress_cart_amount" data-subtotal="<?php echo rpress_get_cart_subtotal(); ?>" data-total="<?php echo rpress_get_cart_total(); ?>"><?php rpress_cart_total(); ?></span>
 </p>
 <?php
@@ -950,7 +887,7 @@ function rpress_checkout_submit() {
 		<?php do_action( 'rpress_purchase_form_after_submit' ); ?>
 
 		<?php if ( rpress_is_ajax_disabled() ) { ?>
-			<p class="rpress-cancel"><a href="<?php echo rpress_get_checkout_uri(); ?>"><?php _e( 'Go back', 'restropress' ); ?></a></p>
+			<p class="rpress-cancel"><a href="<?php echo rpress_get_checkout_uri(); ?>"><?php esc_html_e( 'Go back', 'restropress' ); ?></a></p>
 		<?php } ?>
 	</fieldset>
 <?php
@@ -964,17 +901,17 @@ add_action( 'rpress_purchase_form_after_cc_form', 'rpress_checkout_submit', 9999
  * @return string
  */
 function rpress_checkout_button_next() {
-	$color = rpress_get_option( 'checkout_color', 'red' );
-	$color = ( $color == 'inherit' ) ? '' : $color;
+
 	$style = rpress_get_option( 'button_style', 'button' );
 	$purchase_page = rpress_get_option( 'purchase_page', '0' );
 
-	ob_start();
-?>
+	ob_start(); ?>
+
 	<input type="hidden" name="rpress_action" value="gateway_select" />
 	<input type="hidden" name="page_id" value="<?php echo absint( $purchase_page ); ?>"/>
-	<input type="submit" name="gateway_submit" id="rpress_next_button" class="rpress-submit <?php echo $color; ?> <?php echo $style; ?>" value="<?php _e( 'Next', 'restropress' ); ?>"/>
-<?php
+	<input type="submit" name="gateway_submit" id="rpress_next_button" class="rpress-submit <?php echo esc_attr( $style ); ?>" value="<?php esc_html_e( 'Next', 'restropress' ); ?>"/>
+
+	<?php
 	return apply_filters( 'rpress_checkout_button_next', ob_get_clean() );
 }
 
@@ -985,15 +922,15 @@ function rpress_checkout_button_next() {
  * @return string
  */
 function rpress_checkout_button_purchase() {
-	$color = rpress_get_option( 'checkout_color', 'red' );
-	$color = ( $color == 'inherit' ) ? '' : $color;
+
 	$style = rpress_get_option( 'button_style', 'button' );
 	$label = rpress_get_checkout_button_purchase_label();
 
-	ob_start();
-?>
-	<input type="submit" class="rpress-submit <?php echo $color; ?> <?php echo $style; ?>" id="rpress-purchase-button" name="rpress-purchase" value="<?php echo $label; ?>"/>
-<?php
+	ob_start(); ?>
+
+	<input type="submit" class="rpress-submit <?php echo esc_attr( $style ); ?>" id="rpress-purchase-button" name="rpress-purchase" value="<?php echo esc_attr( $label ); ?>"/>
+
+	<?php
 	return apply_filters( 'rpress_checkout_button_purchase', ob_get_clean() );
 }
 
@@ -1066,53 +1003,11 @@ function rpress_checkout_hidden_fields() {
  */
 function rpress_filter_success_page_content( $content ) {
 	if ( isset( $_GET['payment-confirmation'] ) && rpress_is_success_page() ) {
-		if ( has_filter( 'rpress_payment_confirm_' . $_GET['payment-confirmation'] ) ) {
-			$content = apply_filters( 'rpress_payment_confirm_' . $_GET['payment-confirmation'], $content );
+		if ( has_filter( 'rpress_payment_confirm_' . sanitize_text_field( $_GET['payment-confirmation'] ) ) ) {
+			$content = apply_filters( 'rpress_payment_confirm_' . sanitize_text_field( $_GET['payment-confirmation'] ), $content );
 		}
 	}
 
 	return $content;
 }
 add_filter( 'the_content', 'rpress_filter_success_page_content', 99999 );
-
-/**
- * Show a fooditem's files in the purchase receipt
- *
- * @since 1.0.6
- * @param  int        $item_id      The fooditem ID
- * @param  array      $receipt_args Args specified in the [rpress_receipt] shortcode
- * @param  array      $item         Cart item array
- * @return boolean
- */
-function rpress_receipt_show_fooditem_files( $item_id, $receipt_args, $item = array() ) {
-
-	$ret = true;
-
-	/*
-	 * If re-fooditem is disabled, set return to false
-	 *
-	 * When the purchase session is still present AND the receipt being shown is for that purchase,
-	 * file fooditem links are still shown. Once session expires, links are disabled
-	 */
-	if ( rpress_no_refooditem() ) {
-
-		$key     = isset( $_GET['payment_key'] ) ? sanitize_text_field( $_GET['payment_key'] ) : '';
-		$session = rpress_get_purchase_session();
-
-		if ( ! empty( $key ) && ! empty( $session ) && $key != $session['purchase_key'] ) {
-
-			// We have session data but the payment key provided is not for this session
-			$ret = false;
-
-		} elseif ( empty( $session ) ) {
-
-			// No session data is present but a key has been provided
-			$ret = false;
-
-		}
-
-
-	}
-
-	return apply_filters( 'rpress_receipt_show_fooditem_files', $ret, $item_id, $receipt_args, $item );
-}

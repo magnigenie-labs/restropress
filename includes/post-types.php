@@ -37,7 +37,7 @@ function rpress_setup_rpress_post_types() {
 		'not_found'             => __( 'No %2$s found', 'restropress' ),
 		'not_found_in_trash'    => __( 'No %2$s found in Trash', 'restropress' ),
 		'parent_item_colon'     => '',
-		'menu_name'             => _x( 'RestroPress', 'fooditem post type menu name', 'restropress' ),
+		'menu_name'             => _x( 'Food Items', 'fooditem post type menu name', 'restropress' ),
 		'featured_image'        => __( '%1$s Image', 'restropress' ),
 		'set_featured_image'    => __( 'Set %1$s Image', 'restropress' ),
 		'remove_featured_image' => __( 'Remove %1$s Image', 'restropress' ),
@@ -55,14 +55,13 @@ function rpress_setup_rpress_post_types() {
 	$fooditem_args = array(
 		'labels'             => $fooditem_labels,
 		'public'             => false,
-    'map_meta_cap'       => true,
-		'publicly_queryable' => true,
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
-		'menu_icon'          => plugin_dir_url('') . 'restropress/assets/svg/restropress-icon.svg',
 		'rewrite'            => false,
 		'capability_type'    => 'product',
+		'map_meta_cap'       => true,
+		'publicly_queryable' => false,
 		'has_archive'        => false,
 		'hierarchical'       => false,
 		'supports'           => apply_filters( 'rpress_fooditem_supports', array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ) ),
@@ -72,19 +71,19 @@ function rpress_setup_rpress_post_types() {
 
 	/** Payment Post Type */
 	$payment_labels = array(
-		'name'               => _x( 'Payments', 'post type general name', 'restropress' ),
-		'singular_name'      => _x( 'Payment', 'post type singular name', 'restropress' ),
+		'name'               => _x( 'Orders', 'post type general name', 'restropress' ),
+		'singular_name'      => _x( 'Order', 'post type singular name', 'restropress' ),
 		'add_new'            => __( 'Add New', 'restropress' ),
-		'add_new_item'       => __( 'Add New Payment', 'restropress' ),
-		'edit_item'          => __( 'Edit Payment', 'restropress' ),
-		'new_item'           => __( 'New Payment', 'restropress' ),
-		'all_items'          => __( 'All Payments', 'restropress' ),
-		'view_item'          => __( 'View Payment', 'restropress' ),
-		'search_items'       => __( 'Search Payments', 'restropress' ),
-		'not_found'          => __( 'No Payments found', 'restropress' ),
-		'not_found_in_trash' => __( 'No Payments found in Trash', 'restropress' ),
+		'add_new_item'       => __( 'Add New Order', 'restropress' ),
+		'edit_item'          => __( 'Edit Order', 'restropress' ),
+		'new_item'           => __( 'New Order', 'restropress' ),
+		'all_items'          => __( 'All Orders', 'restropress' ),
+		'view_item'          => __( 'View Order', 'restropress' ),
+		'search_items'       => __( 'Search Orders', 'restropress' ),
+		'not_found'          => __( 'No Orders found', 'restropress' ),
+		'not_found_in_trash' => __( 'No Orders found in Trash', 'restropress' ),
 		'parent_item_colon'  => '',
-		'menu_name'          => __( 'Order History', 'restropress' )
+		'menu_name'          => __( 'Orders', 'restropress' )
 	);
 
 
@@ -205,27 +204,56 @@ add_filter( 'enter_title_here', 'rpress_change_default_title' );
 */
 function rpress_setup_fooditem_taxonomies() {
 
-	$slug     = defined( 'RPRESS_SLUG' ) ? RPRESS_SLUG : 'fooditems';
+	$slug = defined( 'RPRESS_SLUG' ) ? RPRESS_SLUG : 'fooditems';
+
+	$food_category_label = array(
+    'name'              => _x( 'Food Category', 'taxonomy general name', 'restropress' ),
+    'singular_name'     => _x( 'Food Category', 'taxonomy singular name', 'restropress' ),
+    'search_items'      => __( 'Search Food Category', 'restropress' ),
+    'all_items'         => __( 'All Food Category', 'restropress' ),
+    'parent_item'       => __( 'Parent Food Category', 'textdomain' ),
+    'parent_item_colon' => __( 'Parent Food Category:', 'textdomain' ),
+    'edit_item'         => __( 'Edit Food Category', 'restropress' ),
+    'update_item'       => __( 'Update Food Category', 'restropress' ),
+    'add_new_item'      => __( 'Add New Food Category', 'restropress' ),
+    'new_item_name'     => __( 'New Food Category', 'restropress' ),
+    'menu_name'         => __( 'Categories', 'restropress' ),
+  );
+
+  $food_item_args = array(
+    'hierarchical' 		=> true,
+    'show_admin_column' => true,
+    'labels'            => $food_category_label,
+    'show_ui'           => true,
+    'query_var'         => true,
+    'rewrite'           => array( 'slug' => 'food-category' ),
+  );
+
+  register_taxonomy( 'food-category', array( 'fooditem' ), $food_item_args );
+
+  //Register taxonomy for food category
+  register_taxonomy_for_object_type( 'food-category', 'fooditem' );
 
 	/** Categories */
 	$category_labels = array(
-		'name'              => sprintf( _x( ' Addon Category', 'taxonomy general name', 'restropress' ), rpress_get_label_singular() ),
-		'singular_name'     => sprintf( _x( ' Addon Category', 'taxonomy singular name', 'restropress' ), rpress_get_label_singular() ),
-		'search_items'      => sprintf( __( 'Search Addon Category', 'restropress' ), rpress_get_label_singular() ),
-		'all_items'         => sprintf( __( 'All Addon Category', 'restropress' ), rpress_get_label_singular() ),
-		'parent_item'       => sprintf( __( 'Parent Addon Category', 'restropress' ), rpress_get_label_singular() ),
-		'parent_item_colon' => sprintf( __( 'Parent Addon Category:', 'restropress' ), rpress_get_label_singular() ),
-		'edit_item'         => sprintf( __( 'Edit Addon Category', 'restropress' ), rpress_get_label_singular() ),
-		'update_item'       => sprintf( __( 'Update Addon Category', 'restropress' ), rpress_get_label_singular() ),
-		'add_new_item'      => sprintf( __( 'Add New Addon Category', 'restropress' ), rpress_get_label_singular() ),
-		'new_item_name'     => sprintf( __( 'New Addon Category Name', 'restropress' ), rpress_get_label_singular() ),
-		'menu_name'         => __( 'Addon Category', 'restropress' ),
+		'name'              => sprintf( _x( 'Addon', 'taxonomy general name', 'restropress' ), rpress_get_label_singular() ),
+		'singular_name'     => sprintf( _x( 'Addon', 'taxonomy singular name', 'restropress' ), rpress_get_label_singular() ),
+		'search_items'      => sprintf( __( 'Search Addon', 'restropress' ), rpress_get_label_singular() ),
+		'all_items'         => sprintf( __( 'All Addon', 'restropress' ), rpress_get_label_singular() ),
+		'parent_item'       => sprintf( __( 'Parent Addon', 'restropress' ), rpress_get_label_singular() ),
+		'parent_item_colon' => sprintf( __( 'Parent Addon:', 'restropress' ), rpress_get_label_singular() ),
+		'edit_item'         => sprintf( __( 'Edit Addon', 'restropress' ), rpress_get_label_singular() ),
+		'update_item'       => sprintf( __( 'Update Addon', 'restropress' ), rpress_get_label_singular() ),
+		'add_new_item'      => sprintf( __( 'Add New Addon', 'restropress' ), rpress_get_label_singular() ),
+		'new_item_name'     => sprintf( __( 'New Addon Name', 'restropress' ), rpress_get_label_singular() ),
+		'menu_name'         => __( 'Addons', 'restropress' ),
 	);
 
 	$category_args = apply_filters( 'rpress_addon_category_args', array(
 			'hierarchical' => true,
 			'labels'       => apply_filters('rpress_addon_category_labels', $category_labels),
 			'show_ui'      => true,
+			'show_admin_column' => false,
 			'query_var'    => 'addon_category',
 			'rewrite'      => array('slug' => $slug . '/category', 'with_front' => false, 'hierarchical' => true ),
 			'capabilities' => array( 'manage_terms' => 'manage_product_terms','edit_terms' => 'edit_product_terms','assign_terms' => 'assign_product_terms','delete_terms' => 'delete_product_terms' )
@@ -261,7 +289,6 @@ function rpress_setup_fooditem_taxonomies() {
 	);
 	register_taxonomy( 'fooditem_tag', array( 'fooditem' ), $tag_args );
 	register_taxonomy_for_object_type( 'fooditem_tag', 'fooditem' );
-	
 }
 add_action( 'init', 'rpress_setup_fooditem_taxonomies', 0 );
 
@@ -273,7 +300,7 @@ add_action( 'init', 'rpress_setup_fooditem_taxonomies', 0 );
  * @return array            Associative array of labels (name = plural)
  */
 function rpress_get_taxonomy_labels( $taxonomy = 'addon_category' ) {
-	$allowed_taxonomies = apply_filters( 'rpress_allowed_fooditem_taxonomies', array( 'addon_category', 'fooditem_tag' ) );
+	$allowed_taxonomies = apply_filters( 'rpress_allowed_fooditem_taxonomies', array( 'addon_category', 'fooditem_tag', 'food-category' ) );
 
 	if ( ! in_array( $taxonomy, $allowed_taxonomies ) ) {
 		return false;
@@ -323,7 +350,7 @@ function rpress_register_post_type_statuses() {
 		'show_in_admin_status_list' => true,
 		'label_count'               => _n_noop( 'Paid <span class="count">(%s)</span>', 'Paid <span class="count">(%s)</span>', 'restropress' )
 	) );
-		
+
 	register_post_status( 'failed', array(
 		'label'                     => _x( 'Failed', 'Failed payment status', 'restropress' ),
 		'public'                    => true,

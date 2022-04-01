@@ -22,9 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_reporting_contextual_help() {
 	$screen = get_current_screen();
 
-	if ( $screen->id != 'fooditem_page_rpress-reports' )
+	if ( $screen->id != 'restropress_page_rpress-reports' )
 		return;
 
 	do_action( 'rpress_reports_contextual_help', $screen );
 }
-add_action( 'load-fooditem_page_rpress-reports', 'rpress_reporting_contextual_help' );
+add_action( 'load-restropress_page_rpress-reports', 'rpress_reporting_contextual_help' );

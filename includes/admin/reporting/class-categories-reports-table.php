@@ -161,7 +161,7 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 				'hide_empty'   => false
 			);
 
-			$categories = get_terms( 'addon_category', $term_args );
+			$categories = get_terms( 'food-category', $term_args );
 
 			foreach ( $categories as $category_id => $category ) {
 
@@ -172,7 +172,7 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 					'hierarchical' => 0,
 				);
 
-				$child_terms = get_terms( 'addon_category', $child_args );
+				$child_terms = get_terms( 'food-category', $child_args );
 				if ( !empty( $child_terms ) ) {
 
 					foreach ( $child_terms as $child_term ) {
@@ -186,7 +186,7 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 					'fields'         => 'ids',
 					'tax_query'      => array(
 						array(
-							'taxonomy' => 'addon_category',
+							'taxonomy' => 'food-category',
 							'field'    => 'slug',
 							'terms'    => $category_slugs,
 						),
@@ -241,7 +241,7 @@ class RPRESS_Categories_Reports_Table extends WP_List_Table {
 							'fields'         => 'ids',
 							'tax_query'      => array(
 								array(
-									'taxonomy' => 'addon_category',
+									'taxonomy' => 'food-category',
 									'field'    => 'slug',
 									'terms'    => $child_term->slug,
 								),

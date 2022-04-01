@@ -24,10 +24,10 @@ function rpress_process_batch_export_fooditem() {
 	}
 
 	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export.php';
+	$class = sanitize_text_field( $_REQUEST['class'] );
+	do_action( 'rpress_batch_export_class_include', $class );
 
-	do_action( 'rpress_batch_export_class_include', $_REQUEST['class'] );
-
-	$export = new $_REQUEST['class'];
+	$export = new $class;
 	$export->export();
 
 }
@@ -170,10 +170,9 @@ add_action( 'rpress_register_batch_exporter', 'rpress_register_file_fooditems_ba
  */
 function rpress_include_file_fooditems_batch_processer( $class ) {
 
-	if ( 'RPRESS_Batch_File_Downloads_Export' === $class ) {
-		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-file-fooditems.php';
+	if ( 'RPRESS_Batch_File_Orders_Export' === $class ) {
+		require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export-orders.php';
 	}
-
 }
 
 /**

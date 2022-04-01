@@ -59,30 +59,30 @@ function rpress_load_dashboard_sales_widget( ) {
 			<table>
 				<thead>
 					<tr>
-						<td colspan="2"><?php _e( 'Current Month', 'restropress' ) ?></td>
+						<td colspan="2"><?php esc_html_e( 'Current Month', 'restropress' ) ?></td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="first t monthly_earnings"><?php _e( 'Earnings', 'restropress' ); ?></td>
+						<td class="first t monthly_earnings"><?php esc_html_e( 'Earnings', 'restropress' ); ?></td>
 						<td class="b b-earnings"><?php echo rpress_currency_filter( rpress_format_amount( $stats->get_earnings( 0, 'this_month' ) ) ); ?></td>
 					</tr>
 					<tr>
 						<?php $monthly_sales = $stats->get_sales( 0, 'this_month', false, array( 'publish', 'revoked' ) ); ?>
 						<td class="first t monthly_sales"><?php echo _n( 'Sale', 'Sales', $monthly_sales, 'restropress' ); ?></td>
-						<td class="b b-sales"><?php echo rpress_format_amount( $monthly_sales, false ); ?></td>
+						<td class="b b-sales"><?php echo esc_html( $monthly_sales ); ?></td>
 					</tr>
 				</tbody>
 			</table>
 			<table>
 				<thead>
 					<tr>
-						<td colspan="2"><?php _e( 'Last Month', 'restropress' ) ?></td>
+						<td colspan="2"><?php esc_html_e( 'Last Month', 'restropress' ) ?></td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="first t earnings"><?php echo __( 'Earnings', 'restropress' ); ?></td>
+						<td class="first t earnings"><?php esc_html_e( 'Earnings', 'restropress' ); ?></td>
 						<td class="b b-last-month-earnings"><?php echo rpress_currency_filter( rpress_format_amount( $stats->get_earnings( 0, 'last_month' ) ) ); ?></td>
 					</tr>
 					<tr>
@@ -91,7 +91,7 @@ function rpress_load_dashboard_sales_widget( ) {
 							<?php echo _n( 'Sale', 'Sales', rpress_format_amount( $last_month_sales, false ), 'restropress' ); ?>
 						</td>
 						<td class="b b-last-month-sales">
-							<?php echo $last_month_sales; ?>
+							<?php echo esc_html( $last_month_sales ); ?>
 						</td>
 					</tr>
 				</tbody>
@@ -102,13 +102,13 @@ function rpress_load_dashboard_sales_widget( ) {
 				<thead>
 					<tr>
 						<td colspan="2">
-							<?php _e( 'Today', 'restropress' ); ?>
+							<?php esc_html_e( 'Today', 'restropress' ); ?>
 						</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="t sales"><?php _e( 'Earnings', 'restropress' ); ?></td>
+						<td class="t sales"><?php esc_html_e( 'Earnings', 'restropress' ); ?></td>
 						<td class="last b b-earnings">
 							<?php $earnings_today = $stats->get_earnings( 0, 'today', false ); ?>
 							<?php echo rpress_currency_filter( rpress_format_amount( $earnings_today ) ); ?>
@@ -116,11 +116,11 @@ function rpress_load_dashboard_sales_widget( ) {
 					</tr>
 					<tr>
 						<td class="t sales">
-							<?php _e( 'Sales', 'restropress' ); ?>
+							<?php esc_html_e( 'Sales', 'restropress' ); ?>
 						</td>
 						<td class="last b b-sales">
 							<?php $sales_today = $stats->get_sales( 0, 'today', false, array( 'publish', 'revoked' ) ); ?>
-							<?php echo rpress_format_amount( $sales_today, false ); ?>
+							<?php echo esc_html( $sales_today ); ?>
 						</td>
 					</tr>
 				</tbody>
@@ -130,17 +130,17 @@ function rpress_load_dashboard_sales_widget( ) {
 			<table>
 				<thead>
 					<tr>
-						<td colspan="2"><?php _e( 'Totals', 'restropress' ) ?></td>
+						<td colspan="2"><?php esc_html_e( 'Totals', 'restropress' ) ?></td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="t earnings"><?php _e( 'Total Earnings', 'restropress' ); ?></td>
+						<td class="t earnings"><?php esc_html_e( 'Total Earnings', 'restropress' ); ?></td>
 						<td class="last b b-earnings"><?php echo rpress_currency_filter( rpress_format_amount( rpress_get_total_earnings() ) ); ?></td>
 					</tr>
 					<tr>
-						<td class="t sales"><?php _e( 'Total Sales', 'restropress' ); ?></td>
-						<td class="last b b-sales"><?php echo rpress_format_amount( rpress_get_total_sales(), false ); ?></td>
+						<td class="t sales"><?php esc_html_e( 'Total Sales', 'restropress' ); ?></td>
+						<td class="last b b-sales"><?php echo rpress_get_total_sales(); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -161,8 +161,8 @@ function rpress_load_dashboard_sales_widget( ) {
 				<thead>
 					<tr>
 						<td colspan="2">
-							<?php _e( 'Recent Purchases', 'restropress' ); ?>
-							<a href="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' ); ?>">&nbsp;&ndash;&nbsp;<?php _e( 'View All', 'restropress' ); ?></a>
+							<?php esc_html_e( 'Recent Purchases', 'restropress' ); ?>
+							<a href="<?php echo admin_url( 'admin.php?page=rpress-payment-history' ); ?>">&nbsp;&ndash;&nbsp;<?php esc_html_e( 'View All', 'restropress' ); ?></a>
 						</td>
 					</tr>
 				</thead>
@@ -171,9 +171,9 @@ function rpress_load_dashboard_sales_widget( ) {
 					foreach ( $payments as $payment ) { ?>
 						<tr>
 							<td class="rpress_order_label">
-								<a href="<?php echo add_query_arg( 'id', $payment->ID, admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details' ) ); ?>">
+								<a href="<?php echo add_query_arg( 'id', $payment->ID, admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ); ?>">
 									<?php echo get_the_title( $payment->ID ) ?>
-									&mdash; <?php echo $payment->email ?>
+									&mdash; <?php echo esc_html( $payment->email ); ?>
 								</a>
 								<?php if ( ! empty( $payment->user_id ) && ( $payment->user_id > 0 ) ) {
 									$user = get_user_by( 'id', $payment->user_id );
@@ -183,7 +183,7 @@ function rpress_load_dashboard_sales_widget( ) {
 								} ?>
 							</td>
 							<td class="rpress_order_price">
-								<a href="<?php echo add_query_arg( 'id', $payment->ID, admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details' ) ); ?>">
+								<a href="<?php echo add_query_arg( 'id', $payment->ID, admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ); ?>">
 									<span class="rpress_price_label"><?php echo rpress_currency_filter( rpress_format_amount( $payment->total ), rpress_get_payment_currency_code( $payment->ID ) ); ?></span>
 								</a>
 							</td>

@@ -30,7 +30,7 @@ function rpress_media_button() {
 
 	}
 
-	echo $output;
+	echo wp_kses_data( $output );
 }
 add_action( 'media_buttons', 'rpress_media_button', 11 );
 
@@ -56,11 +56,11 @@ function rpress_admin_footer_for_thickbox() {
 					direct = jQuery('#select-rpress-direct').val(),
 					style = jQuery('#select-rpress-style').val(),
 					color = jQuery('#select-rpress-color').is(':visible') ? jQuery('#select-rpress-color').val() : '',
-					text = jQuery('#rpress-text').val() || '<?php _e( "Purchase", "restro-press" ); ?>';
+					text = jQuery('#rpress-text').val() || '<?php esc_html_e( "Purchase", "restro-press" ); ?>';
 
 				// Return early if no fooditem is selected
 				if ('' === id) {
-					alert('<?php _e( "You must choose a fooditem", "restro-press" ); ?>');
+					alert('<?php esc_html_e( "You must choose a fooditem", "restro-press" ); ?>');
 					return;
 				}
 
@@ -93,15 +93,15 @@ function rpress_admin_footer_for_thickbox() {
 				<?php if( rpress_shop_supports_buy_now() ) : ?>
 					<div>
 						<select id="select-rpress-direct" style="clear: both; display: block; margin-bottom: 1em; margin-top: 1em;">
-							<option value="0"><?php _e( 'Choose the button behavior', 'restropress' ); ?></option>
-							<option value="1"><?php _e( 'Add to Cart', 'restropress' ); ?></option>
-							<option value="2"><?php _e( 'Direct Purchase Link', 'restropress' ); ?></option>
+							<option value="0"><?php esc_html_e( 'Choose the button behavior', 'restropress' ); ?></option>
+							<option value="1"><?php esc_html_e( 'Add to Cart', 'restropress' ); ?></option>
+							<option value="2"><?php esc_html_e( 'Direct Purchase Link', 'restropress' ); ?></option>
 						</select>
 					</div>
 				<?php endif; ?>
 				<div>
 					<select id="select-rpress-style" style="clear: both; display: block; margin-bottom: 1em; margin-top: 1em;">
-						<option value=""><?php _e( 'Choose a style', 'restropress' ); ?></option>
+						<option value=""><?php esc_html_e( 'Choose a style', 'restropress' ); ?></option>
 						<?php
 							$styles = array( 'button', 'text link' );
 							foreach ( $styles as $style ) {
@@ -115,7 +115,7 @@ function rpress_admin_footer_for_thickbox() {
 				if( $colors ) { ?>
 				<div id="rpress-color-choice" style="display: none;">
 					<select id="select-rpress-color" style="clear: both; display: block; margin-bottom: 1em;">
-						<option value=""><?php _e('Choose a button color','restropress' ); ?></option>
+						<option value=""><?php esc_html_e('Choose a button color','restropress' ); ?></option>
 						<?php
 							foreach ( $colors as $key => $color ) {
 								echo '<option value="' . str_replace( ' ', '_', $key ) . '">' . $color['label'] . '</option>';
@@ -125,11 +125,11 @@ function rpress_admin_footer_for_thickbox() {
 				</div>
 				<?php } ?>
 				<div>
-					<input type="text" class="regular-text" id="rpress-text" value="" placeholder="<?php _e( 'Link text . . .', 'restropress' ); ?>"/>
+					<input type="text" class="regular-text" id="rpress-text" value="" placeholder="<?php esc_html_e( 'Link text . . .', 'restropress' ); ?>"/>
 				</div>
 				<p class="submit">
 					<input type="button" id="rpress-insert-fooditem" class="button-primary" value="<?php echo sprintf( __( 'Insert %s', 'restropress' ), rpress_get_label_singular() ); ?>" onclick="insertDownload();" />
-					<a id="rpress-cancel-fooditem-insert" class="button-secondary" onclick="tb_remove();"><?php _e( 'Cancel', 'restropress' ); ?></a>
+					<a id="rpress-cancel-fooditem-insert" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'restropress' ); ?></a>
 				</p>
 			</div>
 		</div>

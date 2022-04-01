@@ -37,7 +37,7 @@ function rpress_print_errors() {
 				// Loop error codes and display errors
 				foreach ( $errors as $error_id => $error ) {
 
-					echo '<p class="rpress_error" id="rpress_error_' . $error_id . '"><strong>' . __( 'Error', 'restropress' ) . '</strong>: ' . $error . '</p>';
+					echo '<p class="rpress_error" id="rpress_error_' . $error_id . '"><strong>' . esc_html__( 'Error', 'restropress' ) . '</strong>: ' . $error . '</p>';
 
 				}
 

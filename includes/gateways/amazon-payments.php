@@ -543,9 +543,9 @@ final class RPRESS_Amazon_Payments {
 
 		try {
 
-			$profile = $this->client->getUserInfo( $_GET['access_token'] );
+			$profile = $this->client->getUserInfo( sanitize_text_field( $_GET['access_token'] ) );
 
-			RPRESS()->session->set( 'amazon_access_token', $_GET['access_token'] );
+			RPRESS()->session->set( 'amazon_access_token', sanitize_text_field( $_GET['access_token'] ) );
 			RPRESS()->session->set( 'amazon_profile', $profile );
 
 		} catch( Exception $e ) {
@@ -573,7 +573,7 @@ final class RPRESS_Amazon_Payments {
 		}
 
 		$profile   = RPRESS()->session->get( 'amazon_profile' );
-		$reference = $_GET['amazon_reference_id'];
+		$reference = sanitize_text_field( $_GET['amazon_reference_id'] );
 
 		if( ! is_user_logged_in() ) {
 
@@ -705,11 +705,11 @@ final class RPRESS_Amazon_Payments {
 
 		$profile   = RPRESS()->session->get( 'amazon_profile' );
 		remove_action( 'rpress_purchase_form_after_cc_form', 'rpress_checkout_tax_fields', 999 );
-		ob_start(); ?>
+		?>
 		<fieldset id="rpress_cc_fields" class="rpress-amazon-fields">
 			<p class="rpress-amazon-profile-wrapper">
-				<?php _e( 'Currently logged into Amazon as', 'restropress' ); ?>: <span class="rpress-amazon-profile-name"><?php echo $profile['name']; ?></span>
-				<span class="rpress-amazon-logout">(<a id="Logout"><?php _e( 'Logout', 'restropress' ); ?></a>)</span>
+				<?php esc_html_e( 'Currently logged into Amazon as', 'restropress' ); ?>: <span class="rpress-amazon-profile-name"><?php echo esc_html( $profile['name'] ); ?></span>
+				<span class="rpress-amazon-logout">(<a id="Logout"><?php esc_html_e( 'Logout', 'restropress' ); ?></a>)</span>
 			</p>
 			<?php if( rpress_use_taxes() ) : ?>
 				<div id="rpress-amazon-address-box"></div>
@@ -809,9 +809,6 @@ final class RPRESS_Amazon_Payments {
 		</fieldset>
 
 		<?php
-		$form = ob_get_clean();
-		echo $form;
-
 	}
 
 	/**
@@ -832,7 +829,7 @@ final class RPRESS_Amazon_Payments {
 
 		$request = $this->client->getOrderReferenceDetails( array(
 			'merchant_id'               => rpress_get_option( 'amazon_seller_id', '' ),
-			'amazon_order_reference_id' => $_POST['reference_id'],
+			'amazon_order_reference_id' => sanitize_text_field( $_POST['reference_id'] ) ,
 			'address_consent_token'     => RPRESS()->session->get( 'amazon_access_token' )
 		) );
 
@@ -1039,7 +1036,7 @@ final class RPRESS_Amazon_Payments {
 	 */
 	public function disable_address_requirement() {
 
-		if( ! empty( $_POST['rpress-gateway'] ) && $this->gateway_id == $_REQUEST['rpress-gateway'] ) {
+		if( ! empty( $_POST['rpress-gateway'] ) && $this->gateway_id == sanitize_text_field( $_REQUEST['rpress-gateway'] ) ) {
 			add_filter( 'rpress_require_billing_address', '__return_false', 9999 );
 		}
 

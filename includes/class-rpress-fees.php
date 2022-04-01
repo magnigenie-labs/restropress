@@ -99,7 +99,7 @@ class RPRESS_Fees {
 		$fees = $this->get_fees( 'all' );
 
 		// Determine the key
-		$key = empty( $args['id'] ) ? sanitize_key( $args['label'] ) : sanitize_key( $args['id'] );
+		$key = empty( $args['id'] ) ? sanitize_text_field( $args['label'] ) : sanitize_text_field( $args['id'] );
 
 		// Remove the unneeded id key
 		unset( $args['id'] );

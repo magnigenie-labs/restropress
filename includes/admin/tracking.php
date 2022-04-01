@@ -118,7 +118,7 @@ class RPRESS_Tracking {
 
 		$home_url = trailingslashit( home_url() );
 		// Allows us to stop our own site from checking in, and a filter for our additional sites
-		if ( $home_url === 'https://fooditems.com/' || apply_filters( 'rpress_disable_tracking_checkin', false ) ) {
+		if ( $home_url === 'https://restropress.com/' || apply_filters( 'rpress_disable_tracking_checkin', false ) ) {
 			return false;
 		}
 
@@ -134,7 +134,7 @@ class RPRESS_Tracking {
 
 		$this->setup_data();
 
-		wp_remote_post( 'https://fooditems.com/?rpress_action=checkin', array(
+		wp_remote_post( 'https://restropress.com/?rpress_action=checkin', array(
 			'method'      => 'POST',
 			'timeout'     => 8,
 			'redirection' => 5,

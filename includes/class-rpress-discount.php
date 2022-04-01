@@ -4,7 +4,7 @@
  *
  * @package     RPRESS
  * @subpackage  Classes/Discount
- * @copyright   Copyright (c) 2016, Sunny Ratilal
+ * @copyright   Copyright (c) 2016, MagniGenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0.6
  */
@@ -243,7 +243,7 @@ class RPRESS_Discount {
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		$key = sanitize_key( $key );
+		$key = sanitize_text_field( $key );
 
 		if ( method_exists( $this, 'get_' . $key ) ) {
 			return call_user_func( array( $this, 'get_' . $key ) );
@@ -265,7 +265,7 @@ class RPRESS_Discount {
 	 * @param mixed  $value Property value.
 	 */
 	public function __set( $key, $value ) {
-		$key = sanitize_key( $key );
+		$key = sanitize_text_field( $key );
 
 		// Only real properties can be saved.
 		$keys = array_keys( get_class_vars( get_called_class() ) );
@@ -335,6 +335,7 @@ class RPRESS_Discount {
 			)
 		);
 
+
 		if ( ! is_array( $discounts ) || array() === $discounts ) {
 			return false;
 		}
@@ -342,7 +343,6 @@ class RPRESS_Discount {
 		if ( $discounts ) {
 			$discount = $discounts[0];
 		}
-
 		return WP_Post::get_instance( $discount );
 	}
 
@@ -1889,6 +1889,7 @@ class RPRESS_Discount {
 			$amount = $base_price - ( $base_price * ( $this->amount / 100 ) );
 		}
 
+
 		/**
 		 * Filter the discounted amount calculated.
 		 *
@@ -1979,6 +1980,6 @@ class RPRESS_Discount {
 	 * @return string Link to the `Edit Discount` page.
 	 */
 	public function edit_url() {
-		return esc_url( add_query_arg( array( 'rpress-action' => 'edit_discount', 'discount' => $this->ID ), admin_url( 'edit.php?post_type=fooditem&page=rpress-discounts' ) ) );
+		return esc_url( add_query_arg( array( 'rpress-action' => 'edit_discount', 'discount' => $this->ID ), admin_url( 'admin.php?page=rpress-discounts' ) ) );
 	}
 }

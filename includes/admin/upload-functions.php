@@ -30,7 +30,7 @@ function rpress_change_fooditems_upload_dir() {
 	global $pagenow;
 
 	if ( ! empty( $_REQUEST['post_id'] ) && ( 'async-upload.php' == $pagenow || 'media-upload.php' == $pagenow ) ) {
-		if ( 'fooditem' == get_post_type( $_REQUEST['post_id'] ) ) {
+		if ( 'fooditem' == get_post_type( absint( $_REQUEST['post_id'] ) ) ) {
 			rpress_create_protection_files( true );
 			add_filter( 'upload_dir', 'rpress_set_upload_dir' );
 		}

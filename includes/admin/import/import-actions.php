@@ -68,7 +68,7 @@ add_action( 'rpress_register_batch_importer', 'rpress_register_fooditems_batch_i
  */
 function rpress_include_fooditems_batch_import_processer( $class ) {
 
-	if ( 'RPRESS_Batch_RestroPress_Import' === $class ) {
+	if ( 'RPRESS_Batch_FoodItems_Import' === $class ) {
 		require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import-fooditems.php';
 	}
 

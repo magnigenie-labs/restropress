@@ -814,16 +814,13 @@ class RPRESS_API {
 
 		if ( rpress_has_variable_prices( $product_info->ID ) ) {
 			foreach ( rpress_get_variable_prices( $product_info->ID ) as $price ) {
-				$product['pricing'][ sanitize_key( $price['name'] ) ] = $price['amount'];
+				$product['pricing'][ sanitize_text_field( $price['name'] ) ] = $price['amount'];
 			}
 		} else {
 			$product['pricing']['amount'] = rpress_get_fooditem_price( $product_info->ID );
 		}
 
 		if( user_can( $this->user_id, 'view_shop_sensitive_data' ) || $this->override ) {
-			foreach ( rpress_get_fooditem_files( $product_info->ID ) as $file ) {
-				$product['files'][] = $file;
-			}
 			$product['notes'] = rpress_get_product_notes( $product_info->ID );
 		}
 
@@ -1406,18 +1403,18 @@ class RPRESS_API {
 				<tbody>
 					<tr>
 						<th>
-							<label for="rpress_set_api_key"><?php _e( 'RestroPress API Keys', 'rpress' ); ?></label>
+							<label for="rpress_set_api_key"><?php esc_html_e( 'RestroPress API Keys', 'rpress' ); ?></label>
 						</th>
 						<td>
 							<?php if ( empty( $user->rpress_user_public_key ) ) { ?>
 								<input name="rpress_set_api_key" type="checkbox" id="rpress_set_api_key" value="0" />
-								<span class="description"><?php _e( 'Generate API Key', 'rpress' ); ?></span>
+								<span class="description"><?php esc_html_e( 'Generate API Key', 'rpress' ); ?></span>
 							<?php } else { ?>
-								<strong><?php _e( 'Public key:', 'rpress' ); ?>&nbsp;</strong><span id="publickey"><?php echo $user->rpress_user_public_key; ?></span><br/>
-								<strong><?php _e( 'Secret key:', 'rpress' ); ?>&nbsp;</strong><span id="privatekey"><?php echo $user->rpress_user_secret_key; ?></span><br/>
-								<strong><?php _e( 'Token:', 'rpress' ); ?>&nbsp;</strong><span id="token"><?php echo $this->get_token( $user->ID ); ?></span><br/>
+								<strong><?php esc_html_e( 'Public key:', 'rpress' ); ?>&nbsp;</strong><span id="publickey"><?php echo esc_html( $user->rpress_user_public_key ); ?></span><br/>
+								<strong><?php esc_html_e( 'Secret key:', 'rpress' ); ?>&nbsp;</strong><span id="privatekey"><?php echo esc_html( $user->rpress_user_secret_key ); ?></span><br/>
+								<strong><?php esc_html_e( 'Token:', 'rpress' ); ?>&nbsp;</strong><span id="token"><?php echo esc_html( $this->get_token( $user->ID ) ); ?></span><br/>
 								<input name="rpress_set_api_key" type="checkbox" id="rpress_set_api_key" value="0" />
-								<span class="description"><?php _e( 'Revoke API Keys', 'rpress' ); ?></span>
+								<span class="description"><?php esc_html_e( 'Revoke API Keys', 'rpress' ); ?></span>
 							<?php } ?>
 						</td>
 					</tr>
@@ -1436,9 +1433,9 @@ class RPRESS_API {
 	 */
 	public function process_api_key( $args ) {
 
-		if( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'rpress-api-nonce' ) ) {
+		if( ! wp_verify_nonce( sanitize_text_field( $_REQUEST['_wpnonce'] ) , 'rpress-api-nonce' ) ) {
 
-			wp_die( __( 'Nonce verification failed', 'rpress' ), __( 'Error', 'rpress' ), array( 'response' => 403 ) );
+			wp_die( esc_html__( 'Nonce verification failed', 'rpress' ), __( 'Error', 'rpress' ), array( 'response' => 403 ) );
 
 		}
 
@@ -1460,20 +1457,20 @@ class RPRESS_API {
 			case 'generate':
 				if( $this->generate_api_key( $user_id ) ) {
 					delete_transient( 'rpress-total-api-keys' );
-					wp_redirect( add_query_arg( 'rpress-message', 'api-key-generated', 'edit.php?post_type=fooditem&page=rpress-tools&tab=api_keys' ) ); exit();
+					wp_redirect( add_query_arg( 'rpress-message', 'api-key-generated', 'admin.php?page=rpress-tools&tab=api_keys' ) ); exit();
 				} else {
-					wp_redirect( add_query_arg( 'rpress-message', 'api-key-failed', 'edit.php?post_type=fooditem&page=rpress-tools&tab=api_keys' ) ); exit();
+					wp_redirect( add_query_arg( 'rpress-message', 'api-key-failed', 'admin.php?page=rpress-tools&tab=api_keys' ) ); exit();
 				}
 				break;
 			case 'regenerate':
 				$this->generate_api_key( $user_id, true );
 				delete_transient( 'rpress-total-api-keys' );
-				wp_redirect( add_query_arg( 'rpress-message', 'api-key-regenerated', 'edit.php?post_type=fooditem&page=rpress-tools&tab=api_keys' ) ); exit();
+				wp_redirect( add_query_arg( 'rpress-message', 'api-key-regenerated', 'admin.php?page=rpress-tools&tab=api_keys' ) ); exit();
 				break;
 			case 'revoke':
 				$this->revoke_api_key( $user_id );
 				delete_transient( 'rpress-total-api-keys' );
-				wp_redirect( add_query_arg( 'rpress-message', 'api-key-revoked', 'edit.php?post_type=fooditem&page=rpress-tools&tab=api_keys' ) ); exit();
+				wp_redirect( add_query_arg( 'rpress-message', 'api-key-revoked', 'admin.php?page=rpress-tools&tab=api_keys' ) ); exit();
 				break;
 			default;
 				break;

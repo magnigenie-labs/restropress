@@ -1,1 +1,0 @@
-<div class="rpress_fooditems_list rp-col-lg-7 rp-col-md-7 rp-col-sm-9 rp-col-xs-12">

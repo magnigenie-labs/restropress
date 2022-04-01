@@ -21,61 +21,100 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function rpress_process_actions() {
 	if ( isset( $_POST['rpress-action'] ) ) {
-		do_action( 'rpress_' . $_POST['rpress-action'], $_POST );
+		do_action( 'rpress_' . sanitize_text_field( $_POST['rpress-action'] ), rpress_sanitize_array( $_POST ) );
 	}
 
 	if ( isset( $_GET['rpress-action'] ) ) {
-		do_action( 'rpress_' . $_GET['rpress-action'], $_GET );
+		do_action( 'rpress_' . sanitize_text_field( $_GET['rpress-action'] ), rpress_sanitize_array( $_GET ) );
 	}
+
 }
 add_action( 'admin_init', 'rpress_process_actions' );
 
 /**
+ * Display notices to admins
  *
- * @since 1.0.0
- * @param $views
- *
- * @return mixed
+ * @since 2.6
  */
-function rpress_products_tabs( $views ) {
-	rpress_display_product_tabs();
+function rp_addon_activation_notice() {
 
-	return $views;
+  $items = get_transient( 'restropress_add_ons_feed' );
+  if( ! $items ) {
+    $items = rpress_fetch_items();
+  }
+
+  $statuses = array();
+
+  if( is_array( $items ) && !empty( $items ) ) {
+
+    foreach( $items as $key => $item ) {
+
+      $class_name = trim( $item->class_name );
+
+      if( class_exists( $class_name ) ) {
+
+        if( !get_option( $item->text_domain . '_license_status' ) ) {
+          array_push( $statuses, 'empty' );
+        } else {
+          $status = get_option( $item->text_domain . '_license_status' );
+          array_push( $statuses, $status );
+        }
+      }
+    }
+  }
+
+  if( !empty( $statuses ) && ( in_array( 'empty', $statuses) || in_array( 'invalid', $statuses) ) ) {
+
+    $class = 'notice notice-error';
+    $message = __( 'You have invalid or expired license keys for one or more addons of RestroPress. Please go to the <a href="%2$s">Extensions</a> page to update your licenses.', 'restropress' );
+    $url = admin_url( 'admin.php?page=rpress-extensions' );
+
+    printf( '<div class="%1$s"><p>' . $message . '</p></div>', esc_attr( $class ), $url );
+  }
 }
-add_filter( 'views_edit-fooditem', 'rpress_products_tabs', 10, 1 );
+add_action( 'admin_notices', 'rp_addon_activation_notice' );
+
 
 /**
- * Displays the product tabs for 'Products' 
- *
- * @since 1.0.0
+ * Check all extensions for updates
+ * @since 2.7.2
  */
-function rpress_display_product_tabs() {
-	?>
-	<h2 class="nav-tab-wrapper">
-		<?php
-		$tabs = array(
-			'products' => array(
-				'name' => rpress_get_label_plural(),
-				'url'  => admin_url( 'edit.php?post_type=fooditem' ),
-			),
-		);
+add_action( 'init', 'check_extensions_update', 10, 1 );
+function check_extensions_update() {
 
-		$tabs       = apply_filters( 'rpress_add_ons_tabs', $tabs );
-		$active_tab = isset( $_GET['page'] ) && $_GET['page'] === 'rpress-addons' ? 'integrations' : 'products';
-		foreach( $tabs as $tab_id => $tab ) {
+  if ( !is_admin() || wp_doing_ajax() ) return;
 
-			$active = $active_tab == $tab_id ? ' nav-tab-active' : '';
+  if ( ! function_exists( 'get_plugins' ) ) {
+      require_once ABSPATH . 'wp-admin/includes/plugin.php';
+  }
 
-			echo '<a href="' . esc_url( $tab['url'] ) . '" class="nav-tab' . $active . '">';
-			echo esc_html( $tab['name'] );
-			echo '</a>';
-		}
-		?>
+  $all_plugins = get_plugins();
 
-		<a href="<?php echo admin_url( 'post-new.php?post_type=fooditem' ); ?>" class="page-title-action">
-			<?php _e( 'Add New', 'restropress' ); // No text domain so it just follows what WP Core does ?>
-		</a>
-	</h2>
-	<br />
-	<?php
+  $ext_data = [];
+
+  foreach ( $all_plugins as $key => $plugin ) {
+
+    if ( strtolower( $plugin['Author'] ) == 'magnigenie' ) {
+      $ext_data[$plugin['TextDomain']] = array(
+        'path'    => $key,
+        'version' => $plugin['Version'],
+      );
+    }
+
+  }
+
+  if ( !empty( $ext_data ) ) {
+
+    foreach ( $ext_data as $key => $ext ) {
+
+      if ( $ext['path'] == plugin_basename( RP_PLUGIN_FILE ) ) continue ;
+
+      $text_domain = str_replace( '-', '_', $key );
+
+      new RestroPress_License( $ext['path'] , '' , $ext['version'], 'MagniGenie', $text_domain . '_license' );
+
+    }
+
+  }
+
 }

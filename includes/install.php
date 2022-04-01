@@ -51,11 +51,8 @@ register_activation_hook( RP_PLUGIN_FILE, 'rpress_install' );
  * @return void
  */
 function rpress_run_install() {
-	global $wpdb, $rpress_options;
 
-	if( ! function_exists( 'rpress_create_protection_files' ) ) {
-		require_once RP_PLUGIN_DIR . 'includes/admin/upload-functions.php';
-	}
+	global $wpdb, $rpress_options;
 
 	// Setup the RestroPress Custom Post Type
 	rpress_setup_rpress_post_types();
@@ -104,7 +101,7 @@ function rpress_run_install() {
 		$success = wp_insert_post(
 			array(
 				'post_title'     => __( 'Order Confirmation', 'restropress' ),
-				'post_content'   => __( 'Thanks! Your order has been received. [rpress_receipt]', 'restropress' ),
+				'post_content'   => __( '[rpress_receipt]', 'restropress' ),
 				'post_status'    => 'publish',
 				'post_author'    => 1,
 				'post_parent'    => $checkout,
@@ -152,12 +149,12 @@ function rpress_run_install() {
 		$options['order_history_page'] = $history;
 	}
 
-	$fooditems = array_key_exists( 'fooditems_page', $current_options ) ? get_post( $current_options['fooditems_page'] ) : false;
+	$fooditems = array_key_exists( 'food_items_page', $current_options ) ? get_post( $current_options['food_items_page'] ) : false;
 	if ( empty( $fooditems ) ) {
 		// Food Item (Food Item) Page
 		$fooditem = wp_insert_post(
 			array(
-				'post_title'     => __( 'Food Items', 'restropress' ),
+				'post_title'     => __( 'Order Online', 'restropress' ),
 				'post_content'   => '[fooditems]',
 				'post_status'    => 'publish',
 				'post_author'    => 1,
@@ -166,7 +163,9 @@ function rpress_run_install() {
 			)
 		);
 
-		$options['fooditems_page'] = $fooditem;
+		$options['food_items_page'] = $fooditem;
+	} else {
+		$options['food_items_page'] = $current_options['food_items_page'];
 	}
 
 	// Populate some default values
@@ -192,25 +191,47 @@ function rpress_run_install() {
 	}
 
 	$merged_options = array_merge( $rpress_options, $options );
-	$rpress_options    = $merged_options;
+	$rpress_options = $merged_options;
 
 	update_option( 'rpress_settings', $merged_options );
 	update_option( 'rpress_version', RP_VERSION );
 
 	// Create wp-content/uploads/rpress/ folder and the .htaccess file
-	// rpress_create_protection_files( true );
 
 	// Create RPRESS shop roles
 	$roles = new RPRESS_Roles;
 	$roles->add_roles();
 	$roles->add_caps();
 
-	// // Create the customer databases
+	// Create the customer databases
 	@RPRESS()->customers->create_table();
 	@RPRESS()->customer_meta->create_table();
 
-	// // Check for PHP Session support, and enable if available
+	// Check for PHP Session support, and enable if available
 	RPRESS()->session->use_php_sessions();
+
+	// Update lisence string
+	$items = get_transient( 'restropress_add_ons_feed' );
+	if( ! $items ) {
+		$items = rpress_fetch_items();
+	}
+
+	if( is_array( $items ) && !empty( $items ) ) {
+
+		foreach( $items as $key => $item ) {
+
+		  $license_key        = get_option( $item->license_string );
+		  $license_key_status = get_option( $item->license_string . '_status' );
+
+			if( !empty( $license_key ) )
+		  	update_option( $item->text_domain . '_license', $license_key );
+
+			if( !empty( $license_key_status ) )
+				update_option( $item->text_domain . '_license_status', $license_key_status );
+
+		}
+
+	}
 
 	// // Add a temporary option to note that RPRESS pages have been created
 	set_transient( '_rpress_installed', $merged_options, 30 );
@@ -342,3 +363,110 @@ function rpress_install_roles_on_network() {
 
 }
 add_action( 'admin_init', 'rpress_install_roles_on_network' );
+
+/**
+ * Checks whether migration is needed or not
+ *
+ *
+ * @since  2.6
+ * @return bool
+ */
+function rpress_needs_migration() {
+
+	$current_version = get_option( 'rpress_version', true  );
+
+	if ( empty( $current_version ) ) {
+		$current_version = '2.5';
+	}
+
+	if ( ! defined( 'IFRAME_REQUEST' ) && version_compare( $current_version, RPRESS()->version, '<' ) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+/**
+ * Update post meta with terms
+ *
+ *
+ * @since  2.6
+ * @return mixed
+ */
+function rpress_db_migration() {
+
+	global $wpdb;
+
+	$get_fooditems = $wpdb->get_results( "SELECT ID FROM {$wpdb->prefix}posts WHERE `post_type` = 'fooditem' ", ARRAY_A );
+
+	if ( is_array( $get_fooditems ) && !empty( $get_fooditems ) ) {
+
+		foreach( $get_fooditems as $key => $get_fooditem ) {
+
+			$fooditem_id = $get_fooditem['ID'];
+
+			//Get post terms
+			$get_fooditems_terms = wp_get_post_terms( $fooditem_id, 'addon_category', array( 'fields' => 'id=>parent' ) );
+
+			if( is_array( $get_fooditems_terms ) ) {
+
+				$meta_term = array();
+
+				foreach( $get_fooditems_terms as $term_id => $parent_id ) {
+
+					if( $parent_id != 0 )
+						continue;
+
+					$meta_term[$term_id]['category'] = $term_id;
+					$meta_term[$term_id]['items'] = array();
+				}
+
+				foreach( $get_fooditems_terms as $term_id => $parent_id ) {
+					if( $parent_id == 0 )
+						continue;
+
+					if( isset( $meta_term[$parent_id]['items'] ) )
+						array_push( $meta_term[$parent_id]['items'], $term_id );
+				}
+			}
+
+			// Update Post Meta
+			update_post_meta( $fooditem_id, '_addon_items', $meta_term );
+		}
+	}
+	//Update add-ons meta if upgrading
+	$addons_args = array(
+		'taxonomy'  	=> 'addon_category',
+		'orderby'   	=> 'name',
+		'hide_empty'  => false
+	);
+	//Migrate old term data
+	$addons = get_terms( $addons_args );
+	foreach( $addons as $addon ) {
+		$addon_meta  = get_option( 'taxonomy_term_' . $addon->term_id );
+		if( empty( $addon_meta ) ) continue;
+		$addon_type  = !empty( $addon_meta['use_it_like'] ) && $addon_meta['use_it_like'] == 'checkbox' ? 'multiple' : 'single';
+		$addon_price = $addon_meta['price'];
+		
+		if( !empty( $addon->parent ) )
+			update_term_meta( $addon->term_id, '_price', $addon_price );
+		else
+			update_term_meta( $addon->term_id, '_type', $addon_type );
+		
+		//Clean the old term data
+		delete_option( 'taxonomy_term_' . $addon->term_id );
+	}
+}
+
+
+
+function rpress_check_migartion() {
+	if ( rpress_needs_migration() ) {
+  	rpress_db_migration();
+    delete_option( 'rpress_version' );
+    add_option( 'rpress_version', RPRESS()->version );
+  }
+}
+
+add_action( 'admin_init', 'rpress_check_migartion' );

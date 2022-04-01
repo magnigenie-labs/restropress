@@ -589,7 +589,7 @@ class RPRESS_Batch_Payments_Import extends RPRESS_Batch_Import {
 	 * @return string
 	 */
 	public function get_list_table_url() {
-		return admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history' );
+		return admin_url( 'admin.php?page=rpress-payment-history' );
 	}
 
 	/**

@@ -31,8 +31,8 @@ function rpress_get_payment_gateways() {
 			'checkout_label' => __( 'Test Payment', 'restropress' )
 		),
 		'cash_on_delivery' => array(
-			'admin_label'    => __( 'Cash On Delivery', 'restropress' ),
-			'checkout_label' => __( 'Cash On Delivery', 'restropress' )
+			'admin_label'    => __( 'Pay by cash', 'restropress' ),
+			'checkout_label' => __( 'Pay by cash', 'restropress' )
 		),
 	);
 
@@ -85,8 +85,11 @@ function rpress_get_enabled_payment_gateways( $sort = false ) {
  * @return boolean true if enabled, false otherwise
 */
 function rpress_is_gateway_active( $gateway ) {
-	$gateways = rpress_get_enabled_payment_gateways();
-	$ret = array_key_exists( $gateway, $gateways );
+
+	if ( !$gateway ) return false;
+
+	$gateways 	= rpress_get_enabled_payment_gateways();
+	$ret 		= array_key_exists( $gateway, $gateways );
 	return apply_filters( 'rpress_is_gateway_active', $ret, $gateway, $gateways );
 }
 
@@ -122,7 +125,7 @@ function rpress_get_gateway_admin_label( $gateway ) {
 
 	if( $gateway == 'manual' && $payment ) {
 		if( rpress_get_payment_amount( $payment ) == 0 ) {
-			$label = __( 'Free Purchase', 'restropress' );
+			$label = __( 'Test Payment', 'restropress' );
 		}
 	}
 
@@ -141,7 +144,7 @@ function rpress_get_gateway_checkout_label( $gateway ) {
 	$label    = isset( $gateways[ $gateway ] ) ? $gateways[ $gateway ]['checkout_label'] : $gateway;
 
 	if( $gateway == 'manual' ) {
-		$label = __( 'Free Purchase', 'restropress' );
+		$label = __( 'Test Payment', 'restropress' );
 	}
 
 	return apply_filters( 'rpress_gateway_checkout_label', $label, $gateway );
@@ -347,7 +350,7 @@ function rpress_show_gateways() {
  */
 function rpress_get_chosen_gateway() {
 	$gateways = rpress_get_enabled_payment_gateways();
-	$chosen   = isset( $_REQUEST['payment-mode'] ) ? $_REQUEST['payment-mode'] : false;
+	$chosen   = isset( $_REQUEST['payment-mode'] ) ? sanitize_text_field( $_REQUEST['payment-mode'] )  : false;
 
 	if ( false !== $chosen ) {
 		$chosen = preg_replace('/[^a-zA-Z0-9-_]+/', '', $chosen );
@@ -445,9 +448,9 @@ function rpress_cash_on_delivery_payment( $purchase_data ) {
 
 	if ( $payment ) {
 		rpress_update_payment_status( $payment, 'processing' );
+		rpress_update_order_status( $payment, 'pending' );
 		// Empty the shopping cart
 		rpress_empty_cart();
-		rpress_admin_email_notice($payment, $payment_data);
 		rpress_send_to_success_page();
 	} else {
 		rpress_record_gateway_error( __( 'Payment Error', 'restropress' ), sprintf( __( 'Payment creation failed while processing with Cash On delivery order. Payment data: %s', 'restropress' ), json_encode( $payment_data ) ), $payment );

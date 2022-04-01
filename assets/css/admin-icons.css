@@ -1,0 +1,124 @@
+@font-face {
+  font-family: 'restropress';
+  src:  url('../fonts/restropress.eot?ffp6c9');
+  src:  url('../fonts/restropress.eot?ffp6c9#iefix') format('embedded-opentype'),
+    url('../fonts/restropress.ttf?ffp6c9') format('truetype'),
+    url('../fonts/restropress.woff?ffp6c9') format('woff'),
+    url('../fonts/restropress.svg?ffp6c9#restropress') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'rp-notification';
+  src:  url('../fonts/rp-notification.eot?kn1kj2');
+  src:  url('../fonts/rp-notification.eot?kn1kj2#iefix') format('embedded-opentype'),
+    url('../fonts/rp-notification.ttf?kn1kj2') format('truetype'),
+    url('../fonts/rp-notification.woff?kn1kj2') format('woff'),
+    url('../fonts/rp-notification.svg?kn1kj2#rp-notification') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'restropress' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 18px;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-eye:before {
+  content: "\e903";
+  color: #686868;
+}
+
+.icon-clock:before {
+  content: "\e902";
+  color: #686868;
+}
+.icon-restropress:before {
+  content: "\e901";
+  color: #676767;
+}
+.icon-default:before {
+  content: "\e900";
+  color: #676767;
+}
+.icon-food-items:before {
+  content: "\e908";
+  color: #676767;
+}
+.icon-addon:before {
+  content: "\e909";
+  color: #676767;
+}
+.icon-category:before {
+  content: "\e90a";
+  color: #676767;
+}
+.icon-general:before {
+  content: "\e90b";
+  color: #676767;
+}
+
+#adminmenu #toplevel_page_restropress .menu-icon-generic div.wp-menu-image::before {
+  font-family: restropress !important;
+  content: "\e901";
+}
+
+#adminmenu #menu-posts-fooditem div.wp-menu-image::before {
+  font-family: restropress !important;
+  content: "\e908";
+  left: 8px;
+}
+#rpress-payments-filter a.order-preview::before {
+  font-family: restropress !important;
+  content: "\e903";
+}
+
+#rpress-payments-filter a.order-preview.disabled::before {
+  content: "";
+}
+
+#rpress-payments-filter a.order-preview span {
+  display: none;
+}
+
+.rp-service-time .rp-clock-icon::before {
+  font-family: restropress !important;
+  content: "\e902";
+  position: relative;
+  top: 5px;
+  left: 11px;
+  font-size: 13px;
+  color: #2e7090;
+}
+
+.rpress-email-settings-table-status .status-enabled,
+.rpress-email-settings-table-status .status-disabled {
+  position: relative;
+  top: 5px;
+  left: 11px;
+  font-size: 20px;
+  font-family: rp-notification !important;
+}
+.rpress-email-settings-table-status .status-enabled:before {
+  content: "\e901";
+  color: rgb(13, 140, 175);
+}
+
+.rpress-email-settings-table-status .status-disabled:before {
+  content: "\e900";
+  color: rgb(204, 204, 204);
+}

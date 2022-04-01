@@ -75,7 +75,7 @@ function rpress_options_page() {
 	ob_start();
 	?>
 	<div class="wrap <?php echo 'wrap-' . $active_tab; ?>">
-		<h2><?php _e( 'RestroPress Settings', 'restropress' ); ?></h2>
+		<h2><?php esc_html_e( 'RestroPress Settings', 'restropress' ); ?></h2>
 		<h2 class="nav-tab-wrapper">
 			<?php
 			foreach ( rpress_get_settings_tabs() as $tab_id => $tab_name ) {
@@ -148,7 +148,7 @@ function rpress_options_page() {
 
 				// If the main section was empty and we overrode the view with the next subsection, prepare the section for saving
 				if ( true === $override ) {
-					?><input type="hidden" name="rpress_section_override" value="<?php echo $section; ?>" /><?php
+					?><input type="hidden" name="rpress_section_override" value="<?php echo esc_html( $section ); ?>" /><?php
 				}
 				?>
 				</table>

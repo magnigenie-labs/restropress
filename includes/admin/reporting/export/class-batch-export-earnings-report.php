@@ -6,7 +6,7 @@
  *
  * @package     RPRESS
  * @subpackage  Admin/Reports
- * @copyright   Copyright (c) 2017, Sunny Ratilal
+ * @copyright   Copyright (c) 2017, MagniGenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.7
  */

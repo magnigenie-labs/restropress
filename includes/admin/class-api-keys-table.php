@@ -135,13 +135,13 @@ class RPRESS_API_Keys_Table extends WP_List_Table {
 
 		$actions = array();
 
-		if( apply_filters( 'rpress_api_log_requests', true ) ) {
-			$actions['view'] = sprintf(
-				'<a href="%s">%s</a>',
-				esc_url( add_query_arg( array( 'view' => 'api_requests', 'post_type' => 'fooditem', 'page' => 'rpress-reports', 'tab' => 'logs', 's' => $item['email'] ), 'edit.php' ) ),
-				__( 'View API Log', 'restropress' )
-			);
-		}
+		// if( apply_filters( 'rpress_api_log_requests', true ) ) {
+		// 	$actions['view'] = sprintf(
+		// 		'<a href="%s">%s</a>',
+		// 		esc_url( add_query_arg( array( 'page' => 'rpress-reports', 'view' => 'api_requests' 'tab' => 'logs', 's' => $item['email'] ), 'admin.php' ) ),
+		// 		__( 'View API Log', 'restropress' )
+		// 	);
+		// }
 
 		$actions['reissue'] = sprintf(
 			'<a href="%s" class="rpress-regenerate-api-key">%s</a>',
@@ -190,7 +190,7 @@ class RPRESS_API_Keys_Table extends WP_List_Table {
 			return;
 		}
 		?>
-		<form id="api-key-generate-form" method="post" action="<?php echo admin_url( 'edit.php?post_type=fooditem&page=rpress-tools&tab=api_keys' ); ?>">
+		<form id="api-key-generate-form" method="post" action="<?php echo admin_url( 'admin.php?page=rpress-tools&tab=api_keys' ); ?>">
 			<input type="hidden" name="rpress_action" value="process_api_key" />
 			<input type="hidden" name="rpress_api_process" value="generate" />
 			<?php wp_nonce_field( 'rpress-api-nonce' ); ?>

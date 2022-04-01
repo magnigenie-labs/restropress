@@ -76,10 +76,10 @@ class RPRESS_Earnings_Export extends RPRESS_Export {
 	 */
 	public function get_data() {
 
-		$start_year  = isset( $_POST['start_year'] )   ? absint( $_POST['start_year'] )   : date( 'Y' );
-		$end_year    = isset( $_POST['end_year'] )     ? absint( $_POST['end_year'] )     : date( 'Y' );
+		$start_year  = isset( $_POST['start_year'] )   ? absint( $_POST['start_year'] )  : date( 'Y' );
+		$end_year    = isset( $_POST['end_year'] )     ? absint( $_POST['end_year'] )    : date( 'Y' );
 		$start_month = isset( $_POST['start_month'] )  ? absint( $_POST['start_month'] )  : date( 'n' );
-		$end_month   = isset( $_POST['end_month'] )    ? absint( $_POST['end_month'] )    : date( 'n' );
+		$end_month   = isset( $_POST['end_month'] )    ? absint( $_POST['end_month'] )   : date( 'n' );
 
 		$data  = array();
 		$year  = $start_year;

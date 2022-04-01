@@ -48,64 +48,11 @@ function rpress_get_tax_rates() {
  * @return mixed|void
  */
 function rpress_get_tax_rate( $country = false, $state = false ) {
-	$rate = (float) rpress_get_option( 'tax_rate', 0 );
 
-	$user_address = rpress_get_customer_address();
-
-	if( empty( $country ) ) {
-		if( ! empty( $_POST['billing_country'] ) ) {
-			$country = $_POST['billing_country'];
-		} elseif( is_user_logged_in() && ! empty( $user_address['country'] ) ) {
-			$country = $user_address['country'];
-		}
-		$country = ! empty( $country ) ? $country : rpress_get_shop_country();
-	}
-
-	if( empty( $state ) ) {
-		if( ! empty( $_POST['state'] ) ) {
-			$state = $_POST['state'];
-		} elseif( ! empty( $_POST['card_state'] ) ) {
-			$state = $_POST['card_state'];
-		} elseif( is_user_logged_in() && ! empty( $user_address['state'] ) ) {
-			$state = $user_address['state'];
-		}
-		$state = ! empty( $state ) ? $state : rpress_get_shop_state();
-	}
-
-	if( ! empty( $country ) ) {
-		$tax_rates   = rpress_get_tax_rates();
-
-		if( ! empty( $tax_rates ) ) {
-
-			// Locate the tax rate for this country / state, if it exists
-			foreach( $tax_rates as $key => $tax_rate ) {
-
-				if( $country != $tax_rate['country'] )
-					continue;
-
-				if( ! empty( $tax_rate['global'] ) ) {
-					if( ! empty( $tax_rate['rate'] ) ) {
-						$rate = number_format( $tax_rate['rate'], 4 );
-					}
-				} else {
-
-					if( empty( $tax_rate['state'] ) || strtolower( $state ) != strtolower( $tax_rate['state'] ) ) {
-						continue;
-					}
-
-					$state_rate = $tax_rate['rate'];
-					if( ( 0 !== $state_rate || ! empty( $state_rate ) ) && '' !== $state_rate ) {
-						$rate = number_format( $state_rate, 4 );
-					}
-				}
-			}
-		}
-	}
-
-	// Convert to a number we can use
-	$rate = $rate / 100;
-
-	return apply_filters( 'rpress_tax_rate', $rate, $country, $state );
+    $rate = (float) rpress_get_option( 'tax_rate', 0 );
+    // Convert to a number we can use
+    $rate = $rate / 100;
+    return apply_filters( 'rpress_tax_rate', $rate, $country, $state );
 }
 
 /**
@@ -137,17 +84,15 @@ function rpress_calculate_tax( $amount = 0, $country = false, $state = false ) {
 	$tax  = 0.00;
 
 	if ( rpress_use_taxes() && $amount > 0 ) {
-
 		if ( rpress_prices_include_tax() ) {
 			$pre_tax = ( $amount / ( 1 + $rate ) );
-			$tax     = $amount - $pre_tax;
+			$tax = floatval($amount) - $pre_tax;
 		} else {
-			$tax = $amount * $rate;
+			$tax = floatval($amount) * $rate;
 		}
-
 	}
 
-	return apply_filters( 'rpress_taxed_amount', $tax, $rate, $country, $state );
+	return apply_filters( 'rpress_taxed_amount', floatval( $tax ), $rate, $country, $state );
 }
 
 /**
@@ -237,21 +182,6 @@ function rpress_prices_show_tax_on_checkout() {
 }
 
 /**
- * Check to see if we should show included taxes
- *
- * Some countries (notably in the EU) require included taxes to be displayed.
- *
- * @since  1.0.0
- * @author Daniel J Griffiths
- * @return bool
- */
-function rpress_display_tax_rate() {
-	$ret = rpress_use_taxes() && rpress_get_option( 'display_tax_rate', false );
-
-	return apply_filters( 'rpress_display_tax_rate', $ret );
-}
-
-/**
  * Should we show address fields for taxation purposes?
  *
  * @since 1.y
@@ -263,7 +193,6 @@ function rpress_cart_needs_tax_address_fields() {
 		return false;
 
 	return ! did_action( 'rpress_after_cc_fields', 'rpress_default_cc_address_fields' );
-
 }
 
 /**
@@ -273,6 +202,47 @@ function rpress_cart_needs_tax_address_fields() {
  * @return bool
  */
 function rpress_fooditem_is_tax_exclusive( $fooditem_id = 0 ) {
-	$ret = (bool) get_post_meta( $fooditem_id, '_rpress_fooditem_tax_exclusive', true );
+	$ret = false;
 	return apply_filters( 'rpress_fooditem_is_tax_exclusive', $ret, $fooditem_id );
+}
+
+/**
+ * Is this Addon excluded from tax?
+ *
+ * @since  2.7.3
+ * @return bool
+ */
+function rpress_addon_is_tax_exclusive( $addon_id = 0 ) {
+	$ret = 'no';
+	return apply_filters( 'rpress_addon_is_tax_exclusive', $ret, $addon_id );
+}
+
+/**
+ * Get tax name
+ *
+ * @since  2.6
+ * @return string
+ */
+function rpress_get_tax_name() {
+
+    $tax_name = rpress_get_option( 'tax_name', '' );
+
+    if ( empty( $tax_name ) ) {
+        $tax_name = __( 'Estimated Tax', 'restropress' );
+    }
+
+    $tax_name = apply_filters( 'rpress_tax_name', $tax_name );
+
+    return $tax_name;
+}
+
+/**
+ * Checks whether it needs to show the billing details or not.
+ *
+ * @since 2.5.5
+ * @return bool Whether or the fields needs to be shown
+ */
+function rpress_show_billing_fields() {
+    $enable_fields = rpress_get_option( 'enable_billing_fields', false );
+    return (bool) apply_filters( 'rpress_show_billing_fields', $enable_fields );
 }

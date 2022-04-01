@@ -45,7 +45,9 @@ function rpress_get_shop_state() {
  * @param string $country
  * @return array A list of states for the selected country
  */
-function rpress_get_shop_states( $country = null ) {
+function rpress_get_states( $country = null ) {
+	$country = sanitize_text_field( $country );
+	
 	if( empty( $country ) )
 		$country = rpress_get_shop_country();
 
@@ -1915,7 +1917,7 @@ function rpress_get_country_name( $country_code = '' ) {
  * @return string
  */
 function rpress_get_state_name( $country_code = '', $state_code = '' ) {
-	$states_list = rpress_get_shop_states( $country_code );
+	$states_list = rpress_get_states( $country_code );
 	$state_name  = isset( $states_list[ $state_code ] ) ? $states_list[ $state_code ] : $state_code;
 
 	return apply_filters( 'rpress_get_state_name', $state_name, $state_code );

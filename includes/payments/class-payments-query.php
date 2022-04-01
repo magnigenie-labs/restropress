@@ -80,6 +80,7 @@ class RPRESS_Payments_Query extends RPRESS_Stats {
 			'post_type'       => array( 'rpress_payment' ),
 			'start_date'      => false,
 			'end_date'        => false,
+			'service_date'	  => false,
 			'number'          => 20,
 			'page'            => null,
 			'orderby'         => 'ID',
@@ -164,15 +165,16 @@ class RPRESS_Payments_Query extends RPRESS_Stats {
 		$this->customer();
 		$this->search();
 		$this->gateway();
+		$this->service_date();
 		$this->mode();
 		$this->children();
 		$this->fooditem();
 		$this->post__in();
 
 		do_action( 'rpress_pre_get_payments', $this );
-		//print_r( $this->args) ;
+
 		$query = new WP_Query( $this->args );
-		
+
 		$custom_output = array(
 			'payments',
 			'rpress_payments',
@@ -378,6 +380,26 @@ class RPRESS_Payments_Query extends RPRESS_Stats {
 			'key'   => '_rpress_payment_gateway',
 			'value' => $this->args['gateway']
 		) );
+	}
+
+	/**
+	 * Filter for specific service date
+	 *
+	 * @since 2.6.2
+	 * @return void
+	 */
+	public function service_date() {
+
+		if ( ! ( $this->args['service_date'] ) ) {
+			return;
+		}
+
+		$this->__set( 'meta_query', array(
+			'key'   => '_rpress_delivery_date',
+			'value' => date_i18n( 'Y-m-d', strtotime( $this->args['service_date'] ) )
+		) );
+
+		$this->__unset( 'service_date' );
 	}
 
 	/**

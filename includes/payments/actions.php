@@ -25,134 +25,153 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @return void
 */
 function rpress_complete_purchase( $payment_id, $new_status, $old_status ) {
-	if ( $old_status == 'publish' || $old_status == 'complete' ) {
-		return; // Make sure that payments are only completed once
-	}
+    if ( $old_status == 'publish' || $old_status == 'complete' ) {
+        return; // Make sure that payments are only completed once
+    }
 
-	// Make sure the payment completion is only processed when new status is complete
-	if ( $new_status != 'publish' && $new_status != 'processing' ) {
-		return;
-	}
+    // Make sure the payment completion is only processed when new status is complete
+    if ( ( $new_status != 'publish' && $new_status != 'processing' ) ||  $old_status == 'processing' ) {
+        return;
+    }
 
-	$payment = new RPRESS_Payment( $payment_id );
+    $payment = new RPRESS_Payment( $payment_id );
 
-	$creation_date  = get_post_field( 'post_date', $payment_id, 'raw' );
-	$completed_date = $payment->completed_date;
-	$user_info      = $payment->user_info;
-	$customer_id    = $payment->customer_id;
-	$amount         = $payment->total;
-	$cart_details   = $payment->cart_details;
+    $creation_date  = get_post_field( 'post_date', $payment_id, 'raw' );
+    $completed_date = $payment->completed_date;
+    $user_info      = $payment->user_info;
+    $customer_id    = $payment->customer_id;
+    $amount         = $payment->total;
+    $cart_details   = $payment->cart_details;
 
-	do_action( 'rpress_pre_complete_purchase', $payment_id );
+    do_action( 'rpress_pre_complete_purchase', $payment_id );
 
-	if ( is_array( $cart_details ) ) {
+    if ( is_array( $cart_details ) ) {
 
-		// Increase purchase count and earnings
-		foreach ( $cart_details as $cart_index => $fooditem ) {
+        // Increase purchase count and earnings
+        foreach ( $cart_details as $cart_index => $fooditem ) {
 
-			// "bundle" or "default"
-			$fooditem_type = rpress_get_fooditem_type( $fooditem['id'] );
-			$price_id      = isset( $fooditem['item_number']['options']['price_id'] ) ? (int) $fooditem['item_number']['options']['price_id'] : false;
-			// Increase earnings and fire actions once per quantity number
-			for( $i = 0; $i < $fooditem['quantity']; $i++ ) {
+            // "bundle" or "default"
+            $fooditem_type = rpress_get_fooditem_type( $fooditem['id'] );
+            $price_id      = isset( $fooditem['item_number']['options']['price_id'] ) ? (int) $fooditem['item_number']['options']['price_id'] : false;
+            // Increase earnings and fire actions once per quantity number
+            for( $i = 0; $i < $fooditem['quantity']; $i++ ) {
 
-				// Ensure these actions only run once, ever
-				if ( empty( $completed_date ) ) {
+                // Ensure these actions only run once, ever
+                if ( empty( $completed_date ) ) {
 
-					rpress_record_sale_in_log( $fooditem['id'], $payment_id, $price_id, $creation_date );
-					do_action( 'rpress_complete_fooditem_purchase', $fooditem['id'], $payment_id, $fooditem_type, $fooditem, $cart_index );
+                    rpress_record_sale_in_log( $fooditem['id'], $payment_id, $price_id, $creation_date );
+                    do_action( 'rpress_complete_fooditem_purchase', $fooditem['id'], $payment_id, $fooditem_type, $fooditem, $cart_index );
 
-				}
+                }
 
-			}
+            }
 
-			$increase_earnings = $fooditem['price'];
-			if ( ! empty( $fooditem['fees'] ) ) {
-				foreach ( $fooditem['fees'] as $fee ) {
-					if ( $fee['amount'] > 0 ) {
-						continue;
-					}
-					$increase_earnings += $fee['amount'];
-				}
-			}
+            $increase_earnings = $fooditem['price'];
+            if ( ! empty( $fooditem['fees'] ) ) {
+                foreach ( $fooditem['fees'] as $fee ) {
+                    if ( $fee['amount'] > 0 ) {
+                        continue;
+                    }
+                    $increase_earnings += $fee['amount'];
+                }
+            }
 
-			// Increase the earnings for this fooditem ID
-			rpress_increase_earnings( $fooditem['id'], $increase_earnings );
-			rpress_increase_purchase_count( $fooditem['id'], $fooditem['quantity'] );
+            // Increase the earnings for this fooditem ID
+            rpress_increase_earnings( $fooditem['id'], $increase_earnings );
+            rpress_increase_purchase_count( $fooditem['id'], $fooditem['quantity'] );
 
-		}
+        }
 
-		// Clear the total earnings cache
-		delete_transient( 'rpress_earnings_total' );
-		// Clear the This Month earnings (this_monththis_month is NOT a typo)
-		delete_transient( md5( 'rpress_earnings_this_monththis_month' ) );
-		delete_transient( md5( 'rpress_earnings_todaytoday' ) );
-	}
+        // Clear the total earnings cache
+        delete_transient( 'rpress_earnings_total' );
+        // Clear the This Month earnings (this_monththis_month is NOT a typo)
+        delete_transient( md5( 'rpress_earnings_this_monththis_month' ) );
+        delete_transient( md5( 'rpress_earnings_todaytoday' ) );
+    }
 
+    if ( isset( $_COOKIE['service_time'] )
+     && !empty( $_COOKIE['service_time'] ) ) {
+        unset( $_COOKIE['service_time'] );
+        setcookie( "service_time", "", time() - 300, "/" );
+    }
 
-	// Increase the customer's purchase stats
-	$customer = new RPRESS_Customer( $customer_id );
-	$customer->increase_purchase_count();
-	$customer->increase_value( $amount );
+    if ( isset( $_COOKIE['service_type'] )
+        && !empty( $_COOKIE['service_type'] ) ) {
+        unset( $_COOKIE['service_type'] );
+        setcookie( "service_type", "", time() - 300, "/" );
+    }
 
-	rpress_increase_total_earnings( $amount );
-
-	// Check for discount codes and increment their use counts
-	if ( ! empty( $user_info['discount'] ) && $user_info['discount'] !== 'none' ) {
-
-		$discounts = array_map( 'trim', explode( ',', $user_info['discount'] ) );
-
-		if( ! empty( $discounts ) ) {
-
-			foreach( $discounts as $code ) {
-
-				rpress_increase_discount_usage( $code );
-
-			}
-
-		}
-	}
+    if ( isset( $_COOKIE['delivery_date'] )
+     && !empty( $_COOKIE['delivery_date']  ) ) {
+        unset( $_COOKIE['delivery_date'] );
+        setcookie( "delivery_date", "", time() - 300, "/" );
+    }
 
 
-	// Ensure this action only runs once ever
-	if( empty( $completed_date ) ) {
+    // Increase the customer's purchase stats
+    $customer = new RPRESS_Customer( $customer_id );
+     $customer->increase_purchase_count();
+     $customer->increase_value( $amount );
 
-		// Save the completed date
-		$payment->completed_date = current_time( 'mysql' );
-		$payment->save();
+    rpress_increase_total_earnings( $amount );
 
-		/**
-		 * Runs **when** a purchase is marked as "complete".
-		 *
-		 * @since 1.0.0 - Added RPRESS_Payment and RPRESS_Customer object to action.
-		 *
-		 * @param int          $payment_id Payment ID.
-		 * @param RPRESS_Payment  $payment    RPRESS_Payment object containing all payment data.
-		 * @param RPRESS_Customer $customer   RPRESS_Customer object containing all customer data.
-		 */
-		do_action( 'rpress_complete_purchase', $payment_id, $payment, $customer );
+    // Check for discount codes and increment their use counts
+    if ( ! empty( $user_info['discount'] ) && $user_info['discount'] !== 'none' ) {
 
-		// If cron doesn't work on a site, allow the filter to use __return_false and run the events immediately.
-		$use_cron = apply_filters( 'rpress_use_after_payment_actions', true, $payment_id );
-		if ( false === $use_cron ) {
-			/**
-			 * Runs **after** a purchase is marked as "complete".
-			 *
-			 * @see rpress_process_after_payment_actions()
-			 *
-			 * @since 1.0.0 - Added RPRESS_Payment and RPRESS_Customer object to action.
-			 *
-			 * @param int          $payment_id Payment ID.
-			 * @param RPRESS_Payment  $payment    RPRESS_Payment object containing all payment data.
-			 * @param RPRESS_Customer $customer   RPRESS_Customer object containing all customer data.
-			 */
-			do_action( 'rpress_after_payment_actions', $payment_id, $payment, $customer );
-		}
+        $discounts = array_map( 'trim', explode( ',', $user_info['discount'] ) );
 
-	}
+        if( ! empty( $discounts ) ) {
 
-	// Empty the shopping cart
-	rpress_empty_cart();
+            foreach( $discounts as $code ) {
+
+                rpress_increase_discount_usage( $code );
+
+            }
+
+        }
+    }
+
+
+    // Ensure this action only runs once ever
+    if( empty( $completed_date ) ) {
+
+        // Save the completed date
+        $payment->completed_date = current_time( 'mysql' );
+        $payment->save();
+
+        /**
+         * Runs **when** a purchase is marked as "complete".
+         *
+         * @since 1.0.0 - Added RPRESS_Payment and RPRESS_Customer object to action.
+         *
+         * @param int          $payment_id Payment ID.
+         * @param RPRESS_Payment  $payment    RPRESS_Payment object containing all payment data.
+         * @param RPRESS_Customer $customer   RPRESS_Customer object containing all customer data.
+         */
+        do_action( 'rpress_complete_purchase', $payment_id, $payment, $customer );
+
+        // If cron doesn't work on a site, allow the filter to use __return_false and run the events immediately.
+        $use_cron = apply_filters( 'rpress_use_after_payment_actions', true, $payment_id );
+        if ( false === $use_cron ) {
+            /**
+             * Runs **after** a purchase is marked as "complete".
+             *
+             * @see rpress_process_after_payment_actions()
+             *
+             * @since 1.0.0 - Added RPRESS_Payment and RPRESS_Customer object to action.
+             *
+             * @param int          $payment_id Payment ID.
+             * @param RPRESS_Payment  $payment    RPRESS_Payment object containing all payment data.
+             * @param RPRESS_Customer $customer   RPRESS_Customer object containing all customer data.
+             */
+            do_action( 'rpress_after_payment_actions', $payment_id, $payment, $customer );
+        }
+
+    }
+
+    // Empty the shopping cart
+    rpress_empty_cart();
+
 }
 add_action( 'rpress_update_payment_status', 'rpress_complete_purchase', 100, 3 );
 
@@ -440,7 +459,7 @@ function rpress_recover_payment() {
 
 
 
-	$payment = new RPRESS_Payment( $_GET['payment_id'] );
+	$payment = new RPRESS_Payment( sanitize_text_field( $_GET['payment_id'] ) );
 	if ( $payment->ID !== (int) $_GET['payment_id'] ) {
 		return;
 	}
@@ -555,19 +574,14 @@ function rpress_recovery_force_login_fields() {
 		if ( ( $requires_login && ! is_user_logged_in() ) && ( $payment->user_id > 0 && ( ! is_user_logged_in() ) ) ) {
 			?>
 			<div class="rpress-alert rpress-alert-info">
-				<p><?php _e( 'To complete this payment, please login to your account.', 'restropress' ); ?></p>
+				<p><?php esc_html_e( 'To complete this payment, please login to your account.', 'restropress' ); ?></p>
 				<p>
-					<a href="<?php echo wp_lostpassword_url(); ?>" title="<?php _e( 'Lost Password', 'restropress' ); ?>">
-						<?php _e( 'Lost Password?', 'restropress' ); ?>
+					<a href="<?php echo wp_lostpassword_url(); ?>" title="<?php esc_html_e( 'Lost Password', 'restropress' ); ?>">
+						<?php esc_html_e( 'Lost Password?', 'restropress' ); ?>
 					</a>
 				</p>
 			</div>
 			<?php
-			$show_register_form = rpress_get_option( 'show_register_form', 'none' );
-
-			if ( 'both' === $show_register_form || 'login' === $show_register_form ) {
-				return;
-			}
 			do_action( 'rpress_purchase_form_login_fields' );
 		}
 	}

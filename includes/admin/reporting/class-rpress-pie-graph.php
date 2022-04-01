@@ -125,56 +125,56 @@ class RPRESS_Pie_Graph extends RPRESS_Graph {
 			ob_start();
 			?>
 			<script type="text/javascript">
-				var <?php echo $this->id; ?>_data = [
+				var <?php echo esc_html( $this->id ); ?>_data = [
 				<?php foreach ( $this->data as $label => $value ) : ?>
-					<?php echo '{ label: "' . esc_attr( $label ) . '", data: "' . $value . '" },' . "\n"; ?>
+					<?php echo '{ label: "' . esc_attr( $label ) . '", data: "' . wp_kses_post( $value ) . '" },' . "\n"; ?>
 				<?php endforeach; ?>
 				];
 
-				var <?php echo $this->id; ?>_options = {
+				var <?php echo esc_html( $this->id ); ?>_options = {
 					series: {
 						pie: {
 							show: true,
-							radius: <?php echo $this->options['radius']; ?>,
+							radius: <?php echo esc_html( $this->options['radius'] ); ?>,
 							label: [],
 						},
 						rpress_vars: {
-							id: '<?php echo $this->id; ?>',
+							id: '<?php echo esc_html( $this->id ); ?>',
 						}
 					},
 					legend: {
-						show: <?php echo $this->options['legend']; ?>,
+						show: <?php echo esc_html( $this->options['legend'] ); ?>,
 					},
 					grid: {},
 				};
 
 				<?php if ( true === $this->options['show_labels'] ) : ?>
-					<?php echo $this->id; ?>_options.series.pie.label.show = true;
-					<?php echo $this->id; ?>_options.series.pie.label.formatter = <?php echo $this->options['label_formatter']; ?>;
-					<?php echo $this->id; ?>_options.series.pie.label.threshold = <?php echo $this->options['label_threshold']; ?>;
-					<?php echo $this->id; ?>_options.series.pie.label.radius = <?php echo $this->options['label_radius']; ?>;
-					<?php echo $this->id; ?>_options.series.pie.label.background = { opacity: <?php echo $this->options['label_bg_opacity']; ?> };
+					<?php echo esc_html( $this->id ); ?>_options.series.pie.label.show = true;
+					<?php echo esc_html( $this->id ); ?>_options.series.pie.label.formatter = <?php echo wp_kses_post( $this->options['label_formatter'] ) ; ?>;
+					<?php echo esc_html( $this->id ); ?>_options.series.pie.label.threshold = <?php echo wp_kses_post( $this->options['label_threshold'] ); ?>;
+					<?php echo esc_html( $this->id ); ?>_options.series.pie.label.radius = <?php echo wp_kses_post( $this->options['label_radius'] ); ?>;
+					<?php echo esc_html( $this->id ); ?>_options.series.pie.label.background = { opacity: <?php echo wp_kses_post( $this->options['label_bg_opacity'] ); ?> };
 				<?php endif; ?>
 
 				<?php if ( true === $this->options['legend'] && ! empty( $this->options['legend_formatter'] ) ) : ?>
-					<?php echo $this->id; ?>_options.legend.labelFormatter = <?php echo $this->options['legend_formatter']; ?>;
-					<?php echo $this->id; ?>_options.legend.noColumns = <?php echo $this->options['legend_columns']; ?>;
-					<?php echo $this->id; ?>_options.legend.position = "<?php echo $this->options['legend_position']; ?>";
+					<?php echo esc_html( $this->id ); ?>_options.legend.labelFormatter = <?php echo wp_kses_post( $this->options['legend_formatter'] ); ?>;
+					<?php echo esc_html( $this->id ); ?>_options.legend.noColumns = <?php echo wp_kses_post( $this->options['legend_columns'] ); ?>;
+					<?php echo esc_html( $this->id ); ?>_options.legend.position = "<?php echo wp_kses_post( $this->options['legend_position'] ); ?>";
 				<?php endif; ?>
 
 				<?php if ( true === $this->options['hoverable'] ) : ?>
-					<?php echo $this->id; ?>_options.grid.hoverable = true;
+					<?php echo esc_html( $this->id ); ?>_options.grid.hoverable = true;
 				<?php endif; ?>
 
 				<?php if ( true === $this->options['clickable'] ) : ?>
-					<?php echo $this->id; ?>_options.grid.clickable = true;
+					<?php echo esc_html( $this->id ); ?>_options.grid.clickable = true;
 				<?php endif; ?>
 
 				jQuery( document ).ready( function($) {
-					var <?php echo $this->id; ?>Chart = $('#rpress-pie-graph-<?php echo $this->id; ?>');
-					$.plot( <?php echo $this->id; ?>Chart, <?php echo $this->id; ?>_data, <?php echo $this->id; ?>_options );
+					var <?php echo esc_html( $this->id ); ?>Chart = $('#rpress-pie-graph-<?php echo esc_html( $this->id ); ?>');
+					$.plot( <?php echo esc_html( $this->id ); ?>Chart, <?php echo esc_html( $this->id ); ?>_data, <?php echo esc_html( $this->id ); ?>_options );
 					<?php if ( ! wp_is_mobile() ) : ?>
-					$(<?php echo $this->id; ?>Chart).on('plothover', function (event, pos, item) {
+					$(<?php echo esc_html( $this->id ); ?>Chart).on('plothover', function (event, pos, item) {
 						$('.rpress-legend-item-wrapper').css('background-color', 'inherit');
 						if ( item ) {
 							var label = item.series.label;
@@ -191,8 +191,8 @@ class RPRESS_Pie_Graph extends RPRESS_Graph {
 
 			</script>
 			<div class="rpress-pie-graph-wrap">
-				<div id="rpress-pie-graph-<?php echo $this->id; ?>" class="rpress-pie-graph" style="height: <?php echo $this->options['height']; ?>px;"></div>
-				<div id="rpress-pie-legend-<?php echo $this->id; ?>" class="rpress-pie-legend"></div>
+				<div id="rpress-pie-graph-<?php echo esc_html( $this->id ); ?>" class="rpress-pie-graph" style="height: <?php echo esc_html( $this->options['height'] ); ?>px;"></div>
+				<div id="rpress-pie-legend-<?php echo esc_html( $this->id ); ?>" class="rpress-pie-legend"></div>
 			</div>
 			<?php
 		}

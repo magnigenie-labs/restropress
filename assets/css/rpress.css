@@ -1,25 +1,42 @@
-/* Food Items Category Style */
-
-/* Food Items Style */
+/* Restropress Style */
+.rpress-checkout-fields.hidden {
+	display: none
+}
+.rpress-section, .rpress-section *, .rpress-section:before, .rpress-section:after, .rpress-section *:before, .rpress-section *:after, #rp-order-details, #rp-order-details *, #rpressModal, #rpressModal * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
 div.rpress-element-title, input[type="button"], input[type="text"] {
-	outline: none;
+	outline: none
 }
 html body .rpress_fooditems_list .rpress_fooditem {
-	clear: both;
+	clear: both
 }
 html body .rpress_fooditems_list {
-	position: relative;
+	position: relative
 }
-a.rpress-popup {display: block;}
-div.rpress_fooditems_list .rpress_fooditem {width: 100%;}
-.fancybox-container{ z-index: 99999; }
-
-div.rpress_fooditems_list .rpress_fooditem h3.rpress_fooditem_title {display: block; margin: 0;}
-div.rpress_fooditems_list .rpress_fooditem .rpress_fooditem_buy_button {float: right;}
+a.rpress-popup {
+	display: block
+}
+div.rpress_fooditems_list .rpress_fooditem {
+	width: 100%
+}
+.fancybox-container {
+	z-index: 99999
+}
+div.rpress_fooditems_list .rpress_fooditem h3.rpress_fooditem_title {
+	display: block;
+	margin: 0
+}
+div.rpress_fooditems_list .rpress_fooditem h3.rpress_fooditem_title a img {
+	width: 16px;
+	max-width: 16px
+}
 div.rpress_fooditems_list .rpress_fooditem {
 	display: block;
 	clear: both;
-	margin: 6px 0px;
+	margin: 6px 0px
 }
 html body .rpress-errors-wrap {
 	text-align: center;
@@ -28,358 +45,387 @@ html body .rpress-errors-wrap {
 	padding: 6px;
 	margin-bottom: 20px;
 	background: #ac2925;
-	color: #FFF;
+	color: #FFF
 }
-html body h6.rpress-addon-category, html body div.food-item-list {width: 100%;}
-html body .rpress-errors-wrap.enable {display: block; }
-html body .rpress-errors-wrap.disabled{display: none;}
+html body h6.rpress-addon-category, html body div.food-item-list {
+	width: 100%;
+	padding: 0 4px
+}
+html body .rpress-errors-wrap.enable {
+	display: block
+}
+html body .rpress-errors-wrap.disabled {
+	display: none
+}
 html body .rpress-delivery-time-wrap.preorder-enable, html body .rpress-pickup-time-wrap.preorder-enable {
-	display: none;
+	display: none
 }
-html body .delivery-items-options .delivery-change {
+html body .delivery-wrap .delivery-change {
 	display: inline-block;
 	text-align: right;
 	cursor: pointer;
-	font-size: 13px;
-  font-weight: 600;
+	font-size: 12px;
+	margin-left: 10px;
+	outline: 0
 }
-
-html body .datepicker.datepicker-dropdown { width: 24%; }
+html body .datepicker.datepicker-dropdown {
+	width: 24%
+}
 html body .ui-timepicker-wrapper {
 	z-index: 999999 !important;
 	width: 290px;
-	text-align: center;
-}
-html body #rpressModal .modal-header button.close {
-	background: #808080;
-	opacity: 1;
-	border-radius: 0;
-	width: 23px;
-	text-align: center;
-	text-shadow: none;
-	color: #FFF;
-	padding: 0px;
-	margin: 0;
+	text-align: center
 }
 html body .rpress-section ul {
-	padding: 10px 0 0;
+	padding: 5px 0 0
 }
-html body #rpressModal .modal-footer {overflow: hidden;}
+html body #rpressModal .modal-footer {
+	overflow: hidden
+}
 html body #rpressModal .modal-header button.close:hover {
-	background: #808080 !important;
+	background: #808080 !important
 }
-html body #rpressModal .modal-body{
-	max-height: 500px;
-	overflow-y: scroll;
+html body #rpressModal.show-service-options .modal-body {
+	overflow-y: auto
+}
+html body #rpressModal .modal-body {
+	max-height: 490px;
+	overflow-y: auto
 }
 html body #rpressModal.rpress-delivery-options .modal-body {
-	max-height: 100%;
-	overflow-y: auto;
+	max-height: 100%
 }
 html body .datepicker-days .today.day {
 	background: #c33332;
-	color: #FFF;
+	color: #FFF
 }
-.delivery-change{
-	margin-bottom: -25px;
-	font-weight: bold;
-}
-
-
-html body #rpressModal
- .nav-pills > li.active > a, html body #rpressModal .nav-pills > html body #rpressModal li.active > html body #rpressModal a:hover{
-	margin-top: -2px;
-    margin-bottom: -2px;
-    margin-right: -2px;
-    padding: 8px !important;
-    margin-left: -2px;
-    border-radius: 0px;
-}
-.btn.btn-block.btn-primary{
+.btn.btn-block.btn-primary {
 	border: none;
 	margin-top: 20px;
+	outline: none
 }
-.rpress-delivery-options ul#rpressdeliveryTab.nav > li > a{
+.rpress-delivery-options ul#rpressdeliveryTab.nav>li>a {
 	text-align: center;
-	width: 145px;
-	padding: 6px;
+	width: 170px;
+	padding: 7px;
+	max-width: 100%;
+	line-height: 30px;
+	border-radius: 3px
 }
 .rpress-delivery-wrap .rpress-store-closed-info {
 	width: 95%;
 	margin: 0 auto 10px;
-	text-align: center;
+	text-align: center
 }
-.rpress-delivery-options ul#rpressdeliveryTab{
+.rpress-delivery-options ul#rpressdeliveryTab {
 	display: inline-block;
-	border: 2px solid #ccc;
-	margin: 0;
+	border: 1px solid #d8d8d8;
+	list-style: none;
+	text-align: center;
+	padding-left: 0;
+	border-radius: 3px;
+	margin: 0
 }
-html body .modal-backdrop.fade.in {z-index: 99999;}
-html body div#rpressModal{z-index: 999999;}
-html body div#rpressModal button.close {
-	position: absolute;
-	right: 11px;
-	top: 15px;
+html body .modal-backdrop.fade.in {
+	z-index: 99999
+}
+html body div#rpressModal {
+	z-index: 999999
+}
+html body div#rpressModal.loading .modal-footer, html body div#rpressModal.loading .modal-header, html body div#rpressModal.loading .modal-body .view-food-item-wrap {
+	display: none
+}
+html body #rpressModal.loading .modal-body {
+	overflow-y: auto
+}
+html body #rpressModal .modal-body .fooditem-description {
+	margin: 0px 0 10px
+}
+html body #rpressModal.loading .rp-loader {
+	text-align: center;
+	display: inline-block;
+	font-weight: 700
 }
 html body .modal.rpress-delivery-options .modal-content {
 	width: 360px;
-	top: 90px;
+	top: 90px
 }
 html body .modal.rpress-delivery-options .modal-footer {
-	display: none;
+	display: none
 }
-html body .pickup-time-text, html body .delivery-time-text {text-transform: capitalize;}
-
 .delivery-settings-wrapper #rpress-allowed-hours {
-	width: 100%;
+	width: 100%
 }
-.rpress-datepicker-days table {width: 100%;}
+.rpress-datepicker-days table {
+	width: 100%
+}
 .rpress-tabs-wrapper {
 	display: block;
 	clear: both;
+	text-align: center
 }
 div.rpress-thumbnail-holder {
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: center;
+	background-position: center
 }
 div.rpress_fooditems_list .rpress_fooditem:last-child {
-	border-bottom: none;
+	border-bottom: none
 }
-
-.food-item-list label {
-	font-weight: normal;
-	display: inline-block;
+html body .rpress-section.rpress-main-fooditem-container {
+	float: none;
+	clear: both;
+	overflow: hidden
 }
-
+html body .rpress_checkout_wrap {
+	overflow: hidden;
+	clear: both
+}
 .food-item-list {
 	margin-bottom: 8px;
+	display: none
 }
-
-/* Food Items Cart Style */
-
-
+.food-item-list.active {
+	display: block
+}
+.food-item-list label {
+	font-weight: 400;
+	display: inline-block
+}
+/*=================== Food Items Cart Style ========================================== =======================*/
+div.food-item-list span {
+	color: #000
+}
 div.food-item-list span.cat_price {
 	float: right;
+	font-weight: 500;
+	font-size: 14px
+}
+.food-item-heading h4 {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	margin-right: 10px
 }
 .rpress-popup-actions a.submit-fooditem-button, .rpress-popup-actions a.update-fooditem-button {
-	cursor: pointer;
+	cursor: pointer
 }
 .rpress-close-button, .rpress-edit-from-cart {
-	cursor: pointer;
+	cursor: pointer
 }
 .rpress-item-quantity-wrap {
 	width: 50%;
-	margin-top: 20px;
+	margin-top: 20px
 }
 .rpress-item-quantity-wrap .qty {
 	display: inline-block;
-	width: 40%;
+	width: 40%
 }
 .rpress-item-quantity-wrap .qtyminus {
 	display: inline-block;
-	float: left;
+	float: left
 }
 .rpress-cart .rpress-special-instruction {
-	font-size: 13px !important;
+	font-size: 13px;
 	display: block;
-	margin-top: 5px;
-	font-weight: bold;
+	margin: 5px 0 0 24px;
+	font-weight: 700
 }
-
+li.rpress-cart-item {
+	padding: 10px 0px;
+	border-bottom: 1px solid #ebebeb
+}
 .rpress-item-quantity-wrap .qtyplus {
 	display: inline-block;
-	float: right;
-}
-.rpress-cart-item-qty {
-	padding-right: 10px;
-	color: #20AC76;
-}
-.rpress_checkout_cart_item_qty {
-	padding-right: 20px;
+	float: right
 }
 #rpress_checkout_cart_wrap .rpress_cart_item_name {
 	width: 100%;
-	padding: 4px 10px;
+	padding: 5px 10px
 }
-#rpress_checkout_cart_wrap .rpress_cart_total {padding: 10px;}
-#rpress_checkout_cart_wrap .rpress_cart_amount {padding-top: 0px;}
 #rpress_checkout_cart_wrap th {
 	padding: 5px;
 	border-top: none;
 	border-bottom: none;
+	display: table-cell
+}
+#rpress_checkout_cart_wrap tfoot th {
+	padding: 5px 10px
+}
+#rpress_checkout_cart_wrap th.rpress_get_subtotal {
+	padding: 5px 10px
+}
+#rpress_checkout_cart_wrap th.rpress_cart_fee_label {
+	padding: 5px 10px;
+	font-weight: 400;
+	font-size: 14px
+}
+#rpress_checkout_cart_wrap th.rpress_cart_fee_label span {
+	float: right
 }
 #rpress_checkout_cart_wrap .delivery-wrap {
-	text-align: center;
-	margin-top: 20px;
+	text-align: left;
+	margin-top: 20px
 }
 #rpress_checkout_cart_wrap .delivery-wrap span {
-	font-weight: normal;
+	font-weight: 400
 }
-#rpress_checkout_cart_wrap .rpress_cart_subtotal_amount {padding: 0;}
+#rpress_checkout_cart_wrap .rpress_cart_subtotal_amount {
+	padding: 0
+}
 #rpress_checkout_cart_wrap .rpress.item-order h6 {
-	margin-bottom: 0px;
+	margin-bottom: 0px
 }
 div.rpress-element-title {
 	display: block;
-	clear: both;
+	clear: both
 }
 .rpress-element-title span {
-	font-size: 12px;
-	color: #a9a9a9;
+	font-size: 14px;
 	line-height: 16px;
 	display: block;
 	margin-top: -10px;
-	margin-bottom: 20px;
+	margin-bottom: 20px
 }
 .view-food-item-wrap div {
-	margin-bottom: 10px;
+	margin-bottom: 10px
 }
 .rpress_fooditems_list h5.rpress-cat {
-    text-decoration: underline;
-    width: 100%;
-    margin-bottom: 20px;
-    text-transform: capitalize;
-    display: block;
-    font-size: 17px;
+	width: 100%;
+	margin-bottom: 10px;
+	text-transform: capitalize;
+	display: block;
+	font-size: 20px;
+	font-weight: 700
 }
-#rpress-tab-content .delivery-address-input {text-align: left !important;}
+#rpress-tab-content .delivery-address-input {
+	text-align: left !important
+}
 div.rpress-tabs ul.tabs {
-	list-style: none;
+	list-style: none
 }
 div.rpress-tabs ul.tabs li {
 	float: left;
 	display: inline-block;
-	margin-right: 30px;
+	margin-right: 30px
 }
-
 div.rpress-search-wrap {
 	margin-bottom: 20px;
 	display: block;
-	clear: both;
+	clear: both
 }
 .rpress_fooditems_list.sticky-live-search .rpress-live-search {
 	position: fixed;
 	width: 100%;
 	z-index: 9999;
 	top: 109px;
-	max-width: calc(124rem / 3);
+	max-width: calc(124rem / 3)
 }
-
 .rpress_fooditems_list.sticky-live-search div.rpress-search-wrap #rpress-food-search {
-	box-shadow: 5px 4px 13px 2px #ccc;
+	box-shadow: 5px 4px 13px 2px #ccc
 }
-div.rpress-search-wrap input[type="text"] {
-	border: none;
-	text-transform: initial;
-	color: #666666;
-	font-weight: 500;
-	letter-spacing: 1px;
-	border-bottom: 1px solid #ebedf3;
-	padding: 0;
-	font-size: 12px;
-	height: 43px;
-	line-height: 43px;
-	width: 100%;
-    box-shadow: 0px 1px 10px -3px #888888;
-    border-radius: 4px;
+a.rpress-order-time {
+	text-align: left;
+	display: block
 }
-a.rpress-order-time {text-align: left; display: block;}
-
 .rpress-tabs-wrapper #rpress-tab-content {
 	display: block;
 	clear: both;
 	overflow: hidden;
 	width: 90%;
-	margin: 0 auto;
+	margin: 0 auto
 }
-div.rpress-search-wrap #rpress-food-search {
+div.rpress-search-wrap input#rpress-food-search {
 	background-image: url('../svg/search-icon.svg');
 	background-repeat: no-repeat;
 	background-size: 17px;
 	background-position: 98% center;
 	outline: none;
 	padding: 6px 10px;
-	width: 100% !important;
+	border: 1px solid #ebedf3;
+	height: 43px;
+	line-height: 43px;
+	width: 100%;
+	box-shadow: 0px 0px 34px -14px #ccc;
+	-webkit-box-shadow: 0px 0px 34px -14px #ccc;
+	-moz-box-shadow: 0px 0px 34px -14px #ccc;
+	border-radius: 4px
 }
 div.rpress-element-title.not-matched {
-	display: none;
+	display: none
 }
 div.rpress-element-title.matched {
-	display: block;
+	display: block
 }
 .delivery-wrap, .delivery-wrap select {
-	width: 100%;
+	width: 100%
 }
 html body .delivery-options h3 {
 	text-align: center;
 	display: block;
 	border-top: 1px solid #ccc;
-	padding-top: 8px;
+	padding-top: 8px
 }
 html body .rpress-open-hrs {
 	display: block;
 	padding: 0;
 	margin: 0;
 	margin-top: -20px;
-	width: 100%;
+	width: 100%
 }
 html body #rpress-allowed-hours, html body .rpress_get_delivery_dates {
 	border: 1px solid #ccc !important;
 	padding: 0px 10px;
 	width: 40%;
-	background: #f9f9f9;
+	background: #ffff
 }
-html body .pac-container.pac-logo {z-index: 9999999 !important;}
+html body .pac-container.pac-logo {
+	z-index: 9999999 !important
+}
 html body .rpress-location-wrapper span {
-	display: block;
+	display: block
 }
-
 html body .rpress-delivery-location {
 	width: 100%;
 	border: 1px solid #ccc !important;
 	padding: 0px 10px;
-	background: #f9f9f9;
+	background: #f9f9f9
 }
 html body .rpress_get_delivery_dates {
-	width: 100%;
+	width: 100%
 }
 .restro-instruction {
-	font-weight: bold;
-	display: inline-block;
-	margin-top: 10px;
+	font-size: 14px;
+	padding-left: 24px;
+	font-weight: 600
 }
 .rpress-cart span.rpress-cart-item-title {
-	max-width: 47%;
+	max-width: 65%;
 	display: inline-block;
-	font-size: 13px;
-	position: relative;
-	top: 0px;
+	font-size: 14px;
 	color: #404040;
-    font-weight: 500;
-    display: inline-block;
-    width: 108px;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
+	font-weight: 600
 }
-
-#rpress_checkout_wrap  span.rpress-cart-item-title {width: 60%;}
-
-
+.rpress-time-wrap {
+	padding-top: 10px;
+	text-align: left
+}
+#rpress_checkout_wrap span.rpress-cart-item-title {
+	width: 65%
+}
 .rpress-tabs div.rpress-Tabs-panel#tab-menu {
 	width: 100%;
-	display: block;
+	display: block
 }
 html body .entry-content {
 	width: 100% !important;
-	display: block !important;
+	display: block !important
 }
 div.tab-pane div.menu {
-	margin-top: 20px;
+	margin-top: 20px
 }
 div.nav.nav-tabs .nav-item.nav-link {
-	margin-right: 10px;
+	margin-right: 10px
 }
 div.rpress-filter-toggle {
 	padding: 10px 15px;
@@ -387,268 +433,223 @@ div.rpress-filter-toggle {
 	cursor: pointer;
 	margin-bottom: 20px;
 	display: none;
-	background: #FFFFFF;
-	border: 1px solid #fdfdfd;
+	background: #f7f7f7;
+	border: 1px solid #fdfdfd
 }
 .rpress-filter-toggle-text {
 	line-height: 20px;
 	font-size: 16px;
 	text-transform: capitalize;
 	color: #9097a1;
-	letter-spacing: 1px;
+	letter-spacing: 1px
 }
 .rpress-categories-menu h6 {
 	margin: 0 0 10px;
-	padding: 0 0 0 22px;
+	padding: 0 0 0 22px
 }
 ul.rpress-category-lists {
 	list-style: none;
 	margin: 0;
-	padding: 0;
+	padding: 0
 }
 ul.rpress-category-lists .rpress-category-item {
-	padding: 10px 0px 10px 0px ;
+	padding: 10px 0px 10px 0px;
 	font-size: 13px;
+	font-weight: 500;
 	color: #9c9c9c;
 	text-transform: capitalize;
 	text-align: left;
 	list-style: none;
-	border-bottom: 1px solid #9c9c9c2b;
+	border-bottom: 1px solid #9c9c9c2b
 }
-
 .rpress-categories-menu h6 {
 	background-image: url('../svg/restaurant.svg');
 	background-repeat: no-repeat;
 	background-size: 8%;
 	background-position: 0px 2px;
 	padding-top: 0px;
-	padding-bottom: 0px;
+	padding-bottom: 0px
 }
 #fooditem-details h6.rpress-addon-category, #fooditem-update-details h6.rpress-addon-category {
 	margin: 0 0 5px 0;
-	padding: 10px 0 10px 0;
+	padding: 10px 0 10px 0
 }
-
-
 .ui-timepicker-container.ui-timepicker-standard {
-	z-index: 9999999 !important;
+	z-index: 9999999 !important
 }
-
 #rpress_checkout_wrap #rpress_checkout_cart td img {
 	float: none;
-	width: 22px;
+	width: 22px
 }
-
 .rpress_fooditem_inner .thumbnail-holder {
 	float: left;
-	margin-top: 4px;
+	margin-top: 4px
 }
-
+.rpress_fooditem_inner .rp-col-md-9, .rpress_fooditem_inner .rp-col-md-3 {
+	padding: 0px
+}
 .rpress-title-holder h3 {
-	margin: 0;
+	margin: 0
 }
 .rpress_purchase_submit_wrapper {
-	line-height: 50px;
-}
-.rpress_purchase_submit_wrapper a {
-	border-radius: 20px;
-	background-color: transparent !important;
+	line-height: 50px
 }
 .rpress-submit {
 	font-size: 21px;
 	font-weight: 500;
-	line-height: 1;
+	line-height: 1
 }
-
 .entry-content a:hover {
-   -webkit-box-shadow: none !important;
+	-webkit-box-shadow: none !important
 }
 .rpress-section .rpress-sidebar-cart-wrap {
-	box-shadow: 0px 0px 2px 0px #ccc;
-	-moz-box-shadow: 0px 0px 2px 0px #ccc;
-	-webkit-box-shadow: 0px 0px 2px 0px #ccc;
-	padding: 15px 15px 10px 15px;
+	box-shadow: 0px 0px 4px 1px #eee;
+	-moz-box-shadow: 0px 0px 4px 1px #eee;
+	-webkit-box-shadow: 0px 0px 4px 1px #eee;
+	padding: 10px 15px;
+	border-radius: 6px
+}
+.rpress-section .rpress-sidebar-cart-wrap .item-order>span {
+	font-size: 20px
 }
 .rpress-cart li {
-   list-style: none;
+	list-style: none
 }
 .menu .pull-right h1 {
 	text-align: center;
-    color: black;
-    font-weight: 500;
-    margin-top: 25px;
+	color: #000000;
+	font-weight: 500;
+	margin-top: 25px
 }
-
 .rpress-cart .delivery-opts label {
 	display: inline-block;
 	font-size: 13px;
-	margin-left: 5px;
+	margin-left: 5px
 }
 .rpress-cart .delivery-opts label[for=delivery] {
-	margin-right: 12px;
+	margin-right: 12px
 }
 html body .rpress_fooditem_inner {
 	display: block;
 	clear: both;
 	overflow: hidden;
-    border-bottom: 1px solid #ebedf3;
-    padding: 0 0 17px 0;
-    margin: 0 0 17px 0;
-    width: 100%;
-    position: relative;
+	border-bottom: 1px solid #ebedf3;
+	padding: 0 0 17px 0;
+	margin: 0 0 0 0;
+	width: 100%;
+	position: relative
 }
 .rpress-clear-cart {
 	display: inline-block;
 	font-size: 12px;
 	float: right;
 	position: relative;
-	top: 5px;
+	top: 5px
 }
 .rpress-cart-number-of-items {
-	clear:both;
+	clear: both;
 	margin: 10px 0px;
 	font-size: 13px;
 	text-align: left;
 	color: #333;
-	display: block;
+	display: block
 }
-
-
-.rpress_purchase_submit_wrapper a {
-	height: 27px;
-	width: 27px;
+.rpress-price-holder {
+	text-align: right
 }
-
 .rpress-price-holder .rpress-add-to-cart {
-	position: relative;
-	width: 22px;
-	height: 22px;
-	padding: 0;
-	margin: 0;
+	border-radius: 4px;
+	padding: 0px 10px
 }
-
-
 .rpress-cart {
-	clear: both;
+	clear: both
 }
 .rpress_total {
-	padding-left: 4%;
+	padding-left: 4%
 }
 .rpress-cart .rpress_empty_cart {
-	font-size: 14px;
+	font-size: 14px
 }
 ul.rpress-cart span.cart-total {
 	float: right;
 	font-weight: 600;
-	margin-right: 50px;
+	margin-right: 0
 }
 .cart_item .rpress_checkout {
-	padding-left: 28%;
+	padding-left: 28%
+}
+.rpress-sidebar-cart ul.addon-item-wrap {
+	padding: 0
 }
 .rpress-sidebar-cart ul.addon-item-wrap, .rpress-sidebar-cart ul.rpress-cart {
-	margin-left: 0px;
+	margin: 0px
 }
 .rpress-sidebar-cart .addon-item-wrap li {
-	margin-top: 20px;
+	margin-top: 20px
 }
 .rpress-cart-meta.rpress_total {
-	font-weight: 500;
+	font-weight: 500
 }
-ul.rpress-cart li.rpress-cart-item:nth-child(even) {
-	background-color: #f2f2f2;
-    padding-left: 8px;
-    padding-top: 2px;
-}
-ul.rpress-cart li.rpress-cart-item:nth-child(odd) {
-    padding-left: 8px;
-}
-ul.addon-item-wrap li.rpress-cart-item:nth-child(even) {
-	background-color: inherit;
+.rpress-cart-meta {
+	padding: 5px 0px
 }
 html body .rpress-section ul li.delivery-items-options {
-	padding: 25px 0 10px 0;
-}
-.rpress-edit-from-cart{
-	margin-left: 5px;
+	padding: 15px 0 10px 0
 }
 #rpress_checkout_wrap .rpress-cart .cart-action-wrap {
 	float: none;
+	font-size: 12px
 }
 #rpress_checkout_wrap .rpress-cart .cart-action-wrap.addon-items {
-	display: none;
-}
-.rpress-cart .cart-action-wrap {
-	float: right;
-	width: 16%;
-	position: relative;
-	top: 3px;
+	display: none
 }
 .rpress-cart .cart-action-wrap a {
-	font-size: 12px;
+	font-size: 12px
 }
-.rpress-cart .cart-action-wrap .rpress-edit-from-cart:before {
-	/* font-family: "Font Awesome 5 Free"; 
-	content: "\f303"; */
-}
-.rpress-cart .cart-action-wrap .rpress-remove-from-cart:before {
-	/* font-family: "Font Awesome 5 Free"; 
-	content: "\f2ed"; */
-}
-.rpress-cart .cart-action-wrap .rpress-remove-from-cart, .rpress-cart .cart-action-wrap .rpress-edit-from-cart {
-	background-repeat: no-repeat;
-	background-size: 100%;
-	background-position: 0px 0px;
-	font-size: 14px;
-	padding-top: 0px;
-	font-weight: bold;
-	display: inline-block;
-}
-.rpress-cart .cart-action-wrap .rpress-edit-from-cart {
-	width: 13px;
-	height: 15px;
-}
-.rpress-cart .cart-action-wrap .rpress-remove-from-cart {
-	width: 11px;
-	height: 15px;
-	margin-left: 2px;
+.rpress-cart .rpress-edit-from-cart {
+	margin-right: 4px
 }
 .rpress-cart li.rpress-cart-meta:first-child {
-	margin-top: 10px;
+	margin-top: 10px
 }
 .rpress.item-order a.rpress-clear-cart {
 	font-weight: 600;
-    font-size: 11px;
+	font-size: 11px;
+	padding: 6px 0;
+	outline: 0
 }
-li.cart_item.empty{text-align:center;}
-li.cart_item.empty:before{
+li.cart_item.empty {
+	text-align: center
+}
+li.cart_item.empty:before {
 	content: '';
 	background-image: url(../svg/plate.png);
 	background-repeat: no-repeat;
 	background-size: 100%;
 	display: block;
-  width: 100px;
-  height: 100px;
-  margin: 16px auto;
+	width: 100px;
+	height: 100px;
+	margin: 16px auto
 }
 span.rpress_empty_cart {
-   	display: inline-block;
-   }
+	display: inline-block
+}
 .sticky-sidebar.cat-lists {
-	/*border-right: 1px solid #e4e4e4;*/
-	padding-right: 20px;
+	padding-right: 20px
 }
 ul.rpress-category-lists li.rpress-category-item a {
-	padding-right: 35px;
+	outline: none;
+	border: none
 }
 .rpress-category-link.nav-scroller-item.active:after {
 	content: '';
-    display: inline-block;
-    width: 4px;
-    height: 18px;
-    float: right;
+	display: inline-block;
+	width: 4px;
+	height: 18px;
+	float: right
 }
 .rpress-cart .rpress_checkout {
-	text-align: center;
+	text-align: center
 }
 .rpress-cart .rpress_checkout a {
 	padding: 10px;
@@ -661,243 +662,235 @@ ul.rpress-category-lists li.rpress-category-item a {
 	line-height: normal;
 	text-transform: uppercase;
 	width: 100%;
-	color: #ffffff;
+	color: #ffffff
 }
 .rpress-thumbnail-holder {
-	width: 65px;
-	height: 65px;
+	width: 95px;
+	height: 95px;
 	vertical-align: top;
+	float: left
 }
 .rpress-thumbnail-holder, .rpress-title-holder {
-	display: inline-block;
+	display: inline-block
 }
 .rpress-thumbnail-holder img {
-	border: 1px solid #ddd;
-	border-radius: 2px;
-	}
-.rpress-thumbnail-holder + .rpress-title-holder {
+	border-radius: 5px
+}
+.rpress-thumbnail-holder+.rpress-title-holder {
 	padding-left: 10px;
-	width: -webkit-calc(100% - 170px);
-	width: -moz-calc(100% - 170px);
-	width: calc(100% - 170px);
+	width: -webkit-calc(100% - 105px);
+	width: -moz-calc(100% - 105px);
+	width: calc(100% - 105px)
 }
-.rpress-price-holder {
-	top: 45%;
-	position: absolute;
-	right: 0px;
-	transform: translateY(-50%);
-	line-height: 0;
-	display: block;
-	margin-top: 0px;
-	width: 18%;
+@media only screen and (max-width: 480px) {
+	div.food-item-list span.cat_price, div.food-item-list span {
+		font-size: 13px
 }
-/* Rpress Item Order */
-#rpress_checkout_cart_wrap .rpress.item-order {border-bottom: none;}
+	.rpress.item-order a.rpress-clear-cart {
+		margin-right: 25px
+}
+}
+/*=================== Rpress Item Order ========================================== =======================*/
+#rpress_checkout_cart_wrap .rpress.item-order {
+	border-bottom: none;
+	padding: 8px 0 9px
+}
 .rpress.item-order {
 	display: block;
-	border-bottom: 1px solid #ebedf3;
+	border-bottom: 1px solid #a9aaab;
+	padding-bottom: 6px
 }
 .rpress.item-order h6 {
 	font-size: 18px;
-    padding-top: 0px;
-    letter-spacing: 1px;
-    font-weight: bold;
-    display: inline-block;
-    color: #404040;
-    margin-bottom: 15px;
-    display: block;
-    text-align: center;
+	padding-top: 0px;
+	letter-spacing: 1px;
+	font-weight: 700;
+	margin-bottom: 15px;
+	display: block;
+	text-align: center
 }
 .rpress_purchase_submit_wrapper .rpress-add-to-cart-label {
-	font-size: 20px;
+	font-size: 14px;
 	line-height: 25px;
-	position: absolute;
-	left: 4px;
-	top: -2px;
-}
-.rpress_purchase_submit_wrapper a {
-	width: 24px;
-	height: 24px;
-}
-.rpress_purchase_submit_wrapper a.rpress-add-to-cart.rpress-has-js {
-	top: -7px;
+	font-weight: 400
 }
 .rpress-price-holder span.price {
-	top: 40%;
-	position: absolute;
-	font-size: 14px;
+	font-size: 15px;
+	font-weight: 700;
+	font-weight: 500;
+	color: #000
 }
 .food-title {
-	font-size: 17px;
-	font-weight: 500;
-	margin-left: 7px;
+	font-size: 18px;
+	font-weight: 500
 }
 .rpress_fooditem_inner .rpress_fooditem_excerpt p {
-	font-size: 12px;
-	color: #a9a9a9;
+	font-size: 14px;
+	line-height: 18px;
+	color: #8E8E8E;
 	display: block;
-	line-height: 16px;
+	margin: 0
 }
-.rpress_fooditem_excerpt {
-	display: block;
-	margin-left: 7px;
-	width: 90%;
+.rpress_fooditem_tags span.fooditem_tag {
+	padding: 2px 4px;
+	font-size: 12px;
+	border: 1px solid;
+	border-radius: 4px;
+	margin-right: 3px
 }
 .rpress-cart .cat_icon img {
 	width: 16px;
-	height: auto;
+	height: auto
 }
 .rpress-cart .cart_icon img {
 	width: 13px;
-	height: auto;
-}
-.rpress_checkout_wrap .rpress-cart .remove_icon img {
-	width: 13px;
+	height: auto
 }
 #rpress_purchase_form #rpress-purchase-button, #rpress_purchase_form #rpress-user-login-submit input {
-	padding: 9px 24px;
+	padding: 9px 24px
 }
 .rpress-checkout-button-actions {
 	display: block;
 	clear: both;
 	overflow: hidden;
-	margin-top: 20px;
+	margin-top: 0px;
+	text-align: center
 }
 .rpress-checkout-button-actions span {
 	display: block;
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 0px
 }
-.rpress-checkout-button-actions a {
+span.rp-btn-title {
+	font-size: 13px;
+	font-weight: 400;
+	padding-bottom: 5px
+}
+.rpress-checkout-button-actions a.rpress-submit.button {
 	border: 1px solid #ccc;
 	text-align: center;
-	padding: 4px 10px;
-}
-.rpress-cart .remove_icon img {
-	width: 13px;
-	height: auto;
-	float: none;
+	padding: 7px 14px;
+	border-radius: 5px;
+	font-size: 15px;
+	font-weight: 500
 }
 .rpress-cart .order-icn img {
 	width: 16px;
-	height: auto;
+	height: auto
 }
 .rpress-checkout-block {
-	border: 1px solid #eee;
-	padding: 10px;
 	margin-bottom: 20px;
 	display: block;
 	clear: both;
-	overflow: hidden;
+	overflow: hidden
 }
-
 .rpress-cart .cart_icon, .rpress-cart .order-icn {
-  display: inline-block;
+	display: inline-block
 }
 #nav-tab.nav.nav-tabs {
 	width: 79%;
-	float: right;
+	float: right
 }
 .rpress_fooditems_list .rpress_fooditem {
-	margin-top: -9px;
+	margin-top: -9px
 }
-
 .food-item-list input[type="radio"] {
 	margin-right: 5px;
 	position: relative;
-	top: -2px;
+	top: 0px
 }
-
 .food-item-list input[type="radio"]:checked:after {
-   width: 16px;
-   height: 16px;
-   top: 1px;
-   left: -1px;
-   position: relative;
-   margin-right: 4px;
-   background-color: #2d3138;
-   content: '';
-   display: inline-block;
-   visibility: visible;
-   border: 1px solid #2d3138 ;
+	width: 16px;
+	height: 16px;
+	top: -3px;
+	left: -1px;
+	position: relative;
+	margin-right: 4px;
+	background-color: #2d3138;
+	content: '';
+	display: inline-block;
+	visibility: visible;
+	border: 1px solid #2d3138
 }
 .food-item-list input[type="radio"]:after {
-   width: 16px;
-   height: 16px;
-   top: 1px;
-   position: relative;
-   margin-right: 4px;
-   background-color: #FFF;
-   content: '';
-   display: inline-block;
-   visibility: visible;
-   border: 1px solid #2d3138;
-   border-radius: 20px;
+	width: 16px;
+	height: 16px;
+	top: -3px;
+	left: -1px;
+	position: relative;
+	margin-right: 4px;
+	background-color: #FFF;
+	content: '';
+	display: inline-block;
+	visibility: visible;
+	border: 1px solid #2d3138;
+	border-radius: 20px
 }
-
 .view-food-item-wrap input[type="checkbox"] {
 	background: #EEE;
-	box-shadow: 0 0 0 0 #d4413c inset, 0 0 0 2px #666666 inset, 0 0 0 8px #EEE inset, 0 0 0 0 #ddd inset, 0 0 0 0 #ddd;
-	padding: 2px;
+	box-shadow: none;
+	padding: 0px;
 	border-radius: 2px;
 	display: inline-block;
 	transition: all .2s;
 	zoom: 1;
 	margin-right: 4px;
+	height: 16px;
+	width: 16px
 }
-
 .view-food-item-wrap input[type="checkbox"]:active {
 	background: #ddd;
-	box-shadow: 0 0 0 0 #d4413c inset, 0 0 0 2px #666666 inset, 0 0 0 0 #EEE inset, 0 0 0 8px #ddd inset, 0 0 0 4px #ddd;
+	box-shadow: 0 0 0 0 #d4413c inset, 0 0 0 2px #666666 inset, 0 0 0 0 #EEE inset, 0 0 0 8px #ddd inset, 0 0 0 4px #ddd
 }
 .view-food-item-wrap input[type="checkbox"]:checked {
 	background: #F9F9F9;
 	box-shadow: 0 0 0 8px #2d3138 inset, 0 0 0 0 #666666 inset, 0 0 0 8px #EEE inset, 0 0 0 0 #ddd inset, 0 0 0 0 #ddd;
 	content: url('../images/checkbox.png');
-	position: relative;
-	top: 2px;
+	position: relative
 }
-.rpress-cart-item span {
-	font-size: 15px;
+.rpress-cart-item .rpress-cart-item-qty {
+	vertical-align: top;
+	padding: 0px;
+	font-weight: 600
+}
+.rpress-cart-item .separator {
+	vertical-align: top;
+	padding: 0 2px;
+	font-weight: 700
+}
+span.cart-action-wrap {
+	font-weight: 600
 }
 input.pick {
-	margin-left: 7px;
+	margin-left: 7px
 }
 .rpress-open-hrs {
 	display: inline-block;
-	width: 37%;
+	width: 37%
 }
 .delivery-opts {
 	display: inline-block;
+	font-size: 14px
 }
-.delivery-opts span.delMethod{
-	text-transform: capitalize;
-	font-size: 17px;
-}
-.delivery-opts span.delTime {
-	text-transform: lowercase;
-	font-size: 17px;
+.delivery-opts span.delMethod {
+	text-transform: capitalize
 }
 .ui-timepicker-standard a {
 	font-size: 14px;
-    margin-left: -22px;
+	margin-left: -22px
 }
 .delivery-items-options h3.delivery-options-heading {
 	text-align: left;
 	font-size: 14px;
-	font-weight: bold;
-	margin-top: 30px;
+	font-weight: 700;
+	margin-top: 30px
 }
-.pull-right {
-	padding-top: 10px;
-}
-
 input#rpress-allowed-hours {
-    background: #f7f7f700;
+	background: #f7f7f700
 }
 section.fullwidth.nav {
 	display: none;
-    margin-bottom: 20px;
+	margin-bottom: 20px
 }
 .row-top.update-bottom {
 	border-top: 1px solid #d9dbe080;
@@ -907,234 +900,434 @@ section.fullwidth.nav {
 	position: absolute;
 	background-color: #ffffff;
 	left: 0;
-	bottom: 14px;
+	bottom: 14px
 }
 .qty-button {
 	border: 1px solid #d9dbe080;
 	border-radius: 100px;
-	width: 35%;
+	width: 35%
+}
+.rpress-section {
+	margin-top: 15px
 }
 .rpress-section .rp-col-sm-3.left, .rpress-section .rp-col-sm-3.right {
-	padding-left: 0px;
+	padding-left: 0px
 }
 .rp-col-sm-3.cent {
-	padding-right: 0px;
-}
-#rpress_checkout_user_info input[type="text"] , #rpress_checkout_addrs input[type="text"]  {
-    border: 1px solid #bbb;
-    line-height: 1.5;
-    text-align: left;
+	padding-right: 0px
 }
 #rpress_purchase_submit .rpress-submit, #rpress_login_submit, #rpress-purchase-button {
-	padding: 5px 15px;
+	padding: 5px 15px
 }
 #rpress_purchase_form_wrap #rpress-purchase-button {
-	margin-top: 15px;
+	margin-top: 15px
 }
 #rpress_checkout_cart_form a.rpress-cart-saving-button {
-    padding: 5px 15px;
-    font-size: 16px;
-    border-radius: 5px;
-    width: 100%;
+	padding: 5px 15px;
+	font-size: 16px;
+	border-radius: 5px;
+	width: 100%
 }
-#rpress_checkout_cart_form .rpress_cart_remove_item_btn{
-	float: right;
-	position: relative;
-	top: 7px;
-	width: 10%;
+#rpress_checkout_cart_form .rpress_cart_remove_item_btn {
+	font-size: 12px
 }
 #rpress_checkout_cart .rpress_cart_header_row th {
-    padding: 15px;
-    font-weight: 600;
+	padding: 15px;
+	font-weight: 600
 }
-.rpress_cart_item_price,
-.rpress_cart_actions {
-	text-align: center;
+.rpress_cart_item_price, .rpress_cart_actions {
+	text-align: center
 }
 #rpress_checkout_cart td img {
-	width: 40px;
+	width: 40px
 }
-
-#rpress_checkout_cart #item_thumbnail, #rpress_checkout_cart .tb-cart {display: inline-block;}
-
+#rpress_checkout_cart #item_thumbnail, #rpress_checkout_cart .tb-cart {
+	display: inline-block
+}
 #rpress_checkout_form_wrap .rpress-payment-icons {
-    height: 45px;
+	height: 45px
 }
 .rpress-cart .cart_icon {
 	float: right;
-	padding-left: 7px;
+	padding-left: 7px
 }
 .rpress-cart .cart-item-quantity-wrap {
-	width: 35%;
+	width: 20%;
 	display: inline-block;
 	font-size: 13px;
 	float: right;
-	text-align: center;
+	text-align: right;
 	position: relative;
-	top: 4px;
+	top: 1px
 }
 #rpress_checkout_cart_wrap .rpress-checkout-item-row {
 	position: relative;
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 10px
+}
+#rpress_checkout_cart_wrap .rpress-checkout-addon-row {
+	padding-left: 24px
+}
+#rpress_checkout_cart_wrap .rpress-checkout-addon-row .rpress-cart-item-title{
+	margin-left: 5px;
+	font-weight: 400;
+	color: #8E8E8E;
+	font-size: 13px
 }
 #rpress_checkout_cart_form .rpress-cart .cart-item-quantity-wrap {
-	float: none;
-	top: 0px;
-	width: 30%;
+	float: right;
+	top: 4px;
+	width: 22%
 }
 .rpress-cart .addon-item-wrap span.addon-item-price {
 	width: 91px;
-    text-align: left;
+	text-align: right
 }
 .rpress-cart .cart-item-quantity-wrap span {
 	font-size: 13px;
-	padding: 0;
+	padding: 0
 }
-.rpress-cart .rpress_subtotal, .rpress-cart .rpress_cart_tax, .rpress-cart .rpress-delivery-fee {
-	font-weight: normal;
+.rpress-cart .rpress_subtotal, .rpress-cart .rpress_cart_tax, .rpress-cart .rpress-delivery-fee,.rpress-cart .rpress_user_discount{
+	font-weight: 600;
 	font-size: 14px;
 	font-style: normal;
 	background: transparent;
 	display: block;
 	clear: both;
-	overflow: hidden;
+	overflow: hidden
 }
-.rpress-cart .rpress_subtotal span, .rpress-cart .cart-delivery-fee, .rpress-cart .rpress_cart_tax span {
-	float: right;
+.rpress-cart .rpress_subtotal span, .rpress-cart .cart-delivery-fee, .rpress-cart .rpress_cart_tax span,.rpress-cart .cart-discount {
+	float: right
 }
 .rpress-cart .rpress_total {
-    padding: 7px 2px 0px 8px;
-    color: #404040;
-    font-weight: 500;
-    font-size: 15px;
-    border-top: 1px solid #E9E9E9;
+	padding-top: 8px;
+	color: #404040;
+	font-weight: 500;
+	font-size: 15px;
+	border-top: 1px solid #E9E9E9
 }
 .rpress-category-item .active {
-	font-weight: 500;
+	font-weight: 600
 }
 .rpress-cart .cart-item-quantity-wrap span.separator {
 	padding: 0 2px;
 	margin-right: 17px;
-	color: #404040;
+	color: #404040
 }
 .rpress-cart .cart-item-quantity-wrap .qty-class {
 	font-weight: 500;
-	color: #404040;
+	color: #404040
 }
 ul.addon-item-wrap .rpress-cart-item-title {
-	color: #8a8a8a;
-	margin-left: 10px;
+	margin-left: 6px;
+	font-weight: 400;
+	color: #8E8E8E;
+	font-size: 13px
 }
 span.addon-item-price {
-	float: right;
+	float: right
 }
 .rpress-section span.cart-total {
-	margin-right: 0px;
+	margin-right: 0px
 }
-
 .rpress-section .ui-menu-item a {
-	font-size: 12px;
+	font-size: 12px
 }
 .cart_item.rpress_checkout {
-	margin-top: 15px;
+	margin-top: 15px
 }
-
 .rpress-cart .addon-item-wrap li.rpress-cart-item {
-	margin-top: 0;
-	padding-bottom: 0;
-	border-bottom: none;
+	margin: 1px 0px 1px 18px;
+	padding: 0;
+	border-bottom: none
 }
 .sticky-cat {
-    position: fixed;
-    top: 15px;
+	position: fixed;
+	top: 15px
 }
 .sticky-category {
 	position: fixed;
-    top: 31%;
+	top: 31%
 }
-
 div.rpress_fooditems_list.rp-col-md-5 {
-	width: 46.666667%;
+	width: 46.666667%
 }
 #rpress_user_history tr:nth-child(even) {
-	background: #f8f8f8;
+	background: #f8f8f8
 }
 #rpress_user_history tr:nth-child(odd) {
-	background: #ffffff;
+	background: #ffffff
 }
 #rpress_user_history th {
-    background: #e4e4e4;
+	background: #e4e4e4
 }
-
+#rpress_checkout_cart_wrap table{
+	border: none !important;
+	background: #fff;
+	box-shadow: 1px 1px 10px #efefef;
+	padding: 15px;
+	border-radius: 4px;
+	width: 100%
+}
 /* Checkout Page Style */
-
-
-/* Scroll bar style */
-
+/*=================== Scroll bar style ========================================== =======================*/
 .view-food-item-wrap {
-	cursor: pointer;
 	height: auto;
 	position: relative;
 	margin: 0px auto;
 	overflow: hidden;
 	padding: 0px;
 	text-align: left;
-	width: 100%;
+	width: 100%
 }
 table#rpress_purchase_receipt_products .rpress_purchase_receipt_product_name {
-	font-weight: 600;
+	font-weight: 600
 }
- /*=================== Style sheet for pop-up =======================
-   ===================                        =======================*/
+/*=================== Style sheet for pop-up ========================================== =======================*/
 .qtyminus-style {
-	font-weight: bold;
-	padding: 15px 20px;
+	font-weight: 700;
+	padding: 15px 20px
 }
 .qtyplus-style {
-	font-weight: bold;
-	padding: 15px 27px 15px 20px;
+	font-weight: 700;
+	padding: 15px 27px 15px 20px
 }
 .qty-style {
 	padding: 9px 6px;
-	margin-bottom: 0px;
+	margin-bottom: 0px
 }
-.press-popup-actions .md-4-mar-lft {
-	margin-left: 10px;
-	}
-#fooditem-details {
-	padding: 0px 16px;
+.rpress-popup-actions .md-4-mar-lft {
+	margin-left: 10px
 }
 .rpress-popup-actions .md-4-top {
-	margin-top: 10px;
+	margin-top: 10px
 }
 .rpress-popup-actions .bold {
-	margin-left: 14px;
+	margin-left: 14px
 }
-.rpress-popup-actions  {
+.rpress-popup-actions {
 	display: block;
 	clear: both;
 	overflow: hidden;
-	padding: 0;
+	padding: 0
 }
 .rpress-popup-actions .rp-col-md-4 {
 	padding: 0;
-	height: 45px;
+	line-height: 100%;
+	text-align: center;
+	height: 44px
+}
+.rpress-popup-actions .rp-col-md-8.rp-col-sm-12 {
+	width: 77%;
+	padding-right: 0;
+	padding-left: 30px
 }
 .rpress-popup-actions .qtyminus-style {
-  color: #F00;
-  font-size: 16px;
+	color: #F00;
+	font-size: 16px
+}
+#rpressModal .nav-pills>li {
+	float: left;
+	position: relative;
+	display: block
+}
+#rpressModal .nav-pills>li>a {
+	border-radius: 4px
+}
+#rpressModal .nav-pills>li+li {
+	margin-left: 2px
+}
+fieldset p.rp-col-sm-12 {
+	padding-left: 0
+}
+fieldset p.rp-col-md-6:nth-child(2n+1), #rpress-order-note {
+	padding-right: 0
+}
+fieldset p#rpress-card-cvc-wrap {
+	padding-right: 15px
+}
+.rp-row {
+	margin-right: -15px;
+	margin-left: -15px
+}
+.rp-col-xs-1, .rp-col-sm-1, .rp-col-md-1, .rp-col-lg-1, .rp-col-xs-2, .rp-col-sm-2, .rp-col-md-2, .rp-col-lg-2, .rp-col-xs-3, .rp-col-sm-3, .rp-col-md-3, .rp-col-lg-3, .rp-col-xs-4, .rp-col-sm-4, .rp-col-md-4, .rp-col-lg-4, .rp-col-xs-5, .rp-col-sm-5, .rp-col-md-5, .rp-col-lg-5, .rp-col-xs-6, .rp-col-sm-6, .rp-col-md-6, .rp-col-lg-6, .rp-col-xs-7, .rp-col-sm-7, .rp-col-md-7, .rp-col-lg-7, .rp-col-xs-8, .rp-col-sm-8, .rp-col-md-8, .rp-col-lg-8, .rp-col-xs-9, .rp-col-sm-9, .rp-col-md-9, .rp-col-lg-9, .rp-col-xs-10, .rp-col-sm-10, .rp-col-md-10, .rp-col-lg-10, .rp-col-xs-11, .rp-col-sm-11, .rp-col-md-11, .rp-col-lg-11, .rp-col-xs-12, .rp-col-sm-12, .rp-col-md-12, .rp-col-lg-12 {
+	position: relative;
+	min-height: 1px;
+	padding-right: 15px;
+	padding-left: 15px
+}
+.rp-col-xs-1, .rp-col-xs-2, .rp-col-xs-3, .rp-col-xs-4, .rp-col-xs-5, .rp-col-xs-6, .rp-col-xs-7, .rp-col-xs-8, .rp-col-xs-9, .rp-col-xs-10, .rp-col-xs-11, .rp-col-xs-12 {
+	float: left
+}
+.rp-col-xs-12 {
+	width: 100%
+}
+.rp-col-xs-11 {
+	width: 91.66666667%
+}
+.rp-col-xs-10 {
+	width: 83.33333333%
+}
+.rp-col-xs-9 {
+	width: 75%
+}
+.rp-col-xs-8 {
+	width: 66.66666667%
+}
+.rp-col-xs-7 {
+	width: 58.33333333%
+}
+.rp-col-xs-6 {
+	width: 50%
+}
+.rp-col-xs-5 {
+	width: 41.66666667%
+}
+.rp-col-xs-4 {
+	width: 33.33333333%
+}
+.rp-col-xs-3 {
+	width: 25%
+}
+.rp-col-xs-2 {
+	width: 16.66666667%
+}
+.rp-col-xs-1 {
+	width: 8.33333333%
+}
+.rp-col-xs-pull-12 {
+	right: 100%
+}
+.rp-col-xs-pull-11 {
+	right: 91.66666667%
+}
+.rp-col-xs-pull-10 {
+	right: 83.33333333%
+}
+.rp-col-xs-pull-9 {
+	right: 75%
+}
+.rp-col-xs-pull-8 {
+	right: 66.66666667%
+}
+.rp-col-xs-pull-7 {
+	right: 58.33333333%
+}
+.rp-col-xs-pull-6 {
+	right: 50%
+}
+.rp-col-xs-pull-5 {
+	right: 41.66666667%
+}
+.rp-col-xs-pull-4 {
+	right: 33.33333333%
+}
+.rp-col-xs-pull-3 {
+	right: 25%
+}
+.rp-col-xs-pull-2 {
+	right: 16.66666667%
+}
+.rp-col-xs-pull-1 {
+	right: 8.33333333%
+}
+.rp-col-xs-pull-0 {
+	right: auto
+}
+.rp-col-xs-push-12 {
+	left: 100%
+}
+.rp-col-xs-push-11 {
+	left: 91.66666667%
+}
+.rp-col-xs-push-10 {
+	left: 83.33333333%
+}
+.rp-col-xs-push-9 {
+	left: 75%
+}
+.rp-col-xs-push-8 {
+	left: 66.66666667%
+}
+.rp-col-xs-push-7 {
+	left: 58.33333333%
+}
+.rp-col-xs-push-6 {
+	left: 50%
+}
+.rp-col-xs-push-5 {
+	left: 41.66666667%
+}
+.rp-col-xs-push-4 {
+	left: 33.33333333%
+}
+.rp-col-xs-push-3 {
+	left: 25%
+}
+.rp-col-xs-push-2 {
+	left: 16.66666667%
+}
+.rp-col-xs-push-1 {
+	left: 8.33333333%
+}
+.rp-col-xs-push-0 {
+	left: auto
+}
+.rp-col-xs-offset-12 {
+	margin-left: 100%
+}
+.rp-col-xs-offset-11 {
+	margin-left: 91.66666667%
+}
+.rp-col-xs-offset-10 {
+	margin-left: 83.33333333%
+}
+.rp-col-xs-offset-9 {
+	margin-left: 75%
+}
+.rp-col-xs-offset-8 {
+	margin-left: 66.66666667%
+}
+.rp-col-xs-offset-7 {
+	margin-left: 58.33333333%
+}
+.rp-col-xs-offset-6 {
+	margin-left: 50%
+}
+.rp-col-xs-offset-5 {
+	margin-left: 41.66666667%
+}
+.rp-col-xs-offset-4 {
+	margin-left: 33.33333333%
+}
+.rp-col-xs-offset-3 {
+	margin-left: 25%
+}
+.rp-col-xs-offset-2 {
+	margin-left: 16.66666667%
+}
+.rp-col-xs-offset-1 {
+	margin-left: 8.33333333%
+}
+.rp-col-xs-offset-0 {
+	margin-left: 0
+}
+.pull-right {
+	float: right !important
+}
+.pull-left {
+	float: left !important
 }
 html body .rpress-popup-actions input.qty.qty-style {
 	text-align: center;
-	text-align: center;
-	height: 43px;
+	height: 42px;
 	margin-top: 0;
 	width: 100%;
 	border-radius: unset;
-	border: 1px #ecedef solid;
-	border-top: 0;
-	border-bottom: 0;
+	border: none;
+	background: #ffffff;
+	color: #000;
+	padding: 0
 }
 .rpress-popup-actions .submit-fooditem-button {
 	font-size: 12px;
@@ -1144,8 +1337,14 @@ html body .rpress-popup-actions input.qty.qty-style {
 	color: rgb(255, 255, 255);
 	font-weight: 600;
 	border-radius: 4px;
-	padding: 12px 0px;
-	width: 100%;
+	padding: 12px 15px;
+	position: relative;
+	width: 100%
+}
+span.cart-item-price {
+	position: absolute;
+	right: 15px;
+	opacity: .8
 }
 .update-fooditem-button {
 	font-size: 12px;
@@ -1160,330 +1359,822 @@ html body .rpress-popup-actions input.qty.qty-style {
 	line-height: 54px;
 	width: 61%;
 	display: inline-block;
-	margin-left: 10px;
+	margin-left: 10px
 }
 .edit-pop-up-custom-button {
-	margin-top: 0px;
+	margin-top: 0px
 }
 .edit-pop-up-custom-button a {
-	color: #ffffff;
+	color: #ffffff
 }
-
 div.rpress-popup-actions input[type="button"] {
-	border-color: transparent;
-	color: #2d3138 ;
-	background-color: transparent ;
-	font-size: 28px ;
-	font-weight: normal ;
-	padding: 0 ;
+	color: #a7a7a7;
+	background-color: #fffffff2;
+	font-size: 24px;
+	line-height: 42px;
+	font-weight: 400;
+	padding: 0 !important;
 	box-shadow: none;
-	height: 100%;
-	width: 100%;
+	width: 97%;
+	height: 96%;
+	margin: 0 !important;
+	position: relative;
+	top: 0px;
+	border-radius: 4px
 }
-
-div.btn-count {
+.rpress_purchase_submit_wrapper a.rpress-not-available {
+	border: none !important;
+	padding: 0;
+	background: transparent !important;
+	cursor: unset;
+	color: #ccc
+}
+.rpress-section div.btn-count {
 	border: 1px solid #d9dbe080;
-	border-radius: 5px;
-}
-.clearfix:after, .container:after, .container-fluid:after,
-.row:after, .btn-toolbar:after, .nav:after,
-.navbar:after, .navbar-header:after, .navbar-collapse:after,
-.pager:after, .panel-body:after, .modal-header:after, .modal-footer:after {
-	clear: none !important;
+	border-radius: 5px
 }
 .rpress-section input[type="radio"], .rpress-section input[type="checkbox"] {
-	display: inline-block;
+	display: inline-block
 }
-
-button:hover {
+.rpress-section button:hover {
 	background: #76767600 !important;
-	color: #d4413c;
+	color: #d4413c
 }
-form#fooditem-details h6,
-form#fooditem-update-details h6 {
+form#fooditem-details h6, form#fooditem-update-details h6 {
 	border-bottom: 1px solid rgba(217, 219, 224, 0.5);
 	padding-bottom: 8px;
-	font-weight: 600;
+	font-weight: 600
 }
 .view-food-item-wrap h1 {
 	float: left;
 	font-size: 25px;
 	font-weight: 600;
-	margin-left: 8px;
+	margin-left: 8px
 }
-
-/*===================Edit pop-up===============
-=================================================*/
+/*===================Edit pop-up================================================================*/
 #fooditem-update-details {
-	padding: 0 16px;
+	padding: 0 16px
 }
-.view-food-item-wrap .qtyplus{
-	font-weight: bold;
-	padding: 17px 27px 17px 21px;
+.view-food-item-wrap .qtyplus {
+	font-weight: 700;
+	padding: 17px 27px 17px 21px
 }
 .view-food-item-wrap .qtyminus {
-	font-weight: bold;
-  padding: 17px 20px;
+	font-weight: 700;
+	padding: 17px 20px
 }
 .special-margin {
 	margin-top: 10px;
+	padding: 0
 }
-.special-margin textarea,
-.special-inst textarea {
-	border: 1px solid #e4e4e4;
+.special-margin textarea, .special-inst textarea {
+	border: 1px solid #e4e4e4
 }
-.special-margin a,
-.special-inst a {
-  font-weight: 500;
-  margin-bottom: 8px;
-  display: block;
+.special-margin a, .special-inst a {
+	font-weight: 500;
+	margin-bottom: 8px;
+	display: block
 }
-#fooditem-details,
-#fooditem-update-details {
-	margin-bottom: -15px;
+#fooditem-details, #fooditem-update-details {
+	margin-bottom: -15px
 }
-.RPressMinOrderWrap {display: none;}
+.RPressMinOrderWrap {
+	display: none
+}
 #RPressMinOrder {
-	width:400px;
-	overflow:auto;
-  padding : 30px 0px ;
-  background : #FFFFFF ;
-  position : relative ;
-  color : #666;
+	width: 400px;
+	overflow: auto;
+	padding: 30px 0px;
+	background: #FFFFFF;
+	position: relative;
+	color: #666
 }
 #RPressMinOrder a {
-	background: white;
-  padding: 4px 4px;
+	background: #FFFFFF;
+	padding: 4px 4px;
 	padding: 0px 5px;
 	position: absolute;
 	top: 0;
 	right: 0;
 	margin-right: 2px;
-	border-radius: 50px;
+	border-radius: 50px
 }
 .price-text-left {
 	margin-left: 15px;
-	margin-top: 5px;
+	margin-top: 5px
 }
 .row-top {
-	margin-top: 8px;
+	margin-top: 8px
 }
 .edit-value {
-	margin-left: 12px;
+	margin-left: 12px
 }
 .md-4-mar-lft {
-    margin-left:10px;
+	margin-left: 10px
 }
 .md-12-top {
-	margin-top: 10px;
-}
-.qty_plus_font{
-     font-weight: bold !important;
+	margin-top: 10px
 }
 .rpress-min-price-error {
 	line-height: 20px;
-	font-size: 14px;
+	font-size: 14px
 }
-
-/* Purchase Page */
-form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
-
-
-
-/*=========================css for responsive=====================
-===================================================================*/
-@media only screen and (max-width: 1024px) {
-
+/*=================== Purchase Page =======================*/
+form#rpress_purchase_form #rpress-purchase-button {
+	margin-top: 20px
 }
-
+/*=================== RP Col responsive start =======================*/
+@media (min-width: 768px) {
+	.rp-col-sm-1, .rp-col-sm-2, .rp-col-sm-3, .rp-col-sm-4, .rp-col-sm-5, .rp-col-sm-6, .rp-col-sm-7, .rp-col-sm-8, .rp-col-sm-9, .rp-col-sm-10, .rp-col-sm-11, .rp-col-sm-12 {
+		float: left
+}
+	.rp-col-sm-12 {
+		width: 100%
+}
+	.rp-col-sm-11 {
+		width: 91.66666667%
+}
+	.rp-col-sm-10 {
+		width: 83.33333333%
+}
+	.rp-col-sm-9 {
+		width: 75%
+}
+	.rp-col-sm-8 {
+		width: 66.66666667%
+}
+	.rp-col-sm-7 {
+		width: 58.33333333%
+}
+	.rp-col-sm-6 {
+		width: 50%
+}
+	.rp-col-sm-5 {
+		width: 41.66666667%
+}
+	.rp-col-sm-4 {
+		width: 33.33333333%
+}
+	.rp-col-sm-3 {
+		width: 25%
+}
+	.rp-col-sm-2 {
+		width: 16.66666667%
+}
+	.rp-col-sm-1 {
+		width: 8.33333333%
+}
+	.rp-col-sm-pull-12 {
+		right: 100%
+}
+	.rp-col-sm-pull-11 {
+		right: 91.66666667%
+}
+	.rp-col-sm-pull-10 {
+		right: 83.33333333%
+}
+	.rp-col-sm-pull-9 {
+		right: 75%
+}
+	.rp-col-sm-pull-8 {
+		right: 66.66666667%
+}
+	.rp-col-sm-pull-7 {
+		right: 58.33333333%
+}
+	.rp-col-sm-pull-6 {
+		right: 50%
+}
+	.rp-col-sm-pull-5 {
+		right: 41.66666667%
+}
+	.rp-col-sm-pull-4 {
+		right: 33.33333333%
+}
+	.rp-col-sm-pull-3 {
+		right: 25%
+}
+	.rp-col-sm-pull-2 {
+		right: 16.66666667%
+}
+	.rp-col-sm-pull-1 {
+		right: 8.33333333%
+}
+	.rp-col-sm-pull-0 {
+		right: auto
+}
+	.rp-col-sm-push-12 {
+		left: 100%
+}
+	.rp-col-sm-push-11 {
+		left: 91.66666667%
+}
+	.rp-col-sm-push-10 {
+		left: 83.33333333%
+}
+	.rp-col-sm-push-9 {
+		left: 75%
+}
+	.rp-col-sm-push-8 {
+		left: 66.66666667%
+}
+	.rp-col-sm-push-7 {
+		left: 58.33333333%
+}
+	.rp-col-sm-push-6 {
+		left: 50%
+}
+	.rp-col-sm-push-5 {
+		left: 41.66666667%
+}
+	.rp-col-sm-push-4 {
+		left: 33.33333333%
+}
+	.rp-col-sm-push-3 {
+		left: 25%
+}
+	.rp-col-sm-push-2 {
+		left: 16.66666667%
+}
+	.rp-col-sm-push-1 {
+		left: 8.33333333%
+}
+	.rp-col-sm-push-0 {
+		left: auto
+}
+	.rp-col-sm-offset-12 {
+		margin-left: 100%
+}
+	.rp-col-sm-offset-11 {
+		margin-left: 91.66666667%
+}
+	.rp-col-sm-offset-10 {
+		margin-left: 83.33333333%
+}
+	.rp-col-sm-offset-9 {
+		margin-left: 75%
+}
+	.rp-col-sm-offset-8 {
+		margin-left: 66.66666667%
+}
+	.rp-col-sm-offset-7 {
+		margin-left: 58.33333333%
+}
+	.rp-col-sm-offset-6 {
+		margin-left: 50%
+}
+	.rp-col-sm-offset-5 {
+		margin-left: 41.66666667%
+}
+	.rp-col-sm-offset-4 {
+		margin-left: 33.33333333%
+}
+	.rp-col-sm-offset-3 {
+		margin-left: 25%
+}
+	.rp-col-sm-offset-2 {
+		margin-left: 16.66666667%
+}
+	.rp-col-sm-offset-1 {
+		margin-left: 8.33333333%
+}
+	.rp-col-sm-offset-0 {
+		margin-left: 0
+}
+}
+@media (min-width: 992px) {
+	.rp-col-md-1, .rp-col-md-2, .rp-col-md-3, .rp-col-md-4, .rp-col-md-5, .rp-col-md-6, .rp-col-md-7, .rp-col-md-8, .rp-col-md-9, .rp-col-md-10, .rp-col-md-11, .rp-col-md-12 {
+		float: left
+}
+	.rp-col-md-12 {
+		width: 100%
+}
+	.rp-col-md-11 {
+		width: 91.66666667%
+}
+	.rp-col-md-10 {
+		width: 83.33333333%
+}
+	.rp-col-md-9 {
+		width: 75%
+}
+	.rp-col-md-8 {
+		width: 66.66666667%
+}
+	.rp-col-md-7 {
+		width: 58.33333333%
+}
+	.rp-col-md-6 {
+		width: 50%
+}
+	.rp-col-md-5 {
+		width: 41.66666667%
+}
+	.rp-col-md-4 {
+		width: 33.33333333%
+}
+	.rp-col-md-3 {
+		width: 25%
+}
+	.rp-col-md-2 {
+		width: 16.66666667%
+}
+	.rp-col-md-1 {
+		width: 8.33333333%
+}
+	.rp-col-md-pull-12 {
+		right: 100%
+}
+	.rp-col-md-pull-11 {
+		right: 91.66666667%
+}
+	.rp-col-md-pull-10 {
+		right: 83.33333333%
+}
+	.rp-col-md-pull-9 {
+		right: 75%
+}
+	.rp-col-md-pull-8 {
+		right: 66.66666667%
+}
+	.rp-col-md-pull-7 {
+		right: 58.33333333%
+}
+	.rp-col-md-pull-6 {
+		right: 50%
+}
+	.rp-col-md-pull-5 {
+		right: 41.66666667%
+}
+	.rp-col-md-pull-4 {
+		right: 33.33333333%
+}
+	.rp-col-md-pull-3 {
+		right: 25%
+}
+	.rp-col-md-pull-2 {
+		right: 16.66666667%
+}
+	.rp-col-md-pull-1 {
+		right: 8.33333333%
+}
+	.rp-col-md-pull-0 {
+		right: auto
+}
+	.rp-col-md-push-12 {
+		left: 100%
+}
+	.rp-col-md-push-11 {
+		left: 91.66666667%
+}
+	.rp-col-md-push-10 {
+		left: 83.33333333%
+}
+	.rp-col-md-push-9 {
+		left: 75%
+}
+	.rp-col-md-push-8 {
+		left: 66.66666667%
+}
+	.rp-col-md-push-7 {
+		left: 58.33333333%
+}
+	.rp-col-md-push-6 {
+		left: 50%
+}
+	.rp-col-md-push-5 {
+		left: 41.66666667%
+}
+	.rp-col-md-push-4 {
+		left: 33.33333333%
+}
+	.rp-col-md-push-3 {
+		left: 25%
+}
+	.rp-col-md-push-2 {
+		left: 16.66666667%
+}
+	.rp-col-md-push-1 {
+		left: 8.33333333%
+}
+	.rp-col-md-push-0 {
+		left: auto
+}
+	.rp-col-md-offset-12 {
+		margin-left: 100%
+}
+	.rp-col-md-offset-11 {
+		margin-left: 91.66666667%
+}
+	.rp-col-md-offset-10 {
+		margin-left: 83.33333333%
+}
+	.rp-col-md-offset-9 {
+		margin-left: 75%
+}
+	.rp-col-md-offset-8 {
+		margin-left: 66.66666667%
+}
+	.rp-col-md-offset-7 {
+		margin-left: 58.33333333%
+}
+	.rp-col-md-offset-6 {
+		margin-left: 50%
+}
+	.rp-col-md-offset-5 {
+		margin-left: 41.66666667%
+}
+	.rp-col-md-offset-4 {
+		margin-left: 33.33333333%
+}
+	.rp-col-md-offset-3 {
+		margin-left: 25%
+}
+	.rp-col-md-offset-2 {
+		margin-left: 16.66666667%
+}
+	.rp-col-md-offset-1 {
+		margin-left: 8.33333333%
+}
+	.rp-col-md-offset-0 {
+		margin-left: 0
+}
+}
+@media (min-width: 769px) {
+	.rp-col-lg-1, .rp-col-lg-2, .rp-col-lg-3, .rp-col-lg-4, .rp-col-lg-5, .rp-col-lg-6, .rp-col-lg-7, .rp-col-lg-8, .rp-col-lg-9, .rp-col-lg-10, .rp-col-lg-11, .rp-col-lg-12 {
+		float: left
+}
+	.rp-col-lg-12 {
+		width: 100%
+}
+	.rp-col-lg-11 {
+		width: 91.66666667%
+}
+	.rp-col-lg-10 {
+		width: 83.33333333%
+}
+	.rp-col-lg-9 {
+		width: 75%
+}
+	.rp-col-lg-8 {
+		width: 66.66666667%
+}
+	.rp-col-lg-7 {
+		width: 58.33333333%
+}
+	.rp-col-lg-6 {
+		width: 50%
+}
+	.rp-col-lg-5 {
+		width: 41.66666667%
+}
+	.rp-col-lg-4 {
+		width: 33.33333333%
+}
+	.rp-col-lg-3 {
+		width: 25%
+}
+	.rp-col-lg-2 {
+		width: 16.66666667%
+}
+	.rp-col-lg-1 {
+		width: 8.33333333%
+}
+	.rp-col-lg-pull-12 {
+		right: 100%
+}
+	.rp-col-lg-pull-11 {
+		right: 91.66666667%
+}
+	.rp-col-lg-pull-10 {
+		right: 83.33333333%
+}
+	.rp-col-lg-pull-9 {
+		right: 75%
+}
+	.rp-col-lg-pull-8 {
+		right: 66.66666667%
+}
+	.rp-col-lg-pull-7 {
+		right: 58.33333333%
+}
+	.rp-col-lg-pull-6 {
+		right: 50%
+}
+	.rp-col-lg-pull-5 {
+		right: 41.66666667%
+}
+	.rp-col-lg-pull-4 {
+		right: 33.33333333%
+}
+	.rp-col-lg-pull-3 {
+		right: 25%
+}
+	.rp-col-lg-pull-2 {
+		right: 16.66666667%
+}
+	.rp-col-lg-pull-1 {
+		right: 8.33333333%
+}
+	.rp-col-lg-pull-0 {
+		right: auto
+}
+	.rp-col-lg-push-12 {
+		left: 100%
+}
+	.rp-col-lg-push-11 {
+		left: 91.66666667%
+}
+	.rp-col-lg-push-10 {
+		left: 83.33333333%
+}
+	.rp-col-lg-push-9 {
+		left: 75%
+}
+	.rp-col-lg-push-8 {
+		left: 66.66666667%
+}
+	.rp-col-lg-push-7 {
+		left: 58.33333333%
+}
+	.rp-col-lg-push-6 {
+		left: 50%
+}
+	.rp-col-lg-push-5 {
+		left: 41.66666667%
+}
+	.rp-col-lg-push-4 {
+		left: 33.33333333%
+}
+	.rp-col-lg-push-3 {
+		left: 25%
+}
+	.rp-col-lg-push-2 {
+		left: 16.66666667%
+}
+	.rp-col-lg-push-1 {
+		left: 8.33333333%
+}
+	.rp-col-lg-push-0 {
+		left: auto
+}
+	.rp-col-lg-offset-12 {
+		margin-left: 100%
+}
+	.rp-col-lg-offset-11 {
+		margin-left: 91.66666667%
+}
+	.rp-col-lg-offset-10 {
+		margin-left: 83.33333333%
+}
+	.rp-col-lg-offset-9 {
+		margin-left: 75%
+}
+	.rp-col-lg-offset-8 {
+		margin-left: 66.66666667%
+}
+	.rp-col-lg-offset-7 {
+		margin-left: 58.33333333%
+}
+	.rp-col-lg-offset-6 {
+		margin-left: 50%
+}
+	.rp-col-lg-offset-5 {
+		margin-left: 41.66666667%
+}
+	.rp-col-lg-offset-4 {
+		margin-left: 33.33333333%
+}
+	.rp-col-lg-offset-3 {
+		margin-left: 25%
+}
+	.rp-col-lg-offset-2 {
+		margin-left: 16.66666667%
+}
+	.rp-col-lg-offset-1 {
+		margin-left: 8.33333333%
+}
+	.rp-col-lg-offset-0 {
+		margin-left: 0
+}
+}
+/*=========================css for responsive========================================================================================*/
 @media only screen and (max-width: 1024px) and (min-width: 992px) {
 	.rp-col-md-3 {
-  	width: 30%;
-	}
+		width: 30%
 }
-
+	#rpress_checkout_form_wrap label {
+		font-size: 13px
+}
+}
 @media only screen and (max-width: 991px) {
 	div.btn-count {
 		overflow: hidden;
-		margin-bottom: 20px;
-   }
-  .rpress-popup-actions .submit-fooditem-button {
-  	display: inline-block;
-  }
+		margin-bottom: 0
 }
-
+	.rpress-popup-actions .submit-fooditem-button {
+		display: inline-block
+}
+	div.rpress-price-holder {
+		margin-top: 0px;
+		padding-left: 13px;
+		float: right;
+		width: calc(100% - 95px)
+}
+	.rp-no-img.rpress_fooditem_inner div.rpress-price-holder {
+		padding-left: 0px;
+		width: calc(100% - 0px)
+}
+	.rpress_purchase_submit_wrapper {
+		line-height: normal
+}
+	.rpress-price-holder span.price {
+		float: left;
+		margin-top: 3px
+}
+	.rpress-price-holder .rpress_fooditem_buy_button {
+		float: right
+}
+	fieldset p.rp-col-sm-12 {
+		padding: 0
+}
+	a.rpress_checkout_register_login.rpress-submit.button.rp-col-sm-12, .rpress-checkout-button-actions a.rpress-submit.button {
+		width: 100%;
+		margin-bottom: 10px;
+		font-size: 13px
+}
+	#rpress_checkout_form_wrap fieldset fieldset {
+		margin-bottom: 25px
+}
+}
 @media only screen and (max-width: 768px) {
 	html body .modal.rpress-delivery-options .modal-content {
 		width: auto;
-		top: 90px;
-	}
+		top: 90px
+}
 	div.item-cart {
-  	padding-bottom: 1px;
-    margin-bottom: 40px;
-  }
-  ul.rpress-category-lists .rpress-category-item {
-  	padding: 4px 10px 4px 0;
-  }
-  div.rpress-filter-toggle {
-  	display: block;
-  }
-  .rpress-categories-menu h6 {
-  	background-size: 6%;
-  }
-  div.rpress-search-wrap {
-  	margin-bottom: 20px;
-  }
-  div.rpress-filter-wrapper {
-  	display: none;
-    padding: 0 15px;
-  }
-  div.rpress-filter-wrapper.active {
-  	display: block;
-  }
-  div.rpress-title-holder h3 {
-  	line-height: 17px;
-  	text-align: left;
-  }
-  div.rpress-title-holder a.food-title {
-  	font-size: 13px;
-  }
-  div.rpress-price-holder {
-  	width: 28%;
-  }
-  .rpress-category-item a {
-  	text-align: left;
-  	font-size: 12px;
-  }
-  ul.rpress-list li {
-    display: inline-block;
-    border-color: #c33332;
-    font-weight: 600;
-    height: 50px;
-    background: #fff!important;
-    border-width: 0 0 5px;
-    border-style: solid;
-    padding: .85714286em 1.142857em !important;
-	}
+		padding-bottom: 1px;
+		margin-bottom: 40px
+}
+	ul.rpress-category-lists .rpress-category-item {
+		padding: 4px 10px 4px 0
+}
+	div.rpress-filter-toggle {
+		display: block
+}
+	.rpress-categories-menu h6 {
+		background-size: 6%
+}
+	div.rpress-search-wrap {
+		margin-bottom: 20px
+}
+	div.rpress-filter-wrapper {
+		display: none;
+		padding: 0 15px
+}
+	div.rpress-filter-wrapper.active {
+		display: block
+}
+	div.rpress-title-holder h3 {
+		line-height: 17px;
+		text-align: left
+}
+	div.rpress-title-holder a.food-title {
+		font-size: 13px
+}
+	.rpress-category-item a {
+		text-align: left;
+		font-size: 12px
+}
+	ul.rpress-list li {
+		display: inline-block;
+		border-color: #c33332;
+		font-weight: 600;
+		height: 50px;
+		background: #fff !important;
+		border-width: 0 0 5px;
+		border-style: solid;
+		padding: .85714286em 1.142857em !important
+}
 	ul.rpress-list .rpress-category-item {
-		font-size: 15px;
-	}
+		font-size: 15px
+}
 	section.fullwidth.nav {
 		display: block;
 		margin-left: -15px;
-		margin-right: -15px;
-	}
+		margin-right: -15px
+}
 	.nav-scroller-wrapper {
-	  position: relative;
-	  overflow: hidden;
-	  padding: 0 30px;
-	}
-  .nav-scroller {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    font-size: 0;
-    padding-bottom: 20px;
-    margin-bottom: -20px;
-  }
-
+		position: relative;
+		overflow: hidden;
+		padding: 0 30px
+}
+	.nav-scroller {
+		position: relative;
+		overflow-x: auto;
+		overflow-y: hidden;
+		white-space: nowrap;
+		font-size: 0;
+		padding-bottom: 20px;
+		margin-bottom: -20px
+}
 	.nav-scroller-content {
-	  position: relative;
-	  display: flex;
-	  justify-content: space-around;
-	  float: left;
-	  width: min-content;
-	  min-width: 100%;
-	  transition: transform .4s ease-in-out;
-	}
-  .no-transition {
-  	transition: none;
-  }
-  .nav-scroller-item {
-    display: block;
-    font-size: 1.125rem;
-    text-align: center;
-    padding: .5rem;
-  }
-  .nav-scroller-btn {
-    position: absolute;
-    top: 65px;
-    padding-left: 4px;
-    padding-right: 4px;
-    font-size: 1.25rem;
-    transition: opacity .3s;
-    height: 46px;
-    background-color: #ffffff !important;
-    border-color: #337ab700 !important;
-  }
-  .nav-scroller-btn--left {
-    left: 0;
-  }
-  .nav-scroller-btn--right {
-    right: 0;
-    margin-right: 11px;
-  }
-	.fullwidth {
-	  padding: 15px 0;
-	  margin: 15px 0;
-	  background-color: #fff;
-	}
-	.rpress-term-list.rpress-left {
-		width: 100%;
-	}
-	.scroll-class {
-		width: 100% !important;
-	}
-	.btn-primary:hover {
+		position: relative;
+		display: flex;
+		justify-content: space-around;
+		float: left;
+		width: min-content;
+		min-width: 100%;
+		transition: transform .4s ease-in-out
+}
+	.no-transition {
+		transition: none
+}
+	.nav-scroller-item {
+		display: block;
+		font-size: 1.125rem;
+		text-align: center;
+		padding: .5rem
+}
+	.nav-scroller-btn {
+		position: absolute;
+		top: 65px;
+		padding-left: 4px;
+		padding-right: 4px;
+		font-size: 1.25rem;
+		transition: opacity .3s;
+		height: 46px;
 		background-color: #ffffff !important;
-	}
+		border-color: #337ab700 !important
+}
+	.nav-scroller-btn--left {
+		left: 0
+}
+	.nav-scroller-btn--right {
+		right: 0;
+		margin-right: 11px
+}
+	.fullwidth {
+		padding: 15px 0;
+		margin: 15px 0;
+		background-color: #fff
+}
+	.rpress-term-list.rpress-left {
+		width: 100%
+}
+	.scroll-class {
+		width: 100% !important
+}
+	.btn-primary:hover {
+		background-color: #ffffff !important
+}
 	.nav-scroller {
 		overflow: hidden;
-	  overflow-x: hidden;
-	}
+		overflow-x: hidden
+}
 	.rpress-list {
-		display: none;
-	}
+		display: none
+}
 	.btn-primary {
-		color: #efefef !important;
-		font-size: 27px;
-	}
+		color: #efefef;
+		font-size: 27px
+}
 	html body .rpress-tabs-wrapper button.btn-primary {
-		font-size: 15px;
-	}
-	html body .datepicker-days > table {
-		background: #FFF;
-	}
+		font-size: 15px
+}
+	html body .datepicker-days>table {
+		background: #FFF
+}
 	.nav-scroller-item.selected {
 		border-bottom: 1px solid #c33332;
-    font-weight: 600;
-    border-width: 0 0 4px;
-	}
-	.btn-sm, .btn-group-sm > .btn {
-		padding: 5px 4px !important;
-	}
+		font-weight: 600;
+		border-width: 0 0 4px
+}
+	.btn-sm, .btn-group-sm>.btn {
+		padding: 5px 4px !important
+}
 	.btn:active, .btn.active {
 		color: #c33332 !important;
-		box-shadow: inset 0 0px 0px rgba(0, 0, 0, .125) !important;
-	}
+		box-shadow: inset 0 0px 0px rgba(0, 0, 0, .125) !important
+}
 	.nav-scroller-item:hover {
 		border-bottom: 1px solid #ececec;
-	  border-width: 0 0 4px;
-	}
+		border-width: 0 0 4px
+}
 	.container.scroll-class {
 		padding-right: 50px;
-   	padding-left: 50px;
-	}
+		padding-left: 50px
+}
 	.fullwidth.nav {
 		border: 1px solid #e7e7e7;
-    box-shadow: 0px 0px 10px 1px #efefef;
-	}
+		box-shadow: 0px 0px 10px 1px #efefef
+}
 	button.nav-scroller-btn--left {
-	  margin-left: 22px;
-	}
+		margin-left: 22px
+}
 	button.nav-scroller-btn--right {
-		margin-right: 22px;
-	}
+		margin-right: 22px
+}
 	.sticky-cat {
 		position: fixed !important;
 		top: 104px !important;
@@ -1492,111 +2183,1229 @@ form#rpress_purchase_form #rpress-purchase-button { margin-top: 20px; }
 		width: 100%;
 		border-bottom: 1px solid #e7e7e7 !important;
 		box-shadow: 0px 0px 0px 0px #efefef !important;
-		border-top: 0 !important;
-	}
-	.sticky-cat button.nav-scroller-btn--left,
-	.sticky-cat button.nav-scroller-btn--right {
-	  margin-top: -56px;
-    padding-bottom: 45px !important;
-	}
-	.nav-scroller-btn--left,
-	.nav-scroller-btn--right {
-	  padding-bottom: 43px !important;
-	}
-	.sticky-category {
-	  position: unset !important;
-	}
-	.cat-lists, div.rpress_fooditems_list.rp-col-md-5 {
-		width: 100% !important;
-	}
+		border-top: 0 !important
 }
-
+	.sticky-cat button.nav-scroller-btn--left, .sticky-cat button.nav-scroller-btn--right {
+		margin-top: -56px;
+		padding-bottom: 45px !important
+}
+	.nav-scroller-btn--left, .nav-scroller-btn--right {
+		padding-bottom: 43px !important
+}
+	.sticky-category {
+		position: unset !important
+}
+	.cat-lists, div.rpress_fooditems_list.rp-col-md-5 {
+		width: 100% !important
+}
+	span.cart-item-price {
+		position: relative;
+		right: -10px;
+		opacity: .8
+}
+}
 @media only screen and (max-width: 625px) {
 	.sticky-cat {
-  	top: -15px !important;
-	  margin-left: -51px !important;
-  }
-  html body #RPressMinOrder {
-  	position : absolute ;
-  	left : 8%;
-  	top: 42%;
-  	width: 85%;
-	}
+		top: -15px !important;
+		margin-left: -51px !important
+}
+	html body #RPressMinOrder {
+		position: absolute;
+		left: 8%;
+		top: 42%;
+		width: 85%
+}
 }
 @media only screen and (max-width: 768px) {
 	.view-food-item-wrap .rp-col-sm-3 {
-  	width: 17%;
-	}
+		width: 17%
 }
-
+	.rp-col-xs-1, .rp-col-xs-2, .rp-col-xs-3, .rp-col-xs-4, .rp-col-xs-5, .rp-col-xs-6, .rp-col-xs-7, .rp-col-xs-8, .rp-col-xs-9, .rp-col-xs-10, .rp-col-xs-11, .rp-col-xs-12 {
+		padding: 0px !important
+}
+}
 @media only screen and (max-width: 425px) {
-	input[type="text"] {
-		width: 65% !important;
-	}
 	.rp-col-xs-3 {
-	  width: 18%;
-	}
-	.view-food-item-wrap .rp-col-xs-3  {
-	  width: 20%;
-	}
-	.view-food-item-wrap .rp-col-xs-4  {
-		width: 28.333333%;
-	}
-	.sticky-cat {
-		margin-left: -45px !important;
-  }
+		width: 18%
 }
-
+	.view-food-item-wrap .rp-col-xs-3 {
+		width: 20%
+}
+	.view-food-item-wrap .rp-col-xs-4 {
+		width: 28.333333%
+}
+	.sticky-cat {
+		margin-left: -45px !important
+}
+}
 @media only screen and (max-width: 375px) {
 	input[type="text"] {
-		width: 100% !important;
-	}
-	.qtyplus-style {
-  	font-weight: bold !important;
-    padding: 15px 20px 15px 20px !important;
-	}
+		width: 100% !important
 }
-
+	.qtyplus-style {
+		padding: 0px 20px 15px 20px !important
+}
+}
 @media only screen and (max-width: 320px) {
 	.qtyplus-style {
-  	font-weight: bold !important;
-    padding: 14px 21px 15px 19px !important;
-	}
-	.qty_plus_font{
-    padding: 16px 20px !important;
-	}
+		padding: 0px 21px 15px 19px !important
 }
-
+	.qty_plus_font {
+		padding: 16px 20px !important
+}
+}
+@media (max-width: 767px) {
+	.rpress-delivery-options ul#rpressdeliveryTab.nav>li>a {
+		width: 130px
+}
+	.rpress-popup-actions {
+		padding: 0
+}
+	.rpress-popup-actions .rp-col-xs-8 {
+		padding-left: 10px !important
+}
+}
+@media only screen and (max-width: 768px) {
+	.rpress-categories-menu .rpress-category-lists::-webkit-scrollbar {
+		display: none
+}
+	div.rpress-filter-wrapper {
+		display: block !important;
+		padding: 0 0px
+}
+	.rpress-categories-menu {
+		margin-bottom: 20px
+}
+}
+@media only screen and (min-width: 769px) {
+	.rpress-category-item.current a {
+		background: transparent !important
+}
+	.rp-mb-cat-ft-btn {
+		display: none
+}
+	i.fa.fa-times.close-cart-ic{
+		display: none
+}
+	.rpress-mobile-cart-icons{
+		display: none !important
+}
+}
+@media (max-width: 320px) {
+	.rpress-delivery-options ul#rpressdeliveryTab.nav>li>a {
+		width: 112px
+}
+}
 .vertical-alignment-helper {
-    display:table;
-    height: 100%;
-    width: 100%;
+	display: table;
+	height: 100%;
+	width: 100%
 }
 .vertical-align-center {
-    /* To center vertically */
-    display: table-cell;
-    vertical-align: middle;
+	display: table-cell;
+	vertical-align: middle
+}
+.rpress-delivery-options input.rpress-hrs {
+	border: 1px solid #ccc;
+	color: #555
+}
+html body.fancybox-active {
+	padding-right: 0px;
+	margin: 0 auto
+}
+html body .rpress-delivery-options.service-option-pickup ul#rpressdeliveryTab, html body .rpress-delivery-options.service-option-delivery ul#rpressdeliveryTab {
+	display: none
+}
+/* Additional CSS for popup design */
+.quantity::-webkit-inner-spin-button, .quantity::-webkit-outer-spin-button {
+	-webkit-appearance: none !important;
+	margin: 0 !important
+}
+.disable_click {
+	pointer-events: none
+}
+.rpress-title-holder h3 {
+	padding-right: 10px;
+	text-align: left;
+	line-height: 21px;
+	padding-bottom: 8px
+}
+/*.rpress-mobile-cart-icons, .close-cart-ic {
+	display: none !important
+}
+*/
+/*=================== Service Options Enable , Minimum Order Nitice ========================================== =======================*/
+#rpressModal.checkout-error .modal-footer, #rpressModal.show-service-options .modal-footer {
+	display: none
+}
+#rpressModal.checkout-error span.badge {
+	display: none !important
+}
+@media only screen and (max-width: 768px) {
+	.sticky-sidebar.cat-lists.rp-mobile-cat {
+		height: auto;
+		max-height: 60%;
+		margin-bottom: 30px;
+		width: 75% !important;
+		background: #FFFFFF;
+		position: fixed;
+		z-index: 99999;
+		box-shadow: -7px -5px 16px #00000024;
+		padding: 6px !important;
+		bottom: 98px;
+		left: 50%;
+		border-radius: 5px;
+		cursor: pointer;
+		text-align: center;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		transform: translate(-50%, 0px)
+}
+	/*.sticky-sidebar.rp-hide{
+		display: block !important
+}
+	*/
+	.rp-mb-cat-ft-btn.rp-close-menu .rp-mb-cat-txt i {
+		display: none
+}
+	.rp-mb-cat-ft-btn {
+		font-size: 17px;
+		width: 30%;
+		background: #FFFFFF;
+		position: fixed;
+		z-index: 99999;
+		box-shadow: 1px 1px 16px #0000008c;
+		padding: 6px;
+		bottom: 80px;
+		left: 50%;
+		border-radius: 100px;
+		cursor: pointer;
+		text-align: center;
+		transform: translate(-50%, 0px);
+		font-weight: 500
+}
+	.rp-mb-cat-txt i {
+		padding-right: 5px
+}
+	.sticky-sidebar.cat-lists.rp-mobile-cat {
+		display: none
+}
+	body.rp-cat-no-scroll {
+		overflow: hidden
+}
+	.rp-cat-overlay {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		background: #3c3c3c;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		opacity: .6;
+		z-index: 9999;
+		overflow: hidden;
+		-webkit-transition: all 0.3s ease;
+		-moz-transition: all 0.3s ease;
+		transition: all 0.3s ease
+}
+	.rpress_fooditems_list.rp-col-lg-7.rp-col-md-7.rp-col-sm-9.rp-col-xs-12 {
+		width: 100%
+}
+	span.rp-mb-cat-txt {
+		padding: 0;
+		font-weight: inherit;
+		font-size: inherit
+}
+	/*functionality code*/
+	.rpress-sidebar-main-wrap {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		left: 100%;
+		background: #fafafa;
+		transition: 1s ease;
+		height: 100%;
+		z-index: 99999;
+		overflow: auto
+}
+	.rpress-mobile-cart-icons {
+		display: inline-block;
+		border-radius: 0;
+		bottom: 0;
+		cursor: pointer;
+		height: 50px;
+		width: 100%;
+		outline: none;
+		position: fixed;
+		left: 0;
+		z-index: 999999;
+		font-size: 15px !important;
+		right: 0;
+		justify-content: space-between;
+		line-height: 50px;
+		box-shadow: 0px -1px 14px #0000008c;
+		background: #fff;
+		padding: 0 15px
+}
+	.rpress-mobile-cart-icons span.rp-separation{
+		opacity: .3
+}
+	.rpress-section .rpress-sidebar-cart-wrap {
+		box-shadow: none
+}
+	.rpress-sidebar-cart-wrap .rpress-cart .cart_item.empty {
+		position: relative;
+		transform: translate(0, 70%);
+		top: 50%
+}
+	.rp-cart-right-wrap {
+		width: 40%;
+		text-align: center;
+		padding: 0px 15px;
+		opacity: 1;
+		float: right;
+		border-radius: 4px;
+		line-height: 40px;
+		margin: 5px 0px;
+		height: 40px;
+		display: inline-block
+}
+	.rp-cart-left-wrap {
+		width: 60%;
+		text-align: left;
+		background: #fff;
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 53px;
+		float: left;
+		display: inline-block;
+		padding: 0 15px 0 0
+}
+	.mob-view-order-txt h6 {
+		background: #db2f39;
+		padding: 14px;
+		color: #FFFFFF;
+		border-radius: 7px
+}
+	.rp-cart-left-wrap span.rp-cart-mb-icon {
+		padding-right: 5px
+}
+	.rp-cart-right-wrap span.rp-cart-mb-icon{
+		padding-left: 5px
+}
+	.close-cart-ic {
+		display: block !important;
+		width: 30px;
+		height: 30px;
+		padding: 7px 9px;
+		border-radius: 50px;
+		position: relative;
+		right: 12px;
+		float: right;
+		text-align: right;
+		top: 10px
+}
+}
+@media only screen and (max-width: 480px) {
+	.rpress_fooditem_excerpt {
+		width: 100%;
+		padding-bottom: 10px
+}
+	.rpress-title-holder h3 {
+		padding-top: 6px
+}
+	.rpress-sidebar-cart-wrap ul.rpress-cart li.rpress-cart-item {
+		padding-left: 0px
+}
+	.rpress-sidebar-cart-wrap ul.rpress-cart li.rpress-cart-item span.rpress-cart-item-title {
+		font-size: 12px
+}
+}
+/*=================== Modal Css Rpress ========================================== =======================*/
+.btn-primary .badge {
+	color: #337ab7;
+	background-color: #fff
+}
+.panel-default>.panel-heading .badge {
+	color: #f5f5f5;
+	background-color: #333
+}
+.panel-primary>.panel-heading .badge {
+	color: #337ab7;
+	background-color: #fff
+}
+.panel-success>.panel-heading .badge {
+	color: #dff0d8;
+	background-color: #3c763d
+}
+.panel-info>.panel-heading .badge {
+	color: #d9edf7;
+	background-color: #31708f
+}
+.panel-warning>.panel-heading .badge {
+	color: #fcf8e3;
+	background-color: #8a6d3b
+}
+.badge {
+	display: inline-block;
+	padding: .25em .4em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+.badge-secondary {
+	color: #fff;
+	background-color: #6c757d
+}
+.panel-danger>.panel-heading .badge {
+	color: #f2dede;
+	background-color: #a94442
+}
+/*=================== Modal css start ========================================== =======================*/
+.modal-open {
+	overflow: hidden
+}
+.modal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1050;
+	display: none;
+	overflow: hidden;
+	-webkit-overflow-scrolling: touch;
+	outline: 0
+}
+.modal-open .modal {
+	overflow-x: hidden;
+	overflow-y: auto
 }
 .modal-content {
-    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
-    width:inherit;
-    height:inherit;
-    /* To center horizontally */
-    margin: 0 auto;
+	position: relative;
+	background-color: #fff;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	border: 1px solid #999;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 6px;
+	outline: 0;
+	-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+	box-shadow: 0 3px 9px rgba(0, 0, 0, .5)
 }
-.rpress-delivery-options input.rpress-hrs {border: 1px solid #ccc; color: #555;}
-
-html body.fancybox-active {padding-right: 0px; margin: 0 auto;}
-
-html body .rpress-delivery-options.service-option-pickup ul#rpressdeliveryTab, html body .rpress-delivery-options.service-option-delivery ul#rpressdeliveryTab{display: none;}
-
-/* Additional CSS for popup design */
-.quantity::-webkit-inner-spin-button, 
-.quantity::-webkit-outer-spin-button { 
-  -webkit-appearance: none !important; 
-  margin: 0 !important; 
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1040;
+	background-color: #000
 }
-
-.disable_click {
-	pointer-events: none;
+.modal-header {
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5
+}
+.modal-body {
+	position: relative;
+	padding: 15px
+}
+.modal-footer {
+	padding: 15px;
+	text-align: right;
+	border-top: 1px solid #e5e5e5
+}
+.modal-footer .btn+.btn {
+	margin-bottom: 0;
+	margin-left: 5px
+}
+.modal-footer .btn-group .btn+.btn {
+	margin-left: -1px
+}
+.modal-footer .btn-block+.btn-block {
+	margin-left: 0
+}
+.modal-scrollbar-measure {
+	position: absolute;
+	top: -9999px;
+	width: 50px;
+	height: 50px;
+	overflow: scroll
+}
+@media (min-width: 768px) {
+	.modal-content {
+		-webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+}
+	.modal-sm {
+		width: 300px
+}
+}
+@media (min-width: 992px) {
+	.modal-lg {
+		width: 900px
+}
+}
+.clearfix:before, .clearfix:after, .dl-horizontal dd:before, .dl-horizontal dd:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after, .form-horizontal .form-group:before, .form-horizontal .form-group:after, .btn-toolbar:before, .btn-toolbar:after, .btn-group-vertical>.btn-group:before, .btn-group-vertical>.btn-group:after, .nav:before, .nav:after, .navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .navbar-collapse:before, .navbar-collapse:after, .pager:before, .pager:after, .panel-body:before, .panel-body:after {
+	display: table;
+	content: " "
+}
+.clearfix:after, .dl-horizontal dd:after, .container:after, .container-fluid:after, .row:after, .form-horizontal .form-group:after, .btn-toolbar:after, .btn-group-vertical>.btn-group:after, .nav:after, .navbar:after, .navbar-header:after, .navbar-collapse:after, .panel-body:after, .modal-header:after, .modal-footer:after {
+	clear: both
+}
+.rp-center {
+	text-align: center
+}
+.nav#rpressdeliveryTab>li>a {
+	position: relative;
+	display: block;
+	padding: 10px 15px
+}
+.tab-content>.tab-pane {
+	display: none
+}
+.tab-content>.active {
+	display: block
+}
+.rp-form-control {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+.btn-block {
+	display: block;
+	width: 100%
+}
+.btn {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px
+}
+/*=================== order receipt page ========================================== =======================*/
+.rp-tick {
+	width: 59px;
+	height: 59px;
+	margin: 0 auto;
+	background-image: url(../images/tick-order.png);
+	background-repeat: no-repeat;
+	margin-bottom: 10px
+}
+.rp-customer-receipt h3.rp-order-head-text {
+	font-size: 2em;
+	font-weight: 300
+}
+.rp-customer-receipt h4.rp-order-no-text {
+	font-size: 1.5em;
+	font-weight: 500
+}
+.rp-customer-receipt p.rp-order-message-text {
+	font-size: 1.2em;
+	color: #a5a4a4
+}
+.rp-customer-receipt p.rp-order-message-text span {
+	color: #000
+}
+#rp-order-details h3 {
+	font-size: 1.8em;
+	margin-bottom: 10px
+}
+#rp-order-details p {
+	font-size: 1em;
+	margin-bottom: 2px;
+	font-weight: 600
+}
+#rp-order-details p span {
+	font-weight: 400
+}
+#rp-order-details .rp-order-section {
+	margin-bottom: 30px
+}
+.rp-bold {
+	font-weight: 700
+}
+.rp-tb-right {
+	text-align: right
+}
+body.rpress-success .entry-title {
+	display: none
+}
+table#rp-order-summary {
+	border: none
+}
+table#rp-order-summary tr {
+	background: transparent
+}
+table#rp-order-summary tfoot td {
+	border: none
+}
+table#rp-order-summary thead th {
+	padding: .5em;
+	border: none
+}
+table#rp-order-summary thead {
+	background: #FBFBFB
+}
+table#rp-order-summary th, table#rp-order-summary td {
+	vertical-align: text-top;
+	border: none;
+	border-bottom: 1px solid rgba(0, 0, 0, .1)
+}
+span.rpress-main-item-name {
+	font-weight: 600
+}
+table#rp-order-summary td.rp-tb-right{
+	font-weight: 600
+}
+@media screen and (max-width: 786px) {
+	table#rp-order-summary{
+		display: block;
+		overflow-x: auto;
+		font-size: 14px
+}
+	table#rp-order-summary th, table#rp-order-summary td{
+		padding: 10px 5px
+}
+	.rpress_purchase_receipt_product_name{
+		width: 240px
+}
+	#rp-order-details h3,.rp-order-summary-main h3{
+		font-size: 1.2em
+}
+}
+/* order receipt page end */
+span.rpress_discount_rate_wrap {
+	float: right
+}
+#rpressModal .rp-loader:after {
+	content: '';
+	background-image: url(../images/wpspin-2x.gif);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	display: block;
+	width: 25px;
+	height: 25px;
+	margin: auto;
+	position: absolute;
+	left: 0;
+	top: 0px
+}
+#rpressModal .rp-loader {
+	position: relative;
+	padding-left: 30px;
+	padding-top: 0px
+}
+.rpress-popup-actions .btn-count {
+	position: relative;
+	border: 1px solid #a7a7a7;
+	border-radius: 4px
+}
+.rp-col-md-4.rp-col-sm-12.btn-count {
+	width: 23%
+}
+.control__indicator {
+	position: absolute;
+	top: 3px;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background: #ffffff;
+	margin: 0 !important;
+	border: 2px solid #000000;
+	border-radius: 3px;
+	transition: all 0.2s ease-in-out 0s
+}
+.food-item-list label {
+	font-weight: 400;
+	display: inline-block;
+	position: relative;
+	padding-left: 30px;
+	margin-bottom: 0px;
+	cursor: pointer
+}
+.view-food-item-wrap input[type="checkbox"], .view-food-item-wrap input[type="radio"], #rpress_checkout_form_wrap input[type=radio] {
+	position: absolute !important;
+	z-index: -1;
+	opacity: 0
+}
+.checkbox-container input:checked~.control__indicator {
+	background: #000000
+}
+.checkbox-container input:checked~.control__indicator:after {
+	display: block
+}
+.control__indicator:after {
+	left: 6px;
+	top: 1px;
+	width: 5px;
+	height: 11px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg)
+}
+.control__indicator:after {
+	content: '';
+	position: absolute;
+	display: none
+}
+.radio-container input:checked~.control__indicator {
+	background: #ffffff
+}
+.radio-container input:checked~.control__indicator:after {
+	display: block
+}
+.radio-container .control__indicator:after {
+	left: 3px;
+	top: 3px;
+	height: 10px;
+	width: 10px;
+	border-radius: 100px;
+	background: #000;
+	border: none
+}
+.radio-container .control__indicator {
+	position: absolute;
+	top: 3px;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background: #ffffff;
+	margin: 0 !important;
+	border-radius: 50%;
+	border: 2px solid #000000;
+	transition: all 0.2s ease-in-out 0s
+}
+#rpress-payment-mode-wrap label {
+	padding-left: 30px;
+	position: relative
+}
+#rpress-payment-mode-wrap input:checked~.control__indicator {
+	background: #ffffff
+}
+#rpress-payment-mode-wrap input:checked~.control__indicator:after {
+	display: block
+}
+#rpress-payment-mode-wrap .control__indicator {
+	position: absolute;
+	top: -2px;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background: #ffffff;
+	margin: 0 !important;
+	border-radius: 50%;
+	border: 2px solid #000000;
+	transition: all 0.2s ease-in-out 0s
+}
+#rpress-payment-mode-wrap .control__indicator:after {
+	left: 3px;
+	top: 3px;
+	height: 10px;
+	width: 10px;
+	border-radius: 100px;
+	background: #000;
+	border: none
+}
+.rp-addons-data-wrapper .rp-max-addon {
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	color: rgb(118, 118, 118)
+}
+.rp-addons-data-wrapper .rp-addon-error {
+	color: #ff0000 !important
+}
+.rp-addons-data-wrapper .rp-addon-required {
+	font-size: 13px;
+	color: rgb(118, 118, 118);
+	float: right;
+	font-weight: 500
+}
+/*=================== order history page ========================================== =======================*/
+.rpress-history-card {
+	border: 1px solid #ddd;
+	padding: 25px;
+	border-radius: 3px;
+	height: 276px
+}
+.repress-history-inner {
+	margin-top: 30px
+}
+.rpress-his-col {
+	padding: 0
+}
+hr.rp-line {
+	clear: both;
+	margin: 10px 0;
+	border: 1px #cccccc;
+	border-style: dotted !important;
+	height: 0px
+}
+.rpress-order-status-wrap {
+	text-align: right
+}
+.rpress-total-am {
+	font-weight: 600;
+	color: #1d1d1d;
+	font-size: 12px;
+	width: 30%;
+	text-align: right
+}
+.rpesss-foods {
+	font-weight: 500;
+	font-size: 12px;
+	width: 70%;
+	color: #1d1d1d
+}
+.rpesss-foods span {
+	font-size: 12px;
+	font-weight: 500;
+	color: #404040;
+	width: 360px;
+	padding: 0;
+	overflow: hidden;
+	display: inline-block;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left
+}
+.rpress-order-cart-ft {
+	display: flex;
+	justify-content: space-between;
+	clear: both;
+	flex: 1;
+	padding-top: 15px
+}
+span.rp-bold-hs {
+	display: inline-block;
+	font-weight: 700;
+	color: #000;
+	font-size: 14px;
+	padding-right: 3px;
+	width: 95px
+}
+.rpress-lable-txt {
+	font-size: 14px;
+	font-weight: 500;
+	color: #404040;
+	width: 400px;
+	padding: 0;
+	overflow: hidden;
+	display: inline-block;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left;
+	text-transform: capitalize
+}
+a.rpress-view-order-btn {
+	font-weight: 800;
+	text-transform: uppercase;
+	font-size: 13px;
+	line-height: 1.2;
+	outline: 0
+}
+.rpess-view-details {
+	padding: 10px 0
+}
+span.rpress-status {
+	padding: 6px 13px;
+	font-size: 14px;
+	background: #FF0000;
+	color: #fff;
+	border-radius: 4px;
+	font-weight: 600;
+	line-height: 1.2;
+	text-transform: capitalize
+}
+.rpress_purchase_row {
+	margin-bottom: 20px
+}
+.rp-detils-content-view span {
+	display: block;
+	padding-top: 5px;
+	font-weight: 400;
+	color: #000;
+	text-transform: capitalize;
+	letter-spacing: normal
+}
+.rp-detils-content-view p {
+	margin-bottom: 10px;
+	color: #424242;
+	line-height: 1.2;
+	text-transform: capitalize;
+	font-size: 14px;
+	letter-spacing: 1px;
+	font-weight: 700
+}
+.rp-order-list-main-wrap h3 {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.2
+}
+.rp-order-list-main-wrap ul.rpress-cart {
+	margin-left: 0;
+	margin-bottom: 10px
+}
+.rp-order-list-main-wrap .rpress-cart-item-title {
+	vertical-align: middle;
+	line-height: 1.2
+}
+.rp-addons-ht-wrap {
+	margin: 3px 0 0 19px;
+	max-width: 65%;
+	display: block;
+	font-size: 12px;
+	color: #404040;
+	vertical-align: middle
+}
+.rp-order-list-main-wrap span.rpress-cart-item-qty.qty-class {
+	line-height: 1.2;
+	padding-right: 10px;
+	font-size: 14px;
+	vertical-align: middle
+}
+.rp-order-list-main-wrap .rpress-special-instruction {
+	font-size: 13px;
+	display: block;
+	margin: 5px 0 0 19px;
+	font-weight: 500;
+	font-style: italic;
+	letter-spacing: 1px
+}
+.rp-order-list-main-wrap h3 {
+	margin-bottom: 5px
+}
+#rpress_user_history .rp-row {
+	float: left
+}
+.modal.show-order-details .modal-footer{
+	font-weight: 700;
+	color: #000
+}
+.modal.show-order-details .modal-header .modal-title{
+	width: 100%
+}
+.modal.show-order-details .rpress-status{
+	float: right;
+	margin-right: 20px
+}
+@media screen and (max-width: 900px) {
+	.rpress-history-card {
+		display: flex;
+		flex-flow: column
+}
+	.rp-col-md-9.rpress-his-col {
+		-webkit-box-ordinal-group: 2;
+		-moz-box-ordinal-group: 2;
+		-ms-flex-order: 2;
+		-webkit-order: 2;
+		order: 2;
+		padding-top: 10px
+}
+	.rp-col-md-3.rpress-his-col {
+		-webkit-box-ordinal-group: 1;
+		-moz-box-ordinal-group: 1;
+		-ms-flex-order: 1;
+		-webkit-order: 1;
+		order: 1
+}
+	hr.rp-line {
+		-webkit-box-ordinal-group: 3;
+		-moz-box-ordinal-group: 3;
+		-ms-flex-order: 3;
+		-webkit-order: 3;
+		order: 3
+}
+	.rpress-order-cart-ft {
+		-webkit-box-ordinal-group: 1;
+		-moz-box-ordinal-group: 1;
+		-ms-flex-order: 1;
+		-webkit-order: 1;
+		order: 4
+}
+	.rpress-order-status-wrap {
+		text-align: left
+}
+	.rpress-lable-txt {
+		width: auto;
+		padding: 0;
+		overflow: hidden;
+		display: block;
+		text-decoration: none;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		text-align: left
+}
+	span.rp-bold-hs {
+		width: auto
+}
+	.rpress-order-cart-ft {
+		display: block
+}
+	.rpesss-foods, .rpress-total-am {
+		width: 100%;
+		text-align: left
+}
+}
+@media screen and (max-width: 768px) {
+	.rpesss-foods span {
+		width: auto;
+		display: block
+}
+	.rpress-history-card {
+		height: 300px
+}
+}
+@media screen and (max-width: 480px) {
+	.rpress-history-card {
+		height: auto
+}
+}
+/*=================== RP loader css ========================================== =======================*/
+.rp-loading {
+	position: relative
+}
+.rp-loading:after {
+	content: " ";
+	display: block;
+	width: 20px;
+	height: 20px;
+	margin: 2px auto;
+	border-radius: 50%;
+	border: 3px solid #ffffff;
+	border-color: #ffffff transparent #ffffff transparent;
+	animation: lds-dual-ring 1.2s linear infinite;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 2px;
+	bottom: 0
+}
+@keyframes lds-dual-ring {
+	0% {
+		transform: rotate(0deg)
+}
+	100% {
+		transform: rotate(360deg)
+}
+}
+.rpress-price-holder .rpress-add-to-cart.rp-loading {
+	width: 60px;
+	height: 28px;
+	line-height: 28px
+}
+.service-option-delivery_and_pickup button.rp-loading:after {
+	top: 4px
+}
+.submit-fooditem-button.rp-loading:after {
+	top: 11px
+}
+.rpress_checkout a.rp-loading:after {
+	top: 5px
+}
+.rpress-clear-cart.rp-loading:after {
+	left: 0;
+	right: 0px;
+	top: 0px;
+	bottom: 0
+}
+.rpress-edit-from-cart.rp-loading:after {
+	width: 15px;
+	height: 15px;
+	top: 0px
+}
+.header.modal__header .modal-title {
+	width: 100%
+}
+.header.modal__header .modal-title span.rpress-status {
+	float: right;
+	margin-right: 20px
+}
+.rp-infinite-load {
+	float: left
+}
+.rp-text-visibility{
+	opacity: 0 !important
+}
+.rp-loading span.cart-clear-icon{
+	display: none
+}
+a.btn.btn-primary.btn-block.rpress-delivery-opt-update.rp-loading:after{
+	top: 4px
+}
+a.delivery-change.rp-loading:after{
+	top: 0
+}
+a.rpress-add-to-cart.button.rpress-submit.rp-loading:after{
+	width: 18px;
+	height: 18px
+}
+a.rpress-view-order-btn.rp-loading:after{
+	right: auto
+}
+#rpress-user-login-submit .rp-loading:after{
+	left: 10px;
+	top: 0px
+}
+a.rpress_checkout_register_login.rpress-submit.button.rp-loading:after{
+	top: 7px
+}
+#rpress-new-account-wrap a.rpress_checkout_register_login.rp-loading:after,#rpress-login-account-wrap .rpress_checkout_register_login:after{
+	top: -2px;
+	right: auto;
+	left: 0
+}
+/*=================== Cehckout Service Option Css ========================================== =======================*/
+#rpress_checkout_cart_wrap .delivery-wrap {
+	display: none
+}
+.rp-checkout-service-option {
+	margin-bottom: 20px;
+	background: #fff;
+	box-shadow: 1px 1px 10px #efefef;
+	padding: 15px;
+	border-radius: 4px
+}
+.rp-checkout-service-option .rpress-delivery-options ul#rpressdeliveryTab.nav>li.active>a {
+	border-radius: 100px
+}
+.rp-checkout-service-option .nav#rpressdeliveryTab>li>a:hover, .rp-checkout-service-option .nav#rpressdeliveryTab>li>a:focus {
+	background-color: transparent
+}
+.rp-checkout-service-option .rpress-delivery-options ul#rpressdeliveryTab {
+	border-radius: 100px
+}
+.rp-checkout-service-option .rpress-delivery-options ul#rpressdeliveryTab.nav>li>a {
+	width: 50%;
+	float: left;
+	display: inline-block
+}
+.rp-checkout-service-option .rpress-delivery-options ul#rpressdeliveryTab {
+	padding: 0;
+	width: 100%
+}
+.rp-checkout-service-option button.rpress-delivery-opt-update {
+	display: none
+}
+.rp-checkout-service-option .rpress-tabs-wrapper #rpress-tab-content {
+	width: 100%
+}
+.rp-checkout-service-option .rp-form-control {
+	height: 48px
+}
+body.rpress-checkout a.btn.btn-primary.btn-block.rpress-delivery-opt-update {
+	display: none
+}
+#rpress_purchase_submit .rp-loading:after{
+	left: 10px;
+	top: 9px
+}
+fieldset#rpress_checkout_order_details.rp-loading:before{
+	content: "";
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgb(0 0 0 / 85%);
+	z-index: 10;
+	opacity: .7
+}
+fieldset#rpress_checkout_order_details.rp-loading:after{
+	width: 50px;
+	height: 50px;
+	top: 40%;
+	z-index: 10
+}
+fieldset#rpress_checkout_order_details.rp-loading {
+	position: relative
+}
+/*=================== Order History infi laoder css ========================================== =======================*/
+#rp-order-history-infi-load-container .rp-infi-loading:before {
+	content: " ";
+	display: block;
+	width: 20px;
+	height: 20px;
+	margin: 2px auto;
+	border-radius: 50%;
+	border: 3px solid #ffffff;
+	border-color: #ff0000 transparent #ff0303 transparent;
+	animation: lds-dual-ring 1.2s linear infinite;
+	position: absolute;
+	left: 0;
+	top: 0px;
+	bottom: 0
+}
+#rp-order-history-infi-load-container .rp-infi-loading {
+	position: relative;
+	width: 155px;
+	margin: auto;
+	font-size: 20px;
+	text-align: center;
+	font-weight: 600;
+	color: #717171
+}
+.rp-infinite-load {
+	width: 100%;
+	float: none;
+	text-align: center
+}
+#rp-order-history-infi-load-container h2.rp-infi-load {
+	margin: 30px 0
+}
+.rp-infinite-load-main{
+	clear: both
+}
+/*=================== tata toast custom css =======================*/
+.rpress-food-type-icon{
+	width: 18px;
+	position: relative;
+	top: 2px
+}
+.tata{
+	z-index: 9999999999999 !important;
+	background: #fff !important;
+	color: #000000 !important
+}
+@media screen and (max-width: 480px) {
+	.tata{
+		width: 100% !important;
+		left: 0 !important
+}
 }

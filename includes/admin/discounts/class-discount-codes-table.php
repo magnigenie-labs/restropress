@@ -95,13 +95,13 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 		$input_id = $input_id . '-search-input';
 
 		if ( ! empty( $_REQUEST['orderby'] ) )
-			echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['orderby'] ) . '" />';
+			echo '<input type="hidden" name="orderby" value="' . esc_attr( sanitize_text_field( $_REQUEST['orderby'] )  ) . '" />';
 		if ( ! empty( $_REQUEST['order'] ) )
-			echo '<input type="hidden" name="order" value="' . esc_attr( $_REQUEST['order'] ) . '" />';
+			echo '<input type="hidden" name="order" value="' . esc_attr( sanitize_text_field( $_REQUEST['order'] ) ) . '" />';
 		?>
 		<p class="search-box">
-			<label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
-			<input type="search" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
+			<label class="screen-reader-text" for="<?php echo esc_attr( $input_id ) ?>"><?php echo esc_html( $text ); ?>:</label>
+			<input type="search" id="<?php echo esc_attr( $input_id)  ?>" name="s" value="<?php _admin_search_query(); ?>" />
 			<?php submit_button( $text, 'button', false, false, array('ID' => 'search-submit') ); ?>
 		</p>
 	<?php
@@ -114,9 +114,10 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 	 * @return array $views All the views available
 	 */
 	public function get_views() {
-		$base           = admin_url('edit.php?post_type=fooditem&page=rpress-discounts');
 
-		$current        = isset( $_GET['status'] ) ? $_GET['status'] : '';
+		$base           = admin_url('admin.php?page=rpress-discounts');
+
+		$current        = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ): '';
 		$total_count    = '&nbsp;<span class="count">(' . $this->total_count    . ')</span>';
 		$active_count   = '&nbsp;<span class="count">(' . $this->active_count . ')</span>';
 		$inactive_count = '&nbsp;<span class="count">(' . $this->inactive_count  . ')</span>';
@@ -286,7 +287,7 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 			return;
 		}
 
-		$ids = isset( $_GET['discount'] ) ? $_GET['discount'] : false;
+		$ids = isset( $_GET['discount'] ) ? sanitize_text_field( $_GET['discount'] ): false;
 
 		if ( ! is_array( $ids ) )
 			$ids = array( $ids );
@@ -330,14 +331,14 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 
 		$per_page = $this->per_page;
 
-		$orderby  = isset( $_GET['orderby'] )  ? $_GET['orderby']                  : 'ID';
-		$order    = isset( $_GET['order'] )    ? $_GET['order']                    : 'DESC';
-		$status   = isset( $_GET['status'] )   ? $_GET['status']                   : array( 'active', 'inactive' );
-		$meta_key = isset( $_GET['meta_key'] ) ? $_GET['meta_key']                 : null;
+		$orderby  = isset( $_GET['orderby'] )  ? sanitize_text_field( $_GET['orderby']  )                : 'ID';
+		$order    = isset( $_GET['order'] )    ? sanitize_text_field( $_GET['order'] )                    : 'DESC';
+		$status   = isset( $_GET['status'] )   ? sanitize_text_field( $_GET['status']   )               : array( 'active', 'inactive' );
+		$meta_key = isset( $_GET['meta_key'] ) ? sanitize_text_field( $_GET['meta_key'] )             : null;
 		$search   = isset( $_GET['s'] )        ? sanitize_text_field( $_GET['s'] ) : null;
 		$args = array(
 			'posts_per_page' => $per_page,
-			'paged'          => isset( $_GET['paged'] ) ? $_GET['paged'] : 1,
+			'paged'          => isset( $_GET['paged'] ) ? sanitize_text_field( $_GET['paged'] ): 1,
 			'orderby'        => $orderby,
 			'order'          => $order,
 			'post_status'    => $status,
@@ -418,7 +419,7 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 
 		$data = $this->discount_codes_data();
 
-		$status = isset( $_GET['status'] ) ? $_GET['status'] : 'any';
+		$status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : 'any';
 
 		switch( $status ) {
 			case 'active':

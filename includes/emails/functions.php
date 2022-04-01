@@ -22,14 +22,17 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @param int          $payment_id   Payment ID
  * @param bool         $admin_notice Whether to send the admin email notification or not (default: true)
  * @param RPRESS_Payment  $payment      Payment object for payment ID.
- * @param RPRESS_Customer $customer     Customer object for associated payment.
  * @return void
  */
-function rpress_email_purchase_receipt( $payment_id, $admin_notice = true, $to_email = '', $payment = null, $customer = null ) {
-	if ( is_null( $payment ) ) {
+function rpress_email_purchase_receipt( $payment_id, $admin_notice = true, $to_email = '', $payment = null, $order_status = '' ) {
+
+    if ( is_null( $payment ) ) {
 		$payment = rpress_get_payment( $payment_id );
 	}
 
+    if( empty( $order_status ) ) {
+        $order_status = rpress_get_order_status( $payment_id );
+    }
 	$payment_data = $payment->get_meta( '_rpress_payment_meta', true );
 
 	$from_name    = rpress_get_option( 'from_name', wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) );
@@ -42,17 +45,27 @@ function rpress_email_purchase_receipt( $payment_id, $admin_notice = true, $to_e
 		$to_email = $payment->email;
 	}
 
-	$subject      = rpress_get_option( 'purchase_subject', __( 'Purchase Receipt', 'restropress' ) );
+	$email_settings = rpress_get_option( $order_status );
+    $subject = isset( $email_settings['subject'] ) ? $email_settings['subject'] : '';
+
+    if ( $order_status == 'pending' && empty( $subject ) ) {
+        $subject      = rpress_get_option( 'purchase_subject', __( 'Purchase Receipt', 'restropress' ) );
+    }
+
 	$subject      = apply_filters( 'rpress_purchase_subject', wp_strip_all_tags( $subject ), $payment_id );
 	$subject      = wp_specialchars_decode( rpress_do_email_tags( $subject, $payment_id ) );
 
-	$heading      = rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restropress' ) );
+	$heading            = isset( $email_settings['heading'] ) ? $email_settings['heading'] : '';
+    if ( $order_status == 'pending' && empty( $heading ) ) {
+        $heading      = rpress_get_option( 'purchase_heading', __( 'Purchase Receipt', 'restropress' ) );
+    }
+
 	$heading      = apply_filters( 'rpress_purchase_heading', $heading, $payment_id, $payment_data );
 	$heading      = rpress_do_email_tags( $heading, $payment_id );
 
 	$attachments  = apply_filters( 'rpress_receipt_attachments', array(), $payment_id, $payment_data );
 
-	$message      = rpress_do_email_tags( rpress_get_email_body_content( $payment_id, $payment_data ), $payment_id );
+	$message      = rpress_do_email_tags( rpress_get_email_body_content( $payment_id, $payment_data, $order_status ), $payment_id );
 
 	$emails = RPRESS()->emails;
 
@@ -65,7 +78,7 @@ function rpress_email_purchase_receipt( $payment_id, $admin_notice = true, $to_e
 
 	$emails->send( $to_email, $subject, $message, $attachments );
 
-	if ( $admin_notice && ! rpress_admin_notices_disabled( $payment_id ) ) {
+	if ( $admin_notice ) {
 		do_action( 'rpress_admin_order_notice', $payment_id, $payment_data );
 	}
 }
@@ -103,7 +116,7 @@ function rpress_email_test_purchase_receipt() {
 	$headers = apply_filters( 'rpress_receipt_headers', $emails->get_headers(), 0, array() );
 	$emails->__set( 'headers', $headers );
 
-	$emails->send( rpress_get_admin_notice_emails(), $subject, $message, $attachments );
+	//$emails->send( rpress_get_admin_notice_emails(), $subject, $message, $attachments );
 
 }
 
@@ -117,44 +130,56 @@ function rpress_email_test_purchase_receipt() {
  */
 function rpress_admin_email_notice( $payment_id = 0, $payment_data = array() ) {
 
-	$payment_id = absint( $payment_id );
+    $notification_settings = rpress_get_option( 'admin_notification' );
 
-	if( empty( $payment_id ) ) {
-		return;
-	}
+    if ( empty( $notification_settings ) ) {
+        $enable_admin_notification = false;
+    } else {
+        $enable_admin_notification = isset( $notification_settings['enable_notification'] ) ? true : false;
+    }
 
-	if( ! rpress_get_payment_by( 'id', $payment_id ) ) {
-		return;
-	}
+    if ( ! $enable_admin_notification ) {
+        return;
+    }
 
-	$from_name   = rpress_get_option( 'from_name', wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) );
-	$from_name   = apply_filters( 'rpress_purchase_from_name', $from_name, $payment_id, $payment_data );
+    $payment_id = absint( $payment_id );
 
-	$from_email  = rpress_get_option( 'from_email', get_bloginfo( 'admin_email' ) );
-	$from_email  = apply_filters( 'rpress_admin_order_from_address', $from_email, $payment_id, $payment_data );
+    if( empty( $payment_id ) ) {
+        return;
+    }
 
-	$subject     = rpress_get_option( 'order_notification_subject', sprintf( __( 'New order received - Order #%1$s', 'restropress' ), $payment_id ) );
-	$subject     = apply_filters( 'rpress_admin_order_notification_subject', wp_strip_all_tags( $subject ), $payment_id );
-	$subject     = wp_specialchars_decode( rpress_do_email_tags( $subject, $payment_id ) );
+    if( ! rpress_get_payment_by( 'id', $payment_id ) ) {
+        return;
+    }
 
-	$heading     = rpress_get_option( 'order_notification_heading', __( 'New Order Received!', 'restropress' ) );
-	$heading     = apply_filters( 'rpress_admin_order_notification_heading', $heading, $payment_id, $payment_data );
-	$heading     = rpress_do_email_tags( $heading, $payment_id );
+    $from_name   = rpress_get_option( 'from_name', wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) );
+    $from_name   = apply_filters( 'rpress_purchase_from_name', $from_name, $payment_id, $payment_data );
 
-	$attachments = apply_filters( 'rpress_admin_order_notification_attachments', array(), $payment_id, $payment_data );
+    $from_email  = rpress_get_option( 'from_email', get_bloginfo( 'admin_email' ) );
+    $from_email  = apply_filters( 'rpress_admin_order_from_address', $from_email, $payment_id, $payment_data );
 
-	$message     = rpress_get_order_notification_body_content( $payment_id, $payment_data );
+    $subject     = isset( $notification_settings['subject'] ) ? $notification_settings['subject'] : rpress_get_option( 'order_notification_subject', sprintf( __( 'New order received - Order #%1$s', 'restropress' ), $payment_id ) );
+    $subject     = apply_filters( 'rpress_admin_order_notification_subject', wp_strip_all_tags( $subject ), $payment_id );
+    $subject     = wp_specialchars_decode( rpress_do_email_tags( $subject, $payment_id ) );
 
-	$emails = RPRESS()->emails;
+    $heading     = isset( $notification_settings['heading'] ) ? $notification_settings['heading'] : rpress_get_option( 'order_notification_heading', __( 'New Order Received!', 'restropress' ) );
+    $heading     = apply_filters( 'rpress_admin_order_notification_heading', $heading, $payment_id, $payment_data );
+    $heading     = rpress_do_email_tags( $heading, $payment_id );
 
-	$emails->__set( 'from_name', $from_name );
-	$emails->__set( 'from_email', $from_email );
-	$emails->__set( 'heading', $heading );
+    $attachments = apply_filters( 'rpress_admin_order_notification_attachments', array(), $payment_id, $payment_data );
 
-	$headers = apply_filters( 'rpress_admin_order_notification_headers', $emails->get_headers(), $payment_id, $payment_data );
-	$emails->__set( 'headers', $headers );
+    $message     = rpress_get_order_notification_body_content( $payment_id, $payment_data );
 
-	$emails->send( rpress_get_admin_notice_emails(), $subject, $message, $attachments );
+    $emails = RPRESS()->emails;
+
+    $emails->__set( 'from_name', $from_name );
+    $emails->__set( 'from_email', $from_email );
+    $emails->__set( 'heading', $heading );
+
+    $headers = apply_filters( 'rpress_admin_order_notification_headers', $emails->get_headers(), $payment_id, $payment_data );
+    $emails->__set( 'headers', $headers );
+
+    $emails->send( rpress_get_admin_notice_emails(), $subject, $message, $attachments );
 
 }
 add_action( 'rpress_admin_order_notice', 'rpress_admin_email_notice', 10, 2 );
@@ -167,24 +192,12 @@ add_action( 'rpress_admin_order_notice', 'rpress_admin_email_notice', 10, 2 );
  * @return mixed
  */
 function rpress_get_admin_notice_emails() {
-	$emails = rpress_get_option( 'admin_notice_emails', false );
-	$emails = strlen( trim( $emails ) ) > 0 ? $emails : get_bloginfo( 'admin_email' );
-	$emails = array_map( 'trim', explode( "\n", $emails ) );
+    $admin_notification = rpress_get_option( 'admin_notification' );
+    $emails = isset( $admin_notification['admin_recipients'] ) ? $admin_notification['admin_recipients'] : rpress_get_option( 'admin_notice_emails', false );
+    $emails = strlen( trim( $emails ) ) > 0 ? $emails : get_bloginfo( 'admin_email' );
+    $emails = array_map( 'trim', explode( "\n", $emails ) );
 
-	return apply_filters( 'rpress_admin_notice_emails', $emails );
-}
-
-/**
- * Checks whether admin sale notices are disabled
- *
- * @since 1.0
- *
- * @param int $payment_id
- * @return mixed
- */
-function rpress_admin_notices_disabled( $payment_id = 0 ) {
-	$ret = rpress_get_option( 'disable_admin_notices', false );
-	return (bool) apply_filters( 'rpress_admin_notices_disabled', $ret, $payment_id );
+    return apply_filters( 'rpress_admin_notice_emails', $emails );
 }
 
 /**

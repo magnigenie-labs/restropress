@@ -185,14 +185,14 @@ function rpress_process_register_form( $data ) {
 		$redirect = apply_filters( 'rpress_register_redirect', $data['rpress_redirect'] );
 
 		rpress_register_and_login_new_user( array(
-			'user_login'      => $data['rpress_user_login'],
-			'user_pass'       => $data['rpress_user_pass'],
-			'user_email'      => $data['rpress_user_email'],
+			'user_login'      => sanitize_text_field( $data['rpress_user_login'] ),
+			'user_pass'       => sanitize_text_field( $data['rpress_user_pass'] ),
+			'user_email'      => sanitize_text_field( $data['rpress_user_email'] ),
 			'user_registered' => date( 'Y-m-d H:i:s' ),
 			'role'            => get_option( 'default_role' )
 		) );
 
-		wp_redirect( $redirect );
+		wp_redirect( esc_url( $redirect ) );
 		rpress_die();
 	}
 }

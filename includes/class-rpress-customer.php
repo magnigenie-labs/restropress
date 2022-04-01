@@ -131,7 +131,6 @@ class RPRESS_Customer {
 		}
 
 		$this->setup_customer( $customer );
-
 	}
 
 	/**
@@ -480,6 +479,9 @@ class RPRESS_Customer {
 	 */
 	public function attach_payment( $payment_id = 0, $update_stats = true ) {
 
+
+
+
 		if( empty( $payment_id ) ) {
 			return false;
 		}
@@ -517,9 +519,9 @@ class RPRESS_Customer {
 
 				if ( ! empty( $payment->total ) ) {
 					$this->increase_value( $payment->total );
+					$this->increase_purchase_count();
 				}
-
-				$this->increase_purchase_count();
+				
 			}
 
 		}
@@ -580,9 +582,9 @@ class RPRESS_Customer {
 				// We removed this payment successfully, decrement the stats
 				if ( ! empty( $payment->total ) ) {
 					$this->decrease_value( $payment->total );
+					$this->decrease_purchase_count();
 				}
 
-				$this->decrease_purchase_count();
 			}
 
 		}

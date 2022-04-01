@@ -81,6 +81,7 @@ function rpress_sanitize_amount( $amount ) {
  * @return string $amount Newly formatted amount or Price Not Available
  */
 function rpress_format_amount( $amount, $decimals = true ) {
+
 	$thousands_sep = rpress_get_option( 'thousands_separator', ',' );
 	$decimal_sep   = rpress_get_option( 'decimal_separator', '.' );
 
@@ -149,6 +150,29 @@ function rpress_currency_filter( $price = '', $currency = '' ) {
 			case "NZD" :
 			case "SGD" :
 			case "JPY" :
+			case "INR" :
+			case "HUF" :
+			case "ILS" :
+			case "MYR" :
+			case "NOK" :
+			case "PKR" :
+			case "PHP" :
+			case "PLN" :
+			case "SEK" :
+			case "TWD" :
+			case "THB" :
+			case "RIAL" :
+			case "RUB" :
+			case "AED" :
+			case "AFN" :
+			case "AMD" :
+			case "AZN" :
+			case "CNY" :
+			case "KRW" :
+			case "BDT" :
+			case "NPR" :
+			case "TRY" :
+
 				$formatted = $symbol . $price;
 				break;
 			default :
@@ -166,8 +190,32 @@ function rpress_currency_filter( $price = '', $currency = '' ) {
 			case "CAD" :
 			case "HKD" :
 			case "MXN" :
+			case "NZD" :
 			case "SGD" :
 			case "JPY" :
+			case "INR" :
+			case "HUF" :
+			case "ILS" :
+			case "MYR" :
+			case "NOK" :
+			case "PKR" :
+			case "PHP" :
+			case "PLN" :
+			case "SEK" :
+			case "TWD" :
+			case "THB" :
+			case "RIAL" :
+			case "RUB" :
+			case "AED" :
+			case "AFN" :
+			case "AMD" :
+			case "AZN" :
+			case "CNY" :
+			case "KRW" :
+			case "BDT" :
+			case "NPR" :
+			case "TRY" :
+
 				$formatted = $price . $symbol;
 				break;
 			default :
@@ -177,7 +225,7 @@ function rpress_currency_filter( $price = '', $currency = '' ) {
 		$formatted = apply_filters( 'rpress_' . strtolower( $currency ) . '_currency_filter_after', $formatted, $currency, $price );
 	endif;
 
-	if( $negative ) {
+	if( $negative && !empty( $price ) ) {
 		// Prepend the mins sign before the currency sign
 		$formatted = '-' . $formatted;
 	}
@@ -232,4 +280,30 @@ function rpress_sanitize_key( $key ) {
 	 * @param string $raw_key The key prior to sanitization.
 	 */
 	return apply_filters( 'rpress_sanitize_key', $key, $raw_key );
+}
+
+/**
+ * Sanitizes array items
+ *
+ *
+ * @since 2.8.3
+ * @param  array $array array items
+ * @return array sanitized array items
+ */
+function rpress_sanitize_array( &$array ){
+
+  foreach ( $array as &$value ){  
+
+    if( !is_array( $value ) ){
+      // sanitize if value is not an array
+      $value = sanitize_text_field( $value );
+    }
+    else{
+      // go inside this function again
+      rpress_sanitize_array($value);
+    }
+  }
+
+  return $array;
+
 }

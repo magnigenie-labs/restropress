@@ -40,7 +40,7 @@ class RPRESS_Payments_Export extends RPRESS_Export {
 			set_time_limit( 0 );
 
 		$month = isset( $_POST['month'] ) ? absint( $_POST['month'] ) : date( 'n' );
-		$year  = isset( $_POST['year']  ) ? absint( $_POST['year']  ) : date( 'Y' );
+		$year  = isset( $_POST['year']  ) ? absint( $_POST['year'] ) : date( 'Y' );
 
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
@@ -107,7 +107,7 @@ class RPRESS_Payments_Export extends RPRESS_Export {
 			'offset' => 0,
 			'number' => -1,
 			'mode'   => rpress_is_test_mode() ? 'test' : 'live',
-			'status' => isset( $_POST['rpress_export_payment_status'] ) ? $_POST['rpress_export_payment_status'] : 'any',
+			'status' => isset( $_POST['rpress_export_payment_status'] ) ? sanitize_text_field( $_POST['rpress_export_payment_status'] )  : 'any',
 			'month'  => isset( $_POST['month'] ) ? absint( $_POST['month'] ) : date( 'n' ),
 			'year'   => isset( $_POST['year'] ) ? absint( $_POST['year'] ) : date( 'Y' )
 		) );

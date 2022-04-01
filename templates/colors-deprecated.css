@@ -1,0 +1,274 @@
+
+/* Gray Color */
+a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart span.cart-total.gray,
+.special-margin.gray a,
+.special-inst.gray a,
+.rpress-submit.button.gray .rpress-add-to-cart-label,
+.btn.btn-block.btn-primary.gray:hover,
+.delivery-change.gray {
+    color: #ccc;
+}
+
+.rpress-submit.button,
+.rpress-submit.button.gray,
+.rpress-submit.button:visited {
+    color: #333;
+    background: #f0f0f0;
+    border-color: #ccc
+}
+
+.btn.btn-block.btn-primary.gray:hover {
+    border: 1px solid #adadad;
+}
+
+.rpress-popup-actions .submit-fooditem-button.gray,
+.btn.btn-block.btn-primary.gray,
+.rpress-cart .rpress_checkout.gray a,
+ html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > li.active > a,
+ html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > html body #rpressModal .rpress-delivery-wrap.gray li.active > html body #rpressModal .rpress-delivery-wrap.gray a:hover {
+    background: #f0f0f0;
+}
+
+.rpress-cart .cart_item.rpress_checkout.gray a,
+.rpress-submit.button.gray:active,
+.rpress-submit.button.gray:focus,
+.rpress-submit.button.gray:hover,
+.rpress-submit.button.gray:active,
+.rpress-submit.button.gray:focus,
+.rpress-submit.button.gray:hover {
+    color: #333;
+    background: #ebebeb;
+    border-color: #adadad
+}
+
+.rpress-submit.button.gray:active {
+    background-image: none
+}
+
+/* White Button */
+
+.rpress-submit.button.white {
+    color: #333;
+    background: #fff;
+    border-color: #ccc
+}
+
+.rpress-submit.button.white:active,
+.rpress-submit.button.white:focus,
+.rpress-submit.button.white:hover {
+    color: #333;
+    background: #ebebeb;
+    border-color: #adadad
+}
+
+.rpress-submit.button.white:active {
+    background-image: none
+}
+
+/* Blue Color */
+.rpress-submit.button.blue {
+    color: #fff;
+    background: #428bca;
+    border-color: #357ebd
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.blue:hover, .rpress-sidebar-cart-wrap .rpress-clear-cart.blue:hover, a.nav-link.blue:hover, .rpress_fooditems_list h5.rpress-cat.blue, ul.rpress-cart span.cart-total.blue, .special-margin.blue a, .special-inst.blue a, .rpress-submit.button.blue .rpress-add-to-cart-label, .btn.btn-block.btn-primary.blue:hover, .delivery-change.blue {
+    color: #428bca;
+}
+
+.rpress-submit.button.blue.active,
+.rpress-submit.button.blue:focus,
+.rpress-submit.button.blue:hover {
+    color: #fff;
+    background: #3276b1;
+    border-color: #285e8e
+}
+
+.cart_item.rpress_checkout.blue a,
+.rpress-popup-actions .submit-fooditem-button.blue,
+.btn.btn-block.btn-primary.blue,
+.rpress-cart .rpress_checkout.blue a,
+ html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > li.active > a,
+ html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > html body #rpressModal .rpress-delivery-wrap.blue li.active > html body #rpressModal .rpress-delivery-wrap.blue a:hover {
+    background: #3276b1;
+}
+
+.rpress-submit.button.blue.active {
+    background-image: none
+}
+
+.btn.btn-block.btn-primary.blue:hover {
+    border: 1px solid #285e8e;
+}
+
+/* Red Color */
+.rpress-submit.button.red {
+    color: #fff;
+    background: #d9534f;
+    border-color: #d43f3a
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.red:hover, a.nav-link.red:hover, .rpress_fooditems_list h5.rpress-cat.red, ul.rpress-cart span.cart-total.red, .special-margin.red a, .special-inst.red a, .rpress-submit.button.red .rpress-add-to-cart-label, .btn.btn-block.btn-primary.red:hover, .delivery-change.red {
+    color: #d4413c;
+}
+
+.rpress-submit.button.red:active,
+.rpress-submit.button.red:focus,
+.rpress-submit.button.red:hover {
+    color: #fff;
+    background: #d2322d;
+    border-color: #ac2925
+}
+
+.rpress-submit.button.red:active {
+    background-image: none
+}
+
+.btn.btn-block.btn-primary.red:hover {
+    border: 1px solid #ac2925;
+}
+
+.cart_item.rpress_checkout.red a,
+.rpress-popup-actions .submit-fooditem-button.red,
+.btn.btn-block.btn-primary.red,
+.rpress-cart .rpress_checkout.red a,
+ html body #rpressModal .rpress-delivery-wrap.red .nav-pills > li.active > a,
+ html body #rpressModal .rpress-delivery-wrap.red .nav-pills > html body #rpressModal .rpress-delivery-wrap.red li.active > html body #rpressModal .rpress-delivery-wrap.red a:hover {
+    background-color: #ac2925;
+}
+
+/* Green Color */
+.rpress-submit.button.green {
+    color: #fff;
+    background: #5cb85c;
+    border-color: #4cae4c
+}
+
+.rpress-submit.button.green:active,
+.rpress-submit.button.green:focus,
+.rpress-submit.button.green:hover {
+    color: #fff;
+    background: #47a447;
+    border-color: #398439
+}
+
+.rpress-submit.button.green:active {
+    background-image: none
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.green:hover, .rpress_fooditems_list h5.rpress-cat.green, ul.rpress-cart span.cart-total.green,
+.special-margin.green a, .special-inst.green a,
+.rpress-submit.button.green .rpress-add-to-cart-label,
+.btn.btn-block.btn-primary.green:hover,
+.delivery-change.green, a.nav-link.green:hover {
+    color: #5cb85c;
+}
+
+.cart_item.rpress_checkout.green a,
+.rpress-popup-actions .submit-fooditem-button.green,
+.btn.btn-block.btn-primary.green,
+.rpress-cart .rpress_checkout.green a,
+ html body #rpressModal .rpress-delivery-wrap.green .nav-pills > li.active > a,
+ html body #rpressModal .rpress-delivery-wrap.green .nav-pills > html body #rpressModal .rpress-delivery-wrap.green li.active > html body #rpressModal .rpress-delivery-wrap.green a:hover {
+    background: #47a447;
+}
+
+.btn.btn-block.btn-primary.green:hover {
+    border: 1px solid #47a447;
+}
+
+/* Yellow Color */
+.rpress-submit.button.yellow {
+    color: #fff;
+    background: #f0ad4e;
+    border-color: #eea236
+}
+
+.rpress-submit.button.yellow:active,
+.rpress-submit.button.yellow:focus,
+.rpress-submit.button.yellow:hover {
+    color: #fff;
+    background: #ed9c28;
+    border-color: #d58512
+}
+
+.rpress-submit.button.yellow:active {
+    background-image: none
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.yellow:hover, .rpress_fooditems_list h5.rpress-cat.yellow, ul.rpress-cart span.cart-total.yellow,
+.special-margin.yellow a,
+.special-inst.yellow a,
+.rpress-submit.button.yellow .rpress-add-to-cart-label,
+.btn.btn-block.btn-primary.yellow:hover,
+.delivery-change.yellow, a.nav-link.yellow:hover {
+    color: #f0ad4e;
+}
+
+.btn.btn-block.btn-primary.yellow:hover {
+    border: 1px solid #d58512;
+}
+
+
+.cart_item.rpress_checkout.yellow a,
+.rpress-popup-actions .submit-fooditem-button.yellow,
+.btn.btn-block.btn-primary.yellow,
+.rpress-cart .rpress_checkout.yellow a,
+ html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > li.active > a,
+ html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > html body #rpressModal .rpress-delivery-wrap.yellow li.active > html body #rpressModal .rpress-delivery-wrap.yellow a:hover {
+    background-color: #d58512;
+}
+
+/* Orange Color */
+.rpress-submit.button.orange {
+    color: #fff;
+    background: #ed9c28;
+    border-color: #e3921e
+}
+
+.rpress-sidebar-cart-wrap .rpress-clear-cart.orange:hover, a.nav-link.orange:hover, .rpress_fooditems_list h5.rpress-cat.orange, ul.rpress-cart span.cart-total.orange, .special-margin.orange a, .special-inst.orange a, .rpress-submit.button.orange .rpress-add-to-cart-label, .btn.btn-block.btn-primary.orange:hover, .delivery-change.orange {
+    color: #ed9c28;
+}
+
+.btn.btn-block.btn-primary.orange:hover {
+    border: 1px solid #ed9c28;
+}
+
+.rpress-popup-actions .submit-fooditem-button.orange,
+.btn.btn-block.btn-primary.orange,
+.rpress-cart .rpress_checkout.orange a,
+ html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > li.active > a,
+ html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > html body #rpressModal .rpress-delivery-wrap.orange li.active > html body #rpressModal .rpress-delivery-wrap.orange a:hover {
+    background-color: #ed9c28;
+}
+
+.rpress-submit.button.orange:active,
+.rpress-submit.button.orange:focus,
+.rpress-submit.button.orange:hover {
+    color: #fff;
+    background: #e59016;
+    border-color: #d58512
+}
+
+.rpress-submit.button.orange:active {
+    background-image: none
+}
+
+/* Dark Gray Color */
+.rpress-submit.button.dark-gray {
+    color: #fff;
+    background: #363636;
+    border-color: #222
+}
+
+.rpress-submit.button.dark-gray:active,
+.rpress-submit.button.dark-gray:focus,
+.rpress-submit.button.dark-gray:hover {
+    color: #fff;
+    background: #333;
+    border-color: #adadad
+}
+
+.rpress-submit.button.dark-gray:active {
+    background-image: none
+}

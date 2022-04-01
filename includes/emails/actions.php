@@ -6,7 +6,7 @@
  * @subpackage  Emails
  * @copyright   Copyright (c) 2018, Magnigenie
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0.8.2
+ * @since       1.0.0
  */
 
 // Exit if accessed directly
@@ -30,7 +30,7 @@ function rpress_trigger_purchase_receipt( $payment_id = 0, $payment = null, $cus
 	}
 
 	// Send email with secure fooditem link
-	rpress_email_purchase_receipt( $payment_id, true, '', $payment, $customer );
+	rpress_email_purchase_receipt( $payment_id, true, '', $payment );
 }
 add_action( 'rpress_complete_purchase', 'rpress_trigger_purchase_receipt', 999, 3 );
 
@@ -66,15 +66,6 @@ function rpress_resend_purchase_receipt( $data ) {
 	// This allows admins to resend purchase receipts to grant additional file fooditems
 	$fooditems = rpress_get_payment_meta_cart_details( $purchase_id, true );
 
-	if ( is_array( $fooditems ) ) {
-		foreach ( $fooditems as $fooditem ) {
-			$limit = rpress_get_file_fooditem_limit( $fooditem['id'] );
-			if ( ! empty( $limit ) ) {
-				rpress_set_file_fooditem_limit_override( $fooditem['id'], $purchase_id );
-			}
-		}
-	}
-
 	wp_redirect( add_query_arg( array( 'rpress-message' => 'email_sent', 'rpress-action' => false, 'purchase_id' => false ) ) );
 	exit;
 }
@@ -99,3 +90,17 @@ function rpress_send_test_email( $data ) {
 	wp_redirect( remove_query_arg( 'rpress_action' ) ); exit;
 }
 add_action( 'rpress_send_test_email', 'rpress_send_test_email' );
+
+//Send notification to customer
+function send_customer_purchase_notification( $payment_id, $new_status ) {
+
+    $order_status = rpress_get_option( $new_status );
+    $check_notification_enabled = isset( $order_status['enable_notification'] ) ? true : false;
+
+    if ( !empty( $payment_id ) && $check_notification_enabled && $new_status !== 'pending' ) {
+        $customer = new RPRESS_Customer( rpress_get_payment_customer_id( $payment_id ) );
+        $email    = $customer->email;
+        rpress_email_purchase_receipt( $payment_id, false, $email, null, $new_status );
+    }
+}
+add_action( 'rpress_update_order_status', 'send_customer_purchase_notification' , 10, 2 );

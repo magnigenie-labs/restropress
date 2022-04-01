@@ -43,7 +43,7 @@ class RPRESS_Customers_Export extends RPRESS_Export {
 		$extra = '';
 
 		if ( ! empty( $_POST['rpress_export_fooditem'] ) ) {
-			$extra = sanitize_title( get_the_title( absint( $_POST['rpress_export_fooditem'] ) ) ) . '-';
+			$extra = get_the_title( absint( $_POST['rpress_export_fooditem'] ) ) . '-';
 		}
 
 		nocache_headers();
@@ -115,7 +115,7 @@ class RPRESS_Customers_Export extends RPRESS_Export {
 				$args['meta_query'] = array(
 					array(
 						'key'   => '_rpress_log_price_id',
-						'value' => (int) $_POST['rpress_price_option']
+						'value' => absint( $_POST['rpress_price_option'] )
 					)
 				);
 			}

@@ -20,14 +20,27 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return      void
 */
 function rpress_update_payment_details( $data ) {
-	
 
-	$addon_data = array();
+
+	check_admin_referer( 'rpress_update_payment_details_nonce' );
+
 	if( ! current_user_can( 'edit_shop_payments', $data['rpress_payment_id'] ) ) {
 		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	check_admin_referer( 'rpress_update_payment_details_nonce' );
+	$payment_id = absint( $data['rpress_payment_id'] );
+	$payment    = new RPRESS_Payment( $payment_id );
+
+	$addon_data = array();
+
+	//Update payment meta
+	$service_type = isset( $_POST['rp_service_type'] ) ? sanitize_text_field( $_POST['rp_service_type'] ) : '';
+	$service_time = isset( $_POST['rp_service_time'] ) ? sanitize_text_field( $_POST['rp_service_time'] ) : '';
+	$order_status = isset( $_POST['rpress_order_status'] ) ? sanitize_text_field( $_POST['rpress_order_status'] ) : '';
+
+	update_post_meta( $payment_id , '_rpress_delivery_type', $service_type );
+	update_post_meta( $payment_id , '_rpress_delivery_time', $service_time );
+	update_post_meta( $payment_id , '_order_status', $order_status );
 
 	// Retrieve the payment ID
 	$payment_id = absint( $data['rpress_payment_id'] );
@@ -58,18 +71,18 @@ function rpress_update_payment_details( $data ) {
 		$minute = 00;
 	}
 
-	$address     = array_map( 'trim', $data['rpress-payment-address'][0] );
+	$address     = array_map( 'trim', explode(',',!empty( $data['rpress-payment-address'][0] )  ) );
 
 	$curr_total  = rpress_sanitize_amount( $payment->total );
-	$new_total   = rpress_sanitize_amount( $_POST['rpress-payment-total'] );
-	$tax         = isset( $_POST['rpress-payment-tax'] ) ? rpress_sanitize_amount( $_POST['rpress-payment-tax'] ) : 0;
+	$new_total   = rpress_sanitize_amount( sanitize_text_field( $_POST['rpress-payment-total'] ) );
+	$tax         = isset( $_POST['rpress-payment-tax'] ) ? rpress_sanitize_amount( sanitize_text_field( $_POST['rpress-payment-tax'] ) ) : 0;
 	$date        = date( 'Y-m-d', strtotime( $date ) ) . ' ' . $hour . ':' . $minute . ':00';
 
 	$curr_customer_id  = sanitize_text_field( $data['rpress-current-customer'] );
 	$new_customer_id   = sanitize_text_field( $data['customer-id'] );
 
 	// Setup purchased items and price options
-	$updated_fooditems = isset( $_POST['rpress-payment-details-fooditems'] ) ? $_POST['rpress-payment-details-fooditems'] : false;
+	$updated_fooditems = !empty( $_POST['rpress-payment-details-fooditems'] ) ? rpress_sanitize_array( $_POST['rpress-payment-details-fooditems'] ): false;
 
 	if ( $updated_fooditems ) {
 
@@ -79,11 +92,11 @@ function rpress_update_payment_details( $data ) {
 				foreach(  $fooditem['addon_items'] as $key => $addons ) {
 					$addons = explode('|', $addons);
 					if( is_array($addons) && !empty($addons) ) {
-						$addon_data[$key]['addon_item_name'] = $addons[0];
-						$addon_data[$key]['addon_id'] = $addons[1];
-						$addon_data[$key]['price'] = $addons[2];
-						$addon_data[$key]['quantity'] = $addons[3];
-						
+						$addon_data[$fooditem['id']][$key]['addon_item_name'] = $addons[0];
+						$addon_data[$fooditem['id']][$key]['addon_id'] = $addons[1];
+						$addon_data[$fooditem['id']][$key]['price'] = $addons[2];
+						$addon_data[$fooditem['id']][$key]['quantity'] = $addons[3];
+
 					}
 				}
 			}
@@ -91,8 +104,6 @@ function rpress_update_payment_details( $data ) {
 			// If this item doesn't have a log yet, add one for each quantity count
 			$has_log = absint( $fooditem['has_log'] );
 			$has_log = empty( $has_log ) ? false : true;
-
-			
 
 			if ( $has_log ) {
 
@@ -141,6 +152,7 @@ function rpress_update_payment_details( $data ) {
 					'tax'         => $tax,
 				);
 
+				$addon_data = isset( $addon_data[ $fooditem_id ] ) ? $addon_data[ $fooditem_id ] : '';
 				$payment->add_fooditem( $fooditem_id, $args, $addon_data );
 
 			}
@@ -175,7 +187,6 @@ function rpress_update_payment_details( $data ) {
 			do_action( 'rpress_remove_fooditem_from_payment', $payment_id, $deleted_fooditem['id'] );
 
 		}
-
 
 	}
 
@@ -234,8 +245,6 @@ function rpress_update_payment_details( $data ) {
 
 	}
 
-
-
 	// Setup first and last name from input values
 	$names      = explode( ' ', $names );
 	$first_name = ! empty( $names[0] ) ? $names[0] : '';
@@ -246,7 +255,6 @@ function rpress_update_payment_details( $data ) {
 	}
 
 	if ( $customer_changed ) {
-
 		// Remove the stats and payment from the previous customer and attach it to the new customer
 		$previous_customer->remove_payment( $payment_id, false );
 		$customer->attach_payment( $payment_id, false );
@@ -306,13 +314,17 @@ function rpress_update_payment_details( $data ) {
 
 	$updated = $payment->save();
 
+  	$order_status = isset( $_POST['rpress_order_status'] ) ? sanitize_text_field( $_POST['rpress_order_status'] ) : '';
+
+	rpress_update_order_status( $payment_id, $order_status );
+
 	if ( 0 === $updated ) {
 		wp_die( __( 'Error Updating Payment', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 400 ) );
 	}
 
 	do_action( 'rpress_updated_edited_purchase', $payment_id );
 
-	wp_safe_redirect( admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details&rpress-message=payment-updated&id=' . $payment_id ) );
+	wp_safe_redirect( admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details&rpress-message=payment-updated&id=' . $payment_id ) );
 	exit;
 }
 add_action( 'rpress_update_payment_details', 'rpress_update_payment_details' );
@@ -334,7 +346,7 @@ function rpress_trigger_purchase_delete( $data ) {
 		}
 
 		rpress_delete_purchase( $payment_id );
-		wp_redirect( admin_url( '/edit.php?post_type=fooditem&page=rpress-payment-history&rpress-message=payment_deleted' ) );
+		wp_redirect( admin_url( 'admin.php?page=rpress-payment-history&rpress-message=payment_deleted' ) );
 		rpress_die();
 	}
 }
@@ -376,7 +388,7 @@ function rpress_trigger_payment_note_deletion( $data ) {
 		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	$edit_order_url = admin_url( 'edit.php?post_type=fooditem&page=rpress-payment-history&view=view-order-details&rpress-message=payment-note-deleted&id=' . absint( $data['payment_id'] ) );
+	$edit_order_url = admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details&rpress-message=payment-note-deleted&id=' . absint( $data['payment_id'] ) );
 
 	rpress_delete_payment_note( $data['note_id'], $data['payment_id'] );
 
@@ -392,11 +404,11 @@ add_action( 'rpress_delete_payment_note', 'rpress_trigger_payment_note_deletion'
 */
 function rpress_ajax_delete_payment_note() {
 
-	if( ! current_user_can( 'edit_shop_payments', $_POST['payment_id'] ) ) {
+	if( ! current_user_can( 'edit_shop_payments', absint( $_POST['payment_id'] ) ) ) {
 		wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
 	}
 
-	if( rpress_delete_payment_note( $_POST['note_id'], $_POST['payment_id'] ) ) {
+	if( rpress_delete_payment_note( absint( $_POST['note_id'] ), absint( $_POST['payment_id'] ) ) ) {
 		die( '1' );
 	} else {
 		die( '-1' );
@@ -404,54 +416,3 @@ function rpress_ajax_delete_payment_note() {
 
 }
 add_action( 'wp_ajax_rpress_delete_payment_note', 'rpress_ajax_delete_payment_note' );
-
-/**
- * Retrieves a new fooditem link for a purchased file
- *
- * @since  1.0.0
- * @return string
-*/
-function rpress_ajax_generate_file_fooditem_link() {
-
-	$customer_view_role = apply_filters( 'rpress_view_customers_role', 'view_shop_reports' );
-	if ( ! current_user_can( $customer_view_role ) ) {
-		die( '-1' );
-	}
-
-	$payment_id  = absint( $_POST['payment_id'] );
-	$fooditem_id = absint( $_POST['fooditem_id'] );
-	$price_id    = absint( $_POST['price_id'] );
-
-	if( empty( $payment_id ) )
-		die( '-2' );
-
-	if( empty( $fooditem_id ) )
-		die( '-3' );
-
-	$payment_key = rpress_get_payment_key( $payment_id );
-	$email       = rpress_get_payment_user_email( $payment_id );
-
-	$limit = rpress_get_file_fooditem_limit( $fooditem_id );
-	if ( ! empty( $limit ) ) {
-		// Increase the file fooditem limit when generating new links
-		rpress_set_file_fooditem_limit_override( $fooditem_id, $payment_id );
-	}
-
-	$files = rpress_get_fooditem_files( $fooditem_id, $price_id );
-	if( ! $files ) {
-		die( '-4' );
-	}
-
-	$file_urls = '';
-
-	foreach( $files as $file_key => $file ) {
-
-		$file_urls .= rpress_get_fooditem_file_url( $payment_key, $email, $file_key, $fooditem_id, $price_id );
-		$file_urls .= "\n\n";
-
-	}
-
-	die( $file_urls );
-
-}
-add_action( 'wp_ajax_rpress_get_file_fooditem_link', 'rpress_ajax_generate_file_fooditem_link' );

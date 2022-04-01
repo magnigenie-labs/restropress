@@ -257,7 +257,6 @@ class RPRESS_Customer_Query {
 	public function query( $query ) {
 		$this->query_vars = wp_parse_args( $query );
 		$items = $this->get_items();
-
 		return $items;
 	}
 
@@ -329,7 +328,6 @@ class RPRESS_Customer_Query {
 
 		if ( false === $cache_value ) {
 			$items = $this->query_items();
-
 			if ( $items ) {
 				$this->set_found_items();
 			}
@@ -341,6 +339,7 @@ class RPRESS_Customer_Query {
 			wp_cache_add( $cache_key, $cache_value, $this->cache_group );
 		} else {
 			$items = $cache_value['items'];
+
 			$this->found_items = $cache_value['found_items'];
 		}
 
@@ -526,7 +525,7 @@ class RPRESS_Customer_Query {
 
 		if ( strlen( $this->query_vars['search'] ) ) {
 			if ( ! empty( $this->query_vars['search_columns'] ) ) {
-				$search_columns = array_map( 'sanitize_key', (array) $this->query_vars['search_columns'] );
+				$search_columns = array_map( 'sanitize_text_field', (array) $this->query_vars['search_columns'] );
 			} else {
 				$search_columns = array( 'name' );
 			}

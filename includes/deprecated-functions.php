@@ -198,51 +198,6 @@ function rpress_taxes_on_prices() {
 }
 
 /**
- * Show Has Purchased Item Message
- *
- * Prints a notice when user has already purchased the item.
- *
- * @since 1.0
- * @deprecated 1.8
- * @global $user_ID
- */
-function rpress_show_has_purchased_item_message() {
-
-	$backtrace = debug_backtrace();
-
-	_rpress_deprecated_function( __FUNCTION__, '1.8', 'no alternatives', $backtrace );
-
-	global $user_ID, $post;
-
-	if( !isset( $post->ID ) )
-		return;
-
-	if ( rpress_has_user_purchased( $user_ID, $post->ID ) ) {
-		$alert = '<p class="rpress_has_purchased">' . __( 'You have already purchased this item, but you may purchase it again.', 'restropress' ) . '</p>';
-		echo apply_filters( 'rpress_show_has_purchased_item_message', $alert );
-	}
-}
-
-/**
- * Flushes the total earning cache when a new payment is created
- *
- * @since 1.0.0
- * @deprecated 1.8.4
- * @param int $payment Payment ID
- * @param array $payment_data Payment Data
- * @return void
- */
-function rpress_clear_earnings_cache( $payment, $payment_data ) {
-
-	$backtrace = debug_backtrace();
-
-	_rpress_deprecated_function( __FUNCTION__, '1.8.4', 'no alternatives', $backtrace );
-
-	delete_transient( 'rpress_total_earnings' );
-}
-//add_action( 'rpress_insert_payment', 'rpress_clear_earnings_cache', 10, 2 );
-
-/**
  * Get Cart Amount
  *
  * @since 1.0
@@ -263,7 +218,7 @@ function rpress_get_cart_amount( $add_taxes = true, $local_override = false ) {
 		$discounts = rpress_get_cart_discounts();
 
 		// Check for a posted discount
-		$posted_discount = isset( $_POST['rpress-discount'] ) ? trim( $_POST['rpress-discount'] ) : '';
+		$posted_discount = isset( $_POST['rpress-discount'] ) ? trim( sanitize_text_field( $_POST['rpress-discount'] ) ) : '';
 
 		if ( $posted_discount && ! in_array( $posted_discount, $discounts ) ) {
 			// This discount hasn't been applied, so apply it
@@ -332,7 +287,6 @@ function rpress_get_purchase_receipt_template_tags() {
 function rpress_get_sale_notification_template_tags() {
 	$tags = __( 'Enter the email that is sent to sale notification emails after completion of a purchase. HTML is accepted. Available template tags:', 'restropress' ) . '<br/>' .
 			'{fooditem_list} - ' . __('A list of fooditem purchased','restropress' ) . '<br/>' .
-			'{file_urls} - ' . __('A plain-text list of fooditem URLs for each fooditem purchased','restropress' ) . '<br/>' .
 			'{name} - ' . __('The buyer\'s first name','restropress' ) . '<br/>' .
 			'{fullname} - ' . __('The buyer\'s full name, first and last','restropress' ) . '<br/>' .
 			'{username} - ' . __('The buyer\'s user name on the site, if they registered an account','restropress' ) . '<br/>' .
@@ -398,50 +352,6 @@ function rpress_get_email_body_footer() {
 }
 
 /**
- * Applies the Chosen Email Template
- *
- * @since 1.0
- * @deprecated 2.0
- * @param string $body The contents of the receipt email
- * @param int $payment_id The ID of the payment we are sending a receipt for
- * @param array $payment_data An array of meta information for the payment
- * @return string $email Formatted email with the template applied
- */
-function rpress_apply_email_template( $body, $payment_id, $payment_data=array() ) {
-	global $rpress_options;
-
-	$backtrace = debug_backtrace();
-
-	_rpress_deprecated_function( __FUNCTION__, '2.0', '', $backtrace );
-
-	$template_name = isset( $rpress_options['email_template'] ) ? $rpress_options['email_template'] : 'default';
-	$template_name = apply_filters( 'rpress_email_template', $template_name, $payment_id );
-
-	if ( $template_name == 'none' ) {
-		if ( is_admin() )
-			$body = rpress_email_preview_template_tags( $body );
-
-		return $body; // Return the plain email with no template
-	}
-
-	ob_start();
-
-	do_action( 'rpress_email_template_' . $template_name );
-
-	$template = ob_get_clean();
-
-	if ( is_admin() )
-		$body = rpress_email_preview_template_tags( $body );
-
-	$body = apply_filters( 'rpress_purchase_receipt_' . $template_name, $body );
-
-	$email = str_replace( '{email}', $body, $template );
-
-	return $email;
-
-}
-
-/**
  * Checks if the user has enabled the option to calculate taxes after discounts
  * have been entered
  *
@@ -459,89 +369,6 @@ function rpress_taxes_after_discounts() {
 	global $rpress_options;
 	$ret = isset( $rpress_options['taxes_after_discounts'] ) && rpress_use_taxes();
 	return apply_filters( 'rpress_taxes_after_discounts', $ret );
-}
-
-/**
- * Verifies a fooditem purchase using a purchase key and email.
- *
- * @deprecated Please avoid usage of this function in favor of the tokenized urls with rpress_validate_url_token()
- * introduced in RPRESS 2.3
- *
- * @since 1.0
- *
- * @param int    $fooditem_id
- * @param string $key
- * @param string $email
- * @param string $expire
- * @param int    $file_key
- *
- * @return bool True if payment and link was verified, false otherwise
- */
-function rpress_verify_fooditem_link( $fooditem_id = 0, $key = '', $email = '', $expire = '', $file_key = 0 ) {
-
-	$meta_query = array(
-		'relation'  => 'AND',
-		array(
-			'key'   => '_rpress_payment_purchase_key',
-			'value' => $key
-		),
-		array(
-			'key'   => '_rpress_payment_user_email',
-			'value' => $email
-		)
-	);
-
-	$accepted_stati = apply_filters( 'rpress_allowed_fooditem_stati', array( 'publish', 'complete' ) );
-
-	$payments = get_posts( array( 'meta_query' => $meta_query, 'post_type' => 'rpress_payment', 'post_status' => $accepted_stati ) );
-
-	if ( $payments ) {
-		foreach ( $payments as $payment ) {
-
-			$cart_details = rpress_get_payment_meta_cart_details( $payment->ID, true );
-
-			if ( ! empty( $cart_details ) ) {
-				foreach ( $cart_details as $cart_key => $cart_item ) {
-
-					if ( $cart_item['id'] != $fooditem_id )
-						continue;
-
-					$price_options 	= isset( $cart_item['item_number']['options'] ) ? $cart_item['item_number']['options'] : false;
-					$price_id 		= isset( $price_options['price_id'] ) ? $price_options['price_id'] : false;
-
-					$file_condition = rpress_get_file_price_condition( $cart_item['id'], $file_key );
-
-					// Check to see if the file fooditem limit has been reached
-					if ( rpress_is_file_at_fooditem_limit( $cart_item['id'], $payment->ID, $file_key, $price_id ) )
-						wp_die( apply_filters( 'rpress_fooditem_limit_reached_text', __( 'Sorry but you have hit your fooditem limit for this file.', 'restropress' ) ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
-
-					// If this fooditem has variable prices, we have to confirm that this file was included in their purchase
-					if ( ! empty( $price_options ) && $file_condition != 'all' && rpress_has_variable_prices( $cart_item['id'] ) ) {
-						if ( $file_condition == $price_options['price_id'] )
-							return $payment->ID;
-					}
-
-					// Make sure the link hasn't expired
-
-					if ( base64_encode( base64_decode( $expire, true ) ) === $expire ) {
-						$expire = base64_decode( $expire ); // If it is a base64 string, decode it. Old expiration dates were in base64
-					}
-
-					if ( current_time( 'timestamp' ) > $expire ) {
-						wp_die( apply_filters( 'rpress_fooditem_link_expired_text', __( 'Sorry but your fooditem link has expired.', 'restropress' ) ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
-					}
-					return $payment->ID; // Payment has been verified and link is still valid
-				}
-
-			}
-
-		}
-
-	} else {
-		wp_die( __( 'No payments matching your request were found.', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
-	}
-	// Payment not verified
-	return false;
 }
 
 /**

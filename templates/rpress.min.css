@@ -66,15 +66,6 @@
 	}
 }
 
-.rpress_clearfix:after {
-	display: block;
-	visibility: hidden;
-	float: none;
-	clear: both;
-	text-indent: -9999px;
-	content: "."
-}
-
 #rpress_checkout_cart {
 	text-align: left;
 	width: 100%;
@@ -143,7 +134,7 @@
 	height: 11px;
 	background: url(images/xit.gif ) 0 0 no-repeat;
 	position: relative;
-	top: 3px
+	top: 1px
 }
 
 .rpress_discount_remove:hover {
@@ -164,9 +155,9 @@
 	font-size: 120%;
 	line-height: 1;
 	font-weight: 700;
-	width: 100%;
 	margin: 0 0 21px;
-	padding: 0
+	background: #fff;
+	padding: 0px 5px;
 }
 
 #rpress_checkout_form_wrap label {
@@ -188,6 +179,11 @@
 	content: "."
 }
 
+#rpress_checkout_form_wrap.rpress-logged-out #rpress_payment_mode_select_wrap,
+#rpress_checkout_form_wrap.rpress-logged-out #rpress_purchase_form_wrap{
+	display: none;
+}
+
 #rpress_checkout_form_wrap span.rpress-description {
 	color: #666;
 	font-size: 80%;
@@ -198,12 +194,17 @@
 #rpress_checkout_form_wrap input.rpress-input,
 #rpress_checkout_form_wrap textarea.rpress-input {
 	display: inline-block;
-	width: 70%
+	width: 100%;
+	color: #000;
+}
+
+#rpress-discount-code-wrap input.rpress-input{
+	width: 70%;
 }
 
 #rpress_checkout_form_wrap select.rpress-select {
 	display: block;
-	width: 60%
+	color: #000
 }
 
 #rpress_checkout_form_wrap select.rpress-select.rpress-select-small {
@@ -230,7 +231,9 @@
 #rpress_checkout_form_wrap input[type=tel],
 #rpress_checkout_form_wrap input[type=text],
 #rpress_checkout_form_wrap textarea {
-	padding: 4px 6px
+	padding: 4px 6px;
+	border: 1px solid #bbb;
+	background: #fff;
 }
 
 #rpress_checkout_form_wrap input[type=radio] {
@@ -321,11 +324,6 @@
 #rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-input,
 #rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-submit {
 	display: inline-block
-}
-
-#rpress_checkout_form_wrap .rpress-cart-adjustment input.rpress-submit {
-	padding: 3px 12px;
-	margin-bottom: 2px
 }
 
 #rpress_checkout_form_wrap #rpress-discount-error-wrap {
@@ -475,17 +473,6 @@
 	position: relative
 }
 
-.rpress_purchase_submit_wrapper a.rpress-add-to-cart {
-	text-decoration: none;
-	display: none;
-	position: relative;
-	overflow: hidden
-}
-
-.rpress_purchase_submit_wrapper a.rpress-add-to-cart.rpress-has-js {
-	display: inline-block
-}
-
 .rpress_purchase_submit_wrapper .rpress-cart-ajax {
 	display: none;
 	position: relative;
@@ -540,9 +527,13 @@ a.rpress-add-to-cart.white .rpress-loading {
 	left: .25em;
 	vertical-align: middle
 }
+.button .rpress-loading-ajax.rpress-loading{
+	top: 5px;
+}
 
 #rpress_checkout_form_wrap .rpress-cart-adjustment .rpress-apply-discount.rpress-submit {
-	display: inline-block
+	display: inline-block;
+	padding: 6px 12px;
 }
 
 .rpress-discount-loader.rpress-loading {
@@ -602,11 +593,6 @@ a.rpress-add-to-cart .rpress-add-to-cart-label {
 	color: #567622;
 	display: block;
 	position: absolute
-}
-
-.rpress_form input.rpress-input.required,
-.rpress_form select.rpress-select.required {
-	color: #000
 }
 
 body.rpress_receipt_page {
@@ -910,412 +896,6 @@ input.rpress_submit_plain {
 	border-radius: 0
 }
 
-/* Gray Color */
-
-.rpress.item-order a.rpress-clear-cart.gray {
-    color: #f0f0f0;
-}
-.cart-action-wrap a.rpress-remove-from-cart i.gray {
-    color: #f0f0f0;
-}
-.rpress-category-link.nav-scroller-item.gray.active:after {
-	background: #f0f0f0;
-}
-.rpress-category-item .gray.active {
-	color: #f0f0f0;
-}
-.rpress-category-item a.gray:hover {
-	color: #f0f0f0;
-}
-a.nav-link.gray:hover, .rpress_fooditems_list h5.rpress-cat.gray, ul.rpress-cart span.cart-total.gray, 
-.special-margin.gray a, 
-.special-inst.gray a, 
-.rpress-submit.button.gray .rpress-add-to-cart-label, 
-.btn.btn-block.btn-primary.gray:hover, 
-.delivery-change.gray {
-	color: #ccc;
-}
-
-.rpress-submit.button,
-.rpress-submit.button.gray,
-.rpress-submit.button:visited {
-	color: #333;
-	background: #f0f0f0;
-	border-color: #ccc
-}
-
-.btn.btn-block.btn-primary.gray:hover {
-	border: 1px solid #adadad;
-}
-
-.rpress-popup-actions .submit-fooditem-button.gray,
-.btn.btn-block.btn-primary.gray,
-.rpress-cart .rpress_checkout.gray a,
- html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > li.active > a, 
- html body #rpressModal .rpress-delivery-wrap.gray .nav-pills > html body #rpressModal .rpress-delivery-wrap.gray li.active > html body #rpressModal .rpress-delivery-wrap.gray a:hover {
-	background: #f0f0f0;
-}
-
-.rpress-cart .cart_item.rpress_checkout.gray a,
-.rpress-submit.button.gray:active,
-.rpress-submit.button.gray:focus,
-.rpress-submit.button.gray:hover,
-.rpress-submit.button.gray:active,
-.rpress-submit.button.gray:focus,
-.rpress-submit.button.gray:hover {
-	color: #333;
-	background: #ebebeb;
-	border-color: #adadad
-}
-
-.rpress-submit.button.gray:active {
-	background-image: none
-}
-
-/* White Button */
-
-.rpress-submit.button.white {
-	color: #333;
-	background: #fff;
-	border-color: #ccc
-}
-
-.rpress-submit.button.white:active,
-.rpress-submit.button.white:focus,
-.rpress-submit.button.white:hover {
-	color: #333;
-	background: #ebebeb;
-	border-color: #adadad
-}
-
-.rpress-submit.button.white:active {
-	background-image: none
-}
-
-/* Blue Color */
-
-.rpress.item-order a.rpress-clear-cart.blue {
-    color: #428bca;
-}
-.cart-action-wrap a.rpress-remove-from-cart i.blue, 
-.cart-action-wrap a.rpress-edit-from-cart i.blue:hover {
-    color: #428bca;
-} 
-.rpress-category-link.nav-scroller-item.blue.active:after {
-	background: #428bca;
-}
-.rpress-category-item .blue.active {
-	color: #428bca;
-}
-.rpress-category-item a.blue:hover {
-	color: #428bca;
-}
-.rpress-submit.button.blue {
-	color: #fff;
-	background: #428bca;
-	border-color: #357ebd
-}
-
-.rpress-sidebar-cart-wrap .rpress-clear-cart.blue:hover, .rpress-sidebar-cart-wrap .rpress-clear-cart.blue:hover, a.nav-link.blue:hover, .rpress_fooditems_list h5.rpress-cat.blue, ul.rpress-cart span.cart-total.blue, .special-margin.blue a, .special-inst.blue a, .rpress-submit.button.blue .rpress-add-to-cart-label, .btn.btn-block.btn-primary.blue:hover, .delivery-change.blue {
-	color: #428bca;
-}
-
-.rpress-submit.button.blue.active,
-.rpress-submit.button.blue:focus,
-.rpress-submit.button.blue:hover {
-	color: #fff;
-	background: #3276b1;
-	border-color: #285e8e
-}
-
-.cart_item.rpress_checkout.blue a,
-.rpress-popup-actions .submit-fooditem-button.blue,
-.btn.btn-block.btn-primary.blue,
-.rpress-cart .rpress_checkout.blue a,
- html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > li.active > a, 
- html body #rpressModal .rpress-delivery-wrap.blue .nav-pills > html body #rpressModal .rpress-delivery-wrap.blue li.active > html body #rpressModal .rpress-delivery-wrap.blue a:hover {
-	background: #3276b1;
-}
-
-.rpress-submit.button.blue.active {
-	background-image: none
-}
-
-.btn.btn-block.btn-primary.blue:hover {
-	border: 1px solid #285e8e;
-}
-
-/* Red Color */
-
-.rpress.item-order a.rpress-clear-cart.red {
-    color: #d4413c;
-}
-.cart-action-wrap a.rpress-remove-from-cart i.red {
-    color: #d4413c;
-}
-.rpress-category-link.nav-scroller-item.red.active:after {
-	background: #d4413c;
-}
-.rpress-category-link.nav-scroller-item.red.active {
-	color: #d4413c;
-}
-.rpress-submit.button.red {
-	color: #fff;
-	background: #d9534f;
-	border-color: #d43f3a
-}
-
-.rpress-sidebar-cart-wrap .rpress-clear-cart.red:hover, a.nav-link.red:hover, .rpress_fooditems_list h5.rpress-cat.red, ul.rpress-cart span.cart-total.red, .special-margin.red a, .special-inst.red a, .rpress-submit.button.red .rpress-add-to-cart-label, .btn.btn-block.btn-primary.red:hover, .delivery-change.red {
-	color: #d4413c;
-}
-
-.rpress-submit.button.red:active,
-.rpress-submit.button.red:focus,
-.rpress-submit.button.red:hover {
-	color: #fff;
-	background: #d2322d;
-	border-color: #ac2925
-}
-
-.rpress-submit.button.red:active {
-	background-image: none
-}
-
-.btn.btn-block.btn-primary.red:hover {
-	border: 1px solid #ac2925;
-}
-
-.cart_item.rpress_checkout.red a,
-.rpress-popup-actions .submit-fooditem-button.red,
-.btn.btn-block.btn-primary.red,
-.rpress-cart .rpress_checkout.red a,
- html body #rpressModal .rpress-delivery-wrap.red .nav-pills > li.active > a, 
- html body #rpressModal .rpress-delivery-wrap.red .nav-pills > html body #rpressModal .rpress-delivery-wrap.red li.active > html body #rpressModal .rpress-delivery-wrap.red a:hover {
-	background-color: #ac2925;
-}
-
-/* Green Color */
-
-.rpress.item-order a.rpress-clear-cart.green {
-    color: #5cb85c;
-}
-.cart-action-wrap a.rpress-remove-from-cart i.green, 
-.cart-action-wrap a.rpress-edit-from-cart i.green:hover {
-    color: #5cb85c;
-}
-.rpress-category-link.nav-scroller-item.green.active:after {
-	background: #5cb85c;
-}
-.rpress-category-item .green.active {
-	color: #5cb85c;
-}
-.rpress-category-item a.green:hover {
-	color: #5cb85c;
-}
-.rpress-submit.button.green {
-	color: #fff;
-	background: #5cb85c;
-	border-color: #4cae4c
-}
-
-.rpress-submit.button.green:active,
-.rpress-submit.button.green:focus,
-.rpress-submit.button.green:hover {
-	color: #fff;
-	background: #47a447;
-	border-color: #398439
-}
-
-.rpress-submit.button.green:active {
-	background-image: none
-}
-
-.rpress-sidebar-cart-wrap .rpress-clear-cart.green:hover, .rpress_fooditems_list h5.rpress-cat.green, ul.rpress-cart span.cart-total.green, 
-.special-margin.green a, .special-inst.green a, 
-.rpress-submit.button.green .rpress-add-to-cart-label, 
-.btn.btn-block.btn-primary.green:hover, 
-.delivery-change.green, a.nav-link.green:hover {
-	color: #5cb85c;
-}
-
-.cart_item.rpress_checkout.green a,
-.rpress-popup-actions .submit-fooditem-button.green,
-.btn.btn-block.btn-primary.green,
-.rpress-cart .rpress_checkout.green a,
- html body #rpressModal .rpress-delivery-wrap.green .nav-pills > li.active > a, 
- html body #rpressModal .rpress-delivery-wrap.green .nav-pills > html body #rpressModal .rpress-delivery-wrap.green li.active > html body #rpressModal .rpress-delivery-wrap.green a:hover {
-	background: #47a447;
-}
-
-.btn.btn-block.btn-primary.green:hover {
-	border: 1px solid #47a447;
-}
-
-/* Yellow Color */
-
-.rpress.item-order a.rpress-clear-cart.yellow {
-    color: #f0ad4e;
-}
-.cart-action-wrap a.rpress-remove-from-cart i.yellow {
-    color: #f0ad4e;
-}
-.rpress-category-link.nav-scroller-item.yellow.active:after {
-	background: #f0ad4e;
-}
-.rpress-category-item .yellow.active {
-	color: #f0ad4e;
-}
-.rpress-category-item a.yellow:hover {
-	color: #f0ad4e;
-}
-.rpress-submit.button.yellow {
-	color: #fff;
-	background: #f0ad4e;
-	border-color: #eea236
-}
-
-.rpress-submit.button.yellow:active,
-.rpress-submit.button.yellow:focus,
-.rpress-submit.button.yellow:hover {
-	color: #fff;
-	background: #ed9c28;
-	border-color: #d58512
-}
-
-.rpress-submit.button.yellow:active {
-	background-image: none
-}
-
-.rpress-sidebar-cart-wrap .rpress-clear-cart.yellow:hover, .rpress_fooditems_list h5.rpress-cat.yellow, ul.rpress-cart span.cart-total.yellow, 
-.special-margin.yellow a, 
-.special-inst.yellow a, 
-.rpress-submit.button.yellow .rpress-add-to-cart-label, 
-.btn.btn-block.btn-primary.yellow:hover, 
-.delivery-change.yellow, a.nav-link.yellow:hover {
-	color: #f0ad4e;
-}
-
-.btn.btn-block.btn-primary.yellow:hover {
-	border: 1px solid #d58512;
-}
-
-
-.cart_item.rpress_checkout.yellow a,
-.rpress-popup-actions .submit-fooditem-button.yellow,
-.btn.btn-block.btn-primary.yellow,
-.rpress-cart .rpress_checkout.yellow a,
- html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > li.active > a, 
- html body #rpressModal .rpress-delivery-wrap.yellow .nav-pills > html body #rpressModal .rpress-delivery-wrap.yellow li.active > html body #rpressModal .rpress-delivery-wrap.yellow a:hover {
-	background-color: #d58512;
-}
-
-/* Orange Color */
-
-.rpress.item-order a.rpress-clear-cart.orange {
-    color: #ed9c28;
-}
-.cart-action-wrap a.rpress-remove-from-cart i.orange {
-    color: #ed9c28;
-}
-.rpress-category-link.nav-scroller-item.orange.active:after {
-	background: #ed9c28;
-}
-.rpress-category-item .orange.active {
-	color: #ed9c28;
-}
-.rpress-category-item a.orange:hover {
-	color: #ed9c28;
-}
-.rpress-submit.button.orange {
-	color: #fff;
-	background: #ed9c28;
-	border-color: #357ebd
-}
-.rpress-submit.button.orange {
-	color: #fff;
-	background: #ed9c28;
-	border-color: #e3921e
-}
-
-.rpress-sidebar-cart-wrap .rpress-clear-cart.orange:hover, a.nav-link.orange:hover, .rpress_fooditems_list h5.rpress-cat.orange, ul.rpress-cart span.cart-total.orange, .special-margin.orange a, .special-inst.orange a, .rpress-submit.button.orange .rpress-add-to-cart-label, .btn.btn-block.btn-primary.orange:hover, .delivery-change.orange {
-	color: #ed9c28;
-}
-
-.btn.btn-block.btn-primary.orange:hover {
-	border: 1px solid #ed9c28;
-}
-
-.rpress-popup-actions .submit-fooditem-button.orange,
-.btn.btn-block.btn-primary.orange,
-.rpress-cart .rpress_checkout.orange a,
- html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > li.active > a, 
- html body #rpressModal .rpress-delivery-wrap.orange .nav-pills > html body #rpressModal .rpress-delivery-wrap.orange li.active > html body #rpressModal .rpress-delivery-wrap.orange a:hover {
-	background-color: #ed9c28;
-}
-
-.rpress-submit.button.orange:active,
-.rpress-submit.button.orange:focus,
-.rpress-submit.button.orange:hover {
-	color: #fff;
-	background: #e59016;
-	border-color: #d58512
-}
-
-.rpress-submit.button.orange:active {
-	background-image: none
-}
-
-/* Dark Gray Color */ 
-
-.rpress-popup-actions .submit-fooditem-button.dark-gray,
-.btn.btn-block.btn-primary.dark-gray,
-.rpress-cart .rpress_checkout.dark-gray a,
- html body #rpressModal .rpress-delivery-wrap.dark-gray .nav-pills > li.active > a, 
- html body #rpressModal .rpress-delivery-wrap.dark-gray .nav-pills > html body #rpressModal .rpress-delivery-wrap.dark-gray li.active > html body #rpressModal .rpress-delivery-wrap.gray a:hover {
-	background: #363636;
-}
-
-.rpress-cart .cart_item.rpress_checkout.dark-gray a,
-.rpress-submit.button.dark-gray:active,
-.rpress-submit.button.dark-gray:focus,
-.rpress-submit.button.dark-gray:hover,
-.rpress-submit.button.dark-gray:active,
-.rpress-submit.button.dark-gray:focus,
-.rpress-submit.button.dark-gray:hover {
-	color: #333;
-	background: #ebebeb;
-	border-color: #adadad
-}
-.cart-action-wrap a.rpress-remove-from-cart i.dark-gray {
-    color: #363636;
-}
-.rpress-category-link.nav-scroller-item.dark-gray.active:after {
-	background: #363636;
-}
-.rpress-category-item .dark-gray.active {
-	color: #363636;
-}
-.rpress-category-item a.dark-gray:hover {
-	color: #363636;
-}
-.rpress-submit.button.dark-gray {
-	color: #fff;
-	background: #363636;
-	border-color: #222
-}
-
-.rpress-submit.button.dark-gray:active,
-.rpress-submit.button.dark-gray:focus,
-.rpress-submit.button.dark-gray:hover {
-	color: #fff;
-	background: #333;
-	border-color: #adadad
-}
-
-.rpress-submit.button.dark-gray:active {
-	background-image: none
-}
-
 .rpress_fooditems_list:after {
 	content: "";
 	display: table;
@@ -1398,31 +978,12 @@ rpress-hide-on-empty.cart-not.empty {
 	color: grey
 }
 
-.rpress-cart-meta.rpress_subtotal {
-	font-weight: 700;
-	font-style: italic
-}
-
-.rpress-cart-meta.rpress_cart_tax {
-	font-size: 1em;
-	font-style: italic
-}
-
 .rpress-cart-meta.rpress_cart_tax::before {
 	font-style: normal
 }
 
 .rpress-cart-meta.rpress_total {
 	font-weight: 700
-}
-
-.rpress-cart-meta {
-	padding: 2px 5px
-}
-
-.rpress-cart-meta.rpress_subtotal,
-.rpress-cart-meta.rpress_total {
-	background-color: #f9f9f9
 }
 
 .rpress_errors:not(.rpress-alert) {
@@ -1462,7 +1023,8 @@ p.rpress_error {
 	margin-bottom: 20px;
 	padding: 10px;
 	border: 1px solid transparent;
-	vertical-align: middle
+	vertical-align: middle;
+	clear: both;
 }
 
 .rpress-alert p {

@@ -234,6 +234,25 @@ class RPRESS_Payment {
 	 */
 	private   $payment_meta = array();
 
+
+	/**
+	 * Customer delivery address
+	 *
+	 * @since  1.0.0
+	 * @var array
+	 */
+	protected $delivery_address = array();
+
+
+	/**
+	 * Order Notes
+	 *
+	 * @since  1.0.0
+	 * @var array
+	 */
+	protected $order_note = '';
+
+
 	/**
 	 * The physical address used for the payment if provided
 	 *
@@ -540,10 +559,6 @@ class RPRESS_Payment {
 		$this->key             = $this->setup_payment_key();
 		$this->number          = $this->setup_payment_number();
 
-		//Delivery options
-		// $this->delivery_type   = 'addons';
-		// $this->delivery_time   = '4:34';
-
 		// Additional Attributes
 		$this->has_unlimited_fooditems = $this->setup_has_unlimited();
 
@@ -638,6 +653,11 @@ class RPRESS_Payment {
 			 *
 			 */
 			$this->payment_meta = apply_filters( 'rpress_payment_meta', $this->payment_meta, $payment_data );
+
+			$this->delivery_address = apply_filters( 'rpress_delivery_address_meta', $this->delivery_address );
+
+			$this->order_note = apply_filters( 'rpress_order_note_meta', $this->order_note );
+
 			if ( ! empty( $this->payment_meta['fees'] ) ) {
 				$this->fees = array_merge( $this->payment_meta['fees'], $this->fees );
 				foreach( $this->fees as $fee ) {
@@ -653,7 +673,12 @@ class RPRESS_Payment {
 			}
 
 			$this->update_meta( '_rpress_payment_meta', $this->payment_meta );
-			$this->new          = true;
+
+			$this->update_meta( '_rpress_delivery_address', $this->delivery_address );
+
+			$this->update_meta( '_rpress_order_note', $this->order_note );
+
+			$this->new    = true;
 		}
 
 		return $this->ID;
@@ -675,14 +700,11 @@ class RPRESS_Payment {
 
 			$payment_id = $this->insert_payment();
 
-
-
 			if ( false === $payment_id ) {
 				$saved = false;
 			} else {
 				$this->ID = $payment_id;
 			}
-
 		}
 
 		if( $this->ID !== $this->_ID ) {
@@ -694,10 +716,7 @@ class RPRESS_Payment {
 
 			$this->customer_id            = $customer->id;
 			$this->pending['customer_id'] = $this->customer_id;
-
 		}
-
-
 
 		// If we have something pending, let's save it
 		if ( ! empty( $this->pending ) ) {
@@ -705,10 +724,11 @@ class RPRESS_Payment {
 			$total_increase = 0;
 			$total_decrease = 0;
 
-
 			foreach ( $this->pending as $key => $value ) {
 				switch( $key ) {
+
 					case 'fooditems':
+
 						// Update totals for pending fooditems
 						foreach ( $this->pending[ $key ] as $item ) {
 
@@ -749,147 +769,142 @@ class RPRESS_Payment {
 									}
 									break;
 
-									case 'remove':
+								case 'remove':
 
-										$meta_query = array();
+									$meta_query = array();
+									$meta_query[] = array(
+										'key'     => '_rpress_log_payment_id',
+										'value'   => $this->ID,
+										'compare' => '=',
+									);
+
+									if( ! empty( $item['price_id'] ) || 0 === (int) $item['price_id'] ) {
 										$meta_query[] = array(
-											'key'     => '_rpress_log_payment_id',
-											'value'   => $this->ID,
-											'compare' => '=',
+											'key'     => '_rpress_log_price_id',
+											'value'   => (int) $item['price_id'],
+											'compare' => '='
 										);
+									}
 
-										if( ! empty( $item['price_id'] ) || 0 === (int) $item['price_id'] ) {
+									$log_args = array(
+										'post_parent'    => $item['id'],
+										'posts_per_page' => $item['quantity'],
+										'meta_query'     => $meta_query,
+										'log_type'       => 'sale'
+									);
+
+									$found_logs = $rpress_logs->get_connected_logs( $log_args );
+
+									if( $found_logs ) {
+										foreach ( $found_logs as $log ) {
+											wp_delete_post( $log->ID, true );
+										}
+									}
+
+									if ( 'publish' === $this->status || 'complete' === $this->status || 'revoked' === $this->status ) {
+										$fooditem = new RPRESS_Fooditem( $item['id'] );
+										$fooditem->decrease_sales( $item['quantity'] );
+
+										$decrease_amount = $item['amount'];
+										if ( ! empty( $item['fees'] ) ) {
+											foreach( $item['fees'] as $fee ) {
+												// Only let negative fees affect the earnings
+												if ( $fee['amount'] > 0 ) {
+													continue;
+												}
+												$decrease_amount += $fee['amount'];
+											}
+										}
+										$fooditem->decrease_earnings( $decrease_amount );
+
+										$total_decrease += $item['amount'];
+									}
+									break;
+
+								case 'modify':
+
+									if ( 'publish' === $this->status || 'complete' === $this->status || 'revoked' === $this->status ) {
+
+										$log_count_change = 0;
+
+										if ( $item['previous_data']['quantity'] != $item['quantity'] ) {
+											$log_count_change = $item['previous_data']['quantity'] - $item['quantity'];
+
+											// Find existing logs.
+											$meta_query   = array();
 											$meta_query[] = array(
-												'key'     => '_rpress_log_price_id',
-												'value'   => (int) $item['price_id'],
-												'compare' => '='
+												'key'     => '_rpress_log_payment_id',
+												'value'   => $this->ID,
+												'compare' => '=',
 											);
-										}
 
-										$log_args = array(
-											'post_parent'    => $item['id'],
-											'posts_per_page' => $item['quantity'],
-											'meta_query'     => $meta_query,
-											'log_type'       => 'sale'
-										);
-
-										$found_logs = $rpress_logs->get_connected_logs( $log_args );
-
-										if( $found_logs ) {
-											foreach ( $found_logs as $log ) {
-												wp_delete_post( $log->ID, true );
-											}
-										}
-
-										if ( 'publish' === $this->status || 'complete' === $this->status || 'revoked' === $this->status ) {
-											$fooditem = new RPRESS_Fooditem( $item['id'] );
-											$fooditem->decrease_sales( $item['quantity'] );
-
-											$decrease_amount = $item['amount'];
-											if ( ! empty( $item['fees'] ) ) {
-												foreach( $item['fees'] as $fee ) {
-													// Only let negative fees affect the earnings
-													if ( $fee['amount'] > 0 ) {
-														continue;
-													}
-													$decrease_amount += $fee['amount'];
+											if ( isset( $item['price_id'] ) ) {
+												if ( ! empty( $item[ 'price_id' ] ) || 0 === (int) $item[ 'price_id' ] ) {
+													$meta_query[] = array(
+														'key'     => '_rpress_log_price_id',
+														'value'   => (int) $item[ 'price_id' ],
+														'compare' => '='
+													);
 												}
 											}
-											$fooditem->decrease_earnings( $decrease_amount );
 
-											$total_decrease += $item['amount'];
-										}
-										break;
+											$log_args = array(
+												'post_parent'    => $item[ 'id' ],
+												'meta_query'     => $meta_query,
+												'log_type'       => 'sale'
+											);
 
-									case 'modify':
+											$existing_logs = $rpress_logs->get_connected_logs( $log_args );
 
-										if ( 'publish' === $this->status || 'complete' === $this->status || 'revoked' === $this->status ) {
+											if ( count( $existing_logs ) > $item['quantity'] ) {
 
-
-
-											$log_count_change = 0;
-
-											if ( $item['previous_data']['quantity'] != $item['quantity'] ) {
-												$log_count_change = $item['previous_data']['quantity'] - $item['quantity'];
-
-												// Find existing logs.
-												$meta_query   = array();
-												$meta_query[] = array(
-													'key'     => '_rpress_log_payment_id',
-													'value'   => $this->ID,
-													'compare' => '=',
-												);
-
-												if ( isset( $item['price_id'] ) ) {
-													if ( ! empty( $item[ 'price_id' ] ) || 0 === (int) $item[ 'price_id' ] ) {
-														$meta_query[] = array(
-															'key'     => '_rpress_log_price_id',
-															'value'   => (int) $item[ 'price_id' ],
-															'compare' => '='
-														);
-													}
+												// We have to remove some logs, since quantity has been reduced.
+												$number_of_logs = count( $existing_logs ) - $item['quantity'];
+												$logs_to_remove = array_slice( $existing_logs, 0, $number_of_logs );
+												foreach ( $logs_to_remove as $log ) {
+													wp_delete_post( $log->ID );
 												}
 
-												$log_args = array(
-													'post_parent'    => $item[ 'id' ],
-													'meta_query'     => $meta_query,
-													'log_type'       => 'sale'
-												);
+											} elseif ( count( $existing_logs ) < $item['quantity'] ) {
 
-												$existing_logs = $rpress_logs->get_connected_logs( $log_args );
+												// We have to add some logs, since quantity has been increased.
+												$log_date = date_i18n( 'Y-m-d G:i:s', strtotime( $this->completed_date ) );
+												$price_id = isset( $item['item_number']['options']['price_id'] ) ? $item['item_number']['options']['price_id'] : 0;
 
-												if ( count( $existing_logs ) > $item['quantity'] ) {
-
-													// We have to remove some logs, since quantity has been reduced.
-													$number_of_logs = count( $existing_logs ) - $item['quantity'];
-													$logs_to_remove = array_slice( $existing_logs, 0, $number_of_logs );
-													foreach ( $logs_to_remove as $log ) {
-														wp_delete_post( $log->ID );
-													}
-
-												} elseif ( count( $existing_logs ) < $item['quantity'] ) {
-
-													// We have to add some logs, since quantity has been increased.
-													$log_date = date_i18n( 'Y-m-d G:i:s', strtotime( $this->completed_date ) );
-													$price_id = isset( $item['item_number']['options']['price_id'] ) ? $item['item_number']['options']['price_id'] : 0;
-
-													$number_of_logs = $item['quantity'] - count( $existing_logs );
-													$y = 0;
-													while ( $y < $number_of_logs ) {
-														rpress_record_sale_in_log( $item['id'], $this->ID, $price_id, $log_date );
-														$y ++;
-													}
-
+												$number_of_logs = $item['quantity'] - count( $existing_logs );
+												$y = 0;
+												while ( $y < $number_of_logs ) {
+													rpress_record_sale_in_log( $item['id'], $this->ID, $price_id, $log_date );
+													$y ++;
 												}
 
 											}
 
-											$fooditem = new RPRESS_Fooditem( $item['id'] );
-
-											// Change the number of sales for the fooditem.
-											if ( $log_count_change > 0 ) {
-												$fooditem->decrease_sales( $log_count_change );
-											} elseif ( $log_count_change < 0 ) {
-												$log_count_change = absint( $log_count_change );
-												$fooditem->increase_sales( $log_count_change );
-											}
-
-											// Change the earnings for the product.
-											$price_change = $item['previous_data']['price'] - $item['price'];
-											if ( $price_change > 0 ) {
-												$fooditem->decrease_earnings( $price_change );
-												$total_increase -= $price_change;
-											} elseif ( $price_change < 0 ) {
-												$price_change = -( $price_change );
-												$fooditem->increase_earnings( $price_change );
-												$total_decrease += $price_change;
-											}
-
 										}
-										break;
 
+										$fooditem = new RPRESS_Fooditem( $item['id'] );
+
+										// Change the number of sales for the fooditem.
+										if ( $log_count_change > 0 ) {
+											$fooditem->decrease_sales( $log_count_change );
+										} elseif ( $log_count_change < 0 ) {
+											$log_count_change = absint( $log_count_change );
+											$fooditem->increase_sales( $log_count_change );
+										}
+
+										// Change the earnings for the product.
+										$price_change = $item['previous_data']['price'] - $item['price'];
+										if ( $price_change > 0 ) {
+											$fooditem->decrease_earnings( $price_change );
+											$total_increase -= $price_change;
+										} elseif ( $price_change < 0 ) {
+											$price_change = -( $price_change );
+											$fooditem->increase_earnings( $price_change );
+											$total_decrease += $price_change;
+										}
+									}
+									break;
 							}
-
 						}
 						break;
 
@@ -914,9 +929,7 @@ class RPRESS_Payment {
 								case 'remove':
 									$total_decrease += $fee['amount'];
 									break;
-
 							}
-
 						}
 
 						break;
@@ -962,36 +975,19 @@ class RPRESS_Payment {
 						break;
 
 					case 'delivery_type':
-
-						$delivery_type = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : '';
-
-						$this->update_meta( '_rpress_delivery_type', $delivery_type );
+						$service_type = rpress_selected_service();
+						$this->update_meta( '_rpress_delivery_type', $service_type );
 						break;
 
 					case 'delivery_time':
-						$delivery_time = isset($_COOKIE['deliveryTime']) ? $_COOKIE['deliveryTime'] : '';
+						$delivery_time = isset($_COOKIE['service_time']) ? sanitize_text_field( $_COOKIE['service_time'] )  : '';
 						$this->update_meta( '_rpress_delivery_time', $delivery_time );
 						break;
 
-          case 'delivery_date':
-            $delivery_date = isset($_COOKIE['DeliveryDate']) ? $_COOKIE['DeliveryDate'] : '';
-            $this->update_meta( '_rpress_delivery_date', $delivery_date );
-            break;
-
-					case 'delivery_fee':
-						$delivery_fee = isset($_COOKIE['rpress_delivery_price']) ? $_COOKIE['rpress_delivery_price'] : '';
-						$this->update_meta( '_rpress_delivery_price', $delivery_fee );
-						break;
-
-					case 'delivery_location':
-						$delivery_location = isset($_COOKIE['rpress_delivery_location']) ? $_COOKIE['rpress_delivery_location'] : '';
-						$this->update_meta( '_rpress_delivery_location', $delivery_location );
-						break;
-
-					case 'delivery_location_pos':
-						$delivery_location_pos = isset($_COOKIE['rpress_delivery_location_pos']) ? $_COOKIE['rpress_delivery_location_pos'] : '';
-						$this->update_meta( '_rpress_delivery_location_pos', $delivery_location_pos );
-						break;
+  					case 'delivery_date':
+    					$service_date = isset( $_COOKIE['service_date'] ) ? sanitize_text_field( $_COOKIE['service_date'] ): '';
+      					$this->update_meta( '_rpress_delivery_date', $service_date );
+      					break;
 
 					case 'discounts':
 						if ( ! is_array( $this->discounts ) ) {
@@ -1079,11 +1075,14 @@ class RPRESS_Payment {
 					rpress_increase_total_earnings( $total_change );
 
 				}
-
 			}
 
 			$this->update_meta( '_rpress_payment_total', $this->total );
 			$this->update_meta( '_rpress_payment_tax', $this->tax );
+
+			$subtotal = $this->total - $this->tax;
+
+			$this->update_meta( '_rpress_payment_subtotal', $subtotal );
 
 			$this->fooditems    = array_values( $this->fooditems );
 
@@ -1131,7 +1130,6 @@ class RPRESS_Payment {
 				'cart_details' => $this->cart_details,
 				'status'       => $this->status,
 				'fees'         => $this->fees,
-
 			);
 			$merged_meta = apply_filters( 'rpress_payment_meta', $merged_meta, $payment_data );
 
@@ -1163,36 +1161,6 @@ class RPRESS_Payment {
 		$cache_key = md5( 'rpress_payment' . $this->ID );
 		wp_cache_set( $cache_key, $this, 'payments' );
 
-		if( isset($_COOKIE['deliveryTime']) ) :
-			unset($_COOKIE['deliveryTime']);
-			setcookie("deliveryTime", "", time() - 300,"/");
-		endif;
-
-		if( isset($_COOKIE['deliveryMethod']) ) :
-			unset($_COOKIE['deliveryMethod']);
-			setcookie("deliveryMethod", "", time() - 300,"/");
-		endif;
-
-		if( isset($_COOKIE['DeliveryDate']) ) :
-			unset($_COOKIE['DeliveryDate']);
-			setcookie("DeliveryDate", "", time() - 300,"/");
-		endif;
-
-		if( isset($_COOKIE['rpress_delivery_price']) ) :
-			unset($_COOKIE['rpress_delivery_price']);
-			setcookie("rpress_delivery_price", "", time() - 300,"/");
-		endif;
-
-		if( isset($_COOKIE['rpress_delivery_location']) ) :
-			unset($_COOKIE['rpress_delivery_location']);
-			setcookie("rpress_delivery_location", "", time() - 300,"/");
-		endif;
-
-		if( isset($_COOKIE['rpress_delivery_location_pos']) ) :
-			unset($_COOKIE['rpress_delivery_location_pos']);
-			setcookie("rpress_delivery_location_pos", "", time() - 300,"/");
-		endif;
-
 		return $saved;
 	}
 
@@ -1206,8 +1174,6 @@ class RPRESS_Payment {
 	 * @return bool True when successful, false otherwise
 	 */
 	public function add_fooditem( $fooditem_id = 0, $args = array(), $options = array() ) {
-
-
 
 		$fooditem = new RPRESS_Fooditem( $fooditem_id );
 
@@ -1249,8 +1215,19 @@ class RPRESS_Payment {
 
 		// Sanitizing the price here so we don't have a dozen calls later
 		$item_price = rpress_sanitize_amount( $item_price );
+
 		$quantity   = absint( $args['quantity'] );
+
 		$amount     = round( $item_price * $quantity, rpress_currency_decimal_filter() );
+
+		// Calculating addon prices
+		$addon_prices = 0;
+  		if( !empty($options) ) {
+    		$addon_prices = wp_list_pluck($options, 'price');
+    		$addon_prices = array_sum($addon_prices);
+    		$addon_prices = floatval($addon_prices) * $quantity;
+    		$amount += $addon_prices;
+    	}
 
 		// Setup the fooditems meta item
 		$new_fooditem = array(
@@ -1272,14 +1249,17 @@ class RPRESS_Payment {
 		$this->fooditems[] = $new_fooditem;
 
 		$discount   = $args['discount'];
+
 		$subtotal   = $amount;
+
 		$tax        = $args['tax'];
+
 
 		if ( rpress_prices_include_tax() ) {
 			$subtotal -= round( $tax, rpress_currency_decimal_filter() );
 		}
 
-		$total      = $subtotal - $discount + $tax;
+		$total = $subtotal - $discount + $tax;
 
 		// Do not allow totals to go negative
 		if( $total < 0 ) {
@@ -1293,11 +1273,10 @@ class RPRESS_Payment {
 			'options'   => $options,
 		);
 
-
 		$this->cart_details[] = array(
 			'name'        => $fooditem->post_title,
 			'id'          => $fooditem->ID,
-			'instruction' => $args['instruction'],
+			'instruction' => isset( $args['instruction'] ) ? $args['instruction'] : '' ,
 			'item_number' => $item_number,
 			'item_price'  => round( $item_price, rpress_currency_decimal_filter() ),
 			'quantity'    => $quantity,
@@ -1319,7 +1298,6 @@ class RPRESS_Payment {
 		$this->increase_tax( $tax );
 
 		return true;
-
 	}
 
 	/**
@@ -1515,6 +1493,8 @@ class RPRESS_Payment {
 	 * @return bool
 	 */
 	public function modify_cart_item( $cart_index = false, $args = array(), $addon_data = array() ) {
+
+
 		if ( false === $cart_index ) {
 			return false;
 		}
@@ -1523,10 +1503,9 @@ class RPRESS_Payment {
 			return false;
 		}
 
-
 		$current_args  = $this->cart_details[ $cart_index ];
 
-		if( isset($current_args['addon_items']) ) {
+		if( isset( $current_args['addon_items'] ) && is_array( $current_args['addon_items'] ) ) {
 			foreach($current_args['addon_items'] as $key => $addon_set_data ) {
 				if( is_array($addon_set_data) && !empty($addon_set_data) ) {
 					unset($current_args['addon_items'][$key]);
@@ -1534,7 +1513,7 @@ class RPRESS_Payment {
 			}
 		}
 
-		$current_args['addon_items'] = $addon_data;
+		$current_args['addon_items'] = isset( $addon_data[$current_args['id']] ) ? $addon_data[$current_args['id']] : '';
 
 		$allowed_items = apply_filters( 'rpress_allowed_cart_item_modifications', array(
 			'item_price', 'tax', 'discount', 'quantity'
@@ -1566,7 +1545,7 @@ class RPRESS_Payment {
 		$merged_item['item_price'] = rpress_sanitize_amount( $merged_item['item_price'] );
 
 		$new_subtotal                       = floatval( $merged_item['item_price'] ) * $merged_item['quantity'];
-		$merged_item['price']               = $new_subtotal + $merged_item['tax'];
+		$merged_item['price']               = $new_subtotal + isset($merged_item['tax']);
 		$this->cart_details[ $cart_index ]  = $merged_item;
 		$modified_fooditem                  = $merged_item;
 		$modified_fooditem['action']        = 'modify';
@@ -1583,7 +1562,7 @@ class RPRESS_Payment {
 		if ( $modified_fooditem['tax'] > $current_args['tax'] ) {
 			$this->increase_tax( $modified_fooditem['tax'] - $current_args['tax'] );
 		} else {
-			$this->increase_tax( $current_args['tax'] - $modified_fooditem['tax'] );
+			$this->increase_tax( (float) $current_args['tax'] - (float) $modified_fooditem['tax'] );
 		}
 
 		return true;
@@ -1783,7 +1762,6 @@ class RPRESS_Payment {
 		$amount            = (float) $amount;
 		$this->fees_total += $amount;
 
-		$this->recalculate_total();
 	}
 
 	/**
@@ -1915,7 +1893,6 @@ class RPRESS_Payment {
 		$this->old_status        = $this->status;
 		$this->status            = 'refunded';
 		$this->pending['status'] = $this->status;
-
 		$this->save();
 	}
 
@@ -2036,6 +2013,7 @@ class RPRESS_Payment {
 	 * @return bool|false|int
 	 */
 	public function add_meta( $meta_key = '', $meta_value = '', $unique = false ) {
+
 		if ( empty( $meta_key ) ) {
 			return false;
 		}
@@ -2320,6 +2298,17 @@ class RPRESS_Payment {
 
 		}
 
+		$subtotal 		= $this->setup_subtotal();
+		$discount_code  = $this->setup_discounts();
+		$discount_id  	= !empty( $discount_code ) ? rpress_get_discount_id_by_code( $discount_code ) : '';
+		$amount      	= !empty( $discount_id ) ? rpress_get_discount_amount( $discount_id ) : '';
+
+		if ( !empty( $discount_id ) && 'flat' === rpress_get_discount_type( $discount_id ) ) {
+
+			$tax = rpress_calculate_tax( $subtotal - $amount );
+		}
+
+
 		return $tax;
 
 	}
@@ -2361,18 +2350,50 @@ class RPRESS_Payment {
 	 * @return float The subtotal of the payment
 	 */
 	private function setup_subtotal() {
-		$subtotal     = 0;
 		$cart_details = $this->cart_details;
 
 		if ( is_array( $cart_details ) ) {
 
+			$cart = new RPRESS_Cart();
+			$subtotal     = 0;
 			foreach ( $cart_details as $item ) {
 
 				if ( isset( $item['subtotal'] ) ) {
 
-					$subtotal += $item['subtotal'];
+					$fooditem_id 		= $item['id'];
+					$quantity   		= max( 1, $item['quantity'] ); // Force quantity to 1
+					$options 			= isset( $item['item_number']['options'] ) ? $item['item_number']['options'] : array();
+					$price_id 			= isset( $item['item_number']['options']['price_id'] ) ? $item['item_number']['options']['price_id'] : null;
+					$item_price 		= $cart->get_item_price( $fooditem_id, $item, $options, $price_id, false, $item['price'] );
+
+		        	$addon_tax_price = $item_addon_prices = 0;
+		        	if ( !empty( $item['addon_items'] ) ) {
+			    		foreach ( $item['addon_items'] as  $addon_item ) {
+			    			$addon_id = !empty( $addon_item['addon_id'] ) ? $addon_item['addon_id'] : '';
+			    			if ( empty( $addon_id ) ) continue;
+			    			$addon_tax_price += !empty( $addon_item['price'] ) ? floatval( $addon_item['price'] ) : 0.00;
+			    			$addon_price = !empty( $addon_item['price'] ) ? floatval( $addon_item['price'] ) : 0.00;
+			    			$addon_price = $cart->get_addon_price( $addon_id, $item, $addon_price );
+			    			$item_addon_prices += $addon_price;
+			    		}
+		        	}
+
+	        		//Check if Product is variable
+	        	  	if ( rpress_has_variable_prices( $fooditem_id ) && !is_null( $price_id ) ) {
+	        	    	$item_tax_price = rpress_get_price_option_amount( $fooditem_id, $price_id );
+
+	        	    } else {
+	        	  		$item_tax_price = rpress_get_fooditem_price( $fooditem_id );
+	        	  	}
+
+	        		$item_subtotal = ( $item_tax_price + $addon_tax_price ) * $quantity;
+	        		if ( rpress_prices_include_tax() ) {
+	        			$item_subtotal = ( $item_price + $item_addon_prices ) * $quantity;
+	        		}
 
 				}
+
+	        	$subtotal += $item_subtotal;
 
 			}
 

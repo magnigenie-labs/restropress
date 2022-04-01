@@ -2,9 +2,9 @@
 /**
  * Plugin Name: RestroPress
  * Plugin URI: https://www.restropress.com
- * Description: RestroPress is a restaurant food ordering system for WordPress.
- * Version: 2.0.6
- * Author: Magnigenie
+ * Description: RestroPress is an online ordering system for WordPress.
+ * Version: 2.8.5
+ * Author: MagniGenie
  * Author URI: https://magnigenie.com
  * Text Domain: restropress
  * Domain Path: languages
@@ -13,7 +13,6 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-
 
 if ( ! defined( 'RP_PLUGIN_FILE' ) ) {
 	define( 'RP_PLUGIN_FILE', __FILE__ );

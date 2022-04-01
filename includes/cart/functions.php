@@ -140,11 +140,12 @@ function rpress_get_cart_item_quantity( $fooditem_id = 0, $options = array() ) {
  * @since 1.0
  *
  * @param int   $item_id Download (cart item) ID number
+ * @param array $item cart item
  * @param array $options Optional parameters, used for defining variable prices
  * @return string Fully formatted price
  */
-function rpress_cart_item_price( $item_id = 0, $options = array() ) {
-	return RPRESS()->cart->item_price( $item_id, $options );
+function rpress_cart_item_price( $item_id = 0, $item = array(), $options = array() ) { 
+	return RPRESS()->cart->item_price( $item_id, $item, $options );
 }
 
 /**
@@ -161,8 +162,8 @@ function rpress_cart_item_price( $item_id = 0, $options = array() ) {
  * @param bool  $remove_tax_from_inclusive Remove the tax amount from tax inclusive priced products.
  * @return float|bool Price for this item
  */
-function rpress_get_cart_item_price( $fooditem_id = 0, $options = array(), $remove_tax_from_inclusive = false ) {
-	return RPRESS()->cart->get_item_price( $fooditem_id, $options, $remove_tax_from_inclusive );
+function rpress_get_cart_item_price( $fooditem_id = 0, $item = array(), $options = array(), $price_id = null, $remove_tax_from_inclusive = false, $item_subtotal = 0.00 ) {
+  return RPRESS()->cart->get_item_price( $fooditem_id, $item,  $options, $price_id, $remove_tax_from_inclusive, $item_subtotal );
 }
 
 /**

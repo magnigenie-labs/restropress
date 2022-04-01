@@ -92,9 +92,6 @@ class RPRESS_Fooditem_History_Export extends RPRESS_Export {
 		if ( $logs ) {
 			foreach ( $logs as $log ) {
 				$user_info = get_post_meta( $log->ID, '_rpress_log_user_info', true );
-				$files     = rpress_get_fooditem_files( $log->post_parent );
-				$file_id   = (int) get_post_meta( $log->ID, '_rpress_log_file_id', true );
-				$file_name = isset( $files[ $file_id ]['name'] ) ? $files[ $file_id ]['name'] : null;
 				$user      = get_userdata( $user_info['id'] );
 				$user      = $user ? $user->user_login : $user_info['email'];
 
@@ -102,8 +99,7 @@ class RPRESS_Fooditem_History_Export extends RPRESS_Export {
 					'date'     => $log->post_date,
 					'user'     => $user,
 					'ip'       => get_post_meta( $log->ID, '_rpress_log_ip', true ),
-					'fooditem' => get_the_title( $log->post_parent ),
-					'file'     => $file_name
+					'fooditem' => get_the_title( $log->post_parent )
 				);
 			}
 		}

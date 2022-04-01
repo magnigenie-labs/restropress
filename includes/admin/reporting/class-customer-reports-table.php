@@ -83,13 +83,13 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 		$input_id = $input_id . '-search-input';
 
 		if ( ! empty( $_REQUEST['orderby'] ) )
-			echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['orderby'] ) . '" />';
+			echo '<input type="hidden" name="orderby" value="' . esc_attr( sanitize_text_field( $_REQUEST['orderby'] ) ). '" />';
 		if ( ! empty( $_REQUEST['order'] ) )
-			echo '<input type="hidden" name="order" value="' . esc_attr( $_REQUEST['order'] ) . '" />';
+			echo '<input type="hidden" name="order" value="' . esc_attr(  sanitize_text_field( $_REQUEST['order'] ) ) . '" />';
 		?>
 		<p class="search-box">
-			<label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
-			<input type="search" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
+			<label class="screen-reader-text" for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_html( $text ); ?>:</label>
+			<input type="search" id="<?php echo esc_attr( $input_id ); ?>" name="s" value="<?php _admin_search_query(); ?>" />
 			<?php submit_button( $text, 'button', false, false, array('ID' => 'search-submit') ); ?>
 		</p>
 		<?php
@@ -108,10 +108,10 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 	 */
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
-	
+
 			case 'num_purchases' :
 				$value = '<a href="' .
-					admin_url( '/edit.php?post_type=fooditem&page=rpress-payment-history&user=' . urlencode( $item['email'] )
+					admin_url( 'admin.php?page=rpress-payment-history&user=' . urlencode( $item['email'] )
 				) . '">' . esc_html( $item['num_purchases'] ) . '</a>';
 				break;
 
@@ -119,9 +119,9 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 				$value = rpress_currency_filter( rpress_format_amount( $item[ $column_name ] ) );
 				break;
 
-			case 'file_fooditems' :
+			case 'fooditems' :
 				$user = ! empty( $item['user_id'] ) ? $item['user_id'] : $item['email'];
-				$value = '<a href="' . esc_url( admin_url( '/edit.php?post_type=fooditem&page=rpress-reports&tab=logs&user=' . urlencode( $user ) ) ) . '">' . __( 'View fooditem log', 'restropress' ) . '</a>';
+				$value = '<a href="' . esc_url( admin_url( 'admin.php?page=rpress-reports&tab=logs&user=' . urlencode( $user ) ) ) . '">' . __( 'View fooditem log', 'restropress' ) . '</a>';
 				break;
 			default:
 				$value = isset( $item[ $column_name ] ) ? $item[ $column_name ] : null;
@@ -144,7 +144,7 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 			'email'     	=> __( 'Email', 'restropress' ),
 			'num_purchases' => __( 'Purchases', 'restropress' ),
 			'amount_spent'  => __( 'Total Spent', 'restropress' ),
-			'file_fooditems'=> __( 'Food Items', 'restropress' )
+			'fooditems'=> __( 'Food Items', 'restropress' )
 		);
 
 		return apply_filters( 'rpress_report_customer_columns', $columns );
@@ -198,7 +198,7 @@ class RPRESS_Customer_Reports_Table extends WP_List_Table {
 	 * @return mixed string If search is present, false otherwise
 	 */
 	public function get_search() {
-		return ! empty( $_GET['s'] ) ? urldecode( trim( $_GET['s'] ) ) : false;
+		return ! empty( $_GET['s'] ) ? urldecode( trim( sanitize_text_field( $_GET['s'] ) ) ): false;
 	}
 
 	/**

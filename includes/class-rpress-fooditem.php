@@ -41,18 +41,11 @@ class RPRESS_Fooditem {
 	private $prices;
 
 	/**
-	 * The fooditem files
+	 * The fooditem  vegan type, VEG or NON-VEG
 	 *
 	 * @since  1.0.0
 	 */
-	private $files;
-
-	/**
-	 * The fooditem's file fooditem limit
-	 *
-	 * @since  1.0.0
-	 */
-	private $file_fooditem_limit;
+	private $food_type;
 
 	/**
 	 * The fooditem type, default or bundle
@@ -265,6 +258,15 @@ class RPRESS_Fooditem {
 		return get_the_title( $this->ID );
 	}
 
+	public function get_food_type() {
+
+		if( ! isset( $this->food_type ) ) {
+
+			$this->food_type = get_post_meta( $this->ID, 'rpress_food_type', true );
+			return apply_filters( 'rpress_get_item_food_type', $this->food_type, $this->ID );
+		}
+	}
+
 	/**
 	 * Retrieve the price
 	 *
@@ -278,15 +280,10 @@ class RPRESS_Fooditem {
 			$this->price = get_post_meta( $this->ID, 'rpress_price', true );
 
 			if ( $this->price ) {
-
 				$this->price = rpress_sanitize_amount( $this->price );
-
 			} else {
-
 				$this->price = 0;
-
 			}
-
 		}
 
 		/**
@@ -316,7 +313,6 @@ class RPRESS_Fooditem {
 			if ( empty( $this->prices ) ) {
 				$this->prices = get_post_meta( $this->ID, 'rpress_variable_prices', true );
 			}
-
 		}
 
 		/**
@@ -328,7 +324,6 @@ class RPRESS_Fooditem {
 		 * @param int|string The ID of the fooditem.
 		 */
 		return apply_filters( 'rpress_get_variable_prices', $this->prices, $this->ID );
-
 	}
 
 	/**
@@ -376,104 +371,22 @@ class RPRESS_Fooditem {
 	}
 
 	/**
-	 * Retrieve the file fooditems
+	 * Get food Categories
 	 *
-	 * @since  1.0.0
-	 * @param integer $variable_price_id
-	 * @return array List of fooditem files
+	 * @since 2.4.2
+	 * @param arr str $fields
+	 * @access public
 	 */
-	public function get_files( $variable_price_id = null ) {
-		if( ! isset( $this->files ) ) {
+	public function get_food_categories( $fields = 'ids' ){
 
-			$this->files = array();
-
-			// Bundled products are not allowed to have files
-			if( $this->is_bundled_fooditem() ) {
-				return $this->files;
-			}
-
-			$fooditem_files = get_post_meta( $this->ID, 'rpress_fooditem_files', true );
-
-			if ( $fooditem_files ) {
-
-
-				if ( ! is_null( $variable_price_id ) && $this->has_variable_prices() ) {
-
-					foreach ( $fooditem_files as $key => $file_info ) {
-
-						if ( isset( $file_info['condition'] ) ) {
-
-							if ( $file_info['condition'] == $variable_price_id || 'all' === $file_info['condition'] ) {
-
-								$this->files[ $key ] = $file_info;
-
-							}
-
-						}
-
-					}
-
-				} else {
-
-					$this->files = $fooditem_files;
-
-				}
-
-			}
-
-		}
-
-		return apply_filters( 'rpress_fooditem_files', $this->files, $this->ID, $variable_price_id );
-
-	}
-
-	/**
-	 * Retrieve the file fooditem limit
-	 *
-	 * @since  1.0.0
-	 * @return int Number of fooditem limit
-	 */
-	public function get_file_fooditem_limit() {
-
-		if( ! isset( $this->file_fooditem_limit ) ) {
-
-			$ret    = 0;
-			$limit  = get_post_meta( $this->ID, '_rpress_fooditem_limit', true );
-			$global = rpress_get_option( 'file_fooditem_limit', 0 );
-
-			if ( ! empty( $limit ) || ( is_numeric( $limit ) && (int)$limit == 0 ) ) {
-
-				//specific limit
-				$ret = absint( $limit );
-
-			} else {
-
-				// Global limit
-				$ret = strlen( $limit ) == 0  || $global ? $global : 0;
-
-			}
-
-			$this->file_fooditem_limit = $ret;
-
-		}
-
-		return absint( apply_filters( 'rpress_file_fooditem_limit', $this->file_fooditem_limit, $this->ID ) );
-
-	}
-
-	/**
-	 * Retrieve the price option that has access to the specified file
-	 *
-	 * @since  1.0.0
-	 * @return int|string
-	 */
-	public function get_file_price_condition( $file_key = 0 ) {
-
-		$files    = $this->get_files();
-		$condition = isset( $files[ $file_key ]['condition']) ? $files[ $file_key ]['condition'] : 'all';
-
-		return apply_filters( 'rpress_get_file_price_condition', $condition, $this->ID, $files );
-
+		$food_categories = wp_get_post_terms(
+			$this->ID,
+			'food-category',
+			array(
+				'fields' => $fields
+			)
+		);
+		return $food_categories;
 	}
 
 	/**
@@ -881,14 +794,14 @@ class RPRESS_Fooditem {
 	 * NOTE: Currently only checks on rpress_get_cart_contents() and rpress_add_to_cart()
 	 *
 	 * @since  1.0.0.4
-	 * @return bool If the current user can purcahse the fooditem ID
+	 * @return bool If the current fooditem ID can be purchased
 	 */
 	public function can_purchase() {
 		$can_purchase = true;
 
-    if ( $this->post_status != 'publish' ) {
-      $can_purchase = false;
-    }
+		if ( $this->post_status != 'publish' ) {
+			$can_purchase = false;
+		}
 
 		return (bool) apply_filters( 'rpress_can_purchase_fooditem', $can_purchase, $this );
 	}

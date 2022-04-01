@@ -1,6 +1,6 @@
 <?php if( ! empty( $_GET['rpress-verify-request'] ) ) : ?>
   <p class="rpress-account-pending rpress_success">
-	 <?php _e( 'An email with an activation link has been sent.', 'restropress' ); ?>
+	 <?php esc_html_e( 'An email with an activation link has been sent.', 'restropress' ); ?>
   </p>
 <?php endif; ?>
   <p class="rpress-account-pending">

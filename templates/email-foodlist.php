@@ -11,29 +11,31 @@
   padding: 15px;
 }
 </style>
+
 <table id="rpress-email-food-list" class="rpress-table">
   <thead>
-    <th><?php _e( 'Name', 'restropress' ); ?></th>
-    <th><?php _e( 'Price', 'restropress' ); ?></th>
+    <th><?php esc_html_e( 'Name', 'restropress' ); ?></th>
+    <th><?php esc_html_e( 'Price', 'restropress' ); ?></th>
   </thead>
   <tbody>
   <?php if( is_array( $rpress_email_fooditems ) ) : ?>
     <?php
-    //print_r($cart);
     foreach ( $rpress_email_fooditems as $key => $item ) : ?>
       <?php $row_price = array(); ?>
       <tr>
         <td>
           <div class="rpress_email_receipt_product_name">
-            <?php echo $item['quantity']; ?> X <?php echo get_the_title( $item['id'] ); ?> (<?php echo rpress_price( $item['id'] ); ?>)
+            <?php echo wp_kses_post(  $item['quantity'] ); ?> X <?php echo wp_kses_post( get_the_title( $item['id'] ) ); ?> (<?php echo rpress_price( $item['id'] ); ?>)
             <?php
               if( !empty( $item['options'] ) ) {
                 foreach( $item['options'] as $k => $v ) {
-                  array_push( $row_price, $v['price'] );
-                  if( !empty( $v['addon_item_name'] ) ) {
-                    ?>
-                    <br/>&nbsp;&nbsp;<small class="rpress-receipt-addon-item"><?php echo $v['addon_item_name']; ?> (<?php echo rpress_currency_filter(rpress_format_amount($v['price'])); ?>)</small>
-                    <?php
+                  if( is_array( $v ) ) {
+                    array_push( $row_price, $v['price'] );
+                    if( !empty( $v['addon_item_name'] ) ) {
+                      ?>
+                      <br/>&nbsp;&nbsp;<small class="rpress-receipt-addon-item"><?php echo wp_kses_post( $v['addon_item_name'] ); ?> (<?php echo rpress_currency_filter(rpress_format_amount($v['price'])); ?>)</small>
+                      <?php
+                    }
                   }
                 }
               }

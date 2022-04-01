@@ -157,7 +157,7 @@ class RPRESS_Session {
 	 */
 	public function get( $key ) {
 
-		$key    = sanitize_key( $key );
+		$key    = sanitize_text_field( $key );
 		$return = false;
 
 		if ( isset( $this->session[ $key ] ) && ! empty( $this->session[ $key ] ) ) {
@@ -205,7 +205,7 @@ class RPRESS_Session {
 	 */
 	public function set( $key, $value ) {
 
-		$key = sanitize_key( $key );
+		$key = sanitize_text_field( $key );
 
 		if ( is_array( $value ) ) {
 			$this->session[ $key ] = wp_json_encode( $value );

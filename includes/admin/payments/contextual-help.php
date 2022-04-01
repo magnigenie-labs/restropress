@@ -20,14 +20,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @return      void
  */
 function rpress_payments_contextual_help() {
+	
 	$screen = get_current_screen();
 
-	if ( $screen->id != 'fooditem_page_rpress-payment-history' )
+	if ( $screen->id != 'restropress_page_rpress-payment-history' )
 		return;
-
-
-
 
 	do_action( 'rpress_payments_contextual_help', $screen );
 }
-add_action( 'load-fooditem_page_rpress-payment-history', 'rpress_payments_contextual_help' );
+add_action( 'load-restropress_page_rpress-payment-history', 'rpress_payments_contextual_help' );

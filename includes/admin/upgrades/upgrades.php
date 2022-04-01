@@ -23,7 +23,7 @@ function rpress_upgrades_screen() {
   ?>
 
   <div class="wrap">
-  <h2><?php _e( 'RestroPress - Upgrades', 'restropress' ); ?></h2>
+  <h2><?php esc_html_e( 'RestroPress - Upgrades', 'restropress' ); ?></h2>
   <?php
   if ( is_callable( 'rpress_upgrade_render_' . $action ) ) {
 
@@ -37,10 +37,10 @@ function rpress_upgrades_screen() {
   } else {
 
     // This is the legacy upgrade method, which requires a page refresh at each step.
-    $step   = isset( $_GET['step'] )        ? absint( $_GET['step'] )                     : 1;
-    $total  = isset( $_GET['total'] )       ? absint( $_GET['total'] )                    : false;
-    $custom = isset( $_GET['custom'] )      ? absint( $_GET['custom'] )                   : 0;
-    $number = isset( $_GET['number'] )      ? absint( $_GET['number'] )                   : 100;
+    $step   = isset( $_GET['step'] )    ? absint( $_GET['step'] )   : 1;
+    $total  = isset( $_GET['total'] )   ? absint( $_GET['total'] )  : false;
+    $custom = isset( $_GET['custom'] )  ? absint( $_GET['custom'] ) : 0;
+    $number = isset( $_GET['number'] )  ? absint( $_GET['number'] ) : 100;
     $steps  = round( ( $total / $number ), 0 );
     if ( ( $steps * $number ) < $total ) {
       $steps++;
@@ -64,21 +64,21 @@ function rpress_upgrades_screen() {
       <?php if( ! empty( $action ) ) : ?>
 
         <div id="rpress-upgrade-status">
-          <p><?php _e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restropress' ); ?></p>
+          <p><?php esc_html_e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restropress' ); ?></p>
 
           <?php if( ! empty( $total ) ) : ?>
             <p><strong><?php printf( __( 'Step %d of approximately %d running', 'restropress' ), $step, $steps ); ?></strong></p>
           <?php endif; ?>
         </div>
         <script type="text/javascript">
-          setTimeout(function() { document.location.href = "index.php?rpress_action=<?php echo $action; ?>&step=<?php echo $step; ?>&total=<?php echo $total; ?>&custom=<?php echo $custom; ?>"; }, 250);
+          setTimeout(function() { document.location.href = "index.php?rpress_action=<?php echo wp_kses_post( $action ); ?>&step=<?php echo esc_html( $step ); ?>&total=<?php echo esc_html( $total ); ?>&custom=<?php echo esc_html( $custom ); ?>"; }, 250);
         </script>
 
       <?php else : ?>
 
         <div id="rpress-upgrade-status">
           <p>
-            <?php _e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restropress' ); ?>
+            <?php esc_html_e( 'The upgrade process has started, please be patient. This could take several minutes. You will be automatically redirected when the upgrade is finished.', 'restropress' ); ?>
             <img src="<?php echo RP_PLUGIN_URL . '/assets/images/loading.gif'; ?>" id="rpress-upgrade-loader"/>
           </p>
         </div>

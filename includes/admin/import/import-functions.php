@@ -27,12 +27,12 @@ function rpress_do_ajax_import_file_upload() {
 
 	require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
 
-	if( ! wp_verify_nonce( $_REQUEST['rpress_ajax_import'], 'rpress_ajax_import' ) ) {
-		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restropress' ) ) );
+	if( ! wp_verify_nonce( sanitize_text_field( $_REQUEST['rpress_ajax_import'] ), 'rpress_ajax_import' ) ) {
+		wp_send_json_error( array( 'error' => esc_html__( 'Nonce verification failed', 'restropress' ) ) );
 	}
 
 	if( empty( $_POST['rpress-import-class'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Missing import parameters. Import class must be specified.', 'restropress' ), 'request' => $_REQUEST ) );
+		wp_send_json_error( array( 'error' => esc_html__( 'Missing import parameters. Import class must be specified.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	if( empty( $_FILES['rpress-import-file'] ) ) {
@@ -58,26 +58,32 @@ function rpress_do_ajax_import_file_upload() {
 		wp_send_json_error( array( 'error' => __( 'The file you uploaded does not appear to be a CSV file.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
-	if( ! file_exists( $_FILES['rpress-import-file']['tmp_name'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Something went wrong during the upload process, please try again.', 'restropress' ), 'request' => $_REQUEST ) );
+	if( ! file_exists( sanitize_text_field( $_FILES['rpress-import-file']['tmp_name'] ) ) ){
+		wp_send_json_error( array( 'error' => esc_html__( 'Something went wrong during the upload process, please try again.', 'restropress' ), 'request' => $_REQUEST ) );
 	}
 
 	// Let WordPress import the file. We will remove it after import is complete
-	$import_file = wp_handle_upload( $_FILES['rpress-import-file'], array( 'test_form' => false ) );
+	$import_file  = wp_handle_upload( $_FILES['rpress-import-file'], array( 'test_form' => false ) );
+	$import_class = sanitize_text_field( $_POST['rpress-import-class'] );
 
 	if ( $import_file && empty( $import_file['error'] ) ) {
 
-		do_action( 'rpress_batch_import_class_include', $_POST['rpress-import-class'] );
+		do_action( 'rpress_batch_import_class_include', $import_class );
 
-		$import = new $_POST['rpress-import-class']( $import_file['file'] );
+		$import = new $import_class( $import_file['file'] );
 
 		if( ! $import->can_import() ) {
-			wp_send_json_error( array( 'error' => __( 'You do not have permission to import data', 'restropress' ) ) );
+			wp_send_json_error( array( 'error' => esc_html__( 'You do not have permission to import data', 'restropress' ) ) );
 		}
+		$form = array(
+			'rpress-import-class'	=> $import_class,
+			'rpress_ajax_import'	=> sanitize_text_field( $_POST['rpress_ajax_import'] ),
+			'rpress-import-field'	=> array_map( 'sanitize_key', $_POST['rpress-import-field'] )
+		);
 
 		wp_send_json_success( array(
-			'form'      => $_POST,
-			'class'     => $_POST['rpress-import-class'],
+			'form'      => $form,
+			'class'     => $import_class,
 			'upload'    => $import_file,
 			'first_row' => $import->get_first_row(),
 			'columns'   => $import->get_columns(),
@@ -109,31 +115,33 @@ function rpress_do_ajax_import() {
 
 	require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import.php';
 
-	if( ! wp_verify_nonce( $_REQUEST['nonce'], 'rpress_ajax_import' ) ) {
-		wp_send_json_error( array( 'error' => __( 'Nonce verification failed', 'restropress' ), 'request' => $_REQUEST ) );
+	if( ! wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'rpress_ajax_import' ) ) {
+		wp_send_json_error( array( 'error' => esc_html__( 'Nonce verification failed', 'restropress' ) ) );
 	}
 
-	if( empty( $_REQUEST['class'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Missing import parameters. Import class must be specified.', 'restropress' ), 'request' => $_REQUEST ) );
+	if( empty( $_POST['class'] ) ) {
+		wp_send_json_error( array( 'error' => esc_html__( 'Missing import parameters. Import class must be specified.', 'restropress' ) ) );
 	}
 
-	if( ! file_exists( $_REQUEST['upload']['file'] ) ) {
-		wp_send_json_error( array( 'error' => __( 'Something went wrong during the upload process, please try again.', 'restropress' ), 'request' => $_REQUEST ) );
+	if( ! file_exists( sanitize_text_field( $_POST['upload']['file'] ) ) ) {
+		wp_send_json_error( array( 'error' => esc_html__( 'Something went wrong during the upload process, please try again.', 'restropress' ) ) );
 	}
 
-	do_action( 'rpress_batch_import_class_include', $_REQUEST['class'] );
+	do_action( 'rpress_batch_import_class_include', sanitize_text_field( $_POST['class'] ) );
 
-	$step     = absint( $_REQUEST['step'] );
-	$class    = $_REQUEST['class'];
-	$import   = new $class( $_REQUEST['upload']['file'], $step );
+	$step     = absint( $_POST['step'] );
+	$class    = sanitize_text_field( $_POST['class'] );
+	$import   = new $class( sanitize_text_field( $_POST['upload']['file'] ), $step );
 
 	if( ! $import->can_import() ) {
 
-		wp_send_json_error( array( 'error' => __( 'You do not have permission to import data', 'restropress' ) ) );
+		wp_send_json_error( array( 'error' => esc_html__( 'You do not have permission to import data', 'restropress' ) ) );
 
 	}
 
-	parse_str( $_REQUEST['mapping'], $map );
+	$mapping =  sanitize_text_field( rawurldecode( $_POST['mapping'] ) );
+
+	parse_str( $mapping, $map );
 
 	$import->map_fields( $map['rpress-import-field'] );
 

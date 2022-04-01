@@ -154,6 +154,7 @@ function rpress_get_payment_by( $field = '', $value = '' ) {
  */
 function rpress_insert_payment( $payment_data = array() ) {
 
+
 	if ( empty( $payment_data ) ) {
 		return false;
 	}
@@ -209,14 +210,12 @@ function rpress_insert_payment( $payment_data = array() ) {
 
 	if( is_array( $payment_data['cart_details'] ) && ! empty( $payment_data['cart_details'] ) ) {
 
-
 		foreach ( $payment_data['cart_details'] as $item ) {
 
 			$args = array(
 				'quantity'   => $item['quantity'],
-				'instruction' => isset($item['item_number']['instruction']) ? $item['item_number']['instruction'] : null,
-				'price_id'   => isset( $item['item_number']['options']['price_id'] ) ? $item['item_number']['options']['price_id'] : null,
-				'price_id'   => isset( $item['item_number']['options']['price_id'] ) ? $item['item_number']['options']['price_id'] : null,
+				'instruction'=> isset($item['item_number']['instruction']) ? $item['item_number']['instruction'] : null,
+				'price_id'   => isset( $item['item_number']['price_id'] ) ? $item['item_number']['price_id'] : null,
 				'tax'        => $item['tax'],
 				'item_price' => isset( $item['item_price'] ) ? $item['item_price'] : $item['price'],
 				'fees'       => isset( $item['fees'] ) ? $item['fees'] : array(),
@@ -225,22 +224,17 @@ function rpress_insert_payment( $payment_data = array() ) {
 
 			$options = isset( $item['item_number']['addon_items'] ) ? $item['item_number']['addon_items'] : array();
 
-
-
 			$payment->add_fooditem( $item['id'], $args, $options );
 		}
 
 	}
 
-	$payment->increase_tax( rpress_get_cart_fee_tax() );
-
 	$gateway = ! empty( $payment_data['gateway'] ) ? $payment_data['gateway'] : '';
-	$gateway = empty( $gateway ) && isset( $_POST['rpress-gateway'] ) ? $_POST['rpress-gateway'] : $gateway;
+	$gateway = empty( $gateway ) && isset( $_POST['rpress-gateway'] ) ? sanitize_text_field( $_POST['rpress-gateway'] ) : $gateway;
 
 	$country = ! empty( $payment_data['user_info']['address']['country'] ) ? $payment_data['user_info']['address']['country'] : false;
 	$state   = ! empty( $payment_data['user_info']['address']['state'] )   ? $payment_data['user_info']['address']['state']   : false;
 	$zip     = ! empty( $payment_data['user_info']['address']['zip'] )     ? $payment_data['user_info']['address']['zip']     : false;
-
 
 	$payment->status         = ! empty( $payment_data['status'] ) ? $payment_data['status'] : 'pending';
 	$payment->currency       = ! empty( $payment_data['currency'] ) ? $payment_data['currency'] : rpress_get_currency();
@@ -258,13 +252,9 @@ function rpress_insert_payment( $payment_data = array() ) {
 	$payment->tax_rate       = rpress_get_cart_tax_rate( $country, $state, $zip );
 
 
-	$payment->delivery_type      = isset($_COOKIE['deliveryMethod']) ? $_COOKIE['deliveryMethod'] : ''  ;
-	$payment->delivery_time      = isset($_COOKIE['deliveryTime']) ? $_COOKIE['deliveryTime'] : ''  ;
-	$payment->delivery_fee      = isset($_COOKIE['rpress_delivery_price']) ? $_COOKIE['rpress_delivery_price'] : ''  ;
-	$payment->delivery_location      = isset($_COOKIE['rpress_delivery_location']) ? $_COOKIE['rpress_delivery_location'] : ''  ;
-	$payment->delivery_location_pos     = isset($_COOKIE['rpress_delivery_location_pos']) ? $_COOKIE['rpress_delivery_location_pos'] : ''  ;
-  $payment->delivery_date     = isset($_COOKIE['DeliveryDate']) ? $_COOKIE['DeliveryDate'] : ''  ;
-
+	$payment->delivery_type      = isset($_COOKIE['service_type']) ? sanitize_text_field( $_COOKIE['service_type'] ) : ''  ;
+	$payment->delivery_time      = isset($_COOKIE['service_time']) ? sanitize_text_field( $_COOKIE['service_time'] ) : ''  ;
+	$payment->delivery_date     = isset($_COOKIE['delivery_date']) ? sanitize_text_field( $_COOKIE['delivery_date'] ) : ''  ;
 
 	if ( isset( $payment_data['post_date'] ) ) {
 		$payment->date = $payment_data['post_date'];
@@ -286,6 +276,8 @@ function rpress_insert_payment( $payment_data = array() ) {
 	}
 
 	do_action( 'rpress_insert_payment', $payment->ID, $payment_data );
+
+	rpress_update_order_status( $payment->ID, 'pending' );
 
 	if ( ! empty( $payment->ID ) ) {
 		return $payment->ID;
@@ -316,7 +308,6 @@ function rpress_update_payment_status( $payment_id = 0, $new_status = 'publish' 
 	}
 
 	return $updated;
-
 }
 
 /**
@@ -334,6 +325,7 @@ function rpress_update_payment_status( $payment_id = 0, $new_status = 'publish' 
  * @return void
  */
 function rpress_delete_purchase( $payment_id = 0, $update_customer = true, $delete_fooditem_logs = false ) {
+
 	global $rpress_logs;
 
 	$payment   = new RPRESS_Payment( $payment_id );
@@ -747,11 +739,11 @@ function rpress_get_payment_status( $payment, $return_label = false ) {
 	} else {
 		$statuses = rpress_get_payment_statuses();
 
-		// Account that our 'publish' status is labeled 'Complete'
-		$post_status = 'publish' == $payment->status ? 'Complete' : $payment->post_status;
+		// Account that our 'publish' status is labeled 'Paid'
+		$post_status = 'publish' == $payment->status ? 'Paid' : $payment->post_status;
 
 		// Make sure we're matching cases, since they matter
-		return array_search( strtolower( $post_status ), array_map( 'strtolower', $statuses ) );
+		return array_search( strtolower( $payment->post_status ), array_map( 'strtolower', $statuses ) );
 	}
 
 	return ! empty( $status ) ? $status : false;
@@ -766,6 +758,7 @@ function rpress_get_payment_status( $payment, $return_label = false ) {
  * @return bool|mixed
  */
 function rpress_get_payment_status_label( $status = '' ) {
+
 	$statuses = rpress_get_payment_statuses();
 
 	if ( ! is_array( $statuses ) || empty( $statuses ) ) {
@@ -775,7 +768,6 @@ function rpress_get_payment_status_label( $status = '' ) {
 	if ( array_key_exists( $status, $statuses ) ) {
 		return $statuses[ $status ];
 	}
-
 	return false;
 }
 
@@ -787,16 +779,103 @@ function rpress_get_payment_status_label( $status = '' ) {
  */
 function rpress_get_payment_statuses() {
 	$payment_statuses = array(
-		'pending'   => __( 'Pending', 'restropress' ),
-		'paid'   	=> __( 'Paid', 'restropress' ),
-		'publish'   => __( 'Delivered', 'restropress' ),
-		'refunded'  => __( 'Refunded', 'restropress' ),
-		'failed'    => __( 'Failed', 'restropress' ),
-		'processing' => __( 'Processing', 'restropress' ),
+		'pending' 		=> __( 'Pending', 'restropress' ),
+		'publish' 		=> __( 'Paid', 'restropress' ),
+		'refunded' 		=> __( 'Refunded', 'restropress' ),
+		'failed' 		=> __( 'Failed', 'restropress' ),
+    	'processing'	=> __( 'Processing', 'restropress' ),
 	);
-
 	return apply_filters( 'rpress_payment_statuses', $payment_statuses );
 }
+
+/**
+ * Retrieves all available payments status colors.
+ *
+ * @since 1.0.0.1
+ * @return array $payment_status_colors Status Colors
+ */
+function rpress_get_payment_status_colors() {
+	$payment_status_colors = array(
+		'pending' 			=> '#fcbdbd',
+		'pending_text' 		=> '#333333',
+		'publish' 			=> '#e0f0d7',
+		'publish_text' 		=> '#3a773a',
+		'refunded' 			=> '#e5e5e5',
+		'refunded_text' 	=> '#777777',
+		'failed' 			=> '#e76450',
+		'failed_text' 		=> '#ffffff',
+    	'processing'		=> '#f7ae18',
+    	'processing_text'	=> '#ffffff',
+	);
+	return apply_filters( 'rpress_payment_status_colors', $payment_status_colors );
+}
+
+/**
+ * Given a order status string, return the label for that string.
+ *
+ * @since 2.7
+ * @param string $status
+ *
+ * @return bool|mixed
+ */
+function rpress_get_order_status_label( $status = '' ) {
+
+	$statuses = rpress_get_order_statuses();
+
+	if ( ! is_array( $statuses ) || empty( $statuses ) ) {
+		return false;
+	}
+
+	if ( array_key_exists( $status, $statuses ) ) {
+		return $statuses[ $status ];
+	}
+	return false;
+}
+
+/**
+  * Retrieves all available statuses for Orders.
+  *
+  * @since 2.2
+  * @return array $order_status All the available order statuses
+  */
+  function rpress_get_order_statuses() {
+    $order_statuses = array(
+      'pending'     => __( 'Pending', 'restropress' ),
+      'accepted'    => __( 'Accepted', 'restropress' ),
+      'processing'  => __( 'Processing', 'restropress' ),
+      'ready' 		=> __( 'Ready', 'restropress' ),
+      'transit' 	=> __( 'In Transit', 'restropress' ),
+      'cancelled'   => __( 'Cancelled', 'restropress' ),
+      'completed'   => __( 'Completed', 'restropress' ),
+    );
+    return apply_filters( 'rpress_order_statuses', $order_statuses );
+  }
+
+  /**
+  * Retrieves all available colors for Order Statuses
+  *
+  * @since 2.2
+  * @return array $order_status_colors Colors for available statuses
+  */
+  function rpress_get_order_status_colors() {
+    $order_status_colors = array(
+      'pending'     	=> '#fcbdbd',
+      'pending_text' 	=> '#333333',
+      'accepted'    	=> '#ffcd85',
+      'accepted_text' 	=> '#92531b',
+      'processing'  	=> '#f7ae18',
+      'processing_text' => '#ffffff',
+      'ready' 			=> '#75A84C',
+      'ready_text' 		=> '#ffffff',
+      'transit' 		=> '#cac300',
+      'transit_text' 	=> '#464343',
+      'cancelled'   	=> '#eba3a3',
+      'cancelled_text' 	=> '#761919',
+      'completed' 		=> '#e0f0d7',
+      'completed_text'	=> '#3a773a',
+    );
+    return apply_filters( 'rpress_order_status_colors', $order_status_colors );
+  }
 
 /**
  * Retrieves keys for all available statuses for payments
@@ -1370,7 +1449,7 @@ function rpress_payment_subtotal( $payment_id = 0 ) {
  * @param int $payment_id Payment ID
  * @return float $subtotal Subtotal for payment (non formatted)
  */
-function rpress_get_payment_subtotal( $payment_id = 0) {
+function rpress_get_payment_subtotal( $payment_id = 0 ) {
 	$payment = new RPRESS_Payment( $payment_id );
 
 	return $payment->subtotal;
@@ -1387,6 +1466,7 @@ function rpress_get_payment_subtotal( $payment_id = 0) {
  * @return string $subtotal Fully formatted payment subtotal
  */
 function rpress_payment_tax( $payment_id = 0, $payment_meta = false ) {
+
 	$tax = rpress_get_payment_tax( $payment_id, $payment_meta );
 
 	return rpress_currency_filter( rpress_format_amount( $tax ), rpress_get_payment_currency_code( $payment_id ) );
@@ -1402,7 +1482,6 @@ function rpress_payment_tax( $payment_id = 0, $payment_meta = false ) {
  */
 function rpress_get_payment_tax( $payment_id = 0, $payment_meta = false ) {
 	$payment = new RPRESS_Payment( $payment_id );
-
 	return $payment->tax;
 }
 
@@ -1425,7 +1504,6 @@ function rpress_get_payment_item_tax( $payment_id = 0, $cart_key = false ) {
 	}
 
 	return $item_tax;
-
 }
 
 /**
@@ -1484,17 +1562,17 @@ function rpress_set_payment_transaction_id( $payment_id = 0, $transaction_id = '
 function rpress_get_purchase_id_by_key( $key ) {
 	global $wpdb;
 	$global_key_string = 'rpress_purchase_id_by_key' . $key;
-	global $$global_key_string;
+	global $global_key_string;
 
-	if ( null !== $$global_key_string ) {
-		return $$global_key_string;
+	if ( null !== $global_key_string ) {
+		return $global_key_string;
 	}
 
 	$purchase = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_rpress_payment_purchase_key' AND meta_value = %s LIMIT 1", $key ) );
 
 	if ( $purchase != NULL ) {
-		$$global_key_string = $purchase;
-		return $$global_key_string;
+		$global_key_string = $purchase;
+		return $global_key_string;
 	}
 
 	return 0;
@@ -1770,4 +1848,54 @@ function rpress_filter_where_older_than_week( $where = '' ) {
 	$start = date( 'Y-m-d', strtotime( '-7 days' ) );
 	$where .= " AND post_date <= '{$start}'";
 	return $where;
+}
+
+/**
+ * get discount by payment_id
+ *
+ * @since  2.5.6
+ * @param int $payment_id
+ * @return string discount value
+*/
+function rpress_get_discount_price_by_payment_id( $payment_id = 0 ) {
+
+    if( empty( $payment_id ) )
+        return false;
+
+    $cart_contents  = rpress_get_payment_meta_cart_details( $payment_id, true );
+    $user_info  	= rpress_get_payment_meta_user_info( $payment_id, true );
+
+    $discount_code = $user_info['discount'];
+    $discount = 0;
+
+    $discount_data  = rpress_get_discount_by_code( $discount_code );
+
+    if( !$discount_data ) return false;
+
+    $discount_type 	= rpress_get_discount_type( $discount_data->ID );
+
+    if( $discount_type == 'flat' ){
+
+	    if ( is_array( $cart_contents ) && !empty( $cart_contents ) ) {
+	        foreach( $cart_contents as $key => $cart_content ) {
+
+	            $discount = isset( $cart_content['discount'] ) ? floatval($cart_content['discount']) : 0;
+	        }
+	    }
+
+    }
+
+    if($discount_type == 'percent' ){
+
+
+	    if ( is_array( $cart_contents ) && !empty( $cart_contents ) ) {
+	        foreach( $cart_contents as $key => $cart_content ) {
+
+	            $discount += isset( $cart_content['discount'] ) ? floatval($cart_content['discount']) : 0;
+	        }
+	    }
+
+    }
+    $discount_value = apply_filters( 'rpress_discount_price_by_payment', $discount );
+    return rpress_currency_filter( rpress_format_amount( $discount_value ) );
 }

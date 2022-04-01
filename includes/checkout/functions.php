@@ -103,7 +103,7 @@ function rpress_send_to_success_page( $query_string = null ) {
 	if ( $query_string )
 		$redirect .= $query_string;
 
-	$gateway = isset( $_REQUEST['rpress-gateway'] ) ? $_REQUEST['rpress-gateway'] : '';
+	$gateway = isset( $_REQUEST['rpress-gateway'] ) ? sanitize_text_field( $_REQUEST['rpress-gateway'] ) : '';
 
 	wp_redirect( apply_filters('rpress_success_page_redirect', $redirect, $gateway, $query_string) );
 	rpress_die();
