@@ -48,7 +48,12 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 			'state'        => __( 'State', 'restropress' ),
 			'country'      => __( 'Country', 'restropress' ),
 			'zip'          => __( 'Zip / Postal Code', 'restropress' ),
+	   'delivery_address'  =>__('Delivery Address', 'restropress'),
 			'products'     => __( 'Products (Verbose)', 'restropress' ),
+			'instruction'  => __( 'Special Instruction','restropress' ),
+   			'service_type' => __( 'Service Type','restropress' ),
+			'service_time' => __( 'Service Time','restropress' ),
+
 			'products_raw' => __( 'Products (Raw)', 'restropress' ),
 			'skus'         => __( 'SKUs', 'restropress' ),
 			'amount'       => __( 'Amount', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
@@ -62,8 +67,9 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 			'currency'     => __( 'Currency', 'restropress' ),
 			'ip'           => __( 'IP Address', 'restropress' ),
 			'mode'         => __( 'Mode (Live|Test)', 'restropress' ),
-			'status'       => __( 'Status', 'restropress' ),
+			'order_status' => __( 'Status', 'restropress' ),
 			'country_name' => __( 'Country Name', 'restropress' ),
+
 		);
 
 		if( ! rpress_use_skus() ){
@@ -86,43 +92,63 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 	 */
 	public function get_data() {
 		global $wpdb;
-
+		
 		$data = array();
-
 		$args = array(
 			'number'   => 30,
 			'page'     => $this->step,
-			'status'   => $this->status,
+	'order_status'     => $this->status,
 			'order'    => 'ASC',
 			'orderby'  => 'date'
 		);
-
+		 
 		if( ! empty( $this->start ) || ! empty( $this->end ) ) {
 
-			$args['date_query'] = array(
-				array(
-					'after'     => date( 'Y-n-d 00:00:00', strtotime( $this->start ) ),
-					'before'    => date( 'Y-n-d 23:59:59', strtotime( $this->end ) ),
-					'inclusive' => true
-				)
-			);
+			$args['start_date'] = date( 'Y-n-d 00:00:00', strtotime( $this->start ) ) ;
+			$args['end_date'] = date( 'Y-n-d 23:59:59', strtotime( $this->end ) ) ;
 
 		}
 
+		if( ! is_null( $this->status) ) {
+			if( $this->status ){
+				$args['meta_query'] = array( 
+					array(
+						'key' => '_order_status',
+						'value' => $this->status,
+						'compare' => '='
+					)
+				);	
+
+			}
+		
+		}
+
 		$payments = rpress_get_payments( $args );
-
 		if( $payments ) {
-
 			foreach ( $payments as $payment ) {
 				$payment = new RPRESS_Payment( $payment->ID );
-				$payment_meta   = $payment->payment_meta;
+
+				$address_info	= get_post_meta( $payment->ID , '_rpress_delivery_address', true );
+
+				$user_address 	= !empty( $address_info['address'] ) ? $address_info['address'] . ', ' : '';
+				$user_address 	.= !empty( $address_info['flat'] ) ? $address_info['flat'] . ', ' : '';
+				$user_address 	.= !empty( $address_info['city'] ) ? $address_info['city'] . ', ' : '';
+				$user_address 	.= !empty( $address_info['postcode'] ) ? $address_info['postcode']  : '';
+				
+				$order_statuses = rpress_get_order_statuses();	
+	      $current_order_status = rpress_get_order_status( $payment->ID );
+
 				$user_info      = $payment->user_info;
 				$fooditems      = $payment->cart_details;
+
 				$total          = $payment->total;
 				$user_id        = isset( $user_info['id'] ) && $user_info['id'] != -1 ? $user_info['id'] : $user_info['email'];
 				$products       = '';
+				$service_type   = get_post_meta( $payment->ID, '_rpress_delivery_type', true );
+				$service_time   = get_post_meta( $payment->ID, '_rpress_delivery_time', true );
+
 				$products_raw   = '';
-				$skus           = '';
+				$skus           = ''; 
 
 				if ( $fooditems ) {
 					foreach ( $fooditems as $key => $fooditem ) {
@@ -139,6 +165,7 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 						}
 
 						$fooditem_tax      = isset( $fooditem['tax'] ) ? $fooditem['tax'] : 0;
+						$instruction = isset( $fooditem['instruction'] ) ? $fooditem['instruction'] : '';
 						$fooditem_price_id = isset( $fooditem['item_number']['options']['price_id'] ) ? absint( $fooditem['item_number']['options']['price_id'] ) : false;
 
 						/* Set up verbose product column */
@@ -152,7 +179,7 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 						$products .= ' - ';
 
 						if ( rpress_use_skus() ) {
-							$sku = rpress_get_fooditem_sku( $id );
+							$sku = rpress_get_fooditem_sku( $fooditem['id']);
 
 							if ( ! empty( $sku ) ) {
 								$skus .= $sku;
@@ -203,7 +230,7 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 				$data[] = array(
 					'id'           => $payment->ID,
 					'seq_id'       => $payment->number,
-					'email'        => $payment_meta['email'],
+					'email'        => $user_info['email'],
 					'customer_id'  => $payment->customer_id,
 					'first'        => $user_info['first_name'],
 					'last'         => $user_info['last_name'],
@@ -213,7 +240,11 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 					'state'        => isset( $user_info['address']['state'] )   ? $user_info['address']['state']   : '',
 					'country'      => isset( $user_info['address']['country'] ) ? $user_info['address']['country'] : '',
 					'zip'          => isset( $user_info['address']['zip'] )     ? $user_info['address']['zip']     : '',
+				'delivery_address' => $user_address,
 					'products'     => $products,
+					'instruction'  => $instruction,
+					'service_type' => $service_type,
+					'service_time' => $service_time,
 					'products_raw' => $products_raw,
 					'skus'         => $skus,
 					'amount'       => html_entity_decode( rpress_format_amount( $total ) ), // The non-discounted item price
@@ -227,15 +258,13 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 					'currency'     => $payment->currency,
 					'ip'           => $payment->ip,
 					'mode'         => $payment->get_meta( '_rpress_payment_mode', true ),
-					'status'       => ( 'publish' === $payment->status ) ? 'complete' : $payment->status,
+					'order_status' => $current_order_status,
 					'country_name' => isset( $user_info['address']['country'] ) ? rpress_get_country_name( $user_info['address']['country'] ) : '',
 				);
-
 			}
 
 			$data = apply_filters( 'rpress_export_get_data', $data );
 			$data = apply_filters( 'rpress_export_get_data_' . $this->export_type, $data );
-
 			return $data;
 
 		}
@@ -288,8 +317,9 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 	 * @param array $request The Form Data passed into the batch processing
 	 */
 	public function set_properties( $request ) {
+
 		$this->start  = isset( $request['start'] )  ? sanitize_text_field( $request['start'] )  : '';
 		$this->end    = isset( $request['end']  )   ? sanitize_text_field( $request['end']  )   : '';
-		$this->status = isset( $request['status'] ) ? sanitize_text_field( $request['status'] ) : 'complete';
+		$this->status = isset( $request['order_status'] ) ? sanitize_text_field( $request['order_status'] ) : 'complete';
 	}
 }

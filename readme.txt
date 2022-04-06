@@ -4,8 +4,8 @@ Tags: Food ordering, online ordering, restaurant ordering, restaurant menu, food
 Donate link: https://paypal.me/magnigeeks
 Requires at least: 4.4
 Requires PHP: 5.5
-Tested up to: 5.9
-Stable tag: 2.8.5
+Tested up to: 5.8
+Stable tag: 2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,29 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 5. Once the plugin is installed then you can see RestroPress on the left navigation bar of WordPress Dashboard.
 
 == ChangeLog ==
+
+= Version 2.9 (2022-1-12) =
+
+* Added: Service type delivery, pickup and dinein filter option
+* Fixed: Delivery and pickup filter count issue fixed
+* Fixed: Selected time slot on checkout page for store timing extension 2.0
+* Fixed: Discount coupon issue fixed
+* Fixed: show rewards points for user as per reward extension
+* Added: Add customer email id, service type, service time and order instructions on order history export report
+* Fixed: extensions price view issue in admin section
+* Fixed: Orders filter issue as per selected date
+* Added: Filter option as per order status
+* Added: Hide categories setting feature
+* Added: Food items List view and grid view setting feature
+* Added: Filter feature to get activated extesnions
+* Added: Adding live search button for admin extensions section
+* Fixed: Export order history issue for All status
+* Added: Delivery address in order history export report
+* Added: Addon quantity feature
+* Added: Accounting setting section whith sequencial order ,SKU,Prefix and postfix features
+* Minor code cleanup
+
+
 = Version 2.8.5 (2021-10-30) =
 * Fixed: Subtotal display problem on food item page
 * Fixed: Total amount issue on the checkout page
@@ -502,5 +525,5 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == Upgrade Notice ==
 
-= Version 2.8.5 =
+= Version 2.9 =
 * New update for RestroPress is available. Please take a backup before the update.

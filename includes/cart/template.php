@@ -132,6 +132,7 @@ function get_addon_item_formatted( $addon_items ) {
 
           			$addon_data = get_term_by( 'id', $addon_id, 'addon_category' );
           			$item_addon_price = !empty( $addon_item['price'] ) ? $addon_item['price'] : 0.00;
+					$item_addon_quantity = !empty( $addon_item['quantity'] ) ? $addon_item['quantity'] : 0;
           			$cart = new RPRESS_Cart();
           			$addon_price = $cart->get_addon_price( $addon_id, $addon_items, $item_addon_price );
           			$addon_price = !empty( $addon_price ) ? rpress_currency_filter( rpress_format_amount( $addon_price ) ) : '';
@@ -141,9 +142,11 @@ function get_addon_item_formatted( $addon_items ) {
             			$addon_item_name = $addon_data->name;
 
             			$html.= '<li class="rpress-cart-item">
+						<span>' . $item_addon_quantity . 'x' . '</span>
 			              <span class="rpress-cart-item-title">'.$addon_item_name.'</span>
 			              <span class="addon-item-price cart-item-quantity-wrap">
 			                <span class="rpress-cart-item-price qty-class">' . $addon_price . '</span>
+							
 			              </span>
 			            </li>';
 			        endif;

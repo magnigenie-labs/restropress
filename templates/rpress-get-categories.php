@@ -13,7 +13,8 @@ if ( $data['category_menu'] ) {
 } else {
   $get_all_items = rpress_get_categories( $data );
 }
-
+$disable_category = rpress_get_option( 'disable_category_menu', false );
+if( !$disable_category ) :
 ?>
 
 <div class="rp-col-lg-2 rp-col-md-2 rp-col-sm-3 rp-col-xs-12 sticky-sidebar cat-lists">
@@ -39,5 +40,7 @@ if ( $data['category_menu'] ) {
   </div>
 </div>
 <div class="rp-mb-cat-ft-btn"><span class="rp-mb-cat-txt"><i class="fa fa-cutlery" aria-hidden="true"></i><?php esc_html_e( 'Menu', 'restropress' ); ?></span></div>
+
 <?php
+endif;
 echo ob_get_clean();

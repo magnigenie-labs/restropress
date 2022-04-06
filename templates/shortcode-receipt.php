@@ -162,7 +162,7 @@ do_action( 'rpress_before_payment_receipt', $payment, $rpress_receipt_args );
                   $addon_price = $cart->get_addon_price( $addon_id, $item, $addon_item_price );
                   if( !empty($v['addon_item_name']) ) { ?>
                     <br/>
-                  <small class="rpress-receipt-addon-item"><?php echo wp_kses_post( $v['addon_item_name'] ); ?> (<?php echo rpress_currency_filter(rpress_format_amount( $addon_price )); ?>)</small>
+                  <small class="rpress-receipt-addon-item"><?php echo wp_kses_post( $v['addon_item_name'] ); ?></small>
                 <?php
                     }
                 }
@@ -177,11 +177,29 @@ do_action( 'rpress_before_payment_receipt', $payment, $rpress_receipt_args );
             </div>
           </td>
 
-          <td class="rp-center"><?php echo wp_kses_post( $item['quantity'] ); ?></td>
+          <td class="rp-center">
+            <?php echo wp_kses_post( $item['quantity'] ); ?><br>
+            <?php foreach( $item['item_number']['options'] as $k => $v ) { 
+                  $addon_id = !empty( $v['addon_id'] ) ? $v['addon_id'] : '';
+                  if ( empty( $addon_id ) ) continue;
+                  $cart = new RPRESS_Cart();
+                  $addon_item_quantity = isset( $v['quantity'] ) ? $v['quantity'] : 0;;
+                  ?>
+                  <?php echo $addon_item_quantity; ?><br>
+            <?php } ?>
+          </td>
           <td class="rp-tb-right">
             <?php if( empty( $item['in_bundle'] ) ) :  ?>
-              <?php echo rpress_currency_filter( rpress_format_amount( $item[ 'item_price' ] ) ); ?>
-            <?php endif; ?>
+              <?php echo rpress_currency_filter( rpress_format_amount( $item[ 'item_price' ] ) ); ?><br>
+              <?php foreach( $item['item_number']['options'] as $k => $v ) { 
+                  $addon_id = !empty( $v['addon_id'] ) ? $v['addon_id'] : '';
+                  if ( empty( $addon_id ) ) continue;
+                  $cart = new RPRESS_Cart();
+                  $addon_item_price = isset( $v['price'] ) ? $v['price'] : 0;
+                  $addon_price = $cart->get_addon_price( $addon_id, $item, $addon_item_price );
+                  ?>
+              <?php echo rpress_currency_filter(rpress_format_amount( $addon_price )); ?><br>
+            <?php }endif; ?>
           </td>
         </tr>
         <?php endif; ?>

@@ -29,7 +29,7 @@ $discounts = 0;
       $item_name = isset( $item['name'] ) ? $item['name'] : '';
       $item_qty = isset( $item['item_number']['quantity'] ) ? $item['item_number']['quantity'] : '';
       $item_id = isset( $item['id'] ) ? $item['id'] : '';
-      $item_price = get_post_meta( $item_id, 'rpress_price', true );
+      $item_price = $item['item_price'] * $item_qty;
 
       $subtotal = $subtotal + $item['subtotal'];
       $taxes = $taxes + $item['tax'];
@@ -49,9 +49,9 @@ $discounts = 0;
               $addon_qty = $addon_item['quantity'];
               $addon_price = rpress_currency_filter( rpress_format_amount( $addon_item['price'] ) );
               ?>
-              <td style="padding: 4px 0; vertical-align: top;"> - </td>
-              <td style="padding: 4px 0 4px 15px; vertical-align: top; font-size: 10pt;"><?php echo $addon_qty; ?> x <?php echo $addon_item_name; ?></td>
-              <td style="padding: 4px 0; text-align: right; font-weight: bold; vertical-align: top;"><?php echo $addon_price; ?></td>
+              <!-- <td style="padding: 4px 0; vertical-align: top;"> - </td> -->
+              <td style="padding: 4px 0; font-size: 10pt;">- <?php echo $addon_qty; ?> x <?php echo $addon_item_name; ?></td>
+              <td style="padding: 4px 0; font-size: 10pt; text-align: right; vertical-align: top;"><?php echo $addon_price; ?></td>
             <?php endif; ?>
           </tr>
         <?php endforeach; ?>

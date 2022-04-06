@@ -116,7 +116,8 @@ if ( is_array( $addons ) && !empty( $addons ) ) :
                 $addon_item_name = $get_addon->name;
                 $addon_slug = $get_addon->slug;
                 $addon_price = rpress_get_addon_data( $addon_item_id, '_price' );
-                $addon_price = ! empty( $addon_price ) ? $addon_price : '0.00';
+             
+                $addon_price = ! empty( $addon_price ) ? $addon_price : '';
 
                 $selected = '';
                 $req_selected = '';
@@ -141,12 +142,11 @@ if ( is_array( $addons ) && !empty( $addons ) ) :
                 }
 
                 if( rpress_has_variable_prices( $post_id ) ) {
-
+                
                   $count = 1;
                   foreach ( rpress_get_variable_prices( $post_id ) as $price) {
-
-                    $addon_price = !empty( $addon_item['prices'] ) && !empty( $addon_item['prices'][$addon_item_id][$price['name']] ) ? $addon_item['prices'][$addon_item_id][$price['name']] : $addon_price;
-
+                    $addon_price = !empty( $addon_item['prices'] ) && !empty( $addon_item['prices'][$addon_item_id][sanitize_key( $price['name'] )] ) ? $addon_item['prices'][$addon_item_id][ sanitize_key( $price['name'] )] : $addon_price;
+                    
                     ?>
 
                     <tr class="rp-child-addon">

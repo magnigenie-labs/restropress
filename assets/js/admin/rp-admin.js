@@ -2926,3 +2926,27 @@ jQuery(function ($) {
     }
   }
 });
+
+jQuery(function($) {
+
+  $( '.restropress-addon-item' ).find( '.rpress-addon-title' ).each(function(){
+    $(this).attr('data-search-term', $(this).text().toLowerCase());
+  });
+
+  $('#rpress-plugin-search').on('keyup', function(){
+
+    var searchTerm = $(this).val().toLowerCase();
+    var DataId = '';
+    var SelectedTermId;
+    
+    $('.restropress-addon-item').hide()
+    $('.rpress-addon-title').each(function(index, elem) {
+      let result =  $(this).text().match(new RegExp(searchTerm,'gi'));
+      if(Array.isArray(result) && result.length >0){
+        let id = $(this).parent().find('.rpress-license-field').attr('data-item-id');
+        $(`input[data-item-id='${id}']`).parent().parent().parent().parent().parent().show()
+      }
+  
+    });
+   });
+});

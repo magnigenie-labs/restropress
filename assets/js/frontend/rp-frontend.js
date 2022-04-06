@@ -34,10 +34,12 @@ function rp_get_storage_data() {
 /* Display Dynamic Addon Price Based on Selected Variation */
 function show_dymanic_pricing(container, ele) {
   var price_key = ele.val();
+  
   if (price_key !== 'undefined') {
-    jQuery('#' + container + ' .rp-addons-data-wrapper .food-item-list')
+
+    jQuery('.rp-addons-data-wrapper .food-item-list')
       .removeClass('active');
-    jQuery('#' + container + ' .rp-addons-data-wrapper .food-item-list.list_' + price_key)
+    jQuery('.rp-addons-data-wrapper .food-item-list.list_' + price_key)
       .addClass('active');
   }
 }
@@ -45,8 +47,8 @@ function show_dymanic_pricing(container, ele) {
 /* Calculate Live Price On Click */
 function update_modal_live_price(fooditem_container) {
 
-  var single_price = parseFloat(jQuery('#rpressModal .cart-item-price')
-    .attr('data-price'));
+  var single_price = parseFloat(jQuery('#rpressModal .cart-item-price').attr('data-price'));
+  
   var quantity = parseInt(jQuery('input[name=quantity]')
     .val());
 
@@ -56,6 +58,7 @@ function update_modal_live_price(fooditem_container) {
 
       var element = jQuery(this)
         .find('input');
+
 
       if (element.is(':checked')) {
 
@@ -67,6 +70,7 @@ function update_modal_live_price(fooditem_container) {
         var price = attrs_arr[2];
 
         single_price = parseFloat(price);
+        
       }
     });
 
@@ -83,6 +87,7 @@ function update_modal_live_price(fooditem_container) {
         var attrs_arr = attrs.split('|');
         var price = attrs_arr[2];
 
+        
         if (price != '') {
           single_price = parseFloat(single_price) + parseFloat(price);
         }
@@ -1726,3 +1731,11 @@ const createObserver = () => {
 if (performance.navigation.type == 2) {
   location.reload(true);
 }
+
+//Add new class for grid view design
+jQuery(document).ready(function($) {
+
+  if( $('.restro-vgrid').length >1 ) {
+      $('.rpress_fooditems_list').addClass("rp-grid-view");
+    }
+});

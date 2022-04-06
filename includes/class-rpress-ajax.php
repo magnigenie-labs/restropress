@@ -853,7 +853,8 @@ class RP_AJAX {
         $amount    = rpress_format_discount_rate( rpress_get_discount_type( $discount->ID ), rpress_get_discount_amount( $discount->ID ) );
         $discounts = rpress_set_cart_discount( $discount_code );
         $total     = rpress_get_cart_total( $discounts );
-        $discount_value = rpress_get_discount_value( $discount_code );
+        //$discount_value = rpress_get_discount_value( $discount_code );
+        $discount_value = rpress_currency_filter( rpress_format_amount( RPRESS()->cart->get_discounted_amount() ) );
 
         $return = array(
           'msg'         => 'valid',

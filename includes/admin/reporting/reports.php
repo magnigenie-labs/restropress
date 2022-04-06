@@ -422,19 +422,19 @@ function rpress_reports_tab_export() {
 					</div><!-- .postbox -->
 
 					<div class="postbox rpress-export-payment-history">
-						<h3><span><?php esc_html_e('Export Payment History','restropress' ); ?></span></h3>
+						<h3><span><?php esc_html_e('Export Order History','restropress' ); ?></span></h3>
 						<div class="inside">
-							<p><?php esc_html_e( 'Download a CSV of all payments recorded.', 'restropress' ); ?></p>
+							<p><?php esc_html_e( 'Download a CSV of all orders recorded.', 'restropress' ); ?></p>
 
 							<form id="rpress-export-payments" class="rpress-export-form rpress-import-export-form" method="post">
 								<?php echo RPRESS()->html->date_field( array( 'id' => 'rpress-payment-export-start', 'name' => 'start', 'placeholder' => __( 'Choose start date', 'restropress' ) )); ?>
 								<?php echo RPRESS()->html->date_field( array( 'id' => 'rpress-payment-export-end','name' => 'end', 'placeholder' => __( 'Choose end date', 'restropress' ) )); ?>
-								<select name="status">
-									<option value="any"><?php esc_html_e( 'All Statuses', 'restropress' ); ?></option>
+								<select name="order_status">
+									<option value=""><?php esc_html_e( 'All Statuses', 'restropress' ); ?></option>
 									<?php
-									$statuses = rpress_get_payment_statuses();
+									$statuses = rpress_get_order_statuses();
 									foreach( $statuses as $status => $label ) {
-										echo '<option value="' . esc_attr( $status ). '">' . esc_html( $label ). '</option>';
+										echo '<option value ="' . esc_attr( $status ). '">' . esc_html( $label ). '</option>';
 									}
 									?>
 								</select>
@@ -474,20 +474,6 @@ function rpress_reports_tab_export() {
 						</div><!-- .inside -->
 					</div><!-- .postbox -->
 
-					<div class="postbox rpress-export-fooditem-history">
-						<h3><span><?php esc_html_e('Export Order History in CSV','restropress' ); ?></span></h3>
-						<div class="inside">
-							<p><?php esc_html_e( 'Download a CSV of Food Item Orders. To download a CSV for all Food Items, leave "Choose a Food Item" as it is.', 'restropress' ); ?></p>
-							<form id="rpress-export-file-fooditems" class="rpress-export-form rpress-import-export-form" method="post">
-								<?php echo RPRESS()->html->product_dropdown( array( 'name' => 'fooditem_id', 'id' => 'rpress_file_fooditem_export_fooditem', 'chosen' => true ) ); ?>
-								<?php echo RPRESS()->html->date_field( array( 'id' => 'rpress-file-fooditem-export-start', 'name' => 'start', 'placeholder' => __( 'Choose start date', 'restropress' ) )); ?>
-								<?php echo RPRESS()->html->date_field( array( 'id' => 'rpress-file-fooditem-export-end', 'name' => 'end', 'placeholder' => __( 'Choose end date', 'restropress' ) )); ?>
-								<?php wp_nonce_field( 'rpress_ajax_export', 'rpress_ajax_export' ); ?>
-								<input type="hidden" name="rpress-export-class" value="RPRESS_Batch_File_Orders_Export"/>
-								<input type="submit" value="<?php esc_html_e( 'Generate CSV', 'restropress' ); ?>" class="button-secondary"/>
-							</form>
-						</div><!-- .inside -->
-					</div><!-- .postbox -->
 
 					<div class="postbox rpress-export-payment-history">
 						<h3><span><?php esc_html_e('Export Sales', 'restropress' ); ?></span></h3>
@@ -516,6 +502,7 @@ function rpress_reports_tab_export() {
 		</div><!-- .metabox-holder -->
 	</div><!-- #rpress-dashboard-widgets-wrap -->
 	<?php
+
 }
 add_action( 'rpress_reports_tab_export', 'rpress_reports_tab_export' );
 

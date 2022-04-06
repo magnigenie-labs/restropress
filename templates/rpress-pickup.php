@@ -14,6 +14,7 @@
       $store_time_format  = rpress_get_option( 'store_time_format' );
       $time_format        = ! empty( $store_time_format ) && $store_time_format == '24hrs' ? 'H:i' : 'h:ia';
       $time_format        = apply_filters( 'rpress_store_time_format', $time_format, $store_time_format );
+      $selected_time = isset($_COOKIE['service_time']) ? $_COOKIE['service_time'] : '';
       ?>
 
       <div class="pickup-time-text">
@@ -21,12 +22,12 @@
       </div>
 
       <select class="rpress-pickup rpress-allowed-pickup-hrs rpress-hrs rp-form-control" id="rpress-pickup-hours" name="rpress_allowed_hours">
-        <?php if( is_array( $store_timings ) ) :
-          foreach( $store_timings as $key => $time ) :
-            $loop_time = date( $time_format, $time ); ?>
-            <option value='<?php echo esc_attr( $loop_time ); ?>'><?php echo apply_filters( 'rpress_store_pickup_timings_format', $loop_time, $store_timings, $time_format, $key ); ?></option>
-          <?php endforeach; ?>
-        <?php endif; ?>
+       <?php if( is_array( $store_timings ) ) :
+         foreach( $store_timings as $key => $time ) :
+           $loop_time = date( $time_format, $time ); ?>
+           <option value='<?php echo esc_attr( $loop_time );?>'<?php selected( $selected_time,$loop_time, true ); ?>><?php echo apply_filters( 'rpress_store_pickup_timings_format', $loop_time, $store_timings, $time_format, $key ); ?></option>
+         <?php endforeach; ?>
+       <?php endif; ?>
     	</select>
     <?php endif; ?>
 

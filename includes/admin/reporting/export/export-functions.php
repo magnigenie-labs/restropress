@@ -26,12 +26,12 @@ function rpress_do_ajax_export() {
 
 	require_once RP_PLUGIN_DIR . 'includes/admin/reporting/export/class-batch-export.php';
 
-	parse_str( sanitize_text_field( $_POST['form'] ), $form );
+	parse_str( $_POST['form'], $form );
 
-	$form = (array) $form;
+	$_REQUEST = $form = (array) $form;
 
 
-	if( ! wp_verify_nonce( sanitize_text_field( $form['rpress_ajax_export'] ), 'rpress_ajax_export' ) ) {
+	if( ! wp_verify_nonce( $_REQUEST['rpress_ajax_export'], 'rpress_ajax_export' ) ) {
 		die( '-2' );
 	}
 
@@ -40,7 +40,7 @@ function rpress_do_ajax_export() {
 	$step     = absint( $_POST['step'] );
 	$class    = sanitize_text_field( $form['rpress-export-class'] );
 	$export   = new $class( $step );
-
+	
 	if( ! $export->can_export() ) {
 		die( '-1' );
 	}
@@ -49,8 +49,8 @@ function rpress_do_ajax_export() {
 		echo json_encode( array( 'error' => true, 'message' => __( 'Export location or file not writable', 'restropress' ) ) ); exit;
 	}
 
-	$export->set_properties( rpress_sanitize_array( $_POST ) );
-
+	$export->set_properties( $_REQUEST );
+	
 	// Added in 2.5 to allow a bulk processor to pre-fetch some data to speed up the remaining steps and cache data
 	$export->pre_fetch();
 

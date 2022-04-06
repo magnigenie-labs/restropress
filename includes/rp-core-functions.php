@@ -127,7 +127,8 @@ function save_addon_category_custom_fields( $term_id ) {
 
     if( !empty( $_POST['addon_meta']['type'] ) )
       update_term_meta( $term_id, '_type', sanitize_text_field( $_POST['addon_meta']['type'] ) );
-    
+  
+
     if( !empty( $_POST['addon_meta']['price'] ) )
       update_term_meta( $term_id, '_price', sanitize_text_field( $_POST['addon_meta']['price'] ) );
   }
@@ -658,6 +659,10 @@ function rpress_pre_validate_order(){
   $service_type   = !empty( $_COOKIE['service_type'] ) ? sanitize_text_field( $_COOKIE['service_type'] )  : '';
   $service_time   = !empty( $_COOKIE['service_time'] ) ? sanitize_text_field( $_COOKIE['service_time'] ) : '';
   $service_date   = !empty( $_COOKIE['service_date'] ) ? sanitize_text_field( $_COOKIE['service_date'] ) : current_time( 'Y-m-d' );
+  $custom_service_time   = !empty( $_COOKIE['custom_time_output'] ) ? sanitize_text_field( $_COOKIE['custom_time_output'] ) : null;
+  if ( !is_null($custom_service_time) && isset( $custom_service_time) ) {
+    $service_time = $custom_service_time;
+  }
   $prep_time      = rpress_get_option( 'prep_time', 0 );
   $prep_time      = $prep_time * 60;
   $current_time   = current_time( 'timestamp' );
@@ -667,7 +672,7 @@ function rpress_pre_validate_order(){
   }
 
   $service_time = strtotime( $service_date . ' ' . $service_time );
-
+  
   // Check minimum order
   $enable_minimum_order = rpress_get_option( 'allow_minimum_order' );
   $minimum_order_price_delivery = rpress_get_option('minimum_order_price');
@@ -686,6 +691,8 @@ function rpress_pre_validate_order(){
     $minimum_price_error_pickup = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error_pickup);
     $response = array( 'status' => 'error', 'minimum_price' => $minimum_order_price_pickup, 'error_msg' =>  $minimum_price_error_pickup  );
   } else if( $current_time > $service_time && !empty( sanitize_text_field( $_COOKIE['service_time'] ) ) ){
+    
+
     $time_error = __( 'Please select a different time slot.', 'restropress' );
     $response = array(
       'status' => 'error',
@@ -1065,6 +1072,16 @@ function rpress_get_currencies() {
 function rpress_get_currency() {
   $currency = rpress_get_option( 'currency', 'USD' );
   return apply_filters( 'rpress_currency', $currency );
+}
+
+function rpress_get_success_page(){
+  global $post;
+  $page_slug = $post->post_name;
+  if ( $page_slug == 'order-confirmation' ){
+    return true;
+  }else{
+    return false;
+  }
 }
 
 /**
@@ -1948,3 +1965,4 @@ function rp_get_order_count( $status = 'pending' ) {
 
   return apply_filters( 'rpress_order_count', $order_count, $status );
 }
+

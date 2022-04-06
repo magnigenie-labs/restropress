@@ -837,8 +837,8 @@ function rpress_get_cart_discounts_html( $discounts = false ) {
 		$discount_id = rpress_get_discount_id_by_code( $discount );
 		$rate        = rpress_format_discount_rate( rpress_get_discount_type( $discount_id ), rpress_get_discount_amount( $discount_id ) );
 
-		$discount_value = rpress_get_discount_value( $discount );
-
+		//$discount_value = rpress_get_discount_value( $discount );
+		$discount_value = rpress_currency_filter( rpress_format_amount( RPRESS()->cart->get_discounted_amount() ) );
 		$remove_url  = add_query_arg(
 			array(
 				'rpress_action'    => 'remove_cart_discount',

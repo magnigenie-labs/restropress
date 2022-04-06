@@ -651,25 +651,32 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
 									$addon_item_id = $get_addon->term_id;
 									$addon_item_name = $get_addon->name;
 									$addon_slug = $get_addon->slug;
+
+
+
 									$addon_raw_price = rpress_get_addon_data( $addon_item_id, '_price' );
 									$addon_price = !empty( $addon_raw_price ) ? rpress_currency_filter( rpress_format_amount( $addon_raw_price )) : '';
 									$selected_addon_items = isset( $cart_item['addon_items'] ) ? $cart_item['addon_items'] : array();
 									if ( !empty( $selected_addon_items ) ) {
 										foreach( $selected_addon_items as $selected_addon_item ) {
 											$selected_addon_id = !empty( $selected_addon_item['addon_id'] ) ? $selected_addon_item['addon_id'] : '';
+											$item_addon_quantity = !empty( $selected_addon_item['quantity'] ) ? $selected_addon_item['quantity'] : 0;
 											if ( $selected_addon_id == $addon_item_id ) { ?>
 												<option selected data-price="<?php echo esc_attr( $addon_price ); ?>" data-id="<?php echo esc_attr( $addon_item_id ); ?>" value="<?php echo esc_attr( $addon_item_name ) . '|' . esc_attr( $addon_item_id ) . '|' . esc_attr( $addon_raw_price ) .'|'. '1' ; ?>">
 													<?php
-														echo esc_html( $addon_item_name );
-														if( !empty( $addon_price ) ) echo ' (' . rpress_sanitize_amount( $addon_price ) . ') ';
+														if( !empty( $item_addon_quantity ) ) ?>
+															<small><?php echo esc_html( $item_addon_quantity )." x ";?></small><?php
+															echo esc_html( $addon_item_name );
+														if( !empty( $addon_price ) ) echo ' (' . rpress_sanitize_amount( $addon_price ) . ')';
 													?>
-												</option> <?php
+												</option>	<?php
 											}
 										}
 									} ?>
 
-                                    <option data-price="<?php echo esc_attr( $addon_price ); ?>" data-id="<?php echo esc_attr( $addon_item_id ); ?>" value="<?php echo esc_attr( $addon_item_name ) . '|' . esc_attr( $addon_item_id ). '|' . esc_attr( $addon_raw_price ) .'|'. '1' ; ?>">
-                                        <?php echo esc_html( $addon_item_name ) . ' (' . rpress_sanitize_amount( $addon_price ) . ') '; ?>
+                                    <option data-price="<?php echo esc_attr( $addon_price ); ?>" data-id="<?php echo esc_attr( $addon_item_id ); ?>" value="<?php echo esc_attr( $addon_item_name ) . '|' . esc_attr( $addon_item_id ). '|' . esc_attr( $addon_raw_price ) .'|'. esc_attr( $addon_item_quantity ) ; ?>">
+                                        <?php if( !empty( $addon_item_quantity ) ) echo $addon_item_quantity. " x "; ?>
+										<?php echo esc_html( $addon_item_name ); if( !empty( $addon_price ) ) echo ' (' . rpress_sanitize_amount( $addon_price ) . ')';?>
                                     </option>
                                 <?php endforeach;
                             endif;

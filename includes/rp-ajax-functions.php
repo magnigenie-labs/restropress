@@ -138,12 +138,14 @@ function rpress_get_ajax_url() {
  * @since 1.0
  * @return void
  */
-function get_fooditem_lists( $fooditem_id, $cart_key = '' ) {
+function get_fooditem_lists( $fooditem_id, $cart_key = '') {
 
   $addons = get_post_meta( $fooditem_id, '_addon_items', true );
   $chosen_addons = array();
   $price_id = 0;
   $addon_ids = $child_ids = array();
+  
+  
 
   if( $addons ) {
     foreach ($addons as $addon ) {
@@ -155,11 +157,6 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '' ) {
       }
     }
   }
-
-  // if( $cart_key !== '' ) {         // Showed Ajax Error as per Nirmal
-  // if( !empty( $cart_key ) ) {      // Did work but had issue somewhere else
-  // if( !is_null( $cart_key ) ) {    // Did work but had issue somewhere else
-  // if( is_int( $cart_key ) ) {      // Did work but had issue somewhere else
 
   if( $cart_key !== '' ) {
 
@@ -179,6 +176,8 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '' ) {
   if ( ! empty( $fooditem_id ) && rpress_has_variable_prices( $fooditem_id ) ) {
 
     $prices = rpress_get_variable_prices( $fooditem_id );
+
+
 
     if ( is_array( $prices ) && !empty( $prices ) ) {
 
@@ -221,6 +220,7 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '' ) {
         $addon_items = get_term_by( 'id', $parent, 'addon_category' );
         $addon_name = $addon_items->name;
         $addon_slug = $addon_items->slug;
+        $addon_id = $addon_items->term_id;
 
         $is_required = isset( $addons[$parent]['is_required'] ) ? $addons[$parent]['is_required'] : 'no';
         $max_addons = isset( $addons[$parent]['max_addons'] ) ? $addons[$parent]['max_addons'] : 0;
@@ -271,43 +271,54 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '' ) {
               $addon_type       = rpress_get_addon_data( $parent, '_type' );
               $use_addon_like   = $addon_type == 'single' ? 'radio' : 'checkbox';
               $child_addon_type_name = ( $use_addon_like == 'radio' ) ? $addon_name : $child_addon_name;
-              
+              $child_addon_quantity = $_GET['addon_quantity_final'];
+
+
               if ( is_array( $chosen_addons ) ) :
                 if ( is_array( $prices ) && !empty( $prices ) ) :
+
                   foreach( $prices as $p_id => $price ) :
-                    $get_addon_price  = rpress_dynamic_addon_price( $fooditem_id, $child_data->term_id, $child_data->parent, $p_id ); ?>
+
+                    $get_addon_price  = rpress_dynamic_addon_price( $fooditem_id, $child_data->term_id, $child_data->parent, $p_id );
+                    
+                    ?>
 
                     <div class="food-item-list list_<?php echo esc_attr( $p_id ); ?> <?php if( $p_id == $price_id ) { echo 'active'; } ?> <?php echo esc_attr( $item_classes ); ?>">
                       <label for="<?php echo esc_attr( $child_addon_slug ); ?>_<?php echo esc_attr( $p_id ); ?>" class="<?php echo esc_attr( $use_addon_like ); ?>-container">
                         <?php $is_selected = in_array( $child_addon_id, $chosen_addons ) ?  'checked' : ''; ?>
-                        <input data-type="<?php echo esc_attr( $use_addon_like );?>" type="<?php echo esc_attr( $use_addon_like ); ?>" name="<?php echo esc_attr( $child_addon_type_name ); ?>" id="<?php echo esc_attr( $child_addon_slug ); ?>_<?php echo esc_attr( $p_id ); ?>" value="<?php echo esc_attr( $child_addon . '|1|' . $get_addon_price . '|' . $use_addon_like ); ?>" <?php echo esc_attr( $is_selected ); ?> >
+                        <input data-type="<?php echo esc_attr( $use_addon_like );?>" type="<?php echo esc_attr( $use_addon_like ); ?>" name="<?php echo esc_attr( $child_addon_slug ); ?>" id="<?php echo esc_attr( $child_addon_slug ); ?>_<?php echo esc_attr( $p_id ); ?>" value="<?php echo esc_attr( $child_addon . '|1|' . $get_addon_price . '|' . $use_addon_like ); ?>" <?php echo esc_attr( $is_selected ); ?> >
                         <span><?php echo esc_attr( $child_addon_name ); ?></span>
                         <span class="control__indicator"></span>
                       </label>
 
                       <?php if( $get_addon_price > 0 ) : ?>
-                      <span class="cat_price">&nbsp;+&nbsp;<?php echo rpress_currency_filter( rpress_format_amount( $get_addon_price ) ); ?></span> <?php
+                      <span class="cat_price total-addon-price">&nbsp;+&nbsp;<?php echo rpress_currency_filter( rpress_format_amount( $get_addon_price ) ); ?></span> <?php
 
                       endif; ?>
+                    <span class="cat_price"><?php apply_filters( 'rp_food_addon_column_extra_html',$child_addon_id, $get_addon_price, $addon_id ,$child_addon_slug ); ?></span>
+
                     </div> <?php
                   endforeach;
 
                 else:
 
-                  $get_addon_price  = rpress_dynamic_addon_price( $fooditem_id, $child_data->term_id, $child_data->parent ); ?>
+                  $get_addon_price  = rpress_dynamic_addon_price( $fooditem_id, $child_data->term_id, $child_data->parent );
 
+                  ?>
                   <div class="food-item-list active <?php echo esc_attr( $item_classes ); ?>">
                     <label for="<?php echo esc_attr( $child_addon_slug ); ?>" class="<?php echo esc_attr( $use_addon_like ); ?>-container">
                       <?php $is_selected = in_array( $child_addon_id, $chosen_addons ) ?  'checked' : ''; ?>
-                      <input data-type="<?php echo esc_attr( $use_addon_like );?>" type="<?php echo esc_attr( $use_addon_like ); ?>" name="<?php echo esc_attr( $child_addon_type_name ); ?>" id="<?php echo esc_attr( $child_addon_slug ); ?>" value="<?php echo esc_attr( $child_addon . '|1|' . $get_addon_price . '|' . $use_addon_like ); ?>" <?php echo esc_attr( $is_selected ); ?> >
+                      <input data-type="<?php echo esc_attr( $use_addon_like );?>" type="<?php echo esc_attr( $use_addon_like ); ?>" name="<?php echo esc_attr( $child_addon_slug ); ?>" id="<?php echo esc_attr( $child_addon_slug ); ?>" value="<?php echo esc_attr( $child_addon . '|1|' . $get_addon_price . '|' . $use_addon_like ); ?>" <?php echo esc_attr( $is_selected ); ?> >
                       <span><?php echo esc_attr( $child_addon_name ); ?></span>
                       <span class="control__indicator"></span>
                     </label>
-
+                    
                     <?php if( $get_addon_price > 0 ) : ?>
-                    <span class="cat_price">&nbsp;+&nbsp;<?php echo rpress_currency_filter( rpress_format_amount( $get_addon_price ) ); ?></span> <?php
-                    endif; ?>
-
+                    <span class="cat_price total-addon-price">&nbsp;+&nbsp;<?php echo rpress_currency_filter( rpress_format_amount( $get_addon_price ) ); ?></span> 
+                    <span class="cat_price"><?php apply_filters( 'rp_food_addon_column_extra_html',$child_addon_id, $get_addon_price, $addon_id ,$child_addon_slug ); ?></span>
+                    <?php endif; ?>
+                    
+                     
                   </div> <?php
                 endif;
               endif;

@@ -32,8 +32,8 @@ function rpress_get_payment( $payment_or_txn_id = null, $by_txn = false ) {
 		}
 
 		$query      = $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_rpress_payment_transaction_id' AND meta_value = '%s'", $payment_or_txn_id );
-		$payment_id = $wpdb->get_var( $query );
 
+		$payment_id = $wpdb->get_var( $query );
 		if ( empty( $payment_id ) ) {
 			return false;
 		}
@@ -493,7 +493,8 @@ function rpress_count_payments( $args = array() ) {
 		'start-date' => null,
 		'end-date'   => null,
 		'fooditem'   => null,
-		'gateway'    => null
+		'gateway'    => null,
+	'service-type'   =>null
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -604,6 +605,16 @@ function rpress_count_payments( $args = array() ) {
 		);
 
 	}
+	// Limit payments count by gateway
+	if ( ! empty( $args['service-type'] ) ) {
+		$join .= "LEFT JOIN $wpdb->postmeta g ON (p.ID = g.post_id)";
+		$where .= $wpdb->prepare( "
+			AND g.meta_key = '_rpress_delivery_type'
+			AND g.meta_value = %s",
+			$args['service-type']
+		);
+
+	}
 
 	// Limit payments count by date
 	if ( ! empty( $args['start-date'] ) && false !== strpos( $args['start-date'], '/' ) ) {
@@ -664,6 +675,7 @@ function rpress_count_payments( $args = array() ) {
 
 	$count = $wpdb->get_results( $query, ARRAY_A );
 
+
 	$stats    = array();
 	$statuses = get_post_stati();
 	if( isset( $statuses['private'] ) && empty( $args['s'] ) ) {
@@ -685,7 +697,6 @@ function rpress_count_payments( $args = array() ) {
 
 	$stats = (object) $stats;
 	wp_cache_set( $cache_key, $stats, 'counts' );
-
 	return $stats;
 }
 
@@ -785,6 +796,7 @@ function rpress_get_payment_statuses() {
 		'failed' 		=> __( 'Failed', 'restropress' ),
     	'processing'	=> __( 'Processing', 'restropress' ),
 	);
+
 	return apply_filters( 'rpress_payment_statuses', $payment_statuses );
 }
 
@@ -1865,7 +1877,7 @@ function rpress_get_discount_price_by_payment_id( $payment_id = 0 ) {
     $cart_contents  = rpress_get_payment_meta_cart_details( $payment_id, true );
     $user_info  	= rpress_get_payment_meta_user_info( $payment_id, true );
 
-    $discount_code = $user_info['discount'];
+    $discount_code = isset( $user_info['discount'] ) ? $user_info['discount'] : '';
     $discount = 0;
 
     $discount_data  = rpress_get_discount_by_code( $discount_code );

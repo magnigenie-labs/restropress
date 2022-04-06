@@ -439,6 +439,34 @@ function rpress_get_registered_settings() {
 					),
 				),
 
+                //Accounting setting here
+				'accounting'     => array(
+					'enable_skus' => array(
+						'id'   => 'enable_skus',
+						'name' => __( 'Enable SKU Entry', 'restropress' ),
+						'desc' => __( 'Check this box to allow entry of product SKUs. SKUs will be shown on purchase receipt and exported purchase histories.', 'restropress' ),
+						'type' => 'checkbox',
+					),
+					'enable_sequential' => array(
+						'id'   => 'enable_sequential',
+						'name' => __( 'Sequential Order Numbers', 'restropress' ),
+						'desc' => __( 'Check this box to enable sequential order numbers.', 'restropress' ),
+						'type' => 'checkbox',
+					),
+					'sequential_prefix' => array(
+						'id'   => 'sequential_prefix',
+						'name' => __( 'Sequential Number Prefix', 'restropress' ),
+						'desc' => __( 'A prefix to prepend to all sequential order numbers.', 'restropress' ),
+						'type' => 'text',
+					),
+					'sequential_postfix' => array(
+						'id'   => 'sequential_postfix',
+						'name' => __( 'Sequential Number Postfix', 'restropress' ),
+						'desc' => __( 'A postfix to append to all sequential order numbers.', 'restropress' ),
+						'type' => 'text',
+					),
+				),
+
 				//Order Notification Settings Here
 				'order_notification' => array(
 					'enable_order_notification' => array(
@@ -775,6 +803,22 @@ function rpress_get_registered_settings() {
 						'desc'          => __( 'Enable showing the items tags in menu page.', 'restropress' ),
 						'type'          => 'checkbox',
 					),
+					'disable_category_menu' => array(
+						'id'            => 'disable_category_menu',
+						'name'          => __( 'Disable Category Menu', 'restropress' ),
+						'desc'          => __( 'Disable Category Menu In Food Item Page', 'restropress' ),
+						'type'          => 'checkbox',
+					),
+					'option_view_food_items' => array(
+						'id'            => 'option_view_food_items',
+						'type'          => 'radio',
+						'desc'          => __( 'For Use This List View And Grid View Option First Check Disable Category Menu Option', 'restropress' ),
+						'options' 		=> array(
+							'list_view'  => __( 'List View', 'restropress' ),
+							'grid_view'  => __( 'Grid View', 'restropress' ),
+						),
+						'std' => 'list_view',
+					),
 					'button_header' => array(
 						'id'   => 'button_header',
 						'name' => '<strong>' . __( 'Buttons', 'restropress' ) . '</strong>',
@@ -1109,6 +1153,25 @@ function rpress_get_registered_settings_types( $filtered_tab = false, $filtered_
 }
 
 /**
+ * Misc Accounting Settings Sanitization
+ *
+ * @since 1.0.0
+ * @param array $input The value inputted in the field
+ * @return array $input Sanitized value
+ */
+function rpress_settings_sanitize_misc_accounting( $input ) {
+	if( ! current_user_can( 'manage_shop_settings' ) ) {
+		return $input;
+	}
+	if( ! empty( $input['enable_sequential'] ) && ! rpress_get_option( 'enable_sequential' ) ) {
+		// Shows an admin notice about upgrading previous order numbers
+		update_option( 'rpress_upgrade_sequential', time() );
+	}
+	return $input;
+}
+add_filter( 'rpress_settings_gateways-accounting_sanitize', 'rpress_settings_sanitize_misc_accounting' );
+
+/**
  * Taxes Settings Sanitization
  *
  * Adds a settings error (for the updated message)
@@ -1319,6 +1382,7 @@ function rpress_get_registered_settings_sections() {
 		'general'    => apply_filters( 'rpress_settings_sections_general', array(
 			'main'               => __( 'General', 'restropress' ),
 			'currency'           => __( 'Currency', 'restropress' ),
+			'accounting'           => __( 'Accounting', 'restropress' ),
 			'order_notification'   => __( 'Order Notification', 'restropress' ),
 			'service_options'   => __( 'Service Options', 'restropress' ),
 			'checkout_options'   => __( 'Checkout Options', 'restropress' ),

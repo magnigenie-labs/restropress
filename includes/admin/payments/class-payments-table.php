@@ -80,6 +80,30 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 * @var int
 	 * @since  1.0.0
 	 */
+	public $delivery_count;
+
+	/**
+	 * Total number of  deliver
+	 *
+	 * @var int
+	 * @since  1.0.0
+	 */
+	public $pickup_count;
+
+	/**
+	 * Total number of  pickup
+	 *
+	 * @var int
+	 * @since  1.0.0
+	 */
+	public $dinein_count;
+
+	/**
+	 * Total number of  dinein
+	 *
+	 * @var int
+	 * @since  1.0.0
+	 */
 	public $out_for_deliver_count;
 
 	/**
@@ -144,17 +168,36 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		$status     = isset( $_GET['status'] )      ? sanitize_text_field( $_GET['status'] ): '';
 
 		$all_gateways     = rpress_get_payment_gateways();
+
 		$gateways         = array();
+		
 		$selected_gateway = isset( $_GET['gateway'] ) ? sanitize_text_field( $_GET['gateway'] ) : 'all';
+
 
 		if ( ! empty( $all_gateways ) ) {
 			$gateways['all'] = __( 'All Gateways', 'restropress' );
 
 			foreach( $all_gateways as $slug => $admin_label ) {
 				$gateways[ $slug ] = $admin_label['admin_label'];
+				
 			}
 		}
 
+		$all_order_statuses = rpress_get_order_statuses();
+
+		$order_statuses   = array();
+		
+		$selected_orders = isset( $_GET['order_status'] ) ? sanitize_text_field( $_GET['order_status'] ) : 'all';
+
+		if ( ! empty( $all_order_statuses ) ) {
+			$order_statuses['all'] = __( 'Order Status', 'restropress' );
+
+			foreach( $all_order_statuses as $slug => $admin_label ) {
+				$order_statuses[ $slug ] = $admin_label;
+			}
+		}
+
+		
 		/**
 		 * Allow gateways that aren't registered the standard way to be displayed in the dropdown.
 		 *
@@ -187,6 +230,20 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 				}
 				?>
 			</span>
+			<span id="rpress-order-status-filter">
+			<?php
+			if ( ! empty( $order_statuses ) ) {
+				echo RPRESS()->html->select( array(
+					'options'          => $order_statuses,
+					'name'             => 'order_status',
+					'id'               => 'order_status',
+					'selected'         => $selected_orders,
+					'show_option_all'  => false,
+					'show_option_none' => false
+				) );
+			}
+			?>
+			</span>
 			<span>/</span>
 			<span>
 				<label for="service-date-filter"><?php esc_html_e( 'Service Date:', 'restropress' ); ?></label>
@@ -199,7 +256,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			<?php if( ! empty( $status ) ) : ?>
 				<input type="hidden" name="status" value="<?php echo esc_attr( $status ); ?>"/>
 			<?php endif; ?>
-			<?php if( ! empty( $service_date ) || ! empty( $start_date ) || ! empty( $end_date ) || 'all' !== $selected_gateway ) : ?>
+			<?php if( ! empty( $service_date ) || ! empty( $start_date ) || ! empty( $end_date ) || 'all' !== $selected_gateway || 'all' !== $selected_orders ) : ?>
 				<a href="<?php echo admin_url( 'admin.php?page=rpress-payment-history' ); ?>" class="button-secondary"><?php esc_html_e( 'Clear Filter', 'restropress' ); ?></a>
 			<?php endif; ?>
 			<?php do_action( 'rpress_payment_advanced_filters_row' ); ?>
@@ -246,22 +303,57 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 * @return array $views All the views available
 	 */
 	public function get_views() {
-
+		global $rpress_options;
 		$current          = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ): '';
+		$get_services   = isset( $_GET['service-type'] ) ? sanitize_text_field( $_GET['service-type'] ): '';
+		 $service_options  = !empty( rpress_get_option( 'enable_service' ) ) ? rpress_get_option( 'enable_service' ) : 'delivery_and_pickup';
+
 		$total_count      = '&nbsp;<span class="count">(' . $this->total_count    . ')</span>';
 		$completed_count   = '&nbsp;<span class="count">(' . $this->completed_count . ')</span>';
 		$pending_count    = '&nbsp;<span class="count">(' . $this->pending_count  . ')</span>';
 		$paid_count = '&nbsp;<span class="count">(' . $this->paid_count  . ')</span>';
+		$delivery_count =  '&nbsp;<span class="count">(' . $this->delivery_count  . ')</span>';
+		$pickup_count =  '&nbsp;<span class="count">(' . $this->pickup_count  . ')</span>';
+		$dinein_count = '&nbsp;<span class="count">(' . $this->dinein_count  . ')</span>';
 		$out_for_deliver_count = '&nbsp;<span class="count">(' . $this->out_for_deliver_count . ')</span>';
+
 		$views = array(
-			'all'        => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( array( 'status', 'paged' ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All','restropress' ) . $total_count ),
+			'all'        => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( array( 'status', 'paged','service-type' ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All','restropress' ) . $total_count ),
 			'pending'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'pending', 'paged' => FALSE ) ), $current === 'pending' ? ' class="current"' : '', __('Pending','restropress' ) . $pending_count ),
 			'paid' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'paid' ? ' class="current"' : '', __('Paid','restropress' ) . $paid_count ),
-			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Processing','restropress' ) . $out_for_deliver_count)
+			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Processing','restropress' ) . $out_for_deliver_count),
+		
 		);
+			$dinein_views = array();
+		if( is_plugin_active('restropress-dinein/restropress-dinein.php')) {
+  				$dinein_views = array(
+  					'dinein' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'dinein', 'paged' => FALSE ) ), $get_services === 'dinein' ? ' class="current"' : '', __('Dinein','restropress' ) . $dinein_count ),
+  				);
+  		}
+  		
+		if( $service_options === 'delivery_and_pickup' ) {
+			
+		$args =  array(
+					'delivery' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'delivery', 'paged' => FALSE ) ), $get_services === 'delivery' ? ' class="current"' : '', __('Delivery','restropress' ) . $delivery_count ),
+					'pickup' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'pickup', 'paged' => FALSE ) ), $get_services === 'pickup' ? ' class="current"' : '', __('Pickup','restropress' ) . $pickup_count ),
+			);
+		}
+  		elseif ( $service_options === 'delivery' ) {
 
-		return apply_filters( 'rpress_payments_table_views', $views );
-	}
+  			$args =  array(
+  						'delivery' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'delivery', 'paged' => FALSE ) ), $get_services === 'delivery' ? ' class="current"' : '', __('Delivery','restropress' ) . $delivery_count ),
+  			);
+  		}
+  		elseif ($service_options === 'pickup') {
+  			$args =  array(
+  						'pickup' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'pickup', 'paged' => FALSE ) ), $get_services === 'pickup' ? ' class="current"' : '', __('Pickup','restropress' ) . $pickup_count ),
+  			);
+  		}
+  		
+  		return apply_filters( 'rpress_payments_table_views', array_merge( $views,$args,$dinein_views ) );
+  	}
+  
+  	
 
 	/**
 	 * Retrieve the table columns
@@ -446,11 +538,20 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	    $customer_name = ( !empty( $payment_meta['user_info'] ) && is_array( $payment_meta['user_info'] ) ) ? $payment_meta['user_info']['first_name'] . ' ' . $payment_meta['user_info']['last_name'] : $cust_name;
 
 	    $service_type = rpress_get_service_type( $payment->ID );
+	    $rpress_number = get_post_meta( $payment->ID, '_rpress_payment_number' , true );
+	    if(  rpress_get_option( 'enable_sequential' )){
+	    	$alter_id = ($rpress_number) ? $rpress_number :  $payment->ID ;
+	    	$order_preview = '<a href="#" class="order-preview" data-order-id="' . absint( $payment->ID ) . '" title="' . esc_attr( __( 'Preview', 'restropress' ) ) . '"><span>' . esc_html( __( 'Preview', 'restropress' ) ) . '</span></a>
+	      <a class="" href="' . add_query_arg( 'id', $payment->ID, admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ) . '">#' . $alter_id . ' ' . $customer_name . '</a><span class="rp-service-type badge-' . $service_type . ' ">' . rpress_service_label( $service_type ) . '</span>';
 
+	    return $order_preview;
+	    }
+	    else{
 	    $order_preview = '<a href="#" class="order-preview" data-order-id="' . absint( $payment->ID ) . '" title="' . esc_attr( __( 'Preview', 'restropress' ) ) . '"><span>' . esc_html( __( 'Preview', 'restropress' ) ) . '</span></a>
 	      <a class="" href="' . add_query_arg( 'id', $payment->ID, admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ) . '">#' . $payment->ID . ' ' . $customer_name . '</a><span class="rp-service-type badge-' . $service_type . ' ">' . rpress_service_label( $service_type ) . '</span>';
 
 	    return $order_preview;
+	}
 	}
 
 	/**
@@ -629,17 +730,43 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		if ( ! empty( $_GET['service-date'] ) ) {
 			$args['service-date'] = urldecode( sanitize_text_field( $_GET['service-date'] ) );
 		}
+		if ( ! empty( $_GET['service-type'] ) ) {
+			$args['service-type'] = urldecode( sanitize_text_field( $_GET['service-type'] ) );
+		}
+
 
 		$payment_count          	= rpress_count_payments( $args );
-		$this->completed_count   	= (isset($payment_count->completed))? $payment_count->completed : 0;
-		$this->pending_count    	=  (isset($payment_count->pending)) ? $payment_count->pending : 0 ;
-		$this->paid_count 			=  (isset($payment_count->publish)) ? $payment_count->publish : 0 ;
-		$this->out_for_deliver_count   	=  (isset( $payment_count->processing ) ) ? $payment_count->processing : 0 ;
+		$this->completed_count   	=  isset( $payment_count->completed ) ? $payment_count->completed : 0;
+		$this->pending_count    	=  isset( $payment_count->pending ) ? $payment_count->pending : 0 ;
+		$this->paid_count 			=  isset( $payment_count->publish ) ? $payment_count->publish : 0 ;
+		$this->delivery_count 			=  isset( $this->count_service_type()['delivery'] ) ? $this->count_service_type()['delivery'] : 0;
+		$this->pickup_count 			=  isset( $this->count_service_type()['pickup'] ) ? $this->count_service_type()['pickup'] : 0;
+		$this->dinein_count 			=  isset( $this->count_service_type()['dinein'] ) ? $this->count_service_type()['dinein'] : 0;
+		$this->out_for_deliver_count   	=  isset( $payment_count->processing ) ? $payment_count->processing : 0 ;
 
 		$this->total_count = intval( $this->completed_count ) + intval( $this->pending_count ) + intval( $this->paid_count ) + intval( $this->out_for_deliver_count );
 		// foreach( $payment_count as $count ) {
 		// 	$this->total_count += $count;
 		// }
+	}
+
+	public function count_service_type( ){
+		global $wpdb;
+		$query = "SELECT g.meta_value,count( * ) AS num_posts FROM $wpdb->posts p LEFT JOIN $wpdb->postmeta g ON (p.ID = g.post_id) WHERE p.post_type = 'rpress_payment' AND g.meta_key = '_rpress_delivery_type' GROUP BY g.meta_value";
+
+		$cache_key = md5( $query );
+
+		$count = wp_cache_get( $cache_key, 'counts');
+		if ( false !== $count ) {
+			return $count;
+		}
+
+		$rows = $wpdb->get_results( $query, ARRAY_A );
+		$return_array = array();
+		foreach ($rows as  $row) {
+			$return_array[$row['meta_value'] ] =  $row['num_posts'] ;
+		}
+		return $return_array ;
 	}
 
 	/**
@@ -665,6 +792,9 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		$end_date   = isset( $_GET['end-date'] )    ? sanitize_text_field( $_GET['end-date'] )   : $start_date;
 		$gateway    = isset( $_GET['gateway'] )     ? sanitize_text_field( $_GET['gateway'] )    : null;
 		$service_date = isset( $_GET['service-date'] )  ? sanitize_text_field( $_GET['service-date'] ) : null;
+		$service_type = isset( $_GET['service-type'] ) ? sanitize_text_field(  $_GET['service-type'] ) : null;
+		$selected_orders = isset( $_GET['order_status'] ) ? sanitize_text_field(  $_GET['order_status'] ) : null;
+
 
 		/**
 		 * Introduced as part of #6063. Allow a gateway to specified based on the context.
@@ -682,7 +812,6 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		if ( $gateway === 'all' ) {
 			$gateway = null;
 		}
-
 		$args = array(
 			'output'     => 'payments',
 			'number'     => $per_page,
@@ -700,13 +829,35 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			'start_date' => $start_date,
 			'end_date'   => $end_date,
 			'gateway'    => $gateway,
-			'service_date' => $service_date
+			'service_date' => $service_date,
+			
 		);
 
 		if( is_string( $search ) && false !== strpos( $search, 'txn:' ) ) {
 
 			$args['search_in_notes'] = true;
 			$args['s'] = trim( str_replace( 'txn:', '', $args['s'] ) );
+
+		}
+
+		if( ! is_null( $service_type) ){
+			$args['meta_query'] = [
+			[
+				'key' => '_rpress_delivery_type',
+				'value' => $service_type,
+				'compare' => '='
+			]
+		];
+		}
+
+		if(!empty( $selected_orders )){
+			$args['meta_query'] = [
+				[ 
+			       'key' => '_order_status',
+				'value' => $selected_orders,
+				'compare' => '='   
+			]
+		];
 
 		}
 
@@ -750,6 +901,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			case 'paid':
 				$total_items = $this->paid_count;
 			break;
+
 			case 'any':
 				$total_items = $this->total_count;
 				break;
@@ -1142,8 +1294,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
                 <div class="rpress-action-button-group">
                  {{{ data.actions_html }}}
                 </div>
-
-                <a class="button button-primary button-large" aria-label="<?php esc_attr_e( 'Edit this order', 'restropress' ); ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ); ?>&id={{ data.id }}"><?php esc_html_e( 'Edit', 'restropress' ); ?></a>
+<a class="button button-primary button-large" aria-label="<?php esc_attr_e( 'Edit this order', 'restropress' ); ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ); ?>&id={{ data.id }}"><?php esc_html_e( 'Edit', 'restropress' ); ?></a>
 
               </div>
             </footer>

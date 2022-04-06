@@ -31,6 +31,23 @@ function rpress_extensions_page() {
 			</h2>
 			<div class="about-text"><?php esc_html_e('RestroPress has some basic features for food ordering system. If you want more exciting premium features then we have some addons to boost your restropress powered ordering system.', 'restropress');?></div>
 		</div>
+		<div class="rpress-plugin-filter">
+			<div>
+			<?php 
+				$base  = admin_url('admin.php?page=rpress-extensions'); 
+				$current        = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ): '';
+
+				 echo sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( 'status', $base ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All', 'restropress') ) .'  |  '; echo sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'active', $base ), $current === 'active' ? ' class="current"' : '', __('active', 'restropress')  );
+				?> 
+			</div>
+		</div>
+		<div class="rpress-search-view-wrapper">
+
+	 	    <div style="position: right; float:right; padding-bottom: 5px;" class="rpress-search-wrap rpress-live-search">
+	 	      <input id="rpress-plugin-search" type="text" placeholder="<?php esc_html_e( 'Search plugins', 'restropress' ); ?>">
+	 	    </div>
+			 	    
+		</div>
 		<!-- RestroPress Addons Ends Here -->
 		<div class="rpress-add-ons-view-wrapper">
 			<?php echo rpress_add_ons_get_feed(); ?>
@@ -40,6 +57,7 @@ function rpress_extensions_page() {
 	<?php
 	echo ob_get_clean();
 }
+
 
 /**
  * Add-ons Get Feed
@@ -58,7 +76,6 @@ function rpress_add_ons_get_feed() {
 	}
 
 	$data = '';
-
 	if( is_array( $items ) && !empty( $items ) ) {
 		$data = '<div class="restropress-addons-all">';
 
@@ -66,9 +83,16 @@ function rpress_add_ons_get_feed() {
 
 			$class = 'inactive';
 
-			$class_name = trim( $item->class_name );
+			$class_name = trim( $item->class_name );		
+
+			if ( isset( $_GET['status'] ) && isset( $_GET['status'] ) == 'active') {
+				if ( !class_exists( $class_name ) ) {
+					continue;
+				}
+			}
 
 			if( class_exists( $class_name ) ) {
+
 				$class = 'installed';
 			}
 
@@ -86,7 +110,7 @@ function rpress_add_ons_get_feed() {
 			<div class="rp-col-xs-12 rp-col-sm-4 rp-col-md-4 rp-col-lg-4 restropress-addon-item <?php echo esc_attr( $class ); ?>">
 				<!-- Addons Inner Wrap Starts Here -->
 				<div class="rp-addin-item-inner-wrap">
-					<h3><?php echo esc_html( $item->title ); ?></h3>
+					<h3 class="rpress-addon-title" ><?php echo esc_html( $item->title ); ?></h3>
 					<!-- Addons Image Starts Here -->
 					<div class="restropress-addon-img-wrap">
 						<img alt="<?php echo esc_attr( $item->title ); ?>" src="<?php echo esc_url( $item->product_image ); ?>">

@@ -72,7 +72,7 @@ global $post;
                     <div class="rpress-checkout-addon-row">
 
                       <!-- Item Title -->
-                      <span class="rpress-cart-item-title"><?php echo wp_kses_post( $val['addon_item_name'] ); ?></span>
+                      <span class="rpress-cart-item-title"><?php echo wp_kses_post( $val['quantity'] ); ?> x <?php echo wp_kses_post( $val['addon_item_name'] ); ?></span>
 
                       <!-- Item Quanity Starts Here -->
                       <span class="cart-item-quantity-wrap">

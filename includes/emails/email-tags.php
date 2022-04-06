@@ -373,6 +373,17 @@ function rpress_email_tag_fooditem_list( $payment_id ) {
 
           <td class="center" style="border: 1px solid black; border-collapse: collapse; text-align: center;">
             <span><?php echo esc_html( $quantity ); ?></span>
+            
+            <?php
+            $addon_items =  isset( $item['addon_items'] ) ? $item['addon_items'] : array() ;
+              foreach( $addon_items as $k => $addon_item ) {
+                $cart = new RPRESS_Cart();
+                $item_addon_quantity = !empty( $addon_item['quantity'] ) ? $addon_item['quantity'] : 0;
+                ?>
+                  <div style="margin: 0;font-size: 14px; color:#444;"><small><?php echo $item_addon_quantity; ?></small></div>
+               <?php
+              }
+            ?>
           </td>
 
           <td class="center" style="border: 1px solid black; border-collapse: collapse; text-align: center;">
@@ -385,7 +396,7 @@ function rpress_email_tag_fooditem_list( $payment_id ) {
                 $item_addon_price = !empty( $addon_item['price'] ) ? $addon_item['price'] : 0.00;
                 $addon_price = $cart->get_addon_price( $addon_item['addon_id'], $item, $item_addon_price );
                 ?>
-                  <div style="margin: 0;font-size: 14px;"><?php echo rpress_currency_filter( rpress_format_amount( $addon_price ) ); ?></div>
+                  <div style="margin: 0;font-size: 14px; color:#444;"><small><?php echo rpress_currency_filter( rpress_format_amount( $addon_price ) ); ?><small></div>
                <?php
               }
             ?>

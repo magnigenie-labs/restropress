@@ -29,8 +29,12 @@ class RP_FoodItem_Meta_Boxes{
   public static function add_meta_boxes(){
     $screen    = get_current_screen();
     $screen_id = $screen ? $screen->id : '';
-
+    
     add_meta_box( 'rpress-fooditem-data', __( 'Food Item Data', 'restropress' ), array( __CLASS__, 'metabox_output' ), 'fooditem', 'normal', 'high' );
+    add_meta_box(
+        'food_setting',__( 'Fooditem Settings', 
+          'restropress' ),array(__CLASS__, 'rpress_sku_accounting_options'),'fooditem'
+       );
   }
 
   public static function metabox_output( $post ){
@@ -43,6 +47,29 @@ class RP_FoodItem_Meta_Boxes{
 
     include 'views/html-fooditem-data-panel.php';
   }
+
+  //add SKU section
+
+  public static function rpress_sku_accounting_options( $post ) {
+    if( ! rpress_use_skus() ) {
+      return;
+    }
+    $rpress_sku = get_post_meta( $post->ID, 'rpress_sku', true );
+    ?>
+    <p><strong><?php _e( 'Accounting Options:', 'restropress' ); ?></strong></p>
+    <p>
+      <label for="rpress_sku">
+        <?php echo RPRESS()->html->text( array(
+          'name'  => 'rpress_sku',
+          'value' => $rpress_sku,
+          'class' => 'small-text'
+        ) ); ?>
+        <?php echo sprintf( __( 'Enter an SKU for this %s.', 'restropress' ), strtolower( rpress_get_label_singular() ) ); ?>
+      </label>
+    </p>
+<?php
+}
+
 
   /**
    * Show tab content/settings.
@@ -87,7 +114,6 @@ class RP_FoodItem_Meta_Boxes{
         )
       )
     );
-
     // Sort tabs based on priority.
     uasort( $tabs, array( __CLASS__, 'fooditem_data_tabs_sort' ) );
 
@@ -105,10 +131,10 @@ class RP_FoodItem_Meta_Boxes{
     );
 
     return apply_filters( 'rpress_metabox_fields_save', $fields );
+
   }
 
   public static function save_meta_boxes( $post_id, $post ) {
-
     // $post_id and $post are required
     if ( empty( $post_id ) || empty( $post ) || $post->post_type != 'fooditem' ) {
       return;
@@ -138,7 +164,6 @@ class RP_FoodItem_Meta_Boxes{
     $fields = self::metabox_fields();
 
     foreach( $fields as $field ) {
-
       if( $field != 'addons' && ! empty( $_POST[$field]  ) ) {
         $value = is_array( $_POST[$field] ) ? rpress_sanitize_array( $_POST[$field] ) : sanitize_text_field( $_POST[$field] );
         $value = apply_filters( 'rpress_metabox_save_' . $field, $value );
@@ -147,7 +172,11 @@ class RP_FoodItem_Meta_Boxes{
         delete_post_meta( $post_id, $field );
       }
     }
-
+    //save sku fields
+    if( isset( $_POST['rpress_sku'] ) ) {
+        $sku = !empty( $_POST['rpress_sku'] ) ? sanitize_text_field( $_POST['rpress_sku'] ) : null ;
+        update_post_meta(  $post_id, 'rpress_sku', $sku );
+    }
     // Set the lowest price as the product price so that we can use it on frontend display.
     if( rpress_has_variable_prices() ) {
       $lowest = rpress_get_lowest_price_option( $post_id );
@@ -248,6 +277,7 @@ class RP_FoodItem_Meta_Boxes{
         }
       }
       self::update_addon_items( $post_id, $addon_data);
+
     }
 
     // Hook to allow users to save any custom fields.

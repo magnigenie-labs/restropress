@@ -184,9 +184,11 @@ function rpress_get_purchase_link( $args = array() ) {
 				if ( ! rpress_is_ajax_disabled() ) {
 
 					$add_to_cart_label = apply_filters( 'rpress_add_to_cart_text',
-					__( 'ADD', 'restropress' ) );
+					__( 'Add', 'restropress' ) );
 
-					echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label rp-ajax-toggle-text">' . $add_to_cart_label . '</span> </a>';
+					echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label rp-ajax-toggle-text">' . $add_to_cart_label . '</span> <span class="add_icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
+                      </span> </a>';
 				}
 				?>
 
@@ -207,7 +209,7 @@ function rpress_get_purchase_link( $args = array() ) {
 				$not_available_lable = apply_filters( 'rpress_not_available',
 					__( 'Not Available', 'restropress' ), $fooditem->ID );
 
-					echo '<a href="javascript:void(0)" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-not-available ' . esc_attr( $class ) . '"  data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . ' ' . $button_display . '><span class="rpress-add-to-cart-label">' . $not_available_lable . '</span> </a>';
+					echo '<a href="javascript:void(0)" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-not-available ' . esc_attr( $class ) . '"  data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . ' ' . $button_display . '><span class="rpress-add-to-cart-label">' . $not_available_lable . '</span></a>';
 				?>
 
 			<?php endif; ?>
