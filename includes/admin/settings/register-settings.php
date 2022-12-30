@@ -891,17 +891,15 @@ function rpress_get_registered_settings() {
 
           			'tax_item' => array(
 			          	'id'   => 'tax_item',
-			            'name' => __( 'Display fooditems in shop', 'restropress' ),
-			            'desc' => __( 'When tax_item is enabled this tax_item will be charged to the customers. Select tax type, such as Including/Excluding tax. ', 'restropress' ),
+			            'name' => __( 'Food item Price Displayed With Tax', 'restropress' ),
+			            'desc' => __( 'This option will help you to show the food item price as tax included or excluded', 'restropress' ),
 			            'type'    => 'select',
 			            'std'	=> 'exc_tax',
 						'options' => array(
                          	'inc_tax' => __( 'Including tax', 'restropress' ),
                           	'exc_tax'  => __( 'Excluding tax', 'restropress' ),
                         ),
-			            'size' => 'medium',
-			            'tooltip_title' => __( 'tax_item', 'restropress' ),
-			            'tooltip_desc'  => __( 'This would be the default tax_item for the restaurant who will set product Including/Excluding Tax', 'restropress' ),   
+			              
 			        ),
 
 
