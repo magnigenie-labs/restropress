@@ -5,7 +5,7 @@ Donate link: https://paypal.me/magnigeeks
 Requires at least: 4.4
 Requires PHP: 5.5
 Tested up to: 6.1.1
-Stable tag: 2.9.5
+Stable tag: 2.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,12 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 5. Once the plugin is installed then you can see RestroPress on the left navigation bar of WordPress Dashboard.
 
 == ChangeLog ==
+
+= Version 2.9.6 (2022-12-30) =
+
+* Fixed: Cart total price calculation issue with inclusive tax
+* Added: Load fooditems data using ajax 
+* Added: Add setting option to show the item price in fooditem page by including/excluding tax 
 
 = Version 2.9.5 (2022-12-12) =
 
