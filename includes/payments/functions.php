@@ -403,7 +403,7 @@ function rpress_delete_purchase( $payment_id = 0, $update_customer = true, $dele
  * @param int $payment_id Payment ID
  * @return void
  */
-function rpress_undo_purchase( $fooditem_id = false, $payment_id ) {
+function rpress_undo_purchase( $fooditem_id = false, $payment_id = null ) {
 
 	/**
 	 * In 2.5.7, a bug was found that $fooditem_id was an incorrect usage. Passing it in
@@ -605,16 +605,7 @@ function rpress_count_payments( $args = array() ) {
 		);
 
 	}
-	// Limit payments count by gateway
-	if ( ! empty( $args['service-type'] ) ) {
-		$join .= "LEFT JOIN $wpdb->postmeta g ON (p.ID = g.post_id)";
-		$where .= $wpdb->prepare( "
-			AND g.meta_key = '_rpress_delivery_type'
-			AND g.meta_value = %s",
-			$args['service-type']
-		);
-
-	}
+	
 
 	// Limit payments count by date
 	if ( ! empty( $args['start-date'] ) && false !== strpos( $args['start-date'], '/' ) ) {
@@ -1300,7 +1291,7 @@ function rpress_get_payment_number( $payment_id = 0 ) {
  * @return string      The formatted payment number
  */
 function rpress_format_payment_number( $number ) {
-
+	
 	if( ! rpress_get_option( 'enable_sequential' ) ) {
 		return $number;
 	}
@@ -1333,10 +1324,12 @@ function rpress_get_next_payment_number() {
 	}
 
 	$number           = get_option( 'rpress_last_payment_number' );
-	$start            = rpress_get_option( 'sequential_start', 1 );
+
+	$start            = rpress_get_option( 'enable_sequential' );
+   
 	$increment_number = true;
 
-	if ( false !== $number ) {
+	 if ( false !== $number ) {
 
 		if ( empty( $number ) ) {
 
@@ -1349,6 +1342,7 @@ function rpress_get_next_payment_number() {
 
 		// This case handles the first addition of the new option, as well as if it get's deleted for any reason
 		$payments     = new RPRESS_Payments_Query( array( 'number' => 1, 'order' => 'DESC', 'orderby' => 'ID', 'output' => 'posts', 'fields' => 'ids' ) );
+
 		$last_payment = $payments->get_payments();
 
 		if ( ! empty( $last_payment ) ) {
@@ -1368,12 +1362,14 @@ function rpress_get_next_payment_number() {
 		}
 
 	}
+	
 
 	$increment_number = apply_filters( 'rpress_increment_payment_number', $increment_number, $number );
 
 	if ( $increment_number ) {
 		$number++;
 	}
+	
 
 	return apply_filters( 'rpress_get_next_payment_number', $number );
 }

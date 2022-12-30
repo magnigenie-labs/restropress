@@ -64,7 +64,7 @@ function rpress_shopping_cart( $echo = false ) {
  * @param bool $ajax AJAX?
  * @return string Cart item
 */
-function rpress_get_cart_item_template( $cart_key, $item, $ajax = false, $data_key ) {
+function rpress_get_cart_item_template( $cart_key, $item, $ajax = false, $data_key = null ) {
 
 	global $post;
 
@@ -124,6 +124,10 @@ function get_addon_item_formatted( $addon_items ) {
 
     	foreach( $addon_data_items as $addon_item ) :
 
+			if ( empty( $addon_item['quantity'] ) ) {
+				continue;
+			}
+    			
       		if( is_array( $addon_item ) ) :
 
         		$addon_id = !empty( $addon_item['addon_id'] ) ? $addon_item['addon_id'] : '';
@@ -132,7 +136,7 @@ function get_addon_item_formatted( $addon_items ) {
 
           			$addon_data = get_term_by( 'id', $addon_id, 'addon_category' );
           			$item_addon_price = !empty( $addon_item['price'] ) ? $addon_item['price'] : 0.00;
-					$item_addon_quantity = !empty( $addon_item['quantity'] ) ? $addon_item['quantity'] : 0;
+					$item_addon_quantity = !empty( $addon_item['quantity'] ) ? $addon_item['quantity'] : '';
           			$cart = new RPRESS_Cart();
           			$addon_price = $cart->get_addon_price( $addon_id, $addon_items, $item_addon_price );
           			$addon_price = !empty( $addon_price ) ? rpress_currency_filter( rpress_format_amount( $addon_price ) ) : '';
@@ -142,7 +146,7 @@ function get_addon_item_formatted( $addon_items ) {
             			$addon_item_name = $addon_data->name;
 
             			$html.= '<li class="rpress-cart-item">
-						<span>' . $item_addon_quantity . 'x' . '</span>
+						<span>' . $item_addon_quantity ." ". 'x' . '</span>
 			              <span class="rpress-cart-item-title">'.$addon_item_name.'</span>
 			              <span class="addon-item-price cart-item-quantity-wrap">
 			                <span class="rpress-cart-item-price qty-class">' . $addon_price . '</span>
@@ -158,7 +162,7 @@ function get_addon_item_formatted( $addon_items ) {
 
 	endif;
 
-  	return $html;
+  	return apply_filters( 'rpress_cart_quantity_item', $html,$addon_items );
 }
 
 
@@ -169,7 +173,7 @@ function get_addon_item_formatted( $addon_items ) {
  * @return string Cart is empty message
  */
 function rpress_empty_cart_message() {
-	return apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'CHOOSE AN ITEM FROM THE MENU TO GET STARTED.', 'restropress' ) . '</span>' );
+	return apply_filters( 'rpress_empty_cart_message', '<span class="rpress_empty_cart">' . __( 'Choose an item from the menu to get started.', 'restropress' ) . '</span>' );
 }
 
 /**

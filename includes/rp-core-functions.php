@@ -23,7 +23,7 @@ function rpress_get_cart_items_by_key( $key ) {
   $cart_items_arr = array();
   if( $key !== '' ) {
     $cart_items = rpress_get_cart_contents();
-    if( is_array( $cart_items ) && !empty( $cart_items ) ) {
+    if( is_array( $cart_items ) && ! empty( $cart_items ) ) {
       $items_in_cart = $cart_items[$key];
       if( is_array( $items_in_cart ) ) {
         if( isset( $items_in_cart['addon_items'] ) ) {
@@ -48,7 +48,7 @@ function rpress_get_cart_item_by_price( $key ) {
   if( $key !== '' ) {
     $cart_items = rpress_get_cart_contents();
 
-    if( is_array( $cart_items ) && !empty( $cart_items ) ) {
+    if( is_array( $cart_items ) && ! empty( $cart_items ) ) {
       $items_in_cart = $cart_items[$key];
       if( is_array( $items_in_cart ) ) {
         $item_price = rpress_get_fooditem_price( $items_in_cart['id'] );
@@ -73,10 +73,11 @@ function rpress_get_cart_item_by_price( $key ) {
 }
 
 function addon_category_taxonomy_custom_fields($tag) {
+
   $t_id        = $tag->term_id;
   $addon_type  = get_term_meta( $t_id, '_type', true );
   $addon_type  = empty( $addon_type ) ? 'multiple' : $addon_type;
-  $addon_price = !empty( get_term_meta( $t_id, '_price', true ) ) ? rpress_sanitize_amount( get_term_meta( $t_id, '_price', true ) ): '';
+  $addon_price = ! empty( get_term_meta( $t_id, '_price', true ) ) ? rpress_sanitize_amount( get_term_meta( $t_id, '_price', true ) ): '';
 ?>
 <?php if( $tag->parent != 0 ): ?>
 <tr class="form-field">
@@ -125,11 +126,10 @@ function addon_category_taxonomy_custom_fields($tag) {
 function save_addon_category_custom_fields( $term_id ) {
   if( isset( $_POST['addon_meta'] ) ) {
 
-    if( !empty( $_POST['addon_meta']['type'] ) )
+    if( ! empty( $_POST['addon_meta']['type'] ) )
       update_term_meta( $term_id, '_type', sanitize_text_field( $_POST['addon_meta']['type'] ) );
-  
-
-    if( !empty( $_POST['addon_meta']['price'] ) )
+    
+    if( ! empty( $_POST['addon_meta']['price'] ) )
       update_term_meta( $term_id, '_price', sanitize_text_field( $_POST['addon_meta']['price'] ) );
   }
 }
@@ -156,7 +156,8 @@ function rpress_get_item_qty_by_key( $cart_key ) {
 }
 
 add_action( 'wp_footer', 'rpress_popup' );
-if( !function_exists('rpress_popup') ) {
+
+if( ! function_exists( 'rpress_popup' ) ) {
   function rpress_popup() {
     rpress_get_template_part( 'rpress', 'popup' );
   }
@@ -169,7 +170,7 @@ if ( ! function_exists( 'get_fooditems_categories' ) ) {
   function get_fooditems_categories( $params ){
     global $data;
     $data = $params;
-    rpress_get_template_part('rpress', 'get-categories');
+    rpress_get_template_part( 'rpress', 'get-categories' );
   }
 }
 
@@ -204,11 +205,11 @@ if ( ! function_exists( 'rpress_product_menu_tab' ) ) {
 function get_special_instruction( $items ) {
   $instruction = '';
 
-  if( is_array($items) ) {
-    if( isset($items['options']) ) {
+  if( is_array( $items ) ) {
+    if( isset( $items['options'] ) ) {
       $instruction = $items['options']['instruction'];
     } else {
-      if( isset($items['instruction']) ) {
+      if( isset( $items['instruction'] ) ) {
         $instruction = $items['instruction'];
       }
     }
@@ -228,9 +229,9 @@ function rpress_get_instruction_by_key( $cart_key ) {
   $instruction = '';
   if( $cart_key !== '' ) {
     $cart_items = rpress_get_cart_contents();
-    $cart_items = $cart_items[$cart_key];
-    if( isset($cart_items['instruction']) ) {
-      $instruction = !empty($cart_items['instruction']) ? $cart_items['instruction'] : '';
+    $cart_items = $cart_items[ $cart_key ];
+    if( isset( $cart_items['instruction'] ) ) {
+      $instruction = ! empty( $cart_items['instruction'] ) ? $cart_items['instruction'] : '';
     }
   }
   return $instruction;
@@ -250,11 +251,11 @@ function get_delivery_options( $changeble ) {
   ?>
   <div class="delivery-wrap">
     <div class="delivery-opts">
-      <?php if ( !empty( $_COOKIE['service_type'] ) ) : ?>
-        <span class="delMethod"><?php echo rpress_service_label( sanitize_text_field( $_COOKIE['service_type'] ) ) . ', ' . $service_date; ?></span><?php if( !empty( $_COOKIE['service_time'] ) ) : ?><span class="delTime"><?php printf( __( ', %s', 'restropress' ), sanitize_text_field( $_COOKIE['service_time_text'] ) ); ?></span><?php endif; ?>
+      <?php if ( ! empty( $_COOKIE['service_type'] ) ) : ?>
+        <span class="delMethod"><?php echo rpress_service_label( sanitize_text_field( $_COOKIE['service_type'] ) ) . ', ' . $service_date; ?></span><?php if( ! empty( $_COOKIE['service_time'] ) ) : ?><span class="delTime"><?php printf( __( ', %s', 'restropress' ), sanitize_text_field( $_COOKIE['service_time_text'] ) ); ?></span><?php endif; ?>
       <?php endif; ?>
     </div>
-    <?php if( $changeble && !empty( $_COOKIE['service_type'] ) ) : ?>
+    <?php if( $changeble && ! empty( $_COOKIE['service_type'] ) ) : ?>
       <a href="#" class="delivery-change">
         <span class="rp-ajax-toggle-text">
           <?php esc_html_e( 'Change?', 'restropress' ); ?>
@@ -276,13 +277,13 @@ function get_delivery_options( $changeble ) {
  * @return      array | Custom data with delivery address meta array
  */
 function rpress_store_custom_fields( $delivery_address_meta ) {
-  $delivery_address_meta['address']   = !empty( $_POST['rpress_street_address'] ) ? sanitize_text_field( $_POST['rpress_street_address'] ) : '';
-  $delivery_address_meta['flat']      = !empty( $_POST['rpress_apt_suite'] ) ? sanitize_text_field( $_POST['rpress_apt_suite'] ) : '';
-  $delivery_address_meta['city']      = !empty( $_POST['rpress_city'] ) ? sanitize_text_field( $_POST['rpress_city'] ) : '';
-  $delivery_address_meta['postcode']  = !empty( $_POST['rpress_postcode'] ) ? sanitize_text_field( $_POST['rpress_postcode'] ) : '';
+  $delivery_address_meta['address']   = ! empty( $_POST['rpress_street_address'] ) ? sanitize_text_field( $_POST['rpress_street_address'] ) : '';
+  $delivery_address_meta['flat']      = ! empty( $_POST['rpress_apt_suite'] ) ? sanitize_text_field( $_POST['rpress_apt_suite'] ) : '';
+  $delivery_address_meta['city']      = ! empty( $_POST['rpress_city'] ) ? sanitize_text_field( $_POST['rpress_city'] ) : '';
+  $delivery_address_meta['postcode']  = ! empty( $_POST['rpress_postcode'] ) ? sanitize_text_field( $_POST['rpress_postcode'] ) : '';
   return $delivery_address_meta;
 }
-add_filter( 'rpress_delivery_address_meta', 'rpress_store_custom_fields');
+add_filter( 'rpress_delivery_address_meta', 'rpress_store_custom_fields' );
 
 
 /**
@@ -299,7 +300,7 @@ function rpress_order_note_fields( $order_note ) {
 */
 add_filter( 'rpress_payment_meta', 'rpress_add_phone' );
 function rpress_add_phone( $payment_meta ) {
-  if( !empty( $_POST['rpress_phone'] ) )
+  if( ! empty( $_POST['rpress_phone'] ) )
     $payment_meta['phone']  = sanitize_text_field( $_POST['rpress_phone'] );
   return $payment_meta;
 }
@@ -319,31 +320,31 @@ function rpress_get_service_type( $payment_id ) {
 }
 
 /* Remove View Link From Food Items */
-add_filter('post_row_actions','rpress_remove_view_link', 10, 2);
+add_filter( 'post_row_actions','rpress_remove_view_link', 10, 2 );
 
-function rpress_remove_view_link($actions, $post){
-  if ($post->post_type =="fooditem"){
-    unset($actions['view']);
+function rpress_remove_view_link( $actions, $post ){
+  if ( $post->post_type =="fooditem" ){
+    unset( $actions['view'] );
   }
   return $actions;
 }
 
 /* Remove View Link From Food Addon Category */
-add_filter('addon_category_row_actions','rpress_remove_tax_view_link', 10, 2);
+add_filter( 'addon_category_row_actions','rpress_remove_tax_view_link', 10, 2 );
 
-function rpress_remove_tax_view_link($actions, $taxonomy) {
+function rpress_remove_tax_view_link( $actions, $taxonomy ) {
     if( $taxonomy->taxonomy == 'addon_category' ) {
-        unset($actions['view']);
+        unset( $actions['view'] );
     }
     return $actions;
 }
 
 /* Remove View Link From Food Category */
-add_filter('food-category_row_actions','rpress_remove_food_cat_view_link', 10, 2);
+add_filter( 'food-category_row_actions','rpress_remove_food_cat_view_link', 10, 2 );
 
-function rpress_remove_food_cat_view_link($actions, $taxonomy) {
+function rpress_remove_food_cat_view_link( $actions, $taxonomy ) {
   if( $taxonomy->taxonomy == 'food-category' ) {
-    unset($actions['view']);
+    unset( $actions['view'] );
   }
   return $actions;
 }
@@ -354,11 +355,11 @@ function rpress_remove_food_cat_view_link($actions, $taxonomy) {
  * @since       1.0.0
  * @return      array | store timings
  */
-function rp_get_store_timings( $hide_past_time = true, $service_type ) {
+function rp_get_store_timings( $hide_past_time = true, $service_type = null) {
   $current_time = current_time( 'timestamp' );
-  $prep_time    = !empty( rpress_get_option( 'prep_time' ) ) ? rpress_get_option( 'prep_time' ) : 30;
-  $open_time    = !empty( rpress_get_option( 'open_time' ) ) ? rpress_get_option( 'open_time' ) : '9:00am';
-  $close_time   = !empty( rpress_get_option( 'close_time' ) ) ? rpress_get_option( 'close_time' ) : '11:30pm';
+  $prep_time    = ! empty( rpress_get_option( 'prep_time' ) ) ? rpress_get_option( 'prep_time' ) : 30;
+  $open_time    = ! empty( rpress_get_option( 'open_time' ) ) ? rpress_get_option( 'open_time' ) : '9:00am';
+  $close_time   = ! empty( rpress_get_option( 'close_time' ) ) ? rpress_get_option( 'close_time' ) : '11:30pm';
   $time_interval = apply_filters( 'rp_store_time_interval', '30', $service_type );
   $time_interval = $time_interval * 60;
   $prep_time  = $prep_time * 60;
@@ -394,10 +395,10 @@ function rp_get_store_timings( $hide_past_time = true, $service_type ) {
 function rp_get_current_time() {
   $current_time = '';
   $timezone = get_option( 'timezone_string' );
-  if( !empty( $timezone ) ) {
+  if( ! empty( $timezone ) ) {
     $tz = new DateTimeZone( $timezone );
     $dt = new DateTime( "now", $tz );
-    $current_time = $dt->format("H:i:s");
+    $current_time = $dt->format( "H:i:s" );
   }
   return $current_time;
 }
@@ -435,7 +436,7 @@ function rpress_local_date( $date ) {
  */
 function rpress_get_categories( $params = array() ) {
 
-  if( !empty( $params['ids'] ) ) {
+  if( ! empty( $params['ids'] ) ) {
     $params['include'] = $params['ids'];
     $params['orderby'] = 'include';
   }
@@ -470,8 +471,7 @@ function rpress_get_service_types() {
 * @param bool $current_time_aware if current_time_aware is set true then it would show the next time from now otherwise it would show the default store timings
 * @return store time
 */
-function rp_get_store_service_hours( $service_type, $current_time_aware = true, $selected_time  ) {
-
+function rp_get_store_service_hours( $service_type, $current_time_aware = true, $selected_time = null ,$asap_option = null ) {
   if ( empty( $service_type ) ) {
     return;
   }
@@ -479,9 +479,9 @@ function rp_get_store_service_hours( $service_type, $current_time_aware = true, 
   $time_format = get_option( 'time_format', true );
   $time_format = apply_filters( 'rp_store_time_format', $time_format );
 
-  $current_time = !empty( rp_get_current_time() ) ? rp_get_current_time() : date( $time_format );
+  $current_time = ! empty( rp_get_current_time() ) ? rp_get_current_time() : date( $time_format );
   $store_times = rp_get_store_timings( false, $service_type );
-
+  $asap_option = rpress_get_option('enable_asap_option', '');
   if ( $service_type == 'delivery' ) {
     $store_timings = apply_filters( 'rpress_store_delivery_timings', $store_times );
   } else {
@@ -492,12 +492,12 @@ function rp_get_store_service_hours( $service_type, $current_time_aware = true, 
 
   if( is_array( $store_timings ) ) {
 
-    foreach( $store_timings as $time ) {
+    foreach( $store_timings as $key => $time ) {
 
       // Bring both curent time and Selected time to Admin Time Format
       $store_time = date( $time_format, $time );
       $selected_time = date( $time_format, strtotime( $selected_time ) );
-
+      $asap_option = rpress_get_option('enable_asap_option', '');
       if ( $store_timings_for_today ) {
 
         // Remove any extra space in Current Time and Selected Time
@@ -508,17 +508,17 @@ function rp_get_store_service_hours( $service_type, $current_time_aware = true, 
 
           if ( strtotime( $store_time ) > strtotime( $current_time ) ) { ?>
 
-            <option <?php selected( $selected_time, $timing_slug ); ?> value='<?php echo esc_attr( $store_time ); ?>'>
-              <?php echo esc_html( $store_time ); ?>
+            <option <?php selected( $selected_time, $timing_slug, $asap_option ); ?> value='<?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $store_time; ?>'>
+              <?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $store_time; ?>
             </option>
 
           <?php }
 
         } else { ?>
 
-          <option <?php selected( $selected_time, $timing_slug ); ?> value='<?php echo esc_attr( $store_time ); ?>'>
-            <?php echo esc_html( $store_time ); ?>
-          </option>
+          <option <?php selected( $selected_time, $timing_slug, $asap_option ); ?> value='<?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $store_time; ?>'>
+              <?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $store_time; ?>
+            </option>
 
         <?php }
       }
@@ -656,13 +656,9 @@ function rpress_checkout_delivery_type( $service_type, $service_time ) {
  */
 function rpress_pre_validate_order(){
 
-  $service_type   = !empty( $_COOKIE['service_type'] ) ? sanitize_text_field( $_COOKIE['service_type'] )  : '';
-  $service_time   = !empty( $_COOKIE['service_time'] ) ? sanitize_text_field( $_COOKIE['service_time'] ) : '';
-  $service_date   = !empty( $_COOKIE['service_date'] ) ? sanitize_text_field( $_COOKIE['service_date'] ) : current_time( 'Y-m-d' );
-  $custom_service_time   = !empty( $_COOKIE['custom_time_output'] ) ? sanitize_text_field( $_COOKIE['custom_time_output'] ) : null;
-  if ( !is_null($custom_service_time) && isset( $custom_service_time) ) {
-    $service_time = $custom_service_time;
-  }
+  $service_type   = ! empty( $_COOKIE['service_type'] ) ? sanitize_text_field( $_COOKIE['service_type'] )  : '';
+  $service_time   = ! empty( $_COOKIE['service_time'] ) ? sanitize_text_field( $_COOKIE['service_time'] ) : '';
+  $service_date   = ! empty( $_COOKIE['service_date'] ) ? sanitize_text_field( $_COOKIE['service_date'] ) : current_time( 'Y-m-d' );
   $prep_time      = rpress_get_option( 'prep_time', 0 );
   $prep_time      = $prep_time * 60;
   $current_time   = current_time( 'timestamp' );
@@ -672,33 +668,35 @@ function rpress_pre_validate_order(){
   }
 
   $service_time = strtotime( $service_date . ' ' . $service_time );
-  
+
   // Check minimum order
   $enable_minimum_order = rpress_get_option( 'allow_minimum_order' );
-  $minimum_order_price_delivery = rpress_get_option('minimum_order_price');
+  $minimum_order_price_delivery = rpress_get_option( 'minimum_order_price' );
   $minimum_order_price_delivery = floatval( $minimum_order_price_delivery );
   $minimum_order_price_pickup = rpress_get_option( 'minimum_order_price_pickup' );
   $minimum_order_price_pickup = floatval( $minimum_order_price_pickup );
+  $allow_asap_delivery = rpress_get_option( 'enable_asap_option','' );
 
-  if ( $enable_minimum_order && $service_type == 'delivery' && rpress_get_cart_subtotal() < $minimum_order_price_delivery ) {
-    $minimum_price_error = rpress_get_option('minimum_order_error');
+  if( $enable_minimum_order && $service_type == 'delivery' && rpress_get_cart_subtotal() < $minimum_order_price_delivery ) {
+    $minimum_price_error = rpress_get_option( 'minimum_order_error' );
     $minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price_delivery ) );
-    $minimum_price_error = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error);
+    $minimum_price_error = str_replace( '{min_order_price}', $minimum_order_formatted, $minimum_price_error );
     $response = array( 'status' => 'error', 'minimum_price' => $minimum_order_price, 'error_msg' =>  $minimum_price_error  );
-  } else if ( $enable_minimum_order && $service_type == 'pickup' && rpress_get_cart_subtotal() < $minimum_order_price_pickup ) {
-    $minimum_price_error_pickup = rpress_get_option('minimum_order_error_pickup');
+  } else if( $enable_minimum_order && $service_type == 'pickup' && rpress_get_cart_subtotal() < $minimum_order_price_pickup ) {
+    $minimum_price_error_pickup = rpress_get_option( 'minimum_order_error_pickup' );
     $minimum_order_formatted = rpress_currency_filter( rpress_format_amount( $minimum_order_price_pickup ) );
-    $minimum_price_error_pickup = str_replace('{min_order_price}', $minimum_order_formatted, $minimum_price_error_pickup);
+    $minimum_price_error_pickup = str_replace( '{min_order_price}', $minimum_order_formatted, $minimum_price_error_pickup );
     $response = array( 'status' => 'error', 'minimum_price' => $minimum_order_price_pickup, 'error_msg' =>  $minimum_price_error_pickup  );
-  } else if( $current_time > $service_time && !empty( sanitize_text_field( $_COOKIE['service_time'] ) ) ){
-    
+   } 
 
+    else if( $current_time > $service_time && ! empty( sanitize_text_field( $_COOKIE['service_time'] ) ) && $current_time == $allow_asap_delivery ){
     $time_error = __( 'Please select a different time slot.', 'restropress' );
     $response = array(
       'status' => 'error',
       'error_msg' =>  $time_error
     );
-  } else {
+  } 
+    else {
     $response = array( 'status' => 'success' );
   }
   return $response;
@@ -1049,11 +1047,12 @@ function rpress_get_currencies() {
     'AED'  => __( 'UAE Dirham (د.إ)', 'restropress' ),
     'AFN'  => __( 'Afghani (؋)', 'restropress' ),
     'AMD'  => __( 'Netherlands Antillean Guilder (֏)', 'restropress' ),
-    'AZN'  => __( 'Vietnamese dong (₼)', 'restropress' ),
+    'VND'  => __( 'Vietnamese dong (₫)', 'restropress' ),
     'CNY'  => __( 'Renminbi (¥)', 'restropress' ),
     'KRW'  => __( 'South Korean won (₩)', 'restropress' ),
     'BDT'  => __( 'Bangladeshi taka (৳)', 'restropress' ),
     'NPR'  => __( 'Nepalese rupee (Rs)', 'restropress' ),
+    'AZN'  => __( 'Azerbaijani manat (₽)', 'restropress'),
 
 
 
@@ -1072,16 +1071,6 @@ function rpress_get_currencies() {
 function rpress_get_currency() {
   $currency = rpress_get_option( 'currency', 'USD' );
   return apply_filters( 'rpress_currency', $currency );
-}
-
-function rpress_get_success_page(){
-  global $post;
-  $page_slug = $post->post_name;
-  if ( $page_slug == 'order-confirmation' ){
-    return true;
-  }else{
-    return false;
-  }
 }
 
 /**
@@ -1163,6 +1152,7 @@ function rpress_currency_symbol( $currency = '' ) {
         $symbol = '﷼';
         break;
     case "RUB" :
+    case "AZN" :
         $symbol = '₽';
         break;
     case "AED" :
@@ -1174,8 +1164,8 @@ function rpress_currency_symbol( $currency = '' ) {
     case "AMD" :
         $symbol = '֏';
         break;
-    case "AZN" :
-        $symbol = '₼';
+    case "VND" :
+        $symbol = '₫';
         break;
     case "KRW" :
         $symbol = '₩';
@@ -1826,7 +1816,7 @@ function rpress_fooditem_available( $fooditem_id ) {
  */
 function rp_get_label_singular( $lowercase = false ) {
   $defaults = rp_get_default_labels();
-  return ($lowercase) ? strtolower( $defaults['singular'] ) : $defaults['singular'];
+  return ( $lowercase ) ? strtolower( $defaults['singular'] ) : $defaults['singular'];
 }
 
 /**
@@ -1865,7 +1855,7 @@ function rpress_get_fooditem_icon( $id = '' ) {
   $food_type = get_post_meta( $id, 'rpress_food_type', true );
   $icon_url = apply_filters( 'rpress_food_type_icon', RP_PLUGIN_URL . 'assets/images/' . $food_type . '.png' );
 
-  if( !empty( $food_type ) && !empty( $icon_url ) )
+  if( ! empty( $food_type ) && ! empty( $icon_url ) )
     return '<img src="' . $icon_url . '" class="rpress-food-type-icon">';
 }
 
@@ -1965,4 +1955,3 @@ function rp_get_order_count( $status = 'pending' ) {
 
   return apply_filters( 'rpress_order_count', $order_count, $status );
 }
-

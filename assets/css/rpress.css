@@ -109,7 +109,7 @@ html body .datepicker-days .today.day {
 	width: 170px;
 	padding: 7px;
 	max-width: 100%;
-	line-height: 30px;
+	line-height: 29px;
 	border-radius: 3px
 }
 .rpress-delivery-wrap .rpress-store-closed-info {
@@ -655,7 +655,6 @@ ul.rpress-category-lists li.rpress-category-item a {
 	padding: 10px;
 	display: block;
 	border-radius: 3px;
-	font-family: 'Montserrat', sans-serif;
 	font-size: 12px;
 	font-weight: 600;
 	letter-spacing: 1px;
@@ -665,8 +664,8 @@ ul.rpress-category-lists li.rpress-category-item a {
 	color: #ffffff
 }
 .rpress-thumbnail-holder {
-	width: 95px;
-	height: 95px;
+	width: 117px;
+	height: 117px;
 	vertical-align: top;
 	float: left
 }
@@ -678,9 +677,9 @@ ul.rpress-category-lists li.rpress-category-item a {
 }
 .rpress-thumbnail-holder+.rpress-title-holder {
 	padding-left: 10px;
-	width: -webkit-calc(100% - 105px);
-	width: -moz-calc(100% - 105px);
-	width: calc(100% - 105px)
+	width: -webkit-calc(100% - 120px);
+	width: -moz-calc(100% - 120px);
+	width: calc(100% - 120px)
 }
 @media only screen and (max-width: 480px) {
 	div.food-item-list span.cat_price, div.food-item-list span {
@@ -1430,7 +1429,7 @@ form#fooditem-details h6, form#fooditem-update-details h6 {
 .special-margin textarea, .special-inst textarea {
 	border: 1px solid #e4e4e4
 }
-.special-margin a, .special-inst a {
+.special-margin span, .special-inst span {
 	font-weight: 500;
 	margin-bottom: 8px;
 	display: block
@@ -1979,7 +1978,7 @@ form#rpress_purchase_form #rpress-purchase-button {
 		margin-top: 0px;
 		padding-left: 13px;
 		float: right;
-		width: calc(100% - 95px)
+		width: calc(100% - 117px)
 }
 	.rp-no-img.rpress_fooditem_inner div.rpress-price-holder {
 		padding-left: 0px;
@@ -2884,10 +2883,10 @@ span.rpress_discount_rate_wrap {
 .radio-container input:checked~.control__indicator {
 	background: #ffffff
 }
-.radio-container input:checked~.control__indicator:after {
+.food-item-list.active .radio-container input:checked~.control__indicator:after {
 	display: block
 }
-.radio-container .control__indicator:after {
+.food-item-list.active .radio-container .control__indicator:after {
 	left: 3px;
 	top: 3px;
 	height: 10px;
@@ -3163,8 +3162,8 @@ span.rpress-status {
 .submit-fooditem-button.rp-loading:after {
 	top: 11px
 }
-.rpress_checkout a.rp-loading:after {
-	top: 5px
+.rpress_checkout .rpress-checkout-cart.button.rpress-submit.rp-loading:after {
+	top: 5px; 
 }
 .rpress-clear-cart.rp-loading:after {
 	left: 0;
@@ -3230,13 +3229,14 @@ a.rpress_checkout_register_login.rpress-submit.button.rp-loading:after{
 	border-radius: 4px
 }
 .rp-checkout-service-option .rpress-delivery-options ul#rpressdeliveryTab.nav>li.active>a {
-	border-radius: 100px
+    border-radius: 3px;
 }
-.rp-checkout-service-option .nav#rpressdeliveryTab>li>a:hover, .rp-checkout-service-option .nav#rpressdeliveryTab>li>a:focus {
+.rp-checkout-service-option .nav#rpressdeliveryTab>li>a:hover,
+.rp-checkout-service-option .nav#rpressdeliveryTab>li>a:focus {
 	background-color: transparent
 }
 .rp-checkout-service-option .rpress-delivery-options ul#rpressdeliveryTab {
-	border-radius: 100px
+    border-radius: 3px;
 }
 .rp-checkout-service-option .rpress-delivery-options ul#rpressdeliveryTab.nav>li>a {
 	width: 50%;
@@ -3336,14 +3336,14 @@ fieldset#rpress_checkout_order_details.rp-loading {
 }
 }
 
-.restro-vgrid.rpress_fooditem {
+.rpress-grid.rpress_fooditem {
 
 	width: 50% !important;
-    display: inline-block !important;
+    /*display: inline-block !important;*/
 	clear: unset !important;
     padding: 0 10px 10px !important;
 }
-.restro-vgrid .rpress_fooditem_inner {
+.rpress-grid .rpress_fooditem_inner {
 
     /* padding: 15px; */
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%);
@@ -3352,27 +3352,47 @@ fieldset#rpress_checkout_order_details.rp-loading {
 /*=================== grid view style =======================*/
 #rpress_fooditem_grid {
     width: 50% !important;
-    display: inline-block !important;
     clear: unset !important;
     padding-right: 10px;
 }
 .rpress_fooditems_list.rp-grid-view {
 	width: 66%;
 }
-.rpress_fooditem.restro-vgrid .rpress-price-holder {
+.rpress_fooditem.rpress-grid .rpress-price-holder {
 	text-align: unset;
 }
-.rpress_fooditem.restro-vgrid .rpress_fooditem_buy_button {
+.rpress_fooditem.rpress-grid .rpress_fooditem_buy_button {
 	display: inline-block;
     line-height: 0;
     float: right;
 }
-.rpress_fooditem.restro-vgrid .rpress-thumbnail-holder.rpress-bg img {
+.rpress_fooditem .rpress-thumbnail-holder.rpress-bg img.size-thumbnail.wp-post-image {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
-.rpress_fooditem.restro-vgrid .rpress_fooditem_inner {
+.rpress_fooditem_inner .rpress-thumbnail-holder.rpress-bg img.rpress-food-type-icon,
+.rpress_fooditem_inner .rpress-thumbnail-holder.rpress-default-bg img.rpress-food-type-icon {
+    position: absolute;
+    z-index: 9;
+    background-color: white;
+    padding: 1px;
+    border-radius: 2px;
+    top: 2px;
+    right: 2px;
+    box-shadow: 0px 2px 4px 1px #00000021;
+}
+.rp-no-img.rpress_fooditem_inner img.rpress-food-type-icon,
+.rp-no-img.rpress_fooditem_inner.no-thumbnail-img img.rpress-food-type-icon {
+	display: inline-block;
+}
+.rpress_fooditem_inner .rpress-title-holder img.rpress-food-type-icon {
+	display: none;
+}
+.rpress_fooditem_inner .rpress-thumbnail-holder.rpress-icon-bg {
+	position: relative;
+}
+.rpress_fooditem.rpress-grid .rpress_fooditem_inner {
 	padding-bottom: 0;
 	border-bottom: none;
     padding: 10px !important;
@@ -3380,11 +3400,11 @@ fieldset#rpress_checkout_order_details.rp-loading {
     border-radius: 5px;
     background-color: white;
 }
-.rpress_fooditem.restro-vgrid .rpress_fooditem_buy_button .rpress_purchase_submit_wrapper {
+.rpress_fooditem.rpress-grid .rpress_fooditem_buy_button .rpress_purchase_submit_wrapper {
 	line-height: 0;
 }
-.rpress_fooditem.restro-vgrid .rpress_fooditem_title span.food-title,
-.rpress_fooditem.restro-vgrid .rpress_fooditem_inner .rpress_fooditem_excerpt p {
+.rpress_fooditem.rpress-grid .rpress_fooditem_title span.food-title,
+.rpress_fooditem.rpress-grid .rpress_fooditem_inner .rpress_fooditem_excerpt p {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -3392,7 +3412,8 @@ fieldset#rpress_checkout_order_details.rp-loading {
     line-clamp: 1;
     -webkit-box-orient: vertical;
 }
-.rpress_fooditem.restro-vgrid .rpress_purchase_submit_wrapper a {
+.rpress_fooditem.rpress-grid .rpress_purchase_submit_wrapper a.rpress-add-to-cart.button,
+.rpress_fooditem.rpress-list .rpress_purchase_submit_wrapper a.rpress-add-to-cart.button {
     background: #ffffff;
     color: #1C1C1C;
     border: 1px solid #dddcdc;
@@ -3400,30 +3421,33 @@ fieldset#rpress_checkout_order_details.rp-loading {
     width: 87px;
     height: 35px;
 }
-.rpress_fooditem.restro-vgrid .rpress_purchase_submit_wrapper a span.rp-ajax-toggle-text {
+.rpress_fooditem.rpress-grid .rpress_purchase_submit_wrapper a span.rp-ajax-toggle-text {
 	font-weight: 600;
     text-transform: capitalize;
     font-size: 16px;
     padding-right: 5px;
     letter-spacing: 0;
 }
-.rpress_fooditem.restro-vgrid .rpress-price-holder span.price {
+.rpress_fooditem.rpress-grid .rpress-price-holder span.price {
 	color: #132645;
     font-weight: 600;
     font-size: 16px;
+    vertical-align: -webkit-baseline-middle;
 }
-.rpress_fooditem.restro-vgrid .rpress_purchase_submit_wrapper span.add_icon svg {
-    fill: #dd3333;
+.rpress_fooditem.rpress-grid .rpress_purchase_submit_wrapper span.add-icon svg,
+.rpress_fooditem.rpress-list .rpress_purchase_submit_wrapper span.add-icon svg {
+    /*fill: #dd3333;*/
     width: 11px;
     height: auto;
 }
-.rpress_fooditem.restro-vgrid .rpress-add-to-cart.button.rpress-submit.rp-loading span.add_icon {
+.rpress_fooditem.rpress-grid .rpress-add-to-cart.button.rpress-submit.rp-loading span.add-icon svg,
+.rpress_fooditem.rpress-list .rpress-add-to-cart.button.rpress-submit.rp-loading span.add-icon svg {
 	display: none;
 }
-.rpress_fooditem.restro-vgrid .rp-loading {
+.rpress_fooditem.rpress-grid .rp-loading {
 	position: relative
 }
-.rpress_fooditem.restro-vgrid .rp-loading:after {
+.rpress_fooditem.rpress-grid .rp-loading:after {
 	content: " ";
 	display: block;
 	width: 20px;
@@ -3447,38 +3471,41 @@ fieldset#rpress_checkout_order_details.rp-loading {
 		transform: rotate(360deg)
 }
 }
-.rpress_fooditem.restro-vgrid .rp-col-md-9.rp-grid-view-wrap {
+.rpress_fooditem.rpress-grid .rp-col-md-9.rp-grid-view-wrap {
 	width: 100%;
 }
-.rpress_fooditem.restro-vgrid .rpress-price-holder {
+.rpress_fooditem.rpress-grid .rpress-price-holder {
 	text-align: unset;
     padding-top: 13px;
 }
-.rpress_fooditem.restro-vgrid .rpress_fooditem_buy_button {
+.rpress_fooditem.rpress-grid .rpress_fooditem_buy_button {
 	display: inline-block;
     float: right;
 }
-.rpress_fooditem.restro-vgrid .rpress_purchase_submit_wrapper {
+.rpress_fooditem.rpress-grid .rpress_purchase_submit_wrapper {
 	line-height: 0;
 }
-.rpress_fooditem.restro-vgrid .rpress-thumbnail-holder+.rpress-title-holder {
-    width: calc(100% - 98px);
+.rpress_fooditem.rpress-grid .rpress-thumbnail-holder+.rpress-title-holder {
+    width: calc(100% - 120px);
 }
-.rpress_fooditem.restro-vgrid .add_icon {
+.rpress_fooditem.rpress-grid .add-icon,
+.rpress_fooditem.rpress-list .add-icon {
 	display: inline-block;
 }
-.rpress_fooditem.restro-vgrid .rpress-price-holder.rpress-gridv-holder {
+.rpress_fooditem.rpress-grid .rpress-price-holder.rpress-grid-view-holder {
 	display: block;
 }
-.rpress_fooditem .rpress-price-holder.rpress-gridv-holder,
-.rpress_fooditem .add_icon,
-.rpress_fooditem.restro-vgrid .rp-col-md-3 {
+.rpress_fooditem .rpress-price-holder.rpress-grid-view-holder,
+.rpress_fooditem .add-icon,
+.rpress_fooditem.rpress-grid .rp-col-md-3,
+.rpress_fooditem.rpress-grid .rpress-add-to-cart.plain .add-icon,
+.rpress_fooditem.rpress-list .rpress-add-to-cart.plain .add-icon {
 	display: none;
 }
 
 @media only screen and (max-width: 1100px) {
-	.restro-vgrid.rpress_fooditem, 
-	.rpress_fooditem.restro-vgrid .rpress-price-holder.rpress-gridv-holder {
+	.rpress-grid.rpress_fooditem, 
+	.rpress_fooditem.rpress-grid .rpress-price-holder.rpress-grid-view-holder {
 		width: 100% !important;
 	}
 }
@@ -3551,18 +3578,18 @@ fieldset#rpress_checkout_order_details.rp-loading {
 	.rpress_fooditems_list.rp-grid-view {
 		width: 100%;
 	}
-	.rpress_fooditem.restro-vgrid .rpress-price-holder {
+	.rpress_fooditem.rpress-grid .rpress-price-holder {
 		padding-left: 0;
 	}
 	html body div.rpress_fooditems_list .rpress_fooditem .rpress_fooditem_buy_button {
 		bottom: 0;
 	}
-	.restro-vgrid.rpress_fooditem {
+	.rpress-grid.rpress_fooditem {
 		width: 50% !important;
 	}
 }
 @media screen and (max-width: 699px) {
-	.restro-vgrid.rpress_fooditem {
+	.rpress-grid.rpress_fooditem {
 		width: 100% !important;
 	    padding-left: 0 !important;
     	padding-right: 0 !important;

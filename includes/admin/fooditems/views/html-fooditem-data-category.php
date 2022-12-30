@@ -27,7 +27,7 @@ $food_categories = $fooditem_object->get_food_categories();
 							</th>
 							<td class="rp-select-category">
 								<select name="food_categories[]" class="rp-category-select rp-select2" multiple="multiple">
-									<?php foreach ( $categories as $category ){
+									<?php foreach ( $categories as $category ) {
 										echo '<option ' . rp_selected( $category->term_id, $food_categories ) . ' value="' . $category->term_id .'">' .$category->name .'</option>';
 									}
 									?>
@@ -42,7 +42,7 @@ $food_categories = $fooditem_object->get_food_categories();
 									<option value="">
 										<?php esc_html_e( 'Parent Category', 'restropress' ); ?>
 									</option>
-									<?php foreach ( $categories as $category ){
+									<?php foreach ( $categories as $category ) {
 										echo '<option value="' . $category->term_id .'">' .$category->name .'</option>';
 									}
 									?>

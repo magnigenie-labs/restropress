@@ -502,7 +502,7 @@ class RPRESS_Fooditem {
 			$this->sku = get_post_meta( $this->ID, 'rpress_sku', true );
 
 			if ( empty( $this->sku ) ) {
-				$this->sku = '-';
+				$this->sku = null;
 			}
 
 		}

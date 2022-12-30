@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<ul class="fooditem_data_tabs rp-tabs">
 		<?php foreach ( self::get_fooditem_data_tabs() as $key => $tab ) : ?>
-			<li class="<?php echo esc_attr( $key ); ?>_options <?php echo esc_attr( $key ); ?>_tab <?php echo esc_attr( isset( $tab['class'] ) ? implode( ' ', (array) $tab['class'] ) : '' ); ?>">
+			<li class="<?php echo esc_attr( $key ); ?>_options <?php echo esc_attr( $key ); ?>_tab <?php echo esc_attr( isset( $tab['class'] ) ? implode( ' ', ( array ) $tab['class'] ) : '' ); ?>">
 				<a href="#<?php echo esc_attr( $tab['target'] ); ?>">
 					<?php if( !empty( $tab['icon'] ) ) : ?>
 						<i class="<?php echo sanitize_html_class( $tab['icon'] ) ; ?>"></i>

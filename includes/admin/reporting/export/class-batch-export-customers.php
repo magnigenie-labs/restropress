@@ -38,11 +38,22 @@ class RPRESS_Batch_Customers_Export extends RPRESS_Batch_Export {
 	public function csv_cols() {
 
 		$cols = array(
-			'id'        => __( 'ID',   'restropress' ),
-			'name'      => __( 'Name',   'restropress' ),
-			'email'     => __( 'Email', 'restropress' ),
-			'purchases' => __( 'Number of Purchases', 'restropress' ),
-			'amount'    => __( 'Customer Value', 'restropress' )
+			'id'        	 => __( 'ID',   'restropress' ),
+			'user_id'		 => __( 'User ID',   'restropress' ),
+			'user_login'	 => __( 'User Name', 'restropress' ),
+			'user_pass' 	 => __( 'Password','restropress' ),
+			'payment_ids'	 => __('Payment IDS','restropress' ),
+			'date_created'	 => __( 'Date Created','restropress' ),
+			'name'      	 => __( 'Name',   'restropress' ),
+			'email'     	 => __( 'Email', 'restropress' ),
+			'purchase_count' => __( 'Number of Purchases', 'restropress' ),
+			'purchase_value' => __( 'Customer Value', 'restropress' ),
+			'line1'			 => __( 'Address Line1', 'restropress' ),
+			'line2'			 => __( 'Address Line2', 'restropress' ),
+			'country'   	 => __( 'Country/Region', 'restropress' ),
+			'city'			 => __( 'City', 'restropress' ),
+			'state'			 => __( 'State', 'restropress' ),
+			'zip'			 => __( 'Postal Code', 'restropress' )
 		);
 
 		return $cols;
@@ -89,13 +100,33 @@ class RPRESS_Batch_Customers_Export extends RPRESS_Batch_Export {
 					$payment_id  = get_post_meta( $log->ID, '_rpress_log_payment_id', true );
 					$customer_id = rpress_get_payment_customer_id( $payment_id );
 					$customer    = new RPRESS_Customer( $customer_id );
+					$user_id	 =	$customer->user_id; 	
+					$customer_address = get_user_meta( $user_id, '_rpress_user_address', true );
+					$line1 = $customer_address['line1'];
+					$line2 = $customer_address['line2'];
+					$country = $customer_address['country'];
+					$city = $customer_address['city'];
+					$state = $customer_address['state'];
+					$zip = $customer_address['zip'];
+					$user = get_user_by( 'id', $user_id );
 
 					$data[] = array(
-						'id'        => $customer->id,
-						'name'      => $customer->name,
-						'email'     => $customer->email,
-						'purchases' => $customer->purchase_count,
-						'amount'    => rpress_format_amount( $customer->purchase_value ),
+						'id'          	 => $customer->id,
+						'user_id'	  	 => $customer->user_id,
+						'user_login'  	 =>$user->user_login,
+						'user_pass'	  	 =>$user->user_pass,
+						'payment_ids'	 =>$customer->payment_ids,
+						'date_created'	 =>$customer->date_created,
+						'name'        	 => $customer->name,
+						'email'       	 => $customer->email,
+						'purchase_count' => $customer->purchase_count,
+						'purchase_value' => rpress_format_amount( $customer->purchase_value ),
+						'line1'		     => $line1,
+						'line2'		     => $line2,
+						'country'        => $country,
+						'city'		     => $city,
+						'state'		     => $state,
+						'zip'		     => $zip
 					);
 				}
 			}
@@ -105,16 +136,36 @@ class RPRESS_Batch_Customers_Export extends RPRESS_Batch_Export {
 			// Export all customers
 			$offset    = 30 * ( $this->step - 1 );
 			$customers = RPRESS()->customers->get_customers( array( 'number' => 30, 'offset' => $offset ) );
-
+			
 			$i = 0;
 
 			foreach ( $customers as $customer ) {
-
-				$data[$i]['id']        = $customer->id;
-				$data[$i]['name']      = $customer->name;
-				$data[$i]['email']     = $customer->email;
-				$data[$i]['purchases'] = $customer->purchase_count;
-				$data[$i]['amount']    = rpress_format_amount( $customer->purchase_value );
+				$user_id	 =	$customer->user_id;
+				$customer_address = get_user_meta( $user_id, '_rpress_user_address', true );
+				$user 	  = get_user_by( 'id', $user_id );
+				$line1    =	$customer_address['line1'];
+				$line2    =	$customer_address['line2'];
+				$country  =	$customer_address['country'];
+				$city     =	$customer_address['city'];
+				$state    =	$customer_address['state'];
+				$zip      =	$customer_address['zip'];
+				
+				$data[$i]['id']          	= $customer->id;
+				$data[$i]['user_id']     	= $customer->user_id;
+				$data[$i]['user_login']  	= $user->user_login;
+				$data[$i]['user_pass']   	= $user->user_pass;
+				$data[$i]['payment_ids'] 	= $customer->payment_ids;
+				$data[$i]['date_created'] 	= $customer->date_created;
+				$data[$i]['name']        	= $customer->name;
+				$data[$i]['email']       	= $customer->email;
+				$data[$i]['purchase_count'] = $customer->purchase_count;
+				$data[$i]['purchase_value'] = rpress_format_amount( $customer->purchase_value );
+				$data[$i]['line1']    		= $line1;
+				$data[$i]['line2']     	    = $line2;
+				$data[$i]['country']        = $country;
+				$data[$i]['city']           = $city;
+				$data[$i]['state']          = $state;
+				$data[$i]['zip']   	        = $zip;
 
 				$i++;
 			}

@@ -21,22 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class RPRESS_Pie_Graph extends RPRESS_Graph {
 
-	/*
-
-	Simple example:
-
-	data format for each point: array( location on x, location on y )
-
-	$data = array(
-		array( 'Label'   => 'value' ),
-		array( 'Label 2' => 'value 2' ),
-	);
-
-	$graph = new RPRESS_Pie_Graph( $data );
-	$graph->display();
-
-	*/
-
 	/**
 	 * Data to graph
 	 *

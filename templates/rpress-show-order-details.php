@@ -14,6 +14,7 @@
   $email          = rpress_get_payment_user_email( $payment->ID );
   $payment_status = rpress_get_payment_status( $payment, true );
   $order_status   = rpress_get_order_status( $payment->ID );
+  $order_status_label = rpress_get_order_status_label( $order_status );
   $order_note     = rpress_get_payment_meta( $payment->ID, '_rpress_order_note', true );
   $service_type   = rpress_get_payment_meta( $payment->ID, '_rpress_delivery_type' );
   $service_label  = rpress_service_label( $service_type );
@@ -30,7 +31,7 @@
     <div>
       <header class="modal__header modal-header">
         <h2 class="modal__title modal-title"><?php esc_html_e( 'Order Details', 'restropress' ) ?>
-          <span class="button rpress-status"><?php echo esc_html( $order_status ); ?></span>
+          <span class="button rpress-status"><?php echo esc_html( $order_status_label ); ?></span>
         </h2>
         <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
       </header>

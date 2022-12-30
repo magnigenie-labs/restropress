@@ -135,14 +135,6 @@ class RPRESS_API_Keys_Table extends WP_List_Table {
 
 		$actions = array();
 
-		// if( apply_filters( 'rpress_api_log_requests', true ) ) {
-		// 	$actions['view'] = sprintf(
-		// 		'<a href="%s">%s</a>',
-		// 		esc_url( add_query_arg( array( 'page' => 'rpress-reports', 'view' => 'api_requests' 'tab' => 'logs', 's' => $item['email'] ), 'admin.php' ) ),
-		// 		__( 'View API Log', 'restropress' )
-		// 	);
-		// }
-
 		$actions['reissue'] = sprintf(
 			'<a href="%s" class="rpress-regenerate-api-key">%s</a>',
 			esc_url( wp_nonce_url( add_query_arg( array( 'user_id' => $item['id'], 'rpress_action' => 'process_api_key', 'rpress_api_process' => 'regenerate' ) ), 'rpress-api-nonce' ) ),

@@ -250,3 +250,36 @@ jQuery( function( $ ) {
 	});
 
 });
+jQuery(document).ready(function($){
+	jQuery(document).on('click','td.td_checkbox .rps-checkbox', function(e) {
+		let $this = $(this);
+		if('single' === $(this).parent().parent().parent().parent().data('addon_type')){
+			var variationName = $(this).data('variation_name');
+			$.when( verifiedCheck(variationName) ).then(function(data){
+				if( data > 1 ){
+				 	$this.removeAttr('checked');
+				}else{
+					$this.attr('checked', true);
+				}
+			})
+		}
+	});
+});
+const verifiedCheck = function(variationName){
+	let variationChecked = 0 ;
+	jQuery(`table[data-addon_type="single"] [data-variation_name="${variationName}"]`).each(function(){
+		if(jQuery(this).is(":checked")){
+			variationChecked += 1 ;
+		}
+	})
+	return variationChecked;
+}
+jQuery(document).ready(function($){
+		
+		jQuery('td.tds_checkbox .rp-checkbox').click(function() {
+		if('single' === $(this).parent().parent().parent().parent().data('addon_type')){
+        jQuery('td.tds_checkbox .rp-checkbox').not(this).prop('checked', false);
+ 	}
+        });
+    	
+});

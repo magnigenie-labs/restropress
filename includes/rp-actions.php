@@ -61,16 +61,16 @@ function rpress_upgrade_data( $upgrader_object, $options ) {
 
       foreach ( $options['plugins'] as $plugin ) {
 
-        if ( $plugin == $rpress_plugin_path_name ){
+        if ( $plugin == $rpress_plugin_path_name ) {
 
           $default_tax  = '';
           $tax_rates    = get_option( 'rpress_tax_rates', array() );
 
-          if ( is_array( $tax_rates ) && !empty( $tax_rates ) ) {
+          if ( is_array( $tax_rates ) && ! empty( $tax_rates ) ) {
             $default_tax = isset( $tax_rates[0]['rate'] ) ? $tax_rates[0]['rate'] : '';
           }
 
-          if ( !empty( $default_tax ) ) {
+          if ( ! empty( $default_tax ) ) {
             rpress_update_option( 'tax_rate', $default_tax );
           }
         }

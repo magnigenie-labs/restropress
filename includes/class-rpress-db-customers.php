@@ -321,7 +321,7 @@ class RPRESS_DB_Customers extends RPRESS_DB  {
 	 *
 	 * @since   2.4
 	*/
-	public function update_customer_email_on_user_update( $user_id = 0, $old_user_data ) {
+	public function update_customer_email_on_user_update( $user_id = 0, $old_user_data = null ) {
 
 		$customer = new RPRESS_Customer( $user_id, true );
 

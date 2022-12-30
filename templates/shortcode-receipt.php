@@ -26,6 +26,9 @@ $email          = rpress_get_payment_user_email( $payment->ID );
 $payment_status = rpress_get_payment_status( $payment, true );
 $order_status 	= rpress_get_order_status( $payment->ID );
 $order_note	  	= rpress_get_payment_meta( $payment->ID, '_rpress_order_note', true );
+$prefix         = rpress_get_option( 'sequential_prefix' );
+$postfix        = rpress_get_option( 'sequential_postfix' );
+$payment_id     = rpress_get_payment_number( $payment->ID );
 $service_type 	= rpress_get_payment_meta( $payment->ID, '_rpress_delivery_type' );
 $service_label 	= rpress_service_label( $service_type );
 $phone          = !empty( $meta['phone'] ) ? $meta['phone'] : ( !empty( $user['phone'] ) ? $user['phone'] : '' );
@@ -46,7 +49,16 @@ do_action( 'rpress_before_payment_receipt', $payment, $rpress_receipt_args );
 		<div class="rp-col-sm-12">
 			<p class="rp-center rp-tick"></p>
 	    <h3 class="rp-center rp-order-head-text"><?php esc_html_e( "We've received your order", 'restropress' ); ?></h3>
-	    <h4 class="rp-center rp-order-no-text"><?php esc_html_e( 'Order: ', 'restropress');  ?> <span>#<?php echo rpress_get_payment_number( $payment->ID ); ?></span></h4>
+	    <h4 class="rp-center rp-order-no-text">
+        <?php esc_html_e( 'Order: ', 'restropress'); ?> 
+        <span>#<?php if( rpress_get_option( 'enable_sequential' ) ) { 
+          echo $payment_id; 
+        } else { 
+          echo "$prefix$payment_id$postfix";
+        }
+        ?>      
+        </span>
+      </h4>
 	    <p class="rp-center rp-order-message-text">
 	    	<?php esc_html_e( 'A copy of your receipt has been sent to', 'restropress' ); ?>
 	    	 <span><?php echo esc_html( $email ) ; ?></span></p>
@@ -134,8 +146,9 @@ do_action( 'rpress_before_payment_receipt', $payment, $rpress_receipt_args );
         <tbody>
         <?php
         if ( $cart ) :
-          foreach ( $cart as $key => $item ) :
 
+          foreach ( $cart as $key => $item ) :
+            
             if( ! apply_filters( 'rpress_user_can_view_receipt_item', true, $item ) ) :
               continue;
             endif;
@@ -155,6 +168,9 @@ do_action( 'rpress_before_payment_receipt', $payment, $rpress_receipt_args );
               if ( is_array( $item['item_number']['options'] ) && !empty($item['item_number']['options'] ) ) {
 
                 foreach( $item['item_number']['options'] as $k => $v ) {
+                  if ( empty( $v['quantity'] ) ) {
+                    continue;
+                  }
                   $addon_id = !empty( $v['addon_id'] ) ? $v['addon_id'] : '';
                   if ( empty( $addon_id ) ) continue;
                   $cart = new RPRESS_Cart();
@@ -168,8 +184,6 @@ do_action( 'rpress_before_payment_receipt', $payment, $rpress_receipt_args );
                 }
               }
               ?>
-             <!--  <br/><br/> -->
-
               <?php if ( !empty( $special_instruction ) ) : ?>
                 <span> <?php esc_html_e( 'Special Instructions', 'restropress'); ?> : </span>
                 <small><?php echo esc_html( $special_instruction ); ?></small>
@@ -180,18 +194,25 @@ do_action( 'rpress_before_payment_receipt', $payment, $rpress_receipt_args );
           <td class="rp-center">
             <?php echo wp_kses_post( $item['quantity'] ); ?><br>
             <?php foreach( $item['item_number']['options'] as $k => $v ) { 
+                  if ( empty( $v['quantity'] ) ) {
+                    continue;
+                  }
                   $addon_id = !empty( $v['addon_id'] ) ? $v['addon_id'] : '';
                   if ( empty( $addon_id ) ) continue;
-                  $cart = new RPRESS_Cart();
-                  $addon_item_quantity = isset( $v['quantity'] ) ? $v['quantity'] : 0;;
+                  $cart = new RPRESS_Cart();  
+                  $addon_item_quantity = isset( $v['quantity'] ) ? $v['quantity'] : 0;          
                   ?>
-                  <?php echo $addon_item_quantity; ?><br>
+                  <small><?php echo esc_html( $addon_item_quantity ); ?></small> </br>   
             <?php } ?>
+            <?php  do_action( 'rpress_payment_receipt_table', $payment, $item ); ?>
           </td>
           <td class="rp-tb-right">
             <?php if( empty( $item['in_bundle'] ) ) :  ?>
               <?php echo rpress_currency_filter( rpress_format_amount( $item[ 'item_price' ] ) ); ?><br>
               <?php foreach( $item['item_number']['options'] as $k => $v ) { 
+                  if ( empty( $v['quantity'] ) ) {
+                    continue;
+                  }
                   $addon_id = !empty( $v['addon_id'] ) ? $v['addon_id'] : '';
                   if ( empty( $addon_id ) ) continue;
                   $cart = new RPRESS_Cart();

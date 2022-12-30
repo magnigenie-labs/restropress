@@ -115,7 +115,7 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 	 */
 	public function get_views() {
 
-		$base           = admin_url('admin.php?page=rpress-discounts');
+		$base           = admin_url( 'admin.php?page=rpress-discounts' );
 
 		$current        = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ): '';
 		$total_count    = '&nbsp;<span class="count">(' . $this->total_count    . ')</span>';
@@ -123,9 +123,9 @@ class RPRESS_Discount_Codes_Table extends WP_List_Table {
 		$inactive_count = '&nbsp;<span class="count">(' . $this->inactive_count  . ')</span>';
 
 		$views = array(
-			'all'      => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( 'status', $base ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All', 'restropress') . $total_count ),
-			'active'   => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'active', $base ), $current === 'active' ? ' class="current"' : '', __('Active', 'restropress') . $active_count ),
-			'inactive' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'inactive', $base ), $current === 'inactive' ? ' class="current"' : '', __('Inactive', 'restropress') . $inactive_count ),
+			'all'      => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( 'status', $base ), $current === 'all' || $current == '' ? ' class="current"' : '', __( 'All', 'restropress' ) . $total_count ),
+			'active'   => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'active', $base ), $current === 'active' ? ' class="current"' : '', __( 'Active', 'restropress' ) . $active_count ),
+			'inactive' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'inactive', $base ), $current === 'inactive' ? ' class="current"' : '', __( 'Inactive', 'restropress' ) . $inactive_count ),
 		);
 
 		return $views;

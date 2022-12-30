@@ -479,9 +479,6 @@ class RPRESS_Customer {
 	 */
 	public function attach_payment( $payment_id = 0, $update_stats = true ) {
 
-
-
-
 		if( empty( $payment_id ) ) {
 			return false;
 		}
@@ -820,7 +817,7 @@ class RPRESS_Customer {
 	 *
 	 * @since 1.0
 	 */
-	public function add_meta( $meta_key = '', $meta_value, $unique = false ) {
+	public function add_meta( $meta_key = '', $meta_value = null, $unique = false ) {
 		return RPRESS()->customer_meta->add_meta( $this->id, $meta_key, $meta_value, $unique );
 	}
 
@@ -834,7 +831,7 @@ class RPRESS_Customer {
 	 *
 	 * @since 1.0
 	 */
-	public function update_meta( $meta_key = '', $meta_value, $prev_value = '' ) {
+	public function update_meta( $meta_key = '', $meta_value = null, $prev_value = '' ) {
 		$user_ID= get_current_user_id();
 		return RPRESS()->customer_meta->update_meta( $user_ID, $meta_key, $meta_value, $prev_value );
 	}

@@ -538,7 +538,7 @@ function rpress_disconnect_customer_user_id( $args ) {
 		return;
 	}
 
-	$customer_id   = (int)$args['customer_id'];
+	$customer_id   = ( int )$args['customer_id'];
 	$nonce         = $args['_wpnonce'];
 
 	if ( ! wp_verify_nonce( $nonce, 'edit-customer' ) ) {

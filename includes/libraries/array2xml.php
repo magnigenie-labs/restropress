@@ -46,7 +46,6 @@ class Array2XML {
      */
     private static function &convert($node_name, $arr=array()) {
 
-        //print_arr($node_name);
         $xml = self::getXMLRoot();
         $node = $xml->createElement($node_name);
 

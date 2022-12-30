@@ -42,7 +42,7 @@ function rpress_process_purchase_form() {
 		do_action( 'rpress_checkout_error_checks', $valid_data, $data );
 	}
 
-	$is_ajax = isset( $_POST['rpress_ajax'] ) && !empty( $_POST['rpress_ajax'] ) ? sanitize_text_field( $_POST['rpress_ajax'] ) : null;
+	$is_ajax = isset( $_POST['rpress_ajax'] ) && ! empty( $_POST['rpress_ajax'] ) ? sanitize_text_field( $_POST['rpress_ajax'] ) : null;
 
 	// Process the login form
 	if ( isset( $_POST['rpress_login_submit'] ) ) {
@@ -150,7 +150,7 @@ function rpress_process_purchase_form() {
 	do_action( 'rpress_checkout_before_gateway', $data, $user_info, $valid_data );
 
 	// If the total amount in the cart is 0, send to the manual gateway. This emulates a free fooditem purchase
-	if ( !$purchase_data['price'] ) {
+	if ( ! $purchase_data['price'] ) {
 		// Revert to manual
 		$purchase_data['gateway'] = 'manual';
 		$_POST['rpress-gateway'] = 'manual';
@@ -307,15 +307,15 @@ function rpress_purchase_form_validate_fields() {
 * Phone number field verification
 *
 * @since 2.5
-* @return bool
+* @return bool 
 */
 function rpress_validate_phone_field() {
 
-	if ( !empty( $_POST['rpress_phone'] ) ) :
+	if ( ! empty( $_POST['rpress_phone'] ) ) :
 
     $isPhoneValidated = true;
 
-    $phone = isset( $_POST['rpress_phone'] ) && !empty( $_POST['rpress_phone'] ) ? sanitize_text_field( $_POST['rpress_phone'] ) : null;
+    $phone = isset( $_POST['rpress_phone'] ) && ! empty( $_POST['rpress_phone'] ) ? sanitize_text_field( $_POST['rpress_phone'] ) : null;
 
     $phoneDigitsLength = strlen( $phone );
 
@@ -496,7 +496,7 @@ function rpress_purchase_form_required_fields() {
 		),
 		'rpress_phone' => array(
 			'error_id' => 'invalid_phone',
-			'error_message' =>  __('Please enter a valid phone number', 'restropress')
+			'error_message' =>  __( 'Please enter a valid phone number', 'restropress' )
 		)
 	);
 
@@ -955,7 +955,7 @@ function rpress_get_purchase_form_user( $valid_data = array() ) {
 
 	// Get the user's billing address details
 	$user['address'] = array();
-	$user['address']['line1']   = ! empty( $_POST['card_address']    ) ? sanitize_text_field( $_POST['card_address']    ) : '';
+	$user['address']['line1']   = ! empty( $_POST['card_address']    ) ? sanitize_text_field( $_POST['card_address']   ) : '';
 	$user['address']['line2']   = ! empty( $_POST['card_address_2']  ) ? sanitize_text_field( $_POST['card_address_2']  ) : '';
 	$user['address']['city']    = ! empty( $_POST['card_city']       ) ? sanitize_text_field( $_POST['card_city']       ) : '';
 	$user['address']['state']   = ! empty( $_POST['card_state']      ) ? sanitize_text_field( $_POST['card_state']      ) : '';

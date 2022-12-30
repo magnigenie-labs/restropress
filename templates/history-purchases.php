@@ -37,6 +37,8 @@ if ( is_user_logged_in() ):
 
 							$service_type = get_post_meta( $payment->ID, '_rpress_delivery_type', true );
 							$order_status = get_post_meta( $payment->ID, '_order_status', true );
+ 						 	$order_status_label = rpress_get_order_status_label( $order_status );
+
 
 							$order_items = array();
 							foreach ( $payment->fooditems as $cart_item ) {
@@ -81,7 +83,7 @@ if ( is_user_logged_in() ):
 								</div>
 								<div class="rp-col-md-3 rpress-his-col">
 									<div class="rpress-order-status-wrap">
-										<span class="button rpress-status"><?php echo esc_html( $order_status ); ?></span>
+										<span class="button rpress-status"><?php echo esc_html( $order_status_label ); ?></span>
 									</div>
 								</div>	
 								<hr class="rp-line" style="border-style: dashed;">

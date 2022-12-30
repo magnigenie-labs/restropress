@@ -36,6 +36,7 @@ $number         = $payment->number;
 $payment_meta   = $payment->get_meta();
 $transaction_id = esc_attr( $payment->transaction_id );
 $cart_items     = $payment->cart_details;
+$trash 			= $payment->post_status;
 $user_id        = $payment->user_id;
 $payment_date   = strtotime( $payment->date );
 $unlimited      = $payment->has_unlimited_fooditems;
@@ -55,21 +56,34 @@ $user_address 	= !empty( $address_info['address'] ) ? $address_info['address'] .
 $user_address 	.= !empty( $address_info['flat'] ) ? $address_info['flat'] . ', ' : '';
 $user_address 	.= !empty( $address_info['city'] ) ? $address_info['city'] . ', ' : '';
 $user_address 	.= !empty( $address_info['postcode'] ) ? $address_info['postcode']  : '';
-
+$prefix  = rpress_get_option( 'sequential_prefix' );
+$postfix = rpress_get_option( 'sequential_postfix' );
+$order_id = $prefix.$number.$postfix;
 $service_type 	= $payment->get_meta( '_rpress_delivery_type' );
 $service_time 	= $payment->get_meta( '_rpress_delivery_time' );
 $service_date 	= $payment->get_meta( '_rpress_delivery_date' );
 $order_note		= $payment->get_meta( '_rpress_order_note' );
 $discount		= rpress_get_discount_price_by_payment_id( $payment_id );
 
-$customer_name  = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_info']['first_name'] . ' ' . $payment_meta['user_info']['last_name'] : $customer->name;
-$customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_info']['email'] : $customer->email;
+$customer_name  = is_array( isset( $payment_meta['user_info'] ) ) ? $payment_meta['user_info']['first_name'] . ' ' . $payment_meta['user_info']['last_name'] : $customer->name;
+$customer_email = is_array( isset( $payment_meta['user_info'] ) ) ? $payment_meta['user_info']['email'] : $customer->email;
 
 ?>
 
 <div class="wrap rpress-wrap">
 	<h2>
-		<?php printf( __( 'Order #%s', 'restropress' ), $number ); ?>
+		<?php 
+		if ( rpress_get_option( 'enable_sequential' ) ) {
+
+			printf( __( 'Order #%s', 'restropress' ), $number ); 
+
+			} else {
+
+			printf( __( 'Order #%s', 'restropress' ), $order_id );
+
+			}
+
+		?>
 		<?php do_action( 'rpress_after_order_title', $payment_id ); ?>
 	</h2>
 	<?php do_action( 'rpress_view_order_details_before', $payment_id ); ?>
@@ -223,8 +237,8 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
 
 			</div><!-- /.rpress-admin-box -->
 		</div><!-- /.inside -->
-
-								<div class="rpress-order-update-box rpress-admin-box">
+	<?php	if( $trash == 'trash') {  ?>
+		<div class="rpress-order-update-box rpress-admin-box" style="display: none;">
 			<?php do_action( 'rpress_view_order_details_update_before', $payment_id ); ?>
 			<div id="major-publishing-actions">
 				<div id="delete-action">
@@ -235,6 +249,19 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
 			</div>
 			<?php do_action( 'rpress_view_order_details_update_after', $payment_id ); ?>
 		</div><!-- /.rpress-order-update-box -->
+	<?php } else{  ?>
+		<div class="rpress-order-update-box rpress-admin-box">
+			<?php do_action( 'rpress_view_order_details_update_before', $payment_id ); ?>
+			<div id="major-publishing-actions">
+				<div id="delete-action">
+					<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment_id ), admin_url( 'admin.php?page=rpress-payment-history' ) ), 'rpress_payment_nonce' ) )?>" class="rpress-delete-payment rpress-delete"><?php esc_html_e( 'Delete Order', 'restropress' ); ?></a>
+				</div>
+				<input type="submit" class="button button-primary right" value="<?php esc_attr_e( 'Save Order', 'restropress' ); ?>" />
+				<div class="clear"></div>
+			</div>
+			<?php do_action( 'rpress_view_order_details_update_after', $payment_id ); ?>
+		</div>
+	<?php } ?>
 	</div><!-- /#rpress-order-data -->
 
 	<?php if( rpress_is_payment_complete( $payment_id ) ) : ?>
@@ -454,7 +481,7 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
 
 						<div class="rpress-delivery-details">
 							<p class="rp-service-details">
-								<strong><?php esc_html_e( 'Service type: ', 'restropress' ); ?></strong><?php //echo rpress_service_label( $service_type ); ?>
+								<strong><?php esc_html_e( 'Service type: ', 'restropress' ); ?></strong>
 								<select class="medium-text" name="rp_service_type">
 			                        <?php
 			                        $service_types = rpress_get_service_types();
@@ -465,12 +492,14 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
 							</p>
 						</div>
 
-						<?php if( !empty( $service_time ) ) : ?>
+						<?php 
+						$asap_option = rpress_get_option('enable_asap_option', '');
+						if( !empty( $service_time ) ) : ?>
 							<div class="rpress-delivery-details">
 								<p class="rp-service-time">
 									<strong><?php esc_html_e( 'Service time: ', 'restropress' ); ?></strong>
 									<select name="rp_service_time" class="medium-text">
-				                        <?php echo rp_get_store_service_hours( $service_type, false, $service_time ); ?>
+				                        <?php echo rp_get_store_service_hours( $service_type, false, $service_time ,$asap_option); ?>
 				                    </select>
 								</p>
 							</div>
@@ -558,7 +587,7 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
                       				<span class="rpress-purchased-fooditem-title">
                       					<?php if ( ! empty( $fooditem->ID ) ) : ?>
                       						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $item_id . '&action=edit' ) ); ?>">
-                      							<?php echo sanitize_title( $fooditem->get_name() );
+                      							<?php echo $fooditem->get_name();
                       							if ( isset( $cart_items[ $key ]['item_number'] ) && isset( $cart_items[ $key ]['item_number']['options'] ) ) {
                       								$price_options = $cart_items[ $key ]['item_number']['options'];
                       								if ( rpress_has_variable_prices( $item_id ) && isset( $price_id ) ) {
@@ -625,7 +654,7 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
                   					</span>
                   					<span class="rpress-price-currency"><?php echo rpress_currency_symbol( $currency_code ); ?></span>
                   					<span class="price-text rpress-payment-details-fooditem-amount"><?php echo rpress_format_amount( $price ); ?></span>
-                  					<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][amount]" class="rpress-payment-details-fooditem-amount" value="<?php echo esc_attr( $price ); ?>"/>
+                  					<input type="hidden" name="rpress-payment-details-fooditems[<?php echo $key; ?>][amount]" class="rpress-payment-details-fooditem-amount" value="<?php echo esc_attr( $item_price ); ?>"/>
                   				</li>
                   			</ul>
 
@@ -640,43 +669,48 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
 		<select multiple class="addon-items-list" name="rpress-payment-details-fooditems[<?php echo $key; ?>][addon_items][]">
 			<?php
 			$addons = get_post_meta( $fooditem->ID, '_addon_items', array() );
-			if ( is_array( $addons ) && !empty( $addons ) ) :
+			
+			if ( is_array( $addons ) && ! empty( $addons ) ) :
 				foreach( $addons as $addon_items ) :
 					if ( is_array( $addon_items ) ) :
+
 						foreach( $addon_items as $addon_key => $addon_item ) :
 							$addon_id = isset( $addon_item['category'] ) ? $addon_item['category'] : '';
+							$add_ps = isset( $addon_item['prices'] ) ? $addon_item['prices'] : array();
+																
 							$get_addons = rpress_get_addons( $addon_id );
 							if ( is_array( $get_addons ) && !empty( $get_addons ) ) :
 								foreach( $get_addons as $get_addon ) :
+									
 									$addon_item_id = $get_addon->term_id;
 									$addon_item_name = $get_addon->name;
 									$addon_slug = $get_addon->slug;
-
-
-
-									$addon_raw_price = rpress_get_addon_data( $addon_item_id, '_price' );
-									$addon_price = !empty( $addon_raw_price ) ? rpress_currency_filter( rpress_format_amount( $addon_raw_price )) : '';
 									$selected_addon_items = isset( $cart_item['addon_items'] ) ? $cart_item['addon_items'] : array();
 									if ( !empty( $selected_addon_items ) ) {
 										foreach( $selected_addon_items as $selected_addon_item ) {
 											$selected_addon_id = !empty( $selected_addon_item['addon_id'] ) ? $selected_addon_item['addon_id'] : '';
-											$item_addon_quantity = !empty( $selected_addon_item['quantity'] ) ? $selected_addon_item['quantity'] : 0;
-											if ( $selected_addon_id == $addon_item_id ) { ?>
-												<option selected data-price="<?php echo esc_attr( $addon_price ); ?>" data-id="<?php echo esc_attr( $addon_item_id ); ?>" value="<?php echo esc_attr( $addon_item_name ) . '|' . esc_attr( $addon_item_id ) . '|' . esc_attr( $addon_raw_price ) .'|'. '1' ; ?>">
+											$item_addon_quantity = !empty( $selected_addon_item['quantity'] ) ? $selected_addon_item['quantity'] : 1;
+											if ( $selected_addon_id == $addon_item_id ) { 
+									 		$addon_price = !empty( $selected_addon_item['price'] ) ? rpress_currency_filter( rpress_format_amount( $selected_addon_item['price'] ) ) : '';
+
+											?>
+												<option selected data-price="<?php echo esc_attr( $addon_price ); ?>" data-id="<?php echo esc_attr( $addon_item_id ); ?>" value="<?php echo esc_attr( $addon_item_name ) . '|' . esc_attr( $addon_item_id ) . '|' . esc_attr( $addon_price ) .'|'. '1' ; ?>">
 													<?php
-														if( !empty( $item_addon_quantity ) ) ?>
-															<small><?php echo esc_html( $item_addon_quantity )." x ";?></small><?php
+													if( class_exists( 'Rpress_addon_quantity_Admin' ) ){
+														if( ! empty( $item_addon_quantity ) ) ?>
+															<small><?php echo esc_html( $item_addon_quantity )." x ";?></small>
+														<?php } ?><?php
 															echo esc_html( $addon_item_name );
-														if( !empty( $addon_price ) ) echo ' (' . rpress_sanitize_amount( $addon_price ) . ')';
+														if( ! empty( $addon_price ) ) echo ' (' .  $addon_price  . ')';
 													?>
-												</option>	<?php
+												</option> <?php
 											}
 										}
 									} ?>
 
-                                    <option data-price="<?php echo esc_attr( $addon_price ); ?>" data-id="<?php echo esc_attr( $addon_item_id ); ?>" value="<?php echo esc_attr( $addon_item_name ) . '|' . esc_attr( $addon_item_id ). '|' . esc_attr( $addon_raw_price ) .'|'. esc_attr( $addon_item_quantity ) ; ?>">
-                                        <?php if( !empty( $addon_item_quantity ) ) echo $addon_item_quantity. " x "; ?>
-										<?php echo esc_html( $addon_item_name ); if( !empty( $addon_price ) ) echo ' (' . rpress_sanitize_amount( $addon_price ) . ')';?>
+                                    <option data-price="<?php echo esc_attr( $addon_price ); ?>" data-id="<?php echo esc_attr( $addon_item_id ); ?>" value="<?php echo esc_attr( $addon_item_name ) . '|' . esc_attr( $addon_item_id ). '|' . esc_attr( $addon_price ) .'|'. esc_attr( $item_addon_quantity ) ; ?>">
+                                        <?php if( !empty($item_addon_quantity ) ) echo $item_addon_quantity. " x "; ?>
+										<?php echo esc_html( $addon_item_name ); if( !empty( $addon_price ) ) echo ' (' .  $addon_price . ')';?>
                                     </option>
                                 <?php endforeach;
                             endif;
@@ -729,7 +763,7 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
         			</li>
         			<?php if ( rpress_use_taxes() ) : ?>
         			<li class="item_tax">
-        				<?php echo sanitize_title( rpress_get_tax_name() ) ; ?>
+        				<?php esc_html_e( 'Tax', 'restropress'); ?>
         			</li>
         			<?php endif; ?>
         			<li class="price"><?php esc_html_e( 'Actions', 'restropress' ); ?></li>
@@ -792,9 +826,7 @@ $customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_i
 				<input type="hidden" name="rpress-payment-fooditems-changed" id="rpress-payment-fooditems-changed" value="" />
 				<input type="hidden" name="rpress-payment-removed" id="rpress-payment-removed" value="{}" />
 
-				<?php //if ( ! rpress_item_quantities_enabled() ) : ?>
 					<input type="hidden" id="rpress-order-fooditem-quantity" name="rpress-order-fooditem-quantity" value="1" />
-				<?php // endif; ?>
 
 				<?php if ( ! rpress_use_taxes() ) : ?>
 					<input type="hidden" id="rpress-order-fooditem-tax" name="rpress-order-fooditem-tax" value="0" />

@@ -473,7 +473,7 @@ class RPRESS_Logging {
 	 *
 	 * Note: Do not use this file to write to the logs, please use the `rpress_debug_log` function to do so.
 	 *
-	 * @since 2.9.1
+	 * @since 2.9.2
 	 *
 	 * @return string
 	 */

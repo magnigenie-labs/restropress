@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rpress_checkout_form() {
 	$payment_mode = rpress_get_chosen_gateway();
 	$form_action  = esc_url( rpress_get_checkout_uri( 'payment-mode=' . $payment_mode ) );
-
+	$page_id = rpress_get_option('food_items_page','');
 	ob_start();
 		echo '<div id="rpress_checkout_wrap" class="rpress-section">';
 		if ( rpress_get_cart_contents() || rpress_cart_has_fees() ) :
@@ -63,6 +63,11 @@ function rpress_checkout_form() {
 			 * @since 1.0
 			 */
 			do_action( 'rpress_cart_empty' );
+  			$link = get_permalink($page_id);
+  			$view = __('Add Food Items', 'restropress');
+			?>
+			<a href="<?php echo $link;  ?>"><?php echo $view; ?></a>
+			<?php
 		endif;
 		echo '</div><!--end #rpress_checkout_wrap-->';
 	return ob_get_clean();

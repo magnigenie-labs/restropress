@@ -727,21 +727,21 @@ function rpress_privacy_billing_information_exporter( $email_address = '', $page
 				'value' => $payment->number,
 			),
 			array(
-				'name' => __( 'Order Date', 'restropress' ),
+				'name'  => __( 'Order Date', 'restropress' ),
 				'value' => date_i18n( get_option( 'date_format' ) . ' H:i:s', strtotime( $payment->date ) ),
 			),
 			array(
-				'name' => __( 'Order Completed Date', 'restropress' ),
+				'name'  => __( 'Order Completed Date', 'restropress' ),
 				'value' =>  ! empty( $payment->completed_date )
 					? date_i18n( get_option( 'date_format' ) . ' H:i:s', strtotime( $payment->completed_date ) )
 					: '',
 			),
 			array(
-				'name' => __( 'Order Total', 'restropress' ),
+				'name'  => __( 'Order Total', 'restropress' ),
 				'value' => rpress_currency_filter( rpress_format_amount( $payment->total ), $payment->currency ),
 			),
 			array(
-				'name' => __( 'Order Items', 'restropress' ),
+				'name'  => __( 'Order Items', 'restropress' ),
 				'value' => $items_purchased,
 			),
 			array(

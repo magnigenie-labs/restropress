@@ -12,4 +12,8 @@ $display       = $cart_quantity > 0 ? '' : ' style="display:none;"';
 <li class="delivery-items-options" style="display:none">
 	<?php echo get_delivery_options( true ); ?>
 </li>
-<li class="cart_item rpress_checkout" style="display:none;"><a href="<?php echo esc_url( rpress_get_checkout_uri() ); ?>"><?php esc_html_e( 'Checkout', 'restropress' ); ?></a></li>
+<li class="cart_item rpress_checkout" style="display:none;"><a class="rpress-checkout-cart button rpress-submit" data-url="<?php echo esc_url( rpress_get_checkout_uri() ); ?>" href="#"><span class="rpress-checkout-label rp-ajax-toggle-text">
+  			<?php
+    		$confirm_order_text = apply_filters( 'rp_confirm_order_text', esc_html_e( 'Checkout', 'restropress' ) );
+    		echo esc_html( $confirm_order_text ); ?>
+    	</span></a></li>

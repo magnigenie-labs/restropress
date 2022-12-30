@@ -24,7 +24,6 @@ $discounts = 0;
   <tbody>
 
     <?php foreach( $cart_items as $key => $item ) : ?>
-
       <?php if ( isset( $item['name'] ) ) :
       $item_name = isset( $item['name'] ) ? $item['name'] : '';
       $item_qty = isset( $item['item_number']['quantity'] ) ? $item['item_number']['quantity'] : '';
@@ -48,9 +47,9 @@ $discounts = 0;
               $addon_item_name = $addon_item['addon_item_name'];
               $addon_qty = $addon_item['quantity'];
               $addon_price = rpress_currency_filter( rpress_format_amount( $addon_item['price'] ) );
-              ?>
-              <!-- <td style="padding: 4px 0; vertical-align: top;"> - </td> -->
-              <td style="padding: 4px 0; font-size: 10pt;">- <?php echo $addon_qty; ?> x <?php echo $addon_item_name; ?></td>
+              $x = 'x';
+              ?>              
+              <td style="padding: 4px 0; font-size: 10pt;"><?php if(class_exists( 'Rpress_addon_quantity_Admin' )) { echo $addon_qty . " " . $x . " "; } ?><?php echo $addon_item_name; ?></td>
               <td style="padding: 4px 0; font-size: 10pt; text-align: right; vertical-align: top;"><?php echo $addon_price; ?></td>
             <?php endif; ?>
           </tr>

@@ -114,7 +114,7 @@ class RPRESS_Batch_Import {
 	 * @return bool Whether we can iport or not
 	 */
 	public function can_import() {
-		return (bool) apply_filters( 'rpress_import_capability', current_user_can( $this->capability_type ) );
+		return ( bool ) apply_filters( 'rpress_import_capability', current_user_can( $this->capability_type ) );
 	}
 
 	/**
@@ -234,7 +234,7 @@ class RPRESS_Batch_Import {
 
 		if( ! empty( $delimiter ) ) {
 
-			$array = (array) explode( $delimiter, $str );
+			$array = ( array ) explode( $delimiter, $str );
 
 		} else {
 

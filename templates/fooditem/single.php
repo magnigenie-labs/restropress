@@ -23,10 +23,10 @@ $option_view_food_items  = rpress_get_option( 'option_view_food_items' );
 
 if( rpress_get_option( 'disable_styles', false ) == 0 && $disable_category && $option_view_food_items == "grid_view" ) {
 
-  $food_item_class = "restro-vgrid";
+  $food_item_class = "rpress-grid";
 }
 else {
-  $food_item_class = "";
+  $food_item_class = "rpress-list";
 }
 
 ?>

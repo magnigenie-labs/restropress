@@ -189,7 +189,7 @@ class RPRESS_Cart {
 
 		if( is_array( $cart ) && !empty( $cart ) ) {
 			foreach ( $cart as $key => $item ) {
-				if( isset($item['id']) && !empty($item['id']) ) {
+				if( isset( $item['id']) && !empty($item['id'] ) ) {
 
 					$fooditem = new RPRESS_Fooditem( $item['id'] );
 
@@ -248,6 +248,9 @@ class RPRESS_Cart {
 			$discount   		= apply_filters( 'rpress_get_cart_content_details_item_discount_amount', $discount, $item );
 			$quantity   		= $item['quantity'];
 			$fees       		= $this->get_fees( 'fee', $item['id'], $price_id );
+			$include_tax  = rpress_get_option('prices_include_tax', true);
+
+
 
         	$addon_tax_price = $item_addon_prices = 0;
         	if ( !empty( $item['addon_items'] ) ) {
@@ -280,6 +283,9 @@ class RPRESS_Cart {
 
 				$tax = $tax_price - ( $subtotal - $discount );
 
+				if( $include_tax == 'yes'){
+					$tax = $tax_price -  $subtotal;
+				}
 
 			}
 
@@ -639,7 +645,8 @@ class RPRESS_Cart {
 
 				$reqs              = rpress_get_discount_product_reqs( $code_id );
 				$excluded_products = rpress_get_discount_excluded_products( $code_id );
-
+				$cat_reqs		   = rpress_get_discount_category_reqs( $code_id );	
+				$excluded_category = rpress_get_discount_excluded_category( $code_id );
 				// Make sure requirements are set and that this discount shouldn't apply to the whole cart
 				if ( ! empty( $reqs ) && rpress_is_discount_not_global( $code_id ) ) {
 					$count = 0 ;
@@ -925,7 +932,7 @@ class RPRESS_Cart {
 	 * @param  int        $addon_id               FoodItem ID for the cart item
 	 * @param  array      $options                   Optional parameters, used for defining variable prices
 	 */
-	public function get_addon_price( $addon_id = 0, $options, $addon_price ) {
+	public function get_addon_price( $addon_id = 0, $options = null, $addon_price = null ) {
 
 
 		if ( !empty( $addon_price ) && rpress_prices_include_tax() ) {
@@ -1093,9 +1100,13 @@ class RPRESS_Cart {
 			foreach ( $discounts as  $discount ) {
 				$code_id = rpress_get_discount_id_by_code( $discount );
 				$discount_sum += rpress_get_discount_value( $discount, 'amount' );
-				$reqs    = rpress_get_discount_product_reqs( $code_id );
+				$reqs     = rpress_get_discount_product_reqs( $code_id );
+				$cat_reqs = rpress_get_discount_category_reqs( $code_id );
 			}
 			if( empty( $reqs ) ){
+				return apply_filters( 'rpress_get_cart_discounted_amount', $discount_sum );
+			}
+			if( empty( $cat_reqs ) ){
 				return apply_filters( 'rpress_get_cart_discounted_amount', $discount_sum );
 			}
 		}
@@ -1151,18 +1162,19 @@ class RPRESS_Cart {
 	 */
 	public function get_total( $discounts = false ) {
 
-		$subtotal     = (float) $this->get_subtotal();
-
-		$discounts    = (float) $this->get_discounted_amount( $discounts );
-
-		$cart_tax     = (float) $this->get_tax();
-		$fees         = (float) $this->get_total_fees();
+		$subtotal     = ( float ) $this->get_subtotal();
+		$discounts    = ( float ) $this->get_discounted_amount( $discounts );
+		$discounts    = round( $discounts,2 );
+		$cart_tax     = ( float ) $this->get_tax();
+		$include_tax  = rpress_get_option('prices_include_tax', true);
+		$fees         = ( float ) $this->get_total_fees();
 		$rate         = rpress_get_tax_rate();
-		$total_wo_tax = ($subtotal - $discounts) + $fees;
+		$total_wo_tax = ( $subtotal - $discounts ) + $fees;
 		$total        = $subtotal - $discounts + $cart_tax + $fees ;
 
-
-
+		if( $include_tax == 'yes' ) {
+		$total        = ( $subtotal - $discounts ) + $fees;
+		}
 
 		if ( $total < 0 || ! $total_wo_tax > 0 ) {
 			$total = 0.00;
@@ -1333,7 +1345,7 @@ class RPRESS_Cart {
 		$discounts    = (float) $this->get_discounted_amount( $discounts );
 		$fees         = (float) $this->get_total_fees();
 		$rate         = rpress_get_tax_rate();
-		$cart_tax = rpress_currency_filter( rpress_format_amount( $cart_tax ) );
+		$cart_tax 	  = rpress_currency_filter( rpress_format_amount( $cart_tax ) );
 
 		$tax = max( $cart_tax, 0 );
 		$tax = apply_filters( 'rpress_cart_tax', $cart_tax );

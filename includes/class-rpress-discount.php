@@ -92,8 +92,26 @@ class RPRESS_Discount {
 
 	/**
 	 * Start Date.
+	 * Category Requirements.
 	 *
 	 * @since 1.0.6
+	 * @access protected
+	 * @var array
+	 */
+	protected $category_reqs = null;
+
+	/**
+	 * Excluded Category.
+	 *
+	 * @since 1.0.6
+	 * @access protected
+	 * @var array
+	 */
+	protected $excluded_category = null;
+	/**
+	 * Start Date.
+	 *
+	 * @since 2.9.2
 	 * @access protected
 	 * @var string
 	 */
@@ -391,6 +409,7 @@ class RPRESS_Discount {
 	 * @return bool Object var initialisation successful or not.
 	 */
 	private function setup_discount( $discount = null ) {
+
 		$this->pending = array();
 
 		if ( null == $discount ) {
@@ -433,6 +452,8 @@ class RPRESS_Discount {
 		$this->type              = $this->setup_type();
 		$this->amount            = $this->setup_amount();
 		$this->product_reqs      = $this->setup_product_requirements();
+		$this->category_reqs     = $this->setup_category_requirements();
+		$this->excluded_category = $this->setup_excluded_category();
 		$this->excluded_products = $this->setup_excluded_products();
 		$this->start             = $this->setup_start();
 		$this->expiration        = $this->setup_expiration();
@@ -542,9 +563,35 @@ class RPRESS_Discount {
 	 */
 	private function setup_product_requirements() {
 		$requirements = $this->get_meta( 'product_reqs', true );
+
 		return (array) $requirements;
 	}
+	/**
+	 * Setup the category requirements.
+	 *
+	 * @since 2.9.2
+	 * @access private
+	 *
+	 * @return array RPRESS requirements.
+	 */
+	private function setup_category_requirements() {
+		$requirements = $this->get_meta( 'category_reqs', true );
 
+		return (array) $requirements;
+	}
+	/**
+	 * Setup the excluded categories.
+	 *
+	 * @since 2.9.2
+	 * @access private
+	 *
+	 * @return array Excluded categories.
+	 */
+	private function setup_excluded_category() {
+		$excluded = $this->get_meta( 'excluded_category', true );
+
+		return (array) $excluded;
+	}
 	/**
 	 * Setup the excluded products.
 	 *
@@ -555,6 +602,7 @@ class RPRESS_Discount {
 	 */
 	private function setup_excluded_products() {
 		$excluded = $this->get_meta( 'excluded_products', true );
+
 		return (array) $excluded;
 	}
 
@@ -693,6 +741,7 @@ class RPRESS_Discount {
 		$key = '_rpress_discount_' . $key;
 
 		$value = apply_filters( 'rpress_update_discount_meta_' . $key, $value, $this->ID );
+
 		return update_post_meta( $this->ID, $key, $value, $prev_value );
 	}
 
@@ -836,6 +885,7 @@ class RPRESS_Discount {
 	 * @return array IDs of required fooditems.
 	 */
 	public function get_product_reqs() {
+
 		if ( empty( $this->product_reqs ) || ! is_array( $this->product_reqs ) ) {
 			$this->product_reqs = array();
 		}
@@ -862,7 +912,6 @@ class RPRESS_Discount {
 		if ( empty( $this->excluded_products ) || ! is_array( $this->excluded_products ) ) {
 			$this->excluded_products = array();
 		}
-
 		/**
 		 * Filters the excluded fooditems.
 		 *
@@ -871,9 +920,50 @@ class RPRESS_Discount {
 		 * @param array $excluded_products IDs of excluded products.
 		 * @param int   $ID                Discount ID.
 		 */
+
 		return (array) apply_filters( 'rpress_get_discount_excluded_products', $this->excluded_products, $this->ID );
 	}
 
+	/**
+	 * Retrieve the discount requirements for the discount to be satisfied.
+	 *
+	 * @since 2.9.2
+	 *
+	 * @return array IDs of required categories.
+	 */
+	public function get_category_reqs() {
+		if ( empty( $this->category_reqs ) || ! is_array( $this->category_reqs ) ) {
+			$this->category_reqs = array();
+		}
+
+		/**
+		 * Filters the category requirements.
+		 *
+		 * @since 2.9.2
+		 *
+		 * @param array $category_reqs IDs of required category.
+		 * @param int   $ID           Discount ID.
+		 */
+		return (array) apply_filters( 'rpress_get_discount_category_reqs', $this->category_reqs, $this->ID );
+	}
+
+	public function get_excluded_category() {
+		if ( empty( $this->excluded_category ) || ! is_array( $this->excluded_category ) ) {
+
+			$this->excluded_category = array();
+		}
+
+		/**
+		 * Filters the excluded categories.
+		 *
+		 * @since 2.9.2
+		 *
+		 * @param array $excluded_category IDs of excluded categories.
+		 * @param int   $ID                Discount ID.
+		 */
+
+		return (array) apply_filters( 'rpress_get_discount_excluded_category', $this->excluded_category, $this->ID );
+	}
 	/**
 	 * Retrieve the start date.
 	 *
@@ -1062,8 +1152,11 @@ class RPRESS_Discount {
 			'type'              => isset( $this->type )              ? $this->type              : '',
 			'min_price'         => isset( $this->min_price )         ? $this->min_price        : '',
 			'product_reqs'      => isset( $this->product_reqs )      ? $this->product_reqs      : array(),
+			'category_reqs'      => isset( $this->category_reqs )      ? $this->category_reqs      : array(),
 			'product_condition' => isset( $this->product_condition ) ? $this->product_condition : '',
 			'excluded_products' => isset( $this->excluded_products ) ? $this->excluded_products : array(),
+			'excluded_category' => isset( $this->excluded_category ) ? $this->excluded_category : array(),
+
 			'is_not_global'     => isset( $this->is_not_global )     ? $this->is_not_global     : false,
 			'is_single_use'     => isset( $this->is_single_use )     ? $this->is_single_use     : false,
 		);
@@ -1088,6 +1181,13 @@ class RPRESS_Discount {
 			foreach ( $discount_data['excluded_products'] as $key => $product ) {
 				if ( 0 === intval( $product ) ) {
 					unset( $discount_data['excluded_products'][ $key ] );
+				}
+			}
+		}
+		if ( ! empty( $discount_data['excluded_category'] ) ) {
+			foreach ( $discount_data['excluded_category'] as $key => $category ) {
+				if ( 0 === intval( $category ) ) {
+					unset( $discount_data['excluded_category'][ $key ] );
 				}
 			}
 		}
@@ -1337,6 +1437,7 @@ class RPRESS_Discount {
 			return false;
 		}
 
+
 		$meta = array(
 			'code'              => isset( $args['code'] )             ? $args['code']              : '',
 			'name'              => isset( $args['name'] )             ? $args['name']              : '',
@@ -1351,6 +1452,8 @@ class RPRESS_Discount {
 			'product_reqs'      => isset( $args['products'] )         ? $args['products']          : array(),
 			'product_condition' => isset( $args['product_condition'] )? $args['product_condition'] : '',
 			'excluded_products' => isset( $args['excluded-products'] )? $args['excluded-products'] : array(),
+			'category_reqs'      => isset( $args['categories'] )         ? $args['categories']          : array(),
+			'excluded_category' => isset( $args['excluded-categories'] )? $args['excluded-categories'] : array(),
 			'is_not_global'     => isset( $args['not_global'] )       ? $args['not_global']        : false,
 			'is_single_use'     => isset( $args['use_once'] )         ? $args['use_once']          : false,
 		);
@@ -1375,6 +1478,13 @@ class RPRESS_Discount {
 			foreach ( $meta['excluded_products'] as $key => $product ) {
 				if ( 0 === intval( $product ) ) {
 					unset( $meta['excluded_products'][ $key ] );
+				}
+			}
+		}
+		if ( ! empty( $meta['excluded_category'] ) ) {
+			foreach ( $meta['excluded_category'] as $key => $category ) {
+				if ( 0 === intval( $category ) ) {
+					unset( $meta['excluded_category'][ $key ] );
 				}
 			}
 		}
@@ -1587,6 +1697,7 @@ class RPRESS_Discount {
 	 * @return bool Are required products in the cart?
 	 */
 	public function is_product_requirements_met( $set_error = true ) {
+
 		$product_reqs = $this->product_reqs;
 		$excluded_ps  = $this->excluded_products;
 		$cart_items   = rpress_get_cart_contents();
@@ -1693,6 +1804,117 @@ class RPRESS_Discount {
 		 * @param string $product_condition Product condition.
 		 */
 		return (bool) apply_filters( 'rpress_is_discount_products_req_met', $return, $this->ID, $this->product_condition );
+	}
+/**
+	 * Are the categories requirements met for the discount to hold.
+	 *
+	 * @since 2.9.2
+	 *
+	 * @param bool $set_error Whether an error message be set in session.
+	 * @return bool Are required categories in the cart?
+	 */
+	public function is_categories_requirements_met( $set_error = true ) {
+		$category_reqs = $this->category_reqs;
+		$excluded_cs  = $this->excluded_category;
+		$cart_items   = rpress_get_cart_contents();
+		$cart_ids     = $cart_items ? wp_list_pluck( $cart_items, 'id' ) : null;
+		$return       = false;
+
+		foreach ( $cart_ids as $cart_id ) {
+			$terms = get_the_terms( $cart_id, 'food-category' );
+		}	
+		if ( has_term( $category_reqs, 'food-category',$cart_id ) ) {
+         $return = true;
+      	}
+		if ( empty( $category_reqs ) && empty( $excluded_cs ) ) {
+			$return = true;
+		}
+		/**
+		 * Normalize our data for categories requirements, exclusions and cart data.
+		 */
+
+		// First absint the items, then sort, and reset the array keys
+		$category_reqs = array_map( 'absint', $category_reqs );
+		asort( $category_reqs );
+		$category_reqs = array_filter( array_values( $category_reqs ) );
+
+		$excluded_cs  = array_map( 'absint', $excluded_cs );
+		asort( $excluded_cs );
+		$excluded_cs  = array_filter( array_values( $excluded_cs ) );
+
+		$cart_ids     = array_map( 'absint', $cart_ids );
+		asort( $cart_ids );
+		$cart_ids     = array_values( $cart_ids );
+	
+
+		// // Ensure we have requirements before proceeding
+		if ( ! $return && ! empty( $category_reqs ) ) {
+			
+					// Default back to true
+					$return = true;
+
+					foreach ( $category_reqs as $category_id ) {
+
+						if ( empty( $category_id ) ) {
+							continue;
+						}
+
+						if ( ! rpress_item_in_cart( $category_id ) ) {
+
+							if ( $set_error ) {
+								rpress_set_error( 'rpress-discount-error', __( 'The category requirements for this discount are not met.', 'restropress' ) );
+							}
+
+							$return = false;
+
+							break;
+
+						}
+
+					}
+
+					foreach ( $category_reqs as $category_id ) {
+
+						if ( empty( $category_id ) ) {
+							continue;
+						}
+
+						if ( rpress_item_in_cart( $category_id ) ) {
+							$return = true;
+							break;
+						}
+
+					}
+
+					if ( ! $return && $set_error ) {
+						rpress_set_error( 'rpress-discount-error', __( 'The category requirements for this discount are not met.', 'restropress' ) );
+					}
+
+		} else {
+
+			$return = true;
+
+		}
+
+		if ( ! empty( $excluded_cs ) ) {
+			if ( count( array_intersect( $cart_ids, $excluded_cs ) ) == count( $cart_ids ) ) {
+				$return = false;
+
+				if ( $set_error ) {
+					rpress_set_error( 'rpress-discount-error', __( 'This discount is not valid for the cart contents.', 'restropress' ) );
+				}
+			}
+		}
+
+		/**
+		 * Filters whether the categories requirements are met for the discount to hold.
+		 *
+		 * @since 2.9.2
+		 *
+		 * @param bool   $return            Are the categories requirements met or not.
+		 * @param int    $ID                Discount ID.
+		 */
+		return (bool) apply_filters( 'rpress_is_discount_categories_req_met', $return, $this->ID );
 	}
 
 	/**
@@ -1810,6 +2032,7 @@ class RPRESS_Discount {
 				! $this->is_maxed_out( $set_error ) &&
 				! $this->is_used( $user, $set_error ) &&
 				$this->is_product_requirements_met( $set_error ) &&
+				$this->is_categories_requirements_met( $set_error ) &&
 				$this->is_min_price_met( $set_error )
 			) {
 				$return = true;

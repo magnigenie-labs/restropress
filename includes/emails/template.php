@@ -156,8 +156,8 @@ add_action( 'template_redirect', 'rpress_display_email_template_preview' );
  */
 function rpress_get_email_body_content( $payment_id = 0, $payment_data = array(), $order_status='' ) {
 
-    $default_email_body = __( "Dear", "restro-press" ) . " {name},\n\n";
-    $default_email_body .= __( "Thank you for your order. Here are the list of items that you have ordered", "restro-press" ) . "\n\n";
+    $default_email_body = __( "Dear", "restropress" ) . " {name},\n\n";
+    $default_email_body .= __( "Thank you for your order. Here are the list of items that you have ordered", "restropress" ) . "\n\n";
     $default_email_body .= "{fooditem_list}\n\n";
     $default_email_body .= "{sitename}";
 

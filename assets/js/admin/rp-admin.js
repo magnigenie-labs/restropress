@@ -738,14 +738,6 @@ jQuery(document)
               var amount = $('input[name="rpress-payment-details-fooditems[' + key + '][amount]"]')
                 .val();
 
-              // if ( $('input[name="rpress-payment-details-fooditems['+key+'][item_tax]"]') ) {
-              //   var fees = $('input[name="rpress-payment-details-fooditems['+key+'][item_tax]"]').val();
-              // }
-
-              // if ( $('input[name="rpress-payment-details-fooditems['+key+'][fees]"]') ) {
-              //   var fees = $.parseJSON( $('input[name="rpress-payment-details-fooditems['+key+'][fees]"]').val() );
-              // }
-
               var currently_removed = $('input[name="rpress-payment-removed"]')
                 .val();
               currently_removed = $.parseJSON(currently_removed);
@@ -905,8 +897,6 @@ jQuery(document)
             var IndexCount = count - 1;
             var clone = $('#rpress-purchased-items div.row:last')
               .clone();
-            // var Name = $('#rpress-purchased-items div.row:last').find('select').attr('name');
-
             clone.find('.fooditem span.rpress-purchased-fooditem-title')
               .html('<a href="post.php?post=' + fooditem_id + '&action=edit"></a>');
             clone.find('.fooditem span.rpress-purchased-fooditem-title a')
@@ -1144,10 +1134,7 @@ jQuery(document)
                 data: postData,
                 url: ajaxurl,
                 success: function (response) {
-                  //$this.parents('.rpress-add-fooditem-to-purchase').find('span.rpress-fooditem-price').html(response);
-                  //$this.parents('.rpress-add-fooditem-to-purchase').find('input.rpress-order-fooditem-price').val(response);
-                  //$('.rpress_price_options_select').remove();
-                  //$(response).insertAfter( $this.next() );
+                  
                 }
               })
                 .fail(function (data) {
@@ -1487,7 +1474,7 @@ jQuery(document)
 
               // If the media frame already exists, reopen it.
               if (file_frame) {
-                //file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
+                
                 file_frame.open();
                 return;
               }
@@ -1885,17 +1872,7 @@ jQuery(document)
                   .empty();
               },
               success: function (data) {
-                // Remove all options but those that are selected
-                // $('option:not(:selected)', select).remove();
-                // $.each( data, function( key, item ) {
-                //   // Add any option that doesn't already exist
-                //   if( ! $('option[value="' + item.id + '"]', select).length ) {
-                //     select.prepend( '<option value="' + item.id + '">' + item.name + '</option>' );
-                //   }
-                // });
-                // // Update the options
-                // $('.rpress-select-chosen').trigger('chosen:updated');
-                // select.next().find('input').val(val);
+                
               }
             })
               .fail(function (response) {

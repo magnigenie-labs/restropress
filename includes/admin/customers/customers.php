@@ -477,7 +477,7 @@ function rpress_customers_view( $customer ) {
 							<td><?php echo esc_html( $fooditem->post_title ); ?></td>
 							<td>
 								<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $fooditem->ID ) ); ?>">
-									<?php esc_html_e('View Item', 'restropress'); ?>
+									<?php esc_html_e( 'View Item', 'restropress' ); ?>
 								</a>
 							</td>
 						</tr>
@@ -531,7 +531,7 @@ function rpress_customer_notes_view( $customer ) {
 			'post__in'       => explode( ',', $customer->payment_ids ),
 			'orderby'        => 'date',
 			'posts_per_page' => 1
-		));
+		) );
 
 		$last_payment_date = '';
 
@@ -754,7 +754,7 @@ function rpress_verify_customer_notice( $customer ) {
 	echo '<div class="update error"><p>';
 	esc_html_e( 'This customer\'s user account is pending verification.', 'restropress' );
 	echo ' ';
-	echo '<a href="' .esc_url($url)  . '">' . __( 'Verify account.', 'restropress' ) . '</a>';
+	echo '<a href="' .esc_url( $url )  . '">' . __( 'Verify account.', 'restropress' ) . '</a>';
 	echo "\n\n";
 
 	echo '</p></div>';

@@ -366,7 +366,7 @@ function rpress_v20_upgrade_sequential_payment_numbers() {
 
 		$prefix  = rpress_get_option( 'sequential_prefix' );
 		$postfix = rpress_get_option( 'sequential_postfix' );
-		$number  = ! empty( $_GET['custom'] ) ? absint( $_GET['custom'] ) : intval( rpress_get_option( 'sequential_start', 1 ) );
+		$number  = ! empty( $_GET['custom'] ) ? absint( $_GET['custom'] ) :intval( rpress_get_option( 'enable_sequential' ) );
 
 		foreach( $payments as $payment ) {
 
@@ -379,6 +379,7 @@ function rpress_v20_upgrade_sequential_payment_numbers() {
 			$number++;
 
 		}
+		
 
 		// Payments found so upgrade them
 		$step++;
@@ -389,11 +390,10 @@ function rpress_v20_upgrade_sequential_payment_numbers() {
 			'custom'      => $number,
 			'total'       => $total
 		), admin_url( 'index.php' ) );
+
 		wp_redirect( $redirect ); exit;
 
 	} else {
-
-
 		// No more payments found, finish up
 		RPRESS()->session->set( 'upgrade_sequential', null );
 		delete_option( 'rpress_doing_upgrade' );

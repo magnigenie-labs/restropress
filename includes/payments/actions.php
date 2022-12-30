@@ -608,3 +608,19 @@ function rpress_recovery_verify_logged_in( $verified_data, $post_data ) {
 	}
 }
 add_action( 'rpress_checkout_error_checks', 'rpress_recovery_verify_logged_in', 10, 2 );
+
+/**
+ * updating the option value of sequential order number.
+ *
+ * @since 1.0
+ * @param $old_value
+ * @param $value
+ */
+function rpress_sequential_order_number_update(  $old_value, $value ){
+	if( isset( $value['enable_sequential'] ) && !empty( $value['enable_sequential'] ) ){
+		if( $old_value['enable_sequential'] != $value['enable_sequential'] ){
+			update_option( 'rpress_last_payment_number',null );
+		}
+	}
+}
+add_action( 'update_option_rpress_settings', 'rpress_sequential_order_number_update', 10, 2 );

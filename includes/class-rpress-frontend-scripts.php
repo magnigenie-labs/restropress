@@ -313,7 +313,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       $position = rpress_get_item_position_in_cart( $post->ID );
 
     $has_purchase_links = false;
-    if ((!empty($post->post_content) && (has_shortcode($post->post_content, 'purchase_link') || has_shortcode($post->post_content, 'fooditems'))) || is_post_type_archive('fooditem'))
+    if ( ( ! empty( $post->post_content ) && ( has_shortcode( $post->post_content, 'purchase_link' ) || has_shortcode( $post->post_content, 'fooditems' ) ) ) || is_post_type_archive( 'fooditem' ) )
       $has_purchase_links = true;
 
     $pickup_time_enabled = rpress_is_service_enabled( 'pickup' );
@@ -379,38 +379,38 @@ if ( ! defined( 'ABSPATH' ) ) {
       return;
     }
 
-    if( !is_restropress_page() ) {
+    if( ! is_restropress_page() ) {
       return;
     }
 
     // Use minified libraries if SCRIPT_DEBUG is turned off
-    $suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min';
+    $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
     $file = 'rpress' . $suffix . '.css';
     $templates_dir = rpress_get_theme_template_dir_name();
 
-    $child_theme_style_sheet    = trailingslashit(get_stylesheet_directory()) . $templates_dir . $file;
-    $child_theme_style_sheet_2  = trailingslashit(get_stylesheet_directory()) . $templates_dir . 'rpress.css';
-    $parent_theme_style_sheet   = trailingslashit(get_template_directory()) . $templates_dir . $file;
-    $parent_theme_style_sheet_2 = trailingslashit(get_template_directory()) . $templates_dir . 'rpress.css';
-    $rpress_plugin_style_sheet  = trailingslashit(rpress_get_templates_dir()) . $file;
+    $child_theme_style_sheet    = trailingslashit( get_stylesheet_directory() ) . $templates_dir . $file;
+    $child_theme_style_sheet_2  = trailingslashit( get_stylesheet_directory() ) . $templates_dir . 'rpress.css';
+    $parent_theme_style_sheet   = trailingslashit( get_template_directory() ) . $templates_dir . $file;
+    $parent_theme_style_sheet_2 = trailingslashit( get_template_directory() ) . $templates_dir . 'rpress.css';
+    $rpress_plugin_style_sheet  = trailingslashit( rpress_get_templates_dir() ) . $file;
 
     // Look in the child theme directory first, followed by the parent theme, followed by the RPRESS core templates directory
     // Also look for the min version first, followed by non minified version, even if SCRIPT_DEBUG is not enabled.
     // This allows users to copy just rpress.css to their theme
-    if (file_exists($child_theme_style_sheet) || (!empty($suffix) && ($nonmin = file_exists($child_theme_style_sheet_2)))) {
-      if (!empty($nonmin)) {
-        $url = trailingslashit(get_stylesheet_directory_uri()) . $templates_dir . 'rpress.css';
+    if ( file_exists( $child_theme_style_sheet ) || ( ! empty( $suffix ) && ( $nonmin = file_exists( $child_theme_style_sheet_2 ) ) ) ) {
+      if ( ! empty( $nonmin ) ) {
+        $url = trailingslashit( get_stylesheet_directory_uri() ) . $templates_dir . 'rpress.css';
       } else {
-        $url = trailingslashit(get_stylesheet_directory_uri()) . $templates_dir . $file;
+        $url = trailingslashit( get_stylesheet_directory_uri() ) . $templates_dir . $file;
       }
-    } elseif (file_exists($parent_theme_style_sheet) || (!empty($suffix) && ($nonmin = file_exists($parent_theme_style_sheet_2)))) {
-      if (!empty($nonmin)) {
-        $url = trailingslashit(get_template_directory_uri()) . $templates_dir . 'rpress.css';
+    } elseif ( file_exists( $parent_theme_style_sheet ) || ( ! empty( $suffix ) && ( $nonmin = file_exists( $parent_theme_style_sheet_2 ) ) ) ) {
+      if ( ! empty( $nonmin ) ) {
+        $url = trailingslashit( get_template_directory_uri() ) . $templates_dir . 'rpress.css';
       } else {
-        $url = trailingslashit(get_template_directory_uri()) . $templates_dir . $file;
+        $url = trailingslashit( get_template_directory_uri() ) . $templates_dir . $file;
       }
-    } elseif (file_exists( $rpress_plugin_style_sheet ) || file_exists( $rpress_plugin_style_sheet ) ) {
+    } elseif ( file_exists( $rpress_plugin_style_sheet ) || file_exists( $rpress_plugin_style_sheet ) ) {
       $url = trailingslashit( rpress_get_templates_url() ) . $file;
     }
 
@@ -523,6 +523,10 @@ if ( ! defined( 'ABSPATH' ) ) {
         color: #fff;
         border: 1px solid <?php echo sanitize_hex_color( $primary_color ); ?>;
       }
+      .rpress_fooditem.rpress-grid .rpress_purchase_submit_wrapper span.add-icon svg,
+      .rpress_fooditem.rpress-list .rpress_purchase_submit_wrapper span.add-icon svg {
+        fill: <?php echo sanitize_hex_color( $primary_color ); ?>;
+      }
       .button.rpress-submit:active,
       .button.rpress-submit:focus,
       .button.rpress-submit:hover,
@@ -532,8 +536,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         border: 1px solid <?php echo sanitize_hex_color( $primary_color ); ?>;
       }
       .delivery-change,
-      .special-inst a,
-      .special-margin a,
+      .special-inst span,
+      .special-margin span,
       .rpress-clear-cart,
       .cart-action-wrap a,
       .rpress_fooditems_list h5.rpress-cat,
@@ -576,6 +580,10 @@ if ( ! defined( 'ABSPATH' ) ) {
       body.rpress-dinein-menuitem a.rpress-add-to-cart.button.rpress-submit.rp-loading:after{
         border-color: <?php echo sanitize_hex_color( $primary_color ); ?> transparent <?php echo sanitize_hex_color( $primary_color ); ?> transparent;
       }
+
+      body a.rpress-add-to-cart.button.rpress-submit.rp-loading:after{
+        border-top-color: <?php echo sanitize_hex_color( $primary_color ) ?>;
+        border-bottom-color: <?php echo sanitize_hex_color( $primary_color ) ?>;
     </style>
     <?php
   }

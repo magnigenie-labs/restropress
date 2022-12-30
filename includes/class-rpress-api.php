@@ -198,7 +198,7 @@ class RPRESS_API {
 				else
 					$this->invalid_auth();
 			endif;
-		} elseif ( !empty( $wp_query->query_vars['rpress-api'] ) && $wp_query->query_vars['rpress-api'] == 'products' ) {
+		} elseif ( ! empty( $wp_query->query_vars['rpress-api'] ) && $wp_query->query_vars['rpress-api'] == 'products' ) {
 			$this->is_valid_request = true;
 			$wp_query->set( 'key', 'public' );
 		}
@@ -1231,6 +1231,7 @@ class RPRESS_API {
 				$discount_list['discounts'][$count]['status']                = $discount->post_status;
 				$discount_list['discounts'][$count]['product_requirements']  = rpress_get_discount_product_reqs( $discount->ID );
 				$discount_list['discounts'][$count]['requirement_condition'] = rpress_get_discount_product_condition( $discount->ID );
+				$discount_list['discounts'][$count]['category_requirements']  = rpress_get_discount_category_reqs( $discount->ID );
 				$discount_list['discounts'][$count]['global_discount']       = rpress_is_discount_not_global( $discount->ID );
 				$discount_list['discounts'][$count]['single_use']            = rpress_discount_is_single_use( $discount->ID );
 
@@ -1254,6 +1255,7 @@ class RPRESS_API {
 				$discount_list['discounts'][0]['status']                     = get_post_field( 'post_status', $discount );
 				$discount_list['discounts'][0]['product_requirements']       = rpress_get_discount_product_reqs( $discount );
 				$discount_list['discounts'][0]['requirement_condition']      = rpress_get_discount_product_condition( $discount );
+				$discount_list['discounts'][$count]['category_requirements']  = rpress_get_discount_category_reqs( $discount->ID );
 				$discount_list['discounts'][0]['global_discount']            = rpress_is_discount_not_global( $discount );
 				$discount_list['discounts'][0]['single_use']                 = rpress_discount_is_single_use( $discount );
 

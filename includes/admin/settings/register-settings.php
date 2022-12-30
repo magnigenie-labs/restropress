@@ -451,7 +451,7 @@ function rpress_get_registered_settings() {
 						'id'   => 'enable_sequential',
 						'name' => __( 'Sequential Order Numbers', 'restropress' ),
 						'desc' => __( 'Check this box to enable sequential order numbers.', 'restropress' ),
-						'type' => 'checkbox',
+						'type' => 'text',
 					),
 					'sequential_prefix' => array(
 						'id'   => 'sequential_prefix',
@@ -538,6 +538,25 @@ function rpress_get_registered_settings() {
 						),
 						'std' => '12hrs',
 					),
+					'wordpress_time' => array(
+						'id'   => 'wordpress_time',
+						'name' => __( 'Wordpress Time Zone', 'restropress' ),
+						'desc' => sprintf( __( 'Set Coordinated Universal Time <a href="%s" target="_blank">Time Zone</a> <br><br><i><b>Important Notice: You need to setup  Wordpress time zone as per your required counrtry first.</b></i>','restropress' ),admin_url( 'options-general.php#timezone_string' ) ),
+						'type' => 'descriptive_text',
+					),
+					'enable_asap_option' => array(
+						'id'            => 'enable_asap_option',
+						'name'          => __( 'Enable ASAP option', 'restropress' ),
+						'desc'          => __( 'Check this box if you want to add ASAP option on your time slot', 'restropress' ),
+						'type' => 'checkbox',
+						
+					),
+					'enable_asap_option_only' => array(
+                        'id'            => 'enable_asap_option_only',
+                        'name'          => __( 'Enable ASAP option Only', 'restropress' ),
+                        'desc'          => __( 'Check this box if you want to add ASAP as only option on your time slot', 'restropress' ),
+                        'type' => 'checkbox',
+                    ),
 					'open_time' => array(
 						'id'            => 'open_time',
 						'name'          => __( 'Open Time', 'restropress' ),
@@ -1411,7 +1430,6 @@ function rpress_get_registered_settings_sections() {
 			'site_terms'         => __( 'Terms of Agreement', 'restropress' ),
 		) ),
 		'privacy'    => apply_filters( 'rpress_settings_section_privacy', array(
-			// 'general'      => __( 'General', 'restropress' ),
 			'export_erase' => __( 'Export & Erase', 'restropress' ),
 		) ),
     'sms_notification' => apply_filters( 'rpress_settings_section_sms_notification', array() ),

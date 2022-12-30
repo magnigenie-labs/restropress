@@ -244,7 +244,7 @@ function rpress_add_fooditem_filters() {
 			$tag_labels = rpress_get_taxonomy_labels( 'fooditem_tag' );
 			echo "<option value=''>" . sprintf( __( 'Show all %s', 'restropress' ), strtolower( $tag_labels['name'] ) ) . "</option>";
 			foreach ( $terms as $term ) {
-				$selected = isset( $_GET['fooditem_tag']) && $_GET['fooditem_tag'] == $term->slug ? ' selected="selected"' : '';
+				$selected = isset( $_GET['fooditem_tag'] ) && $_GET['fooditem_tag'] == $term->slug ? ' selected="selected"' : '';
 				echo '<option value="' . esc_attr( $term->slug ) . '"' . $selected . '>' . esc_html( $term->name ) .' (' . $term->count .')</option>';
 			}
 			echo "</select>";

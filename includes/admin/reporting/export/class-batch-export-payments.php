@@ -152,8 +152,20 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 
 				if ( $fooditems ) {
 					foreach ( $fooditems as $key => $fooditem ) {
-
+							
 						$id  = isset( $payment_meta['cart_details'] ) ? $fooditem['id'] : $fooditem;
+
+							$title = $id['name'];
+							$add_items = $id['item_number'];
+							$item_name = array();
+
+							foreach( $add_items['options'] as $key => $add_item ){
+								
+								$item_name[] = isset( $add_item['addon_item_name'] ) ? $add_item['addon_item_name'] : false;
+							}
+							
+							$addon_list = implode( " ", $item_name );
+
 						$qty = isset( $fooditem['quantity'] ) ? $fooditem['quantity'] : 1;
 
 						if ( isset( $fooditem['price'] ) ) {
@@ -165,12 +177,21 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 						}
 
 						$fooditem_tax      = isset( $fooditem['tax'] ) ? $fooditem['tax'] : 0;
-						$instruction = isset( $fooditem['instruction'] ) ? $fooditem['instruction'] : '';
+
+						if ( isset( $fooditem['instruction'] ) ) {
+							
+							$instruction = $fooditem['instruction'];
+							if ( ! empty( $instruction ) ) {
+								$instruction .= $instruction;
+							}
+							$instruction .= '  ';
+						}
+						
 						$fooditem_price_id = isset( $fooditem['item_number']['options']['price_id'] ) ? absint( $fooditem['item_number']['options']['price_id'] ) : false;
 
 						/* Set up verbose product column */
 
-						$products .= html_entity_decode( get_the_title( $id ) );
+						$products .= html_entity_decode( $title ) .'|'. $addon_list;
 
 						if ( $qty > 1 ) {
 							$products .= html_entity_decode( ' (' . $qty . ')' );
@@ -184,6 +205,7 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 							if ( ! empty( $sku ) ) {
 								$skus .= $sku;
 							}
+							$skus .= '  ';
 						}
 
 						if ( isset( $fooditems[ $key ]['item_number'] ) && isset( $fooditems[ $key ]['item_number']['options'] ) ) {
@@ -199,14 +221,11 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 						if ( $key != ( count( $fooditems ) -1 ) ) {
 
 							$products .= ' / ';
-
-							if( rpress_use_skus() ) {
-								$skus .= ' / ';
-							}
 						}
+						
 
 						/* Set up raw products column - Nothing but product names */
-						$products_raw .= html_entity_decode( get_the_title( $id ) ) . '|' . $price . '{' . $fooditem_tax . '}';
+						$products_raw .= html_entity_decode( $title ) .'|'. $addon_list . '|' . $price . '{' . $fooditem_tax . '}';
 
 						// if we have a Price ID, include it.
 						if ( false !== $fooditem_price_id ) {

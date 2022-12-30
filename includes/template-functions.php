@@ -186,7 +186,7 @@ function rpress_get_purchase_link( $args = array() ) {
 					$add_to_cart_label = apply_filters( 'rpress_add_to_cart_text',
 					__( 'Add', 'restropress' ) );
 
-					echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label rp-ajax-toggle-text">' . $add_to_cart_label . '</span> <span class="add_icon">
+					echo '<a href="#" data-title="'.get_the_title( $fooditem->ID ).'" class="rpress-add-to-cart ' . esc_attr( $class ) . '" data-action="rpress_add_to_cart" data-fooditem-id="' . esc_attr( $fooditem->ID ) . '" ' . $data_variable . ' ' . $type . ' ' . $data_price . ' ' . $button_display . '><span class="rpress-add-to-cart-label rp-ajax-toggle-text">' . $add_to_cart_label . '</span> <span class="add-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
                       </span> </a>';
 				}
@@ -233,7 +233,7 @@ function rpress_get_purchase_link( $args = array() ) {
 
 		<?php do_action( 'rpress_purchase_link_end', $fooditem->ID, $args ); ?>
 
-	</form><!--end #<?php echo esc_attr( $form_id ); ?>-->
+	</form>
 
 
 <?php
@@ -968,7 +968,7 @@ function rpress_get_category_title( $term_slug, $id, $var ) {
 
   	rpress_get_template_part( 'fooditem/category' );
 }
-add_action('rpress_fooditems_category_title', 'rpress_get_category_title', 10, 3);
+add_action( 'rpress_fooditems_category_title', 'rpress_get_category_title', 10, 3 );
 
 /**
  * Get Cart Items

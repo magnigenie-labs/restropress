@@ -33,9 +33,6 @@ jQuery(document)
         };
         payment_form.hide();
 
-        // Show the ajax loader
-        //$this.html($this.html() + ajax_loader);
-
         $.post(rpress_scripts.ajaxurl, data, function (checkout_response) {
 
           $('#rpress_checkout_login_register')
@@ -237,30 +234,6 @@ jQuery(document)
           xhrFields: {
             withCredentials: true
           },
-
-          success: function (response) {
-            // if (is_checkout) {
-            //   $form = $("#rpress_purchase_form");
-            // }
-            // else {
-            //   $form = $this.closest("form");
-            // }
-
-            // var state_inputs = 'input[name="card_state"], select[name="card_state"], input[name="rpress_address_state"], select[name="rpress_address_state"]';
-
-            // if ('nostates' == $.trim(response)) {
-            //   var text_field = '<input type="text" name="card_state" class="card-state rpress-input required" value=""/>';
-            //   $form.find(state_inputs).replaceWith(text_field);
-            // }
-            // else {
-            //   $form.find(state_inputs).replaceWith(response);
-            // }
-
-            // if (is_checkout) {
-            //   $(document.body).trigger('rpress_cart_billing_address_updated', [response]);
-            // }
-
-          }
         })
           .fail(function (data) {
             if (window.console && window.console.log) {

@@ -22,7 +22,7 @@ function rpress_setup_rpress_post_types() {
 
 	$archives = defined( 'RPRESS_DISABLE_ARCHIVE' ) && RPRESS_DISABLE_ARCHIVE ? false : true;
 	$slug     = defined( 'RPRESS_SLUG' ) ? RPRESS_SLUG : 'fooditems';
-	$rewrite  = defined( 'RPRESS_DISABLE_REWRITE' ) && RPRESS_DISABLE_REWRITE ? false : array('slug' => $slug, 'with_front' => false);
+	$rewrite  = defined( 'RPRESS_DISABLE_REWRITE' ) && RPRESS_DISABLE_REWRITE ? false : array( 'slug' => $slug, 'with_front' => false );
 
 	$fooditem_labels =  apply_filters( 'rpress_fooditem_labels', array(
 		'name'                  => _x( '%2$s', 'fooditem post type name', 'restropress' ),
@@ -156,7 +156,7 @@ function rpress_get_default_labels() {
  */
 function rpress_get_label_singular( $lowercase = false ) {
 	$defaults = rpress_get_default_labels();
-	return ($lowercase) ? strtolower( $defaults['singular'] ) : $defaults['singular'];
+	return ( $lowercase ) ? strtolower( $defaults['singular'] ) : $defaults['singular'];
 }
 
 /**
@@ -259,7 +259,7 @@ function rpress_setup_fooditem_taxonomies() {
 			'capabilities' => array( 'manage_terms' => 'manage_product_terms','edit_terms' => 'edit_product_terms','assign_terms' => 'assign_product_terms','delete_terms' => 'delete_product_terms' )
 		)
 	);
-	register_taxonomy( 'addon_category', array('fooditem'), $category_args );
+	register_taxonomy( 'addon_category', array( 'fooditem' ), $category_args );
 	register_taxonomy_for_object_type( 'addon_category', 'fooditem' );
 
 	/** Tags */

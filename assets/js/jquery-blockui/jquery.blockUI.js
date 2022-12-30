@@ -343,7 +343,7 @@
 			if (msie || opts.forceIframe)
 				lyr1.css('opacity',0.0);
 
-			//$([lyr1[0],lyr2[0],lyr3[0]]).appendTo(full ? 'body' : el);
+		
 			var layers = [lyr1,lyr2,lyr3], $par = full ? $('body') : $(el);
 			$.each(layers, function() {
 				this.appendTo($par);
@@ -554,9 +554,6 @@
 			else
 				$(document).unbind(events, handler);
 
-		// former impl...
-		//		var $e = $('a,:input');
-		//		b ? $e.bind(events, opts, handler) : $e.unbind(events, handler);
 		}
 
 		// event handler to suppress keyboard/mouse events when blocking

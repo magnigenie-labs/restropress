@@ -163,7 +163,7 @@ class RPRESS_Print_Receipts {
     $payment    = new RPRESS_Payment( $payment_id );
 
     $payment_meta   = $payment->get_meta();
-    $address_meta = get_post_meta($payment_id,'_rpress_delivery_address',true);
+    $address_meta = get_post_meta( $payment_id,'_rpress_delivery_address',true );
     
     ob_start();
     rpress_get_template_part( 'receipt/print' ,'receipt' );
@@ -180,8 +180,8 @@ class RPRESS_Print_Receipts {
     // Store Logo / Name
     $image_path = isset( $print_settings['store_logo'] ) ? $print_settings['store_logo'] : '';
     if( $image_path != '' ) {
-      $image_type = pathinfo($image_path, PATHINFO_EXTENSION);
-      $image_data = file_get_contents($image_path);
+      $image_type = pathinfo( $image_path, PATHINFO_EXTENSION );
+      $image_data = file_get_contents( $image_path );
       $base64_img = 'data:image/'.$image_type.';base64,'.base64_encode( $image_data );
 
       $store_logo = '<img style="height: 75px; width:auto; margin: 0px auto 10px; display:block;" src="'.$base64_img.'">';
@@ -192,7 +192,7 @@ class RPRESS_Print_Receipts {
     // Customer Info (Email, Phone, Email)
     $customer_name = $payment_meta['user_info']['first_name'] . ' ' .  $payment_meta['user_info']['last_name'];
     $customer_mail = $payment_meta['email'];
-    $customer_phone = !empty($payment_meta['phone'])?$payment_meta['phone']:'';
+    $customer_phone = ! empty( $payment_meta['phone'] ) ? $payment_meta['phone']:'';
 
     // Service Type & Time
     $timezone = get_option( 'timezone_string' );
@@ -202,38 +202,40 @@ class RPRESS_Print_Receipts {
     $service_time = $payment->get_meta( '_rpress_delivery_time' );
     $service_date = $payment->get_meta( '_rpress_delivery_date' );
 
-    $service_type = !empty( $service_type ) ? ucfirst($service_type) : '';
-    $service_time = !empty( $service_time ) ? $service_time : '';
-    $service_date = !empty( $service_date ) && $service_date != 'undefined' ? date_i18n( get_option( 'date_format' ), strtotime( $service_date ) ) : '';
+    $service_type = ! empty( $service_type ) ? ucfirst($service_type) : '';
+    $service_time = ! empty( $service_time ) ? $service_time : '';
+    $service_date = ! empty( $service_date ) && $service_date != 'undefined' ? date_i18n( get_option( 'date_format' ), strtotime( $service_date ) ) : '';
 
     // Payment Type
-    $payment_type = !empty($payment->get_meta( 'gateway' ))?'<p><b>'.apply_filters( 'rpress_receipt_payment_type_text', __( 'Payment Type: ', 'restropress' ) ).'</b> '.$payment->get_meta( 'gateway' ).'</p>':'';
+    $gateway          = $payment->gateway;
+    $get_payment_type = rpress_get_gateway_admin_label( $gateway );
+    $payment_type     = ! empty( $get_payment_type )?'<p><b>'.apply_filters( 'rpress_receipt_payment_type_text', __( 'Payment Type: ', 'restropress' ) ).'</b> '.$get_payment_type.'</p>':'';
 
     // Address to be shown 
     $address_string = ''; 
-    if( !empty($service_type) && $service_type == 'Delivery' ) :
+    if( ! empty( $service_type ) && $service_type == 'Delivery' ) :
 
       $address_string.= '<p>'.apply_filters( 'rpress_receipt_payment_address_text', __( 'Address: ', 'restropress' ) ).'<b>';
 
       $address_array = array();
 
-      if( !empty( $address_meta['address'] ) ) {
+      if( ! empty( $address_meta['address'] ) ) {
         array_push( $address_array, $address_meta['address'] );
       }
 
-      if( !empty( $address_meta['flat'] ) ) {
+      if( ! empty( $address_meta['flat'] ) ) {
         array_push( $address_array, $address_meta['flat'] );
       }
 
-      if( !empty( $address_meta['city'] ) ) {
+      if( ! empty( $address_meta['city'] ) ) {
         array_push( $address_array, $address_meta['city'] );
       }
 
-      if( !empty( $address_meta['postcode'] ) ) {
+      if( ! empty( $address_meta['postcode'] ) ) {
         array_push( $address_array, $address_meta['postcode'] );
       }
 
-      $address_from_array = implode(', ', $address_array );
+      $address_from_array = implode( ', ', $address_array );
 
       $address_string.= $address_from_array;
       $address_string.= '</b></p>';
@@ -245,7 +247,7 @@ class RPRESS_Print_Receipts {
 
     // Order Note
     $payment_note = get_post_meta( $payment_id, '_rpress_order_note', true );
-    $payment_note = !empty($payment_note)?'<p> '.apply_filters( 'rpress_receipt_payment_note_text', __( 'Instructions: ', 'restropress' ) ).'<b> '.$payment_note.'</b></p>':'';
+    $payment_note = ! empty( $payment_note )?'<p> '.apply_filters( 'rpress_receipt_payment_note_text', __( 'Instructions: ', 'restropress' ) ).'<b> '.$payment_note.'</b></p>':'';
 
     // Footer Notes
     $footer_note = isset( $print_settings['footer_area_content'] ) ?$print_settings['footer_area_content']:'';

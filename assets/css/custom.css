@@ -199,9 +199,7 @@ span.cart-total {
 .rpress-cart .rpress_checkout a {
 	padding: 10px;
 	background-color: #c33332;
-	display: block;
 	border-radius: 3px;
-	font-family: 'Montserrat', sans-serif;
 	font-size: 12px;
 	font-weight: 600;
 	letter-spacing: 1px;
@@ -599,7 +597,7 @@ form#fooditem-details h6,form#fooditem-update-details h6 {
 .special-margin textarea,.special-inst textarea {
 	border: 1px solid #e4e4e4;
 }
-.special-margin a,.special-inst a {
+.special-margin span,.special-inst span {
 	color: #d4413c;
 	font-weight: 500;
 	margin-bottom: 8px;

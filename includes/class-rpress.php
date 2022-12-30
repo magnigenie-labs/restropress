@@ -21,7 +21,7 @@ final class RestroPress {
    *
    * @var string
    */
-  public $version = '2.9';
+  public $version = '2.9.5';
 
 	/**
    * The single instance of the class.
@@ -228,7 +228,7 @@ final class RestroPress {
 		if( file_exists( RP_PLUGIN_DIR . 'includes/deprecated-functions.php' ) ) {
 			require_once RP_PLUGIN_DIR . 'includes/deprecated-functions.php';
 		}
-
+		include_once RP_PLUGIN_DIR . 'includes/class-rpress-category-sorting.php';
 		require_once RP_PLUGIN_DIR . 'includes/rp-ajax-functions.php';
 		include_once RP_PLUGIN_DIR . 'includes/class-rpress-ajax.php';
 		require_once RP_PLUGIN_DIR . 'includes/template-functions.php';

@@ -9,6 +9,22 @@ function rp_getCookie(cname) {
   }
   return "";
 }
+function remove_show_service_options() {
+	jQuery('#rpressModal')
+            .removeClass('show-service-options');
+}
+
+/* Set default addons */
+function rp_checked_default_subaddon() {
+  if(jQuery('#fooditem-details .rp-addons-data-wrapper .food-item-list.active').length > 0 ) {
+      jQuery('#fooditem-details .rp-addons-data-wrapper .food-item-list.active').each(function() {
+          var element = jQuery(this).find('input');
+            if (element.hasClass('checked')) {
+                jQuery(this).find('input').prop('checked', true);
+            }
+      });
+  }
+}
 
 /* Set RestroPress Cookie */
 function rp_setCookie(cname, cvalue, ex_time) {
@@ -34,12 +50,10 @@ function rp_get_storage_data() {
 /* Display Dynamic Addon Price Based on Selected Variation */
 function show_dymanic_pricing(container, ele) {
   var price_key = ele.val();
-  
   if (price_key !== 'undefined') {
-
-    jQuery('.rp-addons-data-wrapper .food-item-list')
+    jQuery('#' + container + ' .rp-addons-data-wrapper .food-item-list')
       .removeClass('active');
-    jQuery('.rp-addons-data-wrapper .food-item-list.list_' + price_key)
+    jQuery('#' + container + ' .rp-addons-data-wrapper .food-item-list.list_' + price_key)
       .addClass('active');
   }
 }
@@ -47,8 +61,10 @@ function show_dymanic_pricing(container, ele) {
 /* Calculate Live Price On Click */
 function update_modal_live_price(fooditem_container) {
 
-  var single_price = parseFloat(jQuery('#rpressModal .cart-item-price').attr('data-price'));
-  
+  //Add changes code
+
+  var single_price = parseFloat(jQuery('#rpressModal .cart-item-price')
+    .attr('data-price'));
   var quantity = parseInt(jQuery('input[name=quantity]')
     .val());
 
@@ -58,7 +74,6 @@ function update_modal_live_price(fooditem_container) {
 
       var element = jQuery(this)
         .find('input');
-
 
       if (element.is(':checked')) {
 
@@ -70,7 +85,6 @@ function update_modal_live_price(fooditem_container) {
         var price = attrs_arr[2];
 
         single_price = parseFloat(price);
-        
       }
     });
 
@@ -87,7 +101,6 @@ function update_modal_live_price(fooditem_container) {
         var attrs_arr = attrs.split('|');
         var price = attrs_arr[2];
 
-        
         if (price != '') {
           single_price = parseFloat(single_price) + parseFloat(price);
         }
@@ -110,6 +123,7 @@ function update_modal_live_price(fooditem_container) {
     .html(rp_scripts.currency_sign + total_price_v);
   jQuery('#rpressModal .cart-item-price')
     .attr('data-current', single_price.toFixed(2));
+
 }
 
 /* RestroPress Frontend Functions */
@@ -268,6 +282,8 @@ jQuery(function ($) {
         $('#rpressModal')
           .addClass('show-service-options');
       } else {
+      	$('#rpressModal')
+          .removeClass('show-service-options');
         var action = 'rpress_show_products';
         var security = rp_scripts.show_products_nonce;
       }
@@ -307,6 +323,7 @@ jQuery(function ($) {
 
           $('#rpressModal')
             .removeClass('loading');
+          
           $('#rpressModal .modal-title')
             .html(response.data.html_title);
           $('#rpressModal .modal-body')
@@ -348,6 +365,7 @@ jQuery(function ($) {
           }
 
           update_modal_live_price('fooditem-details');
+          rp_checked_default_subaddon();
 
         }
 
@@ -819,6 +837,7 @@ jQuery(function ($) {
         return false;
       }
 
+
       var sDate = serviceDate === undefined ? rpress_scripts.current_date : serviceDate;
 
       var action = 'rpress_check_service_slot';
@@ -826,7 +845,8 @@ jQuery(function ($) {
         action: action,
         serviceType: serviceType,
         serviceTime: serviceTime,
-        service_date: sDate
+        service_date: sDate,
+
       };
 
       $.ajax({
@@ -903,7 +923,7 @@ jQuery(function ($) {
                   .html('<span class="delMethod">' + serviceLabel + ',</span> <span class="delTime"> ' + Cookies.get('delivery_date') + '</span>');
               }
             }
-
+      
             //Trigger checked slot event so that it can be used by theme/plugins
             $(document.body)
               .trigger('rpress_checked_slots', [response]);
@@ -913,6 +933,7 @@ jQuery(function ($) {
               window.location.reload();
           }
         }
+
       });
     });
 
@@ -1241,7 +1262,7 @@ jQuery(function ($) {
     });
 
   $(document)
-    .on('click', 'a.special-instructions-link', function (e) {
+    .on('click', 'span.special-instructions-link', function (e) {
       e.preventDefault();
       $(this)
         .parent('div')
@@ -1732,10 +1753,15 @@ if (performance.navigation.type == 2) {
   location.reload(true);
 }
 
-//Add new class for grid view design
-jQuery(document).ready(function($) {
-
-  if( $('.restro-vgrid').length >1 ) {
-      $('.rpress_fooditems_list').addClass("rp-grid-view");
+jQuery('.rpress_fooditems_list').find('.rpress_fooditem_inner').each(function(index, item){
+    if( 0 === jQuery(this).find('.rpress-thumbnail-holder').length ){
+      jQuery(this).addClass('no-thumbnail-img');
     }
+});
+
+jQuery(document).ready(function($){
+
+  $(document).on('change','.rp-variable-price-option', function(){
+    rp_checked_default_subaddon();
+  });
 });

@@ -4,8 +4,8 @@ Tags: Food ordering, online ordering, restaurant ordering, restaurant menu, food
 Donate link: https://paypal.me/magnigeeks
 Requires at least: 4.4
 Requires PHP: 5.5
-Tested up to: 5.8
-Stable tag: 2.9
+Tested up to: 6.1.1
+Stable tag: 2.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,25 +81,75 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == ChangeLog ==
 
-= Version 2.9 (2022-1-12) =
+= Version 2.9.5 (2022-12-12) =
 
-* Added: Service type delivery, pickup and dinein filter option
-* Fixed: Delivery and pickup filter count issue fixed
-* Fixed: Selected time slot on checkout page for store timing extension 2.0
-* Fixed: Discount coupon issue fixed
-* Fixed: show rewards points for user as per reward extension
-* Added: Add customer email id, service type, service time and order instructions on order history export report
-* Fixed: extensions price view issue in admin section
-* Fixed: Orders filter issue as per selected date
-* Added: Filter option as per order status
-* Added: Hide categories setting feature
-* Added: Food items List view and grid view setting feature
-* Added: Filter feature to get activated extesnions
+* Fixed: Price update issue as per addon quantity 
+* Updated: Addon quantity enabled for 0:00 price addon value
+* Fixed: Unrequired strings removed from cart related to addon quantity extension
+
+= Version 2.9.4 (2022-11-26) =
+
+* Fixed: Order status translation issue fixed for frontend order history page
+* Fixed: Addon quantity extension comaptibility issue fixed for updated verison RestroPress
+* Code cleanup
+
+= Version 2.9.3 (2022-11-22) =
+* Fixed: Toast notification alert popup issue fixed
+* Fixed: Removed Unnecessery strings for paypal transaction receipt
+* Fixed: Payment type details issue fixed with print receipt
+* Added: New Payment type coulomn added for admin orders table
+
+= Version 2.9.2 (2022-11-08) =
+* Updated: Update the cart empty page template
+* Added: Add filter 'rpress_special_instructions' for show product section
+* Added: Customer import feature added
+* Added: Order trash option added
+* Added: Setting option to include and exclude as per categories for discount coupon codes
+* Added: Show selected "ASAP" in admin order details section
+* Added: Add Sku and order instruction details in export report data
+* Added: New hook "rpress_purchase_receipt_after_qantity_table" added for email receipt
+* Added: Add new setting feature "Enable ASAP option Only"
+* Added: Add wordpress time zone link in setting
+* Added: Add setting option to include and exclude as per categories for discount coupon codes
+* Added: Add order history url through the email receipt for registered users 
+* Fixed: Fixed google font related privacy issue
+* Fixed: Item Popup issue fixed after click the cart change link
+* Fixed: Single addon default selection issue fixed on both backend and frontend
+* Fixed: Correct text domain added for untransalted strings
+* Fixed: Inclusive tax and discount code code calculation issue fixed
+* Fixed: Add additional fees calculation issue fixed
+* Fixed: Fix "ASAP" option issue with store-timing extension
+* Fixed: Currency issue fixed for Vietnamese Dong
+* Fixed: Sequential order setup issue fixed
+* Fixed: Removed unnecessery <a> for "Special Instruction" on frontend
+* Fixed: inclusive tax issue fixed with discount code calculation
+* Fixed: Correct product details and addon details added with order history report
+* Fixed: Deprecated errors fixed as per php version 8.0, version updated 2.9.1.1 - 2.9.2
+* Minor Code cleanup
+
+= Version 2.9.1.1 (2022-05-12) =
+* Fixed: Single addon selection issue
+* Fixed: Order filter issue in admin section
+
+= Version 2.9.1 (2022-05-04) =
+* Fixed: List view fooditems page design issue fixed
+* Minor code cleanup
+
+= Version 2.9 (2022-05-03) =
+* Added: Food items category reorder feature
+* Added: ASAP feature added
+* Added: Option to filter orders by service type
+* Added: Option to filter orders by order status
+* Added: Option to switch the view of food items layout to Grid layout
+* Added: Option to disable categories menu on the frontend
 * Added: Adding live search button for admin extensions section
-* Fixed: Export order history issue for All status
-* Added: Delivery address in order history export report
-* Added: Addon quantity feature
-* Added: Accounting setting section whith sequencial order ,SKU,Prefix and postfix features
+* Added: Filter feature to get activated extesnions
+* Added: Accounting settings section to set sequencial order numbers, SKU etc.
+* Added: Customer email, service type, service time, delivery address and order instructions on order history export report
+* Fixed: Date filter issue for orders
+* Fixed: Discount coupon related issues
+* Fixed: Extensions price display issue in admin section
+* Fixed: Export order history issue for all status
 * Minor code cleanup
 
 
@@ -525,5 +575,5 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == Upgrade Notice ==
 
-= Version 2.9 =
+= Version 2.9.4  =
 * New update for RestroPress is available. Please take a backup before the update.

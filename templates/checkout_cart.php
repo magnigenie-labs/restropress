@@ -66,13 +66,20 @@ global $post;
 
                 foreach( $cart_list_item as $k => $val ) {
 
+                  if ( empty( $val['quantity'] ) ) {
+                    continue;
+                  }
+
                   if( isset( $val['addon_item_name'] ) && isset( $val['price'] ) ) { ?>
 
                     <!-- Item Row Starts Here -->
                     <div class="rpress-checkout-addon-row">
 
+                      <!-- Item Quantity Wrap starts Here -->
+                      <span class="rpress_checkout_cart_item_qty"><?php echo esc_html( $val['quantity'] ) ; ?>&nbsp;x&nbsp;</span>
+
                       <!-- Item Title -->
-                      <span class="rpress-cart-item-title"><?php echo wp_kses_post( $val['quantity'] ); ?> x <?php echo wp_kses_post( $val['addon_item_name'] ); ?></span>
+                      <span class="rpress-cart-item-title"><?php echo wp_kses_post( $val['addon_item_name'] ); ?></span>
 
                       <!-- Item Quanity Starts Here -->
                       <span class="cart-item-quantity-wrap">
@@ -82,7 +89,7 @@ global $post;
                           $item_addon_price = !empty( $val['price'] ) ? $val['price'] : 0;
                           $addon_price = $cart->get_addon_price( $addon_id, $item, $item_addon_price );
                         ?>
-                        <span class="rpress_checkout_cart_item_qty"><?php echo esc_html( rpress_currency_filter( rpress_format_amount( $addon_price ) ) )?></span>
+                        <span class="rpress_checkout_cart_item_qty"><?php echo esc_html( rpress_currency_filter( rpress_format_amount( $addon_price ) ) ) ;?></span>
                       </span>
                       <!-- Item Quanity Ends Here -->
 

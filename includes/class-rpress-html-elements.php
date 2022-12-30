@@ -49,6 +49,7 @@ class RPRESS_HTML_Elements {
 
 		$args = wp_parse_args( $args, $defaults );
 
+
 		$product_args = array(
 			'post_type'      => 'fooditem',
 			'orderby'        => 'title',
@@ -108,8 +109,10 @@ class RPRESS_HTML_Elements {
 					}
 
 					$post       = get_post( $selected_item );
+					
 					if ( ! is_null( $post ) ) {
 						$products[] = $post;
+
 					}
 				}
 			}
@@ -433,6 +436,75 @@ class RPRESS_HTML_Elements {
 			'options'          => $options,
 			'show_option_all'  => sprintf( _x( 'All %s', 'plural: Example: "All Categories"', 'restropress' ), $category_labels['name'] ),
 			'show_option_none' => false
+		) );
+
+		return $output;
+	}
+	/**
+	 * Renders an HTML Dropdown of all the food  Categories
+	 *
+	 * @since 2.9.2
+	 * @param string $name Name attribute of the dropdown
+	 * @param int    $selected Category to select automatically
+	 * @return string $output Category dropdown
+	 */
+	public function food_categories_dropdown( $args = array() ) {
+        
+		$defaults = array(
+			'name'        => 'categories',
+			'id'          => 'categories',
+			'class'       => '',
+			'multiple'    => false,
+			'selected'    => 0,
+			'chosen'      => true,
+			'number'      => -1,
+			'placeholder' => sprintf( __( 'Choose a category', 'restropress' ), rpress_get_label_singular() ),
+			'data'        => array(
+				'search-type'        => 'food-item',
+				'search-placeholder' => sprintf( __( 'Type to search categories', 'restropress' ), rpress_get_label_plural() )
+			),
+		);
+		$args = wp_parse_args( $args, $defaults );
+
+		$category_args = array(
+			'taxonomy'		=> 'food-category',
+			'orderby'        => 'name',
+			'posts_per_page' => $args['number'],
+		);
+		$categories     = get_terms( $category_args );
+		$existing_ids = wp_list_pluck( $categories, 'term_id' );
+
+		$options    = array();
+		foreach ( $categories as $category ) {
+			$options[ absint( $category->term_id ) ] = esc_html( $category->name );
+		}
+		if( ! empty( $args['selected'] ) ) {
+			foreach ( $args['selected'] as $s_key => $s_value) {
+				if( ! array_key_exists( $s_value, $options ) ) {
+
+					$category = get_terms( $s_value );
+
+					if( $category ) {
+
+						$options[ absint($s_value ) ] = esc_html( $category->name );
+					}
+
+				}
+			}		
+		}
+
+		$output = $this->select( array(
+			'name'             => $args['name'],
+			'selected'         => $args['selected'],
+			'id'               => $args['id'],
+			'class'            => $args['class'].' rpress-category-select',
+			'options'          => $options,
+			'chosen'           => $args['chosen'],
+			'multiple'         => $args['multiple'],
+			'placeholder'      => $args['placeholder'],
+			'show_option_all'  => false,
+			'show_option_none' => false,
+			'data'             => $args['data'],
 		) );
 
 		return $output;

@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function rpress_process_profile_editor_updates( $data ) {
   // Profile field change request
-  if ( empty( $_POST['rpress_profile_editor_submit'] ) && !is_user_logged_in() ) {
+  if ( empty( $_POST['rpress_profile_editor_submit'] ) && ! is_user_logged_in() ) {
     return false;
   }
 

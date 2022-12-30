@@ -234,7 +234,6 @@ if ( ! class_exists( 'RP_Admin_Assets', false ) ) :
       $css_dir = RP_PLUGIN_URL . 'assets/css/';
 
       // Use minified libraries if SCRIPT_DEBUG is turned off
-      // $suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
       $suffix = '';
 
       wp_register_style( 'rpress-admin', $css_dir . 'rpress-admin' . $suffix . '.css', array(), RP_VERSION);

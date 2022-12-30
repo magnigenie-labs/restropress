@@ -166,12 +166,14 @@ function rpress_currency_filter( $price = '', $currency = '' ) {
 			case "AED" :
 			case "AFN" :
 			case "AMD" :
-			case "AZN" :
+			case "VND" :
 			case "CNY" :
 			case "KRW" :
 			case "BDT" :
 			case "NPR" :
 			case "TRY" :
+			case "AZN" :
+
 
 				$formatted = $symbol . $price;
 				break;
@@ -209,12 +211,13 @@ function rpress_currency_filter( $price = '', $currency = '' ) {
 			case "AED" :
 			case "AFN" :
 			case "AMD" :
-			case "AZN" :
+			case "VND" :
 			case "CNY" :
 			case "KRW" :
 			case "BDT" :
 			case "NPR" :
 			case "TRY" :
+			case "AZN" :
 
 				$formatted = $price . $symbol;
 				break;
@@ -300,7 +303,7 @@ function rpress_sanitize_array( &$array ){
     }
     else{
       // go inside this function again
-      rpress_sanitize_array($value);
+      rpress_sanitize_array( $value );
     }
   }
 

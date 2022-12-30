@@ -48,6 +48,30 @@ function rpress_include_payments_batch_import_processer( $class ) {
 	}
 
 }
+/**
+ * Register the customers batch importer
+ *
+ * @since  1.0.0
+ */
+function rpress_register_customers_batch_import() {
+	add_action( 'rpress_batch_import_class_include', 'rpress_include_customers_batch_import_processer', 10 );
+}
+add_action( 'rpress_register_batch_importer', 'rpress_register_customers_batch_import', 10 );
+
+/**
+ * Loads the customers batch process if needed
+ *
+ * @since  1.0.0
+ * @param  string $class The class being requested to run for the batch import
+ * @return void
+ */
+function rpress_include_customers_batch_import_processer( $class ) {
+
+	if ( 'RPRESS_Batch_Customers_Import' === $class ) {
+		require_once RP_PLUGIN_DIR . 'includes/admin/import/class-batch-import-customers.php';
+	}
+
+}
 
 /**
  * Register the fooditems batch importer

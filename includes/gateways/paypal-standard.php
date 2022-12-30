@@ -272,7 +272,7 @@ function rpress_process_paypal_purchase( $purchase_data ) {
 			foreach ( $purchase_data['fees'] as $fee ) {
 				if ( empty( $fee['fooditem_id'] ) && floatval( $fee['amount'] ) > '0' ) {
 					// this is a positive fee
-					$paypal_args['item_name_' . $i ] = stripslashes_deep( html_entity_decode( wp_strip_all_tags( $fee['label']."\n"."slkk" ), ENT_COMPAT, 'UTF-8' ) );
+					$paypal_args['item_name_' . $i ] = stripslashes_deep( html_entity_decode( wp_strip_all_tags( $fee['label']."\n" ), ENT_COMPAT, 'UTF-8' ) );
 					$paypal_args['quantity_' . $i ]  = '1';
 					$paypal_args['amount_' . $i ]    = rpress_sanitize_amount( $fee['amount'] );
 					$i++;

@@ -20,6 +20,8 @@ $discount_id       = absint( $_GET['discount'] );
 $discount          = rpress_get_discount( $discount_id );
 $product_reqs      = rpress_get_discount_product_reqs( $discount_id );
 $excluded_products = rpress_get_discount_excluded_products( $discount_id );
+$category_reqs     = rpress_get_discount_category_reqs( $discount_id );
+$excluded_category = rpress_get_discount_excluded_category( $discount_id );
 $condition         = rpress_get_discount_product_condition( $discount_id );
 $single_use        = rpress_discount_is_single_use( $discount_id );
 $flat_display      = rpress_get_discount_type( $discount_id ) == 'flat' ? '' : ' style="display:none;"';
@@ -136,6 +138,38 @@ $condition_display = empty( $product_reqs ) ? ' style="display:none;"' : '';
 						'placeholder' => sprintf( __( 'Select one or more %s', 'restropress' ), rpress_get_label_plural() )
 					) ); ?><br/>
 					<p class="description"><?php printf( __( '%s that this discount code cannot be applied to.', 'restropress' ), rpress_get_label_plural() ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" valign="top">
+					<label for="rpress-included-categories"><?php printf( __( 'Included categories', 'restropress' ), rpress_get_label_plural() ); ?></label>
+				</th>
+				<td>
+					<?php echo RPRESS()->html->food_categories_dropdown( array(
+						'name'        => 'categories[]',
+						'id'          => 'categories',
+						'selected'    =>$category_reqs,
+						'multiple'    => true,
+						'chosen'      => true,
+						'placeholder' => sprintf( __( 'Select one or more categories', 'restropress' ), rpress_get_label_plural() ),
+					) ); ?><br/>
+					<p class="description"><?php printf( __( 'Categories that this discount code to be applied to.', 'restropress' ), rpress_get_label_plural() ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" valign="top">
+					<label for="rpress-excluded-categories"><?php printf( __( 'Excluded categories', 'restropress' ), rpress_get_label_plural() ); ?></label>
+				</th>
+				<td>
+					<?php echo RPRESS()->html->food_categories_dropdown( array(
+						'name'        => 'excluded-categories[]',
+						'id'          => 'excluded-categories',
+						'selected'    => $excluded_category,
+						'multiple'    => true,
+						'chosen'      => true,
+						'placeholder' => sprintf( __( 'Select one or more categories', 'restropress' ), rpress_get_label_plural() ),
+					) ); ?><br/>
+					<p class="description"><?php printf( __( 'Categories that this discount code cannot to be applied to.', 'restropress' ), rpress_get_label_plural() ); ?></p>
 				</td>
 			</tr>
 			<?php do_action( 'rpress_edit_discount_form_before_start', $discount_id, $discount ); ?>

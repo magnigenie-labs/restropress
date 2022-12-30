@@ -41,7 +41,16 @@ $has_variable_prices = $fooditem_object->has_variable_prices();
 				);
 
 				do_action( 'rpress_fooditem_options_general_before_pricing' );
+				if( !empty( rpress_use_skus() ) ){ 
 
+				rpress_text_input(
+					array(
+						'id'        => 'rpress_sku',
+						'value'     => $fooditem_object->get_sku(),
+						'label'     => __( 'SKU', 'restropress' ),
+					)
+				);
+			}
 				rpress_text_input(
 					array(
 						'id'        => 'rpress_price',
@@ -76,7 +85,7 @@ $has_variable_prices = $fooditem_object->has_variable_prices();
 				<div class="rp-metaboxes rp-variable-prices <?php echo !$has_variable_prices ? 'hidden' : ''; ?>">
 					<?php
 					if( $has_variable_prices ) :
-						$prices = (array) $fooditem_object->get_prices();
+						$prices = ( array ) $fooditem_object->get_prices();
 						$current = 0;
 						foreach ( $prices as $price ) :  ?>
 							<?php include 'html-fooditem-variable-price.php'; ?>

@@ -413,6 +413,20 @@ function rpress_get_discount_excluded_products( $code_id = null ) {
 	$discount = new RPRESS_Discount( $code_id );
 	return $discount->excluded_products;
 }
+/**
+ * Retrieve the category the discount canot be applied to.
+ *
+ * @since  2.9.2
+ * @since 1.0 Updated to use RPRESS_Discount object.
+ *
+ * @param int $code_id Discount ID.
+ * @return array $excluded_category IDs of the required category.
+ */
+function rpress_get_discount_excluded_category( $code_id = null ) {
+	$discount = new RPRESS_Discount( $code_id );
+	
+	return $discount->excluded_category;
+}
 
 /**
  * Retrieve the discount product requirements.
@@ -427,7 +441,19 @@ function rpress_get_discount_product_reqs( $code_id = null ) {
 	$discount = new RPRESS_Discount( $code_id );
 	return $discount->product_reqs;
 }
-
+/**
+ * Retrieve the discount category requirements.
+ *
+ * @since 2.9.2
+ * @since 1.0 Updated to use RPRESS_Discount object.
+ *
+ * @param int $code_id Discount ID.
+ * @return array $category_reqs IDs of the required category.
+ */
+function rpress_get_discount_category_reqs( $code_id = null ) {
+	$discount = new RPRESS_Discount( $code_id );
+	return $discount->category_reqs;
+}
 /**
  * Retrieve the product condition.
  *
@@ -561,6 +587,20 @@ function rpress_discount_is_single_use( $code_id = 0 ) {
 function rpress_discount_product_reqs_met( $code_id = null, $set_error = true ) {
 	$discount = new RPRESS_Discount( $code_id );
 	return $discount->is_product_requirements_met( $set_error );
+}
+/**
+ * Checks to see if the required categories are in the cart
+ *
+ * @since 2.9.2
+ * @since 1.0 Updated to use RPRESS_Discount object.
+ *
+ * @param int  $code_id   Discount ID.
+ * @param bool $set_error Whether an error message be set in session.
+ * @return bool Are required categories in the cart for the discount to hold.
+ */
+function rpress_discount_categories_reqs_met( $code_id = null, $set_error = true ) {
+	$discount = new RPRESS_Discount( $code_id );
+	return $discount->is_categories_requirements_met( $set_error );
 }
 
 /**
@@ -952,7 +992,7 @@ function rpress_listen_for_cart_discount() {
 		return;
 	}
 
-	$code = preg_replace('/[^a-zA-Z0-9-_]+/', '', sanitize_text_field( $_REQUEST['discount'] ) );
+	$code = preg_replace( '/[^a-zA-Z0-9-_]+/', '', sanitize_text_field( $_REQUEST['discount'] ) );
 
 	RPRESS()->session->set( 'preset_discount', $code );
 }
@@ -1162,6 +1202,7 @@ function rpress_get_discount_value( $discount, $type = 'currency' ) {
     $discount_amount 	 	= rpress_get_discount_amount( $discount->ID );
     $is_not_global 			= rpress_is_discount_not_global(  $discount->ID );
    	$included_food_items 	= rpress_get_discount_product_reqs( $discount->ID );
+   	$included_categories    =rpress_get_discount_category_reqs($discount->ID);
    	$cart_item_ids 		 	= wp_list_pluck( rpress_get_cart_content_details(), 'id' );
    	$cart_item_quanties  	= wp_list_pluck( rpress_get_cart_content_details(), 'quantity' );
    	$cart_item_number 		= wp_list_pluck( rpress_get_cart_content_details(), 'item_number' );
@@ -1171,7 +1212,7 @@ function rpress_get_discount_value( $discount, $type = 'currency' ) {
 
    	if( $subtotal < $discount_amount && 'flat' === $discount_type ) $discount_amount = $subtotal;
 
-    if( !$is_not_global || empty( $included_food_items ) )
+    if( ! $is_not_global || empty( $included_food_items ) ||  empty( $included_categories ) )
     	if( 'flat' === $discount_type ){
     		$discount_value = $discount_amount;
     	}else{
@@ -1179,17 +1220,17 @@ function rpress_get_discount_value( $discount, $type = 'currency' ) {
     	}
     else{
     	foreach ( $cart_item_ids as $key => $cart_item_id ) {
-    		if ( ! empty( $included_food_items ) ) {
-    			if ( in_array( $cart_item_id, $included_food_items ) ) {
+    		if ( ! empty( $included_food_items  ) || !empty( $included_categories ) ) {
+    			if ( in_array( $cart_item_id, $included_food_items,$included_categories ) ) {
 
     				$price_id 			= rpress_get_cart_item_price_id( $cart_item_id );
     				$price 				= rpress_get_cart_item_price( $cart_item_id, [], $price_id, '' );
     				$quantity 			= $cart_item_quanties[$key];
     				$item_cart_price 	= $price * $quantity;
 					$cart_item_addon_price = 0.00;
-    				if ( !empty( $cart_item_addon_items[$key] ) ) {
+    				if ( ! empty( $cart_item_addon_items[$key] ) ) {
     					
-        				foreach ( $cart_item_addon_items[$key] as $key => $cart_item_addon_item ) {
+        				foreach ( $cart_item_addon_items[ $key ] as $key => $cart_item_addon_item ) {
         					$cart_item_addon_price = (float)$cart_item_addon_price + (float)$cart_item_addon_item['price'];
         				}
     				}

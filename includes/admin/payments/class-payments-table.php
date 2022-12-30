@@ -89,7 +89,13 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 * @since  1.0.0
 	 */
 	public $pickup_count;
-
+	/**
+	 * Total number of  trash
+	 *
+	 * @var int
+	 * @since  1.0.0
+	 */
+    public $trash_count;
 	/**
 	 * Total number of  pickup
 	 *
@@ -162,22 +168,23 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 	public function advanced_filters() {
 
-		$start_date = isset( $_GET['start-date'] )  ? sanitize_text_field( $_GET['start-date'] ) : null;
-		$end_date   = isset( $_GET['end-date'] )    ? sanitize_text_field( $_GET['end-date'] )   : null;
-		$service_date   = isset( $_GET['service-date'] )    ? sanitize_text_field( $_GET['service-date'] )   : null;
-		$status     = isset( $_GET['status'] )      ? sanitize_text_field( $_GET['status'] ): '';
+		$start_date 		= isset( $_GET['start-date'] )   ? sanitize_text_field( $_GET['start-date'] )   : null;
+		$end_date   		= isset( $_GET['end-date'] )     ? sanitize_text_field( $_GET['end-date'] )     : null;
+		$service_date   	= isset( $_GET['service-date'] ) ? sanitize_text_field( $_GET['service-date'] ) : null;
+		$status     		= isset( $_GET['status'] )       ? sanitize_text_field( $_GET['status'] )	   : '';
 
-		$all_gateways     = rpress_get_payment_gateways();
+		$all_gateways   	= rpress_get_payment_gateways();
 
-		$gateways         = array();
+		$gateways         	= array();
 		
-		$selected_gateway = isset( $_GET['gateway'] ) ? sanitize_text_field( $_GET['gateway'] ) : 'all';
+		$selected_gateway 	= isset( $_GET['gateway'] ) ? sanitize_text_field( $_GET['gateway'] ) : 'all';
 
 
 		if ( ! empty( $all_gateways ) ) {
 			$gateways['all'] = __( 'All Gateways', 'restropress' );
 
 			foreach( $all_gateways as $slug => $admin_label ) {
+				
 				$gateways[ $slug ] = $admin_label['admin_label'];
 				
 			}
@@ -193,6 +200,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			$order_statuses['all'] = __( 'Order Status', 'restropress' );
 
 			foreach( $all_order_statuses as $slug => $admin_label ) {
+				
 				$order_statuses[ $slug ] = $admin_label;
 			}
 		}
@@ -242,6 +250,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 					'show_option_none' => false
 				) );
 			}
+
 			?>
 			</span>
 			<span>/</span>
@@ -305,48 +314,51 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	public function get_views() {
 		global $rpress_options;
 		$current          = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ): '';
-		$get_services   = isset( $_GET['service-type'] ) ? sanitize_text_field( $_GET['service-type'] ): '';
-		 $service_options  = !empty( rpress_get_option( 'enable_service' ) ) ? rpress_get_option( 'enable_service' ) : 'delivery_and_pickup';
+		$get_services     = isset( $_GET['service-type'] ) ? sanitize_text_field( $_GET['service-type'] ): '';
+		$service_options  = !empty( rpress_get_option( 'enable_service' ) ) ? rpress_get_option( 'enable_service' ) : 'delivery_and_pickup';
 
-		$total_count      = '&nbsp;<span class="count">(' . $this->total_count    . ')</span>';
-		$completed_count   = '&nbsp;<span class="count">(' . $this->completed_count . ')</span>';
-		$pending_count    = '&nbsp;<span class="count">(' . $this->pending_count  . ')</span>';
-		$paid_count = '&nbsp;<span class="count">(' . $this->paid_count  . ')</span>';
-		$delivery_count =  '&nbsp;<span class="count">(' . $this->delivery_count  . ')</span>';
-		$pickup_count =  '&nbsp;<span class="count">(' . $this->pickup_count  . ')</span>';
-		$dinein_count = '&nbsp;<span class="count">(' . $this->dinein_count  . ')</span>';
+		$total_count      = '&nbsp;<span class="count">(' . $this->total_count     . ')</span>';
+		$completed_count  = '&nbsp;<span class="count">(' . $this->completed_count . ')</span>';
+		$pending_count    = '&nbsp;<span class="count">(' . $this->pending_count   . ')</span>';
+		$paid_count       = '&nbsp;<span class="count">(' . $this->paid_count      . ')</span>';
+		$delivery_count   = '&nbsp;<span class="count">(' . $this->delivery_count  . ')</span>';
+		$pickup_count     = '&nbsp;<span class="count">(' . $this->pickup_count    . ')</span>';
+		$dinein_count     = '&nbsp;<span class="count">(' . $this->dinein_count    . ')</span>';
 		$out_for_deliver_count = '&nbsp;<span class="count">(' . $this->out_for_deliver_count . ')</span>';
-
+		$trash_count = '&nbsp;<span class="count">(' . $this->trash_count . ')</span>';
 		$views = array(
-			'all'        => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( array( 'status', 'paged','service-type' ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All','restropress' ) . $total_count ),
-			'pending'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'pending', 'paged' => FALSE ) ), $current === 'pending' ? ' class="current"' : '', __('Pending','restropress' ) . $pending_count ),
-			'paid' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'paid' ? ' class="current"' : '', __('Paid','restropress' ) . $paid_count ),
-			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __('Processing','restropress' ) . $out_for_deliver_count),
+			'all'        => sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( array( 'status', 'paged','service-type' ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __( 'All','restropress' ) . $total_count ),
+			'pending'    => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'pending', 'paged' => FALSE ) ), $current === 'pending' ? ' class="current"' : '', __( 'Pending','restropress' ) . $pending_count ),
+			'paid'       => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'publish', 'paged' => FALSE ) ), $current === 'paid' ? ' class="current"' : '', __( 'Paid','restropress' ) . $paid_count ),
+			'processing' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'processing', 'paged' => FALSE ) ), $current === 'processing' ? ' class="current"' : '', __( 'Processing','restropress' ) . $out_for_deliver_count ),
+			'Trash'		 =>  sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'status' => 'trash', 'paged' => FALSE ) ), $current === 'trash' ? ' class="current"' : '', __( 'Trash','restropress' ) . $trash_count),
 		
 		);
-			$dinein_views = array();
-		if( is_plugin_active('restropress-dinein/restropress-dinein.php')) {
+
+		$dinein_views = array();
+
+		if( is_plugin_active( 'restropress-dinein/restropress-dinein.php' ) ) {
   				$dinein_views = array(
-  					'dinein' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'dinein', 'paged' => FALSE ) ), $get_services === 'dinein' ? ' class="current"' : '', __('Dinein','restropress' ) . $dinein_count ),
+  					'dinein' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'dinein', 'paged' => FALSE ) ), $get_services === 'dinein' ? ' class="current"' : '', __( 'Dinein','restropress' ) . $dinein_count ),
   				);
   		}
   		
 		if( $service_options === 'delivery_and_pickup' ) {
 			
 		$args =  array(
-					'delivery' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'delivery', 'paged' => FALSE ) ), $get_services === 'delivery' ? ' class="current"' : '', __('Delivery','restropress' ) . $delivery_count ),
-					'pickup' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'pickup', 'paged' => FALSE ) ), $get_services === 'pickup' ? ' class="current"' : '', __('Pickup','restropress' ) . $pickup_count ),
+					'delivery' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'delivery', 'paged' => FALSE ) ), $get_services === 'delivery' ? ' class="current"' : '', __( 'Delivery','restropress' ) . $delivery_count ),
+					'pickup'   => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'pickup', 'paged' => FALSE ) ), $get_services === 'pickup' ? ' class="current"' : '', __( 'Pickup','restropress' ) . $pickup_count ),
 			);
 		}
   		elseif ( $service_options === 'delivery' ) {
 
-  			$args =  array(
-  						'delivery' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'delivery', 'paged' => FALSE ) ), $get_services === 'delivery' ? ' class="current"' : '', __('Delivery','restropress' ) . $delivery_count ),
+  		$args =  array(
+  					'delivery' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'delivery', 'paged' => FALSE ) ), $get_services === 'delivery' ? ' class="current"' : '', __( 'Delivery','restropress' ) . $delivery_count ),
   			);
   		}
-  		elseif ($service_options === 'pickup') {
-  			$args =  array(
-  						'pickup' => sprintf('<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'pickup', 'paged' => FALSE ) ), $get_services === 'pickup' ? ' class="current"' : '', __('Pickup','restropress' ) . $pickup_count ),
+  		elseif ( $service_options === 'pickup' ) {
+  		$args =  array(
+  					'pickup' => sprintf( '<a href="%s"%s>%s</a>', add_query_arg( array( 'service-type' => 'pickup', 'paged' => FALSE ) ), $get_services === 'pickup' ? ' class="current"' : '', __( 'Pickup','restropress' ) . $pickup_count ),
   			);
   		}
   		
@@ -363,13 +375,14 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb' 						=> '<input type="checkbox" />', //Render a checkbox instead of text
-			'ID' 						=> __( 'Order', 'restropress' ),
-  		'date' 					=> __( 'Order Date', 'restropress' ),
+		'cb' 			=> '<input type="checkbox" />', //Render a checkbox instead of text
+		'ID' 			=> __( 'Order', 'restropress' ),
+  		'date' 			=> __( 'Order Date', 'restropress' ),
   		'service_date' 	=> __( 'Service Date', 'restropress' ),
-  		'status' 				=> __( 'Payment Status', 'restropress' ),
+  		'status' 		=> __( 'Payment Status', 'restropress' ),
   		'order_status' 	=> __( 'Order Status', 'restropress' ),
-  		'amount' 				=> __( 'Amount', 'restropress' ),
+  		'payment_type' 	=> __( 'Payment type', 'restropress' ),
+  		'amount' 		=> __( 'Amount', 'restropress' ),
 		);
 
 		return apply_filters( 'rpress_payments_table_columns', $columns );
@@ -418,48 +431,78 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 			case 'amount' :
 				$amount  = $payment->total;
-        $amount  = ! empty( $amount ) ? $amount : 0;
-        $value   = rpress_currency_filter( rpress_format_amount( $amount ), rpress_get_payment_currency_code( $payment->ID ) );
-				break;
+        		$amount  = ! empty( $amount ) ? $amount : 0;
+        		$value   = rpress_currency_filter( rpress_format_amount( $amount ), rpress_get_payment_currency_code( $payment->ID ) );
+			break;
 
 			case 'date' :
 				$date    = strtotime( $payment->date );
-        $value   = date_i18n( get_option( 'date_format' ), $date );
-				break;
+        		$value   = date_i18n( get_option( 'date_format' ), $date ). ', '. date_i18n( 'H:ia', $date );
+			break;
 
 			case 'service_date' :
 				$service_date = get_post_meta( $payment->ID, '_rpress_delivery_date', true );
 				$service_date = rpress_local_date( $service_date );
 				$service_time = get_post_meta( $payment->ID, '_rpress_delivery_time', true );
-    		$value   = !empty( $service_time ) ? $service_date . ', ' . $service_time : $service_date;
-				break;
+    			$value   = !empty( $service_time ) ? $service_date . ', ' . $service_time : $service_date;
+			break;
 
 			case 'status' :
-		  	$status = rpress_get_payment_status_label( $payment->post_status );
-		    $statuses = rpress_get_payment_statuses();
-		    $status_label = '<mark class="payment-status status-' . $payment->post_status . '" >';
-		    $status_label .= '<span> ' . $status . '</span>';
-		    $status_label .= '</mark>';
-		    $value = $status_label;
-				break;
+			  	$status = rpress_get_payment_status_label( $payment->post_status );
+			    $statuses = rpress_get_payment_statuses();
+			    $status_label = '<mark class="payment-status status-' . $payment->post_status . '" >';
+			    $status_label .= '<span> ' . $status . '</span>';
+			    $status_label .= '</mark>';
+			    $value = $status_label;
+			    if( $payment->post_status =='trash'){
+			    $status = rpress_get_payment_status_label( $payment->post_status );
+			    $statuses = rpress_get_payment_statuses();
+			    $status_label = '<mark class="payment-status status-' . 'Trash'. '" >';
+			    $status_label .= '<span style ="color: red;"> ' . 'Trash' . '</span>';
+			    $status_label .= '</mark>';
+			    $value = $status_label;
+			    }
+			break;
 
 			case 'order_status' :
-	      $order_statuses = rpress_get_order_statuses();
-	      $current_order_status = rpress_get_order_status( $payment->ID );
-		    $options = '<select data-payment-id="'.$payment->ID.'" data-current-status="'.$current_order_status.'" name="rp_order_status" class="rp_order_status rp_current_status_'.$current_order_status.'">';
+
+	      		$order_statuses = rpress_get_order_statuses();
+	      		$current_order_status = rpress_get_order_status( $payment->ID );
+		    	$options = '<select data-payment-id="'.$payment->ID.'" data-current-status="'.$current_order_status.'" name="rp_order_status" class="rp_order_status rp_current_status_'.$current_order_status.'">';
 
 		    foreach( $order_statuses as $status_id => $status_label ) {
-		    	$options .= '<option value="' . $status_id  . '" ' . rp_selected( $current_order_status, $status_id, false ) . '>' . $status_label . '</option>';
-		    }
 
-		    $options .= '</select>';
-		    $options .= '<span class="order-status-loading"></span>';
-		    $value = $options;
+		    	$options .= '<option  value="' . $status_id  . '" ' . rp_selected( $current_order_status, $status_id, false ) . '>' . $status_label . '</option>';
+		    }
+		    	$options .= '</select>';
+		    	$options .= '<span class="order-status-loading"></span>';
+		    	$value = $options;
+		    		
+		    	if( $payment->post_status =='trash'){
+
+		    	$order_statuses = rpress_get_order_statuses();
+	      		$current_order_status = rpress_get_order_status( $payment->ID );
+		    	$options = '<select style = "pointer-events: none; cursor: default;" data-payment-id="'.$payment->ID.'" data-current-status="'.$current_order_status.'" name="rp_order_status" class="rp_order_status rp_current_status_'.$current_order_status.'">';
+
+		    foreach( $order_statuses as $status_id => $status_label ) {
+
+		    	$options .= '<option  value="' . $status_id  . '" ' . rp_selected( $current_order_status, $status_id, false ) . '>' . $status_label . '</option>';
+		    }
+		    	$options .= '</select>';
+		    	$options .= '<span class="order-status-loading"></span>';
+		    	$value = $options; 
+      		}
+
+		    break;
+
+		    case 'payment_type' :
+		    	$gateway    = $payment->gateway;
+		    	$value 		= rpress_get_gateway_admin_label( $gateway );
 		    break;
 
 			default:
 				$value = isset( $payment->$column_name ) ? $payment->$column_name : '';
-				break;
+			break;
 		}
 
 		return apply_filters( 'rpress_payments_table_column', $value, $payment->ID, $column_name );
@@ -488,12 +531,12 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			$row_actions['email_links'] = '<a href="' . add_query_arg( array( 'rpress-action' => 'email_links', 'purchase_id' => $payment->ID ), $this->base_url ) . '">' . __( 'Resend Purchase Receipt', 'restropress' ) . '</a>';
 		}
 
-		$row_actions['delete'] = '<a href="' . wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment->ID ), $this->base_url ), 'rpress_payment_nonce') . '">' . __( 'Delete', 'restropress' ) . '</a>';
+		$row_actions['delete'] = '<a href="' . wp_nonce_url( add_query_arg( array( 'rpress-action' => 'delete_payment', 'purchase_id' => $payment->ID ), $this->base_url ), 'rpress_payment_nonce' ) . '">' . __( 'Delete', 'restropress' ) . '</a>';
 
 		$row_actions = apply_filters( 'rpress_payment_row_actions', $row_actions, $payment );
 
 		if ( empty( $email ) ) {
-			$email = __( '(unknown)', 'restropress' );
+			$email = __( '( unknown )', 'restropress' );
 		}
 
 		$value = $email . $this->row_actions( $row_actions );
@@ -528,30 +571,64 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		$customer_id = rpress_get_payment_customer_id( $payment->ID );
 		$cust_name = '';
 
-	    if( ! empty( $customer_id ) ) {
+		$row_actions = array();
+		if ( rpress_is_order_trashable( $payment->ID ) ) {
+		$trash_url = wp_nonce_url( add_query_arg( array(
+				'rpress-action'  => 'trash_order',
+				'purchase_id' => absint( $payment->ID ),
+			), $this->base_url ), 'rpress_payment_nonce' );
+			$row_actions['trash'] = '<a href="' . esc_url( $trash_url ) . '">' . esc_html__( 'Trash', 'restropress' ) . '</a>';
+		}elseif ( rpress_is_order_restorable( $payment->ID ) ) {
+			$restore_url = wp_nonce_url( add_query_arg( array(
+				'rpress-action'  => 'restore_order',
+				'purchase_id' => absint( $payment->ID ),
+			), $this->base_url ), 'rpress_payment_nonce' );
+			$row_actions['restore'] = '<a href="' . esc_url( $restore_url ) . '">' . esc_html__( 'Restore', 'restropress' ) . '</a>';
+
+			$delete_url = wp_nonce_url( add_query_arg( array(
+				'rpress-action'  => 'delete_order',
+				'purchase_id' => absint( $payment->ID ),
+			), $this->base_url ), 'rpress_payment_nonce' );
+			$row_actions['delete'] = '<a href="' . esc_url( $delete_url ) . '">' . esc_html__( 'Delete Permanently', 'restropress' ) . '</a>';
+
+			unset( $row_actions['view'] );
+		}
+		if ( has_filter( 'rpress_payment_row_actions' ) ) {
+			$payment = rpress_get_payment( $payment->ID );
+
+			$row_actions = apply_filters_deprecated( 'rpress_payment_row_actions', array( $row_actions, $payment ), '3.0', 'rpress_order_row_actions' );
+		}
+		$row_actions = apply_filters( 'rpress_order_row_actions', $row_actions, $payment );
+
+		$actions = $this->row_actions( $row_actions );
+
+	    if ( ! empty( $customer_id ) ) {
 	      $customer  = new RPRESS_Customer( $customer_id );
 	      $cust_name = $customer->name;
 	    }
 
 		$payment_meta = $payment->get_meta();
 
-	    $customer_name = ( !empty( $payment_meta['user_info'] ) && is_array( $payment_meta['user_info'] ) ) ? $payment_meta['user_info']['first_name'] . ' ' . $payment_meta['user_info']['last_name'] : $cust_name;
-
+	    $customer_name = ( ! empty( $payment_meta['user_info'] ) && is_array( $payment_meta['user_info'] ) ) ? $payment_meta['user_info']['first_name'] . ' ' . $payment_meta['user_info']['last_name'] : $cust_name;
+	    $prefix  = rpress_get_option( 'sequential_prefix' );
+		$postfix = rpress_get_option( 'sequential_postfix' );
 	    $service_type = rpress_get_service_type( $payment->ID );
 	    $rpress_number = get_post_meta( $payment->ID, '_rpress_payment_number' , true );
-	    if(  rpress_get_option( 'enable_sequential' )){
-	    	$alter_id = ($rpress_number) ? $rpress_number :  $payment->ID ;
+	    if ( rpress_get_option( 'enable_sequential' ) ) {
+	    	$alter_id = ( $rpress_number ) ? $rpress_number :  $payment->ID ;
 	    	$order_preview = '<a href="#" class="order-preview" data-order-id="' . absint( $payment->ID ) . '" title="' . esc_attr( __( 'Preview', 'restropress' ) ) . '"><span>' . esc_html( __( 'Preview', 'restropress' ) ) . '</span></a>
 	      <a class="" href="' . add_query_arg( 'id', $payment->ID, admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ) . '">#' . $alter_id . ' ' . $customer_name . '</a><span class="rp-service-type badge-' . $service_type . ' ">' . rpress_service_label( $service_type ) . '</span>';
 
-	    return $order_preview;
-	    }
-	    else{
-	    $order_preview = '<a href="#" class="order-preview" data-order-id="' . absint( $payment->ID ) . '" title="' . esc_attr( __( 'Preview', 'restropress' ) ) . '"><span>' . esc_html( __( 'Preview', 'restropress' ) ) . '</span></a>
-	      <a class="" href="' . add_query_arg( 'id', $payment->ID, admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ) . '">#' . $payment->ID . ' ' . $customer_name . '</a><span class="rp-service-type badge-' . $service_type . ' ">' . rpress_service_label( $service_type ) . '</span>';
+	    	return $order_preview . $actions ;
 
-	    return $order_preview;
-	}
+	    } else {
+		    $order_preview = '<a href="#" class="order-preview" data-order-id="' . absint( $payment->ID ) . '" title="' . esc_attr( __( 'Preview', 'restropress' ) ) . '"><span>' . esc_html( __( 'Preview', 'restropress' ) ) . '</span></a>
+		    <a class="" href="' . add_query_arg( 'id', $payment->ID, admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ) . '">#' . $prefix . $payment->ID . $postfix .' ' . $customer_name . '</a><span class="rp-service-type badge-' . $service_type . ' ">' . rpress_service_label( $service_type ) . '</span>';
+		
+		}
+
+		    return $order_preview . $actions ;
+
 	}
 
 	/**
@@ -566,8 +643,8 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		$customer_id = rpress_get_payment_customer_id( $payment->ID );
 
 		if( ! empty( $customer_id ) ) {
-			$customer    = new RPRESS_Customer( $customer_id );
-			$value = '<a href="' . esc_url( admin_url( "admin.php?page=rpress-customers&view=overview&id=$customer_id" ) ) . '">' . $customer->name . '</a>';
+			$customer   = new RPRESS_Customer( $customer_id );
+			$value 		= '<a href="' . esc_url( admin_url( "admin.php?page=rpress-customers&view=overview&id=$customer_id" ) ) . '">' . $customer->name . '</a>';
 		} else {
 			$email = rpress_get_payment_user_email( $payment->ID );
 			$value = '<a href="' . esc_url( admin_url( "admin.php?page=rpress-payment-history&s=$email" ) ) . '">' . __( '(customer missing)', 'restropress' ) . '</a>';
@@ -583,7 +660,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'delete'                 				 => __( 'Delete',				'restropress' ),
+			'delete'                 		 => __( 'Delete',				'restropress' ),
 			'set-payment-status-pending'     => __( 'Set Payment To Pending',		'restropress' ),
 			'set-payment-status-processing'  => __( 'Set Payment To Processing',	'restropress' ),
 			'set-payment-status-refunded'    => __( 'Set Payment To Refunded',		'restropress' ),
@@ -595,7 +672,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 		$order_actions = array();
 
-		if ( !empty( $order_statuses ) ) {
+		if ( ! empty( $order_statuses ) ) {
 
 			foreach( $order_statuses as $status => $name ) {
 				$order_actions[ 'set-order-status-' . $status  ] = sprintf( __( 'Set Order To %s', 'restropress' ), $name );
@@ -605,8 +682,15 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 		$order_actions['resend-receipt'] = __( 'Resend Email Receipts','restropress' );
 
+		if ( 'trash' === $this->get_status() ) {
+			$actions = array(
+				'restore' => __( 'Restore', 'restropress' ),
+			);
+		} else {
+			$actions['trash'] = __( 'Move to Trash', 'restropress' );
+		}
+		
 		$actions = array_merge( $actions, $order_actions );
-
 
 		return apply_filters( 'rpress_payments_table_bulk_actions', $actions );
 	}
@@ -682,6 +766,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 			}
 
+
 			do_action( 'rpress_payments_table_do_bulk_action', $id, $this->current_action() );
 		}
 
@@ -699,11 +784,11 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 		$args = array();
 
-		if( isset( $_GET['user'] ) ) {
+		if ( isset( $_GET['user'] ) ) {
 			$args['user'] = urldecode( sanitize_text_field( $_GET['user'] ) );
-		} elseif( isset( $_GET['customer'] ) ) {
+		} elseif ( isset( $_GET['customer'] ) ) {
 			$args['customer'] = absint( $_GET['customer'] );
-		} elseif( isset( $_GET['s'] ) ) {
+		} elseif ( isset( $_GET['s'] ) ) {
 
 			$is_user  = strpos( sanitize_text_field( $_GET['s'] ), strtolower( 'user:' ) ) !== false;
 
@@ -735,38 +820,58 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		}
 
 
-		$payment_count          	= rpress_count_payments( $args );
-		$this->completed_count   	=  isset( $payment_count->completed ) ? $payment_count->completed : 0;
-		$this->pending_count    	=  isset( $payment_count->pending ) ? $payment_count->pending : 0 ;
-		$this->paid_count 			=  isset( $payment_count->publish ) ? $payment_count->publish : 0 ;
+		$payment_count          		= rpress_count_payments( $args );
+		$this->completed_count   		=  isset( $payment_count->completed ) ? $payment_count->completed : 0;
+		$this->pending_count    		=  isset( $payment_count->pending ) ? $payment_count->pending : 0 ;
+		$this->paid_count 				=  isset( $payment_count->publish ) ? $payment_count->publish : 0 ;
+		$this->trash_count  			= $this->count_trash_order();
 		$this->delivery_count 			=  isset( $this->count_service_type()['delivery'] ) ? $this->count_service_type()['delivery'] : 0;
 		$this->pickup_count 			=  isset( $this->count_service_type()['pickup'] ) ? $this->count_service_type()['pickup'] : 0;
 		$this->dinein_count 			=  isset( $this->count_service_type()['dinein'] ) ? $this->count_service_type()['dinein'] : 0;
 		$this->out_for_deliver_count   	=  isset( $payment_count->processing ) ? $payment_count->processing : 0 ;
 
 		$this->total_count = intval( $this->completed_count ) + intval( $this->pending_count ) + intval( $this->paid_count ) + intval( $this->out_for_deliver_count );
-		// foreach( $payment_count as $count ) {
-		// 	$this->total_count += $count;
-		// }
+
 	}
 
-	public function count_service_type( ){
+	public function count_service_type() {
+
 		global $wpdb;
+
 		$query = "SELECT g.meta_value,count( * ) AS num_posts FROM $wpdb->posts p LEFT JOIN $wpdb->postmeta g ON (p.ID = g.post_id) WHERE p.post_type = 'rpress_payment' AND g.meta_key = '_rpress_delivery_type' GROUP BY g.meta_value";
 
 		$cache_key = md5( $query );
 
-		$count = wp_cache_get( $cache_key, 'counts');
+		$count = wp_cache_get( $cache_key, 'counts' );
+
 		if ( false !== $count ) {
 			return $count;
 		}
 
 		$rows = $wpdb->get_results( $query, ARRAY_A );
 		$return_array = array();
-		foreach ($rows as  $row) {
+		foreach ( $rows as  $row ) {
 			$return_array[$row['meta_value'] ] =  $row['num_posts'] ;
 		}
+		
 		return $return_array ;
+	}
+	public function count_trash_order() {
+		global $wpdb;
+
+		$query = "SELECT count( * ) AS num_posts FROM $wpdb->posts WHERE post_type = 'rpress_payment' AND  post_status= 'trash'" ;
+		
+		$cache_key = md5( $query );
+
+		$count = wp_cache_get( $cache_key, 'counts' );
+
+		if ( false !== $count ) {
+			return $count;
+		}
+
+		$rows = $wpdb->get_row( $query, ARRAY_A );
+		
+		return $rows['num_posts'];
 	}
 
 	/**
@@ -777,22 +882,23 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	 */
 	public function payments_data() {
 
-		$per_page   = $this->per_page;
-		$orderby    = isset( $_GET['orderby'] )     ? urldecode( sanitize_text_field( $_GET['orderby'] ) )              : 'ID';
-		$order      = isset( $_GET['order'] )       ? sanitize_text_field( $_GET['order']   )                         : 'DESC';
-		$user       = isset( $_GET['user'] )        ? sanitize_text_field( $_GET['user'] )                             : null;
-		$customer   = isset( $_GET['customer'] )    ? sanitize_text_field( $_GET['customer']     )                     : null;
-		$status     = isset( $_GET['status'] )      ? sanitize_text_field( $_GET['status']  )                          : rpress_get_payment_status_keys();
-		$meta_key   = isset( $_GET['meta_key'] )    ? sanitize_text_field( $_GET['meta_key']   )                       : null;
-		$year       = isset( $_GET['year'] )        ? sanitize_text_field( $_GET['year'] )                       : null;
-		$month      = isset( $_GET['m'] )           ? sanitize_text_field( $_GET['m']      )                           : null;
-		$day        = isset( $_GET['day'] )         ? sanitize_text_field( $_GET['day']  )                            : null;
-		$search     = isset( $_GET['s'] )           ? sanitize_text_field( $_GET['s'] )          : null;
-		$start_date = isset( $_GET['start-date'] )  ? sanitize_text_field( $_GET['start-date'] ) : null;
-		$end_date   = isset( $_GET['end-date'] )    ? sanitize_text_field( $_GET['end-date'] )   : $start_date;
-		$gateway    = isset( $_GET['gateway'] )     ? sanitize_text_field( $_GET['gateway'] )    : null;
-		$service_date = isset( $_GET['service-date'] )  ? sanitize_text_field( $_GET['service-date'] ) : null;
-		$service_type = isset( $_GET['service-type'] ) ? sanitize_text_field(  $_GET['service-type'] ) : null;
+		$per_page   	 = $this->per_page;
+		$orderby    	 = isset( $_GET['orderby'] )      ? urldecode( sanitize_text_field( $_GET['orderby'] ) ) : 'ID';
+		$order      	 = isset( $_GET['order'] )        ? sanitize_text_field( $_GET['order'] ) : 'DESC';
+		$user       	 = isset( $_GET['user'] )         ? sanitize_text_field( $_GET['user'] ) : null;
+		$customer   	 = isset( $_GET['customer'] )     ? sanitize_text_field( $_GET['customer'] ) : null;
+		$status     	 = isset( $_GET['status'] )       ? sanitize_text_field( $_GET['status'] ) : rpress_get_payment_status_keys();
+		$meta_key   	 = isset( $_GET['meta_key'] )     ? sanitize_text_field( $_GET['meta_key'] ) : null;
+		$year       	 = isset( $_GET['year'] )         ? sanitize_text_field( $_GET['year'] ) : null;
+		$month      	 = isset( $_GET['m'] )            ? sanitize_text_field( $_GET['m'] ) : null;
+		$day        	 = isset( $_GET['day'] )          ? sanitize_text_field( $_GET['day'] ) : null;
+		$search     	 = isset( $_GET['s'] )            ? sanitize_text_field( $_GET['s'] ) : null;
+		$start_date 	 = isset( $_GET['start-date'] )   ? sanitize_text_field( $_GET['start-date'] ) : null;
+		$end_date   	 = isset( $_GET['end-date'] )     ? sanitize_text_field( $_GET['end-date'] ) : $start_date;
+		$gateway    	 = isset( $_GET['gateway'] )      ? sanitize_text_field( $_GET['gateway'] ) : null;
+		$service_date 	 = isset( $_GET['service-date'] ) ? sanitize_text_field( $_GET['service-date'] ) : null;
+		$service_type 	 = isset( $_GET['service-type'] ) ? sanitize_text_field(  $_GET['service-type'] ) : null;
+		$trash   = isset( $_GET['trash'] ) ? sanitize_text_field(  $_GET['trash'] ) : null;
 		$selected_orders = isset( $_GET['order_status'] ) ? sanitize_text_field(  $_GET['order_status'] ) : null;
 
 
@@ -813,23 +919,24 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 			$gateway = null;
 		}
 		$args = array(
-			'output'     => 'payments',
-			'number'     => $per_page,
-			'page'       => isset( $_GET['paged'] ) ? sanitize_text_field( $_GET['paged'] )  : null,
-			'orderby'    => $orderby,
-			'order'      => $order,
-			'user'       => $user,
-			'customer'   => $customer,
-			'status'     => $status,
-			'meta_key'   => $meta_key,
-			'year'       => $year,
-			'month'      => $month,
-			'day'        => $day,
-			's'          => $search,
-			'start_date' => $start_date,
-			'end_date'   => $end_date,
-			'gateway'    => $gateway,
+			'output'       => 'payments',
+			'number'       => $per_page,
+			'page'         => isset( $_GET['paged'] ) ? sanitize_text_field( $_GET['paged'] )  : null,
+			'orderby'      => $orderby,
+			'order'        => $order,
+			'user'         => $user,
+			'customer'     => $customer,
+			'status'       => $status,
+			'meta_key'     => $meta_key,
+			'year'         => $year,
+			'month'        => $month,
+			'day'          => $day,
+			's'            => $search,
+			'start_date'   => $start_date,
+			'end_date'     => $end_date,
+			'gateway'      => $gateway,
 			'service_date' => $service_date,
+			'order_status' =>$selected_orders
 			
 		);
 
@@ -840,7 +947,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 		}
 
-		if( ! is_null( $service_type) ){
+		if( ! is_null( $service_type ) ) {
 			$args['meta_query'] = [
 			[
 				'key' => '_rpress_delivery_type',
@@ -850,7 +957,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		];
 		}
 
-		if(!empty( $selected_orders )){
+		if( ! empty( $selected_orders ) && $selected_orders != 'all' ) {
 			$args['meta_query'] = [
 				[ 
 			       'key' => '_order_status',
@@ -862,6 +969,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 		}
 
 		$p_query  = new RPRESS_Payments_Query( $args );
+
 
 		return $p_query->get_payments();
 
@@ -982,20 +1090,20 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	      	$payment_via = rpress_get_gateway_admin_label( $gateway );
 	    }
 
-	    if ( !empty( $payment->customer_id ) ) {
+	    if ( ! empty( $payment->customer_id ) ) {
 
-	    	$customer  = new RPRESS_Customer( $payment->customer_id );
-	    	$payment_meta = $payment->get_meta();
+	    	$customer    			= new RPRESS_Customer( $payment->customer_id );
+	    	$payment_meta 			= $payment->get_meta();
 
-	    	$customer_name = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_info']['first_name'] . ' ' . $payment_meta['user_info']['last_name'] : $customer->name;
-	    	$customer_email = is_array( $payment_meta['user_info'] ) ? $payment_meta['user_info']['email'] : $customer->email;
+	    	$customer_name 			= is_array( $payment_meta['user_info'] ) ? $payment_meta['user_info']['first_name'] . ' ' . $payment_meta['user_info']['last_name'] : $customer->name;
+	    	$customer_email 		= is_array( $payment_meta['user_info'] ) ? $payment_meta['user_info']['email'] : $customer->email;
 
-	    	$delivery_address_meta = get_post_meta( $payment->ID, '_rpress_delivery_address', true );
-		    $phone  = !empty( $payment_meta['phone'] ) ? $payment_meta['phone'] : (!empty( $delivery_address_meta['phone'] ) ? $delivery_address_meta['phone'] :  '');
-		    $flat   = !empty( $delivery_address_meta['flat'] ) ? $delivery_address_meta['flat'] : '';
-		    $city = !empty( $delivery_address_meta['city'] ) ? $delivery_address_meta['city'] : '';
-		    $postcode = !empty( $delivery_address_meta['postcode'] ) ? $delivery_address_meta['postcode'] : '';
-		    $customer_address = !empty( $delivery_address_meta['address'] ) ? $delivery_address_meta['address'] : '';
+	    	$delivery_address_meta  = get_post_meta( $payment->ID, '_rpress_delivery_address', true );
+		    $phone  				= ! empty( $payment_meta['phone'] ) ? $payment_meta['phone'] : (!empty( $delivery_address_meta['phone'] ) ? $delivery_address_meta['phone'] :  '');
+		    $flat   				= ! empty( $delivery_address_meta['flat'] ) ? $delivery_address_meta['flat'] : '';
+		    $city 					= ! empty( $delivery_address_meta['city'] ) ? $delivery_address_meta['city'] : '';
+		    $postcode 				= ! empty( $delivery_address_meta['postcode'] ) ? $delivery_address_meta['postcode'] : '';
+		    $customer_address 		= ! empty( $delivery_address_meta['address'] ) ? $delivery_address_meta['address'] : '';
 
     		$customer_details = array(
 				'phone'      => $phone,
@@ -1006,12 +1114,12 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
     		);
 	    }
 
-	    $user_info      = $payment->user_info;
-	    $billing_address = isset( $user_info['address'] ) ? $user_info['address'] : '';
-	    $service_type = rpress_get_service_type( $payment->ID );
-  		$service_date = $payment->get_meta( '_rpress_delivery_date' );
-  		$service_date = !empty( $service_date ) ? rpress_local_date( $service_date ) : '';
-  		$service_time = $payment->get_meta( '_rpress_delivery_time' );
+	    $user_info      	= $payment->user_info;
+	    $billing_address 	= isset( $user_info['address'] ) ? $user_info['address'] : '';
+	    $service_type 		= rpress_get_service_type( $payment->ID );
+  		$service_date 		= $payment->get_meta( '_rpress_delivery_date' );
+  		$service_date 		= !empty( $service_date ) ? rpress_local_date( $service_date ) : '';
+  		$service_time 		= $payment->get_meta( '_rpress_delivery_time' );
 
 	    return apply_filters(
 	      	'rpress_admin_order_preview_get_order_details',
@@ -1042,7 +1150,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
      * @param  RP_Payment $payment Payment Object.
      * @return html
      */
-  	public static function get_ordered_items( $payment ) {
+  	public  function get_ordered_items( $payment ) {
 
     	$order_items = $payment->cart_details;
 
@@ -1081,7 +1189,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
             		<tr class="rp-order-preview-table">
 						<td class="rp-order-preview-table__column--product">
-							<?php echo rpress_get_cart_item_name($fooditems); ?>
+							<?php echo rpress_get_cart_item_name( $fooditems ); ?>
               			</td>
 	              		<td class="rp-order-preview-table__column--quantity">
 	                		<?php echo rpress_currency_filter( rpress_format_amount( $fooditems['item_price'] ) ) . ' X ' . $fooditems['quantity']; ?>
@@ -1089,12 +1197,12 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
 	              		<?php if ( rpress_use_taxes() ) : ?>
 	                	<td class="rp-order-preview-table__column--tax">
-	                  		<?php echo rpress_currency_filter(rpress_format_amount( $item_tax )); ?>
+	                  		<?php echo rpress_currency_filter( rpress_format_amount( $item_tax ) ); ?>
 	                	</td>
 	              		<?php endif; ?>
 
 	              		<td class="rp-order-preview-table__column--price">
-	                		<?php echo rpress_currency_filter(rpress_format_amount( $price )); ?>
+	                		<?php echo rpress_currency_filter( rpress_format_amount( $price ) ); ?>
 	              		</td>
             		</tr>
 
@@ -1124,11 +1232,11 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
                       	<?php if ( rpress_use_taxes() ) : ?>
                         <td>
-                         	<?php echo rpress_currency_filter( rpress_format_amount( '0' )); ?>
+                         	<?php echo rpress_currency_filter( rpress_format_amount( '0' ) ); ?>
                         </td>
                       	<?php endif; ?>
                       	<td>
-                        	<?php echo rpress_currency_filter( rpress_format_amount( $addon_price )); ?>
+                        	<?php echo rpress_currency_filter( rpress_format_amount( $addon_price ) ); ?>
                       	</td>
                     </tr>
                     		<?php endif;
@@ -1143,6 +1251,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 	      	$output = ob_get_contents();
 	      	ob_clean();
     	}
+
     	return $output;
   	}
 

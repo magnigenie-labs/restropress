@@ -253,21 +253,21 @@ function rpress_get_cart_amount( $add_taxes = true, $local_override = false ) {
  * @return string $tags
  */
 function rpress_get_purchase_receipt_template_tags() {
-	$tags = __('Enter the email that is sent to users after completing a successful purchase. HTML is accepted. Available template tags:','restropress' ) . '<br/>' .
-			'{fooditem_list} - ' . __('A list of fooditem purchased','restropress' ) . '<br/>' .
-			'{name} - ' . __('The buyer\'s first name','restropress' ) . '<br/>' .
-			'{fullname} - ' . __('The buyer\'s full name, first and last','restropress' ) . '<br/>' .
-			'{username} - ' . __('The buyer\'s user name on the site, if they registered an account','restropress' ) . '<br/>' .
-			'{user_email} - ' . __('The buyer\'s email address','restropress' ) . '<br/>' .
-			'{billing_address} - ' . __('The buyer\'s billing address','restropress' ) . '<br/>' .
-			'{date} - ' . __('The date of the purchase','restropress' ) . '<br/>' .
-			'{subtotal} - ' . __('The price of the purchase before taxes','restropress' ) . '<br/>' .
-			'{tax} - ' . __('The taxed amount of the purchase','restropress' ) . '<br/>' .
-			'{price} - ' . __('The total price of the purchase','restropress' ) . '<br/>' .
-			'{payment_id} - ' . __('The unique ID number for this purchase','restropress' ) . '<br/>' .
-			'{receipt_id} - ' . __('The unique ID number for this purchase receipt','restropress' ) . '<br/>' .
-			'{payment_method} - ' . __('The method of payment used for this purchase','restropress' ) . '<br/>' .
-			'{sitename} - ' . __('Your site name','restropress' ) . '<br/>' .
+	$tags = __( 'Enter the email that is sent to users after completing a successful purchase. HTML is accepted. Available template tags:','restropress' ) . '<br/>' .
+			'{fooditem_list} - ' . __( 'A list of fooditem purchased','restropress' ) . '<br/>' .
+			'{name} - ' . __( 'The buyer\'s first name','restropress' ) . '<br/>' .
+			'{fullname} - ' . __( 'The buyer\'s full name, first and last','restropress' ) . '<br/>' .
+			'{username} - ' . __( 'The buyer\'s user name on the site, if they registered an account','restropress' ) . '<br/>' .
+			'{user_email} - ' . __( 'The buyer\'s email address','restropress' ) . '<br/>' .
+			'{billing_address} - ' . __( 'The buyer\'s billing address','restropress' ) . '<br/>' .
+			'{date} - ' . __( 'The date of the purchase','restropress' ) . '<br/>' .
+			'{subtotal} - ' . __( 'The price of the purchase before taxes','restropress' ) . '<br/>' .
+			'{tax} - ' . __( 'The taxed amount of the purchase','restropress' ) . '<br/>' .
+			'{price} - ' . __( 'The total price of the purchase','restropress' ) . '<br/>' .
+			'{payment_id} - ' . __( 'The unique ID number for this purchase','restropress' ) . '<br/>' .
+			'{receipt_id} - ' . __( 'The unique ID number for this purchase receipt','restropress' ) . '<br/>' .
+			'{payment_method} - ' . __( 'The method of payment used for this purchase','restropress' ) . '<br/>' .
+			'{sitename} - ' . __( 'Your site name','restropress' ) . '<br/>' .
 			'{receipt_link} - ' . __( 'Adds a link so users can view their receipt directly on your website if they are unable to view it in the browser correctly.', 'restropress' );
 
 	return apply_filters( 'rpress_purchase_receipt_template_tags_description', $tags );
@@ -286,20 +286,20 @@ function rpress_get_purchase_receipt_template_tags() {
  */
 function rpress_get_sale_notification_template_tags() {
 	$tags = __( 'Enter the email that is sent to sale notification emails after completion of a purchase. HTML is accepted. Available template tags:', 'restropress' ) . '<br/>' .
-			'{fooditem_list} - ' . __('A list of fooditem purchased','restropress' ) . '<br/>' .
-			'{name} - ' . __('The buyer\'s first name','restropress' ) . '<br/>' .
-			'{fullname} - ' . __('The buyer\'s full name, first and last','restropress' ) . '<br/>' .
-			'{username} - ' . __('The buyer\'s user name on the site, if they registered an account','restropress' ) . '<br/>' .
-			'{user_email} - ' . __('The buyer\'s email address','restropress' ) . '<br/>' .
-			'{billing_address} - ' . __('The buyer\'s billing address','restropress' ) . '<br/>' .
-			'{date} - ' . __('The date of the purchase','restropress' ) . '<br/>' .
-			'{subtotal} - ' . __('The price of the purchase before taxes','restropress' ) . '<br/>' .
-			'{tax} - ' . __('The taxed amount of the purchase','restropress' ) . '<br/>' .
-			'{price} - ' . __('The total price of the purchase','restropress' ) . '<br/>' .
-			'{payment_id} - ' . __('The unique ID number for this purchase','restropress' ) . '<br/>' .
-			'{receipt_id} - ' . __('The unique ID number for this purchase receipt','restropress' ) . '<br/>' .
-			'{payment_method} - ' . __('The method of payment used for this purchase','restropress' ) . '<br/>' .
-			'{sitename} - ' . __('Your site name','restropress' );
+			'{fooditem_list} - ' . __( 'A list of fooditem purchased','restropress' ) . '<br/>' .
+			'{name} - ' . __( 'The buyer\'s first name','restropress' ) . '<br/>' .
+			'{fullname} - ' . __( 'The buyer\'s full name, first and last','restropress' ) . '<br/>' .
+			'{username} - ' . __( 'The buyer\'s user name on the site, if they registered an account','restropress' ) . '<br/>' .
+			'{user_email} - ' . __( 'The buyer\'s email address','restropress' ) . '<br/>' .
+			'{billing_address} - ' . __( 'The buyer\'s billing address','restropress' ) . '<br/>' .
+			'{date} - ' . __( 'The date of the purchase','restropress' ) . '<br/>' .
+			'{subtotal} - ' . __( 'The price of the purchase before taxes','restropress' ) . '<br/>' .
+			'{tax} - ' . __( 'The taxed amount of the purchase','restropress' ) . '<br/>' .
+			'{price} - ' . __( 'The total price of the purchase','restropress' ) . '<br/>' .
+			'{payment_id} - ' . __( 'The unique ID number for this purchase','restropress' ) . '<br/>' .
+			'{receipt_id} - ' . __( 'The unique ID number for this purchase receipt','restropress' ) . '<br/>' .
+			'{payment_method} - ' . __( 'The method of payment used for this purchase','restropress' ) . '<br/>' .
+			'{sitename} - ' . __( 'Your site name','restropress' );
 
 	return apply_filters( 'rpress_sale_notification_template_tags_description', $tags );
 }
@@ -418,7 +418,7 @@ function rpress_undo_purchase_on_refund( $payment_id, $new_status, $old_status )
  * @param int $hour Hour
  * @return int $earnings Earnings
  */
-function rpress_get_earnings_by_date( $day = null, $month_num, $year = null, $hour = null, $include_taxes = true ) {
+function rpress_get_earnings_by_date( $day = null, $month_num = null, $year = null, $hour = null, $include_taxes = true ) {
 	$backtrace = debug_backtrace();
 
 	_rpress_deprecated_function( __FUNCTION__, '2.7', 'RPRESS_Payment_Stats()->get_earnings()', $backtrace );

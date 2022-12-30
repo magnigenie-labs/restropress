@@ -56,11 +56,11 @@ function rpress_admin_footer_for_thickbox() {
 					direct = jQuery('#select-rpress-direct').val(),
 					style = jQuery('#select-rpress-style').val(),
 					color = jQuery('#select-rpress-color').is(':visible') ? jQuery('#select-rpress-color').val() : '',
-					text = jQuery('#rpress-text').val() || '<?php esc_html_e( "Purchase", "restro-press" ); ?>';
+					text = jQuery('#rpress-text').val() || '<?php esc_html_e( "Purchase", "restropress" ); ?>';
 
 				// Return early if no fooditem is selected
 				if ('' === id) {
-					alert('<?php esc_html_e( "You must choose a fooditem", "restro-press" ); ?>');
+					alert('<?php esc_html_e( "You must choose a fooditem", "restropress" ); ?>');
 					return;
 				}
 

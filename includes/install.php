@@ -223,10 +223,10 @@ function rpress_run_install() {
 		  $license_key        = get_option( $item->license_string );
 		  $license_key_status = get_option( $item->license_string . '_status' );
 
-			if( !empty( $license_key ) )
+			if( ! empty( $license_key ) )
 		  	update_option( $item->text_domain . '_license', $license_key );
 
-			if( !empty( $license_key_status ) )
+			if( ! empty( $license_key_status ) )
 				update_option( $item->text_domain . '_license_status', $license_key_status );
 
 		}
@@ -400,7 +400,7 @@ function rpress_db_migration() {
 
 	$get_fooditems = $wpdb->get_results( "SELECT ID FROM {$wpdb->prefix}posts WHERE `post_type` = 'fooditem' ", ARRAY_A );
 
-	if ( is_array( $get_fooditems ) && !empty( $get_fooditems ) ) {
+	if ( is_array( $get_fooditems ) && ! empty( $get_fooditems ) ) {
 
 		foreach( $get_fooditems as $key => $get_fooditem ) {
 
@@ -439,17 +439,17 @@ function rpress_db_migration() {
 	$addons_args = array(
 		'taxonomy'  	=> 'addon_category',
 		'orderby'   	=> 'name',
-		'hide_empty'  => false
+		'hide_empty'  	=> false
 	);
 	//Migrate old term data
 	$addons = get_terms( $addons_args );
 	foreach( $addons as $addon ) {
 		$addon_meta  = get_option( 'taxonomy_term_' . $addon->term_id );
 		if( empty( $addon_meta ) ) continue;
-		$addon_type  = !empty( $addon_meta['use_it_like'] ) && $addon_meta['use_it_like'] == 'checkbox' ? 'multiple' : 'single';
+		$addon_type  = ! empty( $addon_meta['use_it_like'] ) && $addon_meta['use_it_like'] == 'checkbox' ? 'multiple' : 'single';
 		$addon_price = $addon_meta['price'];
 		
-		if( !empty( $addon->parent ) )
+		if( ! empty( $addon->parent ) )
 			update_term_meta( $addon->term_id, '_price', $addon_price );
 		else
 			update_term_meta( $addon->term_id, '_type', $addon_type );

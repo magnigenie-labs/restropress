@@ -1,0 +1,23 @@
+#the-list tr:hover {
+	cursor: -webkit-grab;
+	cursor: -moz-grab;
+}
+
+#the-list tr.ui-sortable-helper:hover {
+	display: table;
+	cursor: -webkit-grabbing;
+	cursor: -moz-grabbing;
+}
+
+#the-list tr.no-items:hover {
+	cursor: default;
+}
+
+.rp-drag-drop-tax-placeholder {
+    min-height: 57px;
+    height: 100%;
+}
+
+.rp-drag-drop-preloader {
+	margin: 0 0 0 8px;
+}

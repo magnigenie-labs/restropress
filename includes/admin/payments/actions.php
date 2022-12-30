@@ -88,10 +88,10 @@ function rpress_update_payment_details( $data ) {
 
 		foreach ( $updated_fooditems as $cart_position => $fooditem ) {
 
-			if( isset($fooditem['addon_items']) && !empty($fooditem['addon_items']) ) {
+			if( isset( $fooditem['addon_items'] ) && !empty( $fooditem['addon_items'] ) ) {
 				foreach(  $fooditem['addon_items'] as $key => $addons ) {
 					$addons = explode('|', $addons);
-					if( is_array($addons) && !empty($addons) ) {
+					if( is_array( $addons ) && !empty( $addons ) ) {
 						$addon_data[$fooditem['id']][$key]['addon_item_name'] = $addons[0];
 						$addon_data[$fooditem['id']][$key]['addon_id'] = $addons[1];
 						$addon_data[$fooditem['id']][$key]['price'] = $addons[2];
@@ -107,7 +107,7 @@ function rpress_update_payment_details( $data ) {
 
 			if ( $has_log ) {
 
-				$quantity   = isset( $fooditem['quantity'] ) ? absint( $fooditem['quantity']) : 1;
+				$quantity   = isset( $fooditem['quantity'] ) ? absint( $fooditem['quantity'] ) : 1;
 				$item_price = isset( $fooditem['item_price'] ) ? $fooditem['item_price'] : 0;
 				$item_tax   = isset( $fooditem['item_tax'] ) ? $fooditem['item_tax'] : 0;
 
@@ -176,9 +176,9 @@ function rpress_update_payment_details( $data ) {
 			$cart_index = isset( $deleted_fooditem['cart_index'] ) ? absint( $deleted_fooditem['cart_index'] ) : false;
 
 			$args = array(
-				'quantity'   => (int) $deleted_fooditem['quantity'],
+				'quantity'   => ( int ) $deleted_fooditem['quantity'],
 				'price_id'   => $price_id,
-				'item_price' => (float) $deleted_fooditem['amount'],
+				'item_price' => ( float ) $deleted_fooditem['amount'],
 				'cart_index' => $cart_index
 			);
 
@@ -351,6 +351,82 @@ function rpress_trigger_purchase_delete( $data ) {
 	}
 }
 add_action( 'rpress_delete_payment', 'rpress_trigger_purchase_delete' );
+/**
+ * Trigger the action of moving an order to the 'trash' status
+ *
+ * @since 3.0
+ *
+ * @param $data
+ * @return void
+ */
+function rpress_trigger_trash_order( $data ) {
+
+	if ( wp_verify_nonce( $data['_wpnonce'], 'rpress_payment_nonce' ) ) {
+
+		$payment_id = absint( $data['purchase_id'] );
+
+		if ( ! current_user_can( 'delete_shop_payments', $payment_id ) ) {
+			wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
+		}
+
+		rpress_trash_order( $payment_id );	
+
+		$redirect = admin_url( array(
+			'page'        => 'rpress-payment-history',
+			'rpress-message' => 'order_trashed',
+		) );
+
+	}
+}
+add_action( 'rpress_trash_order', 'rpress_trigger_trash_order' );
+
+function rpress_trigger_restore_order( $data ) {
+	if ( wp_verify_nonce( $data['_wpnonce'], 'rpress_payment_nonce' ) ) {
+
+		$payment_id = absint( $data['purchase_id'] );
+
+		if ( ! current_user_can( 'delete_shop_payments', $payment_id ) ) {
+			wp_die( __( 'You do not have permission to edit this payment record', 'restropress' ), __( 'Error', 'restropress' ), array( 'response' => 403 ) );
+		}
+
+		rpress_restore_order( $payment_id );
+
+		$redirect = admin_url( array(
+			'page'        => 'rpress-payment-history',
+			'rpress-message' => 'order_restored',
+		) );
+
+	}
+}
+add_action( 'rpress_restore_order', 'rpress_trigger_restore_order' );
+/**
+ * New in 3.0, permanently destroys an order, and all its data, and related data.
+ *
+ * @since 3.0
+ *
+ * @param array $data Arguments passed.
+ */
+function rpress_trigger_destroy_order( $data ) {
+
+	if ( wp_verify_nonce( $data['_wpnonce'], 'rpress_payment_nonce' ) ) {
+
+		$payment_id = absint( $data['purchase_id'] );
+
+		if ( ! current_user_can( 'delete_shop_payments', $payment_id ) ) {
+			wp_die( esc_html__( 'You do not have permission to edit this order.', 'restropress' ), esc_html__( 'Error', 'restropress' ), array( 'response' => 403 ) );
+		}
+
+		rpress_delete_order( $payment_id );
+
+		$redirect_link = admin_url(
+			array(
+				'page'        => 'rpress-payment-history',
+				'rpress-message' => 'payment_deleted',
+			) );
+			
+	}
+}
+add_action( 'rpress_delete_order', 'rpress_trigger_destroy_order' );
 
 function rpress_ajax_store_payment_note() {
 

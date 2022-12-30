@@ -372,16 +372,16 @@ function rpress_email_tag_fooditem_list( $payment_id ) {
           </td>
 
           <td class="center" style="border: 1px solid black; border-collapse: collapse; text-align: center;">
-            <span><?php echo esc_html( $quantity ); ?></span>
-            
+            <span><?php echo esc_html( $quantity ); ?></span>          
             <?php
             $addon_items =  isset( $item['addon_items'] ) ? $item['addon_items'] : array() ;
               foreach( $addon_items as $k => $addon_item ) {
                 $cart = new RPRESS_Cart();
-                $item_addon_quantity = !empty( $addon_item['quantity'] ) ? $addon_item['quantity'] : 0;
+                
                 ?>
-                  <div style="margin: 0;font-size: 14px; color:#444;"><small><?php echo $item_addon_quantity; ?></small></div>
+                  <div style="margin: 0;font-size: 14px; color:#444;"><small></small></div>
                <?php
+               do_action( 'rpress_purchase_receipt_after_qantity_table', $addon_item );
               }
             ?>
           </td>
@@ -467,7 +467,9 @@ function rpress_email_tag_fooditem_list( $payment_id ) {
 
     </tfoot>
 
+
   </table>
+   <?php do_action( 'rpress_purchase_receipt_after_table', $payment_id ); ?>
   <?php
   endif;
 

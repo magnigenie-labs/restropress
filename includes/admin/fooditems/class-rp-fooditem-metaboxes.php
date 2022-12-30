@@ -19,56 +19,30 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 
-class RP_FoodItem_Meta_Boxes{
+class RP_FoodItem_Meta_Boxes {
 
-  public static function init(){
+  public static function init() {
     add_action( 'add_meta_boxes', array( __CLASS__, 'add_meta_boxes' ) );
     add_action( 'save_post', array( __CLASS__, 'save_meta_boxes' ), 1, 2 );
   }
 
-  public static function add_meta_boxes(){
+  public static function add_meta_boxes() {
     $screen    = get_current_screen();
     $screen_id = $screen ? $screen->id : '';
     
     add_meta_box( 'rpress-fooditem-data', __( 'Food Item Data', 'restropress' ), array( __CLASS__, 'metabox_output' ), 'fooditem', 'normal', 'high' );
-    add_meta_box(
-        'food_setting',__( 'Fooditem Settings', 
-          'restropress' ),array(__CLASS__, 'rpress_sku_accounting_options'),'fooditem'
-       );
   }
 
-  public static function metabox_output( $post ){
-    global $thepostid, $fooditem_object;
+  public static function metabox_output( $post ) {
+    global $thepostid, $fooditem_object,$rpress_sku;
 
     $thepostid     = $post->ID;
     $fooditem_object = new RPRESS_Fooditem( $thepostid );
-
+    $rpress_sku    = new RPRESS_Fooditem( $thepostid );
     wp_nonce_field( 'restropress_save_data', 'restropress_meta_nonce' );
 
     include 'views/html-fooditem-data-panel.php';
   }
-
-  //add SKU section
-
-  public static function rpress_sku_accounting_options( $post ) {
-    if( ! rpress_use_skus() ) {
-      return;
-    }
-    $rpress_sku = get_post_meta( $post->ID, 'rpress_sku', true );
-    ?>
-    <p><strong><?php _e( 'Accounting Options:', 'restropress' ); ?></strong></p>
-    <p>
-      <label for="rpress_sku">
-        <?php echo RPRESS()->html->text( array(
-          'name'  => 'rpress_sku',
-          'value' => $rpress_sku,
-          'class' => 'small-text'
-        ) ); ?>
-        <?php echo sprintf( __( 'Enter an SKU for this %s.', 'restropress' ), strtolower( rpress_get_label_singular() ) ); ?>
-      </label>
-    </p>
-<?php
-}
 
 
   /**
@@ -120,7 +94,7 @@ class RP_FoodItem_Meta_Boxes{
     return $tabs;
   }
 
-  public static function metabox_fields(){
+  public static function metabox_fields() {
     $fields = array(
       'rpress_food_type',
       'rpress_price',
@@ -172,8 +146,8 @@ class RP_FoodItem_Meta_Boxes{
         delete_post_meta( $post_id, $field );
       }
     }
-    //save sku fields
-    if( isset( $_POST['rpress_sku'] ) ) {
+    //save sku fields 
+     if( isset( $_POST['rpress_sku'] ) ) {
         $sku = !empty( $_POST['rpress_sku'] ) ? sanitize_text_field( $_POST['rpress_sku'] ) : null ;
         update_post_meta(  $post_id, 'rpress_sku', $sku );
     }
@@ -223,7 +197,7 @@ class RP_FoodItem_Meta_Boxes{
     } else {
 
       $product_terms = wp_get_post_terms( $post_id,  'addon_category', array( 'fields' => 'ids' ) );
-      if(!is_wp_error( $product_terms )) {
+      if( !is_wp_error( $product_terms ) ) {
         wp_remove_object_terms( $post_id, $product_terms, 'addon_category' );
       }
       update_post_meta( $post_id, '_addon_items', '' );
@@ -262,7 +236,7 @@ class RP_FoodItem_Meta_Boxes{
                 $term_name = !empty( $child_addon ) ? $child_addon : '';
                 $term_price = !empty( $addon_cat['addon_price'][$k] ) ? $addon_cat['addon_price'][$k] : '';
 
-                if ( !empty($term_name) ) {
+                if ( !empty( $term_name ) ) {
                   $child_terms = wp_insert_term( $term_name, 'addon_category', array( 'parent' => $term_id, 'slug' => sanitize_title( $term_name ) ) );
                 }
 
@@ -276,7 +250,7 @@ class RP_FoodItem_Meta_Boxes{
           }
         }
       }
-      self::update_addon_items( $post_id, $addon_data);
+      self::update_addon_items( $post_id, $addon_data );
 
     }
 

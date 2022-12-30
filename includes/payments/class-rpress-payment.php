@@ -665,8 +665,8 @@ class RPRESS_Payment {
 				}
 			}
 
-			if ( rpress_get_option( 'enable_sequential' ) ) {
-				$number       = rpress_get_next_payment_number();
+			if (rpress_get_option( 'enable_sequential' ) ) {
+				echo $number       = rpress_get_next_payment_number();
 				$this->number = rpress_format_payment_number( $number );
 				$this->update_meta( '_rpress_payment_number', $this->number );
 				update_option( 'rpress_last_payment_number', $number );
@@ -1535,17 +1535,11 @@ class RPRESS_Payment {
 		ksort( $current_args );
 		ksort( $merged_item );
 
-
-
-		// if ( md5( json_encode( $current_args ) ) == md5( json_encode( $merged_item ) ) ) {
-		// 	return false;
-		// }
-
 		// Format the item_price correctly now
 		$merged_item['item_price'] = rpress_sanitize_amount( $merged_item['item_price'] );
 
 		$new_subtotal                       = floatval( $merged_item['item_price'] ) * $merged_item['quantity'];
-		$merged_item['price']               = $new_subtotal + isset($merged_item['tax']);
+		$merged_item['price']               = $new_subtotal + $merged_item['tax'];
 		$this->cart_details[ $cart_index ]  = $merged_item;
 		$modified_fooditem                  = $merged_item;
 		$modified_fooditem['action']        = 'modify';

@@ -42,7 +42,7 @@ $row = isset( $_POST['i'] ) ?  absint( $_POST['i'] ) : 0;
             <td>
               <select name="addon_category[<?php echo sanitize_key( $row ) ; ?>][type]" class="rp-input addon-category-type">
                 <?php
-                  foreach ( $addon_types as $k => $type ){
+                  foreach ( $addon_types as $k => $type ) {
                     echo '<option value="' . esc_attr( $k ).'">' .esc_html( $type ) .'</option>';
                   }
                 ?>

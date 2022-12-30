@@ -55,11 +55,39 @@ function rpress_add_discount( $data ) {
 
 			$posted[ $key ] = $value;
 
+
 		} else if ( $key != 'rpress-discount-nonce' && $key != 'rpress-action' && $key != 'rpress-redirect' ) {
 
 			if ( is_string( $value ) || is_int( $value ) ) {
 
 				$posted[ $key ] = strip_tags( addslashes( $value ) );
+
+
+			} elseif ( is_array( $value ) ) {
+
+				$posted[ $key ] = array_map( 'absint', $value );
+
+			}
+		}
+
+	}
+	foreach ( $data as $key => $value ) {
+
+		if ( $key === 'categories' || $key === 'excluded-categories' ) {
+
+			foreach ( $value as $product_key => $product_value ) {
+				$value[ $product_key ] = preg_replace("/[^0-9_]/", '', $product_value );
+			}
+
+			$posted[ $key ] = $value;
+
+
+		} else if ( $key != 'rpress-discount-nonce' && $key != 'rpress-action' && $key != 'rpress-redirect' ) {
+
+			if ( is_string( $value ) || is_int( $value ) ) {
+
+				$posted[ $key ] = strip_tags( addslashes( $value ) );
+
 
 			} elseif ( is_array( $value ) ) {
 
@@ -140,8 +168,34 @@ function rpress_edit_discount( $data ) {
 		}
 
 	}
+	foreach ( $data as $key => $value ) {
 
-	$old_discount     = new RPRESS_Discount( (int) $data['discount-id'] );
+		if ( $key === 'categories' || $key === 'excluded-categories' ) {
+
+			foreach ( $value as $product_key => $product_value ) {
+				$value[ $product_key ] = preg_replace("/[^0-9_]/", '', $product_value );
+			}
+
+			$discount[ $key ] = $value;
+
+		} else if ( $key != 'rpress-discount-nonce' && $key != 'rpress-action' && $key != 'discount-id' && $key != 'rpress-redirect' ) {
+
+			if ( is_string( $value ) || is_int( $value ) ) {
+
+				$discount[ $key ] = strip_tags( addslashes( $value ) );
+
+			} elseif ( is_array( $value ) ) {
+
+				$discount[ $key ] = array_map( 'absint', $value );
+
+			}
+
+		}
+
+	}
+
+
+	$old_discount     = new RPRESS_Discount( ( int ) $data['discount-id'] );
 	$discount['uses'] = rpress_get_discount_uses( $old_discount->ID );
 
 	if ( rpress_store_discount( $discount, $data['discount-id'] ) ) {

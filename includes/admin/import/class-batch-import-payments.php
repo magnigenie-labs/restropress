@@ -534,7 +534,7 @@ class RPRESS_Batch_Payments_Import extends RPRESS_Batch_Import {
 		// Break string into separate products
 
 		$d_array   = array();
-		$fooditems = (array) explode( '/', $data_str );
+		$fooditems = ( array ) explode( '/', $data_str );
 
 		if( $fooditems ) {
 

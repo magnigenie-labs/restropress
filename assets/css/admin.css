@@ -9,6 +9,12 @@
 .rpress-hidden,#addon_categorydiv,#food-categorydiv {
   display: none;
  }
+
+ #rpress_sku{
+  width: 93px;
+  margin-left: 35px;
+  }
+
  .rpress-clearfix:after {
   content: ".";
   display: block;
@@ -3216,3 +3222,4 @@
   display: inline-block;
   margin-right: 10px;
  }
+ 

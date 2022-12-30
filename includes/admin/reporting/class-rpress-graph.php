@@ -21,32 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class RPRESS_Graph {
 
-	/*
-
-	Simple example:
-
-	data format for each point: array( location on x, location on y )
-
-	$data = array(
-
-		'Label' => array(
-			array( 1, 5 ),
-			array( 3, 8 ),
-			array( 10, 2 )
-		),
-
-		'Second Label' => array(
-			array( 1, 7 ),
-			array( 4, 5 ),
-			array( 12, 8 )
-		)
-	);
-
-	$graph = new RPRESS_Graph( $data );
-	$graph->display();
-
-	*/
-
+	
 	/**
 	 * Data to graph
 	 *
@@ -172,7 +147,7 @@ class RPRESS_Graph {
 						{
 							label: "<?php echo esc_attr( $label ); ?>",
 							id: "<?php echo sanitize_text_field( $label ); ?>",
-							// data format is: [ point on x, value on y ]
+							
 							data: [<?php foreach( $data as $point ) { echo '[' . implode( ',', $point ) . '],'; } ?>],
 							points: {
 								show: <?php echo $this->options['points'] ? 'true' : 'false'; ?>,

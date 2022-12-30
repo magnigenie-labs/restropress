@@ -197,7 +197,7 @@ add_filter( 'rpress_fooditem_price', 'rpress_currency_filter', 20 );
  * @param string $amount_override a custom amount that over rides the 'rpress_price' meta, used for variable prices
  * @return string - the price of the fooditem
  */
-function rpress_get_fooditem_final_price( $fooditem_id = 0, $user_purchase_info, $amount_override = null ) {
+function rpress_get_fooditem_final_price( $fooditem_id = 0, $user_purchase_info = null, $amount_override = null ) {
 	if ( is_null( $amount_override ) ) {
 		$original_price = get_post_meta( $fooditem_id, 'rpress_price', true );
 	} else {
@@ -266,8 +266,8 @@ function rpress_get_default_variable_price( $fooditem_id = 0 ) {
 	$prices = rpress_get_variable_prices( $fooditem_id );
 	$default_price_id = get_post_meta( $fooditem_id, '_rpress_default_price_id', true );
 
-	if ( $default_price_id === '' ||  ! isset( $prices[$default_price_id] ) ) {
-		if( is_array( $prices) ) {
+	if ( $default_price_id === '' ||  ! isset( $prices[ $default_price_id ] ) ) {
+		if( is_array( $prices ) ) {
 			$default_price_id = current( array_keys( $prices ) );
 		}
 
@@ -590,7 +590,7 @@ function rpress_get_fooditem_sales_stats( $fooditem_id = 0 ) {
  * @param string|null $sale_date The date of the sale
  * @return void
 */
-function rpress_record_sale_in_log( $fooditem_id = 0, $payment_id, $price_id = false, $sale_date = null ) {
+function rpress_record_sale_in_log( $fooditem_id = 0, $payment_id = null, $price_id = false, $sale_date = null ) {
 	global $rpress_logs;
 
 	$log_data = array(
@@ -665,7 +665,7 @@ function rpress_decrease_purchase_count( $fooditem_id = 0, $quantity = 1 ) {
  * @param int $amount Earnings
  * @return bool|int
  */
-function rpress_increase_earnings( $fooditem_id = 0, $amount ) {
+function rpress_increase_earnings( $fooditem_id = 0, $amount = null ) {
 	$fooditem = new RPRESS_Fooditem( $fooditem_id );
 	return $fooditem->increase_earnings( $amount );
 }
@@ -678,7 +678,7 @@ function rpress_increase_earnings( $fooditem_id = 0, $amount ) {
  * @param int $amount Earnings
  * @return bool|int
  */
-function rpress_decrease_earnings( $fooditem_id = 0, $amount ) {
+function rpress_decrease_earnings( $fooditem_id = 0, $amount = null ) {
 	$fooditem = new RPRESS_Fooditem( $fooditem_id );
 	return $fooditem->decrease_earnings( $amount );
 }
@@ -868,7 +868,7 @@ function rpress_get_addon_types() {
   $addon_types = apply_filters(
     'rpress_addon_types',
     array(
-      'single'  => 'Single',
+      'single'    => 'Single',
       'multiple'  => 'Multiple'
     )
   );
@@ -895,15 +895,15 @@ function rpress_dynamic_addon_price( $post_id, $child_addon, $parent_addon = nul
 	if( empty( $item_addons ) )
 		return $addon_price;
 
-	if( ! isset( $item_addons[$parent_addon]['prices'] ) )
+	if( ! isset( $item_addons[ $parent_addon ]['prices'] ) )
 		return $addon_price;
 
 	if( rpress_has_variable_prices( $post_id ) ) {
 		$prices = rpress_get_variable_prices( $post_id );
-		$name = sanitize_key( $prices[$price_id]['name'] );
-		$addon_price = $item_addons[$parent_addon]['prices'][$child_addon][$name];
+		$name = sanitize_key( $prices[ $price_id ]['name'] );
+		$addon_price = $item_addons[$parent_addon]['prices'][ $child_addon ][ $name ];
 	} else {
-		$addon_price = $item_addons[$parent_addon]['prices'][$child_addon];
+		$addon_price = $item_addons[ $parent_addon ]['prices'][ $child_addon ];
 	}
 
 

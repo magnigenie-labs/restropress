@@ -116,8 +116,6 @@ function rpress_email_test_purchase_receipt() {
 	$headers = apply_filters( 'rpress_receipt_headers', $emails->get_headers(), 0, array() );
 	$emails->__set( 'headers', $headers );
 
-	//$emails->send( rpress_get_admin_notice_emails(), $subject, $message, $attachments );
-
 }
 
 /**

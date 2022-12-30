@@ -159,7 +159,7 @@ class RP_AJAX {
 
     check_ajax_referer( 'add-price', 'security' );
 
-    $current =  isset( $_POST['i'] ) && !empty( $_POST['i'] ) ? sanitize_text_field( $_POST['i'] ) : NULL;
+    $current =  isset( $_POST['i'] ) && ! empty( $_POST['i'] ) ? sanitize_text_field( $_POST['i'] ) : NULL;
 
     include 'admin/fooditems/views/html-fooditem-variable-price.php';
     wp_die();
@@ -217,7 +217,7 @@ class RP_AJAX {
 
     check_admin_referer( 'rpress-order', 'security' );
 
-    if ( !empty( $_GET['status'] ) && !empty( $_GET['payment_id'] ) ) {
+    if ( ! empty( $_GET['status'] ) && ! empty( $_GET['payment_id'] ) ) {
 
       if( ! current_user_can( 'edit_shop_payments', $_GET['payment_id'] ) ) {
         wp_die( esc_html__( 'You do not have permission to update this order', 'restropress' ), esc_html__( 'Error', 'restropress' ), array( 'response' => 403 ) );
@@ -235,7 +235,7 @@ class RP_AJAX {
 
     $redirect = wp_get_referer() ? wp_get_referer() : admin_url( 'admin.php?page=rpress-payment-history' );
     
-    if( !empty( $_GET['redirect'] ) ) {
+    if( ! empty( $_GET['redirect'] ) ) {
       wp_safe_redirect( esc_url( $redirect ) );
       exit;
     }
@@ -250,9 +250,9 @@ class RP_AJAX {
 
     check_ajax_referer( 'load-addon', 'security' );
 
-    $parent      =  isset( $_POST['parent'] ) && !empty( $_POST['parent'] ) ? sanitize_text_field( wp_unslash( $_POST['parent'] ) ) : NULL ;
-    $current     = isset( $_POST['i'] ) && !empty( $_POST['i'] ) ? sanitize_text_field( wp_unslash( $_POST['i'] ) ) : NULL ;
-    $item_id     = isset( $_POST['item_id'] ) && !empty( $_POST['item_id'] ) ? sanitize_text_field( wp_unslash( $_POST['item_id'] ) ) : NULL ;
+    $parent      =  isset( $_POST['parent'] ) && ! empty( $_POST['parent'] ) ? sanitize_text_field( wp_unslash( $_POST['parent'] ) ) : NULL ;
+    $current     = isset( $_POST['i'] ) && ! empty( $_POST['i'] ) ? sanitize_text_field( wp_unslash( $_POST['i'] ) ) : NULL ;
+    $item_id     = isset( $_POST['item_id'] ) && ! empty( $_POST['item_id'] ) ? sanitize_text_field( wp_unslash( $_POST['item_id'] ) ) : NULL ;
     $addon_items = rpress_get_addons( $parent );
     $variation_label = '';
 
@@ -293,7 +293,7 @@ class RP_AJAX {
 
       if( ! empty( $item_id ) && rpress_has_variable_prices( $item_id ) ) {
 
-        foreach ( rpress_get_variable_prices( $item_id ) as $price) {
+        foreach ( rpress_get_variable_prices( $item_id ) as $price ) {
 
           $output .= '<tr class="' . $parent_class . '">';
           if( $count == 1 ) {
@@ -341,7 +341,7 @@ class RP_AJAX {
 
     $price = '';
 
-    if ( !empty( $fooditem_id ) ) {
+    if ( ! empty( $fooditem_id ) ) {
       //Check item is variable or simple
       if ( rpress_has_variable_prices( $fooditem_id ) ) {
         $price = rpress_get_lowest_price_option( $fooditem_id );
@@ -352,7 +352,7 @@ class RP_AJAX {
 
 
 
-    if ( !empty( $price ) ) {
+    if ( ! empty( $price ) ) {
       $formatted_price = rpress_currency_filter( rpress_format_amount( $price ) );
     }
     
@@ -373,7 +373,7 @@ class RP_AJAX {
       'html'        => $data,
       'html_title'  => apply_filters( 'rpress_modal_title' , $food_title ),
     );
-    wp_send_json_success($response);
+    wp_send_json_success( $response );
     rpress_die();
   }
 
@@ -384,7 +384,7 @@ class RP_AJAX {
 
     check_ajax_referer( 'service-type', 'security' );
 
-    $fooditem_id      = isset( $_POST['fooditem_id'] ) && !empty( $_POST['fooditem_id'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_id'] ) )  : NULL;
+    $fooditem_id      = isset( $_POST['fooditem_id'] ) && ! empty( $_POST['fooditem_id'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_id'] ) )  : NULL;
     $delivery_steps   = rpress_get_delivery_steps( $fooditem_id );
 
     $response = array(
@@ -414,17 +414,17 @@ class RP_AJAX {
 
     check_ajax_referer( 'edit-cart-fooditem', 'security' );
 
-    $cart_key = ! empty( $_POST['cartitem_id'] ) ? sanitize_text_field( wp_unslash( $_POST['cartitem_id'] ) )  : 0 ;
-    $cart_key = absint( $cart_key );
+    $cart_key  = ! empty( $_POST['cartitem_id'] ) ? sanitize_text_field( wp_unslash( $_POST['cartitem_id'] ) )  : 0 ;
+    $cart_key  = absint( $cart_key );
     $fooditem_id = ! empty( $_POST['fooditem_id'] ) ? sanitize_text_field ( wp_unslash( $_POST['fooditem_id'] ) ) : NULL ;
-    $food_title = ! empty( $_POST['fooditem_name'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_name'] ) ) : get_the_title( $fooditem_id );
+    $food_title  = ! empty( $_POST['fooditem_name'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_name'] ) ) : get_the_title( $fooditem_id );
     $fooditem_desc  = get_post_field( 'post_content', $fooditem_id );
 
-    if ( !empty( $fooditem_id)  ) {
+    if ( ! empty( $fooditem_id)  ) {
 
       $price = '';
 
-      if ( !empty( $fooditem_id ) ) {
+      if ( ! empty( $fooditem_id ) ) {
         //Check item is variable or simple
         if ( rpress_has_variable_prices( $fooditem_id ) ) {
           $price = rpress_get_lowest_price_option( $fooditem_id );
@@ -433,7 +433,7 @@ class RP_AJAX {
         }
       }
 
-      if ( !empty( $price ) ) {
+      if ( ! empty( $price ) ) {
         $formatted_price = rpress_currency_filter( rpress_format_amount( $price ) );
       }
 
@@ -475,15 +475,15 @@ class RP_AJAX {
     $quantity     = ! empty( $_POST['fooditem_qty'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_qty'] ) )  : 1;
     $instructions = ! empty( $_POST['special_instruction'] ) ? sanitize_text_field( wp_unslash( $_POST['special_instruction'] ) ): '';
     $addon_items  = ! empty( $_POST['post_data'] ) ? (array) $_POST['post_data'] : array() ;
-    $addon_items = rpress_sanitize_array( $addon_items );
+    $addon_items  = rpress_sanitize_array( $addon_items );
     $items   = '';
     $options = array();
 
     //Check whether the fooditem has variable pricing
     if ( rpress_has_variable_prices( $fooditem_id ) ) {
-      $price_id = !empty( $addon_items[0]['value'] ) ? $addon_items[0]['value'] : 0;
+      $price_id = ! empty( $addon_items[0]['value'] ) ? $addon_items[0]['value'] : 0;
       $options['price_id'] = $price_id;
-      $options['price']   = rpress_get_price_option_amount( $fooditem_id, $price_id );
+      $options['price']    = rpress_get_price_option_amount( $fooditem_id, $price_id );
     } else {
       $options['price'] = rpress_get_fooditem_price( $fooditem_id );
     }
@@ -498,7 +498,7 @@ class RP_AJAX {
 
         $addon_data = explode( '|', sanitize_text_field( $get_items[ 'value' ] ) );
 
-        if ( is_array( $addon_data ) && !empty( $addon_data ) ) {
+        if ( is_array( $addon_data ) && ! empty( $addon_data ) ) {
 
           $addon_item_like = isset( $addon_data[3] ) ? $addon_data[3] : 'checkbox';
 
@@ -557,9 +557,9 @@ class RP_AJAX {
 
     check_ajax_referer( 'update-cart-item', 'security' );
 
-    $cart_key     = isset( $_POST['fooditem_cartkey'] ) && !empty( $_POST['fooditem_cartkey'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_cartkey'] ) ) : NULL;
-    $fooditem_id  = isset( $_POST['fooditem_id'] ) && !empty( $_POST['fooditem_id'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_id'] ) )  : NULL;
-    $item_qty     = isset( $_POST['fooditem_qty'] ) && !empty( $_POST['fooditem_qty'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_qty'] ) )  : 1;
+    $cart_key     = isset( $_POST['fooditem_cartkey'] ) && ! empty( $_POST['fooditem_cartkey'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_cartkey'] ) ) : NULL;
+    $fooditem_id  = isset( $_POST['fooditem_id'] ) && ! empty( $_POST['fooditem_id'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_id'] ) )  : NULL;
+    $item_qty     = isset( $_POST['fooditem_qty'] ) && ! empty( $_POST['fooditem_qty'] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_qty'] ) )  : 1;
 
     if ( empty( $cart_key ) && empty( $fooditem_id ) ) {
       return;
@@ -585,17 +585,17 @@ class RP_AJAX {
 
     $options['price_id'] = $price_id;
 
-    if ( is_array( $addon_items ) && !empty( $addon_items ) ) {
+    if ( is_array( $addon_items ) && ! empty( $addon_items ) ) {
 
       foreach( $addon_items as $key => $item ) {
 
         $addon_data = explode( '|', sanitize_text_field( $item[ 'value' ] ) );
 
-        if ( is_array( $addon_data ) && !empty( $addon_data ) ) {
+        if ( is_array( $addon_data ) && ! empty( $addon_data ) ) {
 
-          $addon_id = !empty( $addon_data[0] ) ? $addon_data[0] : '';
-          $addon_qty = !empty( $addon_data[1] ) ? $addon_data[1] : '';
-          $addon_price = !empty( $addon_data[2] ) ? $addon_data[2] : '';
+          $addon_id = ! empty( $addon_data[0] ) ? $addon_data[0] : '';
+          $addon_qty = ! empty( $addon_data[1] ) ? $addon_data[1] : '';
+          $addon_price = ! empty( $addon_data[2] ) ? $addon_data[2] : '';
 
           $addon_details = get_term_by( 'id', $addon_id, 'addon_category' );
 
@@ -620,7 +620,7 @@ class RP_AJAX {
     );
 
     $item   = apply_filters( 'rpress_ajax_pre_cart_item_template', $item );
-    $items = rpress_get_cart_item_template( $cart_key, $item, true, $data_key = '' );
+    $items  = rpress_get_cart_item_template( $cart_key, $item, true, $data_key = '' );
 
     $return = array(
      'subtotal'      => html_entity_decode( rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) ), ENT_COMPAT, 'UTF-8' ),
@@ -756,7 +756,7 @@ class RP_AJAX {
 
     if ( rpress_has_variable_prices( $fooditem_id ) ) :
       $get_lowest_price_id = rpress_get_lowest_price_id( $fooditem_id );
-      $get_lowest_price = rpress_get_lowest_price_option( $fooditem_id );
+      $get_lowest_price    = rpress_get_lowest_price_option( $fooditem_id );
       ?>
       <div class="rpress-get-variable-prices">
         <input type="hidden" class="rpress_selected_price" name="rpress_selected_price" value="<?php echo esc_attr( $get_lowest_price ); ?>">
@@ -800,7 +800,7 @@ class RP_AJAX {
 
     $fooditem_id = isset( $_POST['fooditem_id' ] ) ? sanitize_text_field( wp_unslash( $_POST['fooditem_id'] ) ) : NULL;
 
-    if( !empty( $fooditem_id ) ) {
+    if( ! empty( $fooditem_id ) ) {
       rpress_addon_items_by_fooditem( $fooditem_id );
     }
     
@@ -853,7 +853,6 @@ class RP_AJAX {
         $amount    = rpress_format_discount_rate( rpress_get_discount_type( $discount->ID ), rpress_get_discount_amount( $discount->ID ) );
         $discounts = rpress_set_cart_discount( $discount_code );
         $total     = rpress_get_cart_total( $discounts );
-        //$discount_value = rpress_get_discount_value( $discount_code );
         $discount_value = rpress_currency_filter( rpress_format_amount( RPRESS()->cart->get_discounted_amount() ) );
 
         $return = array(
@@ -876,7 +875,7 @@ class RP_AJAX {
       // Allow for custom discount code handling
       $return = apply_filters( 'rpress_ajax_discount_response', $return );
 
-      echo json_encode($return);
+      echo json_encode( $return );
     }
     rpress_die();
   }
@@ -1259,11 +1258,11 @@ class RP_AJAX {
       $payment  = new RPRESS_Payment( $payment_id );
       $placeholder = array( '{order_id}' => $payment_id );
       $service_type = get_post_meta( $payment_id, '_rpress_delivery_type', true );
-      if ( !empty( $service_type ) ) {
+      if ( ! empty( $service_type ) ) {
         $service_type = ucfirst( $service_type );
       }
       $service_date = get_post_meta( $payment_id, '_rpress_delivery_date', true );
-      if ( !empty( $service_date ) ) {
+      if ( ! empty( $service_date ) ) {
         $service_date = rpress_local_date( $service_date );
       }
       $payment_status = $payment->status;
@@ -1297,7 +1296,7 @@ class RP_AJAX {
   public static function activate_addon_license() {
 
     // listen for our activate button to be clicked
-    if( isset($_POST['license_key']) ) {
+    if( isset( $_POST['license_key'] ) ) {
 
       // Get the license from the user
       // Item ID (Normally a 2 or 3 digit code)
