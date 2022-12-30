@@ -321,6 +321,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     $ajax_params = array(
       'ajaxurl'                 => rpress_get_ajax_url(),
+      'post_id'               => isset( $post->ID ) ? $post->ID : '',
+
       'position_in_cart'        => isset( $position ) ? $position : -1,
       'has_purchase_links'      => $has_purchase_links,
       'already_in_cart_message' => esc_html__( 'You have already added this item to your cart', 'restropress' ), // Item already in the cart message
@@ -639,5 +641,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     );
   }
 }
+
+
 
 RP_Frontend_Scripts::init();

@@ -75,9 +75,9 @@
     $variable_pricing = rpress_has_variable_prices( $post->ID );
 
     if ( $variable_pricing ) {
-      echo  rpress_price_range( $post->ID );
+       echo  rpress_price_range( $post->ID );
     } else {
-      echo rpress_currency_filter( rpress_format_amount( $price ) );
+        echo rpress_currency_filter( rpress_format_amount( $price ) );
     }
 
     ?>

@@ -194,7 +194,6 @@ if ( ! class_exists( 'RP_Admin_Assets', false ) ) :
           'select_addon_category' => esc_js( __( 'Please select addon category first.', 'restropress' ) ),
           'addon_category_already_selected' => esc_js( __( 'Addon category already selected.', 'restropress' ) ),
         );
-
         wp_localize_script( 'rp-admin-fooditem-meta-boxes', 'fooditem_meta_boxes', $params );
       }
 

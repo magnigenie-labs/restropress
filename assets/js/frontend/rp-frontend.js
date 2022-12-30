@@ -1,3 +1,35 @@
+jQuery(document)
+  .ready(function ($) {
+
+  if(($(".rpress_fooditems_list").length)>0){
+      
+      $.ajax( {
+           url: rp_scripts.ajaxurl,
+           type: 'post',
+           data: {
+               action: 'load_fooditems',
+               
+           },
+           success( data ) {
+               if ( data ) {
+
+                  $('.rpress_fooditems_list').append( data );  
+                  $('.rpress_fooditems_list')
+                    .find('.rpress-title-holder')
+                    .each(function () {
+                     $(this)
+                        .attr('data-search-term', $(this)
+                          .text()
+                          .toLowerCase());
+                    });        
+
+               }
+           },
+       });
+    }
+   
+    });
+
 /* Get RestroPress Cookie */
 function rp_getCookie(cname) {
   var name = cname + "=";
@@ -127,6 +159,7 @@ function update_modal_live_price(fooditem_container) {
 }
 
 /* RestroPress Frontend Functions */
+
 jQuery(function ($) {
 
   // Show order details on popup
@@ -263,8 +296,8 @@ jQuery(function ($) {
   }
 
   // Add to Cart
-  $('.rpress-add-to-cart')
-    .click(function (e) {
+  $(document)
+    .on('click', '.rpress-add-to-cart', function (e) {
 
       e.preventDefault();
       var rp_get_delivery_data = rp_get_storage_data();
@@ -289,7 +322,10 @@ jQuery(function ($) {
       }
 
       var _self = $(this);
+
       var fooditem_id = _self.attr('data-fooditem-id');
+            // console.log(fooditem_id);
+
       var foodItemName = _self.attr('data-title');
       var price = _self.attr('data-price');
       var variable_price = _self.attr('data-variable-price');
@@ -299,7 +335,7 @@ jQuery(function ($) {
         fooditem_id: fooditem_id,
         security: security,
       };
-
+      // console.log(data);
       $.ajax({
         type: "POST",
         data: data,
@@ -1541,16 +1577,8 @@ jQuery(function ($) {
 });
 
 /* RestroPress Live Search - Imported from live-search.js */
-jQuery(function ($) {
 
-  $('.rpress_fooditems_list')
-    .find('.rpress-title-holder')
-    .each(function () {
-      $(this)
-        .attr('data-search-term', $(this)
-          .text()
-          .toLowerCase());
-    });
+jQuery(function ($) {
 
   $('#rpress-food-search')
     .on('keyup', function () {
@@ -1559,7 +1587,6 @@ jQuery(function ($) {
         .toLowerCase();
       var DataId;
       var SelectedTermId;
-
       $('.rpress_fooditems_list')
         .find('.rpress-element-title')
         .each(function (index, elem) {
@@ -1569,13 +1596,13 @@ jQuery(function ($) {
             .removeClass('matched');
         });
 
+      
       $('.rpress_fooditems_list')
         .find('.rpress-title-holder')
         .each(function () {
           DataId = $(this)
             .parents('.rpress_fooditem')
             .attr('data-term-id');
-
           if ((searchTerm != '' && $(this)
             .filter('[data-search-term *= ' + searchTerm + ']')
             .length > 0) || searchTerm.length < 1) {
@@ -1598,6 +1625,7 @@ jQuery(function ($) {
             $(this)
               .parents('.rpress_fooditem')
               .hide();
+
             $('.rpress_fooditems_list')
               .find('.rpress-element-title')
               .each(function (index, elem) {
@@ -1606,7 +1634,7 @@ jQuery(function ($) {
               });
           }
         });
-
+       
       $('.rpress_fooditems_list')
         .find('.rpress-element-title')
         .each(function () {
@@ -1624,7 +1652,7 @@ jQuery(function ($) {
           }
         });
     });
-})
+  });
 
 /* RestroPress active category highlighter */
 jQuery(function ($) {

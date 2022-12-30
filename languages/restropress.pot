@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: RestroPress\n"
-"POT-Creation-Date: 2022-12-12 18:17+0530\n"
-"PO-Revision-Date: 2022-12-12 18:17+0530\n"
+"POT-Creation-Date: 2022-11-26 20:45+0530\n"
+"PO-Revision-Date: 2022-11-26 20:44+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2066,9 +2066,9 @@ msgstr ""
 #: includes/admin/payments/class-payments-table.php:1179
 #: includes/admin/tools.php:606 includes/emails/email-tags.php:461
 #: templates/checkout_cart.php:209
-#: templates/receipt/print-receipt-content.php:98
+#: templates/receipt/print-receipt-content.php:99
 #: templates/rpress-show-order-details.php:108
-#: templates/shortcode-receipt.php:269
+#: templates/shortcode-receipt.php:260
 msgid "Total"
 msgstr ""
 
@@ -2254,7 +2254,7 @@ msgstr ""
 
 #: includes/admin/payments/view-order-details.php:216
 #: templates/rpress-show-order-details.php:101
-#: templates/shortcode-receipt.php:262
+#: templates/shortcode-receipt.php:253
 msgid "Coupon"
 msgstr ""
 
@@ -4790,9 +4790,9 @@ msgstr ""
 
 #: includes/admin/tools.php:588 includes/class-rpress-frontend-scripts.php:259
 #: templates/checkout_cart.php:144
-#: templates/receipt/print-receipt-content.php:71
+#: templates/receipt/print-receipt-content.php:72
 #: templates/rpress-show-order-details.php:88
-#: templates/shortcode-receipt.php:232
+#: templates/shortcode-receipt.php:223
 msgid "Subtotal"
 msgstr ""
 
@@ -5181,34 +5181,34 @@ msgstr ""
 msgid "Cart restored successfully."
 msgstr ""
 
-#: includes/cart/template.php:176
+#: includes/cart/template.php:172
 msgid "Choose an item from the menu to get started."
 msgstr ""
 
-#: includes/cart/template.php:237
+#: includes/cart/template.php:233
 msgid "Restore Previous Cart"
 msgstr ""
 
-#: includes/cart/template.php:242
+#: includes/cart/template.php:238
 msgid "Save Cart"
 msgstr ""
 
-#: includes/cart/template.php:259
+#: includes/cart/template.php:255
 msgid "Restore Previous Cart."
 msgstr ""
 
-#: includes/cart/template.php:275
+#: includes/cart/template.php:271
 #: includes/class-rpress-frontend-scripts.php:249
 #: includes/class-rpress-frontend-scripts.php:341
 msgid "Update Cart"
 msgstr ""
 
-#: includes/cart/template.php:368
+#: includes/cart/template.php:364
 #, php-format
 msgid "You have successfully added %s to your shopping cart."
 msgstr ""
 
-#: includes/cart/template.php:369
+#: includes/cart/template.php:365
 msgid "Checkout."
 msgstr ""
 
@@ -7177,7 +7177,7 @@ msgstr ""
 msgid "No Discounts found in Trash"
 msgstr ""
 
-#: includes/post-types.php:116 templates/receipt/print-receipt-content.php:76
+#: includes/post-types.php:116 templates/receipt/print-receipt-content.php:77
 msgid "Discounts"
 msgstr ""
 
@@ -8430,7 +8430,7 @@ msgid ""
 "If it does not, click <a href=\"%s\">here</a>."
 msgstr ""
 
-#: templates/receipt/print-receipt-content.php:60
+#: templates/receipt/print-receipt-content.php:61
 msgid "Customer Note:&nbsp;"
 msgstr ""
 
@@ -8585,7 +8585,7 @@ msgstr ""
 msgid "Item"
 msgstr ""
 
-#: templates/shortcode-receipt.php:188
+#: templates/shortcode-receipt.php:185
 msgid "Special Instructions"
 msgstr ""
 

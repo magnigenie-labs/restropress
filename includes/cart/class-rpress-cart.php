@@ -1173,7 +1173,7 @@ class RPRESS_Cart {
 		$total        = $subtotal - $discounts + $cart_tax + $fees ;
 
 		if( $include_tax == 'yes' ) {
-		$total        = ( $subtotal - $discounts ) + $fees;
+		$total        = ( $subtotal - $discounts ) + $fees + $cart_tax;
 		}
 
 		if ( $total < 0 || ! $total_wo_tax > 0 ) {

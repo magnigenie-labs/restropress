@@ -189,12 +189,37 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '') {
       <div class="rp-variable-price-wrapper">
 
       <?php
-      foreach( $prices as $k => $price ) {
-        
+      foreach( $prices as $k => $price ) { 
+        $rate = (float) rpress_get_option( 'tax_rate', 0 );
+        // Convert to a number we can use
+        $include_tax  = rpress_get_option( 'prices_include_tax', true );
+        $tax_inc_exc_item_option = rpress_get_option('tax_item', true );
         $price_option = $price['name'];
         $is_first = ( $k == $price_id ) ? 'checked' : '';
         $price_option_slug = sanitize_title( $price['name'] );
-        $price_option_amount = rpress_currency_filter( rpress_format_amount( $price['amount'] ) ); ?>
+
+        /** 
+        * Condition added to show the item price as included or excluded Tax
+        * @since 2.9.6
+        */
+
+        if( $include_tax == 'yes' && $tax_inc_exc_item_option == 'inc_tax' ) {
+          $price_option_amount = rpress_currency_filter( rpress_format_amount( $price['amount'] ) ); 
+        } elseif ( $include_tax == 'yes' && $tax_inc_exc_item_option == 'exc_tax' ) {
+            $item_tax = $price['amount'] - ( $price['amount'] / ( ( $rate / 100 ) + 1 ) );
+            $price['amount'] = $price['amount'] - $item_tax;
+        } 
+        elseif ($include_tax == 'no' && $tax_inc_exc_item_option == 'inc_tax') {
+          $item_tax = $price['amount'] * ( $rate / 100 );
+          $price['amount'] = ( float ) $price['amount'] + ( float ) $item_tax;
+
+        } else {
+            $price['amount'] = $price['amount']; 
+         }
+         $price_option_amount = rpress_currency_filter( rpress_format_amount( $price['amount'] ) );
+
+
+        ?>
 
         <div class="food-item-list active">
           <label for="<?php echo esc_attr( $price_option_slug ); ?>" class="radio-container">

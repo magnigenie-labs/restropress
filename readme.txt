@@ -575,5 +575,5 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == Upgrade Notice ==
 
-= Version 2.9.4  =
+= Version 2.9.5  =
 * New update for RestroPress is available. Please take a backup before the update.

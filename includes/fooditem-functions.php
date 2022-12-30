@@ -459,8 +459,44 @@ function rpress_get_highest_price_option( $fooditem_id = 0 ) {
  * @return string $range A fully formatted price range
  */
 function rpress_price_range( $fooditem_id = 0 ) {
-	$low   = rpress_get_lowest_price_option( $fooditem_id );
-	$high  = rpress_get_highest_price_option( $fooditem_id );
+	$rate = (float) rpress_get_option( 'tax_rate', 0 );
+    // Convert to a number we can use
+    $include_tax  = rpress_get_option( 'prices_include_tax', true );
+    $tax_inc_exc_item_option = rpress_get_option('tax_item', true );
+    $low   = rpress_get_lowest_price_option( $fooditem_id );
+    $high  = rpress_get_highest_price_option( $fooditem_id );
+ 
+    /** 
+    * Conditions added to show the item price as included or excluded Tax
+    * @since 2.9.6
+    */
+
+	if( $include_tax == 'yes' && $tax_inc_exc_item_option == 'inc_tax' ) {
+	  $low   = rpress_get_lowest_price_option( $fooditem_id );
+	} elseif ( $include_tax == 'yes' && $tax_inc_exc_item_option == 'exc_tax' ) {
+	  	$item_tax = $low - ( $low / ( ( $rate / 100 ) + 1 ) );
+	  	$low = $low - $item_tax;
+	} elseif ($include_tax == 'no' && $tax_inc_exc_item_option == 'inc_tax') {
+	  $item_tax = $low * ( $rate / 100 );
+	  $low = ( float ) $low + ( float ) $item_tax;
+	} else {
+	  	$low   = rpress_get_lowest_price_option( $fooditem_id );
+	}
+
+	if( $include_tax == 'yes' && $tax_inc_exc_item_option == 'inc_tax' ) {
+	  $high  = rpress_get_highest_price_option( $fooditem_id );
+	} elseif ( $include_tax == 'yes' && $tax_inc_exc_item_option == 'exc_tax' ) {
+	  	$item_tax = $high - ( $high / ( ( $rate / 100 ) + 1 ) );
+	  	$high = $high - $item_tax;
+	} elseif ($include_tax == 'no' && $tax_inc_exc_item_option == 'inc_tax') {
+	  $item_tax = $high * ( $rate / 100 );
+	  $high = ( float ) $high + ( float ) $item_tax;
+	} else {
+	  	$high  = rpress_get_highest_price_option( $fooditem_id );
+	}
+
+	// conditions ended
+
 	$range = '<span class="rpress_price rpress_price_range_low" id="rpress_price_low_' . $fooditem_id . '">' . rpress_currency_filter( rpress_format_amount( $low ) ) . '</span>';
 	if( $low < $high ){
 		$range .= '<span class="rpress_price_range_sep">&nbsp;&ndash;&nbsp;</span>';
