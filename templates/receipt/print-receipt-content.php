@@ -25,7 +25,8 @@ $discounts = 0;
 
     <?php foreach( $cart_items as $key => $item ) : ?>
       <?php if ( isset( $item['name'] ) ) :
-      $item_name = isset( $item['name'] ) ? $item['name'] : '';
+      $item_cart_name = rpress_get_cart_item_name( $item );
+      $item_name = isset( $item_cart_name ) ? $item_cart_name : '';
       $item_qty = isset( $item['item_number']['quantity'] ) ? $item['item_number']['quantity'] : '';
       $item_id = isset( $item['id'] ) ? $item['id'] : '';
       $item_price = $item['item_price'] * $item_qty;
@@ -33,7 +34,6 @@ $discounts = 0;
       $subtotal = $subtotal + $item['subtotal'];
       $taxes = $taxes + $item['tax'];
       $discounts = $discounts + $item['discount'];
-
       ?>
 
       <tr>

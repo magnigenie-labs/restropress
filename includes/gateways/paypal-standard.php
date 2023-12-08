@@ -58,6 +58,13 @@ function rpress_register_paypal_gateway_settings( $gateway_settings ) {
 				'type' => 'text',
 				'size' => 'regular',
 			),
+			'paypal_id' => array(
+				'id'   => 'paypal_id',
+				'name' => __( 'PayPal ID', 'restropress' ),
+				'desc' => __( 'Enter your PayPal account\'s ID', 'restropress' ),
+				'type' => 'text',
+				'size' => 'regular',
+			),
 			'paypal_image_url' => array(
 				'id'   => 'paypal_image_url',
 				'name' => __( 'PayPal Image URL', 'restropress' ),
@@ -69,7 +76,7 @@ function rpress_register_paypal_gateway_settings( $gateway_settings ) {
 
 		$pdt_desc = sprintf(
 			__( 'Enter your PayPal Identity Token in order to enable Payment Data Transfer (PDT). This allows payments to be verified without relying on the PayPal IPN. See our <a href="%s" target="_blank">documentation</a> for further information.', 'restropress' ),
-			'http://docs.restropress.com/paypal-standard'
+			'https://docs.restropress.com/docs/restropress/payment-gateway/paypal-gateway/'
 		);
 
 		$paypal_settings['paypal_identify_token'] = array(
@@ -327,8 +334,10 @@ add_action( 'rpress_gateway_paypal', 'rpress_process_paypal_purchase' );
  * @return void
  */
 function rpress_listen_for_paypal_ipn() {
+
+	// print_r($_REQUEST);exit;
 	// Regular PayPal IPN
-	if ( isset( $_GET['rpress-listener'] ) && 'ipn' === strtolower( $_GET['rpress-listener'] ) ) {
+	if ( isset( $_GET['payment-confirmation'] ) && 'paypal' === strtolower( $_GET['payment-confirmation'] ) ) {
 
 		rpress_debug_log( 'PayPal IPN endpoint loaded' );
 
@@ -339,7 +348,7 @@ function rpress_listen_for_paypal_ipn() {
 		 */
 		$token = rpress_get_option( 'paypal_identity_token' );
 		if ( $token ) {
-			sleep( 5 );
+			sleep( 8 );
 		}
 
 		do_action( 'rpress_verify_paypal_ipn' );
@@ -432,7 +441,7 @@ function rpress_process_paypal_ipn() {
 				'connection'   => 'close',
 				'content-type' => 'application/x-www-form-urlencoded',
 				'post'         => '/cgi-bin/webscr HTTP/1.1',
-				'user-agent'   => 'RPRESS IPN Verification/' . RPRESS_VERSION . '; ' . get_bloginfo( 'url' )
+				'user-agent'   => 'RPRESS IPN Verification/' . RP_VERSION . '; ' . get_bloginfo( 'url' )
 
 			),
 			'sslverify'   => false,
@@ -504,7 +513,6 @@ add_action( 'rpress_verify_paypal_ipn', 'rpress_process_paypal_ipn' );
  * @return void
  */
 function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
-
 	/**
 	 * PayPal Web Accept Data
 	 *
@@ -532,7 +540,7 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 	$paypal_amount  = $data['mc_gross'];
 	$payment_status = strtolower( $data['payment_status'] );
 	$currency_code  = strtolower( $data['mc_currency'] );
-	$business_email = isset( $data['business'] ) && is_email( $data['business'] ) ? trim( $data['business'] ) : trim( $data['receiver_email'] );
+	$receiver_id = isset( $data['receiver_id'] );
 
 
 	if ( $payment->gateway != 'paypal' ) {
@@ -540,7 +548,7 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 	}
 
 	// Verify payment recipient
-	if ( strcasecmp( $business_email, trim( rpress_get_option( 'paypal_email', false ) ) ) != 0 ) {
+	if ( $receiver_id != trim( rpress_get_option( 'paypal_id', true ) ) ) {
 		rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid business email in IPN response. IPN data: %s', 'restropress' ), json_encode( $data ) ), $payment_id );
 		rpress_debug_log( 'Invalid business email in IPN response. IPN data: ' . print_r( $data, true ) );
 		rpress_update_payment_status( $payment_id, 'failed' );
@@ -608,20 +616,19 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 
 	}
 
+
 	if ( $payment_status == 'refunded' || $payment_status == 'reversed' ) {
 
 		// Process a refund
 		rpress_process_paypal_refund( $data, $payment_id );
 
 	} else {
-
 		if ( get_post_status( $payment_id ) == 'publish' ) {
 			return; // Only complete payments once
 		}
 
 		// Retrieve the total purchase amount (before PayPal)
 		$payment_amount = rpress_get_payment_amount( $payment_id );
-
 		if ( number_format( (float) $paypal_amount, 2 ) < number_format( (float) $payment_amount, 2 ) ) {
 			// The prices don't match
 			rpress_record_gateway_error( __( 'IPN Error', 'restropress' ), sprintf( __( 'Invalid payment amount in IPN response. IPN data: %s', 'restropress' ), json_encode( $data ) ), $payment_id );
@@ -639,11 +646,17 @@ function rpress_process_paypal_web_accept_and_cart( $data, $payment_id ) {
 			return;
 		}
 
+
 		if ( 'completed' == $payment_status || rpress_is_test_mode() ) {
 
 			rpress_insert_payment_note( $payment_id, sprintf( __( 'PayPal Transaction ID: %s', 'restropress' ) , $data['txn_id'] ) );
 			rpress_set_payment_transaction_id( $payment_id, $data['txn_id'] );
 			rpress_update_payment_status( $payment_id, 'publish' );
+
+			$sucess_url = add_query_arg( array(
+				'payment_key' => $purchase_key,
+			), get_permalink( rpress_get_option( 'success_page', false ) ) );
+			wp_redirect($sucess_url);
 
 		} else if ( 'pending' == $payment_status && isset( $data['pending_reason'] ) ) {
 

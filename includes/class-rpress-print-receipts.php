@@ -244,7 +244,6 @@ class RPRESS_Print_Receipts {
 
     // Items List
     $receipt_content = $this->render_payment_order_details();
-
     // Order Note
     $payment_note = get_post_meta( $payment_id, '_rpress_order_note', true );
     $payment_note = ! empty( $payment_note )?'<p> '.apply_filters( 'rpress_receipt_payment_note_text', __( 'Instructions: ', 'restropress' ) ).'<b> '.$payment_note.'</b></p>':'';

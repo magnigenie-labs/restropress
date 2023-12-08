@@ -280,6 +280,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       'change_txt'                => esc_html__( 'Change?', 'restropress' ),
       'currency'                  => rpress_get_currency(),
       'currency_sign'             => rpress_currency_filter(),
+      'currency_pos'              => rpress_get_option( 'currency_position', 'before' ),
       'expire_cookie_time'        => $expire_cookie_time,
       'confirm_empty_cart'        => esc_html__( 'Are you sure! You want to clear the cart?', 'restropress' ),
       'success'                   => esc_html__( 'Success', 'restropress' ),
@@ -336,8 +337,8 @@ if ( ! defined( 'ABSPATH' ) ) {
       'permalinks'              => get_option('permalink_structure') ? '1' : '0',
       'quantities_enabled'      => rpress_item_quantities_enabled(),
       'taxes_enabled'           => rpress_use_taxes() ? '1' : '0', // Adding here for widget, but leaving in checkout vars for backcompat
-      'open_hours'              => rpress_get_option('open_time'),
-      'close_hours'             => rpress_get_option('close_time'),
+      'open_hours'              => ( rpress_get_option('enable_always_open') ) ? '12:00am' : rpress_get_option('open_time'),
+      'close_hours'             => ( rpress_get_option('enable_always_open') ) ? '11:59pm' : rpress_get_option('close_time'),
       'please_wait'             => esc_html__( 'Please Wait', 'restropress'),
       'add_to_cart'             => esc_html__( 'Add To Cart', 'restropress'),
       'update_cart'             => esc_html__( 'Update Cart', 'restropress'),
@@ -355,6 +356,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       'menu'                    => esc_html__( 'Menu', 'restropress' ),
       'items'                   => esc_html__( 'Items', 'restropress' ),
       'select_time_error'       => esc_html__( 'Please select time for ', 'restropress' ),
+      'blurtxt'                 => esc_html__( 'Notice: Please do not click back or refresh this page, until the transaction is not completed.', 'restropress' ),
     );
     wp_localize_script( 'rp-ajax', 'rpress_scripts', apply_filters('rpress_ajax_script_vars', $ajax_params ) );
 

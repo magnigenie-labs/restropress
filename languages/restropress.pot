@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: RestroPress\n"
-"POT-Creation-Date: 2022-12-30 17:28+0530\n"
-"PO-Revision-Date: 2022-12-30 17:28+0530\n"
+"POT-Creation-Date: 2023-11-17 23:03+0530\n"
+"PO-Revision-Date: 2023-11-17 23:02+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: restro-press.php\n"
@@ -137,7 +137,7 @@ msgid "RestroPress Extensions"
 msgstr ""
 
 #: includes/admin/admin-pages.php:63 includes/admin/plugins.php:65
-#: includes/admin/settings/register-settings.php:1369
+#: includes/admin/settings/register-settings.php:1377
 msgid "Extensions"
 msgstr ""
 
@@ -269,8 +269,8 @@ msgstr ""
 #: includes/admin/class-rp-admin-assets.php:143
 #: includes/admin/customers/customers.php:400
 #: includes/admin/fooditems/views/html-fooditem-variable-price.php:16
-#: templates/cart/item.php:15 templates/checkout_cart.php:126
-#: templates/checkout_cart.php:195 templates/shortcode-profile-editor.php:123
+#: templates/cart/item.php:15 templates/checkout_cart.php:125
+#: templates/checkout_cart.php:194 templates/shortcode-profile-editor.php:123
 msgid "Remove"
 msgstr ""
 
@@ -479,7 +479,7 @@ msgstr ""
 
 #: includes/admin/customers/class-customer-table.php:72
 #: includes/admin/reporting/class-customer-reports-table.php:64
-#: includes/admin/settings/register-settings.php:2251
+#: includes/admin/settings/register-settings.php:2259
 msgid "Customer"
 msgstr ""
 
@@ -496,7 +496,7 @@ msgstr ""
 #: includes/admin/discounts/class-discount-codes-table.php:268
 #: includes/admin/payments/class-payments-table.php:534
 #: includes/admin/payments/class-payments-table.php:663
-#: includes/admin/settings/register-settings.php:994
+#: includes/admin/settings/register-settings.php:1002
 #: includes/payments/functions.php:1722
 msgid "Delete"
 msgstr ""
@@ -641,7 +641,7 @@ msgstr ""
 #: includes/admin/discounts/edit-discount.php:16
 #: includes/admin/fooditems/dashboard-columns.php:170
 #: includes/admin/import/class-batch-import-customers.php:67
-#: includes/admin/import/class-batch-import-fooditems.php:64
+#: includes/admin/import/class-batch-import-fooditems.php:65
 #: includes/admin/import/class-batch-import-payments.php:76
 #: includes/admin/import/class-batch-import.php:156
 #: includes/admin/payments/actions.php:28
@@ -658,8 +658,8 @@ msgstr ""
 #: includes/admin/reporting/class-export.php:164
 #: includes/admin/reporting/export/class-batch-export.php:129
 #: includes/admin/reporting/export/export-actions.php:23
-#: includes/admin/reporting/reports.php:99 includes/admin/tools.php:1174
-#: includes/admin/tools.php:1180
+#: includes/admin/reporting/reports.php:99 includes/admin/tools.php:1185
+#: includes/admin/tools.php:1191
 #: includes/admin/tools/class-rpress-tools-recount-all-stats.php:205
 #: includes/admin/tools/class-rpress-tools-recount-customer-stats.php:191
 #: includes/admin/tools/class-rpress-tools-recount-download-stats.php:223
@@ -682,14 +682,14 @@ msgstr ""
 #: includes/cart/class-rpress-cart.php:1503
 #: includes/cart/class-rpress-cart.php:1517
 #: includes/class-rpress-addon-updater.php:489
-#: includes/class-rpress-ajax.php:223 includes/class-rpress-ajax.php:726
+#: includes/class-rpress-ajax.php:223 includes/class-rpress-ajax.php:732
 #: includes/class-rpress-api.php:1440 includes/class-rpress-api.php:1453
 #: includes/class-rpress-api.php:1455
 #: includes/class-rpress-frontend-scripts.php:279
 #: includes/class-rpress-print-receipts.php:156 includes/emails/actions.php:53
 #: includes/emails/template.php:252 includes/error-tracking.php:40
 #: includes/gateways/functions.php:229 includes/gateways/functions.php:431
-#: includes/gateways/manual.php:33 includes/gateways/paypal-standard.php:167
+#: includes/gateways/manual.php:33 includes/gateways/paypal-standard.php:174
 #: includes/user-functions.php:823 includes/user-functions.php:848
 #: includes/user-functions.php:901
 msgid "Error"
@@ -838,8 +838,8 @@ msgid "User ID"
 msgstr ""
 
 #: includes/admin/customers/customers.php:315
-#: includes/admin/reporting/class-export-payments.php:184
-#: includes/admin/reporting/export/class-batch-export-payments.php:271
+#: includes/admin/reporting/class-export-payments.php:188
+#: includes/admin/reporting/export/class-batch-export-payments.php:275
 msgid "none"
 msgstr ""
 
@@ -886,7 +886,7 @@ msgstr ""
 #: includes/admin/reporting/export/class-batch-export-customers.php:48
 #: includes/admin/reporting/export/class-batch-export-payments.php:41
 #: includes/admin/reporting/export/class-batch-export-sales.php:42
-#: includes/admin/settings/register-settings.php:2163
+#: includes/admin/settings/register-settings.php:2171
 #: includes/admin/tools.php:462 includes/admin/tools.php:796
 #: templates/shortcode-register.php:29
 msgid "Email"
@@ -948,11 +948,11 @@ msgstr ""
 #: includes/admin/fooditems/dashboard-columns.php:36
 #: includes/admin/reporting/class-export-earnings.php:62
 #: includes/admin/reporting/class-export-fooditem-history.php:62
-#: includes/admin/reporting/class-export-payments.php:78
+#: includes/admin/reporting/class-export-payments.php:79
 #: includes/admin/reporting/class-export.php:67
 #: includes/admin/reporting/export/class-batch-export-api-requests.php:46
 #: includes/admin/reporting/export/class-batch-export-orders.php:41
-#: includes/admin/reporting/export/class-batch-export-payments.php:65
+#: includes/admin/reporting/export/class-batch-export-payments.php:66
 #: includes/admin/reporting/export/class-batch-export-sales.php:49
 #: includes/admin/tools.php:552 includes/privacy-functions.php:919
 #: templates/rpress-show-order-details.php:47
@@ -962,9 +962,9 @@ msgstr ""
 #: includes/admin/customers/customers.php:436
 #: includes/admin/discounts/class-discount-codes-table.php:149
 #: includes/admin/discounts/edit-discount.php:218
-#: includes/admin/reporting/class-export-payments.php:80
+#: includes/admin/reporting/class-export-payments.php:81
 #: includes/admin/reporting/export/class-batch-export-fooditems.php:48
-#: includes/admin/reporting/export/class-batch-export-payments.php:70
+#: includes/admin/reporting/export/class-batch-export-payments.php:71
 #: includes/admin/tools.php:579 includes/privacy-functions.php:760
 msgid "Status"
 msgstr ""
@@ -1030,7 +1030,7 @@ msgid ""
 msgstr ""
 
 #: includes/admin/customers/customers.php:602
-#: includes/admin/reporting/export/class-batch-export-fooditems.php:55
+#: includes/admin/reporting/export/class-batch-export-fooditems.php:56
 msgid "Notes"
 msgstr ""
 
@@ -1086,7 +1086,7 @@ msgstr ""
 #: includes/admin/fooditems/dashboard-columns.php:35
 #: includes/admin/reporting/class-export-earnings.php:64
 #: includes/admin/reporting/class-fooditem-reports-table.php:110
-#: includes/admin/reporting/export/class-batch-export-fooditems.php:57
+#: includes/admin/reporting/export/class-batch-export-fooditems.php:58
 #: includes/admin/reporting/graphing.php:333
 #: includes/admin/reporting/graphing.php:634
 #: includes/admin/reporting/reports.php:55
@@ -1113,7 +1113,7 @@ msgstr ""
 #: includes/admin/dashboard-widgets.php:119
 #: includes/admin/reporting/class-export-earnings.php:63
 #: includes/admin/reporting/class-fooditem-reports-table.php:109
-#: includes/admin/reporting/export/class-batch-export-fooditems.php:56
+#: includes/admin/reporting/export/class-batch-export-fooditems.php:57
 #: includes/admin/reporting/graphing.php:334
 #: includes/admin/reporting/graphing.php:635
 msgid "Sales"
@@ -1126,7 +1126,7 @@ msgstr ""
 #: includes/admin/dashboard-widgets.php:138
 #: includes/admin/reporting/class-addons-reports-table.php:83
 #: includes/admin/reporting/class-categories-reports-table.php:83
-#: includes/admin/tools.php:1061
+#: includes/admin/tools.php:1072
 msgid "Total Earnings"
 msgstr ""
 
@@ -1482,12 +1482,12 @@ msgstr ""
 
 #: includes/admin/fooditems/class-rp-fooditem-metaboxes.php:69
 #: includes/admin/settings/contextual-help.php:35
-#: includes/admin/settings/register-settings.php:1361
-#: includes/admin/settings/register-settings.php:1418
-#: includes/admin/settings/register-settings.php:1427
-#: includes/admin/settings/register-settings.php:1431
+#: includes/admin/settings/register-settings.php:1369
+#: includes/admin/settings/register-settings.php:1426
 #: includes/admin/settings/register-settings.php:1435
-#: includes/admin/settings/register-settings.php:1438
+#: includes/admin/settings/register-settings.php:1439
+#: includes/admin/settings/register-settings.php:1443
+#: includes/admin/settings/register-settings.php:1446
 #: includes/admin/tools.php:68
 msgid "General"
 msgstr ""
@@ -1579,7 +1579,7 @@ msgstr ""
 #: includes/admin/fooditems/views/html-fooditem-addon.php:102
 #: includes/admin/fooditems/views/html-fooditem-data-general.php:58
 #: includes/admin/payments/view-order-details.php:761
-#: includes/admin/reporting/export/class-batch-export-fooditems.php:52
+#: includes/admin/reporting/export/class-batch-export-fooditems.php:53
 #: includes/class-rpress-ajax.php:277 includes/emails/email-tags.php:311
 #: includes/rp-core-functions.php:85 templates/email-foodlist.php:18
 #: templates/receipt/print-receipt-content.php:21
@@ -1709,7 +1709,7 @@ msgid "Non Veg"
 msgstr ""
 
 #: includes/admin/fooditems/views/html-fooditem-data-general.php:50
-#: includes/admin/reporting/export/class-batch-export-fooditems.php:54
+#: includes/admin/reporting/export/class-batch-export-fooditems.php:55
 msgid "SKU"
 msgstr ""
 
@@ -1778,17 +1778,17 @@ msgstr ""
 msgid "Export / Import Settings"
 msgstr ""
 
-#: includes/admin/import-export.php:24 includes/admin/tools.php:1080
+#: includes/admin/import-export.php:24 includes/admin/tools.php:1091
 msgid "Export Settings"
 msgstr ""
 
-#: includes/admin/import-export.php:26 includes/admin/tools.php:1082
+#: includes/admin/import-export.php:26 includes/admin/tools.php:1093
 msgid ""
 "Export the RestroPress settings for this site as a .json file. This allows "
 "you to easily import the configuration into another site."
 msgstr ""
 
-#: includes/admin/import-export.php:27 includes/admin/tools.php:1083
+#: includes/admin/import-export.php:27 includes/admin/tools.php:1094
 #, php-format
 msgid ""
 "To export shop data (purchases, customers, etc), visit the <a "
@@ -1796,30 +1796,30 @@ msgid ""
 msgstr ""
 
 #: includes/admin/import-export.php:34 includes/admin/reporting/reports.php:32
-#: includes/admin/tools.php:1088
+#: includes/admin/tools.php:1099
 msgid "Export"
 msgstr ""
 
-#: includes/admin/import-export.php:40 includes/admin/tools.php:1095
+#: includes/admin/import-export.php:40 includes/admin/tools.php:1106
 msgid "Import Settings"
 msgstr ""
 
-#: includes/admin/import-export.php:42 includes/admin/tools.php:1097
+#: includes/admin/import-export.php:42 includes/admin/tools.php:1108
 msgid ""
 "Import the RestroPress settings from a .json file. This file can be obtained "
 "by exporting the settings on another site using the form above."
 msgstr ""
 
-#: includes/admin/import-export.php:50 includes/admin/tools.php:1105
+#: includes/admin/import-export.php:50 includes/admin/tools.php:1116
 msgid "Import"
 msgstr ""
 
-#: includes/admin/import-export.php:125 includes/admin/tools.php:1180
+#: includes/admin/import-export.php:125 includes/admin/tools.php:1191
 msgid "Please upload a file to import"
 msgstr ""
 
 #: includes/admin/import/class-batch-import-customers.php:67
-#: includes/admin/import/class-batch-import-fooditems.php:64
+#: includes/admin/import/class-batch-import-fooditems.php:65
 #: includes/admin/import/class-batch-import-payments.php:76
 #: includes/admin/import/class-batch-import.php:156
 msgid "You do not have permission to import data."
@@ -1932,13 +1932,13 @@ msgid "Pending"
 msgstr ""
 
 #: includes/admin/payments/class-payments-table.php:332
-#: includes/class-rpress-ajax.php:1254 includes/payments/functions.php:785
+#: includes/class-rpress-ajax.php:1260 includes/payments/functions.php:785
 msgid "Paid"
 msgstr ""
 
 #: includes/admin/payments/class-payments-table.php:333
 #: includes/admin/payments/class-payments-table.php:1273
-#: includes/class-rpress-ajax.php:1254 includes/payments/functions.php:788
+#: includes/class-rpress-ajax.php:1260 includes/payments/functions.php:788
 #: includes/payments/functions.php:848
 msgid "Processing"
 msgstr ""
@@ -1954,13 +1954,13 @@ msgstr ""
 
 #: includes/admin/payments/class-payments-table.php:349
 #: includes/admin/payments/class-payments-table.php:356
-#: includes/rp-core-functions.php:461 includes/rp-core-functions.php:623
+#: includes/rp-core-functions.php:491 includes/rp-core-functions.php:653
 msgid "Delivery"
 msgstr ""
 
 #: includes/admin/payments/class-payments-table.php:350
 #: includes/admin/payments/class-payments-table.php:361
-#: includes/rp-core-functions.php:462 includes/rp-core-functions.php:624
+#: includes/rp-core-functions.php:492 includes/rp-core-functions.php:654
 msgid "Pickup"
 msgstr ""
 
@@ -2057,15 +2057,15 @@ msgstr ""
 
 #: includes/admin/payments/class-payments-table.php:1174
 #: includes/admin/payments/view-order-details.php:766
-#: includes/admin/reporting/class-export-payments.php:73
-#: includes/admin/reporting/export/class-batch-export-payments.php:60
+#: includes/admin/reporting/class-export-payments.php:74
+#: includes/admin/reporting/export/class-batch-export-payments.php:61
 #: includes/admin/tools.php:597
 msgid "Tax"
 msgstr ""
 
 #: includes/admin/payments/class-payments-table.php:1179
 #: includes/admin/tools.php:606 includes/emails/email-tags.php:461
-#: templates/checkout_cart.php:209
+#: templates/checkout_cart.php:208
 #: templates/receipt/print-receipt-content.php:98
 #: templates/rpress-show-order-details.php:108
 #: templates/shortcode-receipt.php:269
@@ -2593,7 +2593,7 @@ msgstr ""
 
 #: includes/admin/reporting/class-customer-reports-table.php:147
 #: includes/post-types.php:144 includes/privacy-functions.php:538
-#: includes/rp-core-functions.php:1842
+#: includes/rp-core-functions.php:1872
 msgid "Food Items"
 msgstr ""
 
@@ -2634,7 +2634,7 @@ msgstr ""
 
 #: includes/admin/reporting/class-export-fooditem-history.php:64
 #: includes/admin/reporting/export/class-batch-export-api-requests.php:41
-#: includes/admin/reporting/export/class-batch-export-payments.php:68
+#: includes/admin/reporting/export/class-batch-export-payments.php:69
 #: includes/admin/tools.php:507 includes/privacy-functions.php:756
 #: includes/privacy-functions.php:855 includes/privacy-functions.php:927
 msgid "IP Address"
@@ -2695,38 +2695,43 @@ msgstr ""
 msgid "SKUs"
 msgstr ""
 
-#: includes/admin/reporting/class-export-payments.php:74
-#: includes/admin/reporting/export/class-batch-export-payments.php:61
-msgid "Discount Code"
+#: includes/admin/reporting/class-export-payments.php:73
+#: includes/admin/reporting/export/class-batch-export-payments.php:60
+msgid "Tips"
 msgstr ""
 
 #: includes/admin/reporting/class-export-payments.php:75
 #: includes/admin/reporting/export/class-batch-export-payments.php:62
-#: includes/admin/tools.php:534 templates/shortcode-receipt.php:111
-msgid "Payment Method"
+msgid "Discount Code"
 msgstr ""
 
 #: includes/admin/reporting/class-export-payments.php:76
 #: includes/admin/reporting/export/class-batch-export-payments.php:63
-#: includes/admin/tools.php:615
-msgid "Transaction ID"
+#: includes/admin/tools.php:534 templates/shortcode-receipt.php:111
+msgid "Payment Method"
 msgstr ""
 
 #: includes/admin/reporting/class-export-payments.php:77
 #: includes/admin/reporting/export/class-batch-export-payments.php:64
+#: includes/admin/tools.php:615
+msgid "Transaction ID"
+msgstr ""
+
+#: includes/admin/reporting/class-export-payments.php:78
+#: includes/admin/reporting/export/class-batch-export-payments.php:65
 #: includes/admin/tools.php:561
 msgid "Purchase Key"
 msgstr ""
 
-#: includes/admin/reporting/class-export-payments.php:79
-#: includes/admin/reporting/export/class-batch-export-payments.php:66
+#: includes/admin/reporting/class-export-payments.php:80
+#: includes/admin/reporting/export/class-batch-export-payments.php:67
 #: includes/admin/reporting/export/class-batch-export-sales.php:40
 #: includes/admin/tools.php:624
 msgid "User"
 msgstr ""
 
-#: includes/admin/reporting/class-export-payments.php:189
-#: includes/admin/reporting/export/class-batch-export-payments.php:276
+#: includes/admin/reporting/class-export-payments.php:193
+#: includes/admin/reporting/export/class-batch-export-payments.php:280
 msgid "guest"
 msgstr ""
 
@@ -2877,12 +2882,16 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: includes/admin/reporting/export/class-batch-export-fooditems.php:53
+#: includes/admin/reporting/export/class-batch-export-fooditems.php:52
+msgid "None/Veg/Non-Veg"
+msgstr ""
+
+#: includes/admin/reporting/export/class-batch-export-fooditems.php:54
 msgid "Featured Image"
 msgstr ""
 
 #: includes/admin/reporting/export/class-batch-export-orders.php:43
-#: includes/post-types.php:143 includes/rp-core-functions.php:1841
+#: includes/post-types.php:143 includes/rp-core-functions.php:1871
 msgid "Food Item"
 msgstr ""
 
@@ -2920,18 +2929,18 @@ msgstr ""
 msgid "Service Time"
 msgstr ""
 
-#: includes/admin/reporting/export/class-batch-export-payments.php:67
+#: includes/admin/reporting/export/class-batch-export-payments.php:68
 #: includes/admin/settings/register-settings.php:408
-#: includes/admin/settings/register-settings.php:1419
+#: includes/admin/settings/register-settings.php:1427
 msgid "Currency"
 msgstr ""
 
-#: includes/admin/reporting/export/class-batch-export-payments.php:69
+#: includes/admin/reporting/export/class-batch-export-payments.php:70
 #: includes/admin/tools.php:516
 msgid "Mode (Live|Test)"
 msgstr ""
 
-#: includes/admin/reporting/export/class-batch-export-payments.php:71
+#: includes/admin/reporting/export/class-batch-export-payments.php:72
 msgid "Country Name"
 msgstr ""
 
@@ -3078,7 +3087,7 @@ msgstr ""
 
 #: includes/admin/reporting/reports.php:60
 #: includes/admin/settings/contextual-help.php:65
-#: includes/admin/settings/register-settings.php:1365
+#: includes/admin/settings/register-settings.php:1373
 msgid "Taxes"
 msgstr ""
 
@@ -3215,8 +3224,8 @@ msgid ""
 msgstr ""
 
 #: includes/admin/settings/contextual-help.php:41
-#: includes/admin/settings/register-settings.php:718
-#: includes/admin/settings/register-settings.php:1362
+#: includes/admin/settings/register-settings.php:724
+#: includes/admin/settings/register-settings.php:1370
 msgid "Payment Gateways"
 msgstr ""
 
@@ -3249,7 +3258,7 @@ msgid "<strong>Cash On Delivery</strong> Collect payment on delivery"
 msgstr ""
 
 #: includes/admin/settings/contextual-help.php:51
-#: includes/admin/settings/register-settings.php:1363
+#: includes/admin/settings/register-settings.php:1371
 msgid "Emails"
 msgstr ""
 
@@ -3269,7 +3278,7 @@ msgid ""
 msgstr ""
 
 #: includes/admin/settings/contextual-help.php:59
-#: includes/admin/settings/register-settings.php:1364
+#: includes/admin/settings/register-settings.php:1372
 msgid "Styles"
 msgstr ""
 
@@ -3332,7 +3341,7 @@ msgid ""
 msgstr ""
 
 #: includes/admin/settings/contextual-help.php:75
-#, php-format
+#, no-php-format
 msgid ""
 "<strong>Calculate Tax After Discounts</strong>: If enabled, this option will "
 "make it so that tax is calculated on the after-discount amount. If a "
@@ -3706,7 +3715,7 @@ msgid ""
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:549
-msgid "Enable ASAP option"
+msgid "Enable ASAP Option"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:550
@@ -3714,7 +3723,7 @@ msgid "Check this box if you want to add ASAP option on your time slot"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:556
-msgid "Enable ASAP option Only"
+msgid "Enable ASAP Option Only"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:557
@@ -3722,469 +3731,487 @@ msgid "Check this box if you want to add ASAP as only option on your time slot"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:562
-msgid "Open Time"
+msgid "Enable Always Order Option"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:563
+msgid "Check this box if you want your customers to always order on your store"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:568
+msgid "Open Time"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:569
 msgid "Select restaurant open time"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:571
+#: includes/admin/settings/register-settings.php:577
 msgid "Close Time"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:572
+#: includes/admin/settings/register-settings.php:578
 msgid "Select restaurant close time"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:580
+#: includes/admin/settings/register-settings.php:586
 msgid "Cooking Time/Prep Time(minutes)"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:581
+#: includes/admin/settings/register-settings.php:587
 msgid ""
 "Enter the time required for food preparation, it would be used for "
 "displaying the time slots intelligibly"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:588
+#: includes/admin/settings/register-settings.php:594
 msgid "Service Cookies Expire Time"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:589
+#: includes/admin/settings/register-settings.php:595
 msgid "Enter value (in minutes) after which the cookies will be expired."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:595
+#: includes/admin/settings/register-settings.php:601
 msgid "Store closed message"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:596
+#: includes/admin/settings/register-settings.php:602
 msgid "Message that would display when ordering is not possible."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:598
-#: templates/rpress-delivery-steps.php:21
+#: includes/admin/settings/register-settings.php:604
+#: templates/rpress-delivery-steps.php:26
 msgid "Sorry, we are closed for ordering now."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:607
+#: includes/admin/settings/register-settings.php:613
 msgid "Login/Register Option"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:608
+#: includes/admin/settings/register-settings.php:614
 msgid ""
 "This option affects how login/register options are offered on checkout page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:612
+#: includes/admin/settings/register-settings.php:618
 msgid "Login/Register with guest checkout"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:613
+#: includes/admin/settings/register-settings.php:619
 msgid "Login/Register only"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:614
+#: includes/admin/settings/register-settings.php:620
 msgid "Guest checkout only"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:619
+#: includes/admin/settings/register-settings.php:625
 msgid "Enforce SSL on Checkout"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:620
+#: includes/admin/settings/register-settings.php:626
 msgid ""
 "Check this to force users to be redirected to the secure checkout page. You "
 "must have an SSL certificate installed to use this option."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:625
+#: includes/admin/settings/register-settings.php:631
 msgid "Enable Cart Saving"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:626
+#: includes/admin/settings/register-settings.php:632
 msgid "Check this to enable cart saving on the checkout."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:628
+#: includes/admin/settings/register-settings.php:634
 msgid "Cart Saving"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:629
+#: includes/admin/settings/register-settings.php:635
 msgid ""
 "Cart saving allows shoppers to create a temporary link to their current "
 "shopping cart so they can come back to it later, or share it with someone."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:637
+#: includes/admin/settings/register-settings.php:643
 msgid "Print Receipt Settings"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:642
+#: includes/admin/settings/register-settings.php:648
 msgid "Enable Printing Option"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:643
+#: includes/admin/settings/register-settings.php:649
 msgid "Check this option to enable printing of invoice"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:649
+#: includes/admin/settings/register-settings.php:655
 msgid "Store Logo"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:650
+#: includes/admin/settings/register-settings.php:656
 msgid ""
 "Select an image to use as the logo in the invoice. Recommended size 280x75."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:656
+#: includes/admin/settings/register-settings.php:662
 msgid "Select Order Statuses"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:657
+#: includes/admin/settings/register-settings.php:663
 msgid "Select the order statuses for which the print will work."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:664
+#: includes/admin/settings/register-settings.php:670
 msgid "Printing Font"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:665
+#: includes/admin/settings/register-settings.php:671
 msgid "Choose the text font for printing."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:668
+#: includes/admin/settings/register-settings.php:674
 msgid "Times New"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:669
+#: includes/admin/settings/register-settings.php:675
 msgid "Georgia"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:670
+#: includes/admin/settings/register-settings.php:676
 msgid "Palatino"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:671
+#: includes/admin/settings/register-settings.php:677
 msgid "Arial"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:672
+#: includes/admin/settings/register-settings.php:678
 msgid "Comic Sans"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:673
+#: includes/admin/settings/register-settings.php:679
 msgid "Lucida Sans"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:674
+#: includes/admin/settings/register-settings.php:680
 msgid "Tahoma"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:675
+#: includes/admin/settings/register-settings.php:681
 msgid "Trebuchet MS"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:676
+#: includes/admin/settings/register-settings.php:682
 msgid "Courier New"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:677
+#: includes/admin/settings/register-settings.php:683
 msgid "Lucida Console"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:683
+#: includes/admin/settings/register-settings.php:689
 #: includes/class-rpress-print-receipts.php:51
 msgid "Select Paper Size"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:684
+#: includes/admin/settings/register-settings.php:690
 msgid "Select the paper size that you want to print"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:687
+#: includes/admin/settings/register-settings.php:693
 msgid "Select page size"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:692
+#: includes/admin/settings/register-settings.php:698
 msgid "Footer Text"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:693
+#: includes/admin/settings/register-settings.php:699
 msgid ""
 "Enter the details you want to show on invoice below the items listing and "
 "total price.You can add image and align the content using the editor."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:699
+#: includes/admin/settings/register-settings.php:705
 msgid "Complementary Close"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:700
+#: includes/admin/settings/register-settings.php:706
 msgid "Enter the details you want to show on invoice at the end of receipt."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:712
+#: includes/admin/settings/register-settings.php:718
 msgid "Test Mode"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:713
+#: includes/admin/settings/register-settings.php:719
 msgid ""
 "While in test mode no live transactions are processed. To fully use test "
 "mode, you must have a sandbox (test) account for the payment gateway you are "
 "testing."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:719
+#: includes/admin/settings/register-settings.php:725
 msgid "Choose the payment gateways you want to enable."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:725
+#: includes/admin/settings/register-settings.php:731
 msgid "Default Gateway"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:726
+#: includes/admin/settings/register-settings.php:732
 msgid "This gateway will be loaded automatically with the checkout page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:732
+#: includes/admin/settings/register-settings.php:738
 msgid "Accepted Payment Method Icons"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:733
+#: includes/admin/settings/register-settings.php:739
 msgid "Display icons for the selected payment methods."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:733
+#: includes/admin/settings/register-settings.php:739
 msgid ""
 "You will also need to configure your gateway settings if you are accepting "
 "credit cards."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:753
+#: includes/admin/settings/register-settings.php:759
 msgid "Email Template"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:754
+#: includes/admin/settings/register-settings.php:760
 msgid ""
 "Choose a template. Click \"Save Changes\" then \"Preview Purchase Receipt\" "
 "to see the new template."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:760
+#: includes/admin/settings/register-settings.php:766
 msgid "Logo"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:761
+#: includes/admin/settings/register-settings.php:767
 msgid ""
 "Upload or choose a logo to be displayed at the top of the purchase receipt "
 "emails. Displayed on HTML emails only."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:766
+#: includes/admin/settings/register-settings.php:772
 msgid "From Name"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:767
+#: includes/admin/settings/register-settings.php:773
 msgid ""
 "The name purchase receipts are said to come from. This should probably be "
 "your site or shop name."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:773
+#: includes/admin/settings/register-settings.php:779
 msgid "From Email"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:774
+#: includes/admin/settings/register-settings.php:780
 msgid ""
 "Email to send purchase receipts from. This will act as the \"from\" and "
 "\"reply-to\" address."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:789
+#: includes/admin/settings/register-settings.php:795
 msgid ""
 "Email notifications sent from RestroPress are listed below. Click on an "
 "email to configure it."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:801
+#: includes/admin/settings/register-settings.php:807
 msgid "Disable Styles"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:802
+#: includes/admin/settings/register-settings.php:808
 msgid ""
 "Check this to disable all included styling of buttons, checkout fields, and "
 "all other elements."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:804
+#: includes/admin/settings/register-settings.php:810
 msgid "Disabling Styles"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:805
+#: includes/admin/settings/register-settings.php:811
 msgid ""
 "If your theme has a complete custom CSS file for RestroPress, you may wish "
 "to disable our default styles. This is not recommended unless you're sure "
 "your theme has a complete custom CSS."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:809
+#: includes/admin/settings/register-settings.php:815
 msgid "Enable Image Placeholder"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:810
+#: includes/admin/settings/register-settings.php:816
 msgid ""
 "Check this to enable showing placeholders where item image is not available."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:815
+#: includes/admin/settings/register-settings.php:821
 msgid "Food Image Popup"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:816
+#: includes/admin/settings/register-settings.php:822
 msgid ""
 "If you want people to click on the food images to view the full food image "
 "then enable this."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:821
+#: includes/admin/settings/register-settings.php:827
 msgid "Show Tags"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:822
+#: includes/admin/settings/register-settings.php:828
 msgid "Enable showing the items tags in menu page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:827
+#: includes/admin/settings/register-settings.php:833
 msgid "Disable Category Menu"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:828
+#: includes/admin/settings/register-settings.php:834
 msgid "Disable Category Menu In Food Item Page"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:834
+#: includes/admin/settings/register-settings.php:840
 msgid ""
 "For Use This List View And Grid View Option First Check Disable Category "
 "Menu Option"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:836
+#: includes/admin/settings/register-settings.php:842
 msgid "List View"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:837
+#: includes/admin/settings/register-settings.php:843
 msgid "Grid View"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:843
+#: includes/admin/settings/register-settings.php:849
 msgid "Buttons"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:844
+#: includes/admin/settings/register-settings.php:850
 msgid "Options for add to cart and purchase buttons"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:849
+#: includes/admin/settings/register-settings.php:855
 msgid "Default Button Style"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:850
+#: includes/admin/settings/register-settings.php:856
 msgid "Choose the style you want to use for the buttons."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:856
+#: includes/admin/settings/register-settings.php:862
 msgid "Theme Color"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:857
+#: includes/admin/settings/register-settings.php:863
 msgid "Choose the color you want to use for the buttons and links."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:869
+#: includes/admin/settings/register-settings.php:875
 msgid "Enable Taxes"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:870
+#: includes/admin/settings/register-settings.php:876
 msgid "Check this to enable taxes on purchases."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:872
+#: includes/admin/settings/register-settings.php:878
 msgid "Enabling Taxes"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:873
+#: includes/admin/settings/register-settings.php:879
 msgid ""
 "With taxes enabled, RestroPress will use the rules below to charge tax to "
 "customers. With taxes enabled, customers are required to input their address "
 "on checkout so that taxes can be properly calculated."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:877
+#: includes/admin/settings/register-settings.php:883
 msgid "Tax Name"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:878
+#: includes/admin/settings/register-settings.php:884
 msgid "Global tax name that would be use through out the site"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:883
-#: includes/admin/settings/register-settings.php:887
+#: includes/admin/settings/register-settings.php:889
+#: includes/admin/settings/register-settings.php:893
 msgid "Tax rate"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:884
+#: includes/admin/settings/register-settings.php:890
 msgid ""
 "When tax rate is enabled this tax rate will be charged to the customers. "
 "Enter a percentage, such as 6.5 for 6.5%. "
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:888
+#: includes/admin/settings/register-settings.php:894
 msgid ""
 "This would be the default tax rate for the customers who will purchase in "
 "your store"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:894
-msgid "Food item Price Displayed With Tax"
+#: includes/admin/settings/register-settings.php:900
+msgid "Display fooditems in shop"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:895
+#: includes/admin/settings/register-settings.php:901
 msgid ""
-"This option will help you to show the food item price as tax included or "
-"excluded"
+"When tax_item is enabled this tax_item will be charged to the customers. "
+"Select tax type, such as Including/Excluding tax. "
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:899
+#: includes/admin/settings/register-settings.php:905
 msgid "Including tax"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:900
+#: includes/admin/settings/register-settings.php:906
 msgid "Excluding tax"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:908
-msgid "Prices entered with tax"
-msgstr ""
-
 #: includes/admin/settings/register-settings.php:909
-msgid "This option affects how you enter prices."
+msgid "tax_item"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:913
-msgid "Yes, I will enter prices inclusive of tax"
-msgstr ""
-
-#: includes/admin/settings/register-settings.php:914
-msgid "No, I will enter prices exclusive of tax"
+#: includes/admin/settings/register-settings.php:910
+msgid ""
+"This would be the default tax_item for the restaurant who will set product "
+"Including/Excluding Tax"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:916
-msgid "Prices Inclusive of Tax"
+msgid "Prices entered with tax"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:917
+msgid "This option affects how you enter prices."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:921
+msgid "Yes, I will enter prices inclusive of tax"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:922
+msgid "No, I will enter prices exclusive of tax"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:924
+msgid "Prices Inclusive of Tax"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:925
 msgid ""
 "When using prices inclusive of tax, you will be entering your prices as the "
 "total amount you want a customer to pay for the fooditem, including tax. "
@@ -4192,77 +4219,77 @@ msgid ""
 "defined total price."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:921
+#: includes/admin/settings/register-settings.php:929
 msgid "Enable Billing Fields"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:922
+#: includes/admin/settings/register-settings.php:930
 msgid "Check this to enable billing fields in the checkout page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:935
+#: includes/admin/settings/register-settings.php:943
 msgid "Debug Mode"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:936
+#: includes/admin/settings/register-settings.php:944
 msgid ""
 "Check this box to enable debug mode. When enabled, debug messages will be "
 "logged and shown in RestroPress &rarr; Tools &rarr; Debug Log."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:941
+#: includes/admin/settings/register-settings.php:949
 msgid "Remove Data on Uninstall?"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:942
+#: includes/admin/settings/register-settings.php:950
 msgid ""
 "Check this box if you would like RestroPress to completely remove all of its "
 "data when deactivated!"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:949
+#: includes/admin/settings/register-settings.php:957
 msgid "Agree to Terms"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:950
+#: includes/admin/settings/register-settings.php:958
 msgid ""
 "Check this to show an <b><i>Agree to Terms</i></b> on checkout that users "
 "must check before creating orders."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:955
+#: includes/admin/settings/register-settings.php:963
 msgid "Agree to Terms Label"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:956
+#: includes/admin/settings/register-settings.php:964
 msgid "Label shown next to <b><i>Agree to Terms</i></b> checkbox."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:962
+#: includes/admin/settings/register-settings.php:970
 msgid "Agreement Text"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:963
+#: includes/admin/settings/register-settings.php:971
 msgid ""
 "If <b><i>Agree to Terms</i></b> is checked, enter the agreement terms here."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:977
+#: includes/admin/settings/register-settings.php:985
 msgid "Payment Status Actions"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:979
+#: includes/admin/settings/register-settings.php:987
 msgid ""
 "When a user requests to be anonymized or removed from a site, these are the "
 "actions that will be taken on payments associated with their customer, by "
 "status."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:980
+#: includes/admin/settings/register-settings.php:988
 msgid "What settings should I use?"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:981
+#: includes/admin/settings/register-settings.php:989
 msgid ""
 "By default, RestroPress sets suggested actions based on the Payment Status. "
 "These are purely recommendations, and you may need to change them to suit "
@@ -4270,15 +4297,15 @@ msgid ""
 "as is."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:992
+#: includes/admin/settings/register-settings.php:1000
 msgid "No Action"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:993
+#: includes/admin/settings/register-settings.php:1001
 msgid "Anonymize"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1022
+#: includes/admin/settings/register-settings.php:1030
 #, php-format
 msgctxt ""
 "payment status labels for the privacy export & erase settings: Pending "
@@ -4286,186 +4313,186 @@ msgctxt ""
 msgid "%s Payments"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1033
+#: includes/admin/settings/register-settings.php:1041
 msgid "Buy Now Disabled"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1034
+#: includes/admin/settings/register-settings.php:1042
 msgid ""
 "Buy Now buttons are only available for stores that have a single supported "
 "gateway active and that do not use taxes."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1137
+#: includes/admin/settings/register-settings.php:1145
 msgid "Settings updated."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1254
+#: includes/admin/settings/register-settings.php:1262
 msgid "Error setting default gateway. No gateways are enabled."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1267
+#: includes/admin/settings/register-settings.php:1275
 #, php-format
 msgid "%s could not be set as the default gateway. It must first be enabled."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1366
+#: includes/admin/settings/register-settings.php:1374
 msgid "Privacy"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1373
+#: includes/admin/settings/register-settings.php:1381
 msgid "Licenses"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1376
+#: includes/admin/settings/register-settings.php:1384
 msgid "Misc"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1420
+#: includes/admin/settings/register-settings.php:1428
 msgid "Accounting"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1421
+#: includes/admin/settings/register-settings.php:1429
 msgid "Order Notification"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1422
+#: includes/admin/settings/register-settings.php:1430
 msgid "Service Options"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1423
+#: includes/admin/settings/register-settings.php:1431
 msgid "Checkout Options"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1424
+#: includes/admin/settings/register-settings.php:1432
 msgid "Print Receipt"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1428
+#: includes/admin/settings/register-settings.php:1436
 #: includes/gateways/functions.php:25 includes/gateways/paypal-standard.php:33
 msgid "PayPal Standard"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1432
+#: includes/admin/settings/register-settings.php:1440
 msgid "Order Notifications"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1441
+#: includes/admin/settings/register-settings.php:1449
 msgid "Main"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1445
+#: includes/admin/settings/register-settings.php:1453
 msgid "Miscellaneous"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1446
+#: includes/admin/settings/register-settings.php:1454
 msgid "Terms of Agreement"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1449
+#: includes/admin/settings/register-settings.php:1457
 msgid "Export & Erase"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1912
+#: includes/admin/settings/register-settings.php:1920
 #, php-format
 msgid "The callback function used for the %s setting is missing."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2070
+#: includes/admin/settings/register-settings.php:2078
 msgid "Upload File"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2164
-#: includes/admin/settings/register-settings.php:2373
+#: includes/admin/settings/register-settings.php:2172
+#: includes/admin/settings/register-settings.php:2381
 msgid "Recipient(s)"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2185
-#: includes/admin/settings/register-settings.php:2187
-#: includes/admin/settings/register-settings.php:2236
+#: includes/admin/settings/register-settings.php:2193
+#: includes/admin/settings/register-settings.php:2195
+#: includes/admin/settings/register-settings.php:2244
 msgid "Enabled"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2193
-#: includes/admin/settings/register-settings.php:2289
+#: includes/admin/settings/register-settings.php:2201
+#: includes/admin/settings/register-settings.php:2297
 msgid "Admin Order Notification"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2207
-#: includes/admin/settings/register-settings.php:2257
+#: includes/admin/settings/register-settings.php:2215
+#: includes/admin/settings/register-settings.php:2265
 msgid "Manage"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2218
-#: includes/admin/settings/register-settings.php:2286
+#: includes/admin/settings/register-settings.php:2226
+#: includes/admin/settings/register-settings.php:2294
 #: includes/post-types.php:79
 msgid "New Order"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2221
-#: includes/admin/settings/register-settings.php:2292
+#: includes/admin/settings/register-settings.php:2229
+#: includes/admin/settings/register-settings.php:2300
 #, php-format
 msgid "%s Order"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2238
+#: includes/admin/settings/register-settings.php:2246
 msgid "Disabled"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2358
+#: includes/admin/settings/register-settings.php:2366
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2364
+#: includes/admin/settings/register-settings.php:2372
 msgid "Enable this email notification"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2379
+#: includes/admin/settings/register-settings.php:2387
 msgid ""
 "Enter the email address(es) that should receive a notification anytime a "
 "order is placed, one per line."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2388
+#: includes/admin/settings/register-settings.php:2396
 msgid "Subject"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2399
+#: includes/admin/settings/register-settings.php:2407
 msgid "Email heading"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2411
+#: includes/admin/settings/register-settings.php:2419
 msgid "Email Content"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2419
+#: includes/admin/settings/register-settings.php:2427
 msgid ""
 "Enter the text that is sent as order notification email. HTML is accepted. "
 "Available template tags:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2480
+#: includes/admin/settings/register-settings.php:2488
 #, php-format
 msgid ""
 "Your license key expired on %s. Please <a href=\"%s\" "
 "target=\"_blank\">renew your license key</a>."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2493
+#: includes/admin/settings/register-settings.php:2501
 #, php-format
 msgid ""
 "Your license key has been disabled. Please <a href=\"%s\" "
 "target=\"_blank\">contact support</a> for more information."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2505
+#: includes/admin/settings/register-settings.php:2513
 #, php-format
 msgid ""
 "Invalid license. Please <a href=\"%s\" target=\"_blank\">visit your account "
 "page</a> and verify it."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2518
+#: includes/admin/settings/register-settings.php:2526
 #, php-format
 msgid ""
 "Your %s is not active for this URL. Please <a href=\"%s\" "
@@ -4473,58 +4500,58 @@ msgid ""
 "URLs."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2530
-#: includes/class-rpress-ajax.php:1371
+#: includes/admin/settings/register-settings.php:2538
+#: includes/class-rpress-ajax.php:1377
 #, php-format
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2539
+#: includes/admin/settings/register-settings.php:2547
 #, php-format
 msgid ""
 "Your license key has reached its activation limit. <a href=\"%s\">View "
 "possible upgrades</a> now."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2548
+#: includes/admin/settings/register-settings.php:2556
 msgid ""
 "The key you entered belongs to a bundle, please use the product specific "
 "license key."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2556
+#: includes/admin/settings/register-settings.php:2564
 msgid "unknown_error"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2557
+#: includes/admin/settings/register-settings.php:2565
 #, php-format
 msgid ""
 "There was an error with this license key: %s. Please <a href=\"%s\">contact "
 "our support team</a>."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2577
+#: includes/admin/settings/register-settings.php:2585
 msgid "License key never expires."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2584
+#: includes/admin/settings/register-settings.php:2592
 #, php-format
 msgid ""
 "Your license key expires soon! It expires on %s. <a href=\"%s\" "
 "target=\"_blank\">Renew your license key</a>."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2594
+#: includes/admin/settings/register-settings.php:2602
 #, php-format
 msgid "Your license key expires on %s."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2612
+#: includes/admin/settings/register-settings.php:2620
 #, php-format
 msgid "To receive updates, please enter your valid %s license key."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:2625
+#: includes/admin/settings/register-settings.php:2633
 msgid "Deactivate License"
 msgstr ""
 
@@ -4582,7 +4609,7 @@ msgstr ""
 msgid "System Info"
 msgstr ""
 
-#: includes/admin/tools.php:77 includes/admin/tools.php:1226
+#: includes/admin/tools.php:77 includes/admin/tools.php:1237
 msgid "Debug Log"
 msgstr ""
 
@@ -4612,7 +4639,7 @@ msgstr ""
 msgid "Use these tools to recount / reset store stats."
 msgstr ""
 
-#: includes/admin/tools.php:148 includes/class-rpress-frontend-scripts.php:331
+#: includes/admin/tools.php:148 includes/class-rpress-frontend-scripts.php:332
 msgid "Please select an option"
 msgstr ""
 
@@ -4758,8 +4785,9 @@ msgstr ""
 #: includes/admin/tools.php:983 includes/admin/tools.php:992
 #: includes/admin/tools.php:1001 includes/admin/tools.php:1010
 #: includes/admin/tools.php:1019 includes/admin/tools.php:1028
-#: includes/admin/tools.php:1037 includes/admin/tools.php:1046
-#: includes/admin/tools.php:1055 includes/admin/tools.php:1064
+#: includes/admin/tools.php:1037 includes/admin/tools.php:1047
+#: includes/admin/tools.php:1057 includes/admin/tools.php:1066
+#: includes/admin/tools.php:1075
 msgid "- Ignore this field -"
 msgstr ""
 
@@ -4790,8 +4818,9 @@ msgstr ""
 #: includes/admin/tools.php:986 includes/admin/tools.php:995
 #: includes/admin/tools.php:1004 includes/admin/tools.php:1013
 #: includes/admin/tools.php:1022 includes/admin/tools.php:1031
-#: includes/admin/tools.php:1040 includes/admin/tools.php:1049
-#: includes/admin/tools.php:1058 includes/admin/tools.php:1067
+#: includes/admin/tools.php:1040 includes/admin/tools.php:1050
+#: includes/admin/tools.php:1060 includes/admin/tools.php:1069
+#: includes/admin/tools.php:1078
 msgid "- select field to preview data -"
 msgstr ""
 
@@ -4808,7 +4837,7 @@ msgid "Purchased Product(s)"
 msgstr ""
 
 #: includes/admin/tools.php:588 includes/class-rpress-frontend-scripts.php:259
-#: templates/checkout_cart.php:144
+#: templates/checkout_cart.php:143
 #: templates/receipt/print-receipt-content.php:71
 #: templates/rpress-show-order-details.php:88
 #: templates/shortcode-receipt.php:232
@@ -4824,7 +4853,7 @@ msgid "Address Line 2"
 msgstr ""
 
 #: includes/admin/tools.php:689 includes/admin/tools.php:882
-#: includes/admin/tools.php:1072
+#: includes/admin/tools.php:1083
 msgid "Process Import"
 msgstr ""
 
@@ -4930,31 +4959,35 @@ msgstr ""
 msgid "Product Tags"
 msgstr ""
 
-#: includes/admin/tools.php:1043
+#: includes/admin/tools.php:1044
+msgid "Product Tag Mark"
+msgstr ""
+
+#: includes/admin/tools.php:1054
 msgid "Product Title"
 msgstr ""
 
-#: includes/admin/tools.php:1052
+#: includes/admin/tools.php:1063
 msgid "Sale Count"
 msgstr ""
 
-#: includes/admin/tools.php:1174
+#: includes/admin/tools.php:1185
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: includes/admin/tools.php:1233
+#: includes/admin/tools.php:1244
 msgid "Download Debug Log File"
 msgstr ""
 
-#: includes/admin/tools.php:1234
+#: includes/admin/tools.php:1245
 msgid "Clear Log"
 msgstr ""
 
-#: includes/admin/tools.php:1235
+#: includes/admin/tools.php:1246
 msgid "Copy Entire Log"
 msgstr ""
 
-#: includes/admin/tools.php:1240
+#: includes/admin/tools.php:1251
 msgid "Log file"
 msgstr ""
 
@@ -5177,7 +5210,7 @@ msgstr ""
 
 #: includes/cart/class-rpress-cart.php:1467
 #: includes/cart/class-rpress-cart.php:1529
-#: includes/class-rpress-frontend-scripts.php:285
+#: includes/class-rpress-frontend-scripts.php:286
 #: templates/shortcode-profile-editor.php:22
 msgid "Success"
 msgstr ""
@@ -5218,7 +5251,7 @@ msgstr ""
 
 #: includes/cart/template.php:275
 #: includes/class-rpress-frontend-scripts.php:249
-#: includes/class-rpress-frontend-scripts.php:343
+#: includes/class-rpress-frontend-scripts.php:344
 msgid "Update Cart"
 msgstr ""
 
@@ -5460,7 +5493,7 @@ msgid "Enter a coupon code if you have one."
 msgstr ""
 
 #: includes/checkout/template.php:806
-#: includes/class-rpress-frontend-scripts.php:301
+#: includes/class-rpress-frontend-scripts.php:302
 #: includes/process-purchase.php:418
 msgid "Enter coupon code"
 msgstr ""
@@ -5515,7 +5548,7 @@ msgstr ""
 msgid "You do not have permission to install plugin updates"
 msgstr ""
 
-#: includes/class-rpress-ajax.php:223 includes/class-rpress-ajax.php:726
+#: includes/class-rpress-ajax.php:223 includes/class-rpress-ajax.php:732
 #: includes/class-rpress-print-receipts.php:156
 msgid "You do not have permission to update this order"
 msgstr ""
@@ -5524,59 +5557,52 @@ msgstr ""
 msgid "Your Order Settings"
 msgstr ""
 
-#: includes/class-rpress-ajax.php:700
+#: includes/class-rpress-ajax.php:706
 msgid "CHOOSE AN ITEM FROM THE MENU TO GET STARTED."
 msgstr ""
 
-#: includes/class-rpress-ajax.php:773
+#: includes/class-rpress-ajax.php:779
 #, php-format
 msgid "( %1$s )"
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1092 includes/class-rpress-ajax.php:1143
+#: includes/class-rpress-ajax.php:1098 includes/class-rpress-ajax.php:1149
 msgid "No results found"
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1192 includes/class-rpress-ajax.php:1235
+#: includes/class-rpress-ajax.php:1198 includes/class-rpress-ajax.php:1241
 #: includes/class-rpress-html-elements.php:342
 msgid "No users found"
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1334 includes/class-rpress-ajax.php:1381
-#: includes/class-rpress-ajax.php:1442
+#: includes/class-rpress-ajax.php:1340 includes/class-rpress-ajax.php:1387
+#: includes/class-rpress-ajax.php:1448
 msgid "An error occurred, please try again."
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1348
+#: includes/class-rpress-ajax.php:1354
 #, php-format
 msgid "Your license key expired on %s."
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1355
+#: includes/class-rpress-ajax.php:1361
 msgid "Your license key has been disabled."
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1360
+#: includes/class-rpress-ajax.php:1366
 msgid "Invalid license."
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1366
+#: includes/class-rpress-ajax.php:1372
 msgid "Your license is not active for this URL."
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1376
+#: includes/class-rpress-ajax.php:1382
 msgid "Your license key has reached its activation limit."
 msgstr ""
 
-#: includes/class-rpress-ajax.php:1456
+#: includes/class-rpress-ajax.php:1462
 msgid "License successfully deactivated."
-msgstr ""
-
-#. translators: %s: post singular name
-#: includes/class-rpress-ajax.php:1582 templates/fooditem/fooditems.php:138
-#, php-format
-msgctxt "rpress post type name"
-msgid "No %s found"
 msgstr ""
 
 #: includes/class-rpress-cache-helper.php:115
@@ -5664,7 +5690,7 @@ msgid "New Product"
 msgstr ""
 
 #: includes/class-rpress-frontend-scripts.php:248
-#: includes/class-rpress-frontend-scripts.php:342
+#: includes/class-rpress-frontend-scripts.php:343
 msgid "Add To Cart"
 msgstr ""
 
@@ -5673,7 +5699,7 @@ msgid " is added to cart"
 msgstr ""
 
 #: includes/class-rpress-frontend-scripts.php:251
-#: includes/class-rpress-frontend-scripts.php:305
+#: includes/class-rpress-frontend-scripts.php:306
 msgid "Please Wait..."
 msgstr ""
 
@@ -5686,85 +5712,91 @@ msgid "at"
 msgstr ""
 
 #: includes/class-rpress-frontend-scripts.php:280
-#: includes/class-rpress-frontend-scripts.php:352
-#: includes/rp-core-functions.php:261
+#: includes/class-rpress-frontend-scripts.php:353
+#: includes/rp-core-functions.php:289
 msgid "Change?"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:284
+#: includes/class-rpress-frontend-scripts.php:285
 msgid "Are you sure! You want to clear the cart?"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:286
+#: includes/class-rpress-frontend-scripts.php:287
 msgid "Cart cleared"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:299
+#: includes/class-rpress-frontend-scripts.php:300
 msgid "Please select a payment method"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:300
+#: includes/class-rpress-frontend-scripts.php:301
 msgid "Please enter a discount code"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:302
+#: includes/class-rpress-frontend-scripts.php:303
 msgid "Discount Applied"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:303
+#: includes/class-rpress-frontend-scripts.php:304
 msgid "Please enter an email address before applying a discount code"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:304
+#: includes/class-rpress-frontend-scripts.php:305
 msgid "Please enter a username before applying a discount code"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:328
+#: includes/class-rpress-frontend-scripts.php:329
 msgid "You have already added this item to your cart"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:329
+#: includes/class-rpress-frontend-scripts.php:330
 #: includes/process-purchase.php:34
 msgid "Your cart is empty"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:330
+#: includes/class-rpress-frontend-scripts.php:331
 msgid "Loading"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:341
+#: includes/class-rpress-frontend-scripts.php:342
 msgid "Please Wait"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:350
-#: templates/rpress-delivery-steps.php:65
+#: includes/class-rpress-frontend-scripts.php:351
+#: templates/rpress-delivery-steps.php:70
 msgid "Update"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:351
+#: includes/class-rpress-frontend-scripts.php:352
 msgid "SubTotal"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:353
+#: includes/class-rpress-frontend-scripts.php:354
 msgid "Fee"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:354
+#: includes/class-rpress-frontend-scripts.php:355
 msgid "Close"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:355
-#: templates/rpress-get-categories.php:42
+#: includes/class-rpress-frontend-scripts.php:356
+#: templates/rpress-get-categories.php:51
 msgid "Menu"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:356 templates/cart/cart.php:18
+#: includes/class-rpress-frontend-scripts.php:357 templates/cart/cart.php:17
 #: templates/receipt/print-receipt-content.php:20
 msgid "Items"
 msgstr ""
 
-#: includes/class-rpress-frontend-scripts.php:357
+#: includes/class-rpress-frontend-scripts.php:358
 msgid "Please select time for "
+msgstr ""
+
+#: includes/class-rpress-frontend-scripts.php:359
+msgid ""
+"Notice: Please do not click back or refresh this page, until the transaction "
+"is not completed."
 msgstr ""
 
 #: includes/class-rpress-html-elements.php:46
@@ -5870,7 +5902,7 @@ msgstr ""
 msgid "Address: "
 msgstr ""
 
-#: includes/class-rpress-print-receipts.php:250
+#: includes/class-rpress-print-receipts.php:249
 msgid "Instructions: "
 msgstr ""
 
@@ -6572,12 +6604,12 @@ msgstr ""
 
 #: includes/gateways/amazon-payments.php:1091
 #: includes/gateways/amazon-payments.php:1145
-#: includes/gateways/paypal-standard.php:448
-#: includes/gateways/paypal-standard.php:455
-#: includes/gateways/paypal-standard.php:544
-#: includes/gateways/paypal-standard.php:554
-#: includes/gateways/paypal-standard.php:627
-#: includes/gateways/paypal-standard.php:636
+#: includes/gateways/paypal-standard.php:457
+#: includes/gateways/paypal-standard.php:464
+#: includes/gateways/paypal-standard.php:552
+#: includes/gateways/paypal-standard.php:562
+#: includes/gateways/paypal-standard.php:634
+#: includes/gateways/paypal-standard.php:643
 msgid "IPN Error"
 msgstr ""
 
@@ -6623,12 +6655,12 @@ msgid "The requested price ID does not exist."
 msgstr ""
 
 #: includes/gateways/functions.php:431 includes/gateways/manual.php:33
-#: includes/gateways/paypal-standard.php:167
+#: includes/gateways/paypal-standard.php:174
 msgid "Nonce verification has failed"
 msgstr ""
 
 #: includes/gateways/functions.php:456 includes/gateways/manual.php:62
-#: includes/gateways/paypal-standard.php:190
+#: includes/gateways/paypal-standard.php:197
 msgid "Payment Error"
 msgstr ""
 
@@ -6659,14 +6691,22 @@ msgid "Enter your PayPal account's email"
 msgstr ""
 
 #: includes/gateways/paypal-standard.php:63
-msgid "PayPal Image URL"
+msgid "PayPal ID"
 msgstr ""
 
 #: includes/gateways/paypal-standard.php:64
-msgid "Upload an image to display on the PayPal checkout page."
+msgid "Enter your PayPal account's ID"
+msgstr ""
+
+#: includes/gateways/paypal-standard.php:70
+msgid "PayPal Image URL"
 msgstr ""
 
 #: includes/gateways/paypal-standard.php:71
+msgid "Upload an image to display on the PayPal checkout page."
+msgstr ""
+
+#: includes/gateways/paypal-standard.php:78
 #, php-format
 msgid ""
 "Enter your PayPal Identity Token in order to enable Payment Data Transfer "
@@ -6675,26 +6715,26 @@ msgid ""
 "information."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:77
+#: includes/gateways/paypal-standard.php:84
 msgid "PayPal Identity Token"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:83
+#: includes/gateways/paypal-standard.php:90
 msgid ""
 "If you are unable to use Payment Data Transfer and payments are not getting "
 "marked as complete, then check this box. This forces the site to use a "
 "slightly less secure method of verifying purchases."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:87
+#: includes/gateways/paypal-standard.php:94
 msgid "Disable PayPal IPN Verification"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:95
+#: includes/gateways/paypal-standard.php:102
 msgid "API Credentials"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:98
+#: includes/gateways/paypal-standard.php:105
 #, php-format
 msgid ""
 "API credentials are necessary to process PayPal refunds from inside "
@@ -6702,209 +6742,209 @@ msgid ""
 "PayPal account</a>."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:104
+#: includes/gateways/paypal-standard.php:111
 msgid "Live API Username"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:105
+#: includes/gateways/paypal-standard.php:112
 msgid "Your PayPal live API username. "
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:111
+#: includes/gateways/paypal-standard.php:118
 msgid "Live API Password"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:112
+#: includes/gateways/paypal-standard.php:119
 msgid "Your PayPal live API password."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:118
+#: includes/gateways/paypal-standard.php:125
 msgid "Live API Signature"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:119
+#: includes/gateways/paypal-standard.php:126
 msgid "Your PayPal live API signature."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:125
+#: includes/gateways/paypal-standard.php:132
 msgid "Test API Username"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:126
+#: includes/gateways/paypal-standard.php:133
 msgid "Your PayPal test API username."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:132
+#: includes/gateways/paypal-standard.php:139
 msgid "Test API Password"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:133
+#: includes/gateways/paypal-standard.php:140
 msgid "Your PayPal test API password."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:139
+#: includes/gateways/paypal-standard.php:146
 msgid "Test API Signature"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:140
+#: includes/gateways/paypal-standard.php:147
 msgid "Your PayPal test API signature."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:190
+#: includes/gateways/paypal-standard.php:197
 #, php-format
 msgid ""
 "Payment creation failed before sending buyer to PayPal. Payment data: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:448
-#: includes/gateways/paypal-standard.php:455
+#: includes/gateways/paypal-standard.php:457
+#: includes/gateways/paypal-standard.php:464
 #, php-format
 msgid "Invalid IPN verification response. IPN data: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:544
+#: includes/gateways/paypal-standard.php:552
 #, php-format
 msgid "Invalid business email in IPN response. IPN data: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:547
+#: includes/gateways/paypal-standard.php:555
 msgid "Payment failed due to invalid PayPal business email."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:554
+#: includes/gateways/paypal-standard.php:562
 #, php-format
 msgid "Invalid currency in IPN response. IPN data: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:557
+#: includes/gateways/paypal-standard.php:565
 msgid "Payment failed due to invalid currency in PayPal IPN."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:627
+#: includes/gateways/paypal-standard.php:634
 #, php-format
 msgid "Invalid payment amount in IPN response. IPN data: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:630
+#: includes/gateways/paypal-standard.php:637
 msgid "Payment failed due to invalid amount in PayPal IPN."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:636
+#: includes/gateways/paypal-standard.php:643
 #, php-format
 msgid "Invalid purchase key in IPN response. IPN data: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:638
+#: includes/gateways/paypal-standard.php:645
 msgid "Payment failed due to invalid purchase key in PayPal IPN."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:644
+#: includes/gateways/paypal-standard.php:652
 #, php-format
 msgid "PayPal Transaction ID: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:658
+#: includes/gateways/paypal-standard.php:671
 msgid "Payment made via eCheck and will clear automatically in 5-8 days"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:665
+#: includes/gateways/paypal-standard.php:678
 msgid ""
 "Payment requires a confirmed customer address and must be accepted manually "
 "through PayPal"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:671
+#: includes/gateways/paypal-standard.php:684
 msgid ""
 "Payment must be accepted manually through PayPal due to international "
 "account regulations"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:677
+#: includes/gateways/paypal-standard.php:690
 msgid ""
 "Payment received in non-shop currency and must be accepted manually through "
 "PayPal"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:684
+#: includes/gateways/paypal-standard.php:697
 msgid ""
 "Payment is being reviewed by PayPal staff as high-risk or in possible "
 "violation of government regulations"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:690
+#: includes/gateways/paypal-standard.php:703
 msgid "Payment was sent to non-confirmed or non-registered email address."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:696
+#: includes/gateways/paypal-standard.php:709
 msgid "PayPal account must be upgraded before this payment can be accepted"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:702
+#: includes/gateways/paypal-standard.php:715
 msgid ""
 "PayPal account is not verified. Verify account in order to accept this "
 "payment"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:708
+#: includes/gateways/paypal-standard.php:721
 msgid ""
 "Payment is pending for unknown reasons. Contact PayPal support for assistance"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:761
+#: includes/gateways/paypal-standard.php:774
 #, php-format
 msgid "Partial PayPal refund processed: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:766
+#: includes/gateways/paypal-standard.php:779
 #, php-format
 msgid "PayPal Payment #%s Refunded for reason: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:767
+#: includes/gateways/paypal-standard.php:780
 #, php-format
 msgid "PayPal Refund Transaction ID: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:979
+#: includes/gateways/paypal-standard.php:992
 msgid ""
 "Payment could not be verified while validating PayPal PDT. Missing payment "
 "total fields."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:990
+#: includes/gateways/paypal-standard.php:1003
 #, php-format
 msgid ""
 "Payment failed while validating PayPal PDT. Amount expected: %f. Amount "
 "Received: %f"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:1020
+#: includes/gateways/paypal-standard.php:1033
 msgid "Payment failed while validating PayPal PDT."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:1027
+#: includes/gateways/paypal-standard.php:1040
 msgid "PayPal PDT encountered an unexpected result, payment set to pending"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:1112
+#: includes/gateways/paypal-standard.php:1125
 msgid "Refund Payment in PayPal"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:1259
+#: includes/gateways/paypal-standard.php:1272
 msgid "PayPal refund failed for unknown reason."
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:1269
+#: includes/gateways/paypal-standard.php:1282
 #, php-format
 msgid "PayPal refund transaction ID: %s"
 msgstr ""
 
-#: includes/gateways/paypal-standard.php:1273
+#: includes/gateways/paypal-standard.php:1286
 #, php-format
 msgid "PayPal refund failed: %s"
 msgstr ""
 
-#: includes/install.php:84 templates/cart/cart.php:24
+#: includes/install.php:84 templates/cart/cart.php:23
 #: templates/cart/checkout.php:29 templates/cart/empty.php:17
 msgid "Checkout"
 msgstr ""
@@ -7850,265 +7890,265 @@ msgstr ""
 msgid "Search Item"
 msgstr ""
 
-#: includes/rp-core-functions.php:255
+#: includes/rp-core-functions.php:283
 #, php-format
 msgid ", %s"
 msgstr ""
 
-#: includes/rp-core-functions.php:511 includes/rp-core-functions.php:512
-#: includes/rp-core-functions.php:519 includes/rp-core-functions.php:520
+#: includes/rp-core-functions.php:541 includes/rp-core-functions.php:542
+#: includes/rp-core-functions.php:549 includes/rp-core-functions.php:550
 #: templates/rpress-delivery.php:37 templates/rpress-pickup.php:36
 msgid "ASAP"
 msgstr ""
 
-#: includes/rp-core-functions.php:563 includes/rp-core-functions.php:566
+#: includes/rp-core-functions.php:593 includes/rp-core-functions.php:596
 #, php-format
 msgid "%s updated."
 msgstr ""
 
-#: includes/rp-core-functions.php:564
+#: includes/rp-core-functions.php:594
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/rp-core-functions.php:565
+#: includes/rp-core-functions.php:595
 msgid "Custom field deleted."
 msgstr ""
 
-#: includes/rp-core-functions.php:567
+#: includes/rp-core-functions.php:597
 #, php-format
 msgid "%s restored to revision from %s"
 msgstr ""
 
-#: includes/rp-core-functions.php:568
+#: includes/rp-core-functions.php:598
 #, php-format
 msgid "%s published."
 msgstr ""
 
-#: includes/rp-core-functions.php:569
+#: includes/rp-core-functions.php:599
 #, php-format
 msgid "%s saved."
 msgstr ""
 
-#: includes/rp-core-functions.php:570
+#: includes/rp-core-functions.php:600
 #, php-format
 msgid "%s submitted"
 msgstr ""
 
-#: includes/rp-core-functions.php:571
+#: includes/rp-core-functions.php:601
 #, php-format
 msgid "%s scheduled for: <strong>%1$s</strong>"
 msgstr ""
 
-#: includes/rp-core-functions.php:571
+#: includes/rp-core-functions.php:601
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: includes/rp-core-functions.php:572
+#: includes/rp-core-functions.php:602
 #, php-format
 msgid "%s draft updated."
 msgstr ""
 
-#: includes/rp-core-functions.php:693
+#: includes/rp-core-functions.php:723
 msgid "Please select a different time slot."
 msgstr ""
 
-#: includes/rp-core-functions.php:1017
+#: includes/rp-core-functions.php:1047
 msgid "US Dollars (&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1018
+#: includes/rp-core-functions.php:1048
 msgid "Euros (&euro;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1019
+#: includes/rp-core-functions.php:1049
 msgid "Pound Sterling (&pound;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1020
+#: includes/rp-core-functions.php:1050
 msgid "Australian Dollars (&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1021
+#: includes/rp-core-functions.php:1051
 msgid "Brazilian Real (R&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1022
+#: includes/rp-core-functions.php:1052
 msgid "Canadian Dollars (&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1023
+#: includes/rp-core-functions.php:1053
 msgid "Czech Koruna (Kč)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1024
+#: includes/rp-core-functions.php:1054
 msgid "Danish Krone (kr)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1025
+#: includes/rp-core-functions.php:1055
 msgid "Hong Kong Dollar (&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1026
+#: includes/rp-core-functions.php:1056
 msgid "Hungarian Forint (Ft)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1027
+#: includes/rp-core-functions.php:1057
 msgid "Israeli Shekel (₪)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1028
+#: includes/rp-core-functions.php:1058
 msgid "Japanese Yen (&yen;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1029
+#: includes/rp-core-functions.php:1059
 msgid "Malaysian Ringgits (RM)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1030
+#: includes/rp-core-functions.php:1060
 msgid "Mexican Peso (&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1031
+#: includes/rp-core-functions.php:1061
 msgid "New Zealand Dollar (&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1032
+#: includes/rp-core-functions.php:1062
 msgid "Norwegian Krone (kr)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1033
+#: includes/rp-core-functions.php:1063
 msgid "Pakistani Rupee (Rs)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1034
+#: includes/rp-core-functions.php:1064
 msgid "Philippine Pesos (₱)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1035
+#: includes/rp-core-functions.php:1065
 msgid "Polish Zloty (zł)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1036
+#: includes/rp-core-functions.php:1066
 msgid "Singapore Dollar (&#36;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1037
+#: includes/rp-core-functions.php:1067
 msgid "Swedish Krona (kr)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1038
+#: includes/rp-core-functions.php:1068
 msgid "Swiss Franc"
 msgstr ""
 
-#: includes/rp-core-functions.php:1039
+#: includes/rp-core-functions.php:1069
 msgid "Taiwan New Dollars ($)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1040
+#: includes/rp-core-functions.php:1070
 msgid "Thai Baht (฿)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1041
+#: includes/rp-core-functions.php:1071
 msgid "Indian Rupee (₹)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1042
+#: includes/rp-core-functions.php:1072
 msgid "Turkish Lira (₺)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1043
+#: includes/rp-core-functions.php:1073
 msgid "Iranian Rial (﷼)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1044
+#: includes/rp-core-functions.php:1074
 msgid "Russian Rubles (₽)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1045
+#: includes/rp-core-functions.php:1075
 msgid "Angolan Kwanza (Kz)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1046
+#: includes/rp-core-functions.php:1076
 msgid "Nigerian Naira (&#8358;)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1047
+#: includes/rp-core-functions.php:1077
 msgid "UAE Dirham (د.إ)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1048
+#: includes/rp-core-functions.php:1078
 msgid "Afghani (؋)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1049
+#: includes/rp-core-functions.php:1079
 msgid "Netherlands Antillean Guilder (֏)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1050
+#: includes/rp-core-functions.php:1080
 msgid "Vietnamese dong (₫)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1051
+#: includes/rp-core-functions.php:1081
 msgid "Renminbi (¥)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1052
+#: includes/rp-core-functions.php:1082
 msgid "South Korean won (₩)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1053
+#: includes/rp-core-functions.php:1083
 msgid "Bangladeshi taka (৳)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1054
+#: includes/rp-core-functions.php:1084
 msgid "Nepalese rupee (Rs)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1055
+#: includes/rp-core-functions.php:1085
 msgid "Azerbaijani manat (₽)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1313
+#: includes/rp-core-functions.php:1343
 #, php-format
 msgid ""
 "%1$s is <strong>deprecated</strong> since RestroPress version %2$s! Use %3$s "
 "instead."
 msgstr ""
 
-#: includes/rp-core-functions.php:1317
+#: includes/rp-core-functions.php:1347
 #, php-format
 msgid ""
 "%1$s is <strong>deprecated</strong> since RestroPress version %2$s with no "
 "alternative available."
 msgstr ""
 
-#: includes/rp-core-functions.php:1354
+#: includes/rp-core-functions.php:1384
 #, php-format
 msgid ""
 "The %1$s argument of %2$s is <strong>deprecated</strong> since RestroPress "
 "version %3$s! Please use %4$s instead."
 msgstr ""
 
-#: includes/rp-core-functions.php:1358
+#: includes/rp-core-functions.php:1388
 #, php-format
 msgid ""
 "The %1$s argument of %2$s is <strong>deprecated</strong> since RestroPress "
 "version %3$s with no alternative available."
 msgstr ""
 
-#: includes/rp-core-functions.php:1899 includes/rp-core-functions.php:1903
+#: includes/rp-core-functions.php:1929 includes/rp-core-functions.php:1933
 msgid "Street Address"
 msgstr ""
 
-#: includes/rp-core-functions.php:1908 includes/rp-core-functions.php:1912
+#: includes/rp-core-functions.php:1938 includes/rp-core-functions.php:1942
 msgid "Apartment, suite, unit etc. (optional)"
 msgstr ""
 
-#: includes/rp-core-functions.php:1917 includes/rp-core-functions.php:1921
+#: includes/rp-core-functions.php:1947 includes/rp-core-functions.php:1951
 msgid "Town / City"
 msgstr ""
 
-#: includes/rp-core-functions.php:1926 includes/rp-core-functions.php:1930
+#: includes/rp-core-functions.php:1956 includes/rp-core-functions.php:1960
 msgid "Postcode / ZIP"
 msgstr ""
 
@@ -8380,12 +8420,12 @@ msgstr ""
 msgid "An email with an activation link has been sent."
 msgstr ""
 
-#: templates/cart/cart.php:32 templates/checkout_cart.php:15
+#: templates/cart/cart.php:31 templates/checkout_cart.php:14
 #: templates/rpress-show-order-details.php:55
 msgid "Your Order"
 msgstr ""
 
-#: templates/cart/cart.php:35
+#: templates/cart/cart.php:34
 msgid "Clear Order"
 msgstr ""
 
@@ -8403,6 +8443,13 @@ msgstr ""
 
 #: templates/cart/empty.php:9
 msgid "Estimated Tax:"
+msgstr ""
+
+#. translators: %s: post singular name
+#: templates/fooditem/fooditems.php:138 templates/fooditem/fooditems.php:208
+#, php-format
+msgctxt "rpress post type name"
+msgid "No %s found"
 msgstr ""
 
 #: templates/history-fooditems.php:3 templates/history-purchases.php:3

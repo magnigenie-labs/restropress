@@ -49,6 +49,7 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 			'categories'               	=> __( 'Categories', 'restropress' ),
 			'addons'               		=> __( 'Addons', 'restropress' ),
 			'tags'                     	=> __( 'Tags', 'restropress' ),
+			'tag_mark'                  => __( 'None/Veg/Non-Veg', 'restropress' ),
 			'rpress_price' 				=> __( 'Price', 'restropress' ),
 			'_thumbnail_id'            	=> __( 'Featured Image', 'restropress' ),
 			'rpress_sku' 				=> __( 'SKU', 'restropress' ),
@@ -162,6 +163,10 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 							$row[ $key ] = implode( ' | ', $terms );
 						}
 
+
+					} else if( 'tag_mark' == $key ) {
+						$food_type = get_post_meta(  $fooditem->ID, 'rpress_food_type', true);
+						$row[ $key ] = $food_type;
 
 					} else if( 'categories' == $key ) {
 

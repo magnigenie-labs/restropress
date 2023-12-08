@@ -465,7 +465,7 @@ function rpress_price_range( $fooditem_id = 0 ) {
     $tax_inc_exc_item_option = rpress_get_option('tax_item', true );
     $low   = rpress_get_lowest_price_option( $fooditem_id );
     $high  = rpress_get_highest_price_option( $fooditem_id );
- 
+
     /** 
     * Conditions added to show the item price as included or excluded Tax
     * @since 2.9.6

@@ -57,6 +57,7 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 			'products_raw' => __( 'Products (Raw)', 'restropress' ),
 			'skus'         => __( 'SKUs', 'restropress' ),
 			'amount'       => __( 'Amount', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
+			'tips'         => __( 'Tips', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
 			'tax'          => __( 'Tax', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
 			'discount'     => __( 'Discount Code', 'restropress' ),
 			'gateway'      => __( 'Payment Method', 'restropress' ),
@@ -105,7 +106,7 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 		if( ! empty( $this->start ) || ! empty( $this->end ) ) {
 
 			$args['start_date'] = date( 'Y-n-d 00:00:00', strtotime( $this->start ) ) ;
-			$args['end_date'] = date( 'Y-n-d 23:59:59', strtotime( $this->end ) ) ;
+			$args['end_date']   = date( 'Y-n-d 23:59:59', strtotime( $this->end ) ) ;
 
 		}
 
@@ -128,19 +129,21 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 			foreach ( $payments as $payment ) {
 				$payment = new RPRESS_Payment( $payment->ID );
 
-				$address_info	= get_post_meta( $payment->ID , '_rpress_delivery_address', true );
+				$address_info	 = get_post_meta( $payment->ID , '_rpress_delivery_address', true );
 
-				$user_address 	= !empty( $address_info['address'] ) ? $address_info['address'] . ', ' : '';
+				$user_address 	 = !empty( $address_info['address'] ) ? $address_info['address'] . ', ' : '';
 				$user_address 	.= !empty( $address_info['flat'] ) ? $address_info['flat'] . ', ' : '';
 				$user_address 	.= !empty( $address_info['city'] ) ? $address_info['city'] . ', ' : '';
 				$user_address 	.= !empty( $address_info['postcode'] ) ? $address_info['postcode']  : '';
 				
 				$order_statuses = rpress_get_order_statuses();	
-	      $current_order_status = rpress_get_order_status( $payment->ID );
-
+	      		$current_order_status = rpress_get_order_status( $payment->ID );
+	      		$payment_meta = rpress_get_payment_meta( $payment->ID );
 				$user_info      = $payment->user_info;
 				$fooditems      = $payment->cart_details;
-
+				$tips 			= $payment_meta['fees']['tip'];
+				$tips_amount	= $tips['amount'];
+				
 				$total          = $payment->total;
 				$user_id        = isset( $user_info['id'] ) && $user_info['id'] != -1 ? $user_info['id'] : $user_info['email'];
 				$products       = '';
@@ -267,6 +270,7 @@ class RPRESS_Batch_Payments_Export extends RPRESS_Batch_Export {
 					'products_raw' => $products_raw,
 					'skus'         => $skus,
 					'amount'       => html_entity_decode( rpress_format_amount( $total ) ), // The non-discounted item price
+					'tips'		   => $tips_amount,	
 					'tax'          => html_entity_decode( rpress_format_amount( rpress_get_payment_tax( $payment->ID, $payment_meta ) ) ),
 					'discount'     => isset( $user_info['discount'] ) && $user_info['discount'] != 'none' ? $user_info['discount'] : __( 'none', 'restropress' ),
 					'gateway'      => rpress_get_gateway_admin_label( rpress_get_payment_meta( $payment->ID, '_rpress_payment_gateway', true ) ),

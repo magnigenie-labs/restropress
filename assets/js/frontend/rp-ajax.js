@@ -169,6 +169,7 @@ jQuery(document)
 
         $(this)
           .after('<span class="rp-loading"></span>');
+        $(this).parents('body').append('<div class="blur-content"><p class="blur-txt">'+rpress_scripts.blurtxt+'</p><span class="blur-loader"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(255, 255, 255); display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><circle cx="50" cy="50" r="32" stroke-width="8" stroke="#fe718d" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform></circle></svg></span></div>');
 
         $.post(rpress_global_vars.ajaxurl, $('#rpress_purchase_form')
           .serialize() + '&action=rpress_process_checkout&rpress_ajax=true',
@@ -179,6 +180,8 @@ jQuery(document)
                 .remove();
               $('.rpress-error')
                 .hide();
+                $('#rpress_final_total_wrap .rp-loading').hide();
+              $('.blur-content').hide();
               $(rpressPurchaseform)
                 .submit();
             } else {
@@ -188,6 +191,8 @@ jQuery(document)
                 .remove();
               $('.rpress_errors')
                 .remove();
+              $('.blur-content').hide();
+              ('#rpress_final_total_wrap .rp-loading').hide();
               $('.rpress-error')
                 .hide();
               $(rpress_global_vars.checkout_error_anchor)
@@ -242,6 +247,16 @@ jQuery(document)
           })
           .done(function (data) {
             if (is_checkout) {
+              var ns = "nostates";
+              if (data != ns) {
+                $("#card_state").parent().show();
+                $("#card_state").replaceWith (data);
+              }
+              else {
+                if (data === ns) {
+                  $("#card_state").parent().hide();
+                }
+              }
               recalculate_taxes();
             }
           });

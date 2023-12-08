@@ -9,8 +9,13 @@ $services = $service_type == 'delivery_and_pickup' ? [ 'delivery', 'pickup' ] : 
 $store_time = rp_get_store_timings( true, '' );
 $store_times = apply_filters( 'rpress_store_delivery_timings', $store_time );
 $current_time = current_time( 'timestamp' );
-$open_time    = ! empty( rpress_get_option( 'open_time' ) ) ? rpress_get_option( 'open_time' ) : '9:00am';
-$close_time   = ! empty( rpress_get_option( 'close_time' ) ) ? rpress_get_option( 'close_time' ) : '11:30pm';
+if( empty( rpress_get_option( 'enable_always_open' ) ) ) {
+	$open_time = ! empty( rpress_get_option( 'open_time' ) ) ? rpress_get_option( 'open_time' ) : '9:00am';
+	$close_time = ! empty( rpress_get_option( 'close_time' ) ) ? rpress_get_option( 'close_time' ) : '11:30pm';
+} else {
+	$open_time = '12:00am';
+	$close_time = '11:59pm';
+}
 $open_time  = strtotime( date_i18n( 'Y-m-d' ) . ' ' . $open_time );
 $close_time = strtotime( date_i18n( 'Y-m-d' ) . ' ' . $close_time );
 //If empty check if pickup hours are available
@@ -24,7 +29,7 @@ $closed_message = rpress_get_option( 'store_closed_msg', __( 'Sorry, we are clos
 
 <div class="rpress-delivery-wrap">
 
-	<?php if ( empty( $store_time ) || ( $current_time < $open_time ) ) : ?>
+	<?php if ( empty( $store_times ) || ( $current_time < $open_time ) ) : ?>
 		<div class="alert alert-warning">
 			<?php echo  wp_kses_post( $closed_message ); ?>
 		</div>

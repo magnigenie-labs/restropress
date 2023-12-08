@@ -114,7 +114,8 @@ class RP_AJAX {
       'recalculate_taxes',
       'get_states',
       'fooditem_search',
-      'checkout_update_service_option'
+      'checkout_update_service_option',
+      'remove_fees_after_empty_cart'
     );
 
     foreach ( $ajax_events_nopriv as $ajax_event ) {
@@ -142,7 +143,6 @@ class RP_AJAX {
       'deactivate_addon_license',
       'show_order_details',
       'more_order_history',
-      
     );
 
     foreach ( $ajax_events as $ajax_event ) {
@@ -464,6 +464,12 @@ class RP_AJAX {
    * Add To Cart in the popup
    */
   public static function add_to_cart() {
+
+    // Remove all cart fees.
+    RPRESS()->session->set('rpress_cart_fees', null);
+
+    // Remove any resuming payments.
+    RPRESS()->session->set('rpress_resume_payment', null);
 
     check_ajax_referer( 'add-to-cart', 'security' );
 
@@ -1536,56 +1542,24 @@ class RP_AJAX {
     rpress_die();
   }
 
+  public static function remove_fees_after_empty_cart() {
+    
+    RPRESS()->session->set('rpress_cart', null);
+
+    // Remove all cart fees.
+    RPRESS()->session->set('rpress_cart_fees', null);
+
+    // Remove any resuming payments.
+    RPRESS()->session->set('rpress_resume_payment', null);
+    
+    // You can also send a response back to the AJAX request if needed
+    $response = array('message' => 'Cart emptied successfully');
+    wp_send_json($response);
+    
+    // Make sure to exit to prevent any additional output
+    exit;
+  }
+
 }
 
 RP_AJAX::init();
-
-
-add_action( 'wp_ajax_nopriv_load_fooditems', 'load_fooditems' );
-add_action( 'wp_ajax_load_fooditems','load_fooditems' );
-function load_fooditems(){
-  
-  $get_categories = rpress_get_categories( $category_params );
-    if ( !empty( $shortcode_atts['category_menu'] ) ) {
-      $get_categories = rpress_get_child_cats( $category_ids );
-    }
-    $all_terms = array();
-    if( is_array( $get_categories ) && !empty( $get_categories ) ) {
-      $all_terms = wp_list_pluck( $get_categories, 'slug' );
-    }
-    if ( is_array( $all_terms ) && !empty( $all_terms ) ) :
-      foreach ( $all_terms as $term_slug ) :
-        $prepared_query = RP_Shortcode_Fooditems::query($term_slug);
-        $atts           = RP_Shortcode_Fooditems::$atts;
-        // Allow the query to be manipulated by other plugins
-        $query = apply_filters( 'rpress_fooditems_query', $prepared_query, $atts );
-        $fooditems = new WP_Query( $query );
-        
-        do_action( 'rpress_fooditems_list_before', $atts );
-        if ( $fooditems->have_posts() ) :
-          $i = 1;
-          do_action( 'rpress_fooditems_list_top', $atts, $fooditems );
-          $curr_cat_var = '';
-          while ( $fooditems->have_posts() ) : $fooditems->the_post();
-            $id = get_the_ID();
-            do_action( 'rpress_fooditems_category_title', $term_slug, $id, $curr_cat_var );
-            do_action( 'rpress_fooditem_shortcode_item', $atts, $i );
-            $i++;
-          endwhile;
-          wp_reset_postdata();
-          do_action( 'rpress_fooditems_list_bottom', $atts );
-          wp_reset_query();
-        endif;
-      endforeach;
-      else:
-        /* translators: %s: post singular name */
-        printf( _x( 'No %s found', 'rpress post type name', 'restropress' ), rp_get_label_plural() );
-      endif;
-  wp_die();
-}
-
-
-
-
-
-

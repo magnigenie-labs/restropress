@@ -70,6 +70,7 @@ class RPRESS_Payments_Export extends RPRESS_Export {
 			'products' => __( 'Products', 'restropress' ),
 			'skus'     => __( 'SKUs', 'restropress' ),
 			'amount'   => __( 'Amount', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
+			'tips'	   => __( 'Tips', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',	
 			'tax'      => __( 'Tax', 'restropress' ) . ' (' . html_entity_decode( rpress_currency_filter( '' ) ) . ')',
 			'discount' => __( 'Discount Code', 'restropress' ),
 			'gateway'  => __( 'Payment Method', 'restropress' ),
@@ -114,6 +115,8 @@ class RPRESS_Payments_Export extends RPRESS_Export {
 
 		foreach ( $payments as $payment ) {
 			$payment_meta   = rpress_get_payment_meta( $payment->ID );
+			$tips 			= $payment_meta['fees']['tip'];
+			$tips_amount	= $tips['amount'];
 			$user_info      = rpress_get_payment_meta_user_info( $payment->ID );
 			$fooditems      = rpress_get_payment_meta_cart_details( $payment->ID );
 			$total          = rpress_get_payment_amount( $payment->ID );
@@ -180,6 +183,7 @@ class RPRESS_Payments_Export extends RPRESS_Export {
 				'products' => $products,
 				'skus'     => $skus,
 				'amount'   => html_entity_decode( rpress_format_amount( $total ) ),
+				'tips'	   => $tips_amount,	
 				'tax'      => html_entity_decode( rpress_format_amount( rpress_get_payment_tax( $payment->ID, $payment_meta ) ) ),
 				'discount' => isset( $user_info['discount'] ) && $user_info['discount'] != 'none' ? $user_info['discount'] : __( 'none', 'restropress' ),
 				'gateway'  => rpress_get_gateway_admin_label( rpress_get_payment_meta( $payment->ID, '_rpress_payment_gateway', true ) ),

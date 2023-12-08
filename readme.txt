@@ -4,8 +4,8 @@ Tags: Food ordering, online ordering, restaurant ordering, restaurant menu, food
 Donate link: https://paypal.me/magnigeeks
 Requires at least: 4.4
 Requires PHP: 5.5
-Tested up to: 6.1.1
-Stable tag: 2.9.6
+Tested up to: 6.4.1
+Stable tag: 2.9.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,11 +81,30 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == ChangeLog ==
 
-= Version 2.9.6 (2022-12-30) =
+= Version 2.9.8 (2023-11-17) =
 
-* Fixed: Cart total price calculation issue with inclusive tax
-* Added: Load fooditems data using ajax 
-* Added: Add setting option to show the item price in fooditem page by including/excluding tax 
+* Fixed: "Store timing and delivery cutoff extension" current day holiday issue.
+* Fixed: Auto-update state list as per the selected country issue for checkout billing form.
+* Added: Blur section and warning message added for checkout page until the payment completion.
+
+= Version 2.9.7 (2023-09-15) =
+
+* Fixed: Paypal live transaction issue "payment status is showing as failed even if customer has paid successfully"
+* Fixed: Cart cookie data clear issue aftre making the cart empty by removing items
+* Updated: Correct url path "PayPal Identity Token" docs
+* Updated: Required columns for food items csv
+* Updated: Show selected item variable name in receipt
+* Added: "Enable always order option" setting to make open the store for 24/7 hour
+* Added: Shortcode format to make exclude categories
+
+= Version 2.9.6 (2023-04-05) =
+
+* Fixed: Deprecated issue with PHP version 8.1.9
+* Fixed: Inclusive tax issue calculation issue for cart section
+* Fixed: Currency sign position issue for popup "add to cart" button
+* Fixed: Negative price validation issue for variables and addons
+* Fixed: Text input validation for addon price input field
+* Updated: Tips column added for order history reports CSV
 
 = Version 2.9.5 (2022-12-12) =
 
@@ -128,7 +147,6 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 * Fixed: Currency issue fixed for Vietnamese Dong
 * Fixed: Sequential order setup issue fixed
 * Fixed: Removed unnecessery <a> for "Special Instruction" on frontend
-* Fixed: inclusive tax issue fixed with discount code calculation
 * Fixed: Correct product details and addon details added with order history report
 * Fixed: Deprecated errors fixed as per php version 8.0, version updated 2.9.1.1 - 2.9.2
 * Minor Code cleanup
@@ -581,5 +599,5 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == Upgrade Notice ==
 
-= Version 2.9.5  =
+= Version 2.9.8 =
 * New update for RestroPress is available. Please take a backup before the update.

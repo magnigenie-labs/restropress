@@ -401,6 +401,26 @@ function rpress_get_registered_settings() {
 					),
 				),
 
+                //API settings
+                'api' => array(
+                    'api_settings' => array(
+                        'id' => 'api_settings',
+                        'name' => '<h3>' . __( 'API Settings', 'restropress' ) . '</h3>',
+                        'desc' => '',
+                        'type' => 'header',
+                        'tooltip_title' => __( 'API Settings', 'restropress' ),
+                        'tooltip_desc' => __( 'This would be the all necessary settings for API', 'restropress' ),
+                    ),
+                    'activate_api' => array(
+                        'id' => 'activate_api',
+                        'name' => __( 'Activate API', 'restropress' ),
+                        'desc' => sprintf(
+                                __( 'Enable API for access all endpoint.', 'restropress' )
+                        ),
+                        'type' => 'checkbox',
+                    ),
+                ),
+
 				//Currency Settings Here
 				'currency' => array(
 					'currency' => array(
@@ -539,30 +559,36 @@ function rpress_get_registered_settings() {
 						'std' => '12hrs',
 					),
 					'wordpress_time' => array(
-						'id'   => 'wordpress_time',
-						'name' => __( 'Wordpress Time Zone', 'restropress' ),
-						'desc' => sprintf( __( 'Set Coordinated Universal Time <a href="%s" target="_blank">Time Zone</a> <br><br><i><b>Important Notice: You need to setup  Wordpress time zone as per your required counrtry first.</b></i>','restropress' ),admin_url( 'options-general.php#timezone_string' ) ),
-						'type' => 'descriptive_text',
+						'id'   			=> 'wordpress_time',
+						'name' 			=> __( 'Wordpress Time Zone', 'restropress' ),
+						'desc' 			=> sprintf( __( 'Set Coordinated Universal Time <a href="%s" target="_blank">Time Zone</a> <br><br><i><b>Important Notice: You need to setup  Wordpress time zone as per your required counrtry first.</b></i>','restropress' ),admin_url( 'options-general.php#timezone_string' ) ),
+						'type' 			=> 'descriptive_text',
 					),
 					'enable_asap_option' => array(
 						'id'            => 'enable_asap_option',
-						'name'          => __( 'Enable ASAP option', 'restropress' ),
+						'name'          => __( 'Enable ASAP Option', 'restropress' ),
 						'desc'          => __( 'Check this box if you want to add ASAP option on your time slot', 'restropress' ),
-						'type' => 'checkbox',
+						'type' 			=> 'checkbox',
 						
 					),
 					'enable_asap_option_only' => array(
                         'id'            => 'enable_asap_option_only',
-                        'name'          => __( 'Enable ASAP option Only', 'restropress' ),
+                        'name'          => __( 'Enable ASAP Option Only', 'restropress' ),
                         'desc'          => __( 'Check this box if you want to add ASAP as only option on your time slot', 'restropress' ),
-                        'type' => 'checkbox',
+                        'type' 			=> 'checkbox',
+                    ),
+					'enable_always_open' => array(
+						'id'            => 'enable_always_open',
+                        'name'          => __( 'Enable Always Order Option', 'restropress' ),
+                        'desc'          => __( 'Check this box if you want your customers to always order on your store', 'restropress' ),
+                        'type' 			=> 'checkbox',
                     ),
 					'open_time' => array(
 						'id'            => 'open_time',
 						'name'          => __( 'Open Time', 'restropress' ),
 						'desc'          => __( 'Select restaurant open time', 'restropress' ),
 						'type'          => 'text',
-            			'std'       => '9:00am',
+						'std'       	=> '9:00am',
 						'field_class' 	=> 'rpress_timings',
 						'allow_blank'	=> false,
 					),
@@ -891,15 +917,17 @@ function rpress_get_registered_settings() {
 
           			'tax_item' => array(
 			          	'id'   => 'tax_item',
-			            'name' => __( 'Food item Price Displayed With Tax', 'restropress' ),
-			            'desc' => __( 'This option will help you to show the food item price as tax included or excluded', 'restropress' ),
+			            'name' => __( 'Display fooditems in shop', 'restropress' ),
+			            'desc' => __( 'When tax_item is enabled this tax_item will be charged to the customers. Select tax type, such as Including/Excluding tax. ', 'restropress' ),
 			            'type'    => 'select',
 			            'std'	=> 'exc_tax',
 						'options' => array(
                          	'inc_tax' => __( 'Including tax', 'restropress' ),
                           	'exc_tax'  => __( 'Excluding tax', 'restropress' ),
                         ),
-			              
+			            'size' => 'medium',
+			            'tooltip_title' => __( 'tax_item', 'restropress' ),
+			            'tooltip_desc'  => __( 'This would be the default tax_item for the restaurant who will set product Including/Excluding Tax', 'restropress' ),   
 			        ),
 
 
@@ -1416,6 +1444,7 @@ function rpress_get_registered_settings_sections() {
 	$sections = array(
 		'general'    => apply_filters( 'rpress_settings_sections_general', array(
 			'main'               => __( 'General', 'restropress' ),
+            'api' => __( 'API', 'restropress' ),
 			'currency'           => __( 'Currency', 'restropress' ),
 			'accounting'           => __( 'Accounting', 'restropress' ),
 			'order_notification'   => __( 'Order Notification', 'restropress' ),

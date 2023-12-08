@@ -1039,6 +1039,17 @@ function rpress_tools_import_export_display() {
 								</td>
 								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
+
+							<tr>
+								<td><?php esc_html_e( 'Product Tag Mark', 'restropress' ); ?></td>
+								<td>
+									<select name="rpress-import-field[tag_mark]" class="rpress-import-csv-column" data-field="None/Veg/Non-Veg">
+										<option value=""><?php esc_html_e( '- Ignore this field -', 'restropress' ); ?></option>
+									</select>
+								</td>
+								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
+							</tr>
+
 							<tr>
 								<td><?php esc_html_e( 'Product Title', 'restropress' ); ?></td>
 								<td>

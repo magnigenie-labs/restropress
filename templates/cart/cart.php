@@ -5,7 +5,6 @@
 $cart_items    	= rpress_get_cart_contents();
 $cart_quantity 	= rpress_get_cart_quantity();
 $display       	= $cart_quantity > 0 ? '' : 'style="display:none;"';
-
 ?>
 
 <?php do_action( 'rpress_before_cart' ); ?>

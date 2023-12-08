@@ -21,7 +21,7 @@ final class RestroPress {
    *
    * @var string
    */
-  public $version = '2.9.6';
+  public $version = '2.9.7';
 
 	/**
    * The single instance of the class.
@@ -105,6 +105,14 @@ final class RestroPress {
 	 */
 	public $cart;
 
+	/**
+	 * RPRESS Payment_Stats Object
+	 *
+	 * @var object|RPRESS_Payment_Stats
+	 * @since 1.0
+	 */
+	public $payment_stats;
+
 
 	/**
 	 * Main RestroPress Instance.
@@ -129,6 +137,7 @@ final class RestroPress {
       add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
 
       self::$instance->includes();
+      self::$instance->init_hooks();
       self::$instance->roles         = new RPRESS_Roles();
       self::$instance->fees          = new RPRESS_Fees();
       self::$instance->session       = new RPRESS_Session();
@@ -300,6 +309,7 @@ final class RestroPress {
 		require_once RP_PLUGIN_DIR . 'includes/admin/tracking.php';
 		require_once RP_PLUGIN_DIR . 'includes/privacy-functions.php';
 		require_once RP_PLUGIN_DIR . 'includes/shortcodes.php';
+        require_once RP_PLUGIN_DIR . 'includes/vendor/autoload.php';
 
 		/**
 		 * Migrating 3.0 Features to 2.x
@@ -377,4 +387,17 @@ final class RestroPress {
 	public function load_textdomain() {
 		load_plugin_textdomain( 'restropress', false, dirname( plugin_basename( RP_PLUGIN_FILE ) ). '/languages/' );
 	}
+    
+	private function init_hooks() {
+        add_action( 'init', array( $this, 'load_rest_api' ) );
+    }
+
+
+      /**
+     * Load REST API.
+     */
+    public function load_rest_api() {
+        include RP_PLUGIN_DIR . 'includes/rest-api/Server.php';
+        \Restropress\RestApi\Server::instance()->init();
+    }
 }

@@ -4,7 +4,6 @@
  */
 
 global $post;
-
 ?>
 
 <table id="rpress_checkout_cart " class="rpress-cart ajaxed">

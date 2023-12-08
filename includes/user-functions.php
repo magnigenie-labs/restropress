@@ -956,3 +956,220 @@ function rpress_detach_deleted_user( $user_id ) {
 add_action( 'delete_user', 'rpress_detach_deleted_user', 10, 1 );
 
 
+/**
+
+ * Adding keys
+ * @since 3.0.0
+ *  */
+if ( "1" === rpress_get_option( "activate_api" ) ) {
+    /**
+     * Adding  API keys 
+     * @since 3.0.0
+     * * */
+    add_action( "show_user_profile", "rpress_user_api_keys_display" );
+    add_action( "edit_user_profile", "rpress_user_api_keys_display" );
+}
+if ( !function_exists( "rpress_user_api_keys_display" ) ) {
+
+    /**
+     * @param WP_User $profile | A  user object, Which is currently editing 
+     * @return void
+     * @since 3.0.0
+     * * */
+    function rpress_user_api_keys_display( WP_User $profile ): void {
+        $keys_not_genereated = rpress_user_api_key_not_generated( $profile );
+        $all_keys = rpress_get_user_all_api_keys( $profile );
+        $table_data = $keys_not_genereated ?? $all_keys;
+        echo $table_data;
+    }
+
+}
+
+if ( !function_exists( "rpress_user_api_key_not_generated" ) ) {
+
+    /**
+     * Getting
+     * @param  WP_User $profile
+     * 
+     * * */
+    function rpress_user_api_key_not_generated( WP_User $profile ): string|null {
+        if ( get_user_meta( $profile->ID, "_rp_api_keys_generated", true ) ) {
+            return null;
+        }
+        ob_start();
+        ?>
+        <table class="form-table">
+            <tr>
+                <th><?php _e( "Restropress API keys", "restropress" ) ?> </th>
+                <td>
+                    <label for="rp-generate-api-key">
+                        <input type="checkbox" name="rp-generate-api-key" id="rp-generate-api-key" value="true" />
+                         <?php _e( "Generate", "restropress" ) ?>
+                    </label>
+                </td>
+            </tr>
+        </table>
+        <?php
+        return ob_get_clean();
+    }
+
+}
+
+if ( !function_exists( "rpress_get_user_all_api_keys" ) ) {
+
+    function rpress_get_user_all_api_keys( WP_User $profile ): null|string {
+        if ( !get_user_meta( $profile->ID, "_rp_api_keys_generated", true ) ) {
+            return null;
+        }
+        ob_start();
+        ?>
+        <h1>
+            <?php _e( "Restropress API Keys Table", "restropress" ) ?>
+        </h1>
+        <table class="wp-list-table widefat fixed striped table-view-list">
+            <thead>
+                <tr>
+                    <th> <?php _e( "Private Key", "restropress" ) ?> </th>
+                    <th> <?php _e( "Public Key", "restropress" ) ?> </th>
+                    <th> <?php _e( "Token", "restropress" ) ?> </th>
+                    <th><?php _e( "Action", "restropress" ) ?></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p><?php echo get_user_meta( $profile->ID, "_rp_api_user_private_key", true ) ?></p>
+                    </td>
+                    <td>
+                        <p><?php echo get_user_meta( $profile->ID, "_rp_api_user_public_key", true ) ?></p>
+                    </td>
+                    <td>
+                        <p><?php echo get_user_meta( $profile->ID, "_rp_api_user_token_key", true ) ?></p>
+                    </td>
+                    <td>
+                        <label for="rp-api-revoke-keys"><?php _e( "Revoke", "restropress" ) ?></label>
+                        <input type="checkbox"  name="rp-api-revoke-keys" id="rp-api-revoke-keys" value="revoke"/>
+
+                        <label for="rp-api-refresh-token-keys"><?php _e( "Refress Token", "restropress" ) ?></label>
+                        <input type="checkbox"  name="rp-api-refresh-keys" id="rp-api-refresh-token-keys" value="refresh"/>
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+        <?php
+        return ob_get_clean();
+    }
+
+}
+
+/**
+ * Updating API keys 
+ * * */
+add_action( 'personal_options_update', 'restropress_update_user_api_key' );
+add_action( 'edit_user_profile_update', 'restropress_update_user_api_key' );
+
+if ( !function_exists( "restropress_update_user_api_key" ) ) {
+
+    /**
+     * Adding API keys
+     * @param int $user_ID | User ID of current editing User
+     * @return void
+     * @since 3.0.0
+     * * */
+    function restropress_update_user_api_key( int $user_ID ): void {
+    
+        rp_generate_api_keys( $user_ID );
+        $data = filter_input( INPUT_POST, "rp-api-revoke-keys", FILTER_SANITIZE_STRING ) ?? filter_input( INPUT_POST, "rp-api-refresh-keys", FILTER_SANITIZE_STRING );
+        if ( !is_null( $data ) ) {
+            call_user_func( "rp_user_api_{$data}", $user_ID );
+        }
+    }
+
+}
+if ( !function_exists( "generate_api_keys" ) ) {
+
+    /**
+     * Generating API keys
+     * @param int $user_ID 
+     * @since 3.0.0
+     * * */
+    function rp_generate_api_keys( int $user_ID ): void {
+
+        if ( true == filter_input( INPUT_POST, 'rp-generate-api-key' ) ) {
+           $public_key = hash( 'sha512', time() );
+            $private_key = password_hash( $user_ID, null );
+           rp_user_api_get_token( $private_key, $public_key, $user_ID );
+           
+        }
+    }
+
+}
+if ( !function_exists( "rp_user_api_get_token" ) ) {
+
+    /**
+     * Getting Token
+     * @param string $private_key
+     * @param string $public_key 
+     * @param int $user_ID
+     * @return void
+     * @since 3.0.0
+     * * */
+    function rp_user_api_get_token( string $private_key, string $public_key, int $user_ID ): void {
+        $url = get_site_url() . "/wp-json/rp/v1/auth";
+        $arg = array(
+            "headers" => array(
+                'Authorization' => $public_key,
+                'X-User-ID' => $user_ID,
+            ),
+        );
+        $result = wp_safe_remote_get( $url, $arg );
+        
+         $response_data = json_decode( $result[ "body" ] ) ;
+        if ( 200 === $result[ 'response' ][ 'code' ] ) {
+            $clean_private_key = sanitize_meta( "_rp_api_user_private_key", $private_key, 'user' );
+            update_user_meta( $user_ID, "_rp_api_user_private_key", $clean_private_key );
+            $clean_public_key = sanitize_meta( "_rp_api_user_public_key", $public_key, 'user' );
+            update_user_meta( $user_ID, "_rp_api_user_public_key", $clean_public_key );
+            if ( property_exists( $response_data, 'token' ) ) {
+                $clean_token_key = sanitize_meta( "_rp_api_user_token_key", $response_data->token, 'user' );
+                update_user_meta( $user_ID, "_rp_api_user_token_key", $clean_token_key );
+            }
+            update_user_meta( $user_ID, "_rp_api_keys_generated", true );
+        }
+    }
+
+}
+if ( !function_exists( "rp_user_api_revoke" ) ) {
+
+    /**
+     * Revoking all API keys
+     * @param int $user_ID
+     * @since 3.0.0
+     * @return void
+     * * */
+    function rp_user_api_revoke( int $user_ID ): void {
+        delete_user_meta( $user_ID, "_rp_api_user_private_key" );
+        delete_user_meta( $user_ID, "_rp_api_user_public_key" );
+        delete_user_meta( $user_ID, "_rp_api_user_token_key" );
+        delete_user_meta( $user_ID, "_rp_api_keys_generated" );
+    }
+
+}
+if ( !function_exists( "rp_user_api_refresh" ) ) {
+
+    /**
+     * Refreshing Token 
+     * @param int $user_ID 
+     * @since 3.0.0
+     * @return void
+     * ** */
+    function rp_user_api_refresh( int $user_ID ): void {
+        $private_key = get_user_meta( $user_ID, "_rp_api_user_private_key", true );
+        $public_key = hash( 'sha512', time() );
+        rp_user_api_get_token( $private_key, $public_key, $user_ID );
+    }
+
+}

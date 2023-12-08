@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 $count 	= !empty( $current ) ? $current : 0;
 $name  	= !empty( $price ) && is_array( $price )  ? $price['name'] : '';
-$amount = !empty( $price ) ? $price['amount'] : '';
+$amount = !empty( $price ) ? $price['amount'] : 0;
 ?>
 <div class="rp-metabox variable-price">
 	<h3>

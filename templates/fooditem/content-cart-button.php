@@ -11,7 +11,7 @@
 
     $rate = (float) rpress_get_option( 'tax_rate', 0 );
     // Convert to a number we can use
-    $item_tax = $price - ( $price / ( ( $rate / 100 ) + 1 ) );
+    $item_tax = (float) $price - ( (float) $price / ( ( (float) $rate / 100 ) + 1 ) );
     $include_tax  = rpress_get_option( 'prices_include_tax', true );
     $tax_inc_exc_item_option = rpress_get_option('tax_item', true );
 
@@ -23,10 +23,10 @@
     if( $include_tax == 'yes' && $tax_inc_exc_item_option == 'inc_tax' ) {
       $price = get_post_meta( $post->ID,'rpress_price', true );
     } elseif ( $include_tax == 'yes' && $tax_inc_exc_item_option == 'exc_tax' ) {
-      $item_tax = $price - ( $price / ( ( $rate / 100 ) + 1 ) );
+      $item_tax = ( float ) $price - ( (float) $price / ( ( (float) $rate / 100 ) + 1 ) );
       $price = $price - $item_tax;
     } elseif ($include_tax == 'no' && $tax_inc_exc_item_option == 'inc_tax') {
-      $item_tax = $price * ( $rate / 100 );
+      $item_tax = ( float ) $price * ( (float) $rate / 100 );
       $price = ( float ) $price + ( float ) $item_tax;
     } else {
       $price = get_post_meta( $post->ID,'rpress_price', true ) ;

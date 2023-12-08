@@ -1813,6 +1813,7 @@ function rpress_remove_payment_notes_in_comment_counts( $stats, $post_id ) {
 	if ( false !== $stats )
 		return $stats;
 
+	$stats_arr = array();
 	$where = 'WHERE comment_type != "rpress_payment_note"';
 
 	if ( $post_id > 0 )
@@ -1826,20 +1827,22 @@ function rpress_remove_payment_notes_in_comment_counts( $stats, $post_id ) {
 		// Don't count post-trashed toward totals
 		if ( 'post-trashed' != $row['comment_approved'] && 'trash' != $row['comment_approved'] )
 			$total += $row['num_comments'];
-		if ( isset( $approved[$row['comment_approved']] ) )
-			$stats[$approved[$row['comment_approved']]] = $row['num_comments'];
+		if ( isset( $approved[$row['comment_approved']] ) ) {
+			$temp = $approved[$row['comment_approved']];
+			$stats_arr[$temp] = $row['num_comments'];
+		}
 	}
 
-	$stats['total_comments'] = $total;
+	$stats_arr['total_comments'] = $total;
 	foreach ( $approved as $key ) {
-		if ( empty($stats[$key]) )
-			$stats[$key] = 0;
+		if ( empty($stats_arr[$key]) )
+			$stats_arr[$key] = 0;
 	}
 
-	$stats = (object) $stats;
-	wp_cache_set( "comments-{$post_id}", $stats, 'counts' );
+	$stats_arr = (object) $stats_arr;
+	wp_cache_set( "comments-{$post_id}", $stats_arr, 'counts' );
 
-	return $stats;
+	return $stats_arr;
 }
 add_filter( 'wp_count_comments', 'rpress_remove_payment_notes_in_comment_counts', 10, 2 );
 

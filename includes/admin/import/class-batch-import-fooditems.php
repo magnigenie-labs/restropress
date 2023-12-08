@@ -42,6 +42,7 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 			'categories'     => '',
 			'addons'     	 => '',
 			'tags'           => '',
+			'tag_mark'		 =>	'',
 			'sku'            => '',
 			'earnings'       => '',
 			'sales'          => '',
@@ -189,6 +190,12 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 
 					$this->set_taxonomy_terms( $fooditem_id, $tags, 'fooditem_tag', false );
 
+				}
+
+				// setup tag mark
+				if( ! empty( $this->field_mapping['tag_mark'] ) && ! empty( $row[ $this->field_mapping['tag_mark'] ] ) ) {
+
+					update_post_meta( $fooditem_id, 'rpress_food_type', sanitize_text_field( $row[ $this->field_mapping['tag_mark'] ] ) );
 				}
 
 				// setup price(s)

@@ -13,6 +13,11 @@ if ( $data['category_menu'] ) {
 } else {
   $get_all_items = rpress_get_categories( $data );
 }
+
+$category_string = $data['excluded_category'];
+$category_string = rtrim($category_string, ',');
+$category_array = explode(',', $category_string);
+
 $disable_category = rpress_get_option( 'disable_category_menu', false );
 if( !$disable_category ) :
 ?>
@@ -26,7 +31,11 @@ if( !$disable_category ) :
     ?>
       <ul class="rpress-category-lists">
       <?php
-      foreach ( $get_all_items as $key => $get_all_item ) : ?>
+      foreach ( $get_all_items as $key => $get_all_item ) : 
+      if ( !empty( $category_array ) && in_array( $get_all_item->slug, $category_array ) ) {
+        continue;
+      }
+      ?>
         <li class="rpress-category-item ">
           <a href="#<?php echo esc_html( $get_all_item->slug ); ?>" data-id="<?php echo esc_attr( $get_all_item->term_id ); ?>" class="rpress-category-link nav-scroller-item"><?php echo wp_kses_post( $get_all_item->name ); ?></a>
         </li>

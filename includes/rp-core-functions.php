@@ -186,6 +186,24 @@ if ( ! function_exists( 'rpress_search_form' ) ) {
 
 add_action( 'before_fooditems_list', 'rpress_search_form' );
 
+add_shortcode( 'foodsearch', 'rpress_foodsearch_callback' );
+function rpress_foodsearch_callback() {
+  ob_start();
+  rpress_search_form();
+  $data = ob_get_contents();
+  ob_get_clean();
+  return $data;
+}
+
+add_shortcode( 'rpress_cart', 'rpress_rpress_cart_callback' );
+function rpress_rpress_cart_callback() {
+  ob_start();
+  do_action( 'rpress_get_cart' );
+  $data = ob_get_contents();
+  ob_get_clean();
+  return $data;
+}
+
 if ( ! function_exists( 'rpress_product_menu_tab' ) ) {
   /**
    * Output the rpress menu tab content.
@@ -247,6 +265,16 @@ function rpress_get_instruction_by_key( $cart_key ) {
 function get_delivery_options( $changeble ) {
 
   $service_date = isset( $_COOKIE['delivery_date'] ) ? sanitize_text_field( $_COOKIE['delivery_date'] ) : '';
+  $current_time = current_time( 'timestamp' );
+  $close_time = ! empty( rpress_get_option( 'close_time' ) ) ? rpress_get_option( 'close_time' ) : '11:30pm';
+  $close_time = strtotime( date_i18n( 'Y-m-d' ) . ' ' . $close_time );
+
+  if ( !empty(rpress_get_option('enable_always_open')) && $current_time > $close_time ) {
+    $service_date = new DateTime($service_date);
+    $service_date->add(new DateInterval('P1D'));
+    $service_date = $service_date->format('F d, Y');
+  }
+
   ob_start();
   ?>
   <div class="delivery-wrap">
@@ -358,8 +386,8 @@ function rpress_remove_food_cat_view_link( $actions, $taxonomy ) {
 function rp_get_store_timings( $hide_past_time = true, $service_type = null) {
   $current_time = current_time( 'timestamp' );
   $prep_time    = ! empty( rpress_get_option( 'prep_time' ) ) ? rpress_get_option( 'prep_time' ) : 30;
-  $open_time    = ! empty( rpress_get_option( 'open_time' ) ) ? rpress_get_option( 'open_time' ) : '9:00am';
-  $close_time   = ! empty( rpress_get_option( 'close_time' ) ) ? rpress_get_option( 'close_time' ) : '11:30pm';
+  $open_time = ! empty( rpress_get_option( 'open_time' ) ) ? rpress_get_option( 'open_time' ) : '9:00am';
+  $close_time = ! empty( rpress_get_option( 'close_time' ) ) ? rpress_get_option( 'close_time' ) : '11:30pm';
   $time_interval = apply_filters( 'rp_store_time_interval', '30', $service_type );
   $time_interval = $time_interval * 60;
   $prep_time  = $prep_time * 60;
@@ -378,6 +406,8 @@ function rp_get_store_timings( $hide_past_time = true, $service_type = null) {
   foreach( $store_times as $store_time ) {
     if( $hide_past_time ) {
       if( $store_time > $current_time ) {
+        $store_timings[] = $store_time;
+      } else if ( ! empty( rpress_get_option( 'enable_always_open' ) ) && $current_time > $close_time ) {
         $store_timings[] = $store_time;
       }
     } else {
