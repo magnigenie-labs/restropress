@@ -191,7 +191,7 @@ class RP_REST_Auth_V1_Controller {
      * @access public
      * @since 3.0.0
      * * */
-    public function get_auth_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function get_auth_permissions_check( WP_REST_Request $request ) {
         
         //Initialize Api_key 
         $api_key = null;

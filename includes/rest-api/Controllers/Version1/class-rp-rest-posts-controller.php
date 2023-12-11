@@ -61,15 +61,15 @@ class RP_REST_Posts_Controller extends WP_REST_Posts_Controller {
      * @param  WP_REST_Request $request Full details about the request.
      * @return WP_Error|boolean
      */
-    public function get_items_permissions_check( $request ): bool|WP_Error {
+    public function get_items_permissions_check( $request ){
         return $this->check_with_parent_permission( $request, __FUNCTION__ );
     }
 
-    public function get_item_permissions_check( $request ): bool|WP_Error {
+    public function get_item_permissions_check( $request ){
         return $this->check_with_parent_permission( $request, __FUNCTION__ );
     }
 
-    public function update_item_permissions_check( $request ): bool|WP_Error {
+    public function update_item_permissions_check( $request ){
         return $this->check_with_parent_permission( $request, __FUNCTION__ );
     }
 
@@ -79,7 +79,7 @@ class RP_REST_Posts_Controller extends WP_REST_Posts_Controller {
      * @return boolean || WP_Error
      * @since 3.0.0
      * * */
-    public function create_item_permissions_check( $request ): bool|WP_Error {
+    public function create_item_permissions_check( $request ){
         return $this->check_with_parent_permission( $request, __FUNCTION__ );
     }
 
@@ -91,7 +91,7 @@ class RP_REST_Posts_Controller extends WP_REST_Posts_Controller {
      * @return boolean or WP_Error
      * @since 3.0.0
      * * */
-    private function check_with_parent_permission( WP_REST_Request $request, string $function_name ): bool|WP_Error {
+    private function check_with_parent_permission( WP_REST_Request $request, string $function_name ){
         $token = $request->get_header( 'authorization' );
         $verification_result = false;
         $bool = false;

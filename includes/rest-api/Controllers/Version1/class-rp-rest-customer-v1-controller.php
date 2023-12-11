@@ -929,7 +929,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @since 3.0.0
      * @return bool | WP_Error 
      * * */
-    public function get_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function get_customer_permissions_check( WP_REST_Request $request ){
         $object = new RP_JWT_Verifier( $request );
         return $object->result;
     }
@@ -940,7 +940,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @since 3.0.0
      * @return bool | WP_Error 
      * * */
-    public function add_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function add_customer_permissions_check( WP_REST_Request $request ) {
         $varifier_object = new RP_JWT_Verifier( $request );
         return $varifier_object->result;
     }
@@ -951,7 +951,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @return bool | WP_Error 
      * @since 3.0.0
      * * */
-    public function update_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function update_customer_permissions_check( WP_REST_Request $request ) {
         $varifier_object = new RP_JWT_Verifier( $request );
         return $varifier_object->result;
     }
@@ -962,7 +962,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @return bool | WP_Error 
      * @since 3.0.0
      * * */
-    public function delete_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function delete_customer_permissions_check( WP_REST_Request $request ){
         $varifier_object = new RP_JWT_Verifier( $request );
         return $varifier_object->result;
     }

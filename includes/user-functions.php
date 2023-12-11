@@ -976,7 +976,7 @@ if ( !function_exists( "rpress_user_api_keys_display" ) ) {
      * @return void
      * @since 3.0.0
      * * */
-    function rpress_user_api_keys_display( WP_User $profile ): void {
+    function rpress_user_api_keys_display( WP_User $profile ) {
         $keys_not_genereated = rpress_user_api_key_not_generated( $profile );
         $all_keys = rpress_get_user_all_api_keys( $profile );
         $table_data = $keys_not_genereated ?? $all_keys;
@@ -992,7 +992,7 @@ if ( !function_exists( "rpress_user_api_key_not_generated" ) ) {
      * @param  WP_User $profile
      * 
      * * */
-    function rpress_user_api_key_not_generated( WP_User $profile ): string|null {
+    function rpress_user_api_key_not_generated( WP_User $profile ) {
         if ( get_user_meta( $profile->ID, "_rp_api_keys_generated", true ) ) {
             return null;
         }
@@ -1017,7 +1017,7 @@ if ( !function_exists( "rpress_user_api_key_not_generated" ) ) {
 
 if ( !function_exists( "rpress_get_user_all_api_keys" ) ) {
 
-    function rpress_get_user_all_api_keys( WP_User $profile ): null|string {
+    function rpress_get_user_all_api_keys( WP_User $profile ) {
         if ( !get_user_meta( $profile->ID, "_rp_api_keys_generated", true ) ) {
             return null;
         }
@@ -1079,7 +1079,7 @@ if ( !function_exists( "restropress_update_user_api_key" ) ) {
      * @return void
      * @since 3.0.0
      * * */
-    function restropress_update_user_api_key( int $user_ID ): void {
+    function restropress_update_user_api_key( int $user_ID ) {
     
         rp_generate_api_keys( $user_ID );
         $data = filter_input( INPUT_POST, "rp-api-revoke-keys", FILTER_SANITIZE_STRING ) ?? filter_input( INPUT_POST, "rp-api-refresh-keys", FILTER_SANITIZE_STRING );
@@ -1096,7 +1096,7 @@ if ( !function_exists( "generate_api_keys" ) ) {
      * @param int $user_ID 
      * @since 3.0.0
      * * */
-    function rp_generate_api_keys( int $user_ID ): void {
+    function rp_generate_api_keys( int $user_ID ) {
 
         if ( true == filter_input( INPUT_POST, 'rp-generate-api-key' ) ) {
            $public_key = hash( 'sha512', time() );
@@ -1117,7 +1117,7 @@ if ( !function_exists( "rp_user_api_get_token" ) ) {
      * @return void
      * @since 3.0.0
      * * */
-    function rp_user_api_get_token( string $private_key, string $public_key, int $user_ID ): void {
+    function rp_user_api_get_token( string $private_key, string $public_key, int $user_ID ) {
         $url = get_site_url() . "/wp-json/rp/v1/auth";
         $arg = array(
             "headers" => array(
@@ -1150,7 +1150,7 @@ if ( !function_exists( "rp_user_api_revoke" ) ) {
      * @since 3.0.0
      * @return void
      * * */
-    function rp_user_api_revoke( int $user_ID ): void {
+    function rp_user_api_revoke( int $user_ID ) {
         delete_user_meta( $user_ID, "_rp_api_user_private_key" );
         delete_user_meta( $user_ID, "_rp_api_user_public_key" );
         delete_user_meta( $user_ID, "_rp_api_user_token_key" );
@@ -1166,7 +1166,7 @@ if ( !function_exists( "rp_user_api_refresh" ) ) {
      * @since 3.0.0
      * @return void
      * ** */
-    function rp_user_api_refresh( int $user_ID ): void {
+    function rp_user_api_refresh( int $user_ID ) {
         $private_key = get_user_meta( $user_ID, "_rp_api_user_private_key", true );
         $public_key = hash( 'sha512', time() );
         rp_user_api_get_token( $private_key, $public_key, $user_ID );

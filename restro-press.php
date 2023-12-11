@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: RestroPress
+ * Plugin Name: RestroPress dev
  * Plugin URI: https://www.restropress.com
  * Description: RestroPress is an online ordering system for WordPress.
  * Version: 2.9.8
