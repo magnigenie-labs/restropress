@@ -616,7 +616,7 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
      * @return boolean | WP_Error 
      * @since 3.0.0
      * * */
-    public function update_cart_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function update_cart_permissions_check( WP_REST_Request $request ){
         $result = new RP_JWT_Verifier( $request );
         return $result;
     }

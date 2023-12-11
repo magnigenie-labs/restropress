@@ -1261,7 +1261,7 @@ function rpress_get_indian_states_list() {
 		'ML' => 'Meghalaya',
 		'MZ' => 'Mizoram',
 		'NL' => 'Nagaland',
-		'OR' => 'Orissa',
+        'OD' => 'Odisha',
 		'PB' => 'Punjab',
 		'RJ' => 'Rajasthan',
 		'SK' => 'Sikkim',
