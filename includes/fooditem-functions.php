@@ -174,7 +174,29 @@ function rpress_price( $fooditem_id = 0, $echo = true, $price_id = false ) {
 
 	$price = rpress_get_fooditem_price( $fooditem_id );
 
+    $rate = (float) rpress_get_option( 'tax_rate', 0 );
+    // Convert to a number we can use
+    $item_tax = (float) $price - ( (float) $price / ( ( (float) $rate / 100 ) + 1 ) );
+    $include_tax  = rpress_get_option( 'prices_include_tax', true );
+    $tax_inc_exc_item_option = rpress_get_option('tax_item', true );
+
+    /** 
+    * Condition added to show the item price as included or excluded Tax
+    * @since 2.9.6
+    */
+
+    if( $include_tax == 'yes' && $tax_inc_exc_item_option == 'inc_tax' ) {
+      $price = get_post_meta( $fooditem_id,'rpress_price', true );
+    } elseif ( $include_tax == 'yes' && $tax_inc_exc_item_option == 'exc_tax' ) {
+      $item_tax = ( float ) $price - ( (float) $price / ( ( (float) $rate / 100 ) + 1 ) );
+      $price = $price - $item_tax;
+    } elseif ($include_tax == 'no' && $tax_inc_exc_item_option == 'inc_tax') {
+      $item_tax = ( float ) $price * ( (float) $rate / 100 );
+      $price = ( float ) $price + ( float ) $item_tax;
+    }
+
 	$price = apply_filters( 'rpress_fooditem_price', rpress_sanitize_amount( $price ), $fooditem_id, $price_id );
+
 	$formatted_price = '<span class="rpress_price" id="rpress_price_' . $fooditem_id . '">' . $price . '</span>';
 	$formatted_price = apply_filters( 'rpress_fooditem_price_after_html', $formatted_price, $fooditem_id, $price, $price_id );
 
