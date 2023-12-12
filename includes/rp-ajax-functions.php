@@ -244,7 +244,12 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '') {
 
       <?php
       foreach( $addon_ids as $parent ) {
+        
         $addon_items = get_term_by( 'id', $parent, 'addon_category' );
+        
+        if(empty($addon_items)){
+        continue;
+    }
         $addon_name = $addon_items->name;
         $addon_slug = $addon_items->slug;
         $addon_id = $addon_items->term_id;

@@ -51,7 +51,7 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
                         'methods' => WP_REST_Server::CREATABLE,
                         'callback' => array( $this, 'add_cart_content' ),
                         'permission_callback' => array( $this, 'add_cart_permissions_check' ),
-                        'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+                        'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
                     ),
                     array(
                         'methods' => WP_REST_Server::DELETABLE,
@@ -81,48 +81,40 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
      * @since 3.0.0
      * * */
     public function get_item_schema(): array {
-        if ( $this->schema ) {
-            return $this->add_additional_fields_schema( $this->schema );
-        }
+     
         $schema = array(
             '$schema' => 'http://json-schema.org/draft-04/schema#',
-            'title' => "customer",
+            'title' => "cart_bikram",
             'type' => 'object',
             "properties" => array(
                 "cart_details" => array(
                     'description' => __( "Cart Item", "restropress" ),
                     'type' => "array",
                     'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
                     "items" => array(
                         'description' => __( "Cart", "restropress" ),
                         'type' => "object",
                         'context' => array( 'view', 'edit', 'embed' ),
-                        'readonly' => true,
                         "properties" => array(
                             "name" => array(
                                 'description' => __( "Name of food", "restropress" ),
                                 'type' => "string",
                                 'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
                             ),
                             "id" => array(
                                 'description' => __( "ID of food", "restropress" ),
                                 'type' => "integer",
                                 'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
                             ),
                             "instruction" => array(
                                 'description' => __( "Instruction of food", "restropress" ),
                                 'type' => "string",
                                 'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
                             ),
                             "item_number" => array(
                                 'description' => __( "Items ", "restropress" ),
                                 'type' => "object",
                                 'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
                                 "properties" => array(
                                     "id" => array(
                                         'description' => __( "ID", "restropress" ),
@@ -283,11 +275,13 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
                 )
             )
         );
-        $schema = apply_filters( "rest_rp_cart_item_schema", $schema );
+        // $schema = apply_filters( "rest_rp_cart_item_schema", $schema );
 
+    
         $this->schema = $schema;
 
         return $this->add_additional_fields_schema( $this->schema );
+
     }
 
     /**
@@ -298,7 +292,8 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
      * * */
     public function prepare_item_for_database( $request ): array {
         $cart_object_array = array();
-        $cart_details = $request[ 'cart_details' ];
+        $data = $request->get_json_params();
+        $cart_details = $data[ 'cart_details' ];
         $schema = $this->get_item_schema();
         $schema_properties = $schema[ "properties" ][ "cart_details" ][ "items" ][ "properties" ];
 //        print_r( $schema_properties );
