@@ -172,6 +172,7 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '') {
 
   ob_start();
 
+  $prices =array();
   if ( ! empty( $fooditem_id ) && rpress_has_variable_prices( $fooditem_id ) ) {
 
     $prices = rpress_get_variable_prices( $fooditem_id );
