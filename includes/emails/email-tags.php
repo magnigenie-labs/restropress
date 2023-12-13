@@ -352,7 +352,7 @@ function rpress_email_tag_fooditem_list( $payment_id ) {
           <td style="border: 1px solid black; border-collapse: collapse;">
             <?php echo esc_html( $title ); ?>
             <?php
-            if ( isset( $item['addon_items'] ) ) {
+            if (isset( $item['addon_items'] ) && !empty($item['addon_items'])  && is_array( $item['addon_items'] )  ) {
                 $item['addon_items'] = array_slice( $item['addon_items'], 2 );
                 for ( $i = 0; $i < count( $item['addon_items'] ); $i++ ) {
                   ?>

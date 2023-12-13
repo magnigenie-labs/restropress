@@ -158,8 +158,7 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
                 ),            
             )
         );
-        // $schema = apply_filters( "rest_rp_cart_item_schema", $schema );
-
+        $schema = apply_filters( "rest_rp_cart_item_schema", $schema );
     
         $this->schema = $schema;
 
