@@ -73,6 +73,10 @@ class RP_REST_Posts_Controller extends WP_REST_Posts_Controller {
         return $this->check_with_parent_permission( $request, __FUNCTION__ );
     }
 
+    public function delete_item_permissions_check( $request ){
+        return $this->check_with_parent_permission( $request, __FUNCTION__ );
+    }
+
     /**
      * Overriding of default permission check 
      * @param WP_REST_Request $request 
