@@ -42,7 +42,7 @@
 }
 
 .modal__close {
-  background: #383838;
+  background: #000000;
   border: 0;
   padding: 0px;
   width: 22px;

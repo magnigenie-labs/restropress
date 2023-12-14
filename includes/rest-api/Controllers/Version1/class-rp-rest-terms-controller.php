@@ -66,7 +66,7 @@ class RP_REST_Terms_Controller extends WP_REST_Terms_Controller {
      * @return boolean or WP_Error
      * @since 3.0.0
      * * */
-    private function check_with_parent_permission( WP_REST_Request $request, string $function_name ): bool|WP_Error {
+    private function check_with_parent_permission( WP_REST_Request $request, string $function_name ){
         $token = $request->get_header( 'authorization' );
         $verification_result = false;
         $bool = false;

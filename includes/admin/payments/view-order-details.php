@@ -684,12 +684,14 @@ $customer_email = is_array( isset( $payment_meta['user_info'] ) ) ? $payment_met
 									
 									$addon_item_id = $get_addon->term_id;
 									$addon_item_name = $get_addon->name;
+                                    
 									$addon_slug = $get_addon->slug;
 									$selected_addon_items = isset( $cart_item['addon_items'] ) ? $cart_item['addon_items'] : array();
 									if ( !empty( $selected_addon_items ) ) {
 										foreach( $selected_addon_items as $selected_addon_item ) {
 											$selected_addon_id = !empty( $selected_addon_item['addon_id'] ) ? $selected_addon_item['addon_id'] : '';
 											$item_addon_quantity = !empty( $selected_addon_item['quantity'] ) ? $selected_addon_item['quantity'] : 1;
+                                        
 											if ( $selected_addon_id == $addon_item_id ) { 
 									 		$addon_price = !empty( $selected_addon_item['price'] ) ? rpress_currency_filter( rpress_format_amount( $selected_addon_item['price'] ) ) : '';
 
@@ -704,7 +706,9 @@ $customer_email = is_array( isset( $payment_meta['user_info'] ) ) ? $payment_met
 														if( ! empty( $addon_price ) ) echo ' (' .  $addon_price  . ')';
 													?>
 												</option> <?php
-											}
+											} else{
+                                                $addon_price ='';
+                                            }
 										}
 									} ?>
 

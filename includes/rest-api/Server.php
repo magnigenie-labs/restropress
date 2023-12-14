@@ -44,13 +44,8 @@ class Server {
      * Hook into WordPress ready to init the REST API as needed.
      */
     public function init() {
-        ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
         add_action( 'rest_api_init', array( $this, 'register_rest_routes' ), 10 );
         add_action( 'rest_api_init', array( $this, 'register_user_meta_for_rest' ),10 );
-
-     //   \RP_REST_System_Status_V1_Controller::register_cache_clean();
     }
 
 /**
@@ -128,7 +123,7 @@ error_reporting(E_ALL);
             'cart' => 'RP_REST_Cart_V1_Controller',
             'customer' => 'RP_REST_Customer_V1_Controller',
             "fooditem/categories" => "RP_REST_Food_Categories_V1_Controller",
-             "fooditem/addons" => "RP_REST_Food_Addons_V1_Controller"
+            "fooditem/addons" => "RP_REST_Food_Addons_V1_Controller"
         );
     }
 

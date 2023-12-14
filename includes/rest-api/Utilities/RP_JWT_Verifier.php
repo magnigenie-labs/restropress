@@ -34,7 +34,7 @@ class RP_JWT_Verifier {
      * @return boolean or WP_Error 
      * @since 3.0.0
      * * */
-    public function incoming_token_verify( WP_REST_Request $request ): bool|WP_Error {
+    public function incoming_token_verify( WP_REST_Request $request ){
         $token = $request->get_header( 'authorization' );
         if ( !is_null( $token ) && !empty( $token ) ) {
             if ( is_string( $token ) ) {
@@ -62,7 +62,7 @@ class RP_JWT_Verifier {
      * @throws DomainException
      * @return boolean| WP_error
      * * */
-    public function jwt_verify( WP_REST_Request $request ): bool|WP_Error {
+    public function jwt_verify( WP_REST_Request $request ){
         $token = $request->get_header( 'authorization' );
         $api_key = $request->get_header( 'x-api-key' );
         if ( !is_null( $token ) && preg_match( '/Bearer\s(\S+)/', $token, $matches ) && is_string( $api_key ) ) {
@@ -93,7 +93,7 @@ class RP_JWT_Verifier {
      * @return  boolean| WP_error
      * @since 3.0.0 
      * * */
-    public function checking_decoded_data( stdClass $decoded, string $api_key ): bool|WP_Error {
+    public function checking_decoded_data( stdClass $decoded, string $api_key ){
         if ( is_object( $decoded ) && !empty( ( array ) $decoded ) && isset( $decoded->data->user_id ) && !empty( $decoded->data->user_id ) ) {
             return $this->checking_user_id( ( int ) $decoded->data->user_id, $api_key );
         } else {
@@ -111,7 +111,7 @@ class RP_JWT_Verifier {
      * @return boolean| WP_error
      * @since 3.0.0
      * * */
-    public function checking_user_id( int $user_ID, string $api_key ): bool|WP_Error {
+    public function checking_user_id( int $user_ID, string $api_key ){
         $private_key = get_user_meta( $user_ID, "_rp_api_user_private_key", true );
         $public_key = get_user_meta( $user_ID, "_rp_api_user_public_key", true );
         if ( hash_equals( $api_key, $public_key ) ) {
@@ -143,7 +143,7 @@ class RP_JWT_Verifier {
      * @return bool| WP_Error | Description
      * @since 3.0.0
      * * */
-    public function checking_user( int $user_ID ): bool|WP_Error {
+    public function checking_user( int $user_ID ){
         $user = get_user_by( 'id', $user_ID );
         if ( $user instanceof WP_User ) {
             wp_set_current_user( $user->ID, $user->user_login );

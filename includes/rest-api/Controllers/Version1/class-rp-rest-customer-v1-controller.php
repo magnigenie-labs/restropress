@@ -47,6 +47,12 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                         'permission_callback' => array( $this, 'add_customer_permissions_check' ),
                         'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
                     ),
+                    array(
+                        'methods' => WP_REST_Server::EDITABLE,
+                        'callback' => array( $this, 'update_customer' ),
+                        'permission_callback' => array( $this, 'update_customer_permissions_check' ),
+                        'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+                    ),
                 )
         );
         register_rest_route(
@@ -65,12 +71,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                         'permission_callback' => array( $this, 'get_customer_permissions_check' ),
                         'args' => $this->get_collection_params(),
                     ),
-                    array(
-                        'methods' => WP_REST_Server::EDITABLE,
-                        'callback' => array( $this, 'update_customer' ),
-                        'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                        'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                    ),
+                 
                     array(
                         'methods' => WP_REST_Server::DELETABLE,
                         'callback' => array( $this, 'delete_customer' ),
@@ -85,314 +86,11 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                     ),
                 )
         );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/add-emails',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'add_emails' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/remove-emails',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'remove_emails' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/set-primary-email',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'set_primary_email' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/attach-payment',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'attach_payment' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/remove-payment',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'remove_payment' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/add-note',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'add_note' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/add-meta-data',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'add_meta' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/update-meta-data',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'update_meta' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
-
-        register_rest_route(
-                $this->namespace,
-                '/' . $this->rest_base . '/(?P<id>[\d]+)/delete-meta-data',
-                array(
-                    'methods' => WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'delete_meta' ),
-                    'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                    'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                )
-        );
+      
     }
 
-    /**
-     * Remove metadata matching criteria from a customer.
-     * @param WP_REST_Request $request
-     * @param WP_REST_Response $response
-     * @since 3.0.0
-     * * */
-    public function delete_meta( WP_REST_Request $request ): WP_REST_Response {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "meta_key" ) && property_exists( $prepare_customer_data, "meta_value" ) ) {
-                if ( is_string( $prepare_customer_data->meta_key ) ) {
-                    $is_updated = $custmer_object->delete_meta( $prepare_customer_data->meta_key, $prepare_customer_data->meta_value );
-                    if ( $is_updated ) {
-                        return $this->get_customer( $request );
-                    }
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
 
-    /**
-     * Update customer meta field based on customer ID.
-     * @param WP_REST_Request $request
-     * @param WP_REST_Response $response
-     * @since 3.0.0
-     * * */
-    public function update_meta( WP_REST_Request $request ): WP_REST_Response {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "meta_key" ) && property_exists( $prepare_customer_data, "meta_value" ) ) {
-                if ( is_string( $prepare_customer_data->meta_key ) ) {
-                    $is_updated = $custmer_object->update_meta( $prepare_customer_data->meta_key, $prepare_customer_data->meta_value );
-                    if ( $is_updated ) {
-                        return $this->get_customer( $request );
-                    }
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
 
-    /**
-     * Add meta data field to a customer.
-     * @param WP_REST_Request $request
-     * @param WP_REST_Response $response
-     * @since 3.0.0
-     * * */
-    public function add_meta( WP_REST_Request $request ): WP_REST_Response {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "meta_key" ) && property_exists( $prepare_customer_data, "meta_value" ) ) {
-                if ( is_string( $prepare_customer_data->meta_key ) ) {
-                    $is_updated = $custmer_object->add_meta( $prepare_customer_data->meta_key, $prepare_customer_data->meta_value );
-                    if ( $is_updated ) {
-                        return $this->get_customer( $request );
-                    }
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
-
-    /**
-     * Add a note for the customer
-     * @param WP_REST_Request $request
-     * @param WP_REST_Response $response
-     * @since 3.0.0
-     * * */
-    public function add_note( WP_REST_Request $request ): WP_REST_Response {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "notes" ) ) {
-                if ( is_string( $prepare_customer_data->notes ) ) {
-                    $is_updated = $custmer_object->add_note( $prepare_customer_data->notes );
-                    if ( $is_updated ) {
-                        return $this->get_customer( $request );
-                    }
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
-
-    /**
-     * Attach payment to the customer
-     * @param WP_REST_Request $request
-     * @param WP_REST_Response $response
-     * @since 3.0.0
-     * * */
-    public function remove_payment( WP_REST_Request $request ): WP_REST_Response {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "payment_id" ) ) {
-                if ( is_integer( $prepare_customer_data->payment_id ) ) {
-                    $is_updated = $custmer_object->remove_payment( $prepare_customer_data->payment_id );
-                    if ( $is_updated ) {
-                        return $this->get_customer( $request );
-                    }
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
-
-    /**
-     * Attach payment to the customer
-     * @param WP_REST_Request $request
-     * @param WP_REST_Response $response
-     * @since 3.0.0
-     * * */
-    public function attach_payment( WP_REST_Request $request ): WP_REST_Response {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "payment_id" ) ) {
-                if ( is_integer( $prepare_customer_data->payment_id ) ) {
-                    $is_updated = $custmer_object->attach_payment( $prepare_customer_data->payment_id );
-                    if ( $is_updated ) {
-                        return $this->get_customer( $request );
-                    }
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
-
-    /**
-     * Set an email address as the customer's primary email
-     * This will move the customer's previous primary email to an additional email
-     * @param WP_REST_Request $request
-     * @return WP_REST_Response $response
-     * @since 3.0.0
-     * * */
-    public function set_primary_email( WP_REST_Request $request ): WP_REST_Response {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "email" ) ) {
-                if ( is_email( $prepare_customer_data->email ) ) {
-                    $is_updated = $custmer_object->set_primary_email( $prepare_customer_data->email );
-                    if ( $is_updated ) {
-                        return $this->get_customer( $request );
-                    }
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
-
-    /**
-     * Removing Email/Emails from customer
-     * @param WP_REST_Request $request
-     * @param WP_REST_Response $response 
-     * * */
-    public function remove_emails( WP_REST_Request $request ) {
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        if ( $prepare_customer_data->ID ) {
-            $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-            if ( property_exists( $prepare_customer_data, "emails" ) ) {
-                if ( is_array( $prepare_customer_data->emails ) ) {
-                    for ( $i = 0; $i < count( $prepare_customer_data->emails ); $i++ ) {
-                        $custmer_object->add_email( $prepare_customer_data->emails[ $i ] );
-                    }
-                    return $this->get_customer( $request );
-                }
-            }
-        }
-        return $this->get_customer( $request );
-    }
-
-    /**
-     * Adding Email/Emails to customer 
-     * @param WP_REST_Request $request 
-     * @return  WP_REST_Response  $response
-     * @since 3.0.0
-     * ** */
-    public function add_emails( WP_REST_Request $request ): WP_REST_Response {
-
-        $prepare_customer_data = $this->prepare_item_for_database( $request );
-        $customer_table = new RPRESS_DB_Customers();
-        if ( property_exists( $prepare_customer_data, "ID" ) ) {
-            $is_exist = $customer_table->exists( $prepare_customer_data->ID, "id" );
-            if ( $is_exist ) {
-                $custmer_object = new RPRESS_Customer( $prepare_customer_data->ID );
-                if ( property_exists( $prepare_customer_data, "emails" ) ) {
-                    if ( is_array( $prepare_customer_data->emails ) ) {
-                        for ( $i = 0; $i < count( $prepare_customer_data->emails ); $i++ ) {
-                            $custmer_object->add_email( $prepare_customer_data->emails[ $i ] );
-                        }
-                        return $this->get_customer( $request );
-                    }
-                } else {
-                    $response = new WP_REST_Response();
-                    $response->set_data( array( "message" => __( "Please check emails you are providing", "Restropress" ) ) );
-                    $response->set_status( 401 );
-                    return $response;
-                }
-            } else {
-                $response = new WP_REST_Response();
-                $response->set_data( array( "message" => __( "Please check ID you are providing", "Restropress" ) ) );
-                $response->set_status( 401 );
-                return $response;
-            }
-        }
-        $response = new WP_REST_Response();
-        $response->set_data( array( "message" => __( "Please check ID you are providing", "Restropress" ) ) );
-        $response->set_status( 401 );
-        return $response;
-    }
 
     /**
      * Deleting Customer By ID
@@ -429,27 +127,11 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
             $customer_table = new RPRESS_DB_Customers();
             $is_exist = $customer_table->exists( $prepare_customer_data->ID, "id" );
             if ( $is_exist ) {
-                $to_update_data = [];
-                if ( property_exists( $prepare_customer_data, "name" ) ) {
-                    $to_update_data[ 'name' ] = $prepare_customer_data->name;
-                }
-                if ( property_exists( $prepare_customer_data, "email" ) ) {
-                    $to_update_data[ 'email' ] = $prepare_customer_data->email;
-                }
-                if ( property_exists( $prepare_customer_data, "user_id" ) ) {
-                    $to_update_data[ 'user_id' ] = $prepare_customer_data->user_id;
-                }
-                if ( property_exists( $prepare_customer_data, "payment_ids" ) ) {
-                    $to_update_data[ 'payment_ids' ] = $prepare_customer_data->payment_ids;
-                }
-                if ( property_exists( $prepare_customer_data, "purchase_count" ) ) {
-                    $to_update_data[ 'purchase_count' ] = $prepare_customer_data->purchase_count;
-                }
-                if ( property_exists( $prepare_customer_data, "purchase_value" ) ) {
-                    $to_update_data[ 'purchase_value' ] = $prepare_customer_data->purchase_value;
-                }
-                $custmer_object = new RPRESS_Customer();
-                $is_updated = $custmer_object->update( $data_to_update );
+
+                $custmer_object = new RPRESS_Customer($prepare_customer_data->ID);
+                $prepare_customer_data = json_decode(json_encode($prepare_customer_data), true);
+
+                $is_updated = $custmer_object->update( $prepare_customer_data );
                 if ( $is_updated ) {
                     return $this->get_customer( $request );
                 } else {
@@ -499,34 +181,25 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
     public function add_customer( WP_REST_Request $request ): WP_REST_Response {
 
         $prepare_customer_data = $this->prepare_item_for_database( $request );
-        $to_add_data = [];
-        if ( property_exists( $prepare_customer_data, "name" ) ) {
-            $to_add_data[ 'name' ] = $prepare_customer_data->name;
-        }
-        if ( property_exists( $prepare_customer_data, "email" ) ) {
-            $to_add_data[ 'email' ] = $prepare_customer_data->email;
-        }
-        if ( property_exists( $prepare_customer_data, "user_id" ) ) {
-            $to_add_data[ 'user_id' ] = $prepare_customer_data->user_id;
-        }
-        if ( property_exists( $prepare_customer_data, "payment_ids" ) ) {
-            $to_add_data[ 'payment_ids' ] = $prepare_customer_data->payment_ids;
-        }
-        if ( property_exists( $prepare_customer_data, "purchase_count" ) ) {
-            $to_add_data[ 'purchase_count' ] = $prepare_customer_data->purchase_count;
-        }
-        if ( property_exists( $prepare_customer_data, "purchase_value" ) ) {
-            $to_add_data[ 'purchase_value' ] = $prepare_customer_data->purchase_value;
-        }
         $custmer_object = new RPRESS_Customer();
-        $created_id = $custmer_object->create( $to_add_data );
+        $customer_table = new RPRESS_DB_Customers();
+        $is_exist = $customer_table->exists(  $prepare_customer_data->email, "email" );
+        
+        if ( $is_exist ) {
+            $response = new WP_REST_Response();
+            $response->set_data( array( "message" => __( "Email already existed.", "Restropress" ) ) );
+            $response->set_status( 400 );
+            return $response;
+        }
+         $created_id = $custmer_object->create( $prepare_customer_data );
+
         if ( $created_id ) {
             $request->set_body_params( [ "id" => $created_id ] );
             return $this->get_customer( $request );
         }
         $response = new WP_REST_Response();
         $response->set_data( array( "message" => __( "Something wrong happen please try again", "Restropress" ) ) );
-        $response->set_status( 401 );
+        $response->set_status( 400 );
         return $response;
     }
 
@@ -663,41 +336,30 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                     'context' => array( 'view', 'edit', 'embed' ),
                     'readonly' => true,
                 ),
-                "user_id" => array(
-                    'description' => __( "user id", "restropress" ),
-                    'type' => "integer",
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                ),
                 "email" => array(
-                    'description' => __( "Email of customer", "restropress" ),
+                    'description' => __( "Default Email of customer", "restropress" ),
                     'type' => "string",
                     'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
+                    'required'=>true,
+                
                 ),
                 "emails" => array(
-                    'description' => __( "Email of customer", "restropress" ),
+                    'description' => __( "Emails of customer", "restropress" ),
                     'type' => "array",
                     'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
+               
                     "items" => array(
                         'description' => __( "Email of customer", "restropress" ),
                         'type' => "string",
                         'context' => array( 'view', 'edit', 'embed' ),
-                        'readonly' => true,
+                        
                     )
                 ),
                 "name" => array(
                     'description' => __( "Name of customer", "restropress" ),
                     'type' => "string",
                     'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                ),
-                "notes" => array(
-                    'description' => __( "Name of customer", "restropress" ),
-                    'type' => "string",
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
+                  
                 ),
                 "purchase_value" => array(
                     'description' => __( "Total purchase of food item ", "restropress" ),
@@ -711,149 +373,14 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                     'context' => array( 'view', 'edit', 'embed' ),
                     'readonly' => true,
                 ),
-                "payment_ids" => array(
-                    'description' => __( "Order Idies ", "restropress" ),
-                    'type' => "array",
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                    "items" => array(
-                        'description' => __( "Order ID ", "restropress" ),
-                        'type' => "string",
-                        'context' => array( 'view', 'edit', 'embed' ),
-                        'readonly' => true,
-                    )
-                ),
-                "payment_id" => array(
-                    'description' => __( "Order ID", "restropress" ),
-                    'type' => "integer",
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                ),
-                "meta_key" => array(
-                    'description' => __( "Order ID", "restropress" ),
-                    'type' => "string",
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                ),
-                "meta_value" => array(
-                    'description' => __( "Order ID", "restropress" ),
-                    'type' => [ "string", "array", "integer" ],
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                ),
-                "meta_data" => array(
-                    'description' => __( "All metadata", "restropress" ),
-                    'type' => "string",
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                ),
                 "date_created" => array(
                     'description' => __( "Created date of customer", "restropress" ),
                     'type' => "string",
                     'context' => array( 'view', 'edit', 'embed' ),
                     'readonly' => true,
                 ),
-                "payments" => array(
-                    'description' => __( "Order Idies ", "restropress" ),
-                    'type' => "array",
-                    'context' => array( 'view', 'edit', 'embed' ),
-                    'readonly' => true,
-                    "items" => array(
-                        'description' => __( "Order ID ", "restropress" ),
-                        'type' => "object",
-                        'context' => array( 'view', 'edit', 'embed' ),
-                        'readonly' => true,
-                        "properties" => array(
-                            "id" => array(
-                                'description' => __( "Order ID ", "restropress" ),
-                                'type' => "integer",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "payment_meta" => array(
-                                'description' => __( "Payment meta", "restropress" ),
-                                'type' => "object",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                                "properties" => array(
-                                    "phone" => array(
-                                        'description' => __( "Phone number ", "restropress" ),
-                                        'type' => "string",
-                                        'context' => array( 'view', 'edit', 'embed' ),
-                                        'readonly' => true,
-                                    ),
-                                    "key" => array(
-                                        'description' => __( "Purchase Key ", "restropress" ),
-                                        'type' => "string",
-                                        'context' => array( 'view', 'edit', 'embed' ),
-                                        'readonly' => true,
-                                    ),
-                                    "email" => array(
-                                        'description' => __( "Email at purchasing ", "restropress" ),
-                                        'type' => "string",
-                                        'context' => array( 'view', 'edit', 'embed' ),
-                                        'readonly' => true,
-                                    ),
-                                    "date" => array(
-                                        'description' => __( "date of purchasing ", "restropress" ),
-                                        'type' => "string",
-                                        'context' => array( 'view', 'edit', 'embed' ),
-                                        'readonly' => true,
-                                        "format" => "date"
-                                    ),
-                                )
-                            ),
-                            "total" => array(
-                                'description' => __( "Total ", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "subtotal" => array(
-                                'description' => __( "Sub Total ", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "tax" => array(
-                                'description' => __( "Tax", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "discounted_amount" => array(
-                                'description' => __( "Discount Amount", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "tax_rate" => array(
-                                'description' => __( "Tax Rate", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "fees" => array(
-                                'description' => __( "Fees", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "fees_total" => array(
-                                'description' => __( "Fees Total", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            ),
-                            "discounts" => array(
-                                'description' => __( "Discounts", "restropress" ),
-                                'type' => "string",
-                                'context' => array( 'view', 'edit', 'embed' ),
-                                'readonly' => true,
-                            )
-                        )
-                    )
-                ),
+                
+                
             )
         );
         $schema = apply_filters( "rest_rp_customer_item_schema", $schema );
@@ -929,7 +456,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @since 3.0.0
      * @return bool | WP_Error 
      * * */
-    public function get_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function get_customer_permissions_check( WP_REST_Request $request ){
         $object = new RP_JWT_Verifier( $request );
         return $object->result;
     }
@@ -940,7 +467,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @since 3.0.0
      * @return bool | WP_Error 
      * * */
-    public function add_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function add_customer_permissions_check( WP_REST_Request $request ) {
         $varifier_object = new RP_JWT_Verifier( $request );
         return $varifier_object->result;
     }
@@ -951,7 +478,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @return bool | WP_Error 
      * @since 3.0.0
      * * */
-    public function update_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function update_customer_permissions_check( WP_REST_Request $request ) {
         $varifier_object = new RP_JWT_Verifier( $request );
         return $varifier_object->result;
     }
@@ -962,7 +489,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
      * @return bool | WP_Error 
      * @since 3.0.0
      * * */
-    public function delete_customer_permissions_check( WP_REST_Request $request ): bool|WP_Error {
+    public function delete_customer_permissions_check( WP_REST_Request $request ){
         $varifier_object = new RP_JWT_Verifier( $request );
         return $varifier_object->result;
     }
@@ -984,13 +511,6 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
         if ( rest_is_field_included( 'user_id', $fields ) ) {
             $data[ "user_id" ] = $customer->user_id;
         }
-
-
-
-        if ( rest_is_field_included( 'payment_ids', $fields ) ) {
-            $data[ "payment_ids" ] = $customer->get_payment_ids();
-        }
-
         if ( rest_is_field_included( 'emails', $fields ) ) {
             $data[ "emails" ] = $customer->emails;
         }
@@ -1011,59 +531,11 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
             $data[ "purchase_count" ] = $customer->purchase_count;
         }
 
-        if ( rest_is_field_included( 'notes', $fields ) ) {
-            $data[ "notes" ] = $customer->notes;
-        }
-
-        if ( rest_is_field_included( 'meta_data', $fields ) ) {
-            $data[ "meta_data" ] = $customer->get_meta();
-        }
-
         if ( rest_is_field_included( 'date_created', $fields ) ) {
             $data[ "date_created" ] = $customer_table->date_created;
         }
 
 
-        // if ( rest_is_field_included( 'payments', $fields ) ) {
-        $payments = $customer->get_payments();
-        $schema = $this->get_item_schema();
-        $payments_field = array_keys( $schema[ 'properties' ][ 'payments' ][ 'items' ][ 'properties' ] );
-        $count = 0;
-        foreach ( $payments as $payment_key => $payment_obj ) {
-
-            if ( rest_is_field_included( "id", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'id' ] = $payment_obj->ID;
-            }
-            if ( rest_is_field_included( "total", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'total' ] = $payment_obj->total;
-            }
-            if ( rest_is_field_included( "subtotal", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'subtotal' ] = $payment_obj->subtotal;
-            }
-            if ( rest_is_field_included( "tax", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'tax' ] = $payment_obj->tax;
-            }
-            if ( rest_is_field_included( "discounted_amount", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'discounted_amount' ] = $payment_obj->discounted_amount;
-            }
-            if ( rest_is_field_included( "tax_rate", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'tax_rate' ] = $payment_obj->tax_rate;
-            }
-            if ( rest_is_field_included( "fees", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'fees' ] = $payment_obj->fees;
-            }
-            if ( rest_is_field_included( "fees_total", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'fees_total' ] = $payment_obj->fees_total;
-            }
-            if ( rest_is_field_included( "discounts", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'discounts' ] = $payment_obj->discounts;
-            }
-            if ( rest_is_field_included( "payment_meta", $payments_field ) ) {
-                $data[ "payments" ][ $count ][ 'payment_meta' ] = $payment_obj->payment_meta;
-            }
-            $count++;
-        }
-        // }
         $response = new WP_REST_Response( $data );
         return $response;
     }
@@ -1079,6 +551,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
     protected function prepare_item_for_database( $request ): stdClass {
         $prepared_customer = new stdClass();
         $schema = $this->get_item_schema();
+        $data = $request->get_json_params();
 
         // Customer ID.
         if ( isset( $request[ 'id' ] ) ) {
@@ -1109,68 +582,6 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
         if ( !empty( $schema[ 'properties' ][ 'name' ] ) && isset( $request[ 'name' ] ) ) {
             if ( is_string( $request[ 'name' ] ) ) {
                 $prepared_customer->name = $request[ 'name' ];
-            }
-        }
-
-        // Customer purchase_value.
-        if ( !empty( $schema[ 'properties' ][ 'purchase_value' ] ) && isset( $request[ 'purchase_value' ] ) ) {
-            if ( is_float( $request[ 'purchase_value' ] ) ) {
-                $prepared_customer->purchase_value = $request[ 'purchase_value' ];
-            }
-        }
-
-        // Customer purchase_value.
-        if ( !empty( $schema[ 'properties' ][ 'purchase_value' ] ) && isset( $request[ 'purchase_value' ] ) ) {
-            if ( is_float( $request[ 'purchase_value' ] ) ) {
-                $prepared_customer->purchase_value = $request[ 'purchase_value' ];
-            }
-        }
-
-        // Customer purchase_count.
-        if ( !empty( $schema[ 'properties' ][ 'purchase_count' ] ) && isset( $request[ 'purchase_count' ] ) ) {
-            if ( is_integer( $request[ 'purchase_count' ] ) ) {
-                $prepared_customer->purchase_count = $request[ 'purchase_count' ];
-            }
-        }
-
-        // Customer payment_ids.
-        if ( !empty( $schema[ 'properties' ][ 'payment_ids' ] ) && isset( $request[ 'payment_ids' ] ) ) {
-            if ( is_array( $request[ 'payment_ids' ] ) ) {
-                for ( $i = 0; $i < count( $request[ 'payment_ids' ] ); $i++ ) {
-                    $prepared_customer->payment_ids[] = $request[ 'payment_ids' ][ $i ];
-                }
-            }
-        }
-
-        // Customer payment_id.
-        if ( !empty( $schema[ 'properties' ][ 'payment_id' ] ) && isset( $request[ 'payment_id' ] ) ) {
-            if ( is_integer( $request[ 'payment_id' ] ) ) {
-                $prepared_customer->payment_id = $request[ 'payment_id' ];
-            }
-        }
-
-        // Customer note.
-        if ( !empty( $schema[ 'properties' ][ 'notes' ] ) && isset( $request[ 'notes' ] ) ) {
-            if ( is_string( $request[ 'notes' ] ) ) {
-                $prepared_customer->notes = $request[ 'notes' ];
-            }
-        }
-
-        // Customer Meta Key.
-        if ( !empty( $schema[ 'properties' ][ 'meta_key' ] ) && isset( $request[ 'meta_key' ] ) ) {
-            if ( is_string( $request[ 'meta_key' ] ) ) {
-                $prepared_customer->meta_key = $request[ 'meta_key' ];
-            }
-        }
-
-        // Customer Meta Value.
-        if ( !empty( $schema[ 'properties' ][ 'meta_value' ] ) && isset( $request[ 'meta_value' ] ) ) {
-            if ( is_string( $request[ 'meta_value' ] ) ) {
-                $prepared_customer->meta_value = $request[ 'meta_value' ];
-            } elseif ( is_array( $request[ 'meta_value' ] ) ) {
-                for ( $i = 0; $i < count( $request[ 'meta_value' ] ); $i++ ) {
-                    $prepared_customer->meta_value[] = $request[ 'meta_value' ][ $i ];
-                }
             }
         }
 

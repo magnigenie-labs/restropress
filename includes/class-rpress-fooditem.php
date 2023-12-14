@@ -103,6 +103,7 @@ class RPRESS_Fooditem {
 	public $post_author = 0;
 	public $post_date = '0000-00-00 00:00:00';
 	public $post_date_gmt = '0000-00-00 00:00:00';
+    public $post_type ;
 	public $post_content = '';
 	public $post_title = '';
 	public $post_excerpt = '';

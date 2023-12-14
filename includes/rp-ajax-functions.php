@@ -172,6 +172,7 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '') {
 
   ob_start();
 
+  $prices =array();
   if ( ! empty( $fooditem_id ) && rpress_has_variable_prices( $fooditem_id ) ) {
 
     $prices = rpress_get_variable_prices( $fooditem_id );
@@ -184,11 +185,14 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '') {
       $variable_price_label = ! empty( $variable_price_label ) ? $variable_price_label : esc_html( 'Price Options', 'restropress' );
       $variable_price_heading = apply_filters( 'rp_variable_price_heading', $variable_price_label ); ?>
 
-      <h6><?php echo esc_html( $variable_price_heading ); ?></h6>
+      <h6><?php echo esc_html( $variable_price_heading );  ?></h6>
 
       <div class="rp-variable-price-wrapper">
 
       <?php
+      if (!array_key_exists($price_id, $prices)) {
+        $price_id = array_key_first($prices);
+      }
       foreach( $prices as $k => $price ) { 
         $rate = (float) rpress_get_option( 'tax_rate', 0 );
         // Convert to a number we can use
@@ -240,7 +244,12 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '') {
 
       <?php
       foreach( $addon_ids as $parent ) {
+        
         $addon_items = get_term_by( 'id', $parent, 'addon_category' );
+        
+        if(empty($addon_items)){
+        continue;
+    }
         $addon_name = $addon_items->name;
         $addon_slug = $addon_items->slug;
         $addon_id = $addon_items->term_id;

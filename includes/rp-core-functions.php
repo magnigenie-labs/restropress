@@ -148,7 +148,7 @@ add_action( 'edited_addon_category', 'save_addon_category_custom_fields', 10, 2 
  * @return      array | cart items array
  */
 function rpress_get_item_qty_by_key( $cart_key ) {
-  if( $cart_key !== '' ) {
+  if( !empty($cart_key) && $cart_key !== '' ) {
     $cart_items = rpress_get_cart_contents();
     $cart_items = $cart_items[$cart_key];
     return $cart_items['quantity'];
