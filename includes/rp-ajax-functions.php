@@ -149,11 +149,14 @@ function get_fooditem_lists( $fooditem_id, $cart_key = '') {
     foreach ($addons as $addon ) {
 
       if( ! empty( $addon['category'] ) ) {
+        
+      
+      if( isset($addon['items']) && is_array( $addon['items'] ) ) {
+        $child_ids = array_merge( $child_ids, $addon['items'] );
         array_push($addon_ids, $addon['category'] );
       }
-      if( is_array( $addon['items'] ) ) {
-        $child_ids = array_merge( $child_ids, $addon['items'] );
-      }
+      
+    }
     }
   }
 
@@ -391,7 +394,7 @@ function rpress_addon_items_by_fooditem( $fooditem_id ) {
       if( ! empty( $addon['category'] ) ) {
         array_push($addon_ids, $addon['category'] );
       }
-      if( is_array( $addon['items'] ) ) {
+      if( isset( $addon['items']) && is_array( $addon['items'] ) ) {
         $child_ids = array_merge( $child_ids, $addon['items'] );
       }
     }
