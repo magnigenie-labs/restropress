@@ -71,7 +71,7 @@ $row = isset( $_POST['i'] ) ?  absint( $_POST['i'] ) : 0;
                 <input type="text" name="addon_category[<?php echo $row; ?>][addon_name][]" class="rp-input" placeholder="<?php esc_html_e( 'Addon Item Name', 'restropress' ); ?>">
               </td>
               <td>
-                <input type="text" name="addon_category[<?php echo $row; ?>][addon_price][]" class="rp-input rp-addon-price" placeholder="9.99">
+                <input type="text" name="addon_category[<?php echo $row; ?>][addon_price][]" class="rp-input rp-addon-price" placeholder="0.00">
               </td>
               <td>
                 <span class="remove rp-addon-cat">

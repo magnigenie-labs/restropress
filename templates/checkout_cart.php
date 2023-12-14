@@ -26,6 +26,7 @@ global $post;
 
       <?php foreach ( $cart_items as $key => $item ) :
 
+
         $cart_list_item   = rpress_get_cart_items_by_key($key);
         $cart_item_price  = rpress_get_cart_item_by_price($key);
         $get_item_qty     = rpress_get_item_qty_by_key($key);
