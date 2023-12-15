@@ -587,24 +587,26 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 
 		$data = $data->get_data();
 
-
 		if ( is_object( $data ) ) {
 			$fooditem_id = $data->id;
 		} else {
 			$fooditem_id = $data['id'];
 		}
-        unset($data['is_bundled_fooditem']);
-        unset($data['template']);
-        unset($data['fodditem_type']);
-        unset($data['button_behavior']);
-        unset($data['bundled_fooditems']);
-        unset($data['notes']);
+		unset( $data['is_bundled_fooditem'] );
+		unset( $data['template'] );
+		unset( $data['fodditem_type'] );
+		unset( $data['button_behavior'] );
+		unset( $data['bundled_fooditems'] );
+		unset( $data['notes'] );
 		$images                     = get_the_post_thumbnail_url( $fooditem_id, 'thumbnail' );
 		$images_full                = get_the_post_thumbnail_url( $fooditem_id, 'full' );
 		$data['featured_media_url'] = $images_full;
 		$data['thumbnail']          = $images;
 		$addons                     = get_post_meta( $fooditem_id, '_addon_items', true );
 		$data['have_addons']        = ! empty( $addons );
+		if ( isset( $request['with_addons'] ) && $request['with_addons'] ) {
+			$data['food_addons'] = $addons;
+		}
 
 		$response = new WP_REST_Response( $data );
 		return $response;
