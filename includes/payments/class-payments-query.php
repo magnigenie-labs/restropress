@@ -211,6 +211,37 @@ class RPRESS_Payments_Query extends RPRESS_Stats {
 	}
 
 	/**
+	 * Retrieve WP_Query args from payment args .
+	 *
+	 * Get WP_Query args from payment args
+	 *
+	 *
+	 * @since 2.9.9
+	 * @return array
+	 */
+	public function get_wp_query_args() {
+
+		// Modify the query/query arguments before we retrieve payments.
+		$this->date_filter_pre();
+		$this->orderby();
+		$this->status();
+		$this->month();
+		$this->per_page();
+		$this->page();
+		$this->user();
+		$this->customer();
+		$this->search();
+		$this->gateway();
+		$this->service_date();
+		$this->mode();
+		$this->children();
+		$this->fooditem();
+		$this->post__in();
+
+		return $this->args;
+	}
+
+	/**
 	 * If querying a specific date, add the proper filters.
 	 *
 	 * @since 1.0
