@@ -50,7 +50,6 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 		$obj                 = get_post_type_object( $this->post_type );
 		$obj->show_in_rest   = true;
 		$obj->rest_namespace = $this->namespace;
-		$obj->rest_base      = $this->rest_base;
 		add_filter( "rest_prepare_{$this->post_type}", array( $this, 'rp_api_prepeare_data' ), 10, 3 );
 		add_filter( "rest_{$this->post_type}_item_schema", array( $this, "{$this->post_type}_item_schema" ) );
 		add_filter( "rest_after_insert_{$this->post_type}", array( $this, "{$this->post_type}_create_item" ), 10, 3 );
@@ -210,53 +209,56 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 	 * * */
 	public function fooditem_item_schema( array $schema ): array {
 		$additional_schema = array(
+			'title'                  => array(
+				'title'       => __( 'Food Title', 'restropress' ),
+				'description' => __( 'Food Title', 'restropress' ),
+				'type'        => 'string',
+				'context'     => array( 'view', 'edit', 'embed' ),
+			),
+			'sku'                    => array(
+				'title'       => __( 'SKU', 'restropress' ),
+				'description' => __( 'Food SKU', 'restropress' ),
+				'type'        => 'string',
+				'context'     => array( 'view', 'edit', 'embed' ),
+			),
 			'food_type'              => array(
 				'title'       => __( 'Food Type', 'restropress' ),
 				'description' => __( 'Food Type', 'restropress' ),
 				'type'        => 'string',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
 			),
 			'price'                  => array(
 				'title'       => __( 'Food Price', 'restropress' ),
 				'description' => __( 'Food Price', 'restropress' ),
-				'type'        => 'string',
+				'type'        => 'number',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'sku'                    => array(
-				'title'       => __( 'Food SKU', 'restropress' ),
-				'description' => __( 'Food SKU', 'restropress' ),
-				'type'        => 'string',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
 			),
 			'variable_prices'        => array(
 				'title'       => __( 'Food Veriable Price', 'restropress' ),
 				'description' => __( 'Food Veriable Price', 'restropress' ),
 				'type'        => 'array',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 				'items'       => array(
 					'title'       => __( 'Price', 'restropress' ),
 					'description' => __( 'Veriable Price', 'restropress' ),
 					'type'        => 'object',
 					'context'     => array( 'view', 'edit', 'embed' ),
-					'readonly'    => true,
+
 					'properties'  => array(
 						'name'   => array(
 							'title'       => __( 'Name', 'restropress' ),
 							'description' => __( 'Veriable Price Name', 'restropress' ),
 							'type'        => 'string',
 							'context'     => array( 'view', 'edit', 'embed' ),
-							'readonly'    => true,
+
 						),
 						'amount' => array(
 							'title'       => __( 'Amount', 'restropress' ),
 							'description' => __( 'Veriable Amount', 'restropress' ),
 							'type'        => 'string',
 							'context'     => array( 'view', 'edit', 'embed' ),
-							'readonly'    => true,
+
 						),
 					),
 				),
@@ -266,34 +268,34 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 				'description' => __( 'Is Single Price Mode', 'restropress' ),
 				'type'        => 'boolean',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 			),
 			'has_variable_prices'    => array(
 				'title'       => __( 'Has variable Prices', 'restropress' ),
 				'description' => __( 'Has variable Prices', 'restropress' ),
 				'type'        => 'boolean',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 			),
 			'variable_price_label'   => array(
 				'title'       => __( 'Variable Price Label', 'restropress' ),
 				'description' => __( 'Variable price label', 'restropress' ),
 				'type'        => 'string',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 			),
 			'food_categories'        => array(
 				'title'       => __( 'Food Categories', 'restropress' ),
 				'description' => __( 'Food categories', 'restropress' ),
 				'type'        => 'array',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 				'items'       => array(
 					'title'       => __( 'Catgory ID', 'restropress' ),
 					'description' => __( 'Food category ID', 'restropress' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit', 'embed' ),
-					'readonly'    => true,
+
 				),
 			),
 			'fodditem_type'          => array(
@@ -301,49 +303,7 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 				'description' => __( 'Food Item Type', 'restropress' ),
 				'type'        => 'string',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'is_bundled_fooditem'    => array(
-				'title'       => __( 'Is bundled FoodItem', 'restropress' ),
-				'description' => __( 'Is Bundled FoodItem', 'restropress' ),
-				'type'        => 'boolean',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'bundled_fooditems'      => array(
-				'title'       => __( 'Food Categories', 'restropress' ),
-				'description' => __( 'Food categories', 'restropress' ),
-				'type'        => 'array',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-				'items'       => array(
-					'title'       => __( 'Catgory ID', 'restropress' ),
-					'description' => __( 'Food category ID', 'restropress' ),
-					'type'        => 'integer',
-					'context'     => array( 'view', 'edit', 'embed' ),
-					'readonly'    => true,
-				),
-			),
-			'notes'                  => array(
-				'title'       => __( 'Notes', 'restropress' ),
-				'description' => __( 'Food Notes', 'restropress' ),
-				'type'        => 'string',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'sku'                    => array(
-				'title'       => __( 'SKU', 'restropress' ),
-				'description' => __( 'Food SKU', 'restropress' ),
-				'type'        => 'string',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'button_behavior'        => array(
-				'title'       => __( 'Button behavior', 'restropress' ),
-				'description' => __( 'Button behavior', 'restropress' ),
-				'type'        => 'string',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 			),
 			'sales'                  => array(
 				'title'       => __( 'Foods sales', 'restropress' ),
@@ -364,69 +324,69 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 				'description' => __( 'True when the fooditem is free', 'restropress' ),
 				'type'        => 'boolean',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 			),
 			'is_quantities_disabled' => array(
 				'title'       => __( 'Is Quntities Disabled', 'restropress' ),
 				'description' => __( 'Is quantity input disabled on this food', 'restropress' ),
 				'type'        => 'boolean',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 			),
 			'can_purchase'           => array(
 				'title'       => __( 'Can Purchase', 'restropress' ),
 				'description' => __( 'If the current fooditem ID can be purchased', 'restropress' ),
 				'type'        => 'boolean',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 			),
 			'food_addons'            => array(
 				'title'       => __( 'Food Addons', 'restropress' ),
-				'description' => __( 'Food Addons', 'restropress' ),
+				'description' => __( 'Selected Food Addons', 'restropress' ),
 				'type'        => 'object',
 				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
+
 				'properties'  => array(
 					'category_id' => array(
 						'title'       => __( 'Food Addons', 'restropress' ),
 						'description' => __( 'Food Addons', 'restropress' ),
 						'type'        => 'object',
 						'context'     => array( 'view', 'edit', 'embed' ),
-						'readonly'    => true,
+
 						'properties'  => array(
 							'category'    => array(
 								'title'       => __( 'category ID', 'restropress' ),
 								'description' => __( 'category ID', 'restropress' ),
 								'type'        => 'string',
 								'context'     => array( 'view', 'edit', 'embed' ),
-								'readonly'    => true,
+
 							),
 							'max_addons'  => array(
 								'title'       => __( 'Max Addons', 'restropress' ),
 								'description' => __( 'Max Addons', 'restropress' ),
 								'type'        => 'integer',
 								'context'     => array( 'view', 'edit', 'embed' ),
-								'readonly'    => true,
+
 							),
 							'is_required' => array(
 								'title'       => __( 'Is Required', 'restropress' ),
 								'description' => __( 'Is Required', 'restropress' ),
 								'type'        => 'string',
 								'context'     => array( 'view', 'edit', 'embed' ),
-								'readonly'    => true,
+
 							),
 							'items'       => array(
 								'title'       => __( 'Food Addons', 'restropress' ),
 								'description' => __( 'Food Addons', 'restropress' ),
 								'type'        => 'array',
 								'context'     => array( 'view', 'edit', 'embed' ),
-								'readonly'    => true,
+
 								'items'       => array(
 									'title'       => __( 'Category ID', 'restropress' ),
 									'description' => __( 'Category ID', 'restropress' ),
 									'type'        => 'integer',
 									'context'     => array( 'view', 'edit', 'embed' ),
-									'readonly'    => true,
+
 								),
 							),
 							'prices'      => array(
@@ -434,14 +394,14 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 								'description' => __( 'Food Addons Prices', 'restropress' ),
 								'type'        => array( 'object', 'array' ),
 								'context'     => array( 'view', 'edit', 'embed' ),
-								'readonly'    => true,
+
 								'properties'  => array(
 									'child_category_id' => array(
 										'title'       => __( 'Child Category ID', 'restropress' ),
 										'description' => __( 'Child Category ID', 'restropress' ),
 										'type'        => 'object',
 										'context'     => array( 'view', 'edit', 'embed' ),
-										'readonly'    => true,
+
 										'properties'  => array(
 											'addon_name' => array(
 												'title'    => __( 'Addon Name', 'restropress' ),
@@ -459,34 +419,36 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 								'description' => __( 'Default Values', 'restropress' ),
 								'type'        => 'array',
 								'context'     => array( 'view', 'edit', 'embed' ),
-								'readonly'    => true,
+
 								'items'       => array(
 									'title'       => __( 'Default Values', 'restropress' ),
 									'description' => __( 'Default Values', 'restropress' ),
 									'type'        => 'string',
 									'context'     => array( 'view', 'edit', 'embed' ),
-									'readonly'    => true,
+
 								),
 							),
 						),
 					),
 				),
 			),
+
 		);
 		$additional_schema = apply_filters( "rp_rest_api_{$this->post_type}_schema", $additional_schema );
 		foreach ( $additional_schema as $schema_key => $schema_value ) {
 			$schema['properties'][ $schema_key ] = $schema_value;
 		}
+
 		return $schema;
 	}
 
 	/**
 	 * Callback of rest_prepare
 	 *
-	 * @param WP_REST_Response $response Having all data need to display
-	 * @param WP_Post          $post || This case rpress_payment post type data
-	 * @param  WP_REST_Request  $request || Request Object
-	 * @return WP_REST_Response || Returning some modifing data
+	 * @param WP_REST_Response $response Having all data need to display .
+	 * @param WP_Post          $fooditem_post || This case rpress_payment post type data .
+	 * @param  WP_REST_Request  $request || Request Object .
+	 * @return WP_REST_Response || Returning some modifing data .
 	 * @since 3.0.0
 	 * * */
 	public function rp_api_prepeare_data( WP_REST_Response $response, WP_Post $fooditem_post, WP_REST_Request $request ): WP_REST_Response {
@@ -604,8 +566,24 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 		$data['thumbnail']          = $images;
 		$addons                     = get_post_meta( $fooditem_id, '_addon_items', true );
 		$data['have_addons']        = ! empty( $addons );
-		if ( isset( $request['with_addons'] ) && $request['with_addons'] ) {
+		if ( isset( $request['with_addons'] ) && $request['with_addons'] && is_array( $addons ) ) {
 			$data['food_addons'] = $addons;
+			$category_idies      = array_keys( $addons );
+			$addon_terms         = array();
+			foreach ( $category_idies as $id ) {
+				$addon_terms[] = $id;
+				if ( is_array( $addons[ $id ]['items'] ) ) {
+					$addon_terms = array_merge( $addon_terms, $addons[ $id ]['items'] );
+				}
+			}
+			$terms = get_terms(
+				array(
+					'taxonomy' => 'addon_category',
+					'include'  => $addon_terms,
+				)
+			);
+
+			$data['addons'] = $terms;
 		}
 
 		$response = new WP_REST_Response( $data );
