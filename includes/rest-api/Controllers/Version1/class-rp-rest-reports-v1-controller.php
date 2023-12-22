@@ -57,17 +57,17 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 		global $wpdb;
 		$select = 'SELECT g.meta_value,count( * ) AS num_posts';
-		$join = "LEFT JOIN $wpdb->postmeta g ON (p.ID = g.post_id)";
-		$where = "WHERE p.post_type = 'rpress_payment' AND g.meta_key = '_order_status'";
-		$arg = array();
+		$join   = "LEFT JOIN $wpdb->postmeta g ON (p.ID = g.post_id)";
+		$where  = "WHERE p.post_type = 'rpress_payment' AND g.meta_key = '_order_status'";
+		$arg    = array();
 
 		if ( isset( $request['start_date'] ) && ! empty( $request['start_date'] ) ) {
 			$post_count_start_date = sanitize_text_field( $request['start_date'] );
-			$post_count_end_date = isset( $request['end_date'] ) && ! empty( $request['end_date'] ) ? sanitize_text_field( $request['end_date'] ) : $post_count_start_date;
-			$arg['start-date'] = date( 'm/d/Y', strtotime( $post_count_start_date ) );
-			$post_count_end_date = date( 'Y-m-d', strtotime( "$post_count_end_date +1 day" ) );
-			$where .= " AND ( p.post_date BETWEEN CAST( '$post_count_start_date' AS DATE ) AND CAST( '$post_count_end_date' AS DATE ) )";
-			$arg['end-date'] = date( 'm/d/Y', strtotime( "$post_count_end_date +1 day" ) );
+			$post_count_end_date   = isset( $request['end_date'] ) && ! empty( $request['end_date'] ) ? sanitize_text_field( $request['end_date'] ) : $post_count_start_date;
+			$arg['start-date']     = date( 'm/d/Y', strtotime( $post_count_start_date ) );
+			$post_count_end_date   = date( 'Y-m-d', strtotime( "$post_count_end_date +1 day" ) );
+			$where                .= " AND ( p.post_date BETWEEN CAST( '$post_count_start_date' AS DATE ) AND CAST( '$post_count_end_date' AS DATE ) )";
+			$arg['end-date']       = date( 'm/d/Y', strtotime( "$post_count_end_date +1 day" ) );
 		}
 
 		$cache_key = '';
@@ -79,14 +79,14 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 			";
 
 		$cache_key = md5( $query );
-		$count = wp_cache_get( $cache_key, 'counts' );
+		$count     = wp_cache_get( $cache_key, 'counts' );
 
 		if ( false !== $count ) {
 			return $count;
 		}
 
-		$count = $wpdb->get_results( $query, ARRAY_A );
-		$stats = array();
+		$count    = $wpdb->get_results( $query, ARRAY_A );
+		$stats    = array();
 		$statuses = get_post_stati();
 
 		if ( isset( $statuses['private'] ) && empty( $args['s'] ) ) {
@@ -106,12 +106,12 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 		$stats = (object) $stats;
 		wp_cache_set( $cache_key, $stats, 'counts' );
-		$purchases = rpress_count_payments( $arg );
+		$purchases      = rpress_count_payments( $arg );
 		$response_array = array(
 			'payments_count' => $purchases,
 			'orders_count'   => $stats,
 		);
-		$response = new WP_REST_Response( $response_array );
+		$response       = new WP_REST_Response( $response_array );
 		$response->set_status( 200 );
 		return $response;
 	}
@@ -126,20 +126,22 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 	 * @since 3.0.0
 	 * * */
 	public function get_collection_params(): array {
-		$query_params                  = parent::get_collection_params();
-		$query_params['start_date']         = array(
+		$query_params               = parent::get_collection_params();
+		$query_params['start_date'] = array(
 			'description'       => __( 'Start Date of the report.' ),
 			'type'              => 'string',
+			'format'            => 'date-time',
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		);
-		$query_params['end_date']         = array(
+		$query_params['end_date']   = array(
 			'description'       => __( 'End Date of the report.' ),
 			'type'              => 'string',
+			'format'            => 'date-time',
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		);
-	
+
 		return $query_params;
 	}
 

@@ -590,4 +590,61 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 		return $response;
 	}
 
+
+
+	/**
+	 * Determines the allowed query_vars for a get_items() response and prepares
+	 * them for WP_Query.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param array           $prepared_args Optional. Prepared WP_Query arguments. Default empty array.
+	 * @param WP_REST_Request $request       Optional. Full details about the request.
+	 * @return array Items query arguments.
+	 */
+	protected function prepare_items_query( $prepared_args = array(), $request = null ) {
+        $query_args = parent::prepare_items_query($prepared_args, $request);
+        if ( ! empty( $request['food_type'] ) ) {
+
+			$query_args['meta_key'] = 'rpress_food_type';
+
+			$query_args['meta_value'] = $request['food_type'];
+
+		}
+        // print_r($query_args);
+		return $query_args;
+	}
+
+    /**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 * @since 4.7.0
+	 * @since 5.4.0 The `tax_relation` query parameter was added.
+	 * @since 5.7.0 The `modified_after` and `modified_before` query parameters were added.
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params() {
+		$query_params = parent::get_collection_params();
+        
+		$query_params['food_type'] = array(
+			'description' => __( 'Filter Food Item with Its type.' ),
+			'type'        => 'string',
+            'enum' => array(
+                'veg',
+                'non_veg'
+            ),
+		);
+        
+		$query_params['with_addons'] = array(
+			'description' => __( 'Item response will have selected addons of food.' ),
+			'type'        => 'string',
+            'enum' => array(
+                'true',
+                'false'
+            ),
+		);
+        return $query_params;
+    }
+
 }
