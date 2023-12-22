@@ -42,7 +42,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$obj->rest_namespace = $this->namespace;
 		// add_filter( "rest_{$this->post_type}_query", array( $this, 'post_query' ) );
 		add_filter( "rest_prepare_{$this->post_type}", array( $this, 'rp_api_prepeare_data' ), 10, 3 );
-		// add_filter( "rest_{$this->post_type}_item_schema", array( $this, "{$this->post_type}_item_schema" ) );
+		add_filter( "rest_{$this->post_type}_item_schema", array( $this, "{$this->post_type}_item_schema" ) );
 		parent::__construct( $this->post_type, $this );
 	}
 	/**
@@ -67,7 +67,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			'/' . $this->rest_base . '/update-status/(?P<id>[\d]+)/(?P<order_status>[a-z-]+)',
 			array(
 				'args' => array(
-					'id'     => array(
+					'id'           => array(
 						'description' => __( 'Unique identifier for the order id.' ),
 						'type'        => 'integer',
 					),
@@ -211,60 +211,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 	}
 
 
-	// public function rpress_check_condtion( array $check_array_data ): stdClass {
 
-	// $prepared_post          = $check_array_data['prepared_post'] ?? new stdClass();
-	// $schema                 = $check_array_data['schema'] ?? array();
-	// $add_food_items_index   = $check_array_data['add_food_items_index'];
-	// $add_food_items_request = $check_array_data['add_food_items_request'];
-	// $add_food_items_schema  = $schema['properties']['add_food_items']['items']['properties'];
-	// if ( is_array( $add_food_items_request ) ) {
-	// foreach ( $add_food_items_request as $key => $request_value ) {
-	// if ( ! empty( $add_food_items_schema ) && isset( $add_food_items_schema[ $key ] ) && ! empty( $request_value ) ) {
-	// if ( ! is_array( $request_value ) ) {
-	// $prepared_post->add_food_items[ $add_food_items_index ][ $key ] = $request_value;
-	// } else {
-	// foreach ( $request_value as $i => $addon_data ) {
-	// $addon_schema = $add_food_items_schema['addon_items']['items']['properties'];
-	// foreach ( $addon_data as $addon_key => $addon ) {
-	// if ( ! empty( $addon_schema ) && ! empty( $addon_schema[ $addon_key ] ) ) {
-	// $prepared_post->add_food_items[ $add_food_items_index ]['addon_items'][ $i ][ $addon_key ] = $addon;
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	// return $prepared_post;
-	// }
-
-	/**
-	 * Callback of pre-insert
-	 * This method responsible for adding extra pre insert validation
-	 *
-	 * @param stdClass        $prepared_post | Default Prepared validation array
-	 * @param  WP_REST_Request $request Description
-	 * * */
-	// public function rpress_payment_pre_insert( stdClass $prepared_post, WP_REST_Request $request ): stdClass {
-	// $schema = $this->get_item_schema();
-	// if ( ! empty( $schema['properties']['add_food_items'] ) && isset( $request['add_food_items'] ) && ! empty( $request['add_food_items'] ) && is_array( $request['add_food_items'] ) ) {
-	// for ( $index = 0; $index < count( $request['add_food_items'] ); $index++ ) {
-	// $schema_item      = $schema['properties']['add_food_items']['items']['properties'];
-	// $request_data     = $request['add_food_items'][ $index ];
-	// $check_array_data = array(
-	// 'add_food_items_index'   => $index,
-	// 'schema'                 => $schema,
-	// 'add_food_items_request' => $request_data,
-	// 'prepared_post'          => $prepared_post,
-	// );
-	// $prepared_post    = $this->rpress_check_condtion( $check_array_data );
-	// $prepared_post = call_user_func( [ $this, 'rpress_check_condtion' ], $check_array_data );
-	// print_r($prepared_post);
-	// }
-	// }
-	// return $prepared_post;
-	// }
 
 	/**
 	 * Callback of prepare schema
@@ -278,116 +225,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 	public function rpress_payment_item_schema( array $schema ): array {
 
 		$additional_schema = array(
-			'add_food_items'        => array(
-				'title'       => __( 'Food Items' ),
-				'description' => __( 'All Food Items' ),
-				'type'        => 'array',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'items'       => array(
-					'title'       => __( 'Food Item' ),
-					'description' => __( 'Fodd Item' ),
-					'type'        => 'object',
-					'context'     => array( 'view', 'edit', 'embed' ),
-					'properties'  => array(
-						'price'       => array(
-							'title'       => __( 'Price', 'restropress' ),
-							'description' => __( 'Price of item' ),
-							'type'        => 'number',
-							'context'     => array( 'edit' ),
-						),
-						'id'          => array(
-							'title'       => __( 'ID', 'restropress' ),
-							'description' => __( 'ID of food item', 'restropress' ),
-							'type'        => 'integer',
-							'context'     => array( 'view', 'edit', 'embed' ),
-							'readonly'    => true,
-						),
-						'quantity'    => array(
-							'title'       => __( 'Quantity', 'restropress' ),
-							'description' => __( 'Quantity of food item', 'restropress' ),
-							'type'        => 'integer',
-							'context'     => array( 'view', 'edit', 'embed' ),
-							'readonly'    => true,
-						),
-						'instruction' => array(
-							'title'       => __( 'Instruction', 'restropress' ),
-							'description' => __( 'Instruction Of food item', 'restropress' ),
-							'type'        => 'string',
-							'context'     => array( 'view', 'edit', 'embed' ),
-							'readonly'    => true,
-						),
-						'addon_items' => array(
-							'title'       => __( 'Addons', 'restropress' ),
-							'description' => __( 'Addon of food item', 'restropress' ),
-							'type'        => 'array',
-							'context'     => array( 'view', 'edit', 'embed' ),
-							'items'       => array(
-								'title'       => __( 'Items', 'restropress' ),
-								'description' => __( 'Addons Items', 'restropress' ),
-								'type'        => 'object',
-								'context'     => array( 'view', 'edit', 'embed' ),
-								'properties'  => array(
-									'addon_item_name' => array(
-										'title'       => __( 'Addon item name', 'restropress' ),
-										'description' => __( 'Addon item name', 'restropress' ),
-										'type'        => 'string',
-										'context'     => array( 'view', 'edit', 'embed' ),
-										'readonly'    => true,
-									),
-									'addon_id'        => array(
-										'title'       => __( 'Addon ID', 'restropress' ),
-										'description' => __( 'ID of addons', 'restropress' ),
-										'type'        => 'integer',
-										'context'     => array( 'view', 'edit', 'embed' ),
-										'readonly'    => true,
-									),
-									'price'           => array(
-										'title'       => __( 'Addon Price', 'restropress' ),
-										'description' => __( 'Price of addon', 'restropress' ),
-										'type'        => 'number',
-										'context'     => array( 'view', 'edit', 'embed' ),
-										'readonly'    => true,
-									),
-									'quantity'        => array(
-										'title'       => __( 'Addon Quantity', 'restropress' ),
-										'description' => __( 'Addon Quantity', 'restropress' ),
-										'type'        => 'integer',
-										'context'     => array( 'view', 'edit', 'embed' ),
-										'readonly'    => true,
-									),
-								),
-							),
-						),
-					),
-				),
-			),
-			'is_add_fooditems'      => array(
-				'title'       => __( 'Is add fooditems' ),
-				'description' => __( 'Check Whether food item should add' ),
-				'type'        => 'boolean',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'is_remove_fooditems'   => array(
-				'title'       => __( 'Is remove fooditems' ),
-				'description' => __( 'Check Whether food item should remove' ),
-				'type'        => 'boolean',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'is_modify_cart_item'   => array(
-				'title'       => __( 'Is remove fooditems' ),
-				'description' => __( 'Check Whether food item should remove' ),
-				'type'        => 'boolean',
-				'context'     => array( 'view', 'edit', 'embed' ),
-				'readonly'    => true,
-			),
-			'cart_key'              => array(
-				'title'       => __( 'Cart key', 'restropress' ),
-				'description' => __( 'Cart key to modification', 'restropress' ),
-				'type'        => 'integer',
-				'context'     => array( 'view', 'edit', 'embed' ),
-			),
 			'delivery_adrress_meta' => array(
 				'title'       => __( 'Delivery Address', 'restropress' ),
 				'description' => __( 'Delivery Address meta', 'restropress' ),
@@ -430,6 +267,10 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		foreach ( $additional_schema as $schema_key => $schema_value ) {
 			$schema['properties'][ $schema_key ] = $schema_value;
 		}
+		$cart_controller                      = new RP_REST_Cart_V1_Controller();
+		$cart_schema                          = $cart_controller->get_item_schema();
+		$schema['properties']['cart_details'] = $cart_schema['properties']['cart_details'];
+
 		return $schema;
 	}
 
@@ -446,37 +287,30 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 		$payment = new RPRESS_Payment( $payment_post->ID );
 
-		$response->data['delivery_adrress_meta'] = $payment->get_meta( '_rpress_delivery_address' );
+		$response->data['delivery_adrress_meta']   = $payment->get_meta( '_rpress_delivery_address' );
 		$response->data['order_note']              = $payment->order_note;
-		$response->data['address']                 = $payment->address;
-		$response->data['key']                     = $payment->key;
 		$response->data['total']                   = $payment->total;
 		$response->data['subtotal']                = $payment->subtotal;
 		$response->data['tax']                     = $payment->tax;
 		$response->data['discounted_amount']       = $payment->discounted_amount;
 		$response->data['tax_rate']                = $payment->tax_rate;
-		$response->data['fees']                    = $payment->fees;
 		$response->data['fees_total']              = $payment->fees_total;
 		$response->data['discounts']               = $payment->discounts;
 		$response->data['date']                    = $payment->date;
 		$response->data['completed_date']          = $payment->completed_date;
-		$response->data['status']                  = $payment->status;
 		$response->data['status_nicename']         = $payment->status_nicename;
 		$response->data['post_status']             = $payment->post_status;
-		$response->data['old_status']              = $payment->old_status;
 		$response->data['user_id']                 = $payment->user_id;
 		$response->data['customer_id']             = $payment->customer_id;
-		$response->data['user_info']               = $payment->user_info;
 		$response->data['ip']                      = $payment->ip;
 		$response->data['gateway']                 = $payment->gateway;
-		$response->data['currency']                = $payment->currency;
 		$response->data['has_unlimited_fooditems'] = $payment->has_unlimited_fooditems;
-		$response->data['pending']                 = $payment->pending;
 		$response->data['parent_payment']          = $payment->parent_payment;
 		$response->data['service_type']            = $payment->get_meta( '_rpress_delivery_type' );
+		$response->data['order_status']            = $payment->get_meta( '_order_status' );
 		$response->data['service_date']            = $payment->get_meta( '_rpress_delivery_date' );
 		$response->data['service_time']            = $payment->get_meta( '_rpress_delivery_time' );
-		$response->data['payment_meta']            = $payment->payment_meta;
+		$response->data                            = array_merge( $response->data, $payment->payment_meta );
 
 		return $response;
 	}
@@ -505,158 +339,180 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 	 * @return WP_REST_Response $response
 	 * @since 3.0.1
 	 * * */
-	// public function create_item( $request ): WP_REST_Response {
-	// if ( ! empty( $request['id'] ) ) {
-	// return new WP_Error(
-	// 'rest_post_exists',
-	// __( 'Cannot create existing post.' ),
-	// array( 'status' => 400 )
-	// );
-	// }
-	// $cart_details = $request->get_param( 'cart_details' );
+	public function create_item( $request ): WP_REST_Response {
+		if ( ! empty( $request['id'] ) ) {
+			return new WP_Error(
+				'rest_post_exists',
+				__( 'Cannot create existing post.' ),
+				array( 'status' => 400 )
+			);
+		}
 
-	// if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
-	// for ( $index = 0; $index < count( $cart_details ); $index++ ) {
-	// rpress_add_to_cart( $cart_details[ $index ]['id'], $cart_details[ $index ] );
-	// }
-	// }
+		$cart_details = $request->get_json_params( 'cart_details' );
 
-	// $user      = get_user_by( 'id', get_current_user_id() );
-	// $user_info = array(
-	// 'id'         => $user->ID,
-	// 'email'      => $user->user_email,
-	// 'first_name' => $user->first_name,
-	// 'last_name'  => $user->last_name,
-	// 'discount'   => 0,
-	// 'address'    => array(),
-	// );
+		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
+			$cart_controller = new RP_REST_Cart_V1_Controller();
+			$cart_data       = $cart_controller->prepare_item_for_database( $request );
 
-	// $payment_data = array(
-	// 'price'        => rpress_get_cart_total(),
-	// 'date'         => date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ),
-	// 'user_email'   => $user->user_email,
-	// 'purchase_key' => strtolower( md5( uniqid() ) ),
-	// 'currency'     => rpress_get_currency(),
-	// 'fooditems'    => rpress_get_cart_contents(),
-	// 'user_info'    => $user_info,
-	// 'cart_details' => rpress_get_cart_content_details(),
-	// 'status'       => 'pending',
-	// );
+			if ( is_array( $cart_data ) && ! empty( $cart_data ) ) {
+				$posts = array();
+				for ( $index = 0; $index < count( $cart_data ); $index++ ) {
+					if ( property_exists( $cart_data[ $index ], 'id' ) ) {
+						$is_added = rpress_add_to_cart( $cart_data[ $index ]->id, (array) $cart_data[ $index ] );
+					}
+				}
+			}
 
-	// print_r( $payment_data );
-	// $post_id = rpress_insert_payment( $payment_data );
-	// if ( $post_id ) {
-	// rpress_update_payment_status( $post_id, 'processing' );
-	// Empty the shopping cart
-	// rpress_empty_cart();
-	// }
+			rpress_empty_cart();
 
-	// if ( is_wp_error( $post_id ) ) {
+		}
 
-	// if ( 'db_insert_error' === $post_id->get_error_code() ) {
-	// $post_id->add_data( array( 'status' => 500 ) );
-	// } else {
-	// $post_id->add_data( array( 'status' => 400 ) );
-	// }
+		$cart_contain = rpress_get_cart_contents();
+		if ( empty( $cart_contain ) ) {
+			$response = rest_ensure_response( array() );
 
-	// return $post_id;
-	// }
+			$response->set_status( 400 );
+			$response->set_data( array( 'message' => __( 'Cart is empty please add some item than you can place an order.', 'restropress' ) ) );
 
-	// $post = get_post( $post_id );
+			return $response;
 
-	// **
-	// * Fires after a single post is created or updated via the REST API.
-	// *
-	// * The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug.
-	// *
-	// * Possible hook names include:
-	// *
-	// *  - `rest_insert_post`
-	// *  - `rest_insert_page`
-	// *  - `rest_insert_attachment`
-	// *
-	// * @since 4.7.0
-	// *
-	// * @param WP_Post         $post     Inserted or updated post object.
-	// * @param WP_REST_Request $request  Request object.
-	// * @param bool            $creating True when creating a post, false when updating.
-	// */
-	// do_action( "rest_insert_{$this->post_type}", $post, $request, true );
+		}
 
-	// $schema = $this->get_item_schema();
+		$user      = get_user_by( 'id', get_current_user_id() );
+		$user_info = array(
+			'id'         => $user->ID,
+			'email'      => $user->user_email,
+			'first_name' => $user->first_name,
+			'last_name'  => $user->last_name,
+			'discount'   => 0,
+			'address'    => array(),
+		);
 
-	// if ( ! empty( $schema['properties']['sticky'] ) ) {
-	// if ( ! empty( $request['sticky'] ) ) {
-	// stick_post( $post_id );
-	// } else {
-	// unstick_post( $post_id );
-	// }
-	// }
+		$payment_data = array(
+			'price'        => rpress_get_cart_total(),
+			'date'         => date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ),
+			'user_email'   => $user->user_email,
+			'purchase_key' => strtolower( md5( uniqid() ) ),
+			'currency'     => rpress_get_currency(),
+			'fooditems'    => $cart_contain,
+			'user_info'    => $user_info,
+			'cart_details' => rpress_get_cart_content_details(),
+			'status'       => 'pending',
+		);
 
-	// if ( ! empty( $schema['properties']['featured_media'] ) && isset( $request['featured_media'] ) ) {
-	// $this->handle_featured_media( $request['featured_media'], $post_id );
-	// }
+		$post_id = rpress_insert_payment( $payment_data );
+		if ( $post_id ) {
+			rpress_update_payment_status( $post_id, 'processing' );
+			// empty the shopping cart
+			rpress_empty_cart();
+		}
 
-	// if ( ! empty( $schema['properties']['format'] ) && ! empty( $request['format'] ) ) {
-	// set_post_format( $post, $request['format'] );
-	// }
+		if ( is_wp_error( $post_id ) ) {
 
-	// if ( ! empty( $schema['properties']['template'] ) && isset( $request['template'] ) ) {
-	// $this->handle_template( $request['template'], $post_id, true );
-	// }
+			if ( 'db_insert_error' === $post_id->get_error_code() ) {
+				$post_id->add_data( array( 'status' => 500 ) );
+			} else {
+				$post_id->add_data( array( 'status' => 400 ) );
+			}
 
-	// $terms_update = $this->handle_terms( $post_id, $request );
+			return $post_id;
+		}
 
-	// if ( is_wp_error( $terms_update ) ) {
-	// return $terms_update;
-	// }
+		$post = get_post( $post_id );
 
-	// if ( ! empty( $schema['properties']['meta'] ) && isset( $request['meta'] ) ) {
-	// $meta_update = $this->meta->update_value( $request['meta'], $post_id );
+		/**
+		* Fires after a single post is created or updated via the REST API .
+		*
+		* The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug .
+		*
+		* Possible hook names include :
+		*
+		* - `rest_insert_post`
+		* - `rest_insert_page`
+		* - `rest_insert_attachment`
+		*
+		* @since 4.7.0
+		*
+		* @param WP_Post         $post     Inserted or updated post object .
+		* @param WP_REST_Request $request  Request object .
+		* @param bool            $creating true when creating a post, false when updating .
+		*/
+		do_action( "rest_insert_{$this->post_type}", $post, $request, true );
 
-	// if ( is_wp_error( $meta_update ) ) {
-	// return $meta_update;
-	// }
-	// }
+		$schema = $this->get_item_schema();
 
-	// $post          = get_post( $post_id );
-	// $fields_update = $this->update_additional_fields_for_object( $post, $request );
+		if ( ! empty( $schema['properties']['sticky'] ) ) {
+			if ( ! empty( $request['sticky'] ) ) {
+				stick_post( $post_id );
+			} else {
+				unstick_post( $post_id );
+			}
+		}
 
-	// if ( is_wp_error( $fields_update ) ) {
-	// return $fields_update;
-	// }
+		if ( ! empty( $schema['properties']['featured_media'] ) && isset( $request['featured_media'] ) ) {
+			$this->handle_featured_media( $request['featured_media'], $post_id );
+		}
 
-	// $request->set_param( 'context', 'edit' );
+		if ( ! empty( $schema['properties']['format'] ) && ! empty( $request['format'] ) ) {
+			set_post_format( $post, $request['format'] );
+		}
 
-	// **
-	// * Fires after a single post is completely created or updated via the REST API.
-	// *
-	// * The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug.
-	// *
-	// * Possible hook names include:
-	// *
-	// *  - `rest_after_insert_post`
-	// *  - `rest_after_insert_page`
-	// *  - `rest_after_insert_attachment`
-	// *
-	// * @since 5.0.0
-	// *
-	// * @param WP_Post         $post     Inserted or updated post object.
-	// * @param WP_REST_Request $request  Request object.
-	// * @param bool            $creating True when creating a post, false when updating.
-	// */
-	// do_action( "rest_after_insert_{$this->post_type}", $post, $request, true );
+		if ( ! empty( $schema['properties']['template'] ) && isset( $request['template'] ) ) {
+			$this->handle_template( $request['template'], $post_id, true );
+		}
 
-	// wp_after_insert_post( $post, false, null );
+		$terms_update = $this->handle_terms( $post_id, $request );
 
-	// $response = $this->prepare_item_for_response( $post, $request );
-	// $response = rest_ensure_response( $response );
+		if ( is_wp_error( $terms_update ) ) {
+			return $terms_update;
+		}
 
-	// $response->set_status( 201 );
-	// $response->header( 'Location', rest_url( rest_get_route_for_post( $post ) ) );
+		if ( ! empty( $schema['properties']['meta'] ) && isset( $request['meta'] ) ) {
+			$meta_update = $this->meta->update_value( $request['meta'], $post_id );
 
-	// return $response;
-	// }
+			if ( is_wp_error( $meta_update ) ) {
+				return $meta_update;
+			}
+		}
+
+		$post          = get_post( $post_id );
+		$fields_update = $this->update_additional_fields_for_object( $post, $request );
+
+		if ( is_wp_error( $fields_update ) ) {
+			return $fields_update;
+		}
+
+		$request->set_param( 'context', 'edit' );
+
+		/**
+		* Fires after a single post is completely created or updated via the REST API .
+		*
+		* The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug .
+		*
+		* Possible hook names include :
+		*
+		* - `rest_after_insert_post`
+		* - `rest_after_insert_page`
+		* - `rest_after_insert_attachment`
+		*
+		* @since 5.0.0
+		*
+		* @param WP_Post         $post     Inserted or updated post object .
+		* @param WP_REST_Request $request  Request object .
+		* @param bool            $creating true when creating a post, false when updating .
+		* */
+		do_action( "rest_after_insert_{$this->post_type}", $post, $request, true );
+
+		wp_after_insert_post( $post, false, null );
+
+		$response = $this->prepare_item_for_response( $post, $request );
+		$response = rest_ensure_response( $response );
+
+		$response->set_status( 201 );
+		$response->header( 'Location', rest_url( rest_get_route_for_post( $post ) ) );
+
+		return $response;
+	}
 
 	/**
 	 * Overriding update_item

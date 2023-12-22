@@ -162,12 +162,6 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
 		$schema = apply_filters( 'rest_rp_cart_item_schema', $schema );
 
 		$this->schema = $schema;
-        // 'price'          => array(
-        //     'description' => __( 'Total Price Including Tax Of Cart', 'restropress' ),
-        //     'type'        => 'number',
-        //     'context'     => array( 'view','embed' ),
-        //     'readonly'=>true
-        // ),
 
 		return $this->add_additional_fields_schema( $this->schema );
 	}
