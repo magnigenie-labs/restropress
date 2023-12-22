@@ -62,9 +62,68 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				),
 			)
 		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/update-status/(?P<id>[\d]+)/(?P<order_status>[a-z-]+)',
+			array(
+				'args' => array(
+					'id'     => array(
+						'description' => __( 'Unique identifier for the order id.' ),
+						'type'        => 'integer',
+					),
+					'order_status' => array(
+						'description' => __( 'Order status key.' ),
+						'type'        => 'string',
+					),
+				),
+				array(
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'update_order_status' ),
+					'permission_callback' => array( $this, 'update_item_permissions_check' ),
+					'args'                => array(),
+				),
+
+			)
+		);
 	}
 
 
+	/**
+	 * Update Order Status By ID
+	 *
+	 * @param WP_REST_Request $request
+	 * @return  WP_REST_Response $response
+	 * @since 3.0.0
+	 * * */
+	public function update_order_status( WP_REST_Request $request ) {
+
+		if ( ! empty( $request['id'] ) && ! empty( $request['order_status'] ) ) {
+			update_post_meta( $request['id'], '_order_status', $request['order_status'] );
+			send_customer_purchase_notification( $request['id'], $request['order_status'] );
+			if ( $request['order_status'] === 'completed' ) {
+				$payment_status = 'publish';
+				$post           = array(
+					'ID'          => $request['id'],
+					'post_status' => $payment_status,
+				);
+				wp_update_post( $post );
+				// Update Payment status to "paid" .
+				rpress_update_payment_status( $request['id'], 'publish' );
+			}
+		}
+		if ( 0 >= did_action( 'rpress_update_order_status' ) ) {
+
+			do_action( 'rpress_update_order_status', $request['id'], $request['order_status'] );
+		}
+
+		$response_array = array(
+			'message' => 'Order status successfully updated.',
+		);
+
+		$response = new WP_REST_Response( $response_array );
+		$response->set_status( 200 );
+		return $response;
+	}
 	/**
 	 * RestroPress Order Status list callback .
 	 *
@@ -388,7 +447,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$payment = new RPRESS_Payment( $payment_post->ID );
 
 		$response->data['delivery_adrress_meta'] = $payment->get_meta( '_rpress_delivery_address' );
-		// $response->data['cart_details']            = $payment->cart_details;
 		$response->data['order_note']              = $payment->order_note;
 		$response->data['address']                 = $payment->address;
 		$response->data['key']                     = $payment->key;

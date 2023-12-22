@@ -18,6 +18,7 @@ include RP_PLUGIN_DIR . 'includes/rest-api/Controllers/Version1/class-rp-rest-au
 include RP_PLUGIN_DIR . 'includes/rest-api/Controllers/Version1/class-rp-rest-orders-v1-controller.php';
 include RP_PLUGIN_DIR . 'includes/rest-api/Controllers/Version1/class-rp-rest-cart-v1-controller.php';
 include RP_PLUGIN_DIR . 'includes/rest-api/Controllers/Version1/class-rp-rest-customer-v1-controller.php';
+include RP_PLUGIN_DIR . 'includes/rest-api/Controllers/Version1/class-rp-rest-reports-v1-controller.php';
 include RP_PLUGIN_DIR . 'includes/rest-api/Controllers/Version1/class-rp-rest-food-categories-v1-controller.php';
 include RP_PLUGIN_DIR . 'includes/rest-api/Controllers/Version1/class-rp-rest-food-addons-v1-controller.php';
 
@@ -122,6 +123,7 @@ class Server {
             'orders' => 'RP_REST_Orders_V1_Controller',
             'cart' => 'RP_REST_Cart_V1_Controller',
             'customer' => 'RP_REST_Customer_V1_Controller',
+            'reports' => 'RP_REST_Reports_V1_Controller',
             "fooditem/categories" => "RP_REST_Food_Categories_V1_Controller",
             "fooditem/addons" => "RP_REST_Food_Addons_V1_Controller"
         );
