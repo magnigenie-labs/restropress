@@ -351,6 +351,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$cart_details = $request->get_json_params( 'cart_details' );
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
+            rpress_empty_cart();
 			$cart_controller = new RP_REST_Cart_V1_Controller();
 			$cart_data       = $cart_controller->prepare_item_for_database( $request );
 
@@ -363,7 +364,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				}
 			}
 
-			rpress_empty_cart();
 
 		}
 
