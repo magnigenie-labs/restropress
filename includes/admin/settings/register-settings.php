@@ -935,7 +935,7 @@ function rpress_get_registered_settings() {
 			          	'id'   		=> 'prices_include_tax',
 			            'name'	 	=> __( 'Prices entered with tax', 'restropress' ),
 			            'desc' 		=> __( 'This option affects how you enter prices.', 'restropress' ),
-			            'type' 		=> 'radio',
+                        'type'    => 'radio',
 			            'std'  		=> 'no',
 			            'options' => array(
                          	'yes' => __( 'Yes, I will enter prices inclusive of tax', 'restropress' ),
@@ -1682,7 +1682,7 @@ function rpress_radio_callback( $args ) {
 		$html .= '<label for="rpress_settings[' . rpress_sanitize_key( $args['id'] ) . '][' . rpress_sanitize_key( $key ) . ']">' . esc_html( $option ) . '</label><br/>';
 	endforeach;
 
-	$html .= '<p class="description">' . apply_filters( 'rpress_after_setting_output', wp_kses_post( $args['desc'] ), $args ) . '</p>';
+	$html .= '<p class="description">' .  wp_kses_post( $args['desc'] ) . '</p>';
 
 	echo apply_filters( 'rpress_after_setting_output', $html, $args );
 }
