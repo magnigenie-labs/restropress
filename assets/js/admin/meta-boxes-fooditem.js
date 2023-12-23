@@ -29,7 +29,10 @@ jQuery( function( $ ) {
   	$( '#rpress-fooditem-data' ).on( 'click', '.remove.rp-addon-cat', function(e) {
 
     	e.preventDefault();
-    	if( window.confirm( fooditem_meta_boxes.delete_new_category ) ) {
+        var rowCount = $('.addon-items-row').length;
+        if(rowCount>1){
+             $(this).closest('tr').remove();
+        }else if( window.confirm( fooditem_meta_boxes.delete_new_category ) ) {
       		$( this ).parents( '.rp-addon.create-new-addon' ).remove();
     	}
   	});
