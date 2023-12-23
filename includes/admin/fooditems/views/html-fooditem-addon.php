@@ -178,7 +178,8 @@ if ( is_array( $addons ) && !empty( $addons ) ) :
 
                 <?php } else {
 
-                  $addon_price = ( isset( $addon_item['prices'][$addon_item_id] ) && !is_array( $addon_item['prices'][$addon_item_id] ) ) ? $addon_item['prices'][$addon_item_id] : 0;
+
+                  $addon_price = ( isset( $addon_item['prices'][$addon_item_id] ) && !is_array( $addon_item['prices'][$addon_item_id] ) ) ? $addon_item['prices'][$addon_item_id] : $addon_price;
 
                   ?>
 
