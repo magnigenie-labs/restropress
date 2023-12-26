@@ -950,6 +950,33 @@ function rpress_tools_import_export_display() {
 								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
+								<td><?php esc_html_e( 'Addons Prices', 'restropress' ); ?></td>
+								<td>
+									<select name="rpress-import-field[addon_prices]" class="rpress-import-csv-column" data-field="Addon Prices">
+										<option value=""><?php esc_html_e( '- Ignore this field -', 'restropress' ); ?></option>
+									</select>
+								</td>
+								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e( 'Addons Is Required', 'restropress' ); ?></td>
+								<td>
+									<select name="rpress-import-field[addon_is_required]" class="rpress-import-csv-column" data-field="Addons Is Required">
+										<option value=""><?php esc_html_e( '- Ignore this field -', 'restropress' ); ?></option>
+									</select>
+								</td>
+								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e( 'Max Addons', 'restropress' ); ?></td>
+								<td>
+									<select name="rpress-import-field[addon_max]" class="rpress-import-csv-column" data-field="Max Addons">
+										<option value=""><?php esc_html_e( '- Ignore this field -', 'restropress' ); ?></option>
+									</select>
+								</td>
+								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
+							</tr>
+							<tr>
 								<td><?php esc_html_e( 'Product Creation Date', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[post_date]" class="rpress-import-csv-column" data-field="Date Created">

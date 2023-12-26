@@ -43,11 +43,16 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 			'addons'     	 => '',
 			'tags'           => '',
 			'tag_mark'		 =>	'',
+			'addon_prices'		 =>	'',
+			'addon_max'		 =>	'',
+			'addon_is_required'		 =>	'',
 			'sku'            => '',
 			'earnings'       => '',
 			'sales'          => '',
 			'featured_image' => '',
-			'notes'          => ''
+			'notes'          => '',
+			'rpress_variable_price_label'          => '',
+			'addon_default'          => ''
 		);
 	}
 
@@ -233,11 +238,37 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 
 					update_post_meta( $fooditem_id, 'rpress_product_notes', sanitize_text_field( $row[ $this->field_mapping['notes'] ] ) );
 				}
+				// Variation Price Label
+				if( ! empty( $this->field_mapping['rpress_variable_price_label'] ) && ! empty( $row[ $this->field_mapping['rpress_variable_price_label'] ] ) ) {
+
+					update_post_meta( $fooditem_id, 'rpress_variable_price_label', sanitize_text_field( $row[ $this->field_mapping['rpress_variable_price_label'] ] ) );
+				}
 
 				// SKU
 				if( ! empty( $this->field_mapping[ 'sku' ] ) && ! empty( $row[ $this->field_mapping[ 'sku' ] ] ) ) {
 
 					update_post_meta( $fooditem_id, 'rpress_sku', sanitize_text_field( $row[ $this->field_mapping['sku'] ] ) );
+				}
+
+                if( ! empty( $this->field_mapping['addon_prices'] ) && ! empty( $row[ $this->field_mapping['addon_prices'] ] ) ) {
+
+                    $price = $row[ $this->field_mapping['addon_prices'] ];
+                    $this->set_addon_prices( $fooditem_id, $price );
+				}
+                if( ! empty( $this->field_mapping['addon_max'] ) && ! empty( $row[ $this->field_mapping['addon_max'] ] ) ) {
+
+                    $price = $row[ $this->field_mapping['addon_max'] ];
+                    $this->set_addon_max( $fooditem_id, $price );
+				}
+                if( ! empty( $this->field_mapping['addon_is_required'] ) && ! empty( $row[ $this->field_mapping['addon_is_required'] ] ) ) {
+
+                    $price = $row[ $this->field_mapping['addon_is_required'] ];
+                    $this->set_addon_required( $fooditem_id, $price );
+				}
+                if( ! empty( $this->field_mapping['addon_default'] ) && ! empty( $row[ $this->field_mapping['addon_default'] ] ) ) {
+
+                    $price = $row[ $this->field_mapping['addon_default'] ];
+                    $this->set_addon_default( $fooditem_id, $price );
 				}
 
 				// Custom fields
@@ -269,6 +300,158 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 
 		return $percentage;
 	}
+
+
+	/**
+	 * Set up and store the addon max option for the fooditem's addon category
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function set_addon_max( $fooditem_id = 0, $price = '' ) {
+
+		$prices = (array) explode( ' | ', $price );
+		$food_addons     = get_post_meta( $fooditem_id, '_addon_items', true );
+
+      
+
+		$data_addons = array();
+         $i = 0;
+		foreach ( $food_addons as $addon_id => $food_addon ) {
+
+            // Check if the element at index $i exists and is not equal to 'Not Define'
+if (isset($prices[$i]) && $prices[$i] !== 'Not Define') {
+    $food_addon['max_addons'] = $prices[$i];
+}
+			$food_addons[ $addon_id ] = $food_addon;
+            $i++;
+
+		}
+			
+        update_post_meta( $fooditem_id, '_addon_items',  $food_addons);
+
+		
+	}
+
+
+	/**
+	 * Set up and store the addon required option for the fooditem's addon category
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function set_addon_required( $fooditem_id = 0, $price = '' ) {
+
+		$prices = (array) explode( ' | ', $price );
+		$food_addons     = get_post_meta( $fooditem_id, '_addon_items', true );
+
+      
+
+		$data_addons = array();
+         $i = 0;
+		foreach ( $food_addons as $addon_id => $food_addon ) {
+
+            if(isset($prices[$i]) && $prices[$i] == 'yes'){
+            $food_addon ['is_required']    = $prices[$i];
+            }
+			$food_addons[ $addon_id ] = $food_addon;
+            $i++;
+
+		}
+			
+        update_post_meta( $fooditem_id, '_addon_items',  $food_addons);
+
+		
+	}
+
+
+
+	/**
+	 * Set up and store the addon default option for the fooditem's addon category
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function set_addon_default( $fooditem_id = 0, $price = '' ) {
+
+		$prices = (array) explode( ' | ', $price );
+		$food_addons     = get_post_meta( $fooditem_id, '_addon_items', true );
+
+      
+
+		$data_addons = array();
+         $i = 0;
+		foreach ( $food_addons as $addon_id => $food_addon ) {
+
+            if(isset($prices[$i]) && $prices[$i] == 'yes'){
+            $food_addon ['is_required']    = $prices[$i];
+            }
+			$food_addons[ $addon_id ] = $food_addon;
+            $i++;
+
+		}
+			
+        update_post_meta( $fooditem_id, '_addon_items',  $food_addons);
+
+		
+	}
+
+
+
+
+	/**
+	 * Set up and store the price for the fooditem
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function set_addon_prices( $fooditem_id = 0, $price = '' ) {
+
+		$prices = (array) explode( ' | ', $price );
+
+		$variable_prices = get_post_meta( $fooditem_id, 'rpress_variable_prices' );
+        if( is_array($variable_prices) && count($variable_prices) ==1){
+        $variable_prices=$variable_prices[0];
+        }
+
+		$food_addons     = get_post_meta( $fooditem_id, '_addon_items', true );
+  
+		$data_addons = array();
+
+		$price = array();
+		foreach ( $food_addons as $addon_id => $food_addon ) {
+
+			if ( isset( $food_addon['items'] ) && is_array( $food_addon['items'] ) ) {
+				foreach ( $food_addon['items'] as  $key => $addonId ) {
+					if ( ! empty( $variable_prices ) ) {
+						$var_prices   = (array) explode( ' : ', $prices[ $key ] );
+						$priceVarData = array();
+
+                        $i = 0;
+						foreach ( $variable_prices as $foodVarKey => $food_variable ) {
+
+						
+                            $priceVarData[  str_replace(' ', '', $food_variable['name'])] = '' . $var_prices[ $i];
+						$i++;
+                        }
+
+						$price[ $addonId ] = $priceVarData;
+
+					} else {
+						$price[ $addonId ] = $prices[ $key ];
+					}
+				}
+			}
+            $food_addon ['prices']    = $price;
+			$food_addons[ $addon_id ] = $food_addon;
+		}
+			
+        update_post_meta( $fooditem_id, '_addon_items',  $food_addons);
+
+		
+	}
+
+
 
 	/**
 	 * Set up and store the price for the fooditem

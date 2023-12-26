@@ -51,9 +51,14 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 			'tags'                     	=> __( 'Tags', 'restropress' ),
 			'tag_mark'                  => __( 'None/Veg/Non-Veg', 'restropress' ),
 			'rpress_price' 				=> __( 'Price', 'restropress' ),
+			'addon_prices' 				=> __( 'Addon Prices', 'restropress' ),
+			'addon_max' 				=> __( 'Max Addons', 'restropress' ),
+			'addon_default' 				=> __( 'Default Addons', 'restropress' ),
+			'addon_is_required' 				=> __( 'Addon Is Required', 'restropress' ),
 			'_thumbnail_id'            	=> __( 'Featured Image', 'restropress' ),
 			'rpress_sku' 				=> __( 'SKU', 'restropress' ),
 			'rpress_product_notes' 		=> __( 'Notes', 'restropress' ),
+			'rpress_variable_price_label' 		=> __( 'Variable Price Label', 'restropress' ),
 			'_rpress_fooditem_sales' 	=> __( 'Sales', 'restropress' ),
 			'_rpress_fooditem_earnings'	=> __( 'Earnings', 'restropress' ),
 		);
@@ -76,6 +81,7 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 			'_thumbnail_id',
 			'rpress_sku',
 			'rpress_product_notes',
+			'rpress_variable_price_label',
 			'_rpress_fooditem_sales',
 			'_rpress_fooditem_earnings'
 		);
@@ -182,6 +188,76 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 						if( $terms ) {
 							$terms = wp_list_pluck( $terms, 'name' );
 							$row[ $key ] = implode( ' | ', $terms );
+						}
+
+					} else if( 'addon_prices' == $key ) {
+                        $addons                     = get_post_meta( $fooditem->ID, '_addon_items', true );
+						if( $addons ) {
+							
+                            $addonPrices = array_map(function ($price) {
+                                if (isset($price['prices']) && is_array($price['prices'])) {
+                                    $values = array_map(function ($value) {
+                                        return is_array($value) ? implode(' : ', $value) : $value;
+                                    }, $price['prices']);
+                            
+                                    return implode(' | ', $values);
+                                }
+                            
+                                return '';
+                            }, $addons);
+                            
+							$row[ $key ] = array_values($addonPrices)[0];
+						}
+
+					
+					} else if( 'addon_max' == $key ) {
+                        $addons                     = get_post_meta( $fooditem->ID, '_addon_items', true );
+						if( $addons ) {
+							
+                            $addonMax = array_map(function ($addon) {
+                                if (isset($addon['max_addons'])) {
+                                    
+                                    return  $addon['max_addons'];
+                                }
+                            
+                                return 'Not Define';
+                            }, $addons);
+                            
+							$row[ $key ] =  implode(' | ',$addonMax);
+						}
+
+					
+					} else if( 'addon_default' == $key ) {
+                        $addons                     = get_post_meta( $fooditem->ID, '_addon_items', true );
+						if( $addons ) {
+							
+                            $addonMax = array_map(function ($addon) {
+                                if (isset($addon['default'])) {
+                                    
+                                    return  implode(' : ',$addon['default']);
+                                }
+                            
+                                return '';
+                            }, $addons);
+                            
+							$row[ $key ] =  implode(' | ',$addonMax);
+						}
+
+					
+					} else if( 'addon_is_required' == $key ) {
+                        $addons                     = get_post_meta( $fooditem->ID, '_addon_items', true );
+						if( $addons ) {
+							
+                            $addonIsRequired = array_map(function ($addon) {
+                                if (isset($addon['is_required'])) {
+                                    
+                                    return $addon['is_required'];
+                                }
+                            
+                                return 'no';
+                            }, $addons);
+                            
+							$row[ $key ] = implode(' | ',$addonIsRequired);
 						}
 
 					}
