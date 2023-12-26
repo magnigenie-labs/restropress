@@ -490,6 +490,10 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 		if ( rest_is_field_included( 'variable_prices', $fields ) ) {
 			$data['variable_prices'] = $food_item->get_prices();
 		}
+		// Checking variable price and adding rpress_variable_price_label
+		if ( rest_is_field_included( 'variable_price_label', $fields ) ) {
+			$data['variable_price_label'] = get_post_meta( $fooditem_post->ID, 'rpress_variable_price_label', true );
+		}
 		// Checking type and adding
 		if ( rest_is_field_included( 'fodditem_type', $fields ) ) {
 			$data['fodditem_type'] = $food_item->get_type();
@@ -603,19 +607,19 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 	 * @return array Items query arguments.
 	 */
 	protected function prepare_items_query( $prepared_args = array(), $request = null ) {
-        $query_args = parent::prepare_items_query($prepared_args, $request);
-        if ( ! empty( $request['food_type'] ) ) {
+		$query_args = parent::prepare_items_query( $prepared_args, $request );
+		if ( ! empty( $request['food_type'] ) ) {
 
 			$query_args['meta_key'] = 'rpress_food_type';
 
 			$query_args['meta_value'] = $request['food_type'];
 
 		}
-        // print_r($query_args);
+		// print_r($query_args);
 		return $query_args;
 	}
 
-    /**
+	/**
 	 * Retrieves the query params for the posts collection.
 	 *
 	 * @since 4.7.0
@@ -626,25 +630,25 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 	 */
 	public function get_collection_params() {
 		$query_params = parent::get_collection_params();
-        
+
 		$query_params['food_type'] = array(
 			'description' => __( 'Filter Food Item with Its type.' ),
 			'type'        => 'string',
-            'enum' => array(
-                'veg',
-                'non_veg'
-            ),
+			'enum'        => array(
+				'veg',
+				'non_veg',
+			),
 		);
-        
+
 		$query_params['with_addons'] = array(
 			'description' => __( 'Item response will have selected addons of food.' ),
 			'type'        => 'string',
-            'enum' => array(
-                'true',
-                'false'
-            ),
+			'enum'        => array(
+				'true',
+				'false',
+			),
 		);
-        return $query_params;
-    }
+		return $query_params;
+	}
 
 }
