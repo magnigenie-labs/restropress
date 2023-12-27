@@ -576,7 +576,7 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 			$addon_terms         = array();
 			foreach ( $category_idies as $id ) {
 				$addon_terms[] = $id;
-				if ( is_array( $addons[ $id ]['items'] ) ) {
+				if ( isset( $addons[ $id ]['items'] ) && is_array( $addons[ $id ]['items'] ) ) {
 					$addon_terms = array_merge( $addon_terms, $addons[ $id ]['items'] );
 				}
 			}

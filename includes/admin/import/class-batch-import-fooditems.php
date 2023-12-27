@@ -174,7 +174,7 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 
 					$categories = $this->str_to_array( $row[ $this->field_mapping['categories'] ] );
 
-					$this->set_taxonomy_terms( $fooditem_id, $categories, 'food-category', false );
+					$this->set_taxonomy_terms_cp( $fooditem_id, $categories, 'food-category' );
 
 				}
 
@@ -184,7 +184,7 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 					$addons = $this->str_to_array( $row[ $this->field_mapping['addons'] ] );
 
 
-					$this->set_taxonomy_terms( $fooditem_id, $addons, 'addon_category', $addons[0] );
+					$this->set_taxonomy_terms_cp( $fooditem_id, $addons, 'addon_category' );
 
 				}
 
@@ -665,6 +665,148 @@ if (isset($prices[$i]) && $prices[$i] !== 'Not Define') {
 		return false;
 
 	}
+
+
+	/**
+	 * Set up and taxonomy terms
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private function set_taxonomy_terms_cp( $fooditem_id = 0, $terms = array(), $taxonomy = 'addon_category' ) {
+
+        error_log(print_r($terms,true));
+		if ( ! empty( $terms ) ) {
+
+			if ( 'addon_category' == $taxonomy ) {
+				$addons = get_post_meta( $fooditem_id, '_addon_items' );
+
+			} else {
+				$addons = array();
+			}
+			if ( ! is_array( $addons ) || empty( $addons ) ) {
+				$addons = array();
+			}
+
+			foreach ( $terms as $input ) {
+				if ( empty( $input ) ) {
+					continue;
+				}
+
+				$terms_array = explode( ' , ', $input );
+
+				// Trim whitespaces from each term
+				$terms_array = array_map( 'trim', $terms_array );
+
+				if ( empty( $terms_array )  ||  !is_array($terms_array) ) {
+					// Insufficient terms to create
+					continue; // Skip
+				}
+
+				// First term is the parent
+				$parent_term_name = reset( $terms_array );
+				$parent_term_slug = sanitize_title( $parent_term_name );
+				if ( empty( $parent_term_slug ) ) {
+					// Insufficient terms to create
+					continue; // Skip
+				}
+
+				// Check if the parent term already exists
+				$parent_term_exists = term_exists( $parent_term_slug, $taxonomy, );
+
+				if ( $parent_term_exists ) {
+					$parent_term_id = $parent_term_exists['term_id'];
+				} else {
+					// Create the parent term
+					$parent_term_args = array(
+						'taxonomy'    => $taxonomy,
+						'description' => '', // You can set a description if needed
+						'slug'        => $parent_term_slug,
+					);
+
+					$parent_term = wp_insert_term( $parent_term_name, $taxonomy, $parent_term_args );
+					if ( is_wp_error( $parent_term ) ) {
+						// Handle the error if any
+						error_log( 'Error creating Parent term: ' . $parent_term->get_error_message() );
+						continue; // Skip to the next iteration
+					}
+					$parent_term_id = $parent_term['term_id'];
+				}
+				wp_set_object_terms( $fooditem_id, $parent_term_id, $taxonomy );
+
+				if ( isset( $parent_term_id ) && 'addon_category' == $taxonomy ) {
+
+					if ( ! isset( $addons[ '' . $parent_term_id ] ) ) {
+						$addons[ '' . $parent_term_id ] = array(
+							'category' => '' . $parent_term_id,
+						);
+					}
+				}
+				// Remove the first element without reindexing
+				// array_splice($terms_array, 0, 1);
+
+				// $terms = $this->maybe_create_terms( $terms_array, $taxonomy, $parent_term_id );
+
+				// if ( ! empty( $terms ) ) {
+				// wp_set_object_terms( $fooditem_id, $terms, $taxonomy );
+				// }
+				// Create child terms and associate them with the parent
+
+				array_shift( $terms_array );
+
+				foreach ( $terms_array as $child_term_name ) {
+
+					$child_term_slug = sanitize_title( $child_term_name );
+					if ( empty( $child_term_slug ) ) {
+						// Insufficient terms to create
+						continue; // Skip
+					}
+					// Check if the child term already exists
+					$child_term_exists = term_exists( $child_term_slug, $taxonomy );
+
+					if ( $child_term_exists ) {
+						$child_term_id = $child_term_exists['term_id'];
+					} else {
+						// Create the child term
+						$child_term_args = array(
+							'parent'      => $parent_term_id,
+							'taxonomy'    => $taxonomy,
+							'description' => '', // You can set a description if needed
+							'slug'        => $child_term_slug,
+						);
+
+						$child_term = wp_insert_term( $child_term_name, $taxonomy, $child_term_args );
+						if ( is_wp_error( $child_term ) ) {
+							// Handle the error if any
+							error_log( 'Error creating child term: ' . $child_term->get_error_message() );
+							continue; // Skip to the next iteration
+						}
+						$child_term_id = $child_term['term_id'];
+					}
+
+					// Set the terms for the specified object
+					wp_set_object_terms( $fooditem_id, $child_term_id, $taxonomy );
+					if ( 'addon_category' == $taxonomy ) {
+						if ( ! isset( $addons[ '' . $parent_term_id ]['items'] ) ) {
+							$addons[ '' . $parent_term_id ]['items'] = array();
+						}
+						$addons[ '' . $parent_term_id ]['items'][] = '' . $child_term_id;
+					}
+				}
+
+				if ( ! empty( $addons ) ) {
+
+					// array_splice($addons, 0, 1);
+					unset( $addons['0'] );
+					update_post_meta( $fooditem_id, '_addon_items', $addons );
+
+				}
+			}
+
+			return $addons;
+		}
+	}
+
 
 	/**
 	 * Set up and taxonomy terms
