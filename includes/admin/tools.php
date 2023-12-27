@@ -977,6 +977,24 @@ function rpress_tools_import_export_display() {
 								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
 							</tr>
 							<tr>
+								<td><?php esc_html_e( 'Variable Price Label', 'restropress' ); ?></td>
+								<td>
+									<select name="rpress-import-field[variable_price_label]" class="rpress-import-csv-column" data-field="Variable Price Label">
+										<option value=""><?php esc_html_e( '- Ignore this field -', 'restropress' ); ?></option>
+									</select>
+								</td>
+								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
+							</tr>
+							<tr>
+								<td><?php esc_html_e( 'Default Addons', 'restropress' ); ?></td>
+								<td>
+									<select name="rpress-import-field[default_addons]" class="rpress-import-csv-column" data-field="Default Addons">
+										<option value=""><?php esc_html_e( '- Ignore this field -', 'restropress' ); ?></option>
+									</select>
+								</td>
+								<td class="rpress-import-preview-field"><?php esc_html_e( '- select field to preview data -', 'restropress' ); ?></td>
+							</tr>
+							<tr>
 								<td><?php esc_html_e( 'Product Creation Date', 'restropress' ); ?></td>
 								<td>
 									<select name="rpress-import-field[post_date]" class="rpress-import-csv-column" data-field="Date Created">

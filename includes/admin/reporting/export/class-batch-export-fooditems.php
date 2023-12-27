@@ -54,7 +54,7 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
 			'addon_prices' 				=> __( 'Addon Prices', 'restropress' ),
 			'addon_max' 				=> __( 'Max Addons', 'restropress' ),
 			'addon_default' 				=> __( 'Default Addons', 'restropress' ),
-			'addon_is_required' 				=> __( 'Addon Is Required', 'restropress' ),
+			'addon_is_required' 				=> __( 'Addons Is Required', 'restropress' ),
 			'_thumbnail_id'            	=> __( 'Featured Image', 'restropress' ),
 			'rpress_sku' 				=> __( 'SKU', 'restropress' ),
 			'rpress_product_notes' 		=> __( 'Notes', 'restropress' ),
@@ -194,19 +194,33 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
                         $addons                     = get_post_meta( $fooditem->ID, '_addon_items', true );
 						if( $addons ) {
 							
-                            $addonPrices = array_map(function ($price) {
-                                if (isset($price['prices']) && is_array($price['prices'])) {
-                                    $values = array_map(function ($value) {
-                                        return is_array($value) ? implode(' : ', $value) : $value;
-                                    }, $price['prices']);
-                            
-                                    return implode(' | ', $values);
-                                }
-                            
-                                return '';
-                            }, $addons);
-                            
-							$row[ $key ] = array_values($addonPrices)[0];
+                          
+
+			$addonPrices = array_map(
+				function ( $price ) {
+
+					if ( isset( $price['items'] ) && is_array( $price['items'] ) ) {
+
+						$prices = $price['prices'];
+
+						$values = array();
+						foreach ( $price['items'] as $value ) {
+							$values [] = isset( $prices[ $value ] ) ? ( is_array( $prices[ $value ] ) ? implode( ' : ', $prices[ $value ] ) : $prices[ $value ] ) : ' ';
+						}
+
+					
+
+						return implode( ' | ', $values );
+					}
+
+					return '';
+				},
+				$addons
+			);
+
+			$row[ $key ] = implode( ' | ', $addonPrices );
+		
+							
 						}
 
 					

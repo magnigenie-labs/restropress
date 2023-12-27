@@ -51,8 +51,8 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 			'sales'          => '',
 			'featured_image' => '',
 			'notes'          => '',
-			'rpress_variable_price_label'          => '',
-			'addon_default'          => ''
+			'variable_price_label'          => '',
+			'default_addons'          => ''
 		);
 	}
 
@@ -239,9 +239,9 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
 					update_post_meta( $fooditem_id, 'rpress_product_notes', sanitize_text_field( $row[ $this->field_mapping['notes'] ] ) );
 				}
 				// Variation Price Label
-				if( ! empty( $this->field_mapping['rpress_variable_price_label'] ) && ! empty( $row[ $this->field_mapping['rpress_variable_price_label'] ] ) ) {
+				if( ! empty( $this->field_mapping['variable_price_label'] ) && ! empty( $row[ $this->field_mapping['variable_price_label'] ] ) ) {
 
-					update_post_meta( $fooditem_id, 'rpress_variable_price_label', sanitize_text_field( $row[ $this->field_mapping['rpress_variable_price_label'] ] ) );
+					update_post_meta( $fooditem_id, 'rpress_variable_price_label', sanitize_text_field( $row[ $this->field_mapping['variable_price_label'] ] ) );
 				}
 
 				// SKU
@@ -265,9 +265,9 @@ class RPRESS_Batch_FoodItems_Import extends RPRESS_Batch_Import {
                     $price = $row[ $this->field_mapping['addon_is_required'] ];
                     $this->set_addon_required( $fooditem_id, $price );
 				}
-                if( ! empty( $this->field_mapping['addon_default'] ) && ! empty( $row[ $this->field_mapping['addon_default'] ] ) ) {
+                if( ! empty( $this->field_mapping['default_addons'] ) && ! empty( $row[ $this->field_mapping['default_addons'] ] ) ) {
 
-                    $price = $row[ $this->field_mapping['addon_default'] ];
+                    $price = $row[ $this->field_mapping['default_addons'] ];
                     $this->set_addon_default( $fooditem_id, $price );
 				}
 
@@ -365,8 +365,7 @@ if (isset($prices[$i]) && $prices[$i] !== 'Not Define') {
 	}
 
 
-
-	/**
+ /**
 	 * Set up and store the addon default option for the fooditem's addon category
 	 *
 	 * @since 1.0.0
@@ -374,22 +373,29 @@ if (isset($prices[$i]) && $prices[$i] !== 'Not Define') {
 	 */
 	public function set_addon_default( $fooditem_id = 0, $price = '' ) {
 
-		$prices = (array) explode( ' | ', $price );
+		$default_per_category = (array) explode( ' | ', trim($price) );
 		$food_addons     = get_post_meta( $fooditem_id, '_addon_items', true );
 
       
 
-		$data_addons = array();
          $i = 0;
 		foreach ( $food_addons as $addon_id => $food_addon ) {
+            if(!isset($food_addon ['default'])){
+                $food_addon ['default'] = array();
+            }
 
-            if(isset($prices[$i]) && $prices[$i] == 'yes'){
-            $food_addon ['is_required']    = $prices[$i];
+            if(isset($default_per_category[$i])){
+                $dafault_per_addon = (array) explode( ' : ', $default_per_category[$i]);
+            
+                if(!empty($dafault_per_addon)){
+            $food_addon ['default']  =    array_merge($food_addon ['default'], $dafault_per_addon);
+                }
             }
 			$food_addons[ $addon_id ] = $food_addon;
             $i++;
 
 		}
+        
 			
         update_post_meta( $fooditem_id, '_addon_items',  $food_addons);
 
