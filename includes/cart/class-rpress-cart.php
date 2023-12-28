@@ -1237,7 +1237,9 @@ class RPRESS_Cart {
 	public function get_item_price_id( $item = array() ) {
 
 
-		if ( isset( $item['item_number'] ) ) {
+		if ( isset( $item['item_number'] ) && isset($item['item_number']['price_id']) ) {
+			$price_id = isset( $item['item_number']['price_id'] ) ? $item['item_number']['price_id'] : null;
+		} else if ( isset( $item['item_number'] ) && isset($item['item_number']['options']) ) {
 			$price_id = isset( $item['item_number']['options']['price_id'] ) ? $item['item_number']['options']['price_id'] : null;
 		} else if ( isset( $item['options'] ) ) {
 			$price_id = isset( $item['options']['price_id'] ) ? $item['options']['price_id'] : null;
@@ -1261,6 +1263,7 @@ class RPRESS_Cart {
 		$price_id = (int) $this->get_item_price_id( $item );
 		$prices   = rpress_get_variable_prices( $item['id'] );
 
+        
 		$name     = ! empty( $prices[ $price_id ] ) ? $prices[ $price_id ]['name'] : '';
 
 		return apply_filters( 'rpress_get_cart_item_price_name', $name, $item['id'], $price_id, $item );
