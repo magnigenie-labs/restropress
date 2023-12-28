@@ -379,7 +379,7 @@ class RPRESS_Batch_RestroPress_Export extends RPRESS_Batch_Export {
         }
 
 
-        return rtrim($addonTerms, ',');
+        return $addonTerms;
 	}
     
 

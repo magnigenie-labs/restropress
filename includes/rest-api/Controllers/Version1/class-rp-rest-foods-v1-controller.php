@@ -587,14 +587,12 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 				)
 			);
 
-			$data['addons'] = $terms;
+			$data['addons'] = array_values( $terms );
 		}
-
 		$response = new WP_REST_Response( $data );
 		return $response;
 	}
-
-
+	
 
 	/**
 	 * Determines the allowed query_vars for a get_items() response and prepares
