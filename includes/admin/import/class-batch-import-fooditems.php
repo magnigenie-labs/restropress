@@ -438,9 +438,9 @@ if (isset($prices[$i]) && $prices[$i] !== 'Not Define') {
   
 		$data_addons = array();
 
-		$price = array();
+		
 		foreach ( $food_addons as $addon_id => $food_addon ) {
-
+            $price = array();
 			if ( isset( $food_addon['items'] ) && is_array( $food_addon['items'] ) ) {
 				foreach ( $food_addon['items'] as  $key => $addonId ) {
 					if ( ! empty( $variable_prices ) ) {
@@ -774,7 +774,7 @@ if (isset($prices[$i]) && $prices[$i] !== 'Not Define') {
 					}
 
 					// Set the terms for the specified object
-					wp_set_object_terms( $fooditem_id, $child_term_slug, $taxonomy );
+					
 					if ( 'addon_category' == $taxonomy ) {
 						if ( ! isset( $addons[ '' . $parent_term_id ]['items'] ) ) {
 							$addons[ '' . $parent_term_id ]['items'] = array();
@@ -789,6 +789,10 @@ if (isset($prices[$i]) && $prices[$i] !== 'Not Define') {
 					update_post_meta( $fooditem_id, '_addon_items', $addons );
 
 				}
+                if(!empty($terms_array)){
+                array_unshift($terms_array,$parent_term_slug);
+                wp_set_object_terms( $fooditem_id, $terms_array, $taxonomy );
+                }
 			}
 
 			return $addons;
