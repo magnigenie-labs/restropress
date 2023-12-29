@@ -337,7 +337,8 @@ function rpress_listen_for_paypal_ipn() {
 
 	// print_r($_REQUEST);exit;
 	// Regular PayPal IPN
-	if ( isset( $_GET['payment-confirmation'] ) && 'paypal' === strtolower( $_GET['payment-confirmation'] ) ) {
+    
+	if (isset( $_REQUEST['rpress-listener'] ) && 'ipn' === strtolower( $_REQUEST['rpress-listener'] )  ) {
 
 		rpress_debug_log( 'PayPal IPN endpoint loaded' );
 
@@ -851,13 +852,13 @@ function rpress_get_paypal_image_url() {
  */
 function rpress_paypal_success_page_content( $content ) {
 
-	if ( ! isset( $_GET['payment-id'] ) && ! rpress_get_purchase_session() ) {
+	if ( ! isset( $_REQUEST['payment-id'] ) && ! rpress_get_purchase_session() ) {
 		return $content;
 	}
 
 	rpress_empty_cart();
 
-	$payment_id = isset( $_GET['payment-id'] ) ? absint( $_GET['payment-id'] ) : false;
+	$payment_id = isset( $_REQUEST['payment-id'] ) ? absint( $_REQUEST['payment-id'] ) : false;
 
 	if ( ! $payment_id ) {
 		$session    = rpress_get_purchase_session();
@@ -890,7 +891,7 @@ add_filter( 'rpress_payment_confirm_paypal', 'rpress_paypal_success_page_content
  */
 function rpress_paypal_process_pdt_on_return() {
 
-	if ( ! isset( $_GET['payment-id'] ) || ! isset( $_GET['tx'] ) ) {
+	if ( ! isset( $_REQUEST['payment-id'] ) || ! isset( $_REQUEST['tx'] ) ) {
 		return;
 	}
 
@@ -900,7 +901,7 @@ function rpress_paypal_process_pdt_on_return() {
 		return;
 	}
 
-	$payment_id = isset( $_GET['payment-id'] ) ? absint( $_GET['payment-id'] ) : false;
+	$payment_id = isset( $_REQUEST['payment-id'] ) ? absint( $_REQUEST['payment-id'] ) : false;
 
 	if( empty( $payment_id ) ) {
 		return;
@@ -914,12 +915,12 @@ function rpress_paypal_process_pdt_on_return() {
 		return;
 	}
 
-	// Do not fire a PDT verification if the purchase session does not match the payment-id PDT is asking to verify.
+	// // Do not fire a PDT verification if the purchase session does not match the payment-id PDT is asking to verify.
 	if ( ! empty( $purchase_session['purchase_key'] ) && $payment->key !== $purchase_session['purchase_key'] ) {
 		return;
 	}
 
-	if( $token && ! empty( $_GET['tx'] ) && $payment->ID > 0 ) {
+	if( $token && ! empty( $_REQUEST['tx'] ) && $payment->ID > 0 ) {
 
 		// An identity token has been provided in settings so let's immediately verify the purchase
 		$host = rpress_is_test_mode() ? 'sandbox.paypal.com' : 'www.paypal.com';
@@ -930,16 +931,16 @@ function rpress_paypal_process_pdt_on_return() {
 			'httpversion' => '1.1',
 			'blocking'    => true,
 			'headers'     => array(
-				'host'         => $host,
-				'connection'   => 'close',
+				// 'host'         => $host,
+				// 'connection'   => 'close',
 				'content-type' => 'application/x-www-form-urlencoded',
-				'post'         => '/cgi-bin/webscr HTTP/1.1',
-				'user-agent'   => 'RPRESS PDT Verification/' . RP_VERSION . '; ' . get_bloginfo( 'url' )
+				// 'post'         => '/cgi-bin/webscr HTTP/1.1',
+				// 'user-agent'   => 'RPRESS PDT Verification/' . RP_VERSION . '; ' . get_bloginfo( 'url' )
 
 			),
 			'sslverify'   => false,
 			'body'        => array(
-				'tx'  => sanitize_text_field( $_GET['tx'] ),
+				'tx'  => sanitize_text_field( $_REQUEST['tx'] ),
 				'at'  => $token,
 				'cmd' => '_notify-synch',
 			)
@@ -961,8 +962,9 @@ function rpress_paypal_process_pdt_on_return() {
 			// parse the data
 			$lines = explode( "\n", trim( $body ) );
 			$data  = array();
+     
 			if ( strcmp ( $lines[0], "SUCCESS" ) == 0 ) {
-
+                rpress_debug_log( 'SUCCESS PDT Verification request to ' . rpress_get_paypal_redirect() );
 				for ( $i = 1; $i < count( $lines ); $i++ ) {
 					$parsed_line = explode( "=", $lines[ $i ],2 );
 					$data[ urldecode( $parsed_line[0] ) ] = urldecode( $parsed_line[1] );
@@ -1024,7 +1026,7 @@ function rpress_paypal_process_pdt_on_return() {
 
 				}
 
-				$payment->transaction_id = sanitize_text_field( $_GET['tx'] );
+				$payment->transaction_id = sanitize_text_field( $_REQUEST['tx'] );
 				$payment->save();
 
 			} elseif ( strcmp ( $lines[0], "FAIL" ) == 0 ) {
