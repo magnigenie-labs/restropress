@@ -147,7 +147,7 @@ if ( is_array( $addons ) && !empty( $addons ) ) :
                   $count = 1;
                   foreach ( rpress_get_variable_prices( $post_id ) as $price) {
                     
-                    $addon_price = !empty( $addon_item['prices'] ) && !empty( $addon_item['prices'][$addon_item_id][sanitize_key( $price['name'] )] ) ? $addon_item['prices'][$addon_item_id][ sanitize_key( $price['name'] )] : 0;
+                    $addon_price = !empty( $addon_item['prices'] ) && !empty( $addon_item['prices'][$addon_item_id][sanitize_key( $price['name'] )] ) ? $addon_item['prices'][$addon_item_id][ sanitize_key( $price['name'] )] : $addon_price;
                     
                     if ( isset( $addon_item['default'] ) ) {
                       
