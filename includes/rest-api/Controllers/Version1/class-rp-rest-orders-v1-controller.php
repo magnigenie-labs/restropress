@@ -37,8 +37,8 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 	 * Initialize foods actions.
 	 */
 	public function __construct() {
-		$obj                 = get_post_type_object( $this->post_type );
-		$obj->show_in_rest   = true;
+		$obj               = get_post_type_object( $this->post_type );
+		$obj->show_in_rest = true;
 		add_filter( "rest_prepare_{$this->post_type}", array( $this, 'rp_api_prepeare_data' ), 10, 3 );
 		add_filter( "rest_{$this->post_type}_item_schema", array( $this, "{$this->post_type}_item_schema" ) );
 		parent::__construct( $this->post_type, $this );
@@ -373,9 +373,12 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			);
 		}
 
-		$cart_details = $request->get_json_params( 'cart_details' );
+		$json_params = $request->get_json_params();
 
-		if ( is_array( $cart_details ) && !empty( $cart_details ) ) {
+		$cart_details          = $json_params['cart_details'];
+		$delivery_adrress_meta = $json_params['delivery_adrress_meta'];
+
+		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
 			rpress_empty_cart();
 			$cart_controller = new RP_REST_Cart_V1_Controller();
 			$cart_data       = $cart_controller->prepare_item_for_database( $request );
@@ -426,8 +429,22 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$post_id = rpress_insert_payment( $payment_data );
 		if ( $post_id ) {
 			rpress_update_payment_status( $post_id, 'processing' );
-			// empty the shopping cart
+			// empty the shopping cart .
 			rpress_empty_cart();
+			// add delivery address meta .
+
+			if ( is_array( $delivery_adrress_meta ) && ! empty( $delivery_adrress_meta ) ) {
+
+				// Assuming $delivery_adrress_meta is an associative array with keys like 'address', 'flat', 'postcode', 'city'.
+				$delivery_adrress = array(
+					'address'  => isset( $delivery_adrress_meta['address'] ) ? $delivery_adrress_meta['address'] : '',
+					'flat'     => isset( $delivery_adrress_meta['flat'] ) ? $delivery_adrress_meta['flat'] : '',
+					'postcode' => isset( $delivery_adrress_meta['postcode'] ) ? $delivery_adrress_meta['postcode'] : '',
+					'city'     => isset( $delivery_adrress_meta['city'] ) ? $delivery_adrress_meta['city'] : '',
+				);
+
+				update_post_meta( $post_id, '_rpress_delivery_address', $delivery_adrress );
+			}
 		}
 
 		if ( is_wp_error( $post_id ) ) {
