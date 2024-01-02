@@ -250,7 +250,50 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				'enum' => array_keys( rpress_get_payment_statuses() ),
 			),
 		);
+		$query_params['customer']       = array(
+			'description'       => __( 'Search Order by customer id.' ),
+			'type'              => 'integer',
+			'sanitize_callback' => 'absint',
+			'validate_callback' => 'rest_validate_request_arg',
+		);
 
+		$query_params['start_date'] = array(
+			'description'       => __( 'Filter Order with Start Date.' ),
+			'type'              => 'string',
+			'format'            => 'date-time',
+			'sanitize_callback' => 'sanitize_text_field',
+			'validate_callback' => 'rest_validate_request_arg',
+		);
+
+		$query_params['end_date'] = array(
+			'description'       => __( 'Filter order with End Date.' ),
+			'type'              => 'string',
+			'format'            => 'date-time',
+			'sanitize_callback' => 'sanitize_text_field',
+			'validate_callback' => 'rest_validate_request_arg',
+		);
+
+		$query_params['gateway'] = array(
+			'description'       => __( 'Filter order with gateway.' ),
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'validate_callback' => 'rest_validate_request_arg',
+		);
+
+		$query_params['search_in_notes'] = array(
+			'description'       => __( 'Search in notes of Orders.' ),
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'validate_callback' => 'rest_validate_request_arg',
+		);
+
+		$query_params['fooditem'] = array(
+			'description' => __( 'Limits results to order with the given food items Id.' ),
+			'type'        => 'array',
+			'items'       => array(
+				'type' => 'string',
+			),
+		);
 		return $query_params;
 	}
 
@@ -303,6 +346,44 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 					),
 				),
 			),
+			'customer'              => array(
+				'title'       => __( 'Customer Details', 'restropress' ),
+				'description' => __( 'If order is placing by admin then admin can place order for customer.', 'restropress' ),
+				'type'        => 'object',
+				'context'     => array( 'view', 'edit', 'embed' ),
+				'properties'  => array(
+					'id'         => array(
+						'title'       => __( 'ID', 'restropress' ),
+						'description' => __( 'ID of Customer this can be -1 if not a customer.', 'restropress' ),
+						'type'        => 'integer',
+						'context'     => array( 'view', 'edit', 'embed' ),
+						'readonly'    => true,
+					),
+					'email'      => array(
+						'title'       => __( 'Email', 'restropress' ),
+						'description' => __( 'Email of Customer', 'restropress' ),
+						'type'        => 'string',
+						'context'     => array( 'view', 'edit', 'embed' ),
+						'readonly'    => true,
+					),
+
+					'first_name' => array(
+						'title'       => __( 'First Name', 'restropress' ),
+						'description' => __( 'First Name of Customer', 'restropress' ),
+						'type'        => 'string',
+						'context'     => array( 'view', 'edit', 'embed' ),
+						'readonly'    => true,
+					),
+					'last_name'  => array(
+						'title'       => __( 'Last Name', 'restropress' ),
+						'description' => __( 'Last Name of Customer', 'restropress' ),
+						'type'        => 'string',
+						'context'     => array( 'view', 'edit', 'embed' ),
+						'readonly'    => true,
+					),
+
+				),
+			),
 		);
 
 		$additional_schema = apply_filters( "rp_rest_api_{$this->post_type}_schema", $additional_schema );
@@ -313,6 +394,13 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$cart_schema                          = $cart_controller->get_item_schema();
 		$schema['properties']['cart_details'] = $cart_schema['properties']['cart_details'];
 
+		// remove unused properties .
+		unset( $schema['properties']['password'] );
+		unset( $schema['properties']['template'] );
+		unset( $schema['properties']['title'] );
+		unset( $schema['properties']['slug'] );
+		unset( $schema['properties']['date'] );
+		unset( $schema['properties']['date_gmt'] );
 		return $schema;
 	}
 
@@ -377,6 +465,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 		$cart_details          = $json_params['cart_details'];
 		$delivery_adrress_meta = $json_params['delivery_adrress_meta'];
+		$customer              = $json_params['customer'];
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
 			rpress_empty_cart();
@@ -403,16 +492,31 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			return $response;
 
 		}
+		if ( current_user_can( 'manage_options' ) ) {
+			// if user is admin ...
 
-		$user      = get_user_by( 'id', get_current_user_id() );
-		$user_info = array(
-			'id'         => $user->ID,
-			'email'      => $user->user_email,
-			'first_name' => $user->first_name,
-			'last_name'  => $user->last_name,
-			'discount'   => 0,
-			'address'    => array(),
-		);
+			if ( ! empty( $customer ) && is_array( $customer ) ) {
+					$user_info = array(
+						'id'         => isset( $customer['id'] ) ? $customer['id'] : '',
+						'email'      => isset( $customer['email'] ) ? $customer['email'] : '',
+						'first_name' => isset( $customer['first_name'] ) ? $customer['first_name'] : '',
+						'last_name'  => isset( $customer['last_name'] ) ? $customer['last_name'] : '',
+						'discount'   => isset( $customer['discount'] ) ? $customer['discount'] : 0,
+						'address'    => isset( $customer['address'] ) && is_array( $customer['address'] ) ? $customer['address'] : array(),
+					);
+
+			}
+		} else {
+			$user      = get_user_by( 'id', get_current_user_id() );
+			$user_info = array(
+				'id'         => $user->ID,
+				'email'      => $user->user_email,
+				'first_name' => $user->first_name,
+				'last_name'  => $user->last_name,
+				'discount'   => 0,
+				'address'    => array(),
+			);
+		}
 
 		$payment_data = array(
 			'price'        => rpress_get_cart_total(),
@@ -433,7 +537,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			rpress_empty_cart();
 			// add delivery address meta .
 
-			if ( is_array( $delivery_adrress_meta ) && ! empty( $delivery_adrress_meta ) ) {
+			if ( ! empty( $delivery_adrress_meta ) && is_array( $delivery_adrress_meta ) ) {
 
 				// Assuming $delivery_adrress_meta is an associative array with keys like 'address', 'flat', 'postcode', 'city'.
 				$delivery_adrress = array(
