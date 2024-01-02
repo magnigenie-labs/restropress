@@ -29,7 +29,6 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
 	protected $rest_base = 'cart';
 
 	public function __construct() {
-		// $this->verify = new RP_JWT_Verifier();
 		$this->cart_object = new RPRESS_Cart();
 	}
 

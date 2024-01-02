@@ -40,7 +40,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$obj                 = get_post_type_object( $this->post_type );
 		$obj->show_in_rest   = true;
 		$obj->rest_namespace = $this->namespace;
-		// add_filter( "rest_{$this->post_type}_query", array( $this, 'post_query' ) );
 		add_filter( "rest_prepare_{$this->post_type}", array( $this, 'rp_api_prepeare_data' ), 10, 3 );
 		add_filter( "rest_{$this->post_type}_item_schema", array( $this, "{$this->post_type}_item_schema" ) );
 		parent::__construct( $this->post_type, $this );
@@ -205,6 +204,29 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		if ( empty( $args['status'] ) ) {
 			$args['status'] = 'any';
 		}
+
+		if ( isset( $request['order_status'] ) ) {
+			// Get orders by order status .
+			if ( strpos( $request['order_status'], ',' ) ) {
+				$all_status = explode( ',', $_GET['status'] );
+				$compare    = 'IN';
+			} else {
+				$all_status = $request['order_status'];
+				$compare    = '=';
+			}
+			// Order status meta query
+			$status_meta = array(
+				'key'     => '_order_status',
+				'value'   => $all_status,
+				'compare' => $compare,
+			);
+
+			$args['meta_query'] = array(
+				'relation' => 'AND',
+				$status_meta,
+			);
+		}
+
 		$payments_query = new RPRESS_Payments_Query( $args );
 		$prepared_args  = $payments_query->get_wp_query_args();
 		return $prepared_args;
@@ -315,23 +337,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		return $response;
 	}
 
-	public function post_query( array $query ): array {
-		if ( isset( $query['order_status'] ) && ! empty( $query['order_status'] ) ) {
-			$query['post_status'] = $query['order_status'];
-		} else {
-			$post_status       = rpress_get_order_statuses();
-			$order_status_keys = array_unique( array_keys( $post_status ) );
-			$order_status      = apply_filters( 'rp_api_order_status', $order_status_keys );
-			if ( is_array( $order_status ) ) {
-				for ( $i = 0; $i < count( $order_status ); $i++ ) {
-					$query['post_status'][] = $order_status[ $i ];
-				}
-			}
-		}
-
-		return $query;
-	}
-
 	/**
 	 * Overriding default create_item
 	 *
@@ -351,7 +356,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$cart_details = $request->get_json_params( 'cart_details' );
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
-            rpress_empty_cart();
+			rpress_empty_cart();
 			$cart_controller = new RP_REST_Cart_V1_Controller();
 			$cart_data       = $cart_controller->prepare_item_for_database( $request );
 
@@ -363,8 +368,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 					}
 				}
 			}
-
-
 		}
 
 		$cart_contain = rpress_get_cart_contents();
