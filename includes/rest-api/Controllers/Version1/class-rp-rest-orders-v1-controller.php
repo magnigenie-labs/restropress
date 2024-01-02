@@ -39,7 +39,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 	public function __construct() {
 		$obj                 = get_post_type_object( $this->post_type );
 		$obj->show_in_rest   = true;
-		$obj->rest_namespace = $this->namespace;
 		add_filter( "rest_prepare_{$this->post_type}", array( $this, 'rp_api_prepeare_data' ), 10, 3 );
 		add_filter( "rest_{$this->post_type}_item_schema", array( $this, "{$this->post_type}_item_schema" ) );
 		parent::__construct( $this->post_type, $this );
@@ -197,24 +196,15 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$args['gateway']         = $request['gateway'];
 		$args['search_in_notes'] = $request['search_in_notes'];
 		$args['fooditem']        = $request['fooditem'];
-		if ( isset( $request['order_id'] ) ) {
-			$args['post__in'] = array( $request['order_id'] );
-		}
 
 		if ( empty( $args['status'] ) ) {
 			$args['status'] = 'any';
 		}
 
 		if ( isset( $request['order_status'] ) ) {
-			// Get orders by order status .
-			if ( strpos( $request['order_status'], ',' ) ) {
-				$all_status = explode( ',', $_GET['status'] );
-				$compare    = 'IN';
-			} else {
-				$all_status = $request['order_status'];
-				$compare    = '=';
-			}
-			// Order status meta query
+			$all_status = $request['order_status'];
+			$compare    = 'IN';
+			// Order status meta query .
 			$status_meta = array(
 				'key'     => '_order_status',
 				'value'   => $all_status,
@@ -233,6 +223,36 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 	}
 
 
+		/**
+		 * Query for Customer (Search, Meta Query etc.)
+		 *
+		 * @return array
+		 * @since 3.0.0
+		 * * */
+	public function get_collection_params(): array {
+		$query_params = parent::get_collection_params();
+		unset( $query_params['status'] );
+
+		$query_params['order_status'] = array(
+			'description' => __( 'Limits results to order with the given order status.' ),
+			'type'        => 'array',
+			'items'       => array(
+				'type' => 'string',
+				'enum' => array_keys( rpress_get_order_statuses() ),
+			),
+		);
+
+		$query_params['payment_status'] = array(
+			'description' => __( 'Limits results to order with the given payment status.' ),
+			'type'        => 'array',
+			'items'       => array(
+				'type' => 'string',
+				'enum' => array_keys( rpress_get_payment_statuses() ),
+			),
+		);
+
+		return $query_params;
+	}
 
 
 	/**
@@ -355,7 +375,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 		$cart_details = $request->get_json_params( 'cart_details' );
 
-		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
+		if ( is_array( $cart_details ) && !empty( $cart_details ) ) {
 			rpress_empty_cart();
 			$cart_controller = new RP_REST_Cart_V1_Controller();
 			$cart_data       = $cart_controller->prepare_item_for_database( $request );
