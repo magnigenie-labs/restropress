@@ -66,7 +66,7 @@ $has_variable_prices = $fooditem_object->has_variable_prices();
 					array(
 						'id'          => '_variable_pricing',
 						'label'       => __( 'Variable pricing', 'restropress' ),
-						'description' => __( 'Check this box if the food has multiple options and you want to specify price for different options.', 'restropress' ),
+						'description' => __( 'Check this box if the food has multiple options and you want to specify price for different options.', 'restropress' ).' '.__( 'After adding variable pricing make sure you have save this item once to see changes in addons.', 'restropress' ),
 						'value'       => $has_variable_prices ? 'yes' : 'no',
 					)
 				);
