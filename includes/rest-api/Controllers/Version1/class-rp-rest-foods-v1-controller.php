@@ -437,6 +437,11 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 		foreach ( $additional_schema as $schema_key => $schema_value ) {
 			$schema['properties'][ $schema_key ] = $schema_value;
 		}
+        // remove unused properties .
+		unset( $schema['properties']['password'] );
+		unset( $schema['properties']['template'] );
+		unset( $schema['properties']['date'] );
+		unset( $schema['properties']['date_gmt'] );
 
 		return $schema;
 	}

@@ -386,7 +386,15 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			),
 		);
 
-		$additional_schema = apply_filters( "rp_rest_api_{$this->post_type}_schema", $additional_schema );
+		$additional_schema['order_status'] = array(
+			'description' => __( 'Give order status.' ),
+			'type'        => 'array',
+			'items'       => array(
+				'type' => 'string',
+				'enum' => array_keys( rpress_get_order_statuses() ),
+			),
+		);
+		$additional_schema                 = apply_filters( "rp_rest_api_{$this->post_type}_schema", $additional_schema );
 		foreach ( $additional_schema as $schema_key => $schema_value ) {
 			$schema['properties'][ $schema_key ] = $schema_value;
 		}
@@ -466,6 +474,8 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$cart_details          = $json_params['cart_details'];
 		$delivery_adrress_meta = $json_params['delivery_adrress_meta'];
 		$customer              = $json_params['customer'];
+		$status                = $json_params['status'];
+		$order_status          = $json_params['order_status'];
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
 			rpress_empty_cart();
@@ -527,10 +537,20 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			'fooditems'    => $cart_contain,
 			'user_info'    => $user_info,
 			'cart_details' => rpress_get_cart_content_details(),
-			'status'       => 'pending',
+			'status'       => ! empty( $order_status ) ? $order_status : 'pending',
 		);
 
 		$post_id = rpress_insert_payment( $payment_data );
+		if ( ! empty( $status ) ) {
+			// Create an array of post data to update .
+			$post_data = array(
+				'ID'          => $post_id,
+				'post_status' => $status,
+			);
+
+			// Update the post with wp_update_post .
+			wp_update_post( $post_data );
+		}
 		if ( $post_id ) {
 			rpress_update_payment_status( $post_id, 'processing' );
 			// empty the shopping cart .
@@ -661,43 +681,117 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 	/**
 	 * Overriding update_item
 	 * * */
-	// public function update_item( $request ) {
-	// $valid_check = $this->get_post( $request['id'] );
-	// if ( is_wp_error( $valid_check ) ) {
-	// return $valid_check;
-	// }
+	public function update_item( $request ) {
+		$valid_check = $this->get_post( $request['id'] );
+		if ( is_wp_error( $valid_check ) ) {
+			return $valid_check;
+		}
 
-	// $post_before = get_post( $request['id'] );
-	// $post        = $this->prepare_item_for_database( $request );
-	// $this->dump_data( $post );
-	// if ( is_wp_error( $post ) ) {
-	// return $post;
-	// }
-	// if ( ! empty( $post->post_status ) ) {
-	// $post_status = $post->post_status;
-	// } else {
-	// $post_status = $post_before->post_status;
-	// }
+		$json_params = $request->get_json_params();
 
-	// Instantiate payment
-	// $payment = new RPRESS_Payment( $post->ID );
+		$post_id               = $request['id'];
+		$cart_details          = $json_params['cart_details'];
+		$delivery_adrress_meta = $json_params['delivery_adrress_meta'];
+		$customer              = $json_params['customer'];
+		$status                = $json_params['status'];
+		$order_status          = $json_params['order_status'];
+		// // Instantiate payment .
+		$payment = new RPRESS_Payment( $post_id );
 
-	// Adding food item
-	// if ( isset( $post->add_food_items ) && is_array( $post->add_food_items ) && ! empty( $post->add_food_items ) ) {
-	// for ( $j = 0; $j < count( $post->add_food_items ); $j++ ) {
-	// $fooditem_id = $post->add_food_items[ $j ]['id'];
-	// $args        = $post->add_food_items[ $j ];
-	// $options     = array();
-	// if ( isset( $post->add_food_items[ $j ]['addon_items'] ) ) {
-	// $options = $post->add_food_items[ $j ]['addon_items'];
-	// $payment->add_fooditem( $fooditem_id, $args, $options );
-	// }
-	// }
-	// }
+		if ( ! empty( $delivery_adrress_meta ) && is_array( $delivery_adrress_meta ) ) {
 
-	// $payment->save();
-	// $classes = get_class_methods( $payment );
-	// $this->dump_data( $classes );
-	// }
+			// Assuming $delivery_adrress_meta is an associative array with keys like 'address', 'flat', 'postcode', 'city'.
+			$delivery_adrress = array(
+				'address'  => isset( $delivery_adrress_meta['address'] ) ? $delivery_adrress_meta['address'] : '',
+				'flat'     => isset( $delivery_adrress_meta['flat'] ) ? $delivery_adrress_meta['flat'] : '',
+				'postcode' => isset( $delivery_adrress_meta['postcode'] ) ? $delivery_adrress_meta['postcode'] : '',
+				'city'     => isset( $delivery_adrress_meta['city'] ) ? $delivery_adrress_meta['city'] : '',
+			);
+
+			$payment->update_meta( '_rpress_delivery_address', $delivery_adrress );
+
+		}
+		if ( ! empty( $customer ) && is_array( $customer ) ) {
+				$user_info = array(
+					'id'         => isset( $customer['id'] ) ? $customer['id'] : '',
+					'email'      => isset( $customer['email'] ) ? $customer['email'] : '',
+					'first_name' => isset( $customer['first_name'] ) ? $customer['first_name'] : '',
+					'last_name'  => isset( $customer['last_name'] ) ? $customer['last_name'] : '',
+					'discount'   => isset( $customer['discount'] ) ? $customer['discount'] : 0,
+					'address'    => isset( $customer['address'] ) && is_array( $customer['address'] ) ? $customer['address'] : array(),
+				);
+
+				$payment_meta              = $payment->payment_meta;
+				$payment_meta['user_info'] = $user_info;
+				$payment_meta['email']     = $user_info['email'];
+				if ( ! empty( $order_status ) ) {
+					$payment_meta['status'] = $order_status;
+				}
+				$payment->update_meta( '_rpress_payment_meta', $payment_meta );
+
+		}
+		if ( ! empty( $status ) ) {
+			// Create an array of post data to update .
+			$post_data = array(
+				'ID'          => $post_id,
+				'post_status' => $status,
+			);
+
+			// Update the post with wp_update_post .
+			wp_update_post( $post_data );
+		}
+
+		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
+			$cart_controller = new RP_REST_Cart_V1_Controller();
+			$cart_data       = $cart_controller->prepare_item_for_database( $request );
+
+			if ( is_array( $cart_data ) && ! empty( $cart_data ) ) {
+				foreach ( $payment->cart_details as $cart_index => $fooditem_item ) {
+
+					$quantity   = $fooditem_item['quantity'];
+					$item_price = $fooditem_item['item_price'];
+					$item_args  = array(
+						'quantity'   => $quantity,
+						'item_price' => $item_price,
+						'price_id'   => false,
+						'cart_index' => false,
+					);
+
+							$payment->remove_fooditem( $fooditem_item['id'], $item_args );
+							$payment->save();
+				}
+				for ( $index = 0; $index < count( $cart_data ); $index++ ) {
+					if ( property_exists( $cart_data[ $index ], 'id' ) ) {
+						$fooditem_id = $cart_data[ $index ]->id;
+						$quantity    = $cart_data[ $index ]->quantity;
+						$item_price  = $cart_data[ $index ]->price;
+						$price_id    = $cart_data[ $index ]->price_id;
+						$addon_items = $cart_data[ $index ]->addon_items;
+						$instruction = $cart_data[ $index ]->instruction;
+
+						$item_args = array(
+							'quantity'   => $quantity,
+							'price_id'   => $price_id,
+							'item_price' => $item_price,
+							'discount'   => 0,
+							'instruction'   => $instruction,
+						);
+						$payment->add_fooditem( $fooditem_id, $item_args, $addon_items );
+
+					}
+				}
+				$payment->save();
+
+			}
+		}
+
+		$response = $this->prepare_item_for_response( $valid_check, $request );
+		$response = rest_ensure_response( $response );
+
+		$response->set_status( 200 );
+		$response->header( 'Location', rest_url( rest_get_route_for_post( $valid_check ) ) );
+
+		return $response;
+	}
 
 }
