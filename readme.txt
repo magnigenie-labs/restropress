@@ -81,6 +81,17 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == ChangeLog ==
 
+= Version 3.0.0 (2024-01-03) =
+
+* Fixed: Excluding tax issue.
+* Fixed: double tooltip issue.
+* Fixed: Paypal payment issue.
+* Fixed: Addons, categories and variable items Import/Export issue.
+* Fixed: Remove button of new category addon add issue.
+* Fixed: Addons pricing issue.
+* Updated: Instruction update to save variable pricing before adding addons.
+* Added: Rest API Added can be found more details on https://documenter.getpostman.com/view/14761886/2s9YsFCYrf.
+
 = Version 2.9.8 (2023-11-17) =
 
 * Fixed: "Store timing and delivery cutoff extension" current day holiday issue.
