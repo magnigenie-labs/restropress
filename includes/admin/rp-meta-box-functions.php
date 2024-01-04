@@ -32,8 +32,9 @@ function rpress_text_input( $field ) {
 
   switch ( $data_type ) {
     case 'price':
-      $field['class'] .= ' rpress_input_price';
+      $field['class'] .= ' rpress_input_price" min="0.00" step="any';
       $field['value']  = rpress_sanitize_amount( $field['value'] );
+      $field['type']  = 'number';
       break;
     case 'decimal':
       $field['class'] .= ' rpress_input_decimal';
@@ -65,7 +66,7 @@ function rpress_text_input( $field ) {
     echo rp_help_tip( $field['description'] );
   }
 
-  echo '<input type="' . esc_attr( $field['type'] ) . '" class="' . esc_attr( $field['class'] ) . '" style="' . esc_attr( $field['style'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '" ' . implode( ' ', $custom_attributes ) . ' /> ';
+  echo '<input type="' . esc_attr( $field['type'] ) . '" class="' .  $field['class']  . '" style="' . esc_attr( $field['style'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '" ' . implode( ' ', $custom_attributes ) . ' /> ';
 
   if ( ! empty( $field['description'] ) && false === $field['desc_tip'] ) {
     echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';

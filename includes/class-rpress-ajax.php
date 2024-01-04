@@ -303,7 +303,7 @@ class RP_AJAX {
           }
           $output .= '<td class="add_label"><label for="' . $addon_item->slug .'">' . $addon_item->name .'</label></td>';
           $output .= '<td class="variation_label"><label for="' . $price['name'] .'">' . $price['name'] .'</label></td>';
-          $output .= '<td class="addon_price"><input class="addon-custom-price" type="text" placeholder="0.00" value="'.$addon_price.'" name="addons[' . $current . '][prices]['.$addon_item->term_id.']['.$price['name'].']"></td>';
+          $output .= '<td class="addon_price"><input class="addon-custom-price" type="number" step="any" min="0.00" placeholder="0.00" value="'.$addon_price.'" name="addons[' . $current . '][prices]['.$addon_item->term_id.']['.$price['name'].']"></td>';
           $output .= '<td class="td_checkbox"><input type="checkbox" value="' . $addon_item->term_id . '" id="' . $addon_item->slug .'" name="addons[' . $current . '][default][]" class="rp-checkbox"></td>';
           $output .= '</tr>';
           $count++;
@@ -315,7 +315,7 @@ class RP_AJAX {
         $output .= '<td class="rp-addon-select td_checkbox"><input type="checkbox" value="' . $addon_item->term_id . '" id="' . $addon_item->slug .'" name="addons[' . $current . '][items][]" class="rp-checkbox"></td>';
         $output .= '<td class="add_label"><label for="' . $addon_item->slug .'">' . $addon_item->name .'</label></td>';
         $output .= '<td class="variation_label">&nbsp;</label></td>';
-        $output .= '<td class="addon_price"><input class="addon-custom-price" type="text" placeholder="0.00" value="'.$addon_price.'" name="addons[' . $current . '][prices]['.$addon_item->term_id.']"></td>';
+        $output .= '<td class="addon_price"><input class="addon-custom-price" type="number" step="any" min="0.00" placeholder="0.00" value="'.$addon_price.'" name="addons[' . $current . '][prices]['.$addon_item->term_id.']"></td>';
         $output .= '<td class="td_checkbox"><input type="checkbox" value="' . $addon_item->term_id . '" id="' . $addon_item->slug .'" name="addons[' . $current . '][default][]" class="rp-checkbox"></td>';
         $output .= '</tr>';
       }

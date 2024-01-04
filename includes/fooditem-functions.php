@@ -959,6 +959,10 @@ function rpress_dynamic_addon_price( $post_id, $child_addon, $parent_addon = nul
 	if( rpress_has_variable_prices( $post_id ) ) {
 		$prices = rpress_get_variable_prices( $post_id );
 		$name = sanitize_key( $prices[ $price_id ]['name'] );
+        
+        if(!isset($item_addons[$parent_addon]['prices'][ $child_addon ][ $name ])){
+            return 0.00;
+        }
 		$addon_price = $item_addons[$parent_addon]['prices'][ $child_addon ][ $name ];
 	} else {
 		$addon_price = $item_addons[ $parent_addon ]['prices'][ $child_addon ];
