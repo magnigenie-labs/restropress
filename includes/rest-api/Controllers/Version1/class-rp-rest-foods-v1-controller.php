@@ -47,8 +47,10 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 	 * Initialize foods actions.
 	 */
 	public function __construct() {
-		$obj                 = get_post_type_object( $this->post_type );
-		$obj->show_in_rest   = true;
+		$category               = get_taxonomy( 'food-category' );
+		$category->show_in_rest = true;
+		$obj                    = get_post_type_object( $this->post_type );
+		$obj->show_in_rest      = true;
 		add_filter( "rest_prepare_{$this->post_type}", array( $this, 'rp_api_prepeare_data' ), 10, 3 );
 		add_filter( "rest_{$this->post_type}_item_schema", array( $this, "{$this->post_type}_item_schema" ) );
 		add_filter( "rest_after_insert_{$this->post_type}", array( $this, "{$this->post_type}_create_item" ), 10, 3 );
