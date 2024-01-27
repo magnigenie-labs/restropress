@@ -336,6 +336,12 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                     'context' => array( 'view', 'edit', 'embed' ),
                     'readonly' => true,
                 ),
+                "user_id" => array(
+                    'description' => __( "user id", "restropress" ),
+                    'type' => "integer",
+                    'context' => array( 'view', 'edit', 'embed' ),
+                    'readonly' => true,
+                ),
                 "email" => array(
                     'description' => __( "Default Email of customer", "restropress" ),
                     'type' => "string",
