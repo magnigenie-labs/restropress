@@ -47,12 +47,7 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                         'permission_callback' => array( $this, 'add_customer_permissions_check' ),
                         'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
                     ),
-                    array(
-                        'methods' => WP_REST_Server::EDITABLE,
-                        'callback' => array( $this, 'update_customer' ),
-                        'permission_callback' => array( $this, 'update_customer_permissions_check' ),
-                        'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-                    ),
+                   
                 )
         );
         register_rest_route(
@@ -71,7 +66,12 @@ class RP_REST_Customer_v1_Controller extends WP_REST_Controller {
                         'permission_callback' => array( $this, 'get_customer_permissions_check' ),
                         'args' => $this->get_collection_params(),
                     ),
-                 
+                    array(
+                        'methods' => WP_REST_Server::EDITABLE,
+                        'callback' => array( $this, 'update_customer' ),
+                        'permission_callback' => array( $this, 'update_customer_permissions_check' ),
+                        'args' => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+                    ),
                     array(
                         'methods' => WP_REST_Server::DELETABLE,
                         'callback' => array( $this, 'delete_customer' ),
