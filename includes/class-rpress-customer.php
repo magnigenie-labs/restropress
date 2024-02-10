@@ -832,8 +832,7 @@ class RPRESS_Customer {
 	 * @since 1.0
 	 */
 	public function update_meta( $meta_key = '', $meta_value = null, $prev_value = '' ) {
-		$user_ID= get_current_user_id();
-		return RPRESS()->customer_meta->update_meta( $user_ID, $meta_key, $meta_value, $prev_value );
+		return RPRESS()->customer_meta->update_meta( $this->id, $meta_key, $meta_value, $prev_value );
 	}
 
 	/**
