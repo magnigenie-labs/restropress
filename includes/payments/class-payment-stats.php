@@ -226,14 +226,14 @@ class RPRESS_Payment_Stats extends RPRESS_Stats {
 	 */
 	public function get_best_selling( $number = 10 ) {
 		global $wpdb;
-
-		$fooditems = $wpdb->get_results( $wpdb->prepare(
-			"SELECT post_id as fooditem_id, max(meta_value) as sales
-			 FROM $wpdb->postmeta
-			 WHERE meta_key='_rpress_fooditem_sales' AND meta_value > 0
-			 GROUP BY meta_value+0
-			 DESC LIMIT %d;", $number
-		) );
+        $fooditems = $wpdb->get_results( $wpdb->prepare(
+            "SELECT post_id as fooditem_id, MAX(meta_value) as sales
+             FROM $wpdb->postmeta
+             WHERE meta_key = '_rpress_fooditem_sales' AND meta_value > 0
+             GROUP BY meta_value+0
+             ORDER BY sales DESC
+             LIMIT %d;", $number
+        ) );        
 
 		return $fooditems;
 	}

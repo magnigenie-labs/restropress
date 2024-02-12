@@ -42,6 +42,43 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 				),
 			)
 		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/sales-earnings',
+			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_sales_earnging' ),
+					'permission_callback' => array( $this, 'get_report_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/best-selling',
+			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_best_selling' ),
+					'permission_callback' => array( $this, 'get_report_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/payment-methods',
+			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_payment_methods' ),
+					'permission_callback' => array( $this, 'get_report_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
 	}
 
 
@@ -118,6 +155,79 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 
 
+	/**
+	 * RestroPress API Callback to get sales and earning report
+	 *
+	 * @param WP_REST_Request $request
+	 * @return  WP_REST_Response $response
+	 * @since 3.0.0
+	 * * */
+	public function get_sales_earnging( WP_REST_Request $request ) {
+
+		$post_count_start_date = sanitize_text_field( $request['start_date'] );
+		$post_count_end_date   = isset( $request['end_date'] ) && ! empty( $request['end_date'] ) ? sanitize_text_field( $request['end_date'] ) : $post_count_start_date;
+		$stats                 = new RPRESS_Payment_Stats();
+		$data                  = $stats->get_earnings_by_range( null, true, $post_count_start_date, $post_count_end_date );
+		$response              = new WP_REST_Response( $data );
+		$response->set_status( 200 );
+		return $response;
+	}
+
+
+
+
+	/**
+	 * RestroPress API Callback to best selling food items
+	 *
+	 * @param WP_REST_Request $request
+	 * @return  WP_REST_Response $response
+	 * @since 3.0.0
+	 * * */
+	public function get_best_selling( WP_REST_Request $request ) {
+
+		$stats    = new RPRESS_Payment_Stats();
+		$data     = $stats->get_best_selling();
+		$response = new WP_REST_Response( $data );
+		$response->set_status( 200 );
+		return $response;
+	}
+
+
+
+
+	/**
+	 * RestroPress API Callback to 
+	 *
+	 * @param WP_REST_Request $request
+	 * @return  WP_REST_Response $response
+	 * @since 3.0.0
+	 * * */
+	public function get_payment_methods( WP_REST_Request $request ) {
+
+        $data = array();
+		$gateways     = rpress_get_payment_gateways();
+
+		foreach ( $gateways as $gateway_id => $gateway ) {
+
+			$complete_count = rpress_count_sales_by_gateway( $gateway_id, 'publish' );
+			$pending_count  = rpress_count_sales_by_gateway( $gateway_id, array( 'pending', 'failed' ) );
+
+			$data[] = array(
+				'ID'             => $gateway_id,
+				'label'          => $gateway['admin_label'],
+				'complete_sales' => rpress_format_amount( $complete_count, false ),
+				'pending_sales'  => rpress_format_amount( $pending_count, false ),
+				'total_sales'    => rpress_format_amount( $complete_count + $pending_count, false ),
+			);
+		}
+
+		$response = new WP_REST_Response( $data );
+		$response->set_status( 200 );
+		return $response;
+	}
+
+
+
 
 	/**
 	 * Query for Reports
@@ -130,14 +240,14 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 		$query_params['start_date'] = array(
 			'description'       => __( 'Start Date of the report.' ),
 			'type'              => 'string',
-			'format'            => 'date-time',
+			'format'            => 'date',
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		);
 		$query_params['end_date']   = array(
 			'description'       => __( 'End Date of the report.' ),
 			'type'              => 'string',
-			'format'            => 'date-time',
+			'format'            => 'date',
 			'sanitize_callback' => 'sanitize_text_field',
 			'validate_callback' => 'rest_validate_request_arg',
 		);
