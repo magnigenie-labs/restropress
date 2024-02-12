@@ -419,6 +419,47 @@ function rpress_count_sales_by_gateway( $gateway_id = 'paypal', $status = 'publi
 }
 
 /**
+ * Counts the number of purchases made with a gateway within a specified date range.
+ *
+ * @since  3.0.1
+ *
+ * @param string $gateway_id The ID of the payment gateway. Default is 'paypal'.
+ * @param string $status     The status of the payments to count. Default is 'publish'.
+ * @param string $start_date Optional. The start date of the date range. Default is null.
+ * @param string $end_date   Optional. The end date of the date range. Default is null.
+ * @return int               The number of purchases made with the specified gateway within the specified date range.
+ */
+function rpress_count_sales_by_gateway_with_date_range( $gateway_id = 'paypal', $status = 'publish', $start_date = null, $end_date = null ) {
+
+    $ret  = 0;
+    $args = array(
+        'meta_key'    => '_rpress_payment_gateway',
+        'meta_value'  => $gateway_id,
+        'nopaging'    => true,
+        'post_type'   => 'rpress_payment',
+        'post_status' => $status,
+        'fields'      => 'ids'
+    );
+
+    // Add date filtering if start and end dates are provided
+    if ( $start_date && $end_date ) {
+        $args['date_query'] = array(
+            'after'     => $start_date,
+            'before'    => $end_date,
+            'inclusive' => true, // Include payments on the end date
+        );
+    }
+
+    $payments = new WP_Query( $args );
+
+    if ( $payments ) {
+        $ret = $payments->post_count;
+    }
+    return $ret;
+}
+
+
+/**
  * Processes the purchase data and uses the Cash On Delivery to record
  * the transaction in the Order History
  *

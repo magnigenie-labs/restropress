@@ -196,7 +196,7 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 
 	/**
-	 * RestroPress API Callback to 
+	 * RestroPress API Callback to
 	 *
 	 * @param WP_REST_Request $request
 	 * @return  WP_REST_Response $response
@@ -204,13 +204,15 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 	 * * */
 	public function get_payment_methods( WP_REST_Request $request ) {
 
-        $data = array();
-		$gateways     = rpress_get_payment_gateways();
+		$data                  = array();
+		$gateways              = rpress_get_payment_gateways();
+		$post_count_start_date = sanitize_text_field( $request['start_date'] );
+		$post_count_end_date   = isset( $request['end_date'] ) && ! empty( $request['end_date'] ) ? sanitize_text_field( $request['end_date'] ) : $post_count_start_date;
 
 		foreach ( $gateways as $gateway_id => $gateway ) {
 
-			$complete_count = rpress_count_sales_by_gateway( $gateway_id, 'publish' );
-			$pending_count  = rpress_count_sales_by_gateway( $gateway_id, array( 'pending', 'failed' ) );
+			$complete_count = rpress_count_sales_by_gateway_with_date_range( $gateway_id, 'publish', $post_count_start_date, $post_count_end_date );
+			$pending_count  = rpress_count_sales_by_gateway_with_date_range( $gateway_id, array( 'pending', 'failed' ), $post_count_start_date, $post_count_end_date );
 
 			$data[] = array(
 				'ID'             => $gateway_id,
