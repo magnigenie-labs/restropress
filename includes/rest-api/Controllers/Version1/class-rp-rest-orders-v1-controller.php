@@ -217,6 +217,22 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			);
 		}
 
+		if ( isset( $request['service_type'] ) ) {
+			$service_type_all = $request['service_type'];
+			$compare    = 'IN';
+			// Order status meta query .
+			$service_type = array(
+				'key'     => '_rpress_delivery_type',
+				'value'   => $service_type_all,
+				'compare' => $compare,
+			);
+
+			$args['meta_query'] = array(
+				'relation' => 'AND',
+				$service_type,
+			);
+		}
+
 		$payments_query = new RPRESS_Payments_Query( $args );
 		$prepared_args  = $payments_query->get_wp_query_args();
 		return $prepared_args;
@@ -239,6 +255,15 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			'items'       => array(
 				'type' => 'string',
 				'enum' => array_keys( rpress_get_order_statuses() ),
+			),
+		);
+
+		$query_params['service_type'] = array(
+			'description' => __( 'Limits results to order with the given service type.' ),
+			'type'        => 'array',
+			'items'       => array(
+				'type' => 'string',
+                'enum' => array_keys( rpress_get_service_types() ),
 			),
 		);
 
