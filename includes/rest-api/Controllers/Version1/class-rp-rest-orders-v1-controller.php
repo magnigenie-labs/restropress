@@ -219,7 +219,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 		if ( isset( $request['service_type'] ) ) {
 			$service_type_all = $request['service_type'];
-			$compare    = 'IN';
+			$compare          = 'IN';
 			// Order status meta query .
 			$service_type = array(
 				'key'     => '_rpress_delivery_type',
@@ -263,7 +263,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			'type'        => 'array',
 			'items'       => array(
 				'type' => 'string',
-                'enum' => array_keys( rpress_get_service_types() ),
+				'enum' => array_keys( rpress_get_service_types() ),
 			),
 		);
 
@@ -470,6 +470,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$response->data['has_unlimited_fooditems'] = $payment->has_unlimited_fooditems;
 		$response->data['parent_payment']          = $payment->parent_payment;
 		$response->data['service_type']            = $payment->get_meta( '_rpress_delivery_type' );
+		$response->data['service_type_name']       = rpress_service_label( $payment->get_meta( '_rpress_delivery_type' ) );
 		$response->data['order_status']            = $payment->get_meta( '_order_status' );
 		$response->data['service_date']            = $payment->get_meta( '_rpress_delivery_date' );
 		$response->data['service_time']            = $payment->get_meta( '_rpress_delivery_time' );
@@ -795,11 +796,11 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 						$instruction = $cart_data[ $index ]->instruction;
 
 						$item_args = array(
-							'quantity'   => $quantity,
-							'price_id'   => $price_id,
-							'item_price' => $item_price,
-							'discount'   => 0,
-							'instruction'   => $instruction,
+							'quantity'    => $quantity,
+							'price_id'    => $price_id,
+							'item_price'  => $item_price,
+							'discount'    => 0,
+							'instruction' => $instruction,
 						);
 						$payment->add_fooditem( $fooditem_id, $item_args, $addon_items );
 
