@@ -413,7 +413,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 		$additional_schema['order_status'] = array(
 			'description' => __( 'Give order status.' ),
-			'type'        => 'array',
+			'type'        => 'string',
 			'items'       => array(
 				'type' => 'string',
 				'enum' => array_keys( rpress_get_order_statuses() ),
@@ -471,7 +471,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$response->data['parent_payment']          = $payment->parent_payment;
 		$response->data['service_type']            = $payment->get_meta( '_rpress_delivery_type' );
 		$response->data['service_type_name']       = rpress_service_label( $payment->get_meta( '_rpress_delivery_type' ) );
-		$response->data['order_status']            = $payment->get_meta( '_order_status' );
+		$response->data['order_status']            = rpress_get_order_status( $payment_post->ID );
 		$response->data['service_date']            = $payment->get_meta( '_rpress_delivery_date' );
 		$response->data['service_time']            = $payment->get_meta( '_rpress_delivery_time' );
 		$response->data                            = array_merge( $response->data, $payment->payment_meta );
@@ -724,6 +724,15 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		// // Instantiate payment .
 		$payment = new RPRESS_Payment( $post_id );
 
+        if ( ! empty( $order_status ) ) {
+            update_post_meta( $request['id'], '_order_status', $order_status );
+            send_customer_purchase_notification( $post_id, $order_status );
+            if ( 0 >= did_action( 'rpress_update_order_status' ) ) {
+
+                do_action( 'rpress_update_order_status', $request['id'], $order_status );
+            }
+        }
+
 		if ( ! empty( $delivery_adrress_meta ) && is_array( $delivery_adrress_meta ) ) {
 
 			// Assuming $delivery_adrress_meta is an associative array with keys like 'address', 'flat', 'postcode', 'city'.
@@ -750,9 +759,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				$payment_meta              = $payment->payment_meta;
 				$payment_meta['user_info'] = $user_info;
 				$payment_meta['email']     = $user_info['email'];
-				if ( ! empty( $order_status ) ) {
-					$payment_meta['status'] = $order_status;
-				}
+				
 				$payment->update_meta( '_rpress_payment_meta', $payment_meta );
 
 		}
@@ -765,6 +772,8 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 			// Update the post with wp_update_post .
 			wp_update_post( $post_data );
+            rpress_update_payment_status( $request['id'], $status );
+
 		}
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
