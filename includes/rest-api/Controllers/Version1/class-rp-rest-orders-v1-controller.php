@@ -362,6 +362,13 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 						'context'     => array( 'view', 'edit', 'embed' ),
 						'readonly'    => true,
 					),
+					'state'     => array(
+						'title'       => __( 'State', 'restropress' ),
+						'description' => __( 'State', 'restropress' ),
+						'type'        => 'string',
+						'context'     => array( 'view', 'edit', 'embed' ),
+						'readonly'    => true,
+					),
 					'postcode' => array(
 						'title'       => __( 'Post code', 'restropress' ),
 						'description' => __( 'Post code', 'restropress' ),
@@ -591,6 +598,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 					'flat'     => isset( $delivery_adrress_meta['flat'] ) ? $delivery_adrress_meta['flat'] : '',
 					'postcode' => isset( $delivery_adrress_meta['postcode'] ) ? $delivery_adrress_meta['postcode'] : '',
 					'city'     => isset( $delivery_adrress_meta['city'] ) ? $delivery_adrress_meta['city'] : '',
+					'state'     => isset( $delivery_adrress_meta['state'] ) ? $delivery_adrress_meta['state'] : '',
 				);
 
 				update_post_meta( $post_id, '_rpress_delivery_address', $delivery_adrress );
