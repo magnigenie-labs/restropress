@@ -541,6 +541,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$gateway      = $json_params['gateway'];
 		$service_time = $json_params['service_time'];
 		$service_date = $json_params['service_date'];
+		$service_type = $json_params['service_type'];
 		$order_note   = $json_params['order_note'];
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
@@ -607,22 +608,17 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		);
 
 		$post_id = rpress_insert_payment( $payment_data );
-		if ( ! empty( $status ) ) {
-			// Create an array of post data to update .
-			$post_data = array(
-				'ID'          => $post_id,
-				'post_status' => $status,
-			);
-
-			// Update the post with wp_update_post .
-			wp_update_post( $post_data );
-		}
+		
 		if ( $post_id ) {
 			rpress_update_payment_status( $post_id, 'processing' );
 			// empty the shopping cart .
 			rpress_empty_cart();
 			// add delivery address meta .
-
+            if ( ! empty( $status ) ) {
+                rpress_update_payment_status( $post_id, $status );
+            }
+           
+            
 			if ( ! empty( $delivery_adrress_meta ) && is_array( $delivery_adrress_meta ) ) {
 
 				// Assuming $delivery_adrress_meta is an associative array with keys like 'address', 'flat', 'postcode', 'city'.
@@ -642,7 +638,16 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			update_post_meta( $post_id, '_rpress_payment_gateway', $gateway );
 			update_post_meta( $post_id, '_rpress_order_note', $order_note );
 			update_post_meta( $post_id, '_rpress_delivery_date', $service_date );
-
+			update_post_meta( $post_id, '_rpress_delivery_type', $service_type );
+            if ( ! empty( $order_status ) ) {
+                update_post_meta( $post_id,'_order_status', $order_status );
+                send_customer_purchase_notification( $post_id, $order_status );
+                if ( 0 >= did_action( 'rpress_update_order_status' ) ) {
+    
+                    do_action( 'rpress_update_order_status',  $post_id, $order_status );
+                }
+       
+            }
 		}
 
 		if ( is_wp_error( $post_id ) ) {
@@ -774,6 +779,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$service_time = $json_params['service_time'];
 		$service_date = $json_params['service_date'];
 		$order_note   = $json_params['order_note'];
+        $service_type = $json_params['service_type'];
 		// // Instantiate payment .
 		$payment = new RPRESS_Payment( $post_id );
         
@@ -878,6 +884,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		update_post_meta( $post_id, '_rpress_payment_gateway', $gateway );
 		update_post_meta( $post_id, '_rpress_order_note', $order_note );
 		update_post_meta( $post_id, '_rpress_delivery_date', $service_date );
+        update_post_meta( $post_id, '_rpress_delivery_type', $service_type );
 
 		$response = $this->prepare_item_for_response( $valid_check, $request );
 		$response = rest_ensure_response( $response );
