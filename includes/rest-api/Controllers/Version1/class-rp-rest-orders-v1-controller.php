@@ -362,7 +362,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 						'context'     => array( 'view', 'edit', 'embed' ),
 						'readonly'    => true,
 					),
-					'state'     => array(
+					'state'    => array(
 						'title'       => __( 'State', 'restropress' ),
 						'description' => __( 'State', 'restropress' ),
 						'type'        => 'string',
@@ -426,7 +426,34 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				'enum' => array_keys( rpress_get_order_statuses() ),
 			),
 		);
-		$additional_schema                 = apply_filters( "rp_rest_api_{$this->post_type}_schema", $additional_schema );
+
+		$additional_schema['gateway'] = array(
+			'description' => __( 'Give payment gateway name.' ),
+			'type'        => 'string',
+		);
+
+		$additional_schema['order_note'] = array(
+			'description' => __( 'Order note or instrucitons.' ),
+			'type'        => 'string',
+			'context'     => array( 'view', 'edit', 'embed' ),
+			'readonly'    => true,
+		);
+
+		$additional_schema['service_time'] = array(
+			'description' => __( 'Order note or instrucitons.' ),
+			'type'        => 'time',
+			'context'     => array( 'view', 'edit', 'embed' ),
+			'readonly'    => true,
+		);
+
+		$additional_schema['service_date'] = array(
+			'description' => __( 'Order note or instrucitons.' ),
+			'type'        => 'date',
+			'context'     => array( 'view', 'edit', 'embed' ),
+			'readonly'    => true,
+		);
+
+		$additional_schema = apply_filters( "rp_rest_api_{$this->post_type}_schema", $additional_schema );
 		foreach ( $additional_schema as $schema_key => $schema_value ) {
 			$schema['properties'][ $schema_key ] = $schema_value;
 		}
@@ -458,7 +485,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$payment = new RPRESS_Payment( $payment_post->ID );
 
 		$response->data['delivery_adrress_meta']   = $payment->get_meta( '_rpress_delivery_address' );
-		$response->data['order_note']              = $payment->order_note;
+		$response->data['order_note']              = $payment->get_meta( '_rpress_order_note' );
 		$response->data['total']                   = $payment->total;
 		$response->data['subtotal']                = $payment->subtotal;
 		$response->data['tax']                     = $payment->tax;
@@ -469,6 +496,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$response->data['date']                    = $payment->date;
 		$response->data['completed_date']          = $payment->completed_date;
 		$response->data['status_nicename']         = $payment->status_nicename;
+		$response->data['gateway_nicename']        = rpress_get_gateway_admin_label( $payment->gateway );
 		$response->data['post_status']             = $payment->post_status;
 		$response->data['user_id']                 = $payment->user_id;
 		$response->data['customer_id']             = $payment->customer_id;
@@ -509,6 +537,11 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$customer              = $json_params['customer'];
 		$status                = $json_params['status'];
 		$order_status          = $json_params['order_status'];
+
+		$gateway      = $json_params['gateway'];
+		$service_time = $json_params['service_time'];
+		$service_date = $json_params['service_date'];
+		$order_note   = $json_params['order_note'];
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
 			rpress_empty_cart();
@@ -598,11 +631,18 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 					'flat'     => isset( $delivery_adrress_meta['flat'] ) ? $delivery_adrress_meta['flat'] : '',
 					'postcode' => isset( $delivery_adrress_meta['postcode'] ) ? $delivery_adrress_meta['postcode'] : '',
 					'city'     => isset( $delivery_adrress_meta['city'] ) ? $delivery_adrress_meta['city'] : '',
-					'state'     => isset( $delivery_adrress_meta['state'] ) ? $delivery_adrress_meta['state'] : '',
+					'state'    => isset( $delivery_adrress_meta['state'] ) ? $delivery_adrress_meta['state'] : '',
 				);
 
 				update_post_meta( $post_id, '_rpress_delivery_address', $delivery_adrress );
+
 			}
+
+			update_post_meta( $post_id, '_rpress_delivery_time', $service_time );
+			update_post_meta( $post_id, '_rpress_payment_gateway', $gateway );
+			update_post_meta( $post_id, '_rpress_order_note', $order_note );
+			update_post_meta( $post_id, '_rpress_delivery_date', $service_date );
+
 		}
 
 		if ( is_wp_error( $post_id ) ) {
@@ -729,17 +769,23 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$customer              = $json_params['customer'];
 		$status                = $json_params['status'];
 		$order_status          = $json_params['order_status'];
+
+		$gateway      = $json_params['gateway'];
+		$service_time = $json_params['service_time'];
+		$service_date = $json_params['service_date'];
+		$order_note   = $json_params['order_note'];
 		// // Instantiate payment .
 		$payment = new RPRESS_Payment( $post_id );
+        
 
-        if ( ! empty( $order_status ) ) {
-            update_post_meta( $request['id'], '_order_status', $order_status );
-            send_customer_purchase_notification( $post_id, $order_status );
-            if ( 0 >= did_action( 'rpress_update_order_status' ) ) {
+		if ( ! empty( $order_status ) ) {
+			update_post_meta( $request['id'], '_order_status', $order_status );
+			send_customer_purchase_notification( $post_id, $order_status );
+			if ( 0 >= did_action( 'rpress_update_order_status' ) ) {
 
-                do_action( 'rpress_update_order_status', $request['id'], $order_status );
-            }
-        }
+				do_action( 'rpress_update_order_status', $request['id'], $order_status );
+			}
+		}
 
 		if ( ! empty( $delivery_adrress_meta ) && is_array( $delivery_adrress_meta ) ) {
 
@@ -767,7 +813,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				$payment_meta              = $payment->payment_meta;
 				$payment_meta['user_info'] = $user_info;
 				$payment_meta['email']     = $user_info['email'];
-				
+
 				$payment->update_meta( '_rpress_payment_meta', $payment_meta );
 
 		}
@@ -780,7 +826,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 			// Update the post with wp_update_post .
 			wp_update_post( $post_data );
-            rpress_update_payment_status( $request['id'], $status );
+			rpress_update_payment_status( $request['id'], $status );
 
 		}
 
@@ -827,6 +873,11 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 			}
 		}
+
+		update_post_meta( $post_id, '_rpress_delivery_time', $service_time );
+		update_post_meta( $post_id, '_rpress_payment_gateway', $gateway );
+		update_post_meta( $post_id, '_rpress_order_note', $order_note );
+		update_post_meta( $post_id, '_rpress_delivery_date', $service_date );
 
 		$response = $this->prepare_item_for_response( $valid_check, $request );
 		$response = rest_ensure_response( $response );
