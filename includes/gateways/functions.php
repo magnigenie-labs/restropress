@@ -458,6 +458,82 @@ function rpress_count_sales_by_gateway_with_date_range( $gateway_id = 'paypal', 
     return $ret;
 }
 
+/**
+ * Calculates the total earnings for completed payments made through a specific payment gateway within a specified date range.
+ *
+ * @since  3.1
+ *
+ * @param string $gateway_id The ID of the payment gateway. Default is 'paypal'.
+ * @param string $start_date Optional. The start date of the date range. Default is null.
+ * @param string $end_date   Optional. The end date of the date range. Default is null.
+ * @return float             The total earnings.
+ */
+function rpress_get_total_earnings_by_gateway_with_date_range( $gateway_id = 'paypal', $start_date = null, $end_date = null ) {
+    global $wpdb;
+
+    $earnings_query = $wpdb->prepare(
+        "SELECT SUM(pm2.meta_value) AS total_earnings
+        FROM {$wpdb->posts} p
+         JOIN {$wpdb->postmeta} pm1 ON p.ID = pm1.post_id  AND pm1.meta_key = '_rpress_payment_gateway' AND pm1.meta_value = %s
+         JOIN {$wpdb->postmeta} pm2 ON p.ID = pm2.post_id
+        WHERE p.post_type = 'rpress_payment'
+        AND p.post_status = 'publish'    
+        AND pm2.meta_key = '_rpress_payment_total'
+        AND pm2.meta_value > 0",
+        $gateway_id
+    );
+
+    if ( $start_date && $end_date ) {
+        $earnings_query .= $wpdb->prepare(
+            " AND p.post_date >= %s AND p.post_date <= %s",
+            $start_date,
+            $end_date
+        );
+    }
+
+
+    $total_earnings = $wpdb->get_var( $earnings_query );
+
+    return floatval( $total_earnings );
+}
+/**
+ * Calculates the total tax for completed payments made through a specific payment gateway within a specified date range.
+ *
+ * @since  3.1
+ *
+ * @param string $gateway_id The ID of the payment gateway. Default is 'paypal'.
+ * @param string $start_date Optional. The start date of the date range. Default is null.
+ * @param string $end_date   Optional. The end date of the date range. Default is null.
+ * @return float             The total tax.
+ */
+function rpress_get_total_tax_by_gateway_with_date_range( $gateway_id = 'paypal', $start_date = null, $end_date = null ) {
+    global $wpdb;
+
+    $tax_query = $wpdb->prepare(
+        "SELECT SUM(pm2.meta_value) AS total_earnings
+        FROM {$wpdb->posts} p
+         JOIN {$wpdb->postmeta} pm1 ON p.ID = pm1.post_id  AND pm1.meta_key = '_rpress_payment_gateway' AND pm1.meta_value = %s
+         JOIN {$wpdb->postmeta} pm2 ON p.ID = pm2.post_id
+        WHERE p.post_type = 'rpress_payment'
+        AND p.post_status = 'publish'    
+        AND pm2.meta_key = '_rpress_payment_tax'
+        AND pm2.meta_value > 0",
+        $gateway_id
+    );
+
+    if ( $start_date && $end_date ) {
+        $tax_query .= $wpdb->prepare(
+            " AND p.post_date >= %s AND p.post_date <= %s",
+            $start_date,
+            $end_date
+        );
+    }
+
+
+    $total_tax = $wpdb->get_var( $tax_query );
+
+    return floatval( $total_tax );
+}
 
 /**
  * Processes the purchase data and uses the Cash On Delivery to record

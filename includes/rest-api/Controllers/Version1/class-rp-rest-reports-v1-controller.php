@@ -213,6 +213,8 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 			$complete_count = rpress_count_sales_by_gateway_with_date_range( $gateway_id, 'publish', $post_count_start_date, $post_count_end_date );
 			$pending_count  = rpress_count_sales_by_gateway_with_date_range( $gateway_id, array( 'pending', 'failed' ), $post_count_start_date, $post_count_end_date );
+			$total_earning  = rpress_get_total_earnings_by_gateway_with_date_range( $gateway_id,  $post_count_start_date, $post_count_end_date );
+			$total_tax  = rpress_get_total_tax_by_gateway_with_date_range( $gateway_id,  $post_count_start_date, $post_count_end_date );
 
 			$data[] = array(
 				'ID'             => $gateway_id,
@@ -220,6 +222,8 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 				'complete_sales' => rpress_format_amount( $complete_count, false ),
 				'pending_sales'  => rpress_format_amount( $pending_count, false ),
 				'total_sales'    => rpress_format_amount( $complete_count + $pending_count, false ),
+				'total_earnings'    => rpress_format_amount( $total_earning, false ),
+				'total_tax'    => rpress_format_amount( $total_tax, false ),
 			);
 		}
 
