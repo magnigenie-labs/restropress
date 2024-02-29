@@ -29,6 +29,9 @@ class RP_Shortcodes {
       'fooditem_discounts'    => __CLASS__ . '::fooditem_discounts',
       'purchase_collection'   => __CLASS__ . '::purchase_collection',
       'rpress_profile_editor' => __CLASS__ . '::rpress_profile_editor',
+      'customer_dashboard'    => __CLASS__ . '::customer_dashboard',
+      'my_order'              => __CLASS__ . '::my_order',
+      'address'               => __CLASS__ . '::address',
     );
 
     foreach ( $shortcodes as $shortcode => $function ) {
@@ -407,6 +410,53 @@ class RP_Shortcodes {
     $display = ob_get_clean();
 
     return $display;
+  }
+
+   /**
+   * Customer Dashboard Shortcode
+   *
+   * Show the Customer dashboard.
+   *
+   * @since 1.0
+   * @param array $atts Shortcode attributes
+   * @param string $content
+   * @return string
+   */
+  public static function customer_dashboard( $atts = array(), $content = null ) {
+    ob_start();
+    include_once plugin_dir_path(RP_PLUGIN_FILE).'templates/rpress-user-dashboard.php';
+    return ob_get_clean();
+  }
+
+   /**
+   *  My Orders Shortcode
+   *
+   * Show the Customer orders.
+   *
+   * @since 1.0
+   * @param array $atts Shortcode attributes
+   * @param string $content
+   * @return string
+   */
+  public static function my_order( $atts = array(), $content = null ) {
+    ob_start();
+    include_once plugin_dir_path(RP_PLUGIN_FILE).'templates/rpress-my-order.php';
+    return ob_get_clean();
+  }
+   /**
+   *  My Address Shortcode
+   *
+   * Show the Customer address.
+   *
+   * @since 1.0
+   * @param array $atts Shortcode attributes
+   * @param string $content
+   * @return string
+   */
+  public static function address( $atts = array(), $content = null ) {
+    ob_start();
+    include_once plugin_dir_path(RP_PLUGIN_FILE).'templates/rpress-my-address.php';
+    return ob_get_clean();
   }
 }
 add_action( 'init', array( 'RP_Shortcodes', 'init' ) );

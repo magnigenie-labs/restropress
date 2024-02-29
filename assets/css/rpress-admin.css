@@ -1,3 +1,5 @@
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
 /*** RPRESS Admin CSS** @package RPRESS* @subpackage Admin CSS* @copyright Copyright (c) 2018, Magnigenie* @license http://opensource.org/licenses/gpl-2.0.php GNU Public License*/
 /*Bootstrap Grid System Css Start***********************************************/
 .container {
@@ -22,6 +24,10 @@
 }
 }
 .row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;	
 	margin-right: -15px;
 	margin-left: -15px
 }
@@ -2756,4 +2762,600 @@ div.rpress-add-ons-view-wrapper div.installed .rpress-license-default-wrapper.sh
 	.rpress-add-ons-view-wrapper .rp-col-sm-4 {
 		width: inherit
 }
+}
+/*-----sales_page-----*/
+body.wp-admin.wp-core-ui.js.ast-highlight-wpblock-onhover.ast-default-content-style-boxed.ast-default-sidebar-unboxed.ast-default-layout-boxed-container.ast-separate-container.ast-two-container.ast-block-custom.ast-no-sidebar.ast-sidebar-default-.restropress_page_rpress-dashboard.auto-fold.admin-bar.branch-6-4.version-6-4-3.admin-color-fresh.locale-en-us.customize-support.svg{
+    background-color: #F8F9FB;
+}
+body.wp-admin.wp-core-ui.js.restropress_page_rpress-dashboard.auto-fold.admin-bar.branch-6-4.version-6-4-2.admin-color-fresh.locale-en-us.customize-support.svg #wpfooter {
+    position: inherit;
+}
+*{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.flex {
+    display: flex;
+}
+.items-center {
+    align-items: center;
+}
+.items-flex-start{
+    align-items: flex-start;
+}
+.justify-content-end{
+	justify-content: end;
+}
+.justify-content-space-between{
+	justify-content: space-between;
+}
+.text-align-right{
+	text-align: right;
+}
+.text-align-left{
+	text-align: left;
+}
+.text-align-center{
+	text-align: center;
+}
+.text-align-top{
+	text-align: top;
+}
+.ml-auto {
+    margin-left: auto;
+}
+.mr-auto {
+    margin-right: auto;
+}
+.mt-1{
+    margin-top: 1rem;
+}
+.mt-5 {
+    margin-top: 1.25rem;
+}
+.mt-6{
+    margin-top: 1.85rem;
+}
+.mt-25 {
+    margin-top: 3.25rem;
+}
+.ml-3 {
+    margin-left: 0.75rem;
+}
+.pl8{
+    padding-left: 8px;
+}
+.pr8{
+	padding-right: 8px;
+}
+.page-header {
+    margin:0 0 20px 0;
+}
+.sales-page-wrap select:focus {
+    border-color: #E8E9EB;
+    color: #2c3338;
+    box-shadow: none;
+}
+h2.page-title{
+    margin: 0;    
+    font-size: 22px;
+    font-weight: 500;
+	color: #0B0545;
+}
+a.see-all-order{
+    font-size: 16px;
+    font-weight: 500;
+    color: #0B0545;
+    text-decoration: none;
+}
+.card-title {
+    font-size: 16px;
+    font-weight: 500;
+	line-height: 19.36px;
+    color: #0B0545;
+    margin: 0;
+}
+.rp-red{    
+    background-color: #FFD9DE;
+    color: #FF2F41;
+}
+.rp-green{    
+    background-color:#C8FFD4;
+    color:#028614;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+.sale-status{
+	font-size:8px;
+	border-radius: 100%;
+	margin-right: 10px;
+}
+.sale-status-completed{
+	color: #CDD0D4;
+	box-shadow: 0 0 0 2px #E3E4E7;
+}
+.sale-status-processing{
+	color:#69B66F;
+	box-shadow: 0 0 0 2px #69B66F;
+}
+.sale-status-cancelled{
+	color:#BA3131;
+	box-shadow: 0 0 0 2px #FF8787;
+}
+.rp-product-quantity-no{
+	background-color: #E2E2E2;
+    border-radius: 10px;
+    display:inline-block;
+    width: 65px;
+    height: 20px;
+    padding: 0px 7px;
+    font-size: 13px;
+    font-weight: 500;
+	margin-top:3px;
+}
+/*---left_side---*/
+.leftbg{
+    padding:50px 40px 50px 0px;
+}
+.box{
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0px 2px 40px 0px #0000000A;
+    border-radius:32px;
+    padding: 20px 20px;
+}
+.rp-sales-overview-box{
+    height: 200px;
+    padding: 40px 20px;
+}
+.rp-sale-no{
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 33.89px;
+}
+.rp-sales-growth p{
+    font-size: 14px;
+    font-weight: 500;
+}
+.rp-sales-growth-rate{
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-weight: 500;
+    font-size: 12px;
+}
+/*---today-sale---*/
+.today-sale-wrap{
+	padding: 30px 30px 33px;
+}
+.today-sale-wrap p{
+	font-size: 21px;
+    font-weight: 600;
+    margin: 0;
+	color: #141414;
+}
+.today-sale-wrap .rp-sale-no {
+    font-size: 40px;
+	color: #141414;
+}
+.today-sale-wrap .rp-sales-growth-rate {
+    padding: 4px 15px;
+	font-size: 16px;
+	border-radius: 6px;
+}
+/*---revenue-sale---*/
+.revenue-wrap select{
+	border: 1px solid #E8E9EB;
+    border-radius: 15.5px;
+    margin-left: 10px;
+	padding: 0 28px 0 12px;
+}
+.revenue-wrap .card-title {
+    font-size: 21px;
+    font-weight: 600;
+}
+.revenue-graph-wrap img{
+	height: 222px;
+    width: 100%;
+}
+/*----table----*/
+.sales-page-wrap table{
+    width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.sales-page-wrap .table tbody tr:nth-child(even){
+	background-color: #ffffff;
+}
+.sales-page-wrap .table tr td:first-child{
+    border-top-left-radius: 0.6rem;
+    border-bottom-left-radius: 0.6rem;
+}
+.sales-page-wrap .table tr td:last-child {
+    border-top-right-radius: 0.6rem;
+    border-bottom-right-radius: 0.6rem;
+}
+.sales-page-wrap .table tr td {
+	font-weight: 500;
+    font-size: 15px;
+	padding:0.85rem 0.85rem;
+	border:0;
+}
+.sales-page-wrap .table-striped tbody tr:nth-of-type(even) {
+    background-color: #eff1f5;
+}
+.sales-page-wrap .table > thead > tr > th {
+    border-bottom:2px solid #EFF0F2;
+    font-size: 15px;
+    font-weight: 500;
+	padding:0.75rem 0.85rem;
+	box-shadow: none;
+	color: #9E9FA3;
+}
+.sales-page-wrap .table > thead > tr > th:last-child{
+	width: 4.5rem;
+}
+.sales-page-wrap h6.rp-order-id{
+    display: block;
+    color:#4C3F4C;
+    margin: 0;
+    font-size: 15px;
+}
+.sales-page-wrap small.rp-order-time {
+    color: #9E9FA3;
+    font-size: 14px;
+    font-weight: 400;
+}
+.sales-page-wrap .viewbg{
+	background-color: #EEEEEE;
+    border-radius: 5px;
+    text-align: center;
+    height: 25px;
+    line-height: 24px;
+    display: inline-block;
+    width: 38px;
+}
+.sales-page-wrap .rp-product-amount span{
+    border-radius: 3px;
+    padding: 1px 8px;
+    display: inline-block;
+    font-size: 13px;	
+	margin-top:3px;
+}
+.sales-page-wrap .paid {
+    background-color: #FFD966;
+	color: #4C3F4C;
+}
+.sales-page-wrap .unpaid{
+    background-color:#2986CC;
+	color: #FFFFFF;
+}
+/*---btn---*/
+.btn{
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    line-height: 1.84615385;
+    border-radius: 6px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	cursor: pointer;
+}
+.btn svg{
+    margin-right: 2px;
+}
+.btn-blue{
+    color: #fff;
+    background-color:#4E4BF5;
+    border-color:#4E4BF5;
+}
+button.add-product-btn{
+	width: 200px;
+	max-width: 100%;
+	border-radius: 11px;
+	padding: 0.6rem 0.75rem;
+}
+/*----select----*/
+.year_select_wrap .arrow-icon_select {
+	position: absolute;
+	top: 15px;
+	right: 2%;
+	font-size: 16px;
+	height: 22px;
+	transition: all 275ms;
+	
+  }
+  .year_select_wrap .multi-column-select {
+	position: relative;
+	float: left;
+	min-width: 300px;
+	width: 300px;
+	min-height: 40px;
+	background-color: #fff;
+	border:1.5px solid #E8E9EB;
+	border-radius:6px;
+	transition: all 375ms ease-in-out;
+  }
+  .year_select_wrap .multi-column-select select {
+	position: absolute;
+	overflow: hidden;
+	height: 0px;
+	opacity: 0;
+	z-index: -1;
+  }  
+  .year_select_wrap .list_multi-column-select {
+	position: relative;
+	float: left;
+	width: 100%;
+  }  
+  .year_select_wrap .list-multi-select-option {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 999;
+	overflow: hidden;
+	height: 0px;
+	width: 100%;
+	background-color: #fff;
+	padding: 0px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	border-radius: 0px 0px 3px 3px;
+	box-shadow: 0px 3px 10px #00000017;
+	transition: all 375ms ease-in-out;
+	display: flex;
+    flex-wrap: wrap;
+  }
+  .year_select_wrap .list-multi-select-option li {
+	position: relative;
+	float: left;
+	width:50%;
+	outline: 1px solid #E0E0E0;
+	background-color: #f0f0f0;
+	list-style-type: none;
+	padding:15px 10px;
+	margin: 0px;
+	transition: all 275ms ease-in-out;
+	display: block;
+	cursor: pointer;
+	font-size: 14px;
+    font-weight: 500;
+    color: #2c3338;
+  }
+  .year_select_wrap .list-multi-select-option li:last-child {
+	border-radius: 3px;
+	border-bottom: 0px;
+  }
+  .year_select_wrap .list-multi-select-option li:hover {
+	background-color: #ffffff;
+  }
+  .year_select_wrap .list-multi-select-option .active {
+	background-color: #ffffff;
+  }
+  .year_select_wrap .list-multi-select-option .active:before {
+	content: "\f0c8"; 
+	font-family: FontAwesome;
+	display: inline-block;
+	font-size: 7px;
+    margin-right: 10px;
+	color: #4E4BF5;
+  }
+  .year_select_wrap .selecionado_opcion {
+	padding: 15px 2% 15px 15%;
+    width: 100%;
+    display: block;
+    margin: 0px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2c3338;
+    background-image: url(http://restropress-admin-sales.local/wp-content/uploads/2024/01/calender-ico.png);
+    background-size: 14px;
+    background-repeat: no-repeat;
+    background-position: 6% 51%;
+  }
+  .year_select_wrap ul.list-multi-select-option li:last-child{
+	width: 100%;
+    text-align: center;
+  }
+.year_select_wrap input.custom{
+	min-width: 300px;
+	width: 300px;
+	min-height: 40px;
+	padding: 15px 2% 15px 4%;
+	position: absolute;
+}
+
+/*---right_side---*/
+.rightbg{
+    background-color:#F2F2FC;
+    padding:50px 20px;
+}
+.sales-page-wrap .current-year-btn{
+    background-color: #fff;
+    border: 1px solid #E8E9EB;
+    border-radius: 6px;
+    position: relative;
+	display: inline-flex;
+}
+.sales-page-wrap .current-year-btn select{
+	border: 0;
+    outline: 0;
+	box-shadow: none;
+}
+.sales-page-wrap .current-year-btn span.input-group-text,
+.sales-page-wrap .rightbg button.btn.btn-blue.ml-3 {
+    align-items: center;
+    display: flex;
+}
+.sales-page-wrap .rightbg .rpress-import-export-form .button-secondary{
+    color: #ffffff;
+    border-color: transparent;
+    background: transparent;
+	font-size: 14px;    
+	padding: 0px 2px;
+}
+/*---add-product-section---*/
+.rp-add-product-wrap .image-fit{
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    padding: 8px;
+    width: 47px;
+    height: 49px;
+    text-align: center;
+}
+.rp-product-hd{
+    font-weight: 400;
+}
+.rp-product-no{
+	font-size: 16px;
+    font-weight: 500;
+    color: #0B0545;
+    line-height: 19.36px;
+    margin: 0;
+}
+/*---bestselling-product---*/
+.rp-bestselling-product-image img{
+	width: 49px;
+    height: 49px;
+    border-radius: 18px;
+}
+.rp-bestselling-product-name{
+    font-size: 16px;
+    font-weight: 500;
+    color: #0B0545;
+    line-height: 19.36px;
+	width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.rp-bestselling-product-description{
+    font-size: 14px;
+    font-weight: 500;
+    color: #9E9FA3;
+    line-height: 19.36px;
+}
+.rp-sale-stock-no{
+    font-size: 14px;
+    font-weight: 500;
+}
+.rp-sale-stock{
+    color: #028614;
+    font-size: 14px;
+    font-weight: 500;
+	margin-left: 1.75rem;
+}
+.rp-sale-stock i{
+    color: #028614;
+    font-size:6px;
+	margin-right: 6px;
+	margin-top: 4px;
+}
+.rp-sale-out-of-stock{
+    color:#b4afaf;
+    font-size: 14px;
+    font-weight: 500;
+	margin-left: 1.75rem;
+}
+.rp-sale-out-of-stock i{
+    color:#b4afaf;
+    font-size:6px;
+	margin-right: 6px;
+	margin-top: 4px;
+}
+/*----customer-information----*/
+.rp-customer-information-list .rp-customer-information-graph img{
+	width: 119px;
+    height: 119px;
+}
+.rp-customer-information-list .rp-customer-information-desc{
+	color: #9E9FA3;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.73px;
+}
+.rp-customer-information-list .rp-customer-type{
+	color: #12253F;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 15.73px;
+	margin: 0 0 5px;
+}
+.rp-customer-information-list span.rp-customer-rate{
+    color: #4E4BF5;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 18.15px;
+}
+.rp-customer-information-wrap select{
+	border: 1px solid #E8E9EB;
+    border-radius: 6px;
+}
+/*---dropdown-menu---*/
+.rp-order-dropdown{
+	position: relative;
+	filter: url(#goo);
+  }
+.rp-order-dropdown .dropdown__items{
+	background-color: #fff;
+	padding: 10px 15px;
+	border-radius: .375rem;
+  }
+.rp-order-dropdown .dropdown__items{
+	margin: 0;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width:100px;
+	list-style: none;
+	visibility: hidden;
+	z-index: -1;
+	opacity: 0;
+	transition: all 0.4s cubic-bezier(0.93, 0.88, 0.1, 0.8);
+	box-shadow: 0px 3px 10px #00000017
+  }
+.rp-order-dropdown input {
+	display: none;
+  }
+.rp-order-dropdown input:checked ~ .dropdown__items {
+	top: calc(100% + 0px);
+	visibility: visible;
+	opacity: 1;
+}
+.rp-order-dropdown i.fa-solid.fa-ellipsis {
+    color: #C3C3C3;
+    font-size: 18px;
+}
+#chartContainer{
+	height: 140px;
+}
+#footer-thankyou{
+	display: none;
+}
+#rp-customer-information-graph{
+	height:150px; 
+	width:60%;
+}
+.custom-dropdown select {
+    position: absolute;
+    top: 12;
+	right: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.restropress_page_rpress-dashboard #wpfooter{
+	display: none;
 }

@@ -624,6 +624,12 @@ function rpress_get_registered_settings() {
             			'std'           => __( 'Sorry, we are closed for ordering now.', 'restropress' ),
 						'allow_blank'	=> false,
 					),
+					'rp_reorder' => array(
+						'id'            => 'rp_reorder',
+						'name'          => __( 'Enable reorder', 'restropress' ),
+						'desc'          => __( 'Enable this option to reorder.', 'restropress' ),
+						'type'          => 'checkbox',
+  					),
 				),
 
 				//Checkout Options

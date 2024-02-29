@@ -203,6 +203,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         'src'     => self::get_asset_url( 'assets/js/rp-tata.js' ),
         'deps'    => array( 'jquery' ),
         'version' => RP_VERSION,
+      ),
+      'rp-reorder' => array(
+        'src'     => self::get_asset_url( 'assets/js/frontend/rp-reorder.js' ),
+        'deps'    => array( 'jquery' ),
+        'version' => RP_VERSION,
       )
     );
 
@@ -223,6 +228,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     self::enqueue_script( 'rp-toast' );
     self::enqueue_script( 'swl-js' );
 
+    $user_params = array(
+      'ajaxurl'                   => rpress_get_ajax_url(),
+    );
+    wp_register_script( 'user-dashboard-scripts', plugin_dir_url( RP_PLUGIN_FILE ). 'assets/js/user-dashboard.js', array('jquery'), RP_VERSION, true );
+    wp_localize_script( 'user-dashboard-scripts', 'users', $user_params );
+    wp_enqueue_script( 'user-dashboard-scripts' );
+
     if( is_restropress_page() ) {
       self::enqueue_script( 'sticky-sidebar' );
       self::enqueue_script( 'rp-fancybox' );
@@ -231,7 +243,10 @@ if ( ! defined( 'ABSPATH' ) ) {
       self::enqueue_script( 'rp-modal' );
       self::enqueue_script( 'rp-frontend' );
       self::enqueue_script( 'rp-tabs' );
+      self::enqueue_script( 'rp-reorder' );
     }
+    self::enqueue_script( 'rp-frontend' );
+
 
     if ( rpress_is_checkout() ) {
       self::enqueue_script( 'rp-checkout' );
@@ -382,6 +397,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     if ( rpress_get_option( 'disable_styles', false ) ) {
       return;
     }
+
+    wp_register_style( 'user-dashboard-styles', plugin_dir_url( RP_PLUGIN_FILE ). '/assets/css/user-dashboard.css', array(), RP_VERSION, 'all' );
+    wp_enqueue_style( 'user-dashboard-styles' );
 
     if( ! is_restropress_page() ) {
       return;

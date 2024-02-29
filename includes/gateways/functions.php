@@ -421,7 +421,7 @@ function rpress_count_sales_by_gateway( $gateway_id = 'paypal', $status = 'publi
 /**
  * Counts the number of purchases made with a gateway within a specified date range.
  *
- * @since  3.0.1
+ * @since  3.1
  *
  * @param string $gateway_id The ID of the payment gateway. Default is 'paypal'.
  * @param string $status     The status of the payments to count. Default is 'publish'.

@@ -32,16 +32,24 @@
       <select class="rpress-pickup rpress-allowed-pickup-hrs rpress-hrs rp-form-control" id="rpress-pickup-hours" name="rpress_allowed_hours">
        <?php if( is_array( $store_timings ) ) :
          foreach( $store_timings as $key => $time ) :
-           $loop_time = date( $time_format, $time ); ?>
-           <option value='<?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $loop_time; ?>'<?php selected( $selected_time,$loop_time, $asap_option, true ); ?>><?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $loop_time; ?></option>
-         <?php endforeach; ?>
+          $loop_time = date( $time_format, $time );
+          if(class_exists('RPRESS_SlotLimit')){
+            ?><option value='<?php echo $loop_time; ?>' <?php selected( $selected_time,$loop_time,$asap_option, true ); ?>>
+            <?php 
+              echo apply_filters( 'rpress_store_delivery_timings_slot_remaining', $loop_time ); // Applying hook to add additional text
+            ?>
+            </option><?php
+          } else {
+            ?><option value='<?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $loop_time; ?>'<?php selected( $selected_time,$loop_time,$asap_option, true ); ?>><?php echo ( $asap_option && $key == 0 ) ? __( 'ASAP' , 'restropress' ) : $loop_time; ?></option><?php
+          }
+        endforeach; ?>
        <?php endif; ?>
-    	</select>
+      </select>
     <?php endif; ?>
 
     <?php do_action( 'rpress_after_service_time', 'pickup' ); ?>
 
-	</div>
-	<!-- Pickup Time Wrap Ends -->
+  </div>
+  <!-- Pickup Time Wrap Ends -->
 
 </div>

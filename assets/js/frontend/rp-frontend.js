@@ -328,6 +328,7 @@ jQuery(function ($) {
         success: function (response) {
 
           $('#rpressModal')
+          
             .removeClass('loading');
           
           $('#rpressModal .modal-title')

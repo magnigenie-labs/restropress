@@ -318,7 +318,6 @@ final class RestroPress {
 		 */
 		include_once RP_PLUGIN_DIR . 'includes/class-rpress-shortcodes.php';
 		include_once RP_PLUGIN_DIR . 'includes/shortcodes/class-shortcode-fooditems.php';
-
 		if ( $this->is_request( 'admin' ) || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
 			/**

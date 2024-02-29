@@ -52,7 +52,7 @@ $closed_message = rpress_get_option( 'store_closed_msg', __( 'Sorry, we are clos
 					<!-- Service Option Starts Here -->
 					<li class="nav-item">
 						<a class="nav-link single-service-selected" id="nav-<?php echo esc_attr( $service );?>-tab" data-service-type="<?php echo esc_attr( $service );?>" data-toggle="tab" href="#nav-<?php echo esc_attr( $service ); ?>" role="tab" aria-controls="nav-<?php echo esc_attr( $service ); ?>" aria-selected="false">
-							<?php echo rpress_service_label( $service ); ?>
+						<?php echo apply_filters('rpress_modify_service_label',rpress_service_label( $service ) ); ?>
 						</a>
 					</li>
 					<!-- Service Option Ends Here -->

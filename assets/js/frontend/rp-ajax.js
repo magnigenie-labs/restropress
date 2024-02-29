@@ -193,8 +193,8 @@ jQuery(document)
                 .remove();
               $('.blur-content').hide();
               if ($("#rpress_final_total_wrap .rp-loading").length) {
-                $("#rpress_final_total_wrap .rp-loading").hide();
-              }
+                  $("#rpress_final_total_wrap .rp-loading").hide();
+                }
               $('.rpress-error')
                 .hide();
               $(rpress_global_vars.checkout_error_anchor)

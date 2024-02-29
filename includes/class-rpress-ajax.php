@@ -115,7 +115,8 @@ class RP_AJAX {
       'get_states',
       'fooditem_search',
       'checkout_update_service_option',
-      'remove_fees_after_empty_cart'
+      'remove_fees_after_empty_cart',
+      'reorder'
     );
 
     foreach ( $ajax_events_nopriv as $ajax_event ) {
@@ -143,11 +144,116 @@ class RP_AJAX {
       'deactivate_addon_license',
       'show_order_details',
       'more_order_history',
+      'delete_user_address'
     );
 
     foreach ( $ajax_events as $ajax_event ) {
       add_action( 'wp_ajax_rpress_' . $ajax_event, array( __CLASS__, $ajax_event ) );
     }
+  }
+
+  /**
+   *  for order reorder.
+   */
+  public static function  reorder() {
+    
+    $user = rpress_get_payment_meta_user_info( absint( $_POST['order_id'] ) );
+    
+    if( get_current_user_id() !== $user['id'] ) return;
+
+    $order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : ''; 
+
+    $payment = get_post( $order_id );
+
+    if( empty( $payment ) ) return;
+
+    $cart = rpress_get_payment_meta_cart_details( $payment->ID, true );
+
+    if ( $cart ) {
+        foreach( $cart as $key=>$fooditem ) {
+
+            $instructions   = isset( $item['instruction'] ) ? $item['instruction'] : '';
+            $fooditem_id    = $fooditem['id'];
+            $quantity       = $fooditem['quantity'];
+            $items          = '';
+            $options        = array();
+            $addon_items    = $fooditem['addon_items'];
+            
+
+            foreach( $addon_items as $key => $value ) {
+                if ( is_array( $value ) && ! empty( $value ) ) {
+                    $options['addon_items'][$key]['addon_item_name'] = $value['addon_item_name'];
+                    $options['addon_items'][$key]['addon_id'] = $value['addon_id'];
+                    $options['addon_items'][$key]['price'] = $value['price'];
+                    $options['addon_items'][$key]['quantity'] = $value['quantity'];
+                }
+            }
+            //Check whether the fooditem has variable pricing
+            if ( rpress_has_variable_prices( $fooditem_id ) ) {
+                $price_id       = $fooditem['item_number']['options']['price_id'];
+                $options['price_id'] = $price_id;
+                $options['price']    = rpress_get_price_option_amount( $fooditem_id, $price_id );
+            } else {
+                $options['price'] = rpress_get_fooditem_price( $fooditem_id );
+            }
+            
+            
+            $options['id']          = $fooditem_id;
+            $options['quantity']    = $quantity;
+            $options['instruction'] = $instructions;
+
+            $key    = rpress_add_to_cart( $fooditem_id, $options );
+            $item   = array(
+              'id'      => $fooditem_id,
+              'options' => $options
+            );
+            $item   = apply_filters( 'rpress_ajax_pre_cart_item_template', $item );
+            $items .= rpress_get_cart_item_template( $key, $item, true, $data_key = $key );
+
+            $return = array(
+                'subtotal'      => html_entity_decode( rpress_currency_filter( rpress_format_amount( rpress_get_cart_subtotal() ) ), ENT_COMPAT, 'UTF-8' ),
+                'total'         => html_entity_decode( rpress_currency_filter( rpress_format_amount( rpress_get_cart_total() ) ), ENT_COMPAT, 'UTF-8' ),
+                'cart_item'     => $items,
+                'cart_key'      => $key,
+                'cart_quantity' => html_entity_decode( rpress_get_cart_quantity() )
+            );
+
+            if ( rpress_use_taxes() ) {
+                $cart_tax = (float) rpress_get_cart_tax();
+                $return['taxes'] = html_entity_decode( rpress_currency_filter( rpress_format_amount( $cart_tax ) ), ENT_COMPAT, 'UTF-8' );
+            }
+
+            $return = apply_filters( 'rpress_cart_data', $return );
+
+        }
+    }
+
+    $html = '<div>
+    <header class="modal__header modal-header">
+        <h2 class="modal__title modal-title">'. __( 'Food Order', 'restropress' ) .'</h2>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+    </header>
+    <main class="modal__content modal-body">
+        <div class="rpress-order-details">
+            <div class="rp-order-section-md-data">
+                <div class="rp-detils-content-view">
+                    <p>All Item from Order #'. $order_id .' have been added to your cart.</p>
+                    <a class="btn btn-primary btn-block" href="'. home_url( '/order-online' ) .'">'. __('Add more items', 'restropress').'</a>
+                    <a class="btn btn-primary btn-block" href="'. rpress_get_checkout_uri() .'">'. __('Checkout Now', 'restropress').'</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="modal__footer modal-footer"></footer>
+    </div>';
+
+    $response = array(
+      'html' => $html,
+    );
+
+    wp_send_json_success( $response );
+    rpress_die();
+
   }
 
   /**
@@ -773,9 +879,10 @@ class RP_AJAX {
   public static function get_order_details() {
 
     check_admin_referer( 'rpress-preview-order', 'security' );
-
-    if( ! current_user_can( 'edit_shop_payments', $_GET['payment_id'] ) ) {
-      wp_die( esc_html__( 'You do not have permission to update this order', 'restropress' ), esc_html__( 'Error', 'restropress' ), array( 'response' => 403 ) );
+    if ( isset( $_GET['payment_id'] ) ){
+      if( ! current_user_can( 'edit_shop_payments', $_GET['payment_id'] ) ) {
+        wp_die( esc_html__( 'You do not have permission to update this order', 'restropress' ), esc_html__( 'Error', 'restropress' ), array( 'response' => 403 ) );
+      }
     }
 
     $order = rpress_get_payment( absint( $_GET['order_id'] ) );
@@ -1556,6 +1663,34 @@ class RP_AJAX {
     $html = ob_get_clean();
     wp_send_json_success( [ 'html' => $html, 'found_post' => $found_post ] );
     rpress_die();
+  }
+
+  public static function delete_user_address(){
+    if(isset($_POST['index'])){
+      $index = $_POST['index'];
+      $user_id = get_current_user_id();
+      // Get user addresses
+      $user_addresses = get_user_meta($user_id, 'user_addresses', true);
+      
+      if(!empty($user_addresses)){
+          // Remove the address array from the main array
+          unset($user_addresses[$index]);
+          
+          // Update user meta data
+          $updated = update_user_meta($user_id, 'user_addresses', $user_addresses);
+          
+          if($updated){
+              // Return success response
+              echo json_encode(['success' => true]);
+          } else {
+              // Return failure response
+              echo json_encode(['success' => false]);
+          }
+      } else {
+          // No addresses found
+          echo json_encode(['success' => false]);
+      }
+    }
   }
 
   /**

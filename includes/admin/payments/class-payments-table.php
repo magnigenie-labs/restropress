@@ -1150,7 +1150,7 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
      * @param  RP_Payment $payment Payment Object.
      * @return html
      */
-  	public  function get_ordered_items( $payment ) {
+  	public static  function get_ordered_items( $payment ) {
 
     	$order_items = $payment->cart_details;
 
@@ -1396,18 +1396,6 @@ class RPRESS_Payment_History_Table extends WP_List_Table {
 
               <?php do_action( 'rpress_admin_order_preview_end' ); ?>
             </article>
-
-            <footer>
-              <div class="inner">
-
-                <div class="rpress-action-button-group">
-                 {{{ data.actions_html }}}
-                </div>
-<a class="button button-primary button-large" aria-label="<?php esc_attr_e( 'Edit this order', 'restropress' ); ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=rpress-payment-history&view=view-order-details' ) ); ?>&id={{ data.id }}"><?php esc_html_e( 'Edit', 'restropress' ); ?></a>
-
-              </div>
-            </footer>
-
           </section>
         </div>
       </div>

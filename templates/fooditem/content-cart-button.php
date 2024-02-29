@@ -22,6 +22,7 @@
       echo  rpress_price_range( $post->ID );
 
     } else {
+    }
  /** 
     * Condition added to show the item price as included or excluded Tax
     * @since 2.9.6
@@ -38,8 +39,14 @@
       } else {
         $price = get_post_meta( $post->ID,'rpress_price', true ) ;
       }
-      echo rpress_currency_filter( rpress_format_amount( $price ) );
-    }
+      if ( $variable_pricing ) {
+
+        echo apply_filters( 'rpress_item_price_display', rpress_price_range( $post->ID ), $post );
+
+      } else {
+
+        echo apply_filters( 'rpress_item_price_display', rpress_currency_filter( rpress_format_amount( $price ) ), $post );
+      }
 
     ?>
 

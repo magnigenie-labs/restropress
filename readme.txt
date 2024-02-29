@@ -1,11 +1,11 @@
 === RestroPress - Online Food Ordering System ===
 Contributors: magnigenie,sagarseth9,kshirod-patel,bibhu1995
-Tags: Food ordering, online ordering, restaurant ordering, restaurant menu, food delivery, takeaway, pickup, restaurant menu
+Tags: Food ordering, online ordering, restaurant ordering, restaurant menu, food delivery, takeaway, pickup, restaurant menu, reorder, gift voucher
 Donate link: https://paypal.me/magnigeeks
 Requires at least: 4.4
 Requires PHP: 5.5
-Tested up to: 6.4.2
-Stable tag: 3.0.0
+Tested up to: 6.4.3
+Stable tag: 3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,10 +40,14 @@ The above shortcode will only display the child categories of lunch on the categ
 = Restropress In action =
 [youtube https://www.youtube.com/watch?v=CGVpXYw6JDQ]
 
-Check  [RestroPress Website](https://www.restropress.com/) for details and support.
+Check  <a href = "https://www.restropress.com/" target="_blank"> RestroPress Website </a> for details and support.
 
 = Restropress Demo =
-Check [RestroPress Demo Website](https://demo.restropress.com/)
+Check <a href="https://demo.restropress.com/" target="_blank"> RestroPress Demo Website </a>
+
+= REST API =
+Check <a href ="https://documenter.getpostman.com/view/14761886/2s9YsFCYrf" target="_blank"> RestroPress REST API</a>
+<i> Note: You can use this feature from version 3.0.0 </i>
 
 = Why use RestroPress: =
 * 100% Free and easy to install and setup.
@@ -81,7 +85,16 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == ChangeLog ==
 
-= Version 3.0.0 (2024-01-03) =
+
+= Version 3.1 (2024-01-10) =
+
+* Added: Admin dashboard
+* Added: User dashboard
+* Added: Reorder feature
+* Added: Service based discount
+
+
+= Version 3.0.0 (2024-01-05) =
 
 * Fixed: Excluding tax issue.
 * Fixed: double tooltip issue.
@@ -90,7 +103,7 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 * Fixed: Remove button of new category addon add issue.
 * Fixed: Addons pricing issue.
 * Updated: Instruction update to save variable pricing before adding addons.
-* Added: Rest API Added can be found more details on https://documenter.getpostman.com/view/14761886/2s9YsFCYrf.
+* Added: Rest API Added can be found more details on <a>https://documenter.getpostman.com/view/14761886/2s9YsFCYrf </a>
 
 = Version 2.9.8 (2023-11-17) =
 
@@ -610,5 +623,5 @@ If you have any suggestions for a new extension, feel free to email us at suppor
 
 == Upgrade Notice ==
 
-= Version 3.0.0 =
+= Version 3.1 =
 * New update for RestroPress is available. Please take a backup before the update.

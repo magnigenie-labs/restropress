@@ -47,6 +47,8 @@ class RP_Admin_Menus {
 		$customer_view_role = apply_filters( 'rpress_view_customers_role', 'view_shop_reports' );
 
 		add_menu_page( __( 'RestroPress', 'restropress' ), __( 'RestroPress', 'restropress' ), 'manage_shop_settings', 'restropress', null, null, '55.5' );
+		//Added version 3.1
+		add_submenu_page( 'restropress', __( 'Dashboard', 'restropress' ), __( 'Dashboard', 'restropress' ), $customer_view_role, 'rpress-dashboard', array( $this, 'rpress_dashboard_page' ), null, null );
 
 		add_submenu_page( 'restropress', $rpress_payment->labels->name, $rpress_payment->labels->menu_name, 'edit_shop_payments', 'rpress-payment-history', 'rpress_payment_history_page', null , null );
 
@@ -67,6 +69,26 @@ class RP_Admin_Menus {
 
 	}
 
+	public function rpress_dashboard_page() {
+		// Define the path to the file
+		// Get the plugin directory path
+		$plugin_dir = plugin_dir_path(__FILE__);
+		// Define the relative path to the file within the plugin
+		$file_relative_path = '/dashboard/rp-dashboard.php';
+	
+		// Build the full path to the file
+		$file_path = $plugin_dir . $file_relative_path;
+	
+		// Check if the file exists before including it
+		if (file_exists($file_path)) {
+			// Include the file
+			include_once($file_path);
+		} else {
+			// Display an error message if the file doesn't exist
+			echo "Error: File not found - $file_relative_path";
+		}
+	}
+
 	/**
 	 * Adds the order pending count to the menu.
 	 */
@@ -80,7 +102,6 @@ class RP_Admin_Menus {
 			// Add count if user has access.
 			if ( apply_filters( 'rpress_include_pending_order_count_in_menu', true ) && current_user_can( 'edit_shop_payments' ) ) {
 				$order_count = apply_filters( 'rpress_menu_order_count', rp_get_order_count( 'pending' ) );
-
 				if ( $order_count ) {
 					foreach ( $submenu['restropress'] as $key => $menu_item ) {
 						if ( 0 === strpos( $menu_item[0], _x( 'Orders', 'Admin menu name', 'restropress' ) ) ) {

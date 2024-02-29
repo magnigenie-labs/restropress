@@ -79,6 +79,21 @@ if ( is_user_logged_in() ):
 												<?php esc_html_e('View Details', 'restropress') ?>
 											</span>
 										</a>
+										<!-- add reorder item -->
+										<?php do_action( 'rpress_order_after_view_details', $payment->ID, $payment->payment_meta ); ?>
+										<?php 
+										$rpress_settings = get_option( 'rpress_settings', true );
+										$reorder = isset( $rpress_settings['rp_reorder'] )?$rpress_settings['rp_reorder']:0;
+	   									 if ( $reorder == 1 ) {
+										?>
+										<a href="#" class="rpress-reorder-btn " data-order-id="<?php echo esc_attr__( $payment->ID ); ?>">
+
+											<span class="rp-ajax-toggle-text">
+												<?php esc_html_e('Reorder', 'restropress') ?>
+											</span>
+										</a>
+										<?php } ?>
+										<!-- add reorder item end -->
 									</div>
 								</div>
 								<div class="rp-col-md-3 rpress-his-col">
