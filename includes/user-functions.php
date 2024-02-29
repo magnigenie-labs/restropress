@@ -452,6 +452,71 @@ function rpress_count_total_customers( $args = array() ) {
 
 
 /**
+ * Counts the total number of unique customers who made purchases within a specified date range.
+ *
+ * @since 1.0.0
+ *
+ * @param string $start_date Optional. The start date of the date range. Default is the beginning of the current year.
+ * @param string $end_date   Optional. The end date of the date range. Default is the end of the current year.
+ * @return int              The total number of unique customers within the specified date range.
+ */
+function rpress_count_total_customers_by_date_range($start_date = '', $end_date = '') {
+    global $wpdb;
+
+    // If start date is not provided, set it to the beginning of the current year
+    if (empty($start_date)) {
+        $current_year = date('Y');
+        $start_date = $current_year . '-01-01';
+    }
+
+    // If end date is not provided, set it to the end of the current year
+    if (empty($end_date)) {
+        $current_year = date('Y');
+        $end_date = $current_year . '-12-31';
+    }
+
+    // Prepare the SQL query
+    $sql = $wpdb->prepare("
+        SELECT COUNT(DISTINCT meta.meta_value) AS total_customers
+        FROM {$wpdb->posts} AS p
+        JOIN {$wpdb->postmeta} AS meta ON p.ID = meta.post_id
+        WHERE p.post_type = 'rpress_payment'
+        AND p.post_status = 'publish'
+        AND p.post_date >= %s
+        AND p.post_date <= %s
+        AND meta.meta_key = '_rpress_payment_customer_id'
+    ", $start_date, $end_date);
+
+    // Execute the query
+    $total_customers = $wpdb->get_var($sql);
+
+    // Return the total number of customers
+    return $total_customers;
+}
+
+
+/**
+ * Counts the number of new customers within a specified date range.
+ *
+ * @param string $start_date The start date of the date range.
+ * @param string $end_date   The end date of the date range.
+ * @return int               The number of new customers within the specified date range.
+ */
+function rpress_count_new_customers_by_date_range($start_date, $end_date) {
+    global $wpdb;
+
+    $query = $wpdb->prepare("
+        SELECT COUNT(*) AS total_new_customers
+        FROM {$wpdb->prefix}rpress_customers
+        WHERE date_created BETWEEN %s AND %s
+        AND purchase_count > 0;
+    ", $start_date, $end_date);
+
+    return $wpdb->get_var($query);
+}
+
+
+/**
  * Returns the saved address for a customer
  *
  * @since 1.0.0

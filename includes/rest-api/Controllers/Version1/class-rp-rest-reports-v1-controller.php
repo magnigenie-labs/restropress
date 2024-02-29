@@ -36,7 +36,7 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_order_count' ),
+					'callback'            => array( $this, 'get_count' ),
 					'permission_callback' => array( $this, 'get_report_permissions_check' ),
 					'args'                => $this->get_collection_params(),
 				),
@@ -90,16 +90,18 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 	 * @return  WP_REST_Response $response
 	 * @since 3.0.0
 	 * * */
-	public function get_order_count( WP_REST_Request $request ) {
+	public function get_count( WP_REST_Request $request ) {
 
 		global $wpdb;
 		$select = 'SELECT g.meta_value,count( * ) AS num_posts';
 		$join   = "LEFT JOIN $wpdb->postmeta g ON (p.ID = g.post_id)";
 		$where  = "WHERE p.post_type = 'rpress_payment' AND g.meta_key = '_order_status'";
 		$arg    = array();
-
+		$post_count_start_date;
+		$post_count_end_date;
 		if ( isset( $request['start_date'] ) && ! empty( $request['start_date'] ) ) {
 			$post_count_start_date = sanitize_text_field( $request['start_date'] );
+			$post_count_start_date = date( 'Y-m-d', strtotime( $post_count_start_date ) );
 			$post_count_end_date   = isset( $request['end_date'] ) && ! empty( $request['end_date'] ) ? sanitize_text_field( $request['end_date'] ) : $post_count_start_date;
 			$arg['start-date']     = date( 'm/d/Y', strtotime( $post_count_start_date ) );
 			$post_count_end_date   = date( 'Y-m-d', strtotime( "$post_count_end_date +1 day" ) );
@@ -143,12 +145,19 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 		$stats = (object) $stats;
 		wp_cache_set( $cache_key, $stats, 'counts' );
-		$purchases      = rpress_count_payments( $arg );
-		$response_array = array(
+		$purchases = rpress_count_payments( $arg );
+
+		$total_new_customer_count = rpress_count_new_customers_by_date_range( $post_count_start_date, $post_count_end_date );
+		$total_customer_count     = rpress_count_total_customers_by_date_range( $post_count_start_date, $post_count_end_date );
+		$response_array           = array(
 			'payments_count' => $purchases,
 			'orders_count'   => $stats,
+			'customer_count' => array(
+			    'total' => $total_customer_count,
+			    'new'            => $total_new_customer_count,
+            ),
 		);
-		$response       = new WP_REST_Response( $response_array );
+		$response                 = new WP_REST_Response( $response_array );
 		$response->set_status( 200 );
 		return $response;
 	}
@@ -213,8 +222,8 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 			$complete_count = rpress_count_sales_by_gateway_with_date_range( $gateway_id, 'publish', $post_count_start_date, $post_count_end_date );
 			$pending_count  = rpress_count_sales_by_gateway_with_date_range( $gateway_id, array( 'pending', 'failed' ), $post_count_start_date, $post_count_end_date );
-			$total_earning  = rpress_get_total_earnings_by_gateway_with_date_range( $gateway_id,  $post_count_start_date, $post_count_end_date );
-			$total_tax  = rpress_get_total_tax_by_gateway_with_date_range( $gateway_id,  $post_count_start_date, $post_count_end_date );
+			$total_earning  = rpress_get_total_earnings_by_gateway_with_date_range( $gateway_id, $post_count_start_date, $post_count_end_date );
+			$total_tax      = rpress_get_total_tax_by_gateway_with_date_range( $gateway_id, $post_count_start_date, $post_count_end_date );
 
 			$data[] = array(
 				'ID'             => $gateway_id,
@@ -222,8 +231,8 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 				'complete_sales' => rpress_format_amount( $complete_count, false ),
 				'pending_sales'  => rpress_format_amount( $pending_count, false ),
 				'total_sales'    => rpress_format_amount( $complete_count + $pending_count, false ),
-				'total_earnings'    => rpress_format_amount( $total_earning, false ),
-				'total_tax'    => rpress_format_amount( $total_tax, false ),
+				'total_earnings' => rpress_format_amount( $total_earning, false ),
+				'total_tax'      => rpress_format_amount( $total_tax, false ),
 			);
 		}
 
