@@ -619,6 +619,15 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 			$query_args['meta_value'] = $request['food_type'];
 
 		}
+		if ( ! empty( $request['orderby_sales'] ) && $request['orderby_sales'] ) {
+
+            $query_args['meta_key'] = '_rpress_fooditem_sales';
+
+            $query_args['orderby'] = 'meta_value_num';
+
+		}
+       
+        
 		// print_r($query_args);
 		return $query_args;
 	}
@@ -646,6 +655,14 @@ class RP_REST_Foods_V1_Controller extends RP_REST_Posts_Controller {
 
 		$query_params['with_addons'] = array(
 			'description' => __( 'Item response will have selected addons of food.' ),
+			'type'        => 'string',
+			'enum'        => array(
+				'true',
+				'false',
+			),
+		);
+		$query_params['orderby_sales'] = array(
+			'description' => __( 'This will enable order by sales for food items.' ),
 			'type'        => 'string',
 			'enum'        => array(
 				'true',
