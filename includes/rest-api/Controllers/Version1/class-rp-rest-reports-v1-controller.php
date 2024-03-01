@@ -149,13 +149,16 @@ class RP_REST_Reports_v1_Controller extends WP_REST_Controller {
 
 		$total_new_customer_count = rpress_count_new_customers_by_date_range( $post_count_start_date, $post_count_end_date );
 		$total_customer_count     = rpress_count_total_customers_by_date_range( $post_count_start_date, $post_count_end_date );
+		$post_type                = 'fooditem';
+		$count_posts              = wp_count_posts( $post_type );
 		$response_array           = array(
 			'payments_count' => $purchases,
 			'orders_count'   => $stats,
 			'customer_count' => array(
-			    'total' => $total_customer_count,
-			    'new'            => $total_new_customer_count,
-            ),
+				'total' => $total_customer_count,
+				'new'   => $total_new_customer_count,
+			),
+			'product_count'  => $count_posts,
 		);
 		$response                 = new WP_REST_Response( $response_array );
 		$response->set_status( 200 );
