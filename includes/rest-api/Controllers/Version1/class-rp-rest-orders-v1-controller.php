@@ -50,18 +50,6 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		parent::register_routes();
 		register_rest_route(
 			$this->namespace,
-			'/' . $this->rest_base . '/statuses',
-			array(
-				array(
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'rpress_order_status_callback' ),
-					'permission_callback' => array( $this, 'get_items_permissions_check' ),
-					'args'                => array(),
-				),
-			)
-		);
-		register_rest_route(
-			$this->namespace,
 			'/' . $this->rest_base . '/update-status/(?P<id>[\d]+)/(?P<order_status>[a-z-]+)',
 			array(
 				'args' => array(
@@ -122,61 +110,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$response->set_status( 200 );
 		return $response;
 	}
-	/**
-	 * RestroPress Order Status list callback .
-	 *
-	 * @since 1.0.0
-	 * @param WP_REST_Request $request
-	 * @return array
-	 */
-	public function rpress_order_status_callback( WP_REST_Request $request ) {
-
-			$payment_statuses = rpress_get_payment_statuses();
-		if ( function_exists( 'rpress_get_payment_status_colors' ) ) {
-			$payment_color_codes = rpress_get_payment_status_colors();
-		} else {
-			$payment_color_codes = array(
-				'pending'         => '#fcbdbd',
-				'pending_text'    => '#333333',
-				'publish'         => '#e0f0d7',
-				'publish_text'    => '#3a773a',
-				'refunded'        => '#e5e5e5',
-				'refunded_text'   => '#777777',
-				'failed'          => '#e76450',
-				'failed_text'     => '#ffffff',
-				'processing'      => '#f7ae18',
-				'processing_text' => '#ffffff',
-			);
-		}
-
-			$statuses = rpress_get_order_statuses();
-		if ( function_exists( 'rpress_get_order_status_colors' ) ) {
-			$color_codes = rpress_get_order_status_colors();
-		} else {
-			$color_codes = array(
-				'pending'    => '#800000',
-				'accepted'   => '#008000',
-				'processing' => '#808000',
-				'ready'      => '#00FF00',
-				'transit'    => '#800080',
-				'cancelled'  => '#FF0000',
-				'completed'  => '#FFFF00',
-			);
-		}
-
-		$response_array = array(
-			'statuses'         => $statuses,
-			'status_colors'    => $color_codes,
-			'payment_statuses' => $payment_statuses,
-			'payment_colors'   => $payment_color_codes,
-
-		);
-		$response = new WP_REST_Response( $response_array );
-		$response->set_status( 200 );
-		return $response;
-	}
-
-
+	
 
 	/**
 	 * Determine the allowed query_vars for a get_items() response and
