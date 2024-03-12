@@ -477,6 +477,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 		$service_date = $json_params['service_date'];
 		$service_type = $json_params['service_type'];
 		$order_note   = $json_params['order_note'];
+		$phone   = $json_params['phone'];
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
 			rpress_empty_cart();
@@ -512,6 +513,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 						'email'      => isset( $customer['email'] ) ? $customer['email'] : '',
 						'first_name' => isset( $customer['first_name'] ) ? $customer['first_name'] : '',
 						'last_name'  => isset( $customer['last_name'] ) ? $customer['last_name'] : '',
+						'phone'  => isset( $customer['phone'] ) ? $customer['phone'] : '',
 						'discount'   => isset( $customer['discount'] ) ? $customer['discount'] : 0,
 						'address'    => isset( $customer['address'] ) && is_array( $customer['address'] ) ? $customer['address'] : array(),
 					);
@@ -537,6 +539,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			'currency'     => rpress_get_currency(),
 			'fooditems'    => $cart_contain,
 			'user_info'    => $user_info,
+			'phone'    => $phone,
 			'cart_details' => rpress_get_cart_content_details(),
 			'status'       => ! empty( $order_status ) ? $order_status : 'pending',
 		);
@@ -726,7 +729,17 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				do_action( 'rpress_update_order_status', $request['id'], $order_status );
 			}
 		}
+        if ( ! empty( $status ) ) {
+			// Create an array of post data to update .
+			$post_data = array(
+				'ID'          => $post_id,
+				'post_status' => $status,
+			);
+			// Update the post with wp_update_post .
+			wp_update_post( $post_data );
+			rpress_update_payment_status( $request['id'], $status );
 
+		}
 		if ( ! empty( $delivery_adrress_meta ) && is_array( $delivery_adrress_meta ) ) {
 
 			// Assuming $delivery_adrress_meta is an associative array with keys like 'address', 'flat', 'postcode', 'city'.
@@ -740,12 +753,13 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			$payment->update_meta( '_rpress_delivery_address', $delivery_adrress );
 
 		}
-		if ( ! empty( $customer ) && is_array( $customer ) ) {
+		if ( current_user_can( 'manage_options' )  && ! empty( $customer ) && is_array( $customer ) ) {
 				$user_info = array(
 					'id'         => isset( $customer['id'] ) ? $customer['id'] : '',
 					'email'      => isset( $customer['email'] ) ? $customer['email'] : '',
 					'first_name' => isset( $customer['first_name'] ) ? $customer['first_name'] : '',
 					'last_name'  => isset( $customer['last_name'] ) ? $customer['last_name'] : '',
+                    'phone'  => isset( $customer['phone'] ) ? $customer['phone'] : '',
 					'discount'   => isset( $customer['discount'] ) ? $customer['discount'] : 0,
 					'address'    => isset( $customer['address'] ) && is_array( $customer['address'] ) ? $customer['address'] : array(),
 				);
@@ -757,18 +771,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				$payment->update_meta( '_rpress_payment_meta', $payment_meta );
 
 		}
-		if ( ! empty( $status ) ) {
-			// Create an array of post data to update .
-			$post_data = array(
-				'ID'          => $post_id,
-				'post_status' => $status,
-			);
-
-			// Update the post with wp_update_post .
-			wp_update_post( $post_data );
-			rpress_update_payment_status( $request['id'], $status );
-
-		}
+		
 
 		if ( is_array( $cart_details ) && ! empty( $cart_details ) ) {
 			$cart_controller = new RP_REST_Cart_V1_Controller();
@@ -793,7 +796,9 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 					if ( property_exists( $cart_data[ $index ], 'id' ) ) {
 						$fooditem_id = $cart_data[ $index ]->id;
 						$quantity    = $cart_data[ $index ]->quantity;
-						$item_price  = $cart_data[ $index ]->price;
+						$item_price  = $cart_data[ $index ]->item_price;
+						$tax  = $cart_data[ $index ]->tax;
+						$fees  = $cart_data[ $index ]->fees;
 						$price_id    = $cart_data[ $index ]->price_id;
 						$addon_items = $cart_data[ $index ]->addon_items;
 						$instruction = $cart_data[ $index ]->instruction;
@@ -804,6 +809,8 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 							'item_price'  => $item_price,
 							'discount'    => 0,
 							'instruction' => $instruction,
+                            'tax'        => $tax,
+					        'fees'       => $fees,
 						);
 						$payment->add_fooditem( $fooditem_id, $item_args, $addon_items );
 
@@ -813,6 +820,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 
 			}
 		}
+
 
 		update_post_meta( $post_id, '_rpress_delivery_time', $service_time );
 		update_post_meta( $post_id, '_rpress_payment_gateway', $gateway );

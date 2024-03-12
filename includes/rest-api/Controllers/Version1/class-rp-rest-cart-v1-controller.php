@@ -184,6 +184,10 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
 			if ( ! empty( $schema_properties['name'] ) && isset( $cart_details[ $cart_key ]['name'] ) ) {
 				$prepared_post->name = $cart_value['name'];
 			}
+			// Adding name
+			if ( ! empty( $schema_properties['variation_name'] ) && isset( $cart_details[ $cart_key ]['variation_name'] ) ) {
+				$prepared_post->name = $cart_value['variation_name'];
+			}
 			// Adding ID
 			if ( ! empty( $schema_properties['id'] ) && isset( $cart_details[ $cart_key ]['id'] ) ) {
 				$prepared_post->id = $cart_value['id'];
