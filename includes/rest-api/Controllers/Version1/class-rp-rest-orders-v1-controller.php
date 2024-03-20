@@ -767,6 +767,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 				$payment_meta              = $payment->payment_meta;
 				$payment_meta['user_info'] = $user_info;
 				$payment_meta['email']     = $user_info['email'];
+				$payment_meta['phone']     = $user_info['phone'];
 
 				$payment->update_meta( '_rpress_payment_meta', $payment_meta );
 
@@ -777,6 +778,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 			$cart_controller = new RP_REST_Cart_V1_Controller();
 			$cart_data       = $cart_controller->prepare_item_for_database( $request );
 
+            // print_r($cart_data);
 			if ( is_array( $cart_data ) && ! empty( $cart_data ) ) {
 				foreach ( $payment->cart_details as $cart_index => $fooditem_item ) {
 
@@ -797,6 +799,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 						$fooditem_id = $cart_data[ $index ]->id;
 						$quantity    = $cart_data[ $index ]->quantity;
 						$item_price  = $cart_data[ $index ]->item_price;
+						$discount  = $cart_data[ $index ]->discount;
 						$tax  = $cart_data[ $index ]->tax;
 						$fees  = $cart_data[ $index ]->fees;
 						$price_id    = $cart_data[ $index ]->price_id;
@@ -807,7 +810,7 @@ class RP_REST_Orders_V1_Controller extends RP_REST_Posts_Controller {
 							'quantity'    => $quantity,
 							'price_id'    => $price_id,
 							'item_price'  => $item_price,
-							'discount'    => 0,
+							'discount'    => $discount,
 							'instruction' => $instruction,
                             'tax'        => $tax,
 					        'fees'       => $fees,
