@@ -217,7 +217,7 @@ class RP_REST_Cart_V1_Controller extends WP_REST_Controller {
 				$prepared_post->item_price = $cart_value['item_price'];
 			}
 			if ( ! empty( $schema_properties['discount'] ) && isset( $cart_details[ $cart_key ]['discount'] ) ) {
-				$prepared_post->item_price = $cart_value['discount'];
+				$prepared_post->discount = $cart_value['discount'];
 			}
 
 			if ( ! empty( $schema_properties['quantity'] ) && isset( $cart_details[ $cart_key ]['quantity'] ) ) {
