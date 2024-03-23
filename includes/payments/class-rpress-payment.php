@@ -1194,6 +1194,7 @@ class RPRESS_Payment {
 
 		$args = wp_parse_args( apply_filters( 'rpress_payment_add_fooditem_args', $args, $fooditem->ID ), $defaults );
 
+        $variation_name = '';
 		// Allow overriding the price
 		if( false !== $args['item_price'] ) {
 			$item_price = $args['item_price'];
@@ -1208,6 +1209,7 @@ class RPRESS_Payment {
 					$item_price       = rpress_get_lowest_price_option( $fooditem->ID );
 					$args['price_id'] = rpress_get_lowest_price_id( $fooditem->ID );
 				}
+
 			} else {
 				$item_price = rpress_get_fooditem_price( $fooditem->ID );
 			}
@@ -1272,10 +1274,13 @@ class RPRESS_Payment {
 			'quantity'  => $quantity,
 			'options'   => $options,
 		);
+        
+        $variation_name = rpress_get_price_option_name( $fooditem->ID, (int) $args['price_id'] );
 
 		$this->cart_details[] = array(
 			'name'        => $fooditem->post_title,
 			'id'          => $fooditem->ID,
+            'variation_name' => $variation_name,
 			'instruction' => isset( $args['instruction'] ) ? $args['instruction'] : '' ,
 			'item_number' => $item_number,
 			'item_price'  => round( $item_price, rpress_currency_decimal_filter() ),
